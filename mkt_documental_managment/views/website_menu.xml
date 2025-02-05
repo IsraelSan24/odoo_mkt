@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="website_affidavit_menu" model="website.menu">
+        <field name="name">Affidavit</field>
+        <field name="url">/affidavit</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">67</field>
+    </record>
+
+</odoo>

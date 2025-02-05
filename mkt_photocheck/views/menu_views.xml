@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="photocheck_root" name="Photocheck" groups="mkt_photocheck.photocheck_user,mkt_photocheck.photocheck_boss,mkt_photocheck.photocheck_designer,mkt_photocheck.photocheck_admin"
+    web_icon="mkt_photocheck,static/description/photocheck_icon.png"/>
+
+        <menuitem id="photocheck_menu" name="Photocheck" action="view_photocheck_action" parent="photocheck_root" sequence="0"/>
+
+        <!-- CONFIGURATION -->
+        <menuitem id="configuration_menu" name="Configuration" parent="photocheck_root" sequence="1"/>
+            <menuitem id="photocheck_brand_group_menu" name="Photocheck Brand Group" action="view_photocheck_brand_group_action" parent="configuration_menu" groups="mkt_photocheck.photocheck_admin,mkt_photocheck.photocheck_designer" sequence="10"/>
+            <menuitem id="photocheck_supervisor_menu" name="Photocheck Supervisor" action="view_photocheck_supervisor_action" parent="configuration_menu" groups="mkt_photocheck.photocheck_admin,mkt_photocheck.photocheck_designer" sequence="11"/>
+            <menuitem id="photocheck_job" name="Photocheck Job" action="view_photocheck_job_action" parent="configuration_menu" groups="mkt_photocheck.photocheck_admin,mkt_photocheck.photocheck_designer" sequence="12"/>
+
+</odoo>

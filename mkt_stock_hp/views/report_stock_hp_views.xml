@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_report_stock_hp_tree" model="ir.ui.view">
+        <field name="name">report.stock.hp.tree</field>
+        <field name="model">report.stock.hp</field>
+        <field name="arch" type="xml">
+            <tree create="0">
+                <field name="report_product_template"/>
+                <field name="report_lot"/>
+                <button name="button_show_image" type="object" class="fa fa-camera-retro" readonly="1"/>
+                <field name="report_photo_loaded" optional="hide"/>
+                <field name="report_category" string="Line"/>
+                <field name="report_product_type" optional="hide"/>
+                <field name="report_location"/>
+                <field name="report_incoming_qty"/>
+                <field name="report_outgoing_qty"/>
+                <field name="report_stock"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_report_stock_hp_search" model="ir.ui.view">
+        <field name="name">report.stock.hp.search</field>
+        <field name="model">report.stock.hp</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="report_product_template"/>
+                <field name="report_lot"/>
+                <field name="report_category" string="Line"/>
+                <field name="report_location"/>
+                <field name="report_incoming_qty"/>
+                <field name="report_outgoing_qty"/>
+                <field name="report_stock"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_report_stock_hp" model="ir.actions.act_window">
+        <field name="name">Report Stock HP</field>
+        <field name="res_model">report.stock.hp</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="button_show_image" model="ir.actions.act_window">
+        <field name="name">Product Image</field>
+        <field name="res_model">gallery</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="mkt_gallery.view_gallery_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

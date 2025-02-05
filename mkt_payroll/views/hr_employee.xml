@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_employee_paycheks_form" model="ir.ui.view">
+        <field name="name">hr.employee.paychecks.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button string="Paycheks" name="action_view_paycheck" type="object" class="oe_highlight"
+                    icon="fa-money" groups="mkt_payroll.group_payroll_paycheck"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
+

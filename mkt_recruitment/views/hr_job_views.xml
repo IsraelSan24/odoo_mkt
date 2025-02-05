@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_job_reference_name_form" model="ir.ui.view">
+        <field name="name">hr.job.reference.name.form</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <group>
+                    <group>
+                        <field name="reference_name"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="before">
+                <field name="current_department_id" invisible="True"/>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="attributes">
+                <attribute name="options">{'no_edit': True, 'no_create': True, 'no_open': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+                <attribute name="groups">hr.group_hr_manager</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_job_reference_name_kanban" model="ir.ui.view">
+        <field name="name">hr.job.reference.name.kanban</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr_recruitment.view_hr_job_kanban"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="reference_name"/>
+            </field>
+            <xpath expr="//div[hasclass('o_kanban_card_header')]" position="inside">
+                <small>
+                    <field name="reference_name"/>
+                </small>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_job_reference_search" model="ir.ui.view">
+        <field name="name">hr.job.reference.search</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_job_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="replace">
+                <field name="name" string="Job Position" filter_domain="['|',('reference_name','ilike',self),('name','ilike',self)]"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_hr_job_reference_name_simple_form" model="ir.ui.view">
+        <field name="name">view.hr.job.reference.name.simple.form</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_job_simple_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="current_department_id" invisible="True"/>
+                <field name="company_id" invisible="True"/>
+                <field name="reference_name" class="o_job_name" placeholder="e.g. My reference for this job"/>
+                <field name="department_id" class="o_job_name" placeholder="e.g. My brand for this job" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                <field name="user_id" invisible="True"/>
+            </field>
+        </field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,60 @@
+#contenedor-gastos{
+    display:flex;
+}
+.conter-div-gastos{
+    margin:auto;
+    width:450px;
+    margin-top: 0px;
+}
+#conter-segundo-gastos{
+  height:240px;
+  background-color: #555555 !important;
+}
+#contenedor-gastos-body{
+  display:flex;
+}
+#contenedor-gastos_datos{
+  display:flex;
+}
+#conter-primero-gastos{
+  height:240px;
+  background-color: #555555 !important;
+}
+#conter-tercer-gastos{
+  height:180px;
+  background-color: #555555 !important;
+}
+
+@media only screen and (max-width: 600px) {
+    #contenedor-gastos{
+        display:inline;
+    }
+    .conter-div-gastos{
+        margin:auto;
+        width:100%;
+    }
+    #conter-segundo-gastos{
+      height:300px;
+      background-color: #555555 !important;
+    }
+    #contenedor-gastos-body{
+      display:inline;
+    }
+    #contenedor-gastos_datos{
+      display:inline;
+    }
+    #table-scroll-gastos{
+      overflow: scroll;
+    }
+    #conter-primero-gastos{
+      height:230px;
+      background-color: #555555 !important;
+    }
+    #conter-tercer-gastos{
+      height:230px;
+      background-color: #555555 !important;
+    }
+    
+   
+    
+}

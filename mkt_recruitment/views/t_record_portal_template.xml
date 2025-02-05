@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_my_home_t_record" name="My T-record" customize_show="True" inherit_id="portal.portal_my_home" priority="61">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">My T-Record</t>
+                <t t-set="url" t-value="'/my/trecord'"/>
+                <t t-set="placeholder_count" t-value="'trecord_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_menu_t_record" name="Portal layout : t-record" inherit_id="portal.portal_breadcrumbs" priority="61">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_menu == 'trecord' or trecord_document and trecord_document.state in ('to_sign','signed')" t-attf-class="breadcrumbs-item #{'active'}">
+                <a t-if="trecord_document" t-attf-href="/my/trecord?{{ keep_query() }}">T-Record Documents</a>
+                <t t-else="">T-Record Documents</t>
+            </li>
+            <li t-if="trecord_document" class="breadcrumb-item active">
+                <t t-esc="trecord_document.name"/>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_trecords" name="My T-records">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">T-Records</t>
+            </t>
+            <t t-if="not trecords">
+                <p>There are currently no t-record for yout accounts.</p>
+            </t>
+            <t t-if="trecords" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>
+                            <span class="d-none d-md-inline">T-record</span>
+                        </th>
+                        <th class="text-right">Date</th>
+                        <th class="text-right">State</th>
+                    </tr>
+                </thead>
+                <t t-foreach="trecords" t-as="trecord">
+                    <tr>
+                        <t t-if="trecord.state != 'draft'">
+                            <td><a t-att-href="trecord.get_portal_url()"><t t-esc="trecord.name"/></a></td>
+                            <td class="text-right">
+                                <span t-if="trecord.state == 'to_sign'" class="badge badge-pill badge-warning">
+                                    <i class="fa a-clock-o" role="img" aria-label="To sign" title="To sign"/> To sign
+                                </span>
+                                <span t-if="trecord.state == 'signed'" class="badge badge-pill badge-success">
+                                    <i class="fa fa-fw fa-check" role="img" aria-label="Signed" title="Signed"/> Signed
+                                </span>
+                            </td>
+                        </t>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="trecord_document_portal_template" name="T-Record Document Portal Template" inherit_id="portal.portal_sidebar" primary="True">
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+            <div class="row mt16 o_portal_sale_sidebar">
+                <t t-call="portal.portal_record_sidebar">
+                    <t t-set="classes" t-value="'col-lg-auto d-print-none'"/>
+                    <t t-set="title">
+                        <h2 class="mb-0"><b t-field="trecord_document.state"/></h2>
+                    </t>
+                    <t t-set="entries">
+                        <ul class="list-group list-group-flush flex-wrap flex-row flex-lg-column">
+                            <li class="list-group-item flex-grow-1 o_trecord_signature_t">
+                                <a t-if="trecord_document.has_to_be_signed(True)" role="button" class="btn btn-primary btn-block mb8 o_valterm" data-toggle="modal" data-target="#trecordvalidatebox" href="#">
+                                    <i class="fa fa-check"/>Accept &amp; Sign
+                                </a>
+                                <t t-if="trecord_document.employee_signature">
+                                    <div class="o_download_pdf btn-toolbar flex-sm-nowrap">
+                                        <div class="btn-group flex-grow-1 mr-1 mb-1">
+                                            <a class="btn btn-secondary btn-block o_download_btn" t-att-href="trecord_document.get_portal_url(report_type='pdf',download=True)" title="Download"><i class="fa fa-download"/> Download</a>
+                                        </div>
+                                        <div class="btn-group flex-grow-1 mb-1">
+                                            <a class="btn btn-secondary btn-block o_print_btn o_portal_invoice_print" t-att-href="trecord_document.get_portal_url(report_type='pdf')" title="Print" target="_blank"><i class="fa fa-print"/> Print</a>
+                                        </div>
+                                    </div>
+                                </t>
+                            </li>
+                            <li class="navspy list-group-item pl-0 flex-grow-l" t-ignore="true" role="complementary">
+                                <ul class="nav flex-column bs-sidenav"></ul>
+                            </li>
+                        </ul>
+                        <!-- <ul class="list-group list-group-flush flex-wrap flex-row flex-lg-column">
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size:0.6rem;">User name: </span><span style="font-size:0.5rem;" t-esc="trecord_document.partner_name"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size: 0.6rem">User email: </span><span style="font-size:0.5rem;" t-esc="trecord_document.email"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size: 0.6rem">IP: </span><span style="font-size:0.5rem;" t-esc="trecord_document.ip"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size: 0.6rem">OS: </span><span style="font-size:0.5rem;" t-esc="trecord_document.os"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size: 0.6rem">Browser: </span><span style="font-size:0.5rem;" t-esc="trecord_document.browser"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size: 0.6rem">Employee signature date: </span><span style="font-size:0.5rem;" t-esc="trecord_document.employee_signed_on"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size: 0.6rem">Hash: </span><span style="font-size:0.5rem;" t-esc="trecord_document.access_token"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size: 0.6rem">Latitude: </span><span style="font-size:0.5rem;" t-esc="trecord_document.latitude"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size: 0.6rem">Longitude:</span><span style="font-size:0.5rem;" t-esc="trecord_document.longitude"/>
+                            </li>
+                        </ul> -->
+                    </t>
+                </t>
+
+                <div role="dialog" class="modal fade o_trecord_validate_box" id="trecordvalidatebox">
+                    <div class="modal-dialog" t-if="trecord_document.has_to_be_signed(True)">
+                        <form id="trecordvalidatedigits" method="POST" t-att-data-document-id="trecord_document.id" t-att-data-token="trecord_document.access_token" class="js_accept_json modal-content js_website_submit_form">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <style>
+                                .digit-input, digit-input-4 {
+                                    width: 50px;
+                                    height: 50px;
+                                    font-size: 24px;
+                                    text-align: center;
+                                    margin: 5px;
+                                    border: 1px solid #ccc;
+                                    border-radius: 5px;
+                                }
+                                .input-container {
+                                    display: flex;
+                                    justify-content: center;
+                                }
+                                /* Hides the spinner (arrows) in number inputs */
+                                input[type=number]::-webkit-outer-spin-button,
+                                input[type=number]::-webkit-inner-spin-button {
+                                    -webkit-appearance: none;
+                                    margin: 0;
+                                }
+                                input[type=number] {
+                                    -moz-appearance: textfield; /* Firefox */
+                                }
+                            </style>
+                            <header class="modal-header">
+                                <h4 class="modal-title">Enter the code</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                            </header>
+                            <div class="p-2 text-start">
+                                <!-- <small>We sent an email to your personal email <span t-esc="trecord_document.email"/> with the code. If you have not received an email within two minutes, please try Accept and Sign again.</small> -->
+                                <small>We sent an email to your personal email with the code. If you have not received an email within two minutes, please try Accept and Sign again.</small>
+                            </div>
+                            <main class="modal-body" id="validate-dialog-trecord" style="display:flex;justify-content:center;">
+                                <input name="trecord_p_number1" type="number" class="digit-input" id="trecord_input1"/>
+                                <input name="trecord_p_number2" type="number" class="digit-input" id="trecord_input2"/>
+                                <input name="trecord_p_number3" type="number" class="digit-input" id="trecord_input3"/>
+                                <input name="trecord_p_number4" type="number" class="digit-input" id="trecord_input4"/>
+                            </main>
+                            <footer>
+                                <a id="validate-btn-boxes" role="button" style="display:none;color:red;" class="btn btn-primary btn-block mb8" data-toggle="modal" href="#">
+                                    Valid code <i class="fa fa-check"/>
+                                </a>
+                                <span id="validation-error-boxes" style="display:none;color:red;">Invalid code. Please, try again.</span>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="trecord_document_content" class="col-12 col-lg justify-content-end">
+                    <div role="dialog" class="modal fade" id="signtrecord">
+                        <div class="modal-dialog" t-if="trecord_document.has_to_be_signed(True)">
+                            <form id="trecordaccept" method="POST" t-att-data-document-id="trecord_document.id" t-att-data-token="trecord_document.access_token" class="js_accept_json modal-content js_website_submit_form">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <header class="modal-header">
+                                    <h4 class="modal-title">Validate T-record</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                                </header>
+                                <main class="modal-body" id="sign-dialog-trecord">
+                                    <p>
+                                        Acepto todo lo que firmaré
+                                    </p>
+                                    <small>
+                                        Suggestion: Write only your first name and last name. And also choose "Auto".
+                                    </small>
+                                    <t t-call="portal.signature_form">
+                                        <t t-set="call_url" t-value="trecord_document.get_portal_url(suffix='/sign')"/>
+                                        <t t-set="default_name" t-value="trecord_document.employee_id.name"/>
+                                    </t>
+                                </main>
+                            </form>
+                        </div>
+                    </div>
+                    <div t-if="message == 'sign_ok'" class="alert alert-success alert-dismissable d-print-none" role="status">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">×</button>
+                        <strong>Thank You!</strong><br/>
+                        <t t-if="message == 'sign_ok' and trecord_document.state == 'open'">Your document has been signed.</t>
+                    </div>
+                    <div t-attf-class="card #{'pb-5' if report_type == 'html' else ''}" id="portal_sale_content_trecord">
+                        <div t-call="mkt_recruitment.trecord_document_portal_content"/>
+                    </div>
+                    <div id="trecord_document_comunication" class="mt-4">
+                        <h2>History</h2>
+                        <t t-call="portal.message_thread">
+                            <t t-set="object" t-value="trecord_document"/>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="trecord_document_portal_content" name="T-Record portal content">
+        <div t-attf-class="pb-2 pt-3 #{'card-header bg-white' if report_type == 'html' else ''}">
+            <h2 class="my-0">
+                <em t-esc="trecord_document.name"/>
+            </h2>
+        </div>
+
+        <div t-attf-class="#{'card-body' if report_type == 'html' else ''}">
+            <t t-if="trecord_document.t_record">
+                <div class="document-preview">
+                    <iframe
+                        t-att-src="'data:application/pdf;base64,' + trecord_document.t_record.decode('utf-8')"
+                            width="100%" height="500px" type="application/pdf">
+                    </iframe>
+                </div>
+            </t>
+        </div>
+    </template>
+</odoo>

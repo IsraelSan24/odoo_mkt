@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_employee_cost_center_tree" model="ir.ui.view">
+        <field name="name">hr.employee.cost.center.tree</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="cost_center_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_employee_cost_center_form" model="ir.ui.view">
+        <field name="name">hr.employee.cost.center.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="cost_center_id" options="{'no_open':True,'no_create':True'}"/>
+                <field name="partner_brand_id" options="{'no_open':True,'no_create':True}"/>
+            </xpath>
+            <xpath expr="//group" position="before">
+                <group>
+                    <field name="is_back_office" widget="boolean_toggle" groups="mkt_recruitment.group_hr_contract_back_office"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_employee_vat_search" model="ir.ui.view">
+        <field name="name">hr.employee.vat.search</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="replace">
+                <field name="name" string="Employee" filter_domain="['|','|',('user_id.partner_id.vat','ilike',self),('work_email','ilike',self),('name','ilike',self)]"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

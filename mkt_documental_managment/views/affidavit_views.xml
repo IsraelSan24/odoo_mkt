@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_affidavit_tree" model="ir.ui.view">
+        <field name="name">affidavit.tree</field>
+        <field name="model">affidavit</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="job_id" optional="hide"/>
+                <field name="location" optional="show"/>
+                <field name="state_id" optional="hide"/>
+                <field name="city_id" optional="hide"/>
+                <field name="district_id" optional="hide"/>
+                <field name="concept" optional="show"/>
+                <field name="amount" optional="show"/>
+                <field name="date" optional="show"/>
+                <field name="date_month"/>
+                <field name="user_id" optional="show"/>
+                <field name="user_vat" optional="hide"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_affidavit_form" model="ir.ui.view">
+        <field name="name">affidavit.form</field>
+        <field name="model">affidavit</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="employee_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+                            <field name="job_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+                            <field name="concept"/>
+                            <field name="activity"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="amount_currency_type" widget="radio" options="{'horizontal': true}"/>
+                            <field name="amount"/>
+                            <field name="location"/>
+                            <field name="state_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+                            <field name="city_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+                            <field name="district_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+                            <field name="from_portal" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_affidavit_action" model="ir.actions.act_window">
+        <field name="name">Affidavit</field>
+        <field name="res_model">affidavit</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

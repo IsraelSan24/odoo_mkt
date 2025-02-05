@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_settlement_line_tree" model="ir.ui.view">
+        <field name="name">settlement.line.tree</field>
+        <field name="model">settlement.line</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <button string="Calculate" name="compute_base_igv_amount" type="object" class="oe_highlight"
+                    groups="mkt_documental_managment.documental_requirement_admin"/>
+                <field name="name"/>
+                <field name="service_type_id" options="{'no_create':True,'no_edit':True}"/>
+                <field name="tax"/>
+                <field name="tax_id"/>
+                <field name="igv_included"/>
+                <field name="quantity"/>
+                <field name="unit_price"/>
+                <field name="base_amount" sum="Base total"/>
+                <field name="igv" sum="IGV total"/>
+                <field name="amount" sum="Amount total"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

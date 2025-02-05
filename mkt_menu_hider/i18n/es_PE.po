@@ -1,0 +1,52 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mkt_menu_hider
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0-20221219\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-21 16:46+0000\n"
+"PO-Revision-Date: 2023-03-21 16:46+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mkt_menu_hider
+#: model_terms:ir.ui.view,arch_db:mkt_menu_hider.hide_user_menu
+msgid "Hide Specific Menu"
+msgstr "Ocultar Menu Específico"
+
+#. module: mkt_menu_hider
+#: model:ir.model.fields,field_description:mkt_menu_hider.field_res_users__is_admin
+msgid "Is Admin"
+msgstr "Es Administrador"
+
+#. module: mkt_menu_hider
+#: model:ir.model,name:mkt_menu_hider.model_ir_ui_menu
+#: model:ir.model.fields,field_description:mkt_menu_hider.field_res_users__hide_menu_ids
+msgid "Menu"
+msgstr "Menú"
+
+#. module: mkt_menu_hider
+#: model:ir.model.fields,field_description:mkt_menu_hider.field_ir_ui_menu__restrict_user_ids
+msgid "Restrict User"
+msgstr "Restringir Usuario"
+
+#. module: mkt_menu_hider
+#: model_terms:ir.ui.view,arch_db:mkt_menu_hider.ir_ui_menu_users
+msgid "Restrict Users"
+msgstr "Restringir Usuarios"
+
+#. module: mkt_menu_hider
+#: model:ir.model.fields,help:mkt_menu_hider.field_res_users__hide_menu_ids
+msgid "Select menu items that needs to be hidden to this user"
+msgstr "Seleccionar elementos del menú que necesitan ser ocultados a este usuario"
+
+#. module: mkt_menu_hider
+#: model:ir.model,name:mkt_menu_hider.model_res_users
+msgid "Users"
+msgstr "Usuarios"

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- BUDGET CONTROL -->
+    <menuitem id="budget_root" name="Budget Control" web_icon="mkt_documental_managment,static/description/icon_budget.png"
+        groups="mkt_documental_managment.budget_control_administrator"/>
+        <menuitem id="budget_menu" name="Budget" action="action_view_budget" parent="budget_root" sequence="0"/>
+        <menuitem id="cost_center_menu" name="Cost center" action="mkt_cost_center.view_cost_center_action" parent="mkt_documental_managment.budget_root" sequence="1"/>
+        <menuitem id="budget_configuration_menu" name="Configuration" parent="budget_root" sequence="2"/>
+            <menuitem id="budget_class_submenu" name="Class" action="view_budget_class_action" parent="budget_configuration_menu" sequence="20"/>
+            <menuitem id="brand_submenu" name="Brand" action="mkt_res_partner_brand.view_res_partner_brand_action" parent="budget_configuration_menu" sequence="21"/>
+            <menuitem id="campaign_submenu" name="Campaign" action="view_budget_campaign_action" parent="budget_configuration_menu" sequence="22"/>
+            <menuitem id="province_submenu" name="Province" action="mkt_res_province.view_res_province_action" parent="budget_configuration_menu" sequence="23"/>
+            <menuitem id="budget_modify_submenu" name="Budget modify" action="view_budget_modify_action" parent="budget_configuration_menu" sequence="24"/>
+
+    <!-- DOCUMENTAL MANAGEMENT -->
+    <menuitem id="doc_mng_root" name="Documental Managment"
+        groups="mkt_documental_managment.documental_requirement_user,mkt_documental_managment.documental_requirement_boss,mkt_documental_managment.documental_requirement_budget_executive,mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_intern_control_read"
+        web_icon="mkt_documental_managment,static/description/icon_documental.png"/>
+        <menuitem id="doc_mng_requirements" name="Requirements" action="action_view_requirement" parent="doc_mng_root" sequence="0"/>
+        <menuitem id="settlement_submenu" name="Settlements" action="view_requirement_settlement_action" parent="doc_mng_root" sequence="1"/>
+        <menuitem id="doc_mng_settlements" name="Settlements" action="action_view_settlements" parent="doc_mng_root" sequence="2"
+            groups="mkt_documental_managment.documental_requirement_admin"/>
+        <menuitem id="doc_mng_mobility" name="Mobility Expediture" parent="doc_mng_root" sequence="3"
+            groups="mkt_documental_managment.documental_mobility_user,mkt_documental_managment.documental_mobility_boss,mkt_documental_managment.documental_mobility_admin"/>
+            <menuitem id="mobility_submenu" name="Mobility" action="action_view_mobility" parent="doc_mng_mobility" sequence="0"/>
+            <menuitem id="mobility_line_submenu" name="Mobility line" action="view_mobility_line_action" parent="doc_mng_mobility" sequence="1" groups="mkt_documental_managment.documental_requirement_admin"/>
+        <menuitem id="affidavit_menu" name="Affidavit" action="view_affidavit_action" parent="doc_mng_root" sequence="4" />
+        <menuitem id="reporting_menu" name="Reporting" parent="doc_mng_root" sequence="5"/>
+            <menuitem id="administration_report" name="Print Administrative Report" action="action_requirement_report_view"
+                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_admin" sequence="40"/>
+            <menuitem id="cash_report_submenu" name="Cash report" action="view_cash_report_action"
+                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="41"/>
+            <menuitem id="settlement_report_submenu" name="Fee Receipt Report" action="view_settlement_report_action"
+                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="42"/>
+            <menuitem id="pending_settlement_submenu" name="Pending settlements" action="action_pending_settlement_view"
+                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_intern_control_read" sequence="43"/>
+            <menuitem id="expenses_report_submenu" name="Expenses report" action="view_expenses_report_action"
+                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="44"/>
+        <menuitem id="accounting_menu" name="Accounting" parent="doc_mng_root" sequence="6" groups="mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_admin"/>
+            <menuitem id="accounting_settlement_submenu" name="Voucher" action="view_settlement_action" parent="accounting_menu" sequence="0"/>
+            <menuitem id="proof_of_purchase_submenu" name="Proof of purchase" action="view_settlement_proof_of_purchase_action" parent="accounting_menu" sequence="1"/>
+            <menuitem id="account_purchase_report_submenu" name="Purchase report" action="view_account_purchase_report_action" parent="accounting_menu" sequence="2"/>
+            <menuitem id="settlement_update_submenu" name="Update settlement" action="view_settlement_update_action" parent="accounting_menu"
+                groups="mkt_documental_managment.documental_requirement_admin" sequence="3"/>
+        <menuitem id="utilities_menu" name="Utilities" parent="doc_mng_root" sequence="7" groups="mkt_documental_managment.budget_control_user,mkt_documental_managment.budget_control_administrator"/>
+            <menuitem id="budget_submenu" name="Budget" action="action_view_budget" parent="utilities_menu" sequence="61"/>
+            <menuitem id="dni_consult_submenu" name="Consult DNI" action="view_dni_consult_action" parent="utilities_menu" sequence="62"/>
+            <menuitem id="ruc_consult_submenu" name="Consult RUC" action="view_ruc_consult_action" parent="utilities_menu" sequence="63"/>
+            <menuitem id="change_type_submenu" name="Change type" action="view_change_type_action" parent="utilities_menu"
+                groups="mkt_documental_managment.documental_requirement_admin" sequence="64"/>
+            <menuitem id="cpe_consult_submenu" name="Consult CPE" action="view_cpe_consult_action" parent="utilities_menu" sequence="65"/>
+        <menuitem id="configuration_menu" name="Configuration" parent="doc_mng_root" sequence="8"
+            groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_accounting"/>
+            <menuitem id="configuration_service_type" name="Service Type" action="action_view_requirement_service_type" parent="configuration_menu" sequence="7"/>
+            <menuitem id="configuration_taxes" name="Taxes" action="view_tax_taxes_action" parent="configuration_menu" sequence="71"/>
+            <menuitem id="document_type_submenu" name="Document type" action="view_settlement_line_type_action" parent="configuration_menu" sequence="72"/>
+            <menuitem id="months_submenu" name="Months" action="view_months_action" parent="configuration_menu" sequence="73"
+                groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting"/>
+            <menuitem id="years_submenu" name="Years" action="view_years_action" parent="configuration_menu" sequence="74"
+                groups="mkt_documental_managment.documental_requirement_admin"/>
+
+</odoo>

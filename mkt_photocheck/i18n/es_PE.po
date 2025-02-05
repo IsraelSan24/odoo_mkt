@@ -1,0 +1,1265 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mkt_photocheck
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0-20230919\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-29 15:00+0000\n"
+"PO-Revision-Date: 2024-08-29 15:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "44775566"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.photocheck_requested_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.photocheck_requested
+msgid "<i class=\"fa fa-arrow-left\"/> Back to Form"
+msgstr "<i class=\"fa fa-arrow-left\"/> Volver al formulario"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "<option value=\"\">Brand...</option>"
+msgstr "<option value=\"\">Marca...</option>"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "<option value=\"\">Jobs...</option>"
+msgstr "<option value=\"\">Cargo...</option>"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "<option value=\"\">Supervisor...</option>"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "<span class=\"col\">Flip image</span>"
+msgstr "<span class=\"col\">Invertir imagen</span>"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "<span class=\"col\">Rotate image</span>"
+msgstr "<span class=\"col\">Rotar imagen</span>"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.report_photocheck_document
+msgid "<span>www.marketing-alterno.com</span>"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:mail.template,body_html:mkt_photocheck.mail_template_photocheck_done
+msgid ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\">\n"
+"                    <tr><td align=\"center\">\n"
+"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: white; color: #454748; border-collapse:separate;\">\n"
+"                    <tbody>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"middle\">\n"
+"                                        <span style=\"font-size: 20px; font-weight: bold;\">\n"
+"                                            <span>Photocheck done</span>\n"
+"                                        </span>\n"
+"                                    </td><td valign=\"middle\" align=\"right\">\n"
+"                                        <img t-attf-src=\"/logo.png?company={{ user.company_id.id }}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt=\"user.company_id.name\"/>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
+"                                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
+"                                        <div>\n"
+"                                            Dear <t t-out=\"object.photocheck_supervisor_id.user_id.partner_id.name\"/><br/><br/>\n"
+"                                            This email is to inform you that your photocheck has been <strong>Done </strong><br/><br/>\n"
+"                                            <a t-att-href=\"object.get_photocheck_url()\">Ir a Photocheck</a><br/><br/>\n"
+"                                            <strong>Photocheck details:</strong><br/>\n"
+"                                            <strong>Name: </strong><t t-out=\"object.name\"/><br/>\n"
+"                                            <strong>DNI: </strong><t t-out=\"object.dni\"/><br/>\n"
+"                                            <strong>First Name: </strong><t t-out=\"object.first_name\"/><br/>\n"
+"                                            <strong>Last Name: </strong><t t-out=\"object.last_name\"/><br/><br/>\n"
+"                                            Your photocheck request has been done.\n"
+"                                            <br/><br/>\n"
+"                                            If you have any questions, please don't hesitate to contact us.\n"
+"                                            <br/><br/>\n"
+"                                            Best regards,\n"
+"                                            <t t-if=\"user.signature\">\n"
+"                                                <br/>\n"
+"                                                <t t-out=\"user.signature or ''\">--<br/>Mitchell Admin</t>\n"
+"                                            </t>\n"
+"                                        </div>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td style=\"text-align:center;\">\n"
+"                                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"middle\" align=\"left\">\n"
+"                                        <t t-out=\"user.company_id.name or ''\">Marketing Alterno Peru</t>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
+"                                        <t t-out=\"user.company_id.phone or ''\">+1 650-123-4567</t>\n"
+"                                        <t t-if=\"user.company_id.email\">\n"
+"                                            | <a t-att-href=\"'mailto:%s' % user.company_id.email\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.email or ''\">info@yourcompany.com</a>\n"
+"                                        </t>\n"
+"                                        <t t-if=\"user.company_id.website\">\n"
+"                                            | <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.website or ''\">https://www.marketing-alterno.com</a>\n"
+"                                        </t>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                    </tbody>\n"
+"                    </table>\n"
+"                    </td></tr>\n"
+"                    <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
+"                        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
+"                        <tr><td style=\"text-align: center; font-size: 13px;\">\n"
+"                            Powered by <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none;color: #875A7B;\" target=\"_blank\">Marketing Alterno Peru</a>\n"
+"                        </td></tr>\n"
+"                        </table>\n"
+"                    </td></tr>\n"
+"                </table>\n"
+"            "
+msgstr ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\">\n"
+"                    <tr><td align=\"center\">\n"
+"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: white; color: #454748; border-collapse:separate;\">\n"
+"                    <tbody>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"middle\">\n"
+"                                        <span style=\"font-size: 20px; font-weight: bold;\">\n"
+"                                            <span>Fotocheck realizado</span>\n"
+"                                        </span>\n"
+"                                    </td><td valign=\"middle\" align=\"right\">\n"
+"                                        <img t-attf-src=\"/logo.png?company={{ user.company_id.id }}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt=\"user.company_id.name\"/>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
+"                                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
+"                                        <div>\n"
+"                                            Estimado <t t-out=\"object.photocheck_supervisor_id.user_id.partner_id.name\"/><br/><br/>\n"
+"                                            Este correo electrónico es para informarle de que su fotocheck ha sido <strong>realizado </strong><br/><br/>\n"
+"                                            <a t-att-href=\"object.get_photocheck_url()\">Ir a Photocheck</a><br/><br/>\n"
+"                                            <strong>Detalles del Photocheck:</strong><br/>\n"
+"                                            <strong>Código: </strong><t t-out=\"object.name\"/><br/>\n"
+"                                            <strong>DNI: </strong><t t-out=\"object.dni\"/><br/>\n"
+"                                            <strong>Nombre: </strong><t t-out=\"object.first_name\"/><br/>\n"
+"                                            <strong>Apellidos: </strong><t t-out=\"object.last_name\"/><br/><br/>\n"
+"                                            Su solicitud de fotocheck ha sido realizada.\n"
+"                                            <br/><br/>\n"
+"                                            Si tiene alguna pregunta, no dude en ponerse en contacto con nosotros.\n"
+"                                            <br/><br/>\n"
+"                                            Saludos cordiales,\n"
+"                                            <t t-if=\"user.signature\">\n"
+"                                                <br/>\n"
+"                                                <t t-out=\"user.signature or ''\">--<br/>Mitchell Admin</t>\n"
+"                                            </t>\n"
+"                                        </div>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td style=\"text-align:center;\">\n"
+"                                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"middle\" align=\"left\">\n"
+"                                        <t t-out=\"user.company_id.name or ''\">Marketing Alterno Peru</t>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
+"                                        <t t-out=\"user.company_id.phone or ''\">+1 650-123-4567</t>\n"
+"                                        <t t-if=\"user.company_id.email\">\n"
+"                                            | <a t-att-href=\"'mailto:%s' % user.company_id.email\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.email or ''\">info@yourcompany.com</a>\n"
+"                                        </t>\n"
+"                                        <t t-if=\"user.company_id.website\">\n"
+"                                            | <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.website or ''\">https://www.marketing-alterno.com</a>\n"
+"                                        </t>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                    </tbody>\n"
+"                    </table>\n"
+"                    </td></tr>\n"
+"                    <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
+"                        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
+"                        <tr><td style=\"text-align: center; font-size: 13px;\">\n"
+"                            Powered by <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none;color: #875A7B;\" target=\"_blank\">Marketing Alterno Peru</a>\n"
+"                        </td></tr>\n"
+"                        </table>\n"
+"                    </td></tr>\n"
+"                </table>\n"
+"            "
+
+#. module: mkt_photocheck
+#: model:mail.template,body_html:mkt_photocheck.mail_template_photocheck_refused
+msgid ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\">\n"
+"                    <tr><td align=\"center\">\n"
+"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: white; color: #454748; border-collapse:separate;\">\n"
+"                    <tbody>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"middle\">\n"
+"                                        <span style=\"font-size: 20px; font-weight: bold;\">\n"
+"                                            <span>Photocheck refused</span>\n"
+"                                        </span>\n"
+"                                    </td><td valign=\"middle\" align=\"right\">\n"
+"                                        <img t-attf-src=\"/logo.png?company={{ user.company_id.id }}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt=\"user.company_id.name\"/>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
+"                                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
+"                                        <div>\n"
+"                                            Dear <t t-out=\"object.photocheck_supervisor_id.user_id.partner_id.name\"/><br/><br/>\n"
+"                                            This email is to inform you that the status of your photocheck has changed to: <strong>Refused </strong><br/><br/>\n"
+"                                            <a t-att-href=\"object.get_photocheck_url()\">Ir a Photocheck</a><br/><br/>\n"
+"                                            <strong>Photocheck details:</strong><br/>\n"
+"                                            <strong>Name: </strong><t t-out=\"object.name\"/><br/>\n"
+"                                            <strong>DNI: </strong><t t-out=\"object.dni\"/><br/>\n"
+"                                            <strong>First Name: </strong><t t-out=\"object.first_name\"/><br/>\n"
+"                                            <strong>Last Name: </strong><t t-out=\"object.last_name\"/><br/><br/>\n"
+"                                            We regret to inform you that your photocheck request has been refused.\n"
+"                                            <br/><br/>\n"
+"                                            If you have any questions, please don't hesitate to contact us.\n"
+"                                            <br/><br/>\n"
+"                                            Best regards,\n"
+"                                            <t t-if=\"user.signature\">\n"
+"                                                <br/>\n"
+"                                                <t t-out=\"user.signature or ''\">--<br/>Mitchell Admin</t>\n"
+"                                            </t>\n"
+"                                        </div>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td style=\"text-align:center;\">\n"
+"                                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"middle\" align=\"left\">\n"
+"                                        <t t-out=\"user.company_id.name or ''\">Marketing Alterno Peru</t>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
+"                                        <t t-out=\"user.company_id.phone or ''\">+1 650-123-4567</t>\n"
+"                                        <t t-if=\"user.company_id.email\">\n"
+"                                            | <a t-att-href=\"'mailto:%s' % user.company_id.email\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.email or ''\">info@yourcompany.com</a>\n"
+"                                        </t>\n"
+"                                        <t t-if=\"user.company_id.website\">\n"
+"                                            | <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.website or ''\">https://www.marketing-alterno.com</a>\n"
+"                                        </t>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                    </tbody>\n"
+"                    </table>\n"
+"                    </td></tr>\n"
+"                    <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
+"                        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
+"                        <tr><td style=\"text-align: center; font-size: 13px;\">\n"
+"                            Powered by <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none;color: #875A7B;\" target=\"_blank\">Marketing Alterno Peru</a>\n"
+"                        </td></tr>\n"
+"                        </table>\n"
+"                    </td></tr>\n"
+"                </table>\n"
+"            "
+msgstr ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\">\n"
+"                    <tr><td align=\"center\">\n"
+"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: white; color: #454748; border-collapse:separate;\">\n"
+"                    <tbody>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"middle\">\n"
+"                                        <span style=\"font-size: 20px; font-weight: bold;\">\n"
+"                                            <span>Fotocheck rechazado</span>\n"
+"                                        </span>\n"
+"                                    </td><td valign=\"middle\" align=\"right\">\n"
+"                                        <img t-attf-src=\"/logo.png?company={{ user.company_id.id }}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt=\"user.company_id.name\"/>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
+"                                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
+"                                        <div>\n"
+"                                            Estimado <t t-out=\"object.photocheck_supervisor_id.user_id.partner_id.name\"/><br/><br/>\n"
+"                                            Este correo electrónico es para informarle que el estado de su fotocheck ha cambiado a: <strong>Denegado </strong><br/><br/>\n"
+"                                            <a t-att-href=\"object.get_photocheck_url()\">Ir a Photocheck</a><br/><br/>\n"
+"                                            <strong>Detalles del Photocheck:</strong><br/>\n"
+"                                            <strong>Código: </strong><t t-out=\"object.name\"/><br/>\n"
+"                                            <strong>DNI: </strong><t t-out=\"object.dni\"/><br/>\n"
+"                                            <strong>Nombre: </strong><t t-out=\"object.first_name\"/><br/>\n"
+"                                            <strong>Apellidos: </strong><t t-out=\"object.last_name\"/><br/><br/>\n"
+"                                            Lamentamos comunicarle que su solicitud de fotocheck ha sido denegada.\n"
+"                                            <br/><br/>\n"
+"                                            Si tiene alguna pregunta, no dude en ponerse en contacto con nosotros.\n"
+"                                            <br/><br/>\n"
+"                                            Saludos cordiales,\n"
+"                                            <t t-if=\"user.signature\">\n"
+"                                                <br/>\n"
+"                                                <t t-out=\"user.signature or ''\">--<br/>Mitchell Admin</t>\n"
+"                                            </t>\n"
+"                                        </div>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td style=\"text-align:center;\">\n"
+"                                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"middle\" align=\"left\">\n"
+"                                        <t t-out=\"user.company_id.name or ''\">Marketing Alterno Peru</t>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
+"                                        <t t-out=\"user.company_id.phone or ''\">+1 650-123-4567</t>\n"
+"                                        <t t-if=\"user.company_id.email\">\n"
+"                                            | <a t-att-href=\"'mailto:%s' % user.company_id.email\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.email or ''\">info@yourcompany.com</a>\n"
+"                                        </t>\n"
+"                                        <t t-if=\"user.company_id.website\">\n"
+"                                            | <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.website or ''\">https://www.marketing-alterno.com</a>\n"
+"                                        </t>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                    </tbody>\n"
+"                    </table>\n"
+"                    </td></tr>\n"
+"                    <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
+"                        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
+"                        <tr><td style=\"text-align: center; font-size: 13px;\">\n"
+"                            Powered by <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none;color: #875A7B;\" target=\"_blank\">Marketing Alterno Peru</a>\n"
+"                        </td></tr>\n"
+"                        </table>\n"
+"                    </td></tr>\n"
+"                </table>\n"
+"            "
+
+#. module: mkt_photocheck
+#: model:mail.template,body_html:mkt_photocheck.mail_template_photocheck_status_change
+msgid ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\">\n"
+"                    <tr><td align=\"center\">\n"
+"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: white; color: #454748; border-collapse:separate;\">\n"
+"                    <tbody>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"middle\">\n"
+"                                        <span style=\"font-size: 20px; font-weight: bold;\">\n"
+"                                            <span>Photocheck requested</span>\n"
+"                                        </span>\n"
+"                                    </td><td valign=\"middle\" align=\"right\">\n"
+"                                        <img t-attf-src=\"/logo.png?company={{ user.company_id.id }}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt=\"user.company_id.name\"/>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
+"                                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
+"                                        <div>\n"
+"                                            Dear User,<br/><br/>\n"
+"                                            <t t-if=\"object.state == 'to_do'\">\n"
+"                                                This email is to inform you that the status of your photocheck has changed to: <strong>To Do </strong><br/><br/>\n"
+"                                                <a t-att-href=\"object.get_photocheck_url()\">Ir a Photocheck</a><br/><br/>\n"
+"                                                <strong>Photocheck details:</strong><br/>\n"
+"                                                <strong>Name: </strong><t t-out=\"object.name\"/><br/>\n"
+"                                                <strong>DNI: </strong><t t-out=\"object.dni\"/><br/>\n"
+"                                                <strong>First Name: </strong><t t-out=\"object.first_name\"/><br/>\n"
+"                                                <strong>Last Name: </strong><t t-out=\"object.last_name\"/><br/><br/>\n"
+"                                                Your photocheck request has been received and is now in process.\n"
+"                                            </t>\n"
+"                                            <br/><br/>\n"
+"                                            If you have any questions, please don't hesitate to contact us.\n"
+"                                            <br/><br/>\n"
+"                                            Best regards,\n"
+"                                            <t t-if=\"user.signature\">\n"
+"                                                <br/>\n"
+"                                                <t t-out=\"user.signature or ''\">--<br/>Mitchell Admin</t>\n"
+"                                            </t>\n"
+"                                        </div>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td style=\"text-align:center;\">\n"
+"                                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"middle\" align=\"left\">\n"
+"                                        <t t-out=\"user.company_id.name or ''\">Marketing Alterno Peru</t>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
+"                                        <t t-out=\"user.company_id.phone or ''\">+1 650-123-4567</t>\n"
+"                                        <t t-if=\"user.company_id.email\">\n"
+"                                            | <a t-att-href=\"'mailto:%s' % user.company_id.email\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.email or ''\">info@yourcompany.com</a>\n"
+"                                        </t>\n"
+"                                        <t t-if=\"user.company_id.website\">\n"
+"                                            | <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.website or ''\">https://www.marketing-alterno.com</a>\n"
+"                                        </t>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                    </tbody>\n"
+"                    </table>\n"
+"                    </td></tr>\n"
+"                    <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
+"                        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
+"                        <tr><td style=\"text-align: center; font-size: 13px;\">\n"
+"                            Powered by <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none;color: #875A7B;\" target=\"_blank\">Marketing Alterno Peru</a>\n"
+"                        </td></tr>\n"
+"                        </table>\n"
+"                    </td></tr>\n"
+"                </table>\n"
+"            "
+msgstr ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\">\n"
+"                    <tr><td align=\"center\">\n"
+"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: white; color: #454748; border-collapse:separate;\">\n"
+"                    <tbody>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"middle\">\n"
+"                                        <span style=\"font-size: 20px; font-weight: bold;\">\n"
+"                                            <span>Fotocheck solicitado</span>\n"
+"                                        </span>\n"
+"                                    </td><td valign=\"middle\" align=\"right\">\n"
+"                                        <img t-attf-src=\"/logo.png?company={{ user.company_id.id }}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt=\"user.company_id.name\"/>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
+"                                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
+"                                        <div>\n"
+"                                            Estimado usuario,<br/><br/>\n"
+"                                            <t t-if=\"object.state == 'to_do'\">\n"
+"                                                Este correo es para informarle que el estado de su fotocheck ha cambiado a: <strong>Por hacer </strong><br/><br/>\n"
+"                                                <a t-att-href=\"object.get_photocheck_url()\">Ir a Photocheck</a><br/><br/>\n"
+"                                                <strong>Detalles del Photocheck:</strong><br/>\n"
+"                                                <strong>Código: </strong><t t-out=\"object.name\"/><br/>\n"
+"                                                <strong>DNI: </strong><t t-out=\"object.dni\"/><br/>\n"
+"                                                <strong>Nombre: </strong><t t-out=\"object.first_name\"/><br/>\n"
+"                                                <strong>Apellidos: </strong><t t-out=\"object.last_name\"/><br/><br/>\n"
+"                                                Su solicitud de fotocheck ha sido recibida y se encuentra en proceso.\n"
+"                                            </t>\n"
+"                                            <br/><br/>\n"
+"                                            Si tiene alguna pregunta, no dude en ponerse en contacto con nosotros.\n"
+"                                            <br/><br/>\n"
+"                                            Saludos cordiales,\n"
+"                                            <t t-if=\"user.signature\">\n"
+"                                                <br/>\n"
+"                                                <t t-out=\"user.signature or ''\">--<br/>Mitchell Admin</t>\n"
+"                                            </t>\n"
+"                                        </div>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td style=\"text-align:center;\">\n"
+"                                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"middle\" align=\"left\">\n"
+"                                        <t t-out=\"user.company_id.name or ''\">Marketing Alterno Peru</t>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
+"                                        <t t-out=\"user.company_id.phone or ''\">+1 650-123-4567</t>\n"
+"                                        <t t-if=\"user.company_id.email\">\n"
+"                                            | <a t-att-href=\"'mailto:%s' % user.company_id.email\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.email or ''\">info@yourcompany.com</a>\n"
+"                                        </t>\n"
+"                                        <t t-if=\"user.company_id.website\">\n"
+"                                            | <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.website or ''\">https://www.marketing-alterno.com</a>\n"
+"                                        </t>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                    </tbody>\n"
+"                    </table>\n"
+"                    </td></tr>\n"
+"                    <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
+"                        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
+"                        <tr><td style=\"text-align: center; font-size: 13px;\">\n"
+"                            Powered by <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none;color: #875A7B;\" target=\"_blank\">Marketing Alterno Peru</a>\n"
+"                        </td></tr>\n"
+"                        </table>\n"
+"                    </td></tr>\n"
+"                </table>\n"
+"            "
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "ANALYST"
+msgstr "ANALISTA"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__message_needaction
+msgid "Action Needed"
+msgstr "Medidas necesarias"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Actividad Decoración de excepción"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__activity_state
+msgid "Activity State"
+msgstr "Estado de actividad"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Icono de tipo de actividad"
+
+#. module: mkt_photocheck
+#: model:res.groups,name:mkt_photocheck.photocheck_admin
+msgid "Admin"
+msgstr "Administrador"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
+msgid "Archived"
+msgstr "Archivado"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "Are you sure you want to submit the form?"
+msgstr "¿Está seguro de que desea enviar el formulario?"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__message_attachment_count
+msgid "Attachment Count"
+msgstr "Recuento de adjuntos"
+
+#. module: mkt_photocheck
+#: model:res.groups,name:mkt_photocheck.photocheck_boss
+msgid "Boss"
+msgstr "Jefe"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__brand_ids
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__brand_ids
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
+msgid "Brand"
+msgstr "Marca"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__brand_counter
+msgid "Brand Counter"
+msgstr "Marca Contador"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__photocheck_brand_group_id
+msgid "Brand Group"
+msgstr "Grupo de marcas"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__brand_group_ids
+msgid "Brand Groups"
+msgstr "Grupos de marcas"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
+msgid "Brands"
+msgstr "Marcas"
+
+#. module: mkt_photocheck
+#: model:ir.actions.act_window,name:mkt_photocheck.view_photocheck_brand_group_action
+msgid "Brands Group"
+msgstr "Grupo de marcas"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
+msgid "Buscar por DNI, Nombre o Apellido"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "CASTRO CASTRO"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "Click here to upload an image"
+msgstr "Haga clic aquí para cargar una imagen"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
+msgid "Code"
+msgstr "Código"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__complete_name
+msgid "Complete Name"
+msgstr "Nombre completo"
+
+#. module: mkt_photocheck
+#: model:ir.ui.menu,name:mkt_photocheck.configuration_menu
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "Confirmation"
+msgstr "Confirmación"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__create_uid
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__create_uid
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job__create_uid
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__create_date
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__create_date
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job__create_date
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__create_date
+msgid "Created on"
+msgstr "Creada el"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "Crop your photo"
+msgstr "Recorta tu foto"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__dni
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "DNI"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:res.groups,name:mkt_photocheck.photocheck_designer
+msgid "Designer"
+msgstr "Diseñador"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__display_name
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__display_name
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job__display_name
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__display_name
+msgid "Display Name"
+msgstr "Mostrar nombre"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields.selection,name:mkt_photocheck.selection__photocheck__state__done
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_form
+msgid "Done"
+msgstr "Hecho"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__done_date
+msgid "Done Date"
+msgstr "Fecha de realización"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields.selection,name:mkt_photocheck.selection__photocheck__state__draft
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields.selection,name:mkt_photocheck.selection__photocheck__state_duplicate__duplicate
+msgid "Duplicate"
+msgstr "Duplicado"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "Enter personnel details."
+msgstr "Introduzca los datos del personal."
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__first_name
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
+msgid "First Name"
+msgstr "Nombre"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,help:mkt_photocheck.field_photocheck__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
+msgid "Group By"
+msgstr "Grupo Por"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__has_message
+msgid "Has Message"
+msgstr "Tiene un mensaje"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__id
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__id
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job__id
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__id
+msgid "ID"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,help:mkt_photocheck.field_photocheck__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,help:mkt_photocheck.field_photocheck__message_needaction
+#: model:ir.model.fields,help:mkt_photocheck.field_photocheck__message_unread
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,help:mkt_photocheck.field_photocheck__message_has_error
+#: model:ir.model.fields,help:mkt_photocheck.field_photocheck__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__initial_name
+msgid "Initial Name"
+msgstr "Nombre inicial"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_form
+msgid "Internal Notes"
+msgstr "Notas internas"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__job_id
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job__name
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
+msgid "Job"
+msgstr "Cargo"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck____last_update
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group____last_update
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job____last_update
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__last_name
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
+msgid "Last Name"
+msgstr "Apellido"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__write_uid
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__write_uid
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job__write_uid
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__write_date
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__write_date
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job__write_date
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "MARIA"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "MARKETING"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__name
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__name
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__name
+msgid "Name"
+msgstr "Código"
+
+#. module: mkt_photocheck
+#: code:addons/mkt_photocheck/models/photocheck.py:0
+#: code:addons/mkt_photocheck/models/photocheck.py:0
+#: code:addons/mkt_photocheck/models/photocheck.py:0
+#: code:addons/mkt_photocheck/models/photocheck.py:0
+#: model:ir.model.fields.selection,name:mkt_photocheck.selection__photocheck__state_duplicate__new
+#, python-format
+msgid "New"
+msgstr "Nuevo"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__note
+msgid "Note"
+msgstr "Nota"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,help:mkt_photocheck.field_photocheck__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,help:mkt_photocheck.field_photocheck__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,help:mkt_photocheck.field_photocheck__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__photo
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__photo_raw
+msgid "Photo"
+msgstr "Foto"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__photo_name
+msgid "Photo Name"
+msgstr "Nombre de la foto"
+
+#. module: mkt_photocheck
+#: model:ir.actions.act_window,name:mkt_photocheck.view_photocheck_action
+#: model:ir.actions.report,name:mkt_photocheck.report_photocheck_action
+#: model:ir.model,name:mkt_photocheck.model_photocheck
+#: model:ir.module.category,name:mkt_photocheck.module_category_photocheck
+#: model:ir.ui.menu,name:mkt_photocheck.photocheck_menu
+#: model:ir.ui.menu,name:mkt_photocheck.photocheck_root
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "Photocheck"
+msgstr "Fotocheck"
+
+#. module: mkt_photocheck
+#: model:ir.model,name:mkt_photocheck.model_photocheck_brand_group
+#: model:ir.ui.menu,name:mkt_photocheck.photocheck_brand_group_menu
+msgid "Photocheck Brand Group"
+msgstr "Grupo de marcas Fotocheck"
+
+#. module: mkt_photocheck
+#: model:mail.template,name:mkt_photocheck.mail_template_photocheck_done
+msgid "Photocheck Done"
+msgstr "Fotocheck Realizado"
+
+#. module: mkt_photocheck
+#: model:ir.actions.act_window,name:mkt_photocheck.view_photocheck_job_action
+#: model:ir.model,name:mkt_photocheck.model_photocheck_job
+#: model:ir.ui.menu,name:mkt_photocheck.photocheck_job
+msgid "Photocheck Job"
+msgstr "Fotocheck Cargo"
+
+#. module: mkt_photocheck
+#: model:mail.template,name:mkt_photocheck.mail_template_photocheck_refused
+msgid "Photocheck Refused"
+msgstr "Fotocheck Rechazado"
+
+#. module: mkt_photocheck
+#: model:mail.template,name:mkt_photocheck.mail_template_photocheck_status_change
+msgid "Photocheck Status Change"
+msgstr "Cambio de estado del fotocheck"
+
+#. module: mkt_photocheck
+#: model:ir.actions.act_window,name:mkt_photocheck.view_photocheck_supervisor_action
+#: model:ir.model,name:mkt_photocheck.model_photocheck_supervisor
+#: model:ir.ui.menu,name:mkt_photocheck.photocheck_supervisor_menu
+msgid "Photocheck Supervisor"
+msgstr "Fotocheck Supervisor"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_form
+msgid "Ready"
+msgstr "Listo"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields.selection,name:mkt_photocheck.selection__photocheck__state__refused
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_form
+msgid "Refused"
+msgstr "Rechazado"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__refused_date
+msgid "Refused Date"
+msgstr "Fecha de rechazo"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__request_date
+msgid "Request Date"
+msgstr "Fecha de solicitud"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.photocheck_requested_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.photocheck_requested
+msgid "Request Sent!"
+msgstr "Solicitud enviada!"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__responsible_id
+msgid "Responsible"
+msgstr "Responsable"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__activity_user_id
+msgid "Responsible User"
+msgstr "Usuario responsable"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
+msgid "Show inactive requirements"
+msgstr "Mostrar requisitos inactivos"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__state
+msgid "State"
+msgstr "Estado"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__state_duplicate
+msgid "State Duplicate"
+msgstr "Nuevo/Duplicado"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__email_status_change_send_on
+msgid "Status Change Email Sent On"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,help:mkt_photocheck.field_photocheck__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "Submit"
+msgstr "Enviar"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__photocheck_supervisor_id
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__user_id
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
+msgid "Supervisor"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_kanban
+msgid "Supervisor:"
+msgstr ""
+
+#. module: mkt_photocheck
+#: code:addons/mkt_photocheck/models/photocheck.py:0
+#, python-format
+msgid ""
+"The email to communicate the photocheck status change to %s was sent to %s "
+"at %s."
+msgstr ""
+"Este correo electrónico es para comunicar el cambio de estado del fotocheck "
+"a %s se envió a %s a %s."
+
+#. module: mkt_photocheck
+#: code:addons/mkt_photocheck/models/photocheck.py:0
+#, python-format
+msgid ""
+"The email to communicate the photocheck was done to %s was sent to %s(%s) at"
+" %s."
+msgstr ""
+"Este correo electrónico es para comunicar que el fotocheck fue  %s fue "
+"enviado a %s(%s) a %s."
+
+#. module: mkt_photocheck
+#: code:addons/mkt_photocheck/models/photocheck.py:0
+#, python-format
+msgid ""
+"The email to communicate the photocheck was refused to %s was sent to %s(%s)"
+" at %s."
+msgstr ""
+"Este correo electrónico es para comunicar que el fotocheck fue %s fue "
+"enviado a %s(%s) a %s."
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_form
+msgid "This note is only for internal purposes."
+msgstr "Esta nota es sólo para fines internos."
+
+#. module: mkt_photocheck
+#: model:ir.model.fields.selection,name:mkt_photocheck.selection__photocheck__state__to_do
+msgid "To Do"
+msgstr "Por hacer"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "Trim"
+msgstr "Recortar"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,help:mkt_photocheck.field_photocheck__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__user_id
+#: model:res.groups,name:mkt_photocheck.photocheck_user
+msgid "User"
+msgstr "Usuario"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,help:mkt_photocheck.field_photocheck__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model:mail.template,subject:mkt_photocheck.mail_template_photocheck_status_change
+msgid "Your Photocheck request has been received and is now in process"
+msgstr "Su solicitud de fotocheck ha sido recibida y está en proceso"
+
+#. module: mkt_photocheck
+#: model:mail.template,subject:mkt_photocheck.mail_template_photocheck_done
+msgid "Your Photocheck was Done"
+msgstr "Su fotocheck ha sido realizado"
+
+#. module: mkt_photocheck
+#: model:mail.template,subject:mkt_photocheck.mail_template_photocheck_refused
+msgid "Your Photocheck was refused"
+msgstr "Su fotocheck ha sido rechazado"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.photocheck_requested_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.photocheck_requested
+msgid ""
+"Your photocheck has been sent successfully. Thank you for filling in the "
+"form."
+msgstr ""
+"Su fotocheck se ha enviado correctamente. Gracias por rellenar el "
+"formulario."
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "first_name"
+msgstr "nombre"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "last_name"
+msgstr "apellido"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_form
+msgid "return"
+msgstr "Regresar"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.report_photocheck
+msgid "string"
+msgstr ""
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "www.marketing-alterno.com"
+msgstr ""

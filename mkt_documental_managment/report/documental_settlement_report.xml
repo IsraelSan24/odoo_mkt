@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_documental_settlement_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=o.responsible_id.partner_id.lang)"/>
+            <html>
+                <link rel="stylesheet" type="text/css" href="/mkt_documental_managment/static/src/css/documental_settlement_styles.css"/>
+                <div class="row">
+                    <div class="col header_left">   
+                        <img t-if="o.env.user.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.env.user.company_id.logo)" style="max-height: 100px; max-width: 200px;"/>
+                    </div>
+                    <div class="col header_right">
+                        <div class="header_right_inside_top"><span t-esc="o.name"/></div>
+                        <div class="header_right_inside_middle"><span t-esc="o.petitioner_signed_on"/></div>
+                        <div class="header_right_inside_bottom"><span t-esc="o.requirement_id.name"/></div>
+                    </div>
+                </div>
+
+                <br/>
+
+                <div class="row">
+                    <div class="col body_upper_left">
+                        <div class="row">
+                            <div class="col body_upper_left_inside_left">
+                                <span class="groupfont">RESPONSIBLE</span><br/>
+                                <span class="groupfont">DNI o RUC</span><br/>
+                                <span class="groupfont">MONEDA</span>
+                            </div>
+                            <div class="col body_upper_left_inside_right">
+                                : <span class="groupfont" t-esc="o.responsible_id.partner_id.name"/><br/>
+                                : <span class="groupfont" t-esc="o.dni"/><br/>
+                                : <span class="groupfont" t-esc="o.amount_currency_type"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col body_upper_right">
+                        <div class="row">
+                            <div class="col body_upper_right_inside_left">
+                                <span class="groupfont">BUDGET</span><br/>
+                                <span class="groupfont">COST CENTER</span><br/>
+                                <span class="groupfont">MONTO REQUERIDO</span><br/>
+                                <span class="groupfont">BALANCE</span>
+                            </div>
+                            <div class="col body_upper_right_inside_right">
+                                : <span class="groupfont" t-esc="o.budget_id.name"/><br/>
+                                : <span class="groupfont" t-esc="o.cost_center_id.code"/><br/>
+                                : <span class="groupfont" t-esc="o.value" t-options="{'widget':'float','precision':2}"/><br/>
+                                : <t t-if="o.balance">
+                                    <span class="groupfont" t-esc="o.balance" t-options="{'widget':'float', 'precision':2}"/>
+                                </t>
+                                <t t-else="">
+                                    <span class="groupfont">0.00</span>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br/>
+
+                <div class="page">
+                    <div class="row table_content">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-left groupfont">DATE</th>
+                                    <th class="text-left groupfont">DOCUMENT TYPE</th>
+                                    <th class="text-left groupfont">DOCUMENT</th>
+                                    <th class="text-left groupfont">REASON</th>
+                                    <t t-if="o.total_detraction > 0">
+                                        <th class="text-left groupfont">DETRACTION</th>
+                                    </t>
+                                    <t t-if="o.total_retention > 0">
+                                        <th class="text-left groupfont">RETENTION</th>
+                                    </t>
+                                    <th class="text-left groupfont">AMOUNT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="total_amount" t-value="0"/>
+                                <t t-foreach="o.settlement_detail_ids" t-as="line">
+                                    <tr>
+                                        <td class="text-left"><span class="groupfont" t-esc="line.date"/></td>
+                                        <td class="text-left"><span class="groupfont" t-esc="line.document_type.name"/></td>
+                                        <td class="text-left"><span class="groupfont" t-esc="line.document"/></td>
+                                        <td class="text-left"><span class="groupfont" t-esc="line.reason"/></td>
+                                        <t t-if="o.total_detraction > 0">
+                                            <td class="text-left"><span class="groupfont" t-esc="line.detraction_amount" t-options="{'widget':'float','precision':2}"/></td>
+                                        </t>
+                                        <t t-if="o.total_retention > 0">
+                                            <td class="text-left"><span class="groupfont" t-esc="line.retention_amount" t-options="{'widget':'float','precision':2}"/></td>
+                                        </t>
+                                        <t t-if="not o.total_retention and not o.total_detraction">
+                                        </t>
+                                        <td class="text-left"><span class="groupfont" t-esc="line.amount" t-options="{'widget':'float','precision':2}"/></td>
+                                    </tr>
+                                    <t t-set="total_amount" t-value="total_amount + line.amount"/>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <t t-if="not o.total_retention and not o.total_detraction">
+                                        <td colspan="4">Total</td>
+                                        <td colspan="1" class="text-left"><span class="groupfont" t-esc="total_amount" t-options="{'widget':'float','precision':2}"/></td>
+                                    </t>
+                                    <t t-else="">
+                                        <td colspan="5">Total</td>
+                                        <td colspan="1" class="text-left"><span class="groupfont" t-esc="total_amount" t-options="{'widget':'float','precision':2}"/></td>
+                                    </t>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="row">
+                        <div class="col-6 text-center" style="margin-top: 15px;">
+                            <t t-if="o.petitioner_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.petitioner_signature)"/></t>
+                            <div>Petitioner</div>
+                        </div>
+                        <div class="col-6 text-center" style="margin-top: 15px;">
+                            <t t-if="o.boss_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.boss_signature)"/></t>
+                            <div>Executive</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <t t-if="o.petitioner_signature">
+                            <t t-if="o.budget_executive_signature">
+                                <div class="col-4 text-center" style="margin-top:15px;">
+                                    <t t-if="o.intern_control_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.intern_control_signature)"/></t>
+                                    <div>Intern Control</div>
+                                </div>
+                                <div class="col-4 text-center" style="margin-top:15px;">
+                                    <t t-if="o.budget_executive_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.budget_executive_signature)"/></t>
+                                    <div>Gerency</div>
+                                </div>
+                                <div class="col-4 text-center" style="margin-top:15px;">
+                                    <t t-if="o.administration_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.administration_signature)"/></t>
+                                    <div>Administration</div>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="col-6 text-center" style="margin-top:15px;">
+                                    <t t-if="o.intern_control_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.intern_control_signature)"/></t>
+                                    <div>Intern Control</div>
+                                </div>
+                                <div class="col-6 text-center" style="margin-top:15px;">
+                                    <t t-if="o.administration_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.administration_signature)"/></t>
+                                    <div>Administration</div>
+                                </div>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <t t-if="o.budget_executive_signature">
+                                <div class="col-4 text-center" style="margin-top:15px;">
+                                    <div>Intern Control</div>
+                                </div>
+                                <div class="col-4 text-center" style="margin-top:15px;">
+                                    <div>Gerency</div>
+                                </div>
+                                <div class="col-4 text-center" style="margin-top:15px;">
+                                    <div>Administration</div>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="col-6 text-center" style="margin-top:15px;">
+                                    <div>Intern Control</div>
+                                </div>
+                                <div class="col-6 text-center" style="margin-top:15px;">
+                                    <div>Administration</div>
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="text-center" style="border-top: 1px solid black;">
+                        <div class="text-muted">
+                            Page: <span class="page"/> / <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </html>
+        </t>
+    </template>
+
+    <template id="report_settlement">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="mkt_documental_managment.report_documental_settlement_document" t-lang="o.responsible_id.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

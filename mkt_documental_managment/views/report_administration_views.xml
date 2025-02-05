@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="view_report_administration_tree" model="ir.ui.view">
+        <field name="name">report.administration.tree</field>
+        <field name="model">report.administration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="requirement_id" optional="hide"/>
+                <field name="rq_budget_id" optional="show"/>
+                <field name="rq_cost_center_id" optional="show"/>
+                <field name="rq_paid_to" optional="show"/>
+                <field name="rq_concept" optional="hide"/>
+                <field name="rq_payment_date" optional="show"/>
+                <field name="rq_transfer_number"/>
+                <field name="rq_currency" optional="show"/>
+                <field name="rq_import" optional="show"/>
+                <field name="rq_to_pay_supplier" optional="show"/>
+                <field name="rq_detraction_amount" optional="hide"/>
+                <field name="rq_payroll_id" optional="show"/>
+                <field name="rq_st_return_employee" optional="show"/>
+                <field name="rq_st_return_mkt" optional="show"/>
+                <field name="rq_state" widget="badge" optional="show"
+                    decoration-muted="rq_state == 'draft'"
+                    decoration-warning="rq_state in ('waiting_boss_validation','waiting_intern_control_validation','waiting_administration_validation')"
+                    decoration-info="rq_state == 'to_settle'"
+                    decoration-success="rq_state == 'settled'"
+                    decoration-danger="rq_state == 'refused'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_report_administration_restricted_form" model="ir.ui.view">
+        <field name="name">report.administration.restricted.form</field>
+        <field name="model">report.administration</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="rq_state" invisible="True"/>
+                    <widget name="web_ribbon" title="Settled" bg_color="bg-success" attrs="{'invisible':[('rq_state','!=','settled')]}"/>
+                    <widget name="web_ribbon" title="Refused" bg_color="bg-danger" attrs="{'invisible':[('rq_state','!=','refused')]}"/>
+                    <widget name="web_ribbon" title="To Validate" bg_color="bg-warning"
+                        attrs="{'invisible':[('rq_state','not in',('waiting_boss_validation','waiting_intern_control_validation','waiting_administration_validation'))]}"/>
+                    <group>
+                        <group string="Requirement Data">
+                            <h1><field name="requirement_id" readonly="True"/></h1>
+                            <field name="rq_transfer_number" readonly="True"/>
+                            <field name="rq_payment_date" readonly="True"/>
+                            <field name="rq_budget_id" readonly="True"/>
+                            <field name="rq_cost_center_id" readonly="True"/>
+                            <field name="rq_paid_to" readonly="True"/>
+                            <field name="rq_concept" readonly="True"/>
+                            <field name="rq_currency" readonly="True"/>
+                            <field name="rq_import" readonly="True"/>
+                            <field name="rq_to_pay_supplier"/>
+                            <field name="rq_detraction_amount" readonly="True"/>
+                            <field name="rq_payroll_id" readonly="True"/>
+                        </group>
+                        <group string="Returns">
+                            <field name="rq_st_return_employee"/>
+                            <field name="rq_st_return_mkt"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Settlement">
+                            <field name="transfer_line_ids">
+                                <tree create="0" delete="0">
+                                    <field name="date"/>
+                                    <field name="settlement_name"/>
+                                    <field name="document_type"/>
+                                    <field name="document"/>
+                                    <field name="document_filename" invisible="True"/>
+                                    <field name="document_file" widget="binary" filename="document_filename"/>
+                                    <field name="reason"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_report_administration_search" model="ir.ui.view">
+        <field name="name">report.administration.search</field>
+        <field name="model">report.administration</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="requirement_id"/>
+                <field name="rq_transfer_number"/>
+                <field name="rq_payment_date"/>
+                <field name="rq_budget_id"/>
+                <field name="rq_cost_center_id"/>
+                <field name="rq_paid_to"/>
+                <field name="rq_concept"/>
+                <field name="rq_currency"/>
+                <field name="rq_import"/>
+                <field name="rq_payroll_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_report_administration" model="ir.actions.act_window">
+        <field name="name">Tranfers</field>
+        <field name="domain">[('rq_state', 'in', ('to_settle','settled'))]</field>
+        <field name="res_model">report.administration</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="module_category_stock_sist" model="ir.module.category">
+        <field name="name">Stock Sistemas</field>
+    </record>
+
+    <record id="groups_stock_sist" model="res.groups">
+        <field name="name">Administrador</field>
+        <field name="category_id" ref="mkt_stock_sistemas.module_category_stock_sist"/>
+    </record>
+
+</odoo>

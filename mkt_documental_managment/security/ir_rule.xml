@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- REQUIREMENT -->
+    <record id="show_own_requirement_user_rule" model="ir.rule">
+        <field name="name">Show only own user requirement</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+        <field name="domain_force">[
+            '|','|','|',
+            ('create_uid','=',user.id),
+            ('employee_id.parent_id.user_id','=',user.id),
+            ('refund_user_id','=',user.id),
+            ('refund_employee_id.parent_id.user_id','=',user.id)
+        ]</field>
+        <!-- <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_requirement_user')),(4,ref('mkt_documental_managment.documental_requirement_boss'))]"/> -->
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_requirement_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="executive_requirement_rule" model="ir.rule">
+        <field name="name">Executive rule</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+        <field name="domain_force">[
+            '|','|','|','|',
+            ('create_uid','=',user.id),
+            ('budget_id.executive_id','=',user.id),
+            ('employee_id.parent_id.user_id','=',user.id),
+            ('employee_id.parent_id.parent_id.user_id','=',user.id),
+            ('refund_employee_id.parent_id.user_id','=',user.id),
+        ]</field>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_requirement_boss'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- <record id="show_budget_executive_requirement_rule" model="ir.rule"> -->
+    <record id="budget_responsible_requirement_rule" model="ir.rule">
+        <field name="name">Responsible requirement</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+        <field name="domain_force">[('budget_id.responsible_id','=',user.id)]</field>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_requirement_budget_executive'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="show_two_requirement_signatures_rule" model="ir.rule">
+        <field name="name">Show two signatures in Requirement</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+        <!-- <field name="domain_force">[('is_petitioner_signed','=',True),('is_boss_signed','=',True)]</field> -->
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_requirement_intern_control'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="administration_requirement_rule" model="ir.rule">
+        <field name="name">Show three signatures in Requirement</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_requirement_administration'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="show_all_requirement_admin_rule" model="ir.rule">
+        <field name="name">Show all requirement</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_requirement_admin'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="show_requirement_intern_control_only_read" model="ir.rule">
+        <field name="name">Show two signature for only read</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_requirement_intern_control_read'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- SETTLEMENT -->
+    <record id="show_own_settlement_user_rule" model="ir.rule">
+        <field name="name">Show only own user settlement</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_settlements"/>
+        <field name="domain_force">['|',('create_uid','=',user.id),('employee_id.parent_id.user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_settlement_user')),(4,ref('mkt_documental_managment.documental_settlement_boss'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="show_two_settlement_signature_rule" model="ir.rule">
+        <field name="name">Show two signatures in Settlement</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_settlements"/>
+        <field name="domain_force">[('is_boss_signed','=',True)]</field>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_settlement_intern_control'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="show_budget_executive_settlement_rule" model="ir.rule">
+        <field name="name">Show budget executive in settlement</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_settlements"/>
+        <field name="domain_force">[('budget_id.executive_id','=',user.id),('is_boss_signed','=',True)]</field>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_settlement_budget_executive'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="show_three_settlement_signature_rule" model="ir.rule">
+        <field name="name">Show three signatures in Settlement</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_settlements"/>
+        <!-- <field name="domain_force">[('is_intern_control_signed','=',True)]</field> -->
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_settlement_administration')),(4,ref('mkt_documental_managment.documental_settlement_accounting'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="show_all_settlement_admin_rule" model="ir.rule">
+        <field name="name">Show all settlement</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_settlements"/>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_settlement_admin'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="show_settlement_intern_control_only_read" model="ir.rule">
+        <field name="name">Show two signature for only read</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_settlements"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_settlement_intern_control_read'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- MOBILITY -->
+    <record id="show_own_mobility_user_rule" model="ir.rule">
+        <field name="name">Show only own user mobility</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_mobility_expediture"/>
+        <field name="domain_force">[('create_uid','=',user.id)]</field>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_mobility_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="show_own_mobility_boss_rule" model="ir.rule">
+        <field name="name">Show only own boss mobility</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_mobility_expediture"/>
+        <field name="domain_force">[
+            '|',
+            ('employee_id.parent_id.user_id','=',user.id),
+            ('employee_id.parent_id.parent_id.user_id','=',user.id),
+            ]
+        </field>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_mobility_boss'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="show_all_mobility_admin_rule" model="ir.rule">
+        <field name="name">Show all mobility</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_mobility_expediture"/>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_mobility_admin'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+</odoo>

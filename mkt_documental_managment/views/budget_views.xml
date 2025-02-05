@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_budget_tree" model="ir.ui.view">
+        <field name="name">budget.tree</field>
+        <field name="model">budget</field>
+        <field name="arch" type="xml">
+            <tree
+                decoration-muted="state == 'draft'"
+                decoration-success="state == 'active'"
+                decoration-warning="state == 'closed'"
+                decoration-info="state == 'locked'"
+                decoration-danger="state == 'canceled'">
+                <field name="create_date" optional="hide"/>
+                <field name="my_month_year" optional="show"/>
+                <field name="name"/>
+                <field name="partner_id" optional="show"/>
+                <field name="partner_brand_id" optional="show"/>
+                <field name="campaign_id" optional="show"/>
+                <field name="cost_center_id" optional="show"/>
+                <field name="class_id" optional="show"/>
+                <field name="class_id" optional="show"/>
+                <field name="max_amount" optional="show"/>
+                <field name="executive_id" widget="many2one_avatar" optional="show"/>
+                <field name="responsible_id" widget="many2one_avatar" optional="show"/>
+                <field name="responsible_revision" optional="hide"/>
+                <field name="state" widget="badge" optional="show"
+                    decoration-muted="state == 'draft'"
+                    decoration-success="state == 'active'"
+                    decoration-warning="state == 'closed'"
+                    decoration-info="state == 'locked'"
+                    decoration-danger="state == 'canceled'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_budget_form" model="ir.ui.view">
+        <field name="name">budget.form.view</field>
+        <field name="model">budget</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="draft,active,locked,closed,canceled" options="{'clickable': '1'}"
+                        groups="mkt_documental_managment.budget_control_administrator"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_settlement" icon="fa-exchange" string="Settlements"/>
+                    </div>
+                    <widget name="web_ribbon" title="Active" bg_color="bg-success" attrs="{'invisible':[('state','!=','ative')]}"/>
+                    <widget name="web_ribbon" title="Closed" bg_color="bg-warning" attrs="{'invisible':[('state','!=','closed')]}"/>
+                    <widget name="web_ribbon" title="Locked" bg_color="bg-info" attrs="{'invisible':[('state','!=','locked')]}"/>
+                    <widget name="web_ribbon" title="Canceled" bg_color="bg-danger" attrs="{'invisible':[('state','!=','canceled')]}"/>
+                    <group>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="create_date" readonly="True" invisible="True"/>
+                            <label for="month" string="Month &amp; Year"/>
+                            <div>
+                                <div class="o_address_format">
+                                    <field name="year" class="o_address_city"/>
+                                    <field name="month" class="o_address_city"/>
+                                </div>
+                            </div>
+                            <field name="my_month_year" invisible="True"/>
+                            <field name="year_month_id" invisible="True"/>
+                            <field name="cost_center_id" options="{'no_open':'1'}"/>
+                            <field name="partner_id" readonly="True" force_save="True" options="{'no_open':'1'}"/>
+                            <field name="partner_brand_id" options="{'no_open':'1'}"/>
+                            <field name="responsible_revision"/>
+                            <field name="amount_total"/>
+                        </group>
+                        <group>
+                            <field name="campaign_id" options="{'no_open':'1'}"/>
+                            <field name="class_id" options="{'no_open':'1'}"/>
+                            <field name="responsible_id" widget="many2one_avatar" options="{'no_open':'1'}"/>
+                            <field name="executive_id" widget="many2one_avatar" options="{'no_open':'1'}"/>
+                            <field name="max_amount" groups="mkt_documental_managment.budget_control_administrator"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="user_id" readonly="True" options="{'no_open':'1'}"/>
+                    </group>
+                    <notebook>
+                        <page string="Settlements">
+                            <field name="budget_line_ids" options="{'no_open': '1'}">
+                                <tree create="0" delete="0">
+                                    <field name="remove" invisible="True"/>
+                                    <field name="date"/>
+                                    <field name="requirement_name"/>
+                                    <field name="requirement_id"/>
+                                    <field name="settlement_id"/>
+                                    <field name="settlement_name"/>
+                                    <field name="document_type"/>
+                                    <field name="document"/>
+                                    <field name="document_filename" invisible="True"/>
+                                    <field name="document_file" widget="binary" filename="document_filename"/>
+                                    <field name="reason"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                    <!-- <field name="cotized"/> -->
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_budget_search" model="ir.ui.view">
+        <field name="name">budget.search</field>
+        <field name="model">budget</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="cost_center_id"/>
+                <field name="partner_brand_id"/>
+                <field name="class_id"/>
+                <field name="my_month_year"/>
+                <field name="executive_id"/>
+                <field name="responsible_id"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="campaign_id"/>
+                <group expand="1" string="Group By">
+                    <filter string="Date" name="create_date" context="{'group_by':'create_date'}"/>
+                    <filter string="Customer" name="partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="Campaign" name="campaign_id" context="{'group_by':'campaign_id'}"/>
+                    <filter string="Cost Center" name="cost_center_id" context="{'group_by':'cost_center_id'}"/>
+                    <filter string="Class" name="class_id" context="{'group_by':'class_id'}"/>
+                    <filter string="Executive" name="executive_id" context="{'group_by':'executive_id'}"/>
+                    <filter string="Responsible" name="responsible_id" context="{'group_by':'responsible_id'}"/>
+                    <filter string="Month/Year" name="my_month_year" context="{'group_by':'my_month_year'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_view_budget" model="ir.actions.act_window">
+        <field name="name">Budget</field>
+        <field name="res_model">budget</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
+

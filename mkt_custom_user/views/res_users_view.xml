@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_create_custom_user_form" model="ir.ui.view">
+        <field name="name">create.custom.user.form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="before">
+                <div class="oe_title">
+                    <group>
+                        <field name="worker_job_id" required="0"/>
+                    </group>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="view_portal_users_search" model="ir.ui.view">
+        <field name="name">portal.users.search</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[1]" position="after">
+                <filter name="portal" string="Portal Users" domain="[('share','=',True)]"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

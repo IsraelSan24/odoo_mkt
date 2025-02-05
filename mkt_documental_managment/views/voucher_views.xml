@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_voucher_tree" model="ir.ui.view">
+        <field name="name">voucher.tree</field>
+        <field name="model">voucher</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="paid_partner_id"/>
+                <field name="vat_paid_partner"/>
+                <field name="card" optional="show"/>
+                <field name="bank_id" optional="show"/>
+                <field name="account_bank" optional="show"/>
+                <field name="budget_id" optional="show"/>
+                <field name="cost_center_id" optional="show"/>
+                <field name="partner_id" optional="show"/>
+                <field name="year_month_id" optional="show"/>
+                <field name="campaign_id" optional="show"/>
+                <field name="currency" optional="show"/>
+                <field name="amount_soles" optional="show"/>
+                <field name="amount_uss" optional="show"/>
+                <field name="amount_char" optional="show"/>
+                <field name="concept" optional="hide"/>
+                <field name="detail" optional="hide"/>
+                <field name="check_or_operation" optional="show"/>
+                <field name="check_number" optional="show"/>
+                <field name="operation_number" optional="show"/>
+                <field name="payment_date" optional="show"/>
+                <field name="approved_by" optional="hide"/>
+                <field name="settled_amount" optional="show"/>
+                <field name="settled_igv_amount" optional="show"/>
+                <field name="settled_detraction_amount" optional="show"/>
+                <field name="settled_retention_amount" optional="show"/>
+                <field name="user_id" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_voucher_form" model="ir.ui.view">
+        <field name="name">voucher.form</field>
+        <field name="model">voucher</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <h1>
+                            <field name="name" readonly="True"/>
+                        </h1>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="requirement_id" options="{'no_create':True,'no_edit':True}"/>
+                            <field name="settlement_id" options="{'no_create':True,'no_edit':True}"/>
+                            <field name="paid_partner_id" options="{'no_create':True,'no_edit':True,'no_open':True}"/>
+                            <field name="vat_paid_partner"/>
+                            <field name="card"/>
+                            <field name="bank_id" options="{'no_create':True,'no_edit':True,'no_open':True}"/>
+                            <field name="account_bank"/>
+                            <field name="budget_id"/>
+                            <field name="cost_center_id" options="{'no_create':True,'no_edit':True,'no_open':True}"/>
+                            <field name="partner_id" options="{'no_create':True,'no_edit':True,'no_open':True}"/>
+                            <field name="year_month_id" options="{'no_create':True,'no_edit':True,'no_open':True}"/>
+                            <field name="check_or_operation"/>
+                            <field name="check_number"/>
+                            <field name="operation_number"/>
+                            <field name="payment_date"/>
+                        </group>
+                        <group>
+                            <field name="campaign_id" options="{'no_create':True,'no_edit':True,'no_open':True}"/>
+                            <field name="currency"/>
+                            <field name="amount_soles"/>
+                            <field name="amount_uss"/>
+                            <field name="amount_char"/>
+                            <field name="concept"/>
+                            <field name="detail"/>
+                            <field name="approved_by"/>
+                            <field name="user_id" options="{'no_create':True,'no_edit':True,'no_open':True}"/>
+                            <field name="settled_total_amount_char"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Justification">
+                            <field name="justification_ids">
+                                <tree>
+                                    <field name="partner"/>
+                                    <field name="document_file"/>
+                                    <field name="document_filename"/>
+                                    <field name="reason"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Document">
+                            <field name="document_ids" options="{'no_open':True}">
+                                <tree>
+                                    <field name="ruc"/>
+                                    <field name="partner"/>
+                                    <field name="document_type" options="{'no_create':True,'no_edit':True,'no_open':True}"/>
+                                    <field name="document"/>
+                                    <field name="document_filename" invisible="True"/>
+                                    <field name="document_file" widget="binary" filename="document_filename"/>
+                                    <field name="reason"/>
+                                    <field name="to_pay"/>
+                                    <field name="detraction"/>
+                                    <field name="retention"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                    <button name="action_show_details" type="object" icon="fa-list" width="0.1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Settlement">
+                            <field name="settlement_line_ids" options="{'no_open':True}">
+                                <tree>
+                                    <field name="state" invisible="True"/>
+                                    <field name="date" attrs="{'readonly':[(1,'=',1)]}"/>
+                                    <field name="ruc" attrs="{'readonly':[(1,'=',1)]}"/>
+                                    <field name="partner" attrs="{'readonly':[(1,'=',1)]}"/>
+                                    <field name="document_type" attrs="{'readonly':[(1,'=',1)]}"/>
+                                    <field name="document" attrs="{'readonly':[(1,'=',1)]}"/>
+                                    <field name="movement_number" attrs="{'readonly':[('state','!=',('waiting_intern_control_validation'))]}"
+                                        groups="mkt_documental_managment.documental_settlement_intern_control"/>
+                                    <field name="document_filename" invisible="True"/>
+                                    <field name="document_file" widget="binary" filename="document_filename" attrs="{'readonly':[(1,'=',1)]}"/>
+                                    <field name="reason" attrs="{'readonly':[(1,'=',1)]}" optional="show"/>
+                                    <field name="to_pay" optional="hide" sum="Total to Supplier"/>
+                                    <field name="detraction_amount" optional="show" sum="Total Detraction"/>
+                                    <field name="retention_amount" optional="show" sum="Total Retention"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record id="view_voucher_action" model="ir.actions.act_window">
+        <field name="name">Voucher</field>
+        <field name="domain">[('requirement_state','=','settled')]</field>
+        <field name="res_model">voucher</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

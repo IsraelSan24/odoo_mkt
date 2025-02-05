@@ -1,0 +1,17 @@
+div .header p, div #header_template_id div{
+    line-height: 12px;
+    font-size: 13px;
+}
+
+.item-1 {
+    height: 100%;
+    align-items: flex-start;
+}
+
+.signs-1 {
+    padding-top: 60px;
+}
+
+.signs-2 {
+    margin-top: 60px;
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_applicat_vat_form" model="ir.ui.view">
+        <field name="name">hr.applicant.vat.form</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+        <field name="arch" type="xml">
+            <field name="email_from" position="before">
+                <field name="vat"/>
+                <field name="is_autoemployee" invisible="True"/>
+                <field name="has_documents" invisible="True"/>
+            </field>
+            <xpath expr="//div[hasclass('oe_title')]" position="before">
+                <field name="photo" widget="image" class="oe_avatar" force_save="True"/>
+            </xpath>
+            <xpath expr="//field[@name='stage_id']" position="attributes">
+                <attribute name="options">{'clickable': False, 'fold_field': 'fold'}</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='create_employee_from_applicant']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <field name="name" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </field>
+            <field name="partner_name" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </field>
+            <field name="vat" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </field>
+            <field name="email_from" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </field>
+            <field name="email_cc" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </field>
+            <field name="partner_phone" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </field>
+            <field name="partner_mobile" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </field>
+            <field name="job_id" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </field>
+            <field name="department_id" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </field>
+            <field name="user_id" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_kanban_name_view_applicant" model="ir.ui.view">
+        <field name="name">Hr Applicants name kanban</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_kanban_view_applicant"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='o_kanban_record_headings']/b[@class='o_kanban_record_title mt8']/field[@name='partner_name']" position="replace">
+                <field name="name"/>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

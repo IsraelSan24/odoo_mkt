@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="report_photocheck_action" model="ir.actions.report">
+            <field name="name">Photocheck</field>
+            <field name="model">photocheck</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mkt_photocheck.report_photocheck</field>
+            <field name="report_file">mkt_photocheck.report_photocheck</field>
+            <field name="binding_model_id" ref="mkt_photocheck.model_photocheck"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_photocheck"/>
+        </record>
+
+    </data>
+</odoo>

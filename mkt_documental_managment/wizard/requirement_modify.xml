@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_requirement_modify_form" model="ir.ui.view">
+        <field name="name">requirement.modify.form</field>
+        <field name="model">requirement.modify</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="new_budget_id" required="1"
+                            options="{'no_create':True,'no_edit':True,'no_open':True}"/>
+                    </group>
+                    <group>
+                        <p class="text-muted">
+                            You are going to modify the current budget.
+                        </p>
+                    </group>
+                </group>
+                <footer>
+                    <button name="modify_budget" string="Modify budget" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

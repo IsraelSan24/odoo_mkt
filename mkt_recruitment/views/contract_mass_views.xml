@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_contract_mass_tree" model="ir.ui.view">
+        <field name="name">contract.mass.tree</field>
+        <field name="model">contract.mass</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="contract_type_id"/>
+                <field name="mode"/>
+                <field name="employee_ids" widget="many2many_tags" optional="hide"/>
+                <field name="date_start" optional="hide"/>
+                <field name="date_end" optional="hide"/>
+                <field name="wage" optional="hide"/>
+                <field name="hr_responsible_id" optional="hide"/>
+                <field name="state" widget="badge"
+                    decoration-success="state == 'generated'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_contract_mass_form" model="ir.ui.view">
+        <field name="name">contract.mass.form</field>
+        <field name="model">contract.mass</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="create_contract_to_new_employee" string="Create contracts"
+                        type="object" class="oe_highlight" attrs="{'invisible':['|',('state','!=','draft'),('mode','!=','new_employee')]}"/>
+                    <button name="create_renewed_contract" string="Create renewed"
+                        type="object" class="oe_highlight" attrs="{'invisible':['|',('state','!=','draft'),('mode','!=','renovation')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,generated"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="name" readonly="True"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="employee_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True, 'no_edit': True}"
+                                attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="mode" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="contract_type_id" attrs="{'readonly':[('state','!=','draft')]}" options="{'no_create': True, 'no_edit': True}"/>
+                            <field name="job_mode" attrs="{'invisible':[('mode','!=','renovation')],'readonly':[('state','!=','draft')]}" widget="radio"/>
+                            <field name="job_id" attrs="{'readonly':[('state','!=','draft')],'invisible':[('job_mode','=','auto')],'required':[('job_mode','=','manual')]}" options="{'no_create': True, 'no_edit': True}"/>
+                        </group>
+                        <group>
+                            <field name="wage_mode" attrs="{'invisible':[('mode','!=','renovation')],'readonly':[('state','!=','draft')]}" widget="radio"/>
+                            <field name="wage" attrs="{'readonly':[('state','!=','draft')],'invisible':[('wage_mode','!=','manual')],'required':[('wage_mode','=','manual')]}"/>
+                            <field name="date_start" attrs="{'readonly':[('state','!=','draft')],'invisible':[('mode','!=','new_employee')]}"/>
+                            <field name="renewed_months" attrs="{'readonly':[('state','!=','draft')],'invisible':[('mode','!=','renovation')]}" />
+                            <field name="date_end" attrs="{'readonly':[('state','!=','draft')],'invisible':[('mode','!=','new_employee')]}"/>
+                            <field name="hr_responsible_id" invisible="True"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Employees">
+                            <field name="last_contract_ids" readonly="True"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_contract_mass_action" model="ir.actions.act_window">
+        <field name="name">Massive Contract</field>
+        <field name="res_model">contract.mass</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <template id="portal_affidavit_template" name="Affidavit">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="oe_structure">
+                        <link rel="stylesheet" type="text/css" href="/mkt_documental_managment/static/src/css/portal_styles.css"/>
+                        <script type="text/javascript" src="/mkt_documental_managment/static/src/js/portal.js"></script>
+                            <div class="container mt-5 o_affidavit">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <h2 class="text-center mb-4">Affidavit</h2>
+                                        <form id="affidavitForm" action="/affidavit/created" method="POST">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <div class="form-group">
+                                                <label for="user_id" class="form-label">Petitioner</label>
+                                                <select name="user_id" id="user_id" class="form-control" disabled="True">
+                                                    <option t-att-value="user.id" id="user_id">
+                                                        <t t-esc="user.name"/>
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label for="user_vat" class="form-label">VAT</label>
+                                                        <input id="user_vat" name="user_vat" type="text" class="form-control" t-att-value="user.partner_id.vat or ''" readonly="True"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <label for="job_id" class="form-label">Job</label>
+                                                        <select name="job_id" id="job_id" class="form-control" disabled="True">
+                                                            <option t-att-value="user.employee_id.job_id" id="job_id">
+                                                                <t t-esc="user.employee_id.job_id.name"/>
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="location" class="form-label">Location</label>
+                                                <input id="location" name="location" type="text" class="form-control" required="True"/>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="country_id" class="form-label">Country</label>
+                                                        <select name="country_id" id="country_id" class="form-control" required="True">
+                                                            <option value="">Country</option>
+                                                            <t t-foreach="countries or []" t-as="country">
+                                                                <option t-att-value="country.id" id="country_name">
+                                                                    <t t-esc="country.name"/>
+                                                                </option>
+                                                            </t>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="state_id" class="form-label">Department</label>
+                                                        <select name="state_id" id="state_id" class="form-control" required="True">
+                                                            <option value="">Department</option>
+                                                            <t t-foreach="states or []" t-as="state">
+                                                                <option t-att-value="state.id" id="state_name" t-att-data-country_id="state.country_id.id">
+                                                                    <t t-esc="state.name"/>
+                                                                </option>
+                                                            </t>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="city_id">Province</label>
+                                                        <select name="city_id" id="city_id" class="form-control" required="True">
+                                                            <option value="">Province</option>
+                                                            <t t-foreach="cities or []" t-as="citie">
+                                                                <option t-att-value="citie.id" id="citie_name" t-att-data-state_id="citie.state_id.id">
+                                                                    <t t-esc="citie.name"/>
+                                                                </option>
+                                                            </t>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="district_id" class="form-label">District</label>
+                                                        <select name="district_id" id="district_id" class="form-control" required="True">
+                                                            <option value="">District...</option>
+                                                            <t t-foreach="districts or []" t-as="district">
+                                                                <option t-att-value="district.id" id="district_name" t-att-data-city_id="district.city_id.id">
+                                                                    <t t-esc="district.name"/>
+                                                                </option>
+                                                            </t>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="concept" class="form-label">Concept</label>
+                                                <input id="concept" name="concept" type="text" class="form-control" required="True"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="activity" class="form-label">Activity</label>
+                                                <input id="activity" name="activity" type="text" class="form-control" required="True"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="date" class="form-label">Date</label>
+                                                <input id="date" name="date" type="date" class="form-control" required="True"/>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="amount" class="form-label">Amount</label>
+                                                        <input id="amount" name="amount" type="number" step="0.0001" class="form-control" required="True"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label d-block">Currency Type</label>
+                                                        <div>
+                                                            <label class="mr-3">
+                                                                <input type="radio" name="amount_currency_type" value="soles" t-att-checked="'soles' == amount_currency_type" />
+                                                                Soles
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="amount_currency_type" value="dolares" t-att-checked="'dolares' == amount_currency_type" />
+                                                                Dolares
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    <div class="form-group col-md-12">
+                                                        <button type="submit" class="btn btn-info btn-lg" style="width:100%;">Send</button>
+                                                    </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="col-md-7">
+                                        <h2 class="text-center text-info mb-4">Affidavit Details</h2>
+                                        <div class="card">
+                                            <div class="card-body border border-info">
+                                                <p class="text-justify">
+                                                    Yo, <strong class="text-decoration"><span class="card-text" id="displayPetitioner"/></strong> con documento de identidad Nº <strong><span class="card-text" id="displayVat"/></strong>, desempeñándome como <strong><span class="card-text" id="displayJob"/></strong>, ubicada en <strong><span class="card-text" id="displayLocation"/></strong> en el Distrito de <strong><span class="card-text" id="displayDistrict"/></strong> provincia de <strong><span class="card-text" id="displayCity"/></strong>, del Departamento de <strong><span class="card-text" id="displayState"/></strong>.
+                                                </p>
+                                                <h5 class="mt-4"><strong>Declaro:</strong></h5>
+                                                <p class="text-justify">
+                                                    A concepto de: <strong><span class="card-text" id="displayConcept"/></strong> para la actividad de <strong><span class="card-text" id="displayActivity"/></strong> y se gastó la cantidad de <strong><span class="card-text" id="displayAmount"/></strong> soles.
+                                                </p>
+                                                
+                                                <p class="text-justify">
+                                                    Me afirmo en lo expresado, en señal de lo cual firmo el presente documento.
+                                                </p>
+
+                                                <p class="text-left mb-5">
+                                                    <strong>
+                                                        <span id="displayDate">
+                                                            Lima,
+                                                        </span>
+                                                    </strong>
+                                                </p>
+                                                <img src="/mkt_documental_managment/static/src/img/affidavit.jpg" class="img-fluid" alt=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                       
+                        <div class="loading-overlay" id="loadingOverlay">
+                            <div class="loading-spinner"></div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="portal_affidavit_created_template" name="Affidavit created">
+            <t t-call="website.layout">
+                <div class="text-center mt-5">
+                    <div id="wrap" class="container mt-5">
+                        <div class="alert alert-success text-center" role="alert">
+                            <h4 class="alert-heading">Request Sent!</h4>
+                            <p>Your Request has been sent successfully. Thank you for filling in the form.</p>
+                            <hr/>
+                            <p class="mb-0">
+                                <a href="/affidavit" class="btn btn-outline-success mt-3">
+                                    <i class="fa fa-arrow-left"></i> Back to Affidavit Form
+                                </a>
+                                <button type="button" class="btn btn-outline-secondary mt-3" data-toggle="modal" data-target="#downloadModal">
+                                    <i class="fa fa-download"></i> Thank you! Click here to download your document.
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="downloadModal" tabindex="-1" role="dialog" aria-labelledby="downloadModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="downloadModalLabel">Download Your Affidavit</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&#x2715;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Your affidavit has been successfully created. Click the button below to download it.
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-secondary" t-att-href="'/affidavit/download/%d' % affidavit_id" title="Download">
+                                        Download
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+    </data>
+
+</odoo>

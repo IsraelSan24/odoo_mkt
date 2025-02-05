@@ -1,0 +1,90 @@
+span {
+    font-size: 12px !important;
+}
+
+.header_left {
+    width: 21%;
+    margin-top: 25px;
+}
+
+.header_middle {
+    width: 40%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.header_right {
+    width: 39%;
+    border: 1px solid #FB0F0B;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.header_right_rq {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.header_right_voucher {
+    background-color: #FB0F0B;
+    height: 45px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 5px;
+}
+
+.header_right_voucher #voucher_id {
+    font-size: 25px !important;
+    font-weight: 700 !important;
+    color: #FFFFFF;
+}
+.header_right_sett {
+    margin-top: 12px;
+    margin-bottom: 12px;    
+}
+
+.body_upper_left {
+    width: 50%;
+    border: 1px solid #FB0F0B;
+    border-radius: 10px;
+    padding: 10px;  
+}
+
+.body_upper_right {
+    width: 50%;
+    border: 1px solid #FB0F0B;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.body_upper_left_inside_left {
+    width: 35%;
+}
+
+.body_upper_left_inside_right {
+    width: 65%;
+}
+
+.body_upper_right_inside_left {
+    width: 35%;
+}
+
+.body_upper_right_inside_right {
+    width: 65%;
+}
+
+.table_content {
+    border: 1px solid #FB0F0B;
+    border-radius: 10px;
+}
+
+.table_content {
+    border: 1px solid #FB0F0B;
+    padding: 10px;
+}

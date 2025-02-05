@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="report_stock_picking_action" model="ir.actions.report">
+        <field name="name">Stock Picking Report</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">mkt_stock_picking_report.report_stockpickingdocument</field>
+        <field name="report_file">mkt_stock_picking_report.report_stockpickingdocument</field>
+        <field name="print_report_name">(object.name or '')</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="mkt_stock_picking_report.paperformat_stock_picking"/>
+    </record>
+
+</odoo>

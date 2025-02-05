@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_contract_wage_tree" model="ir.ui.view">
+        <field name="name">hr.contract.wage.tree</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="wage"/>
+            </xpath>
+            <xpath expr="//tree" position="inside">
+                <header>
+                    <button string="Update contract" name="write_data" type="object" class="oe_highlight"/>
+                    <button string="Update locales" name="update_locale_date" type="object" class="oe_highlight"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_contract_portal_form" model="ir.ui.view">
+        <field name="name">hr.contract.portal.form</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="replace">
+                <field name="state" widget="statusbar" options="{'clickable': False}"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="preview_contract_document"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-globe icon">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_text">Contract</span>
+                            <span class="o_stat_text">Preview</span>
+                        </div>
+                    </button>
+                </div>
+            </xpath>
+            <field name="employee_id" position="before">
+                <field name="is_sended" widget="boolean_toggle"/>
+                <field name="latitude" invisible="1"/>
+                <field name="longitude" invisible="1"/>
+                <field name="location_maps" invisible="1"/>
+                <field name="user_agents" invisible="1"/>
+                <field name="device_info" invisible="1"/>
+                <field name="ip" invisible="1"/>
+                <field name="device" invisible="1"/>
+                <field name="os" invisible="1"/>
+                <field name="browser" invisible="1"/>
+                <field name="validation_password" invisible="1"/>
+            </field>
+            <xpath expr="//group[@name='top_info_right']" position="inside">
+                <field name="cost_center" readonly="1"/>
+                <field name="is_back_office" readonly="1" widget="boolean_toggle" groups="mkt_recruitment.group_hr_contract_back_office"/>
+            </xpath>
+            <xpath expr="//group[@name='top_info_right']" position="after">
+                <group invisible="True">
+                    <field name="partner_name"/>
+                    <field name="vat"/>
+                    <field name="street"/>
+                    <field name="district"/>
+                    <field name="province"/>
+                    <field name="department"/>
+                    <field name="age"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="employee_job"/>
+                    <field name="country"/>
+                    <field name="nationality"/>
+                    <field name="profession"/>
+                    <field name="education_level"/>
+                    <field name="gender"/>
+                    <field name="marital"/>
+                    <field name="company_vat"/>
+                </group>
+            </xpath>
+            <xpath expr="//group[@name='salary']" position="after">
+                <group>
+                    <label for="wage_in_text"/>
+                    <div class="o_row" name="wage_in_text">
+                        <field name="wage_in_text" nolabel="1"/>
+                    </div>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_start']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_end']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='structure_type_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='resource_calendar_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='job_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='contract_type_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='hr_responsible_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='wage']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_end']" position="after">
+                <field name="contract_months" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+            </xpath>
+            <field name="name" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+            <field name="contract_type_id" position="before">
+                <field name="is_renovation" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="signed_by_employer" invisible="True"/>
+                <field name="employer_signature_id" options="{'no_create':True, 'no_open':True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+            </field>
+            <xpath expr="//header" position="inside">
+                <button name="write_data" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}" string="Update data"/>
+                <button name="button_employer_signature" type="object" class="oe_highlight"
+                    attrs="{'invisible':['|',('state','!=','open'),('signed_by_employer','=',True)]}" string="Employer signature"/>
+                <button name="button_refuse" type="object" class="oe_highlight"
+                    attrs="{'invisible':[('state','!=','open')]}" string="Refuse"
+                    confirm="Please confirm to cancel the contract"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_contract_vat_search" model="ir.ui.view">
+        <field name="name">hr.contract.vat.search</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_search"/>
+        <field name="arch" type="xml">
+            <field name="name" position="replace">
+                <field name="name" string="Contract" filter_domain="['|','|',('employee_id.user_id.partner_id.vat','ilike',self),('name','ilike',self),('employee_id.name','ilike',self)]"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_hr_contract_vat_kanban" model="ir.ui.view">
+        <field name="name">hr.contract.vat.kanban</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_kanban_bottom_right']" position="before">
+                <div>
+                    <span class="float-left" style="font-size:0.745rem">
+                        <field name="employee_id"/>
+                    </span>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

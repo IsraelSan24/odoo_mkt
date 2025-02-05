@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="report_documental_settlements" model="ir.actions.report">
+            <field name="name">Settlement A4</field>
+            <field name="model">documental.settlements</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mkt_documental_managment.report_settlement</field>
+            <field name="report_file">mkt_documental_managment.report_settlement</field>
+            <field name="binding_model_id" ref="mkt_documental_managment.model_documental_settlements"/>
+            <field name="binding_type">report</field>            
+            <field name="paperformat_id" ref="paperformat_documental_settlement"/>
+        </record>
+
+        <record id="report_voucher_action" model="ir.actions.report">
+            <field name="name">Voucher A4</field>
+            <field name="model">voucher</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mkt_documental_managment.report_voucher</field>
+            <field name="report_file">mkt_documental_managment.report_voucher</field>
+            <field name="binding_model_id" ref="mkt_documental_managment.model_voucher"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_voucher"/>
+        </record>
+
+        <record id="report_documental_requirements" model="ir.actions.report">
+            <field name="name">Requirement A4</field>
+            <field name="model">documental.requirements</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mkt_documental_managment.report_requirement</field>
+            <field name="report_file">mkt_documental_managment.report_requirement</field>
+            <field name="binding_model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_documental_requirement"/>
+        </record>
+
+        <record id="action_affidavit_report" model="ir.actions.report">
+            <field name="name">Affidavit</field>
+            <field name="model">affidavit</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mkt_documental_managment.report_affidavit</field>
+            <field name="report_file">mkt_documental_managment.report_affidavit</field>
+            <field name="binding_model_id" ref="mkt_documental_managment.model_affidavit"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_affidavit"/>
+        </record>
+
+    </data>
+
+</odoo>

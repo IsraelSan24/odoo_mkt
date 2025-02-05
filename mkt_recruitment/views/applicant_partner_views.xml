@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_applicant_partner_tree" model="ir.ui.view">
+        <field name="name">applicant.partner.tree</field>
+        <field name="model">applicant.partner</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="dni"/>
+                <field name="state" widget="badge"
+                    decoration-muted="state == 'draft'"
+                    decoration-success="state == 'uploaded'"
+                    decoration-danger="state == 'not_found'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_applicant_partner_form" model="ir.ui.view">
+        <field name="name">applicant.partner.form</field>
+        <field name="model">applicant.partner</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Update partner" name="update_partner" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                </header>
+                <sheet>
+                    <field name="state" invisible="True"/>
+                    <widget name="web_ribbon" title="Uploaded" bg_color="bg-success"
+                            attrs="{'invisible':[('state','!=','uploaded')]}"/>
+                    <widget name="web_ribbon" title="Not found" bg_color="bg-success"
+                            attrs="{'invisible':[('state','!=','not_found')]}"/>
+                    <group string="Data">
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="identification_type_id" options="{'no_create': True, 'no_open': True}" readonly="1"/>
+                            <field name="dni" readonly="1"/>
+                            <field name="email" readonly="1"/>
+                            <field name="gender" readonly="1"/>
+                            <field name="marital" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="nationality_id" options="{'no_create': True, 'no_open': True}" class="oe_edit_only" readonly="1"/>
+                            <field name="demonym" readonly="1"/>
+                            <field name="birthday" readonly="1"/>
+                            <field name="emergency_contact" readonly="1"/>
+                            <field name="children" readonly="1"/>
+                            <field name="phone" readonly="1"/>
+                            <field name="emergency_phone" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Location">
+                        <group>
+                            <field name="country_id" readonly="1"/>
+                            <field name="state_id" readonly="1"/>
+                            <field name="city_id" readonly="1"/>
+                            <field name="district_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="street" readonly="1"/>
+                            <field name="reference_location" readonly="1"/>
+                            <field name="zip" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Education">
+                        <group>
+                            <field name="education_level" readonly="1"/>
+                            <field name="education_start_date" readonly="1"/>
+                            <field name="education_end_date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="institution" readonly="1"/>
+                            <field name="profession" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="pension system">
+                        <group>
+                            <field name="private_pension_system" readonly="1"/>
+                            <field name="afp_first_job" readonly="1"/>
+                            <field name="coming_from_onp" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="national_pension_system" readonly="1"/>
+                        </group>
+                    </group>
+                    <table class="table table-bordered" style="padding: 0px 30px 0px 30px; border:none">
+                        <colgroup>
+                            <col width="8%"/>
+                            <col width="24%"/>
+                            <col width="8%"/>
+                            <col width="8%"/>
+                            <col width="8%"/>
+                            <col width="20%"/>
+                            <col width="4%"/>
+                            <col width="20%"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="6" class="text-center" style="border: 2px solid black;">First Beneficiaries</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">N&#176;DNI</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">NAME AND SURNAME</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Genre</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Relationship</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Date</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Address</th>
+                                <th scope="col" style="border: none"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_dni1" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_full_name1" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_gender1" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_relationship1" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_birthday1" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_address1" readonly="1"/>
+                                </td>
+                                <td scope="col" style="border: none">
+                                </td>
+                                <field name="is_beneficiary1" readonly="1"/>
+                                <td scope="col" style="border: none">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_dni2" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_full_name2" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_gender2" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_relationship2" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_birthday2" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_address2" readonly="1"/>
+                                </td>
+                                <td scope="col" style="border: none">
+                                </td>
+                                <field name="is_beneficiary2" readonly="1"/>
+                                <td scope="col" style="border: none">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_dni3" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_full_name3" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_gender3" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_relationship3" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_birthday3" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_address3" readonly="1"/>
+                                </td>
+                                <td scope="col" style="border: none">
+                                </td>
+                                <field name="is_beneficiary3" readonly="1"/>
+                                <td scope="col" style="border: none">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_dni4" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_full_name4" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_gender4" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_relationship4" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_birthday4" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_address4" readonly="1"/>
+                                </td>
+                                <td scope="col" style="border: none">
+                                </td>
+                                <field name="is_beneficiary4" readonly="1"/>
+                                <td scope="col" style="border: none">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered" style="padding: 0px 30px 0px 30px; border:none; ">
+                        <colgroup>
+                            <col width="8%"/>
+                            <col width="24%"/>
+                            <col width="8%"/>
+                            <col width="8%"/>
+                            <col width="8%"/>
+                            <col width="20%"/>
+                            <col width="4%"/>
+                            <col width="20%"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="6" class="text-center" style="border: 2px solid black;">Other Beneficiaries</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">N&#176;DNI</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">NAME AND SURNAME</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Genre</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Relationship</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Date</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Address</th>
+                                <th scope="col" style="border: none"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_dni5" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_full_name5" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_gender5" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_relationship5" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_birthday5" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_address5" readonly="1"/>
+                                </td>
+                                <td scope="col" style="border: none">
+                                </td>
+                                <field name="is_beneficiary5" readonly="1"/>
+                                <td scope="col" style="border: none">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_dni6" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_full_name6" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_gender6" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_relationship6" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_birthday6" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_address6" readonly="1"/>
+                                </td>
+                                <td scope="col" style="border: none">
+                                </td>
+                                <field name="is_beneficiary6" readonly="1"/>
+                                <td scope="col" style="border: none">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_dni7" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_full_name7" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_gender7" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_relationship7" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_birthday7" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_address7" readonly="1"/>
+                                </td>
+                                <td scope="col" style="border: none">
+                                </td>
+                                <field name="is_beneficiary7" readonly="1"/>
+                                <td scope="col" style="border: none">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_dni8" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_full_name8" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_gender8" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_relationship8" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_birthday8" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_address8" readonly="1"/>
+                                </td>
+                                <td scope="col" style="border: none">
+                                </td>
+                                <field name="is_beneficiary8" readonly="1"/>
+                                <td scope="col" style="border: none">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="applicant_partner_view_search" model="ir.ui.view">
+        <field name="name">applicant.partner.search</field>
+        <field name="model">applicant.partner</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Name or DNI" filter_domain="['|',('dni','ilike',self),('name','ilike',self)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_applicant_partner_action" model="ir.actions.act_window">
+        <field name="name">Applicant partner</field>
+        <field name="res_model">applicant.partner</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

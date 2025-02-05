@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="group_payroll_paycheck" model="res.groups">
+        <field name="name">Paycheck</field>
+        <field name="category_id" ref="mkt_payroll.category_payroll"/>
+    </record>
+
+</odoo>

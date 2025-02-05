@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+    
+        <record id="data_employer_signature_manager" model="employer.signature">
+            <field name="name">Manager</field>
+            <field name="signature_default">True</field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

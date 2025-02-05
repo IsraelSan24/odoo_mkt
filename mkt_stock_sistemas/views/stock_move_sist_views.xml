@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sist_stock_move_tree" model="ir.ui.view">
+        <field name="name">sist.stock.move.tree</field>
+        <field name="model">stock.move</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="SIST Moves" create="0" default_order="create_date desc">
+                <field name="date_done"/>
+                <field name="reference"/>
+                <field name="picking_type_id" invisible="1"/>
+                <field name="product_id"/>
+                <field name="location_id" options="{'no_create': True}" string="From"/>
+                <field name="location_dest_id" options="{'no_create': True}" string="To"/>
+                <field name="product_packaging_id" optional="hide" groups="product.group_stock_packaging"/>
+                <field name="product_uom_qty"/>
+                <field name="product_uom" options="{'no_open': True, 'no_create': True}" string="Unit of Measure" groups="uom.group_uom"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'" decoration-info="state not in ('done', 'cancel')"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="location_open_in_sist" model="ir.actions.act_window">
+        <field name="name">SIST Current Inventory Entries</field>
+        <field name="domain">[('location_dest_id','in',('SIST/HP','SIST/HP PRODUCCION','SIST/IMACO','SIST/MARKETING','SIST/MARKETING/LISTAS'))]</field>
+        <field name="res_model">stock.move</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_sist_stock_move_tree"/>
+    </record>
+
+    <record id="location_open_out_sist" model="ir.actions.act_window">
+        <field name="name">SIST Current Inventory Departures</field>
+        <field name="domain">[('location_id','in',('SIST/HP','SIST/HP PRODUCCION','SIST/IMACO','SIST/MARKETING','SIST/MARKETING/LISTAS'))]</field>
+        <field name="res_model">stock.move</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_sist_stock_move_tree"/>
+    </record>
+
+</odoo>

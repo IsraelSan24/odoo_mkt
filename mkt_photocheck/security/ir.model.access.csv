@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_photocheck_user,access.photocheck.user,model_photocheck,mkt_photocheck.photocheck_user,1,1,1,0
+access_photocheck_boss,access.photocheck.boss,model_photocheck,mkt_photocheck.photocheck_boss,1,1,1,0
+access_photocheck_designer,access.photocheck.designer,model_photocheck,mkt_photocheck.photocheck_designer,1,1,1,0
+access_photocheck_admin,access.photocheck.admin,model_photocheck,mkt_photocheck.photocheck_admin,1,1,1,1
+access_photocheck_brand_group,access.photocheck.brand.group,model_photocheck_brand_group,,1,1,1,0
+access_photocheck_job,access.photocheck.job,model_photocheck_job,,1,1,1,0
+access_photocheck_supervisor,access.photocheck.supervisor,model_photocheck_supervisor,,1,1,1,0

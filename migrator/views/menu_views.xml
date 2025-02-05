@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="migrator_root" name="Migrator" web_icon="migrator,static/description/icon_migrator.png"/>
+        <menuitem id="migrator_menu" name="Migrator" action="view_self_migrator_action" parent="migrator_root" sequence="0"/>
+
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="recruitment_document_sequence" model="ir.sequence">
+        <field name="name">Recruitment Document</field>
+        <field name="code">recruitment.document</field>
+        <field name="active">TRUE</field>
+        <field name="prefix">DA%(year)s%(month)s-</field>
+        <field name="padding">6</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="use_date_range">TRUE</field>
+    </record>
+
+    <record id="hr_contract_sequence" model="ir.sequence">
+        <field name="name">hr_contract</field>
+        <field name="code">hr.contract</field>
+        <field name="active">TRUE</field>
+        <field name="prefix">C%(year)s-</field>
+        <field name="padding">7</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="use_date_range">TRUE</field>
+    </record>
+
+    <record id="contract_mass_sequence" model="ir.sequence">
+        <field name="name">Contract massive</field>
+        <field name="code">contract.mass</field>
+        <field name="active">TRUE</field>
+        <field name="prefix">CM</field>
+        <field name="padding">6</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+</odoo>

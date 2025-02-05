@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="module_category_quotation_budget" model="ir.module.category">
+            <field name="name">Quotation Budget</field>
+        </record>
+
+        <record id="quotation_budget_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="mkt_quotation.module_category_quotation_budget"/>
+        </record>
+
+        <record id="quotation_budget_intern_control" model="res.groups">
+            <field name="name">Intern Control</field>
+            <field name="category_id" ref="mkt_quotation.module_category_quotation_budget"/>
+        </record>
+
+        <record id="quotation_budget_invoicing" model="res.groups">
+            <field name="name">Invoicing</field>
+            <field name="category_id" ref="mkt_quotation.module_category_quotation_budget"/>
+        </record>
+
+    </data>
+
+</odoo>

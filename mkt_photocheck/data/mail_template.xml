@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="mail_template_photocheck_status_change" model="mail.template">
+            <field name="name">Photocheck Status Change</field>
+            <field name="model_id" ref="mkt_photocheck.model_photocheck"/>
+            <field name="subject">Your Photocheck request has been received and is now in process</field>
+            <field name="email_from">{{ user.email_formatted or user.partner_id.email }}</field>
+            <field name="email_to">fotocheck@marketing-alterno.com</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr><td align="center">
+                    <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                    <tbody>
+                        <tr>
+                            <td align="center" style="min-width: 590px;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                    <tr><td valign="middle">
+                                        <span style="font-size: 20px; font-weight: bold;">
+                                            <span>Photocheck requested</span>
+                                        </span>
+                                    </td><td valign="middle" align="right">
+                                        <img t-attf-src="/logo.png?company={{ user.company_id.id }}" style="padding: 0px; margin: 0px; height: auto; width: 80px;" t-att-alt="user.company_id.name"/>
+                                    </td></tr>
+                                    <tr><td colspan="2" style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                    </td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="min-width: 590px;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                    <tr><td valign="top" style="font-size: 13px;">
+                                        <div>
+                                            Dear User,<br/><br/>
+                                            <t t-if="object.state == 'to_do'">
+                                                This email is to inform you that the status of your photocheck has changed to: <strong>To Do </strong><br/><br/>
+                                                <a t-att-href="object.get_photocheck_url()">Ir a Photocheck</a><br/><br/>
+                                                <strong>Photocheck details:</strong><br/>
+                                                <strong>Name: </strong><t t-out="object.name"></t><br/>
+                                                <strong>DNI: </strong><t t-out="object.dni"></t><br/>
+                                                <strong>First Name: </strong><t t-out="object.first_name"></t><br/>
+                                                <strong>Last Name: </strong><t t-out="object.last_name"></t><br/><br/>
+                                                Your photocheck request has been received and is now in process.
+                                            </t>
+                                            <br/><br/>
+                                            If you have any questions, please don't hesitate to contact us.
+                                            <br/><br/>
+                                            Best regards,
+                                            <t t-if="user.signature">
+                                                <br/>
+                                                <t t-out="user.signature or ''">--<br/>Mitchell Admin</t>
+                                            </t>
+                                        </div>
+                                    </td></tr>
+                                    <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                    </td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="min-width: 590px;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                    <tr><td valign="middle" align="left">
+                                        <t t-out="user.company_id.name or ''">Marketing Alterno Peru</t>
+                                    </td></tr>
+                                    <tr><td valign="middle" align="left" style="opacity: 0.7;">
+                                        <t t-out="user.company_id.phone or ''">+1 650-123-4567</t>
+                                        <t t-if="user.company_id.email">
+                                            | <a t-att-href="'mailto:%s' % user.company_id.email" style="text-decoration:none; color: #454748;" t-out="user.company_id.email or ''">info@yourcompany.com</a>
+                                        </t>
+                                        <t t-if="user.company_id.website">
+                                            | <a t-att-href="'%s' % user.company_id.website" style="text-decoration:none; color: #454748;" t-out="user.company_id.website or ''">https://www.marketing-alterno.com</a>
+                                        </t>
+                                    </td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    </td></tr>
+                    <tr><td align="center" style="min-width: 590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                        <tr><td style="text-align: center; font-size: 13px;">
+                            Powered by <a t-att-href="'%s' % user.company_id.website" style="text-decoration:none;color: #875A7B;" target="_blank">Marketing Alterno Peru</a>
+                        </td></tr>
+                        </table>
+                    </td></tr>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_photocheck_refused" model="mail.template">
+            <field name="name">Photocheck Refused</field>
+            <field name="model_id" ref="mkt_photocheck.model_photocheck"/>
+            <field name="subject">Your Photocheck was refused</field>
+            <field name="email_from">{{ user.email_formatted or user.partner_id.email }}</field>
+            <field name="email_to">{{ object.photocheck_supervisor_id.user_id.partner_id.email }}</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr><td align="center">
+                    <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                    <tbody>
+                        <tr>
+                            <td align="center" style="min-width: 590px;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                    <tr><td valign="middle">
+                                        <span style="font-size: 20px; font-weight: bold;">
+                                            <span>Photocheck refused</span>
+                                        </span>
+                                    </td><td valign="middle" align="right">
+                                        <img t-attf-src="/logo.png?company={{ user.company_id.id }}" style="padding: 0px; margin: 0px; height: auto; width: 80px;" t-att-alt="user.company_id.name"/>
+                                    </td></tr>
+                                    <tr><td colspan="2" style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                    </td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="min-width: 590px;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                    <tr><td valign="top" style="font-size: 13px;">
+                                        <div>
+                                            Dear <t t-out="object.photocheck_supervisor_id.user_id.partner_id.name"></t><br/><br/>
+                                            This email is to inform you that the status of your photocheck has changed to: <strong>Refused </strong><br/><br/>
+                                            <a t-att-href="object.get_photocheck_url()">Ir a Photocheck</a><br/><br/>
+                                            <strong>Photocheck details:</strong><br/>
+                                            <strong>Name: </strong><t t-out="object.name"></t><br/>
+                                            <strong>DNI: </strong><t t-out="object.dni"></t><br/>
+                                            <strong>First Name: </strong><t t-out="object.first_name"></t><br/>
+                                            <strong>Last Name: </strong><t t-out="object.last_name"></t><br/><br/>
+                                            We regret to inform you that your photocheck request has been refused.
+                                            <br/><br/>
+                                            If you have any questions, please don't hesitate to contact us.
+                                            <br/><br/>
+                                            Best regards,
+                                            <t t-if="user.signature">
+                                                <br/>
+                                                <t t-out="user.signature or ''">--<br/>Mitchell Admin</t>
+                                            </t>
+                                        </div>
+                                    </td></tr>
+                                    <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                    </td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="min-width: 590px;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                    <tr><td valign="middle" align="left">
+                                        <t t-out="user.company_id.name or ''">Marketing Alterno Peru</t>
+                                    </td></tr>
+                                    <tr><td valign="middle" align="left" style="opacity: 0.7;">
+                                        <t t-out="user.company_id.phone or ''">+1 650-123-4567</t>
+                                        <t t-if="user.company_id.email">
+                                            | <a t-att-href="'mailto:%s' % user.company_id.email" style="text-decoration:none; color: #454748;" t-out="user.company_id.email or ''">info@yourcompany.com</a>
+                                        </t>
+                                        <t t-if="user.company_id.website">
+                                            | <a t-att-href="'%s' % user.company_id.website" style="text-decoration:none; color: #454748;" t-out="user.company_id.website or ''">https://www.marketing-alterno.com</a>
+                                        </t>
+                                    </td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    </td></tr>
+                    <tr><td align="center" style="min-width: 590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                        <tr><td style="text-align: center; font-size: 13px;">
+                            Powered by <a t-att-href="'%s' % user.company_id.website" style="text-decoration:none;color: #875A7B;" target="_blank">Marketing Alterno Peru</a>
+                        </td></tr>
+                        </table>
+                    </td></tr>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_photocheck_done" model="mail.template">
+            <field name="name">Photocheck Done</field>
+            <field name="model_id" ref="mkt_photocheck.model_photocheck"/>
+            <field name="subject">Your Photocheck was Done</field>
+            <field name="email_from">{{ user.email_formatted or user.partner_id.email }}</field>
+            <field name="email_to">{{ object.photocheck_supervisor_id.user_id.partner_id.email }}</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr><td align="center">
+                    <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                    <tbody>
+                        <tr>
+                            <td align="center" style="min-width: 590px;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                    <tr><td valign="middle">
+                                        <span style="font-size: 20px; font-weight: bold;">
+                                            <span>Photocheck done</span>
+                                        </span>
+                                    </td><td valign="middle" align="right">
+                                        <img t-attf-src="/logo.png?company={{ user.company_id.id }}" style="padding: 0px; margin: 0px; height: auto; width: 80px;" t-att-alt="user.company_id.name"/>
+                                    </td></tr>
+                                    <tr><td colspan="2" style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                    </td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="min-width: 590px;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                    <tr><td valign="top" style="font-size: 13px;">
+                                        <div>
+                                            Dear <t t-out="object.photocheck_supervisor_id.user_id.partner_id.name"></t><br/><br/>
+                                            This email is to inform you that your photocheck has been <strong>Done </strong><br/><br/>
+                                            <a t-att-href="object.get_photocheck_url()">Ir a Photocheck</a><br/><br/>
+                                            <strong>Photocheck details:</strong><br/>
+                                            <strong>Name: </strong><t t-out="object.name"></t><br/>
+                                            <strong>DNI: </strong><t t-out="object.dni"></t><br/>
+                                            <strong>First Name: </strong><t t-out="object.first_name"></t><br/>
+                                            <strong>Last Name: </strong><t t-out="object.last_name"></t><br/><br/>
+                                            Your photocheck request has been done.
+                                            <br/><br/>
+                                            If you have any questions, please don't hesitate to contact us.
+                                            <br/><br/>
+                                            Best regards,
+                                            <t t-if="user.signature">
+                                                <br/>
+                                                <t t-out="user.signature or ''">--<br/>Mitchell Admin</t>
+                                            </t>
+                                        </div>
+                                    </td></tr>
+                                    <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                    </td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="min-width: 590px;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                    <tr><td valign="middle" align="left">
+                                        <t t-out="user.company_id.name or ''">Marketing Alterno Peru</t>
+                                    </td></tr>
+                                    <tr><td valign="middle" align="left" style="opacity: 0.7;">
+                                        <t t-out="user.company_id.phone or ''">+1 650-123-4567</t>
+                                        <t t-if="user.company_id.email">
+                                            | <a t-att-href="'mailto:%s' % user.company_id.email" style="text-decoration:none; color: #454748;" t-out="user.company_id.email or ''">info@yourcompany.com</a>
+                                        </t>
+                                        <t t-if="user.company_id.website">
+                                            | <a t-att-href="'%s' % user.company_id.website" style="text-decoration:none; color: #454748;" t-out="user.company_id.website or ''">https://www.marketing-alterno.com</a>
+                                        </t>
+                                    </td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    </td></tr>
+                    <tr><td align="center" style="min-width: 590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                        <tr><td style="text-align: center; font-size: 13px;">
+                            Powered by <a t-att-href="'%s' % user.company_id.website" style="text-decoration:none;color: #875A7B;" target="_blank">Marketing Alterno Peru</a>
+                        </td></tr>
+                        </table>
+                    </td></tr>
+                </table>
+            </field>
+        </record>
+
+    </data>
+
+</odoo>

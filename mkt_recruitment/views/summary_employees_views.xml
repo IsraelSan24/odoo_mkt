@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_summary_employees_tree" model="ir.ui.view">
+        <field name="name">summary.employees.tree</field>
+        <field name="model">summary.employees</field>
+        <field name="arch" type="xml">
+            <tree default_order="employee_create_date desc">
+                <field name="employee_create_date" invisible="1"/>
+                <field name="name"/>
+                <field name="job_id"/>
+                <field name="department_id" optional="show"/>
+                <field name="phone" optional="show"/>
+                <field name="birthday" optional="show"/>
+                <field name="age" optional="show"/>
+                <field name="l10n_pe_district" optional="show"/>
+                <field name="education_level" optional="show"/>
+                <field name="profession" optional="show"/>
+                <field name="children" optional="show"/>
+                <field name="user_id" optional="show"/>
+                <field name="first_contract_date" optional="show"/>
+                <field name="date_end" optional="show"/>
+                <field name="state" widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-warning="state == 'close'"
+                    decoration-success="state == 'open'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_summary_employees_search" model="ir.ui.view">
+        <field name="name">summary.employees.search</field>
+        <field name="model">summary.employees</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_summary_employees_action" model="ir.actions.act_window">
+        <field name="name">Summary employees</field>
+        <field name="res_model">summary.employees</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sist_stock_quant_tree" model="ir.ui.view">
+        <field name="name">sist.stock.quant.tree</field>
+        <field name="model">stock.quant</field>
+        <field name="priority" eval="10"/>
+        <field name="arch" type="xml">
+            <tree string="SIST Inventory Stock" create="0" delete="0">
+                <field name="product_id" invisible="context.get('single_product', False)"/>
+                <field name="location_id" invisible="context.get('hide_location', False)"/>
+                <field name="lot_id" groups="stock.group_production_lot" invisible="context.get('hide_lot', False)"/>
+                <field name="package_id" groups="stock.group_tracking_lot"/>
+                <field name="owner_id" groups="stock.groyp_tracking_owner"/>
+                <field name="available_quantity"/>
+                <field name="quantity" string="On Hand Quantity"/>
+                <field name="product_uom_id" groups="uom.group_uom"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="location_open_quants_sist" model="ir.actions.act_window">
+        <field name="name">Current SISTEMAS Stock</field>
+        <field name="domain">[('location_id','in',('SIST/HP','SIST/HP PRODUCCION','SIST/IMACO','SIST/MARKETING','SIST/MARKETING/LISTAS'))]</field>
+        <field name="res_model">stock.quant</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+</odoo>

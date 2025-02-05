@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_res_partner_consult_vat_form" model="ir.ui.view">
+        <field name="name">res.partner.consult.vat.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="vat" position="after">
+                <field name="taxpayer_state" attrs="{'invisible': [('company_type','=','person')]}"/>
+                <field name="taxpayer_condition" attrs="{'invisible': [('company_type','=','person')]}"/>
+                <field name="taxpayer_type" attrs="{'invisible': [('company_type','=','person')]}"/>
+                <field name="trade_name" attrs="{'invisible': [('company_type','=','person')]}"/>
+                <field name="inscription_date" attrs="{'invisible': [('company_type','=','person')]}"/>
+                <field name="start_date" attrs="{'invisible': [('company_type','=','person')]}"/>
+                <field name="tax_residence" attrs="{'invisible': [('company_type','=','person')]}"/>
+                <field name="print_receipt" attrs="{'invisible': [('company_type','=','person')]}"/>
+                <field name="electronic_issuance" attrs="{'invisible': [('company_type','=','person')]}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

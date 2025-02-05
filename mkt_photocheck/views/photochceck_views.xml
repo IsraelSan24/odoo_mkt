@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_photocheck_tree" model="ir.ui.view">
+        <field name="name">photocheck.tree</field>
+        <field name="model">photocheck</field>
+        <field name="arch" type="xml">
+            <tree 
+                decoration-info="state == 'draft'" 
+                decoration-warning="state == 'to_do'"
+                decoration-success="state == 'done'"
+                decoration-danger="state == 'refused'">
+                <field name="name"/>
+                <field name="first_name"/>
+                <field name="last_name"/>
+                <field name="photocheck_brand_group_id"/>
+                <field name="brand_ids" widget="many2many_tags" optional="hide"/>
+                <field name="dni"/>
+                <field name="job_id"/>
+                <field name="complete_name" invisible="True"/>
+                <field name="state" widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-warning="state == 'to_do'"
+                    decoration-success="state == 'done'"
+                    decoration-danger="state == 'refused'"/>
+                <field name="user_id"/>
+                <field name="photocheck_supervisor_id"/>
+                <field name="state_duplicate" widget="badge"/>
+                <field name="request_date"/>
+                <field name="done_date" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                <field name="refused_date" attrs="{'invisible': [('state', '!=', 'refused')]}"/>
+                <field name="note"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_photocheck_form" model="ir.ui.view">
+        <field name="name">photocheck.form</field>
+        <field name="model">photocheck</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="button_to_do" string="Ready" icon="fa-paper-plane" type="object" class="oe_highlight" groups="mkt_photocheck.photocheck_user,mkt_photocheck.photocheck_designer,mkt_photocheck.photocheck_admin" attrs="{'invisible':[('state','in',('to_do','done'))]}"/>
+                    <button name="button_draft" string="return" icon="fa-reply" type="object" class="oe_highlight" groups="mkt_photocheck.photocheck_user,mkt_photocheck.photocheck_designer,mkt_photocheck.photocheck_admin" attrs="{'invisible':[('state','!=','to_do')]}"/>
+                    <button name="button_done" string="Done" icon="fa-check" type="object" class="oe_highlight" groups="mkt_photocheck.photocheck_designer,mkt_photocheck.photocheck_admin" attrs="{'invisible':[('state','!=','to_do')]}"/>
+                    <button name="button_refused" string="Refused" icon="fa-exclamation-triangle" type="object" class="oe_highlight" groups="mkt_photocheck.photocheck_designer,mkt_photocheck.photocheck_admin" attrs="{'invisible':[('state','!=','to_do')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,to_do,done"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Refused" bg_color="bg-danger"
+                        attrs="{'invisible':[('state','!=','refused')]}"/>
+                    <widget name="web_ribbon" title="Done" bg_color="bg-success"
+                        attrs="{'invisible':[('state','!=','done')]}"/>
+                    <field name="photo" widget="image" class="oe_avatar" force_save="True" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="True"/>                        
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="dni" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <field name="first_name" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <field name="last_name" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <field name="job_id" options="{'no_create':True,'no_open':True}" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                        </group>
+                        <group>
+                            <field name="photo_name" invisible="True"/>
+                            <field name="user_id" readonly="True" attrs="{'readonly':[('state','not in',('draft','refused'))]}" invisible="True"/>
+                            <field name="state_duplicate" widget="radio" options="{'horizontal':True}" readonly="True"/>
+                            <field name="photocheck_brand_group_id" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <field name="brand_ids" options="{'no_create':True,'no_open':True}" attrs="{'readonly':[('state','not in',('draft','refused'))]}" widget="many2many_tags" readonly="True"/>
+                            <field name="brand_counter" invisible="True"/>
+                            <field name="photocheck_supervisor_id" options="{'no_create': True}"/>
+                            <field name="active" invisible="True"/>
+                        </group>
+
+                    </group>
+                    <group string="Internal Notes">
+                        <field name="note" nolabel="1" placeholder="This note is only for internal purposes." attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_photocheck_kanban" model="ir.ui.view">
+        <field name="name">photocheck.kanban</field>
+        <field name="model">photocheck</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="name"/>
+                <field name="initial_name"/>
+                <field name="last_name"/>
+                <field name="job_id"/>
+                <field name="dni"/>
+                <field name="brand_ids" widget="many2many_tags"/>
+                <field name="state"/>
+                <field name="photocheck_supervisor_id"/>
+                <templates>
+                    <t t-name="kanban-box" t-attf-style="background-image: url('static/description/fotocheck.png')">
+                        <div class="oe_kanban_global_click d-flex">
+                            <div class="o_kanban_image">
+                                <div style="width:100px"><field name="photo" widget="image" class="o_image_64_contain"/></div>
+                                <div class="o_kanban_footer_text" style="width:100px"><field name="state_duplicate" widget="badge"
+                                    decoration-info="state_duplicate == 'new'" 
+                                    decoration-warning="state_duplicate == 'duplicate'"/>
+                                </div>
+                                <div>
+                                    <h6 class="text-muted mt-3">Supervisor: <field name="photocheck_supervisor_id"></field></h6>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_details ">
+                                <strong class="o_kanban_record_title d-flex flex-column p-10 justify-content-start">
+                                    <field name="name"/>
+                                    <h2><field name="initial_name"/></h2>
+                                    <h3><field name="last_name"/></h3>
+                                    <h3><field name="job_id"/></h3>                   
+                                    <h3><field name="dni"/></h3>
+                                    <h3 class="text-danger"><field name="photocheck_brand_group_id"/></h3>
+                                    <h3><field name="state" widget="badge"
+                                        decoration-info="state == 'draft'" 
+                                        decoration-warning="state == 'to_do'"
+                                        decoration-success="state == 'done'"
+                                        decoration-danger="state == 'refused'"/>
+                                    </h3>         
+                                </strong>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_photocheck_search" model="ir.ui.view">
+        <field name="name">photocheck.search</field>
+        <field name="model">photocheck</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" filter_domain="['|','|','|',('name','ilike',self),('first_name','ilike',self),('last_name','ilike',self),('dni','ilike',self)]" string="Buscar por DNI, Nombre o Apellido"/>
+                <field name="job_id"/>
+                <field name="photocheck_brand_group_id"/>
+                <field name="photocheck_supervisor_id"/>
+                <group expand="1" string="Group By">
+                    <filter string="Code" name="name" context="{'group_by':'name'}"/>
+                    <filter string="DNI" name="dni" context="{'group_by':'dni'}"/>
+                    <filter string="First Name" name="first_name" context="{'group_by':'first_name'}"/>
+                    <filter string="Last Name" name="last_name" context="{'group_by':'last_name'}"/>
+                    <filter string="Job" name="job_id" context="{'group_by':'job_id'}"/>
+                    <filter string="Brand" name="photocheck_brand_group_id" context="{'group_by':'photocheck_brand_group_id'}"/>
+                    <filter string="Supervisor" name="photocheck_supervisor_id" context="{'group_by':'photocheck_supervisor_id'}"/>
+                </group>
+                <separator/>
+                <filter name="inactive" string="Archived" domain="[('active','=',False)]" help="Show inactive requirements"/>
+                <searchpanel>
+                    <field name="photocheck_brand_group_id" string="Brands" enable_counters="1"/>
+                </searchpanel> 
+            </search>
+        </field>
+    </record>
+
+    <record id="view_photocheck_action" model="ir.actions.act_window">
+        <field name="name">Photocheck</field>
+        <field name="res_model">photocheck</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+</odoo>

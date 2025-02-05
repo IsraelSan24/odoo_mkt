@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="view_pending_settlement_wiz_form" model="ir.ui.view">
+            <field name="name">pending.settlement.wiz.form</field>
+            <field name="model">pending.settlement</field>
+            <field name="arch" type="xml">
+                <form string="Pending Settlement Report">
+                    <footer>
+                        <button name="action_print_xlsx" string="Generate report" type="object" icon="fa-print" class="oe_highlight"/>
+                        <button special="cancel" type="object" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_pending_settlement_view" model="ir.actions.act_window">
+            <field name="name">Pending settlement</field>
+            <field name="res_model">pending.settlement</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_pending_settlement_wiz_form"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+
+</odoo>

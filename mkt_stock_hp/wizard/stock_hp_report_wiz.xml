@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="view_stock_hp_report_wiz_form" model="ir.ui.view">
+            <field name="name">stock.hp.report.wiz.form</field>
+            <field name="model">stock.hp.report</field>
+            <field name="arch" type="xml">
+                <form string="Hp Stock Report">
+                    <footer>
+                        <button name="action_print_xlsx" string="Generate HP Stock Report" type="object" icon="fa-print" class="oe_highlight"/>
+                        <button special="cancel" type="object" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_stock_hp_report_view" model="ir.actions.act_window">
+            <field name="name">HP Stock Report</field>
+            <field name="res_model">stock.hp.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_stock_hp_report_wiz_form"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+
+</odoo>

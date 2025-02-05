@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_documental_requirement_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=o.full_name.partner_id.lang)"/>
+            <html>
+                <link rel="stylesheet" type="text/css" href="/mkt_documental_managment/static/src/css/documental_requirement_styles.css"/>
+                <div class="container">
+                    <div class="row mb-2">
+                        <div class="col-8">
+                            <img t-if="o.env.user.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.env.user.company_id.logo)" style="max-height:100px;max-width:200px;"/>
+                            <br/>
+                            <span style="font-size: 14px;margin-top:4px;">JR. LIBERTAD 757 - MAGDALENA DEL MAR - LIMA - LIMA</span>
+                        </div>
+                        <div class="col-4">
+                            <div class="border border-1 o_rounded o_rounded_lg overflow-hidden" style="text-align:center;">
+                                <div class="bg-danger pt-1 text-white o_flex o_flex_column p-2">
+                                    <div><h4 class="font-weight-bold" t-esc="o.name"></h4></div>
+                                </div>
+                                <div class="p-1">
+                                    <t t-if="o.unify">
+                                        <div><span t-esc="o.settlement_intern_control_received"/></div>
+                                    </t>
+                                    <t t-else="">
+                                        <div><span t-esc="o.intern_control_received"/></div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:13px">
+                        <div class="col-md-12 table-responsive">
+                            <table class="table table-condensed table-borderless border-botton border-top border-2 border-danger" cellspacing="5" cellpadding="5">
+                                <tbody style="font-size: 13px;">
+                                    <tr>
+                                        <th>RESPONSIBLE</th>
+                                        <td>: <span t-esc="o.full_name.partner_id.name"/></td>
+                                        <th>DNI/RUC</th>
+                                        <td>: <span t-esc="o.full_name.partner_id.vat"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>PAID TO</th>
+                                        <td>: <span t-esc="o.paid_to.name"/></td>
+                                        <t t-if="o.card_payment">
+                                            <td>Paid with card</td>
+                                        </t>
+                                        <t t-else="">
+                                            <th>BANK</th>
+                                            <td>: <span t-esc="o.bank.name"/></td>
+                                        </t>
+                                    </tr>
+                                    <tr>
+                                        <th>DNI/RUC</th>
+                                        <td>: <span t-esc="o.paid_to.vat"/></td>
+                                        <t t-if="o.card_payment"></t>
+                                        <t t-else="">
+                                            <th>ACCOUNT NUMBER</th>
+                                            <td>: <span t-esc="o.customer_account_number"/></td>
+                                        </t>
+                                    </tr>
+                                    <tr>
+                                        <th>CURRENCY</th>
+                                        <td>: <span style="text-transform: uppercase;" t-esc="o.amount_currency_type"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>BUDGET</th>
+                                        <td>: <span t-esc="o.budget_id.name"/></td>
+                                        <th>COST CENTER</th>
+                                        <td>: <span t-esc="o.cost_center_id.code"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>CUSTOMER</th>
+                                        <td>: <span t-esc="o.partner_id.name"/></td>
+                                        <th>ACTIVITY</th>
+                                        <td>: <span t-esc="o.campaign_id.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>CONCEPT</th>
+                                        <td colspan="4">: <span t-esc="o.concept"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>F. OPERATION</th>
+                                        <td>: <span t-esc="o.payment_date"/></td>
+                                        <td>N°. OPERATION</td>
+                                        <td>: <span t-esc="o.operation_number"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>DETAIL</th>
+                                        <t t-if="o.detail">
+                                            <td colspan="3">: <span t-esc="o.detail"/></td>
+                                        </t>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:13px">
+                        <div class="col-md-12 table-responsive">
+                            <table class="table table-condensed table-borderless border-botton border-top border-2 border-danger" cellspacing="5" cellpadding="5">
+                                <tbody style="font-size: 13px;">
+                                    <tr>
+                                        <th>Total Amount</th>
+                                        <td>:
+                                            <t t-if="o.amount_currency_type == 'soles'">
+                                                <span t-esc="o.amount_soles"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-esc="o.amount_uss"/>
+                                            </t>
+                                        </td>
+                                        <th>Total to pay</th>
+                                        <td>: <span t-esc="o.total_vendor"/></td>
+                                        <t t-if="o.total_detraction > 0">
+                                            <th>Detraction</th>
+                                            <td>: <span t-esc="o.total_detraction"/></td>
+                                        </t>
+                                        <t t-if="o.total_retention > 0">
+                                            <th>Retention</th>
+                                            <td>: <span t-esc="o.total_retention"/></td>
+                                        </t>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row table_content">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">DATE</th>
+                                    <th class="text-left">VENDOR</th>
+                                    <th class="text-left">DOCUMENT TYPE</th>
+                                    <th class="text-left">DOCUMENT</th>
+                                    <th class="text-left">REASON</th>
+                                    <th class="text-left">DET.</th>
+                                    <th class="text-left">RET.</th>
+                                    <th class="text-left">AMOUNT</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size:11px;">
+                                <t t-set="total_amount" t-value="0"/>
+                                <t t-set="total_detraction" t-value="0"/>
+                                <t t-set="total_retention" t-value="0"/>
+                                <t t-foreach="o.settlement_ids" t-as="line">
+                                    <tr>
+                                        <td class="text-left"><span t-esc="line.date"/></td>
+                                        <td class="text-left"><span t-esc="line.dni_ruc"/>/<span t-esc="line.partner"/></td>
+                                        <td class="text-left"><span t-esc="line.document_type_id.name"/></td>
+                                        <td class="text-left"><span t-esc="line.document"/></td>
+                                        <td class="text-left"><span t-esc="line.reason"/></td>
+                                        <t t-if="line.detraction">
+                                            <td class="text-left"><span t-esc="line.detraction"/>(<span t-esc="line.service_type_id.percentage"/>%)</td>
+                                        </t>
+                                        <t t-else="">
+                                            <td class="text-left"><span t-esc="line.detraction"/></td>
+                                        </t>
+                                        <t t-if="line.retention">
+                                            <td class="text-left"><span t-esc="line.retention"/>(<span t-esc="line.service_type_id.percentage"/>%)</td>
+                                        </t>
+                                        <t t-else="">
+                                            <td class="text-left"><span t-esc="line.retention"/></td>
+                                        </t>
+                                        <td class="text-left"><span t-esc="line.amount"/></td>
+                                    </tr>
+                                    <t t-set="total_amount" t-value="total_amount + line.amount"/>
+                                </t>
+                            </tbody>
+                            <tfoot style="font-size:11px;">
+                                <tr>
+                                    <td colspan="7">Total: </td>
+                                    <td colspan="1"><span t-esc="total_amount"/></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- <br/>
+                    <div class="row">
+                        <div class="col-md-12 d-flex align-items-center justify-content-between table-responsive">
+                            <table class="table table-condensed table-borderless border-botton border-top border-2 border-danger">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <p>Required amount: <span t-esc="o.amount_char"/></p>
+                                        </td>
+                                        <td>
+                                            <th>Total :</th>
+                                            <t t-if="o.amount_soles > 0">
+                                                <td class="text-right pr-4"><span t-esc="o.amount_soles" t-options="{'widget':'float','precision':2}"/></td>
+                                            </t>
+                                            <t t-if="o.amount_uss > 0">
+                                                <td class="text-right pr-4"><span t-esc="o.amount_uss" t-options="{'widget':'float','precision':2}"/></td>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> -->
+
+                    <br/>
+                    <t t-if="not o.unify">
+                        <div class="row">
+                            <div class="col-6 text-center" style="margin-top:15px;">
+                                <t t-if="o.petitioner_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.petitioner_signature)"/></t>
+                                <div>Petitioner</div>
+                            </div>
+                            <div class="col-6 text-center" style="margin-top:15px;">
+                                <t t-if="o.boss_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.boss_signature)"/></t>
+                                <div>Executive</div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    
+                        <div class="row">
+                            <t t-if="o.budget_executive_signature">
+                                <div class="col-4 text-center" style="margin-top:15px;">
+                                    <t t-if="o.intern_control_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.intern_control_signature)"/></t>
+                                    <div>Intern Control</div>
+                                </div>
+                                <div class="col-4 text-center" style="margin-top:15px;">
+                                    <t t-if="o.budget_executive_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.budget_executive_signature)"/></t>
+                                    <div>Gerency</div>
+                                </div>
+                                <div class="col-4 text-center" style="margin-top:15px;">
+                                    <t t-if="o.administration_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.administration_signature)"/></t>
+                                    <div>Administration</div>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="col-6 text-center" style="margin-top:15px;">
+                                    <t t-if="o.intern_control_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.intern_control_signature)"/></t>
+                                    <div>Intern Control</div>
+                                </div>
+                                <div class="col-6 text-center" style="margin-top:15px;">
+                                    <t t-if="o.administration_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.administration_signature)"/></t>
+                                    <div>Administration</div>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div class="row">
+                            <div class="col-6 text-center" style="margin-top:15px;">
+                                <t t-if="o.settlement_petitioner_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.settlement_petitioner_signature)"/></t>
+                                <div>Petitioner</div>
+                            </div>
+                            <div class="col-6 text-center" style="margin-top:15px;">
+                                <t t-if="o.settlement_boss_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.settlement_boss_signature)"/></t>
+                                <div>Executive</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <t t-if="o.settlement_budget_executive_signature">
+                                <div class="col-4 text-center" style="margin-top:15px;">
+                                    <t t-if="o.settlement_intern_control_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.settlement_intern_control_signature)"/></t>
+                                    <div>Intern Control</div>
+                                </div>
+                                <div class="col-4 text-center" style="margin-top:15px;">
+                                    <t t-if="o.settlement_budget_executive_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.settlement_budget_executive_signature)"/></t>
+                                    <div>Gerency</div>
+                                </div>
+                                <div class="col-4 text-center" style="margin-top:15px;">
+                                    <t t-if="o.settlement_administration_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.settlement_administration_signature)"/></t>
+                                    <div>Administration</div>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="col-6 text-center" style="margin-top:15px;">
+                                    <t t-if="o.settlement_intern_control_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.settlement_intern_control_signature)"/></t>
+                                    <div>Intern Control</div>
+                                </div>
+                                <div class="col-6 text-center o_flex o_flex_column" style="margin-top:15px;">
+                                    <t t-if="o.settlement_administration_signature"><img style="max-height:100px;max-width:200px;" t-att-src="image_data_uri(o.settlement_administration_signature)"/></t>
+                                    <div>Administration</div>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                </div>
+            </html>
+        </t>
+    </template>
+
+    
+
+    <template id="report_requirement">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="mkt_documental_managment.report_documental_requirement_document" t-lang="o.full_name.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

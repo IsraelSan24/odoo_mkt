@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_employer_signature_tree" model="ir.ui.view">
+        <field name="name">employer.signature.tree</field>
+        <field name="model">employer.signature</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="signature_default"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_employer_signature_form" model="ir.ui.view">
+        <field name="name">employer.signature.form</field>
+        <field name="model">employer.signature</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="signature_default"/>
+                        </group>
+                        <group>
+                            <field name="signature" widget="image"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_employer_signature_action" model="ir.actions.act_window">
+        <field name="name">Employer signature</field>
+        <field name="res_model">employer.signature</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

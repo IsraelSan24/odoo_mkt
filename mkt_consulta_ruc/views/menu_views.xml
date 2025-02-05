@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="ruc_root" name="Consulta Ruc" web_icon="mkt_consulta_ruc,static/description/icon.png"/>
+
+    <menuitem id="consulta_ruc" name="Consulta RUC" action="action_view_consulta_ruc" parent="ruc_root" sequence="0"/>
+
+</odoo>

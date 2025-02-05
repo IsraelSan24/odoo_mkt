@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_self_migrator_tree" model="ir.ui.view">
+        <field name="name">self.migrator.tree</field>
+        <field name="model">self.migrator</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_self_migrator_form" model="ir.ui.view">
+        <field name="name">self.migrator.form</field>
+        <field name="model">self.migrator</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <group string="1. Settlement Detail -> Settlement">
+                            <button name="migrate_settlement" string="Mig. settlement detail" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                        <group string="2. Settlement Detail Line -> Settlement Line">
+                            <button name="migrate_settlement_line" string="Mig. settlement detail line" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="3. Field state -> requirement state">
+                            <button name="update_requirement_state" string="Update state in requirement" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                        <group string="4. Field state -> settlement state">
+                            <button name="update_settlement_state" string="Update state in settlement" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="5. Field unify -> False">
+                            <button name="update_unify" string="Update -> Set unify to False" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                        <group string="6. Update attachment documental.settlements -> settlement">
+                            <button name="update_settlement_attachment" string="Update Attachment settlement" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="7. Update settlement line attachments">
+                            <button name="update_settlement_detail_attachment" string="Update Attachment settlement line" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_self_migrator_action" model="ir.actions.act_window">
+        <field name="name">Migrator</field>
+        <field name="res_model">self.migrator</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

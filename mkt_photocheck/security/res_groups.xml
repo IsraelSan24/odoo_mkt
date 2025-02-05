@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="photocheck_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="mkt_photocheck.module_category_photocheck"/>
+        </record>
+
+        <record id="photocheck_boss" model="res.groups">
+            <field name="name">Boss</field>
+            <field name="category_id" ref="mkt_photocheck.module_category_photocheck"/>
+        </record>
+
+        <record id="photocheck_designer" model="res.groups">
+            <field name="name">Designer</field>
+            <field name="category_id" ref="mkt_photocheck.module_category_photocheck"/>
+        </record>
+
+        <record id="photocheck_admin" model="res.groups">
+            <field name="name">Admin</field>
+            <field name="category_id" ref="mkt_photocheck.module_category_photocheck"/>
+        </record>
+
+    </data>
+
+</odoo>

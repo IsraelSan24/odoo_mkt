@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_tree_requirements" model="ir.ui.view">
+        <field name="name">view.tree.managment</field>
+        <field name="model">documental.requirements</field>
+        <field name="arch" type="xml">
+            <tree
+                decoration-success="settlement_state == 'settled'">
+                <header>
+                    <button string="Assign RQ to PM" name="assign_requirement_to_mobility" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Payment line" name="update_payment_lines" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Compute lines" name="set_line_number" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Update amounts" name="compute_settlement_amounts" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Download formats" name="download_attach_files" type="object" class="oe_highlight"/>
+                </header>
+                <field name="is_refund" invisible="True"/>
+                <field name="timer_state" readonly="True" optional="hide"/>
+                <field name="intern_control_received" optional="hide"/>
+                <field name="petitioner_signed_on" optional="hide"/>
+                <field name="group_administration" invisible="True"/>
+                <field name="urgency" widget="priority" optional="show" nolabel="1" readonly="True"/>
+                <field name="name"/>
+                <field name="paid_to"/>
+                <field name="dni_or_ruc" optional="hide"/>
+                <field name="user_boss_signed_id" optional="hide" groups="mkt_documental_managment.documental_settlement_intern_control_read"/>
+                <field name="user_budget_executive_signed_id" optional="hide" groups="mkt_documental_managment.documental_settlement_intern_control_read"/>
+                <field name="user_intern_control_signed_id" optional="hide" groups="mkt_documental_managment.documental_settlement_intern_control_read"/>
+                <field name="user_administration_signed_id" optional="hide" groups="mkt_documental_managment.documental_settlement_intern_control_read"/>
+                <field name="bank" optional="hide"/>
+                <field name="customer_account_number" optional="hide"/>
+                <field name="amount_currency_type" invisible="True"/>
+                <field name="amount_soles" optional="show"/>
+                <field name="amount_uss" optional="show"/>
+                <field name="concept" optional="show"/>
+                <field name="budget_id" optional="show"/>
+                <field name="cost_center_id" optional="show"/>
+                <field name="detraction_amount" optional="hide"/>
+                <field name="full_name" widget="many2one_avatar_user" optional="show"/>
+                <button name="button_accounting_check" icon="fa-linux" type="object"
+                    class="oe_highlight" groups="mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_admin"/>
+                <field name="account_check" optional="hide"/>
+                <field name="refund_requirement_id" optional="hide"/>
+                <field name="unify" widget="boolean_toggle" readonly="1"/>
+                <field name="requirement_state" widget="badge"
+                    decoration-muted="requirement_state == 'draft'"
+                    decoration-warning="requirement_state in ('executive','responsible','intern_control','administration')"
+                    decoration-info="requirement_state == 'to_settle' and timer_state == 'on_time'"
+                    decoration-success="requirement_state == 'settled'"
+                    decoration-danger="requirement_state == 'refused' or ( requirement_state == 'to_settle' and timer_state == 'late' )"/>
+                <field name="settlement_state" widget="badge"
+                    decoration-muted="settlement_state == 'draft'"
+                    decoration-warning="settlement_state in ('executive','responsible','intern_control','administration')"
+                    decoration-success="settlement_state in 'settled'"
+                    decoration-danger="settlement_state in 'refused'"/>
+                <field name="payment_date" optional="hide"/>
+                <field name="operation_number" optional="hide"/>
+                <field name="check_number" optional="hide"/>
+                <button name="button_current_rq"
+                    type="object" class="fa fa-tripadvisor" readonly="1"
+                    groups="mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_admin"/>
+                <field name="in_bank" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_requirements_restricted_form" model="ir.ui.view">
+        <field name="name">requirements.restricted.form</field>
+        <field name="model">documental.requirements</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="requirement_state" invisible="True"/>
+                    <field name="settlement_state" invisible="True"/>
+                    <widget name="web_ribbon" title="Settled" bg_color="bg-success"
+                        attrs="{'invisible':[('requirement_state','!=','settled'),('settlement_state','!=','settled')]}"/>
+                    <group>
+                        <group>
+                            <h1>
+                                <field name="urgency" widget="priority" class="mr-3" attrs="{'invisible': [('id','=',False)]}"/>
+                                <field name="name" readonly="True"/>
+                            </h1>
+                        </group>
+                        <group>
+                            <field name="unify" widget="boolean_toggle"
+                                attrs="{'readonly':['|',('requirement_state','not in',('draft','refused')),('settlement_state','not in',('draft','refused'))]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                        </group>
+                        <group>
+                            <button name="button_in_bank" type="object" class="fa fa-credit-card"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="current_partner_bank_ids" widget="many2many_tags"
+                                groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <field name="paid_to" readonly="True"/>
+                            <field name="dni_or_ruc" force_save="True" readonly="True"/>
+                            <field name="amount_currency_type" widget='radio' readonly="True" invisible="True"/>
+                            <field name="total_detraction" readonly="1" groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <field name="total_detraction_text" readonly="1" groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <field name="total_retention" readonly="1" groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <field name="total_retention_text" readonly="1" groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <field name="to_pay_supplier" attrs="{'invisible':[('unify','=',True)]}"/>
+                            <field name="total_vendor" attrs="{'invisible':[('unify','=',False)]}"/>
+                            <!-- <field name="total_vendor_text" readonly="1"/> -->
+                        </group>
+                        <group>
+                            <field name="card_payment" readonly="True"/>
+                            <field name="in_bank" invisible="True"/>
+                            <field name="bank" readonly="True" attrs="{'invisible':[('card_payment','=',True)]}"/>
+                            <field name="customer_account_number" readonly="True" attrs="{'invisible':[('card_payment','=',True)]}"/>
+                            <field name="detail" readonly="True"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Requirement" attrs="{'invisible':[('unify','=',True)]}">
+                            <header>
+                                <field name="requirement_state" widget="statusbar" statusbar_visible="executive,responsible,intern_control,administration"/>
+                            </header>
+                            <field name="restricted_requirement_detail_ids" options="{'no_open':'1'}">
+                                <tree create="0" delete="0">
+                                    <field name="date"/>
+                                    <field name="ruc"/>
+                                    <field name="document_type" options="{'no_create':True,'no_edit':True,'no_open':True}"/>
+                                    <field name="document"/>
+                                    <field name="to_pay" sum="Vendor total"/>
+                                    <field name="detraction" sum="Detraction total"/>
+                                    <field name="retention" sum="Retention total"/>
+                                    <field name="amount" sum="Amount total"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Settlement">
+                            <header>
+                                <field name="settlement_state" widget="statusbar" statusbar_visible="executive,responsible,intern_control,administration"/>
+                            </header>
+                            <field name="lock_settlement_ids" options="{'no_open':'1'}">
+                                <tree create="0" delete="0">
+                                    <field name="date"/>
+                                    <field name="dni_ruc"/>
+                                    <field name="partner"/>
+                                    <field name="document_type_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+                                    <field name="document"/>
+                                    <field name="reason"/>
+                                    <field name="settle_igv" optional="hide"/>
+                                    <field name="settle_amount" optional="hide"/>
+                                    <field name="vendor" sum="Vendor total"/>
+                                    <field name="detraction" sum="Detraction total"/>
+                                    <field name="retention" sum="Retention total"/>
+                                    <field name="amount" sum="Amount total"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_form_requirements" model="ir.ui.view">
+        <field name="name">view.form.managment</field>
+        <field name="model">documental.requirements</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Compute lines" name="set_line_number" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Compute vendor/ret/det" name="compute_total_vendor_retention_detraction" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Attach all in chatter" name="new_settlement_attach" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Update vendor" name="compute_settlement_vendor" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Modify requirement budget" name="modify_requirement_budget" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_intern_control"/>
+                    <button string="Compute retention/vendor" name="compute_retention_vendor" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Compute lines" name="compute_settlement_total_lines" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Compute amounts" name="compute_settlement_amounts" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Update amount" name="compute_amount_soles_uss" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Update balance" name="button_update_balance" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Compute balance" name="compute_balance" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <field name="is_ruc" invisible="True"/>
+                    <field name="is_petitioner_signed" invisible="True"/>
+                    <field name="is_boss_signed" invisible="True"/>
+                    <field name="is_budget_executive_signed" invisible="True"/>
+                    <field name="is_intern_control_signed" invisible="True"/>
+                    <field name="is_administration_signed" invisible="True"/>
+                    <field name="settlement_state" invisible="True"/>
+                    <field name="settlement_id" invisible="True"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_settlement" icon="fa-newspaper-o" string="Settlement"
+                            groups="mkt_documental_managment.documental_requirement_admin"/>
+                    </div>
+                    <widget name="web_ribbon" title="Settled" bg_color="bg-success"
+                        attrs="{'invisible':[('requirement_state','!=','settled'),('settlement_state','!=','settled')]}"/>
+                    <group>
+                        <group>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </group>
+                        <group>
+                            <field name="unify" widget="boolean_toggle"
+                                attrs="{'readonly':['|',('requirement_state','not in',('draft','refused')),('settlement_state','not in',('draft','refused'))]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="user_boss_signed_id" groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <field name="user_budget_executive_signed_id" groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <field name="user_intern_control_signed_id" groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <field name="user_administration_signed_id" groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <field name="paid_to" required="True" attrs="{'readonly':['|',('requirement_state','not in',('draft','refused')),('settlement_state','not in',('draft','refused'))]}"/>
+                            <field name="dni_or_ruc" force_save="True" readonly="True"/>
+                            <field name="card_payment" attrs="{'readonly':['|',('requirement_state','not in',('draft','refused')),('settlement_state','not in',('draft','refused'))]}"/>
+                        </group>
+                        <group>
+                            <field name="current_user" groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <field name="is_current_executive" groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <field name="timer_state" invisible="True"/>
+                            <field name="current_partner_bank_ids" widget="many2many_tags" groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <field name="bank" attrs="{'readonly':['|',('requirement_state','not in',('draft','refused')),('settlement_state','not in',('draft','refused'))], 'invisible':[('card_payment','=',True)]}" options="{'no_create':True,'no_edit':True}"/>
+                            <field name="customer_account_number" force_save="True" attrs="{'invisible':[('card_payment','=',True)]}" readonly="True"/>
+                            <field name="refund_requirement_id" readonly="True" attrs="{'invisible':[('refund_requirement_id','=',False)]}" options="{'no_create':True,'no_edit':True}"/>
+                            <field name="in_bank" widget="boolean_toggle" groups="mkt_documental_managment.documental_requirement_administration"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <label for="budget_id" string="Budget"/>
+                            <div class="o_address_format">
+                                <field name="budget_id" required="True" options="{'no_create':True,'no_edit':True}"
+                                    attrs="{'readonly':['|',('requirement_state','not in',('draft','refused')),('settlement_state','not in',('draft','refused'))]}"/>
+                                <field name="show_budget_detail" class="o_address_city"/>
+                            </div>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="partner_bool" invisible="True"/>
+                            <field name="cost_center_bool" invisible="True"/>
+                            <field name="year_month_bool" invisible="True"/>
+                            <field name="campaign_bool" invisible="True"/>
+                            <field name="start_time" invisible="True"/>
+                            <field name="partner_id" options="{'no_open':True}" attrs="{'invisible':[('show_budget_detail','=',False)]}"/>
+                            <field name="cost_center_id" attrs="{'invisible':[('show_budget_detail','=',False)]}"/>
+                            <field name="year_month_id" options="{'no_open':True}" attrs="{'invisible':[('show_budget_detail','=',False)]}"/>
+                            <field name="campaign_id" options="{'no_open':True}" attrs="{'invisible':[('show_budget_detail','=',False)]}"/>
+                            <field name="active" invisible="True"/>
+                        </group>
+                        <group>
+                            <field name="employee_id" invisible="True" readonly="True"/>
+                            <field name="department_id" invisible="True"/>
+                            <field name="refund_employee_id" invisible="True"/>
+                            <field name="amount_currency_type" widget='radio' attrs="{'readonly':['|',('requirement_state','not in',('draft','refused')),('settlement_state','not in',('draft','refused'))]}" options="{'horizontal': true}"/>
+                            <field name="amount_soles" attrs="{'invisible': [('amount_currency_type', '!=', 'soles')]}" force_save="True" readonly="True"/>
+                            <field name="amount_uss" attrs="{'invisible': [('amount_currency_type', '!=', 'dolares')]}" force_save="True" readonly="True"/>
+                            <field name="balance"/>
+                        </group>
+                        <group>
+                            <field name="concept" attrs="{'readonly':['|',('requirement_state','not in',('draft','refused')),('settlement_state','not in',('draft','refused'))]}"/>
+                        </group>
+                        <group>
+                            <field name="detail" attrs="{'readonly':['|',('requirement_state','not in',('draft','refused')),('settlement_state','not in',('draft','refused'))]}"/>
+                        </group>
+                    </group>
+                    <group groups="mkt_documental_managment.documental_requirement_administration" attrs="{'invisible':[('unify','=',False)]}">
+                    <!-- <group groups="mkt_documental_managment.documental_requirement_administration" invisible="1"> -->
+                        <group>
+                            <field name="payment_date" attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
+                            <field name="check_or_operation" widget="radio" options="{'horizontal': True}"
+                                attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="payment_bank_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}" attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
+                            <field name="operation_number" attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
+                            <field name="requirement_payroll_id" attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
+                        </group>
+                    </group>
+                    <group groups="mkt_documental_managment.documental_requirement_administration" attrs="{'invisible':[('unify','=',True)]}">
+                    <!-- <group groups="mkt_documental_managment.documental_requirement_administration" invisible="1"> -->
+                        <group>
+                            <!-- <field name="in_bank" invisible="True"/> -->
+                            <!-- <field name="payment_date" attrs="{'readonly':['|',('requirement_state','!=','administration'),('settlement_state','!=','administration')]}"/> -->
+                            <field name="payment_date" attrs="{'readonly':[('requirement_state','!=','administration')]}" force_save="1"/>
+                            <!-- <field name="check_or_operation" widget="radio" attrs="{'readonly':['|',('requirement_state','!=','administration'),('settlement_state','!=','administration')]}"/> -->
+                            <field name="check_or_operation" widget="radio" attrs="{'readonly':[('requirement_state','!=','administration')]}" force_save="1"/>
+                            <field name="repeated" invisible="True"/>
+                        </group>
+                        <group>
+                            <!-- <field name="operation_number" attrs="{'invisible': [('check_or_operation','=','check')],'readonly':['|',('requirement_state','!=','administration'),('settlement_state','!=','administration')]}"/> -->
+                            <field name="payment_bank_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}" attrs="{'readonly':[('requirement_state','!=','administration')]}" force_save="1"/>
+                            <field name="operation_number" attrs="{'invisible': [('check_or_operation','=','check')],'readonly':[('requirement_state','!=','administration')]}" force_save="1"/>
+                            <field name="check_number" attrs="{'invisible': [('check_or_operation','=','operation')],'readonly':[('requirement_state','!=','administration')]}" force_save="1"/>
+                            <field name="requirement_payroll_id" attrs="{'readonly':[('requirement_state','!=','administration')]}" force_save="1"/>
+                        </group>
+                    </group>
+                    <group invisible="True">
+                        <group>
+                            <field name="full_name" readonly="True"/>
+                            <field name="dni" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="date" readonly="True"/>
+                        </group>
+                    </group>
+                    <group groups="mkt_documental_managment.documental_requirement_admin">
+                        <group>
+                            <field name="settlement_total_lines"/>
+                            <field name="total_paid"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Justifications" groups="mkt_documental_managment.documental_requirement_admin">
+                            <!-- <field name="requirement_detail_justification_ids" mode="tree" attrs="{'invisible':[('state','not in',('draft','refused'))]}" options="{'no_open': '1'}"> -->
+                            <field name="requirement_detail_justification_ids" mode="tree" options="{'no_open': '1'}">
+                                <tree create="1" editable="bottom" delete="1">
+                                    <field name="partner"/>
+                                    <field name="document_filename" invisible="True"/>
+                                    <field name="document_file" widget="binary" filename="document_filename"/>
+                                    <field name="reason"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                </tree>
+                            </field>
+                            <!-- <field name="restricted_requirement_detail_justification_ids" mode="tree" attrs="{'invisible':[('state','in',('draft','refused'))]}" options="{'no_open': '1'}"> -->
+                            <field name="restricted_requirement_detail_justification_ids" mode="tree" options="{'no_open': '1'}">
+                                <tree create="0" delete="0">
+                                    <field name="partner"/>
+                                    <field name="document_filename" invisible="True"/>
+                                    <field name="document_file" widget="binary" filename="document_filename"/>
+                                    <field name="reason"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Requirement" attrs="{'invisible':[('unify','!=',False)]}">
+                            <header>
+                                <button string="Sign" name="button_petitioner_signature"
+                                    icon="fa-pencil-square-o" type="object" class="oe_highlight"
+                                    attrs="{'invisible':[('requirement_state','not in',('draft','refused'))]}"
+                                    groups="mkt_documental_managment.documental_requirement_user"/>
+
+                                <button string="Sign" name="button_boss_signature"
+                                    icon="fa-pencil-square-o" type="object" class="oe_highlight"
+                                    attrs="{'invisible':['|',('requirement_state','!=','executive'),('is_current_executive','=',False)]}"
+                                    groups="mkt_documental_managment.documental_requirement_boss"/>
+                                <button string="Refuse" name="button_refuse_boss" type="object" class="oe_highlight"
+                                    icon="fa-thumbs-o-down" attrs="{'invisible':['|',('requirement_state','!=','executive'),('is_current_executive','=',False)]}"
+                                    groups="mkt_documental_managment.documental_requirement_boss"
+                                    confirm="Please confirm to refuse"/>
+
+                                <button string="Sign" name="button_budget_executive_signature"
+                                    icon="fa-pencil-square-o" type="object" class="oe_highlight"
+                                    attrs="{'invisible':[('requirement_state','!=','responsible')]}"
+                                    groups="mkt_documental_managment.documental_requirement_budget_executive"/>
+                                <button string="Refuse" name="button_refuse_budget_executive" type="object" class="oe_highlight"
+                                    icon="fa-thumbs-o-down" attrs="{'invisible':[('requirement_state','!=','responsible')]}"
+                                    groups="mkt_documental_managment.documental_requirement_budget_executive"
+                                    confirm="Please confirm to refuse"/>
+
+                                <button string="Sign" name="button_intern_control_signature"
+                                    icon="fa-pencil-square-o" type="object" class="oe_highlight"
+                                    attrs="{'invisible':[('requirement_state','!=','intern_control')]}"
+                                    groups="mkt_documental_managment.documental_requirement_intern_control"/>
+                                <button string="Refuse" name="button_refuse_intern_control" type="object" class="oe_highlight"
+                                    icon="fa-thumbs-o-down" attrs="{'invisible':[('requirement_state','!=','intern_control')]}"
+                                    groups="mkt_documental_managment.documental_requirement_intern_control"
+                                    confirm="Please confirm to refuse"/>
+
+                                <button string="Sign" name="button_administration_signature"
+                                    icon="fa-pencil-square-o" type="object" class="oe_highlight"
+                                    attrs="{'invisible':[('requirement_state','!=','administration')]}"
+                                    groups="mkt_documental_managment.documental_requirement_administration"/>
+                                <button string="Refuse" name="button_refuse_administration" type="object" class="oe_highlight"
+                                    icon="fa-thumbs-o-down" attrs="{'invisible':[('requirement_state','!=','administration')]}"
+                                    groups="mkt_documental_managment.documental_requirement_administration"
+                                    confirm="Please confirm to refuse"/>
+
+                                <button string="Refuse" name="button_refuse_admin" type="object" class="oe_highlight"
+                                    icon="fa-thumbs-o-down" attrs="{'invisible':['|',('requirement_state','!=','to_settle'),('settlement_state','=','settled')]}"
+                                    groups="mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_admin"
+                                    confirm="Please confirm to refuse"/>
+
+                                <field name="requirement_state" widget="statusbar" statusbar_visible="executive,responsible,intern_control,administration"/>
+                            </header>
+                            <!-- <div class="alert alert-warning" role="alert" attrs="{'invisible':[('repeated','=',False)]}">
+                                <field name="repeated_document" style="color:red;" readonly="True" force_save="True"/>
+                            </div> -->
+                            <div class="alert alert-warning" role="alert" attrs="{'invisible':[('repeated_document','=',False)]}">
+                                <field name="repeated_document" style="color:red;" readonly="True" force_save="True"/>
+                            </div>
+                            <field name="requirement_detail_ids" attrs="{'readonly':[('requirement_state','not in',('draft','refused'))]}"
+                                groups="mkt_documental_managment.documental_requirement_user,mkt_documental_managment.documental_requirement_boss,mkt_documental_managment.documental_requirement_budget_executive">
+                                <tree>
+                                    <field name="sequence_handle" widget="handle"/>
+                                    <field name="repeated" invisible="True"/>
+                                    <field name="date"/>
+                                    <field name="ruc"/>
+                                    <field name="partner"/>
+                                    <field name="document_type" options="{'no_create':True,'no_edit':True,'no_open':True}"/>
+                                    <field name="document"/>
+                                    <field name="document_filename" invisible="True"/>
+                                    <field name="document_file" widget="binary" filename="document_filename"/>
+                                    <field name="reason"/>
+                                    <!-- <field name="to_pay"/>
+                                    <field name="detraction"/>
+                                    <field name="retention"/>
+                                    <field name="amount" sum="Total Amount"/> -->
+                                    <!-- <button name="action_show_details" type="object" icon="fa-list" width="0.1"/> -->
+                                    <field name="required_amount" sum="Total amount"/>
+                                    <field name="required_igv" sum="Total IGV"/>
+                                </tree>
+                            </field>
+                            <field name="restricted_requirement_detail_ids" attrs="{'readonly':[('requirement_state','!=','intern_control')]}"
+                                groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_intern_control_read">
+                                <tree create="0" delete="0">
+                                    <field name="repeated" invisible="True"/>
+                                    <field name="date"/>
+                                    <field name="ruc"/>
+                                    <field name="partner"/>
+                                    <field name="document_type" options="{'no_create':True,'no_edit':True,'no_open':True}"/>
+                                    <field name="document"/>
+                                    <!-- <field name="document_filename" invisible="True"/> -->
+                                    <!-- <field name="document_file" widget="binary" filename="document_filename"/> -->
+                                    <field name="reason"/>
+                                    <field name="required_igv" optional="hide" sum="Required IGV total"/>
+                                    <field name="required_amount" optional="hide" sum="Required amount total"/>
+                                    <field name="to_pay"/>
+                                    <field name="detraction"/>
+                                    <field name="retention"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                </tree>
+                            </field>
+                            <group groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_intern_control_read"
+                                attrs="{'invisible':[('requirement_state','not in',('administration','to_settle','settled'))]}">
+                                <group>
+                                    <field name="amount_soles" attrs="{'invisible': [('amount_currency_type', '!=', 'soles')]}"/>
+                                    <field name="amount_uss" attrs="{'invisible': [('amount_currency_type', '!=', 'dolares')]}"/>
+                                    <field name="to_pay_supplier"/>
+                                </group>
+                                <group>
+                                    <field name="detraction_amount"/>
+                                    <field name="retention_amount"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="petitioner_signature" widget="image"
+                                        attrs="{'invisible': [('is_petitioner_signed','=',False)]}" readonly="True"/>
+                                    <field name="boss_signature" widget="image"
+                                        attrs="{'invisible': [('is_boss_signed','=',False)]}" readonly="True"/>
+                                    <field name="budget_executive_signature" widget="image"
+                                        attrs="{'invisible': [('is_budget_executive_signed','=',False)]}" readonly="True"/>
+                                </group>
+                                <group>
+                                    <field name="intern_control_signature" widget="image"
+                                        attrs="{'invisible': [('is_intern_control_signed','=',False)]}" readonly="True"/>
+                                    <field name="administration_signature" widget="image"
+                                        attrs="{'invisible': [('is_administration_signed','=',False)]}" readonly="True"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Settlement" name="settlement" attrs="{'invisible':[('unify','!=',True),('requirement_state','not in',('executive','responsible','intern_control','administration','to_settle','settled','refused'))]}">
+                            <header>
+                                <button string="Sign" name="settlement_petitioner_sign"
+                                    icon="fa-pencil-square-o" type="object" class="oe_highlight"
+                                    attrs="{'invisible':[('settlement_state','not in',('draft','refused'))]}"
+                                    groups="mkt_documental_managment.documental_requirement_user"/>
+
+                                <button string="Sign" name="settlement_executive_sign"
+                                    icon="fa-pencil-square-o" type="object" class="oe_highlight"
+                                    attrs="{'invisible':['|',('settlement_state','!=','executive'),('is_current_executive','=',False)]}"
+                                    groups="mkt_documental_managment.documental_requirement_boss"/>
+                                <button string="Refuse" name="settlement_refuse_boss" type="object" class="oe_highlight"
+                                    icon="fa-thumbs-o-down" attrs="{'invisible':['|',('settlement_state','!=','executive'),('is_current_executive','=',False)]}"
+                                    groups="mkt_documental_managment.documental_requirement_boss"
+                                    confirm="Please confirm to refuse"/>
+
+                                <button string="Sign" name="settlement_responsible_sign"
+                                    icon="fa-pencil-square-o" type="object" class="oe_highlight"
+                                    attrs="{'invisible':[('settlement_state','!=','responsible')]}"
+                                    groups="mkt_documental_managment.documental_requirement_budget_executive"/>
+                                <button string="Refuse" name="settlement_refuse_budget_executive" type="object" class="oe_highlight"
+                                    icon="fa-thumbs-o-down" attrs="{'invisible':[('settlement_state','!=','responsible')]}"
+                                    groups="mkt_documental_managment.documental_requirement_budget_executive"
+                                    confirm="Please confirm to refuse"/>
+
+                                <button string="Sign" name="settlement_intern_control_sign"
+                                    icon="fa-pencil-square-o" type="object" class="oe_highlight"
+                                    attrs="{'invisible':[('settlement_state','!=','intern_control')]}"
+                                    groups="mkt_documental_managment.documental_requirement_intern_control"/>
+                                <button string="Refuse" name="settlement_refuse_intern_control" type="object" class="oe_highlight"
+                                    icon="fa-thumbs-o-down" attrs="{'invisible':[('settlement_state','!=','intern_control')]}"
+                                    groups="mkt_documental_managment.documental_requirement_intern_control"
+                                    confirm="Please confirm to refuse"/>
+
+                                <button string="Sign" name="settlement_administration_sign"
+                                    icon="fa-pencil-square-o" type="object" class="oe_highlight"
+                                    attrs="{'invisible':[('settlement_state','!=','administration')]}"
+                                    groups="mkt_documental_managment.documental_requirement_administration"/>
+                                <button string="Refuse" name="settlement_refuse_administration" type="object" class="oe_highlight"
+                                    icon="fa-thumbs-o-down" attrs="{'invisible':[('settlement_state','!=','administration')]}"
+                                    groups="mkt_documental_managment.documental_requirement_administration"
+                                    confirm="Please confirm to refuse"/>
+
+                                <button string="Refuse" name="settlement_refuse_admin" type="object" class="oe_highlight"
+                                    icon="fa-thumbs-o-down" attrs="{'invisible':[('settlement_state','!=','settled')]}"
+                                    groups="mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_admin"
+                                    confirm="Please confirm to refuse"/>
+
+                                <field name="settlement_state" widget="statusbar" statusbar_visible="executive,responsible,intern_control,administration"/>
+                            </header>
+                            <div class="alert alert-warning" role="alert" attrs="{'invisible':[('settlement_repeated_document','=',False)]}">
+                                <field name="settlement_repeated_document" style="color:red;" readonly="True" force_save="True"/>
+                            </div>
+                            <button string="Create line" name="create_settlement_line" type="object" class="oe_highlight" groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <button string="CPE's" name="validation_vouchers" type="object" class="oe_highlight" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"/>
+                            <field name="settlement_ids" attrs="{'readonly':[('settlement_state','not in',('draft','refused'))]}"
+                                groups="mkt_documental_managment.documental_requirement_user,mkt_documental_managment.documental_requirement_boss,mkt_documental_managment.documental_requirement_budget_executive">
+                                <tree>
+                                    <button string="CPE" name="validation_voucher" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"
+                                        type="object" class="oe_highlight"/>
+                                    <field name="cpe_state" widget="badge"
+                                        decoration-info="cpe_state == 'to_validate'"
+                                        decoration-success="cpe_state == 'accepted'"
+                                        decoration-danger="cpe_state == 'non_existent'"
+                                        decoration-warning="cpe_state == 'failed'"
+                                        groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"/>
+                                    <field name="handler" widget="handle"/>
+                                    <field name="repeated" invisible="1"/>
+                                    <field name="settle_no"/>
+                                    <field name="date"/>
+                                    <field name="dni_ruc"/>
+                                    <field name="partner"/>
+                                    <field name="document_type_id" options="{'no_create': '1', 'no_edit': '1', 'no_open': '1'}"/>
+                                    <field name="document"/>
+                                    <field name="movement_number" groups="mkt_documental_managment.documental_requirement_intern_control"/>
+                                    <field name="document_filename" invisible="1"/>
+                                    <field name="document_file" widget="binary" filename="document_filename"/>
+                                    <field name="reason"/>
+                                    <field name="settle_igv" sum="Amount total"/>
+                                    <field name="settle_amount" sum="IGV total"/>
+                                </tree>
+                            </field>
+                            <field name="lock_settlement_ids" attrs="{'readonly':[('settlement_state','!=','intern_control')]}"
+                                groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_intern_control_read">
+                                <tree create="0" delete="0">
+                                    <button string="CPE" name="validation_voucher" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"
+                                        type="object" class="oe_highlight"/>
+                                    <field name="cpe_state" widget="badge"
+                                        decoration-info="cpe_state == 'to_validate'"
+                                        decoration-success="cpe_state == 'accepted'"
+                                        decoration-danger="cpe_state == 'non_existent'"
+                                        decoration-warning="cpe_state == 'failed'"
+                                        groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"/>
+                                    <field name="repeated" invisible="1"/>
+                                    <field name="settle_no"/>
+                                    <field name="date"/>
+                                    <field name="dni_ruc"/>
+                                    <field name="partner"/>
+                                    <field name="document_type_id" options="{'no_create': '1', 'no_edit': '1', 'no_open': '1'}"/>
+                                    <field name="document"/>
+                                    <field name="movement_number" groups="mkt_documental_managment.documental_requirement_intern_control"/>
+                                    <field name="reason"/>
+                                    <field name="settle_igv" optional="hide" sum="Amount total"/>
+                                    <field name="settle_amount" optional="hide" sum="IGV total"/>
+                                    <field name="vendor" optional="hide" sum="Vendor total"/>
+                                    <field name="detraction" optional="hide" sum="Detraction total"/>
+                                    <field name="retention" optional="hide" sum="Retention total"/>
+                                    <field name="amount" sum="Vendor total"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group>
+                                    <field name="settlement_petitioner_signature" widget="image" readonly="1"
+                                        attrs="{'invisible':[('settlement_petitioner_signature','=',False)]}"/>
+                                    <field name="settlement_boss_signature" widget="image" readonly="1"
+                                        attrs="{'invisible':[('settlement_boss_signature','=',False)]}"/>
+                                    <field name="settlement_budget_executive_signature" widget="image" readonly="1"
+                                        attrs="{'invisible':[('settlement_budget_executive_signature','=',False)]}"/>
+                                </group>
+                                <group>
+                                    <field name="settlement_intern_control_signature" widget="image" readonly="1"
+                                        attrs="{'invisible':[('settlement_intern_control_signature','=',False)]}"/>
+                                    <field name="settlement_administration_signature" widget="image" readonly="1"
+                                        attrs="{'invisible':[('settlement_administration_signature','=',False)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Payments" name="payments" groups="mkt_documental_managment.documental_requirement_admin">
+                            <field name="requirement_payment_ids">
+                                <tree>
+                                    <field name="check_or_operation"/>
+                                    <field name="operation_number"/>
+                                    <field name="payment_date"/>
+                                    <field name="requirement_payroll_id"/>
+                                    <field name="amount" sum="Total"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group></group>
+                                <group>
+                                    <field name="pending_to_pay"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_requirements_graph" model="ir.ui.view">
+        <field name="name">requirements.graph</field>
+        <field name="model">documental.requirements</field>
+        <field name="arch" type="xml">
+            <graph string="Requirements" sample="1">
+                <field name="name"/>
+                <field name="amount_soles" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_requirements_kanban" model="ir.ui.view">
+        <field name="name">requirements.kanban</field>
+        <field name="model">documental.requirements</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" sample="1">
+                <field name="name"/>
+                <field name="paid_to"/>
+                <field name="budget_id"/>
+                <field name="amount_soles"/>
+                <field name="amount_uss"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_record_top mb16">
+                                <div class="o_kanban_record_headings mt4">
+                                    <strong class="o_kanban_record_title"><span><t t-esc="record.paid_to.value"/></span></strong>
+                                </div>
+                                <strong>
+                                    <t t-if="record.amount_uss.value == 0.00">
+                                        S/.<field name="amount_soles" widget="monetary"/>
+                                    </t>
+                                    <t t-else="">
+                                        $ <field name="amount_uss" widget="monetary"/>
+                                    </t>
+                                </strong>
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left text-muted">
+                                    <span><t t-esc="record.name.value"/> <t t-esc="record.date"/></span>
+                                    <field name="activity_ids" widget="kanban_activity"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_requirement_search" model="ir.ui.view">
+        <field name="name">requirement.search</field>
+        <field name="model">documental.requirements</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="paid_to"/>
+                <field name="full_name"/>
+                <separator/>
+                <filter name="inactive" string="Archived" domain="[('active','=',False)]" help="Show inactive requirements"/>
+                <filter string="Executive" name="executive" domain="['|',('requirement_state','=','executive'),('settlement_state','=','executive')]"/>
+                <filter string="Responsible" name="responsible" domain="['|',('requirement_state','=','responsible'),('settlement_state','=','responsible')]"/>
+                <filter string="Intern Control" name="intern_control" domain="['|',('requirement_state','=','intern_control'),('settlement_state','=','intern_control')]"/>
+                <filter string="Administration" name="administration" domain="['|',('requirement_state','=','administration'),('settlement_state','=','administration')]"/>
+                <separator/>
+                <group expand="0" string="Group by">
+                    <filter string="Paid to" name="group_by_paid_to" context="{'group_by': 'paid_to'}"/>
+                    <filter string="Responsible" name="group_by_full_name" context="{'group_by': 'full_name'}"/>
+                    <filter string="Budget" name="group_by_budget_id" context="{'group_by': 'budget_id'}"/>
+                    <filter string="Department" name="group_by_department_id" context="{'group_by': 'department_id'}"/>
+                    <filter string="State(RQ)" name="group_by_requirement_state" context="{'group_by': 'requirement_state'}"/>
+                    <filter string="State(FL)" name="group_by_settlement_state" context="{'group_by': 'settlement_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_view_requirement" model="ir.actions.act_window">
+        <field name="name">Requerimientos</field>
+        <field name="res_model">documental.requirements</field>
+        <field name="context">{'search_default_group_by_requirement_state': 1}</field>
+        <field name="view_mode">tree,form,graph,kanban</field>
+    </record>
+
+    <record id="view_requirement_settlement_action" model="ir.actions.act_window">
+        <field name="name">Settlements</field>
+        <field name="res_model">documental.requirements</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="context">{'search_default_group_by_settlement_state': 1}</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+</odoo>
