@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_budget_modify_tree" model="ir.ui.view">
+        <field name="name">budget.modify.tree</field>
+        <field name="model">budget.modify</field>
+        <field name="arch" type="xml">
+            <tree
+                decoration-muted="state == 'draft'"
+                decoration-success="state == 'modified'">
+                <field name="name"/>
+                <field name="modify_type"/>
+                <field name="description"/>
+                <field name="state" widget="badge"
+                    decoration-muted="state == 'draft'"
+                    decoration-success="state == 'modified'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_budget_modify_form" model="ir.ui.view">
+        <field name="name">budget.modify.form</field>
+        <field name="model">budget.modify</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="is_reverted" invisible="True"/>
+                    <button string="Modify revision" name="modify_responsible_revision"
+                        type="object" class="oe_highlight"
+                        attrs="{'invisible':['|','|',
+                            ('state','!=','draft'),('id','=',False),
+                            ('modify_type','!=','executive_revision')]}"/>
+                    <button string="Modify executive" name="modify_executive_budget"
+                        type="object" class="oe_highlight"
+                        attrs="{'invisible':['|','|',
+                            ('state','!=','draft'),('id','=',False),
+                            ('modify_type','!=','executive')]}"/>
+                    <button string="Modify budget" name="modify_settlement_between_budget"
+                        type="object" class="oe_highlight"
+                        attrs="{'invisible':['|','|',
+                            ('state','!=','draft'),('id','=',False),
+                            ('modify_type','!=','move_btwn_budget')]}"/>
+                    <button string="Revert modify" name="revert_executive_modify"
+                        type="object" class="oe_highlight"
+                        attrs="{'invisible':['|','|',('state','=','draft'),('modify_type','!=','executive'),('is_reverted','!=',False)]}"
+                        confirm="Are you sure you want to revert this modification?"/>
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="draft,modified"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Modified" bg_color="bg-success"
+                        attrs="{'invisible':[('state','!=','modified')]}"/>
+                    <group>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="description" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="modify_type" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="old_executive" options="{'no_create':True,'no_open':True}"
+                                attrs="{'invisible':[('modify_type','!=','executive')],'readonly':[('state','!=','draft')],'required':[('modify_type','=','executive')]}"/>
+                            <field name="old_budget_id" options="{'no_create':True,'no_open':True}"
+                                attrs="{'invisible':[('modify_type','!=','move_btwn_budget')],'readonly':[('state','!=','draft')],'required':[('modify_type','=','move_btwn_budget')]}"/>
+                            <field name="revision_executive_id" options="{'no_create':True,'no_open':True}"
+                                attrs="{'invisible':[('modify_type','!=','executive_revision')],'readonly':[('state','!=','draft')],'required':[('modify_type','=','executive_revision')]}"/>
+                            <field name="executive_revision" options="{'no_create':True,'no_open':True}"
+                                attrs="{'invisible':[('modify_type','!=','executive_revision')],'readonly':[('state','!=','draft')],'required':[('modify_type','=','executive_revision')]}"/>
+                        </group>
+                        <group>
+                            <field name="budget_ids" widget="many2many_tags" options="{'no_create':True}"
+                                attrs="{'invisible':[('modify_type','not in',('executive','executive_revision'))],'readonly':[('state','!=','draft')]}"/>
+                            <field name="new_executive" options="{'no_create':True,'no_open':True}"
+                                attrs="{'invisible':[('modify_type','!=','executive')],'readonly':[('state','!=','draft')],'required':[('modify_type','=','executive')]}"/>
+                            <field name="current_executive_ids" invisible="True"/>
+                            <field name="new_budget_id" options="{'no_create':True,'no_open':True}"
+                                attrs="{'invisible':[('modify_type','!=','move_btwn_budget')],'readonly':[('state','!=','draft')],'required':[('modify_type','=','move_btwn_budget')]}"/>
+                        </group>
+                    </group>
+                    <notebook attrs="{'invisible':[('modify_type','!=','move_btwn_budget')]}">
+                        <page string="Settlements">
+                            <field name="budget_line_ids" attrs="{'invisible':[('state','!=','draft')]}" readonly="False">
+                                <tree create="0" editable="bottom" delete="0">
+                                    <field name="state" invisible="True"/>
+                                    <field name="remove"/>
+                                    <field name="date" readonly="True"/>
+                                    <field name="requirement_id" readonly="True"/>
+                                    <field name="settlement_name" readonly="True"/>
+                                    <field name="document_type" readonly="True"/>
+                                    <field name="document" readonly="True"/>
+                                    <field name="document_filename" invisible="True"/>
+                                    <field name="document_file" readonly="True" widget="binary" filename="document_filename"/>
+                                    <field name="reason" readonly="True"/>
+                                    <field name="amount" sum="Total Amount" readonly="True"/>
+                                </tree>
+                            </field>
+                            <field name="lock_budget_line_ids" attrs="{'invisible':[('state','=','draft')]}">
+                                <tree create="0" editable="0" delete="0">
+                                    <field name="state" invisible="True"/>
+                                    <field name="remove"/>
+                                    <field name="date"/>
+                                    <field name="requirement_id"/>
+                                    <field name="settlement_name"/>
+                                    <field name="document_type"/>
+                                    <field name="document"/>
+                                    <field name="document_filename" invisible="True"/>
+                                    <field name="document_file" widget="binary" filename="document_filename"/>
+                                    <field name="reason"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_budget_modify_action" model="ir.actions.act_window">
+        <field name="name">Budget modifies</field>
+        <field name="res_model">budget.modify</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

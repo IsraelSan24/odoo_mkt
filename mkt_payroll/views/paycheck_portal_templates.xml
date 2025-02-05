@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_my_home_paycheck" name="Show my Paycheck" customize_show="True" inherit_id="portal.portal_my_home" priority="51">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">My paycheck</t>
+                <t t-set="url" t-value="'/my/paychecks'"/>
+                <t t-set="placeholder_count" t-value="'paycheck_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_menu_paycheck" name="Portal layout : paycheck" inherit_id="portal.portal_breadcrumbs" priority="51">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'paycheck' or paycheck_document" t-attf-class="breadcrumb-item #{'active'}">
+                <a t-if="paycheck_document" t-attf-href="/my/paycheck?{{ keep_query() }}">Paychecks</a>
+                <t t-else="">Paychecks</t>
+            </li>
+            <li t-if="paycheck_document" class="breacrumb-item active">
+                <t t-esc="paycheck_document.name"/>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_paychecks" name="My Paychecks">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Paycheck</t>
+            </t>
+            <t t-if="not paychecks">
+                <p>There are currently no paychecks for your account.</p>
+            </t>
+            <t t-if="paychecks" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>
+                            <span class="d-none d-md-inline">Paycheck code</span>
+                        </th>
+                        <th class="text-left">Paycheck</th>
+                        <th class="text-left"></th>
+                    </tr>
+                </thead>
+                <t t-foreach="paychecks" t-as="paycheck">
+                    <tr>
+                        <td><a><t t-esc="paycheck.name"/></a></td>
+                        <td class="text-left">
+                            <a t-att-href="'/my/paychecks/download/%s' % paycheck.id"><i class="fa fa-download"/> <span t-esc="paycheck.paycheck_filename"/></a>
+                        </td>
+                        <td class="text-left">
+                            <span></span>&amp;nbsp;
+                        </td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

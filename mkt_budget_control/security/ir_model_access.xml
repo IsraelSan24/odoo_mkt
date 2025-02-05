@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- <record id="model_access_budget" model="ir.model.access">
+        <field name="name">model.access.budget</field>
+        <field name="model_id" ref="mkt_budget_control.model_budget"/>
+        <field name="group_id" ref="mkt_budget_control.budget_control_administrator"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record> -->
+
+    <!-- <record id="model_access_budget_class" model="ir.model.access">
+        <field name="name">model.access.budget.class</field>
+        <field name="model_id" ref="mkt_budget_control.model_budget_class"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record> -->
+
+    <!-- <record id="model_access_budget_campaign" model="ir.model.access">
+        <field name="name">model.access.budget.campaign</field>
+        <field name="model_id" ref="mkt_budget_control.model_budget_campaign"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record> -->
+
+    <!-- <record id="model_access_cost_center" model="ir.model.access">
+        <field name="name">model.access.cost.center</field>
+        <field name="model_id" ref="mkt_budget_control.model_cost_center"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record> -->
+
+    <!-- <record id="model_access_budget_line" model="ir.model.access">
+        <field name="name">model.access.budget.line</field>
+        <field name="model_id" ref="mkt_budget_control.model_budget_line"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record> -->
+<!-- 
+    <record id="model_access_year_month" model="ir.model.access">
+        <field name="name">model.access.year.month</field>
+        <field name="model_id" ref="mkt_budget_control.model_year_month"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record> -->
+
+    <!-- <record id="model_access_budget_control_administrator" model="ir.model.access">
+        <field name="name">model.access.budget.control.administrator</field>
+        <field name="model_id" ref="mkt_budget_control.model_budget"/>
+        <field name="group_id" ref="mkt_budget_control.budget_control_administrator"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record> -->
+
+    <!-- <record id="model_access_budget_control_user" model="ir.model.access">
+        <field name="name">model.access.budget.control.user</field>
+        <field name="model_id" ref="mkt_budget_control.model_budget"/>
+        <field name="group_id" ref="mkt_budget_control.budget_control_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record> -->
+
+</odoo>

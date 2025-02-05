@@ -1,0 +1,144 @@
+.invalid-feedback {
+    display: none;
+}
+  
+.form-control.is-invalid ~ .invalid-feedback {
+    display: block;
+}
+
+.radio-group {
+    display: inline-block;
+}
+  
+.radio-option {
+    position: absolute;
+    cursor: pointer;
+}
+  
+.radio-option:checked + .form-check-label {
+    font-weight: bold;
+}
+
+.custom-modal-content {
+    max-width: 1200px;
+    margin: auto;
+}
+
+@media (min-width: 1200px) {
+    .modal-xl {
+        max-width: 1200px;
+    }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 2px solid black;
+    border-radius: 8px;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+
+
+.truncate {
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Asegura que el contenido de la tabla no se desborde */
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Ajustes específicos para pantallas pequeñas */
+@media (max-width: 576px) {
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-responsive table {
+        width: 100%;
+        min-width: 960px;
+    }
+
+    .table-responsive th, 
+    .table-responsive td {
+        white-space: nowrap;
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .table-responsive thead {
+        display: table-header-group;
+    }
+
+    .table-responsive tbody {
+        display: table-row-group;
+    }
+
+    .table-responsive tr {
+        display: table-row;
+    }
+}
+
+.custom-file-label {
+    display: flex;
+    align-items: center;
+    font-family: "FontAwesome"; /* Font Awesome 4.3 usa este nombre */
+}
+
+.custom-file-label::after{
+    content: none;
+}
+.custom-file-label::before {
+    content: "\f093"; /* Valor por defecto para el ícono de Font Awesome (fa-upload) */
+    font-family: "FontAwesome"; /* Usa la familia correcta para Font Awesome 4.3 */
+    font-weight: normal; /* Font Awesome 4.3 no usa font-weight 900 */
+    padding-right: 10px; /* Espacio entre el ícono y el texto */
+    font-size: 16px; /* Tamaño del ícono */
+}
+
+.custom-file-label.icon-upload::before {
+    content: "\f093"; /* Unicode del ícono de Font Awesome (fa-upload) */
+    color: #17a2b8; /* Color del ícono cuando está en estado de carga (text-info) */
+}
+
+.custom-file-label.icon-check::before {
+    content: "\f00c"; /* Unicode del ícono de Font Awesome (fa-check) */
+    color: #28a745; /* Color del ícono cuando se ha seleccionado un archivo (text-success) */
+}
+
+.spin-animation {
+    display: inline-block;
+    animation: swing 2s ease infinite;
+}
+
+@keyframes swing {
+    20% {
+        transform: rotate(15deg);
+    }
+    40% {
+        transform: rotate(-10deg);
+    }
+    60% {
+        transform: rotate(5deg);
+    }
+    80% {
+        transform: rotate(-5deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}

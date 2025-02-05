@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="url_data_protection" model="website.page">
+        <field name="url">/dataprotection</field>
+        <field name="is_published">True</field>
+        <field name="website_indexed" eval="False"/>
+        <field name="name">Data Protection(Document)</field>
+        <field name="type">qweb</field>
+        <field name="key">mkt_recruitment.url_data_protection</field>
+        <field name="cache_time">0</field>
+        <field name="arch" type="xml">
+            <t name="Data Protection(Document)" t-name="mkt_recruitment.url_data_protection">
+                <t t-call="website.layout">
+                    <div id="test">
+                        <div class="oe_structure">
+                            <div class="container">
+                                <p>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+
+    <record id="url_affidavit_life_law" model="website.page">
+        <field name="url">/affidavitlifelaw</field>
+        <field name="is_published">True</field>
+        <field name="website_indexed" eval="False"/>
+        <field name="name">Affidavit life law(Document)</field>
+        <field name="type">qweb</field>
+        <field name="key">mkt_recruitment.url_affidavit_life_law</field>
+        <field name="cache_time">0</field>
+        <field name="arch" type="xml">
+            <t name="Affidavit life law(Document)" t-name="mkt_recruitment.url_affidavit_life_law">
+                <t t-call="website.layout">
+                    <div id="test">
+                        <div class="oe_structure">
+                            <div class="container">
+                                <p>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+
+    <record id="url_sst_data" model="website.page">
+        <field name="url">/sstdata</field>
+        <field name="is_published">True</field>
+        <field name="website_indexed" eval="False"/>
+        <field name="name">SST data(Document)</field>
+        <field name="type">qweb</field>
+        <field name="key">mkt_recruitment.url_sst_data</field>
+        <field name="cache_time">0</field>
+        <field name="arch" type="xml">
+            <t name="SST data(Document)" t-name="mkt_recruitment.url_sst_data">
+                <t t-call="website.layout">
+                    <div id="test">
+                        <div class="oe_structure">
+                            <div class="container">
+                                <p>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+
+    <record id="url_intern_rules" model="website.page">
+        <field name="url">/internrules</field>
+        <field name="is_published">True</field>
+        <field name="website_indexed" eval="False"/>
+        <field name="name">Intern rules(Document)</field>
+        <field name="type">qweb</field>
+        <field name="key">mkt_recruitment.url_intern_rules</field>
+        <field name="cache_time">0</field>
+        <field name="arch" type="xml">
+            <t name="Intern rules(Document)" t-name="mkt_recruitment.url_intern_rules">
+                <t t-call="website.layout">
+                    <div id="test">
+                        <div class="oe_structure">
+                            <div class="container">
+                                <p>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+
+</odoo>

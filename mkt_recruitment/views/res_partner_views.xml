@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_res_partner_reference_location_form" model="ir.ui.view">
+        <field name="name">res.partner.reference.location.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="website" position="before">
+                <field name="personal_email"/>
+            </field>
+            <field name="vat" position="before">
+                <field name="reference_location"/>
+                <field name="belong_applicant_id"/>
+            </field>
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page name="private_information" string="Private Information"
+                    groups="hr_contract.group_hr_contract_manager,hr_recruitment.group_hr_recruitment_manager">
+                    <group>
+                        <group string="Basic information">
+                            <field name="birthday"/>
+                            <field name="gender"/>
+                            <field name="age"/>
+                            <field name="nationality_id" class="oe_edit_only"/>
+                            <field name="demonym"/>
+                        </group>
+                        <group string="Emergency information">
+                            <button string="Send documents" name="button_send_documents" type="object" class="oe_highlight" group="hr_contract.group_hr_contract_manager"/>
+			    <button string="Actualizar informacion" name="buton_update_applicant_partner" type="object" class="oe_highlight" group="hr_contract.group_hr_contract_manager"/>
+                            <field name="is_validate" widget="boolean_toggle" group="hr_contract.group_hr_contract_manager"/>
+                            <field name="emergency_contact"/>
+                            <field name="emergency_phone" widget="phone"/>
+                        </group>
+                    </group>
+                    <group string="Marital information">
+                        <group>
+                            <field name="marital"/>
+                        </group>
+                        <group>
+                            <field name="children"/>
+                        </group>
+                    </group>
+                    <group string="Employment relationship data">
+                        <group>
+                            <field name="spreadsheet"/>
+                            <field name="private_pension_system"/>
+                            <field name="afp_first_job" attrs="{'invisible':[('private_pension_system','=',False)]}"/>
+                            <field name="coming_from_onp" attrs="{'invisible':[('private_pension_system','=',False)]}"/>
+                        </group>
+                        <group>
+                            <field name="national_pension_system"/>
+                        </group>
+                    </group>
+                    <group string="Education">
+                        <field name="education_level"/>
+                        <field name="education_start_date"/>
+                        <field name="education_end_date"/>
+                        <field name="institution"/>
+                        <field name="profession"/>
+                    </group>
+                    <group string="Documents">
+                        <group>
+                            <field name="document_okay" widget="boolean_toggle" groups="hr_contract.group_hr_contract_manager"/>
+                        </group>
+                        <group>
+                            <button string="Update documents" name="attach_applicant_files" type="object" class="oe_highlight"/>
+                            <field name="current_dni" filename="current_dni_filename"/>
+                            <field name="current_dni_filename" invisible="True"/>
+                            <field name="is_current_dni" invisible="True"/>
+
+                            <field name="current_dni_back" filename="current_dni_back_filename"/>
+                            <field name="current_dni_back_filename" invisible="True"/>
+                            <field name="is_current_dni_back" invisible="True"/>
+
+                            <field name="services_receipt" filename="services_receipt_filename"/>
+                            <field name="services_receipt_filename" invisible="True"/>
+                            <field name="is_services_receipt" invisible="True"/>
+
+                            <field name="certijoven" filename="certijoven_filename"/>
+                            <field name="certijoven_filename" invisible="True"/>
+                            <field name="is_certijoven" invisible="True"/>
+
+                            <field name="t_record" filename="t_record_filename"/>
+                            <field name="t_record_filename" invisible="True"/>
+                            <field name="is_t_record" invisible="True"/>
+                            
+                            <field name="electronic_fine" filename="electronic_fine_filename"/>
+                            <field name="electronic_fine_filename" invisible="True"/>
+                            <field name="is_electronic_fine" invisible="True"/> 
+                            
+                            <field name="certificate_of_vaccination" filename="certificate_of_vaccination_filename"/> 
+                            <field name="certificate_of_vaccination_filename" invisible="True"/>
+                            <field name="is_certificate_of_vaccination" invisible="True"/> 
+
+                            <field name="health_card" filename="health_card_filename"/> 
+                            <field name="health_card_filename" invisible="True"/>
+                            <field name="is_health_card" invisible="True"/> 
+
+                            <field name="contributions_report" filename="contributions_report_filename"/> 
+                            <field name="contributions_report_filename" invisible="True"/>
+                            <field name="is_contributions_report" invisible="True"/> 
+                            
+                        </group>
+                    </group>
+                    <group string="Family">
+                        <field name="children_okay" widget="boolean_toggle" groups="hr_contract.group_hr_contract_manager"/>
+                    </group>
+                        <table class="table table-bordered" style="padding: 0px 30px 0px 30px; border:none">
+                            <colgroup>
+                                <col width="8%"/>
+                                <col width="24%"/>  
+                                <col width="8%"/>
+                                <col width="8%"/>
+                                <col width="8%"/>
+                                <col width="20%"/>
+                                <col width="11%"/>
+                                <col width="11%"/>
+                                <col width="2%"/>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="8" class="text-center" style="border: 2px solid black;">First Beneficiaries</th>
+                                </tr>
+                                <tr>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">N&#176;DNI</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">NAME AND SURNAME</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Genre</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Relationship</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Date</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Address</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">File DNI(Front)</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">File DNI(Back)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dni1"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_full_name1"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_gender1"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_relationship1"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_birthday1"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_address1"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile1_filename" invisible="True"/>
+                                        <field name="familiar_dnifile1" widget="binary" filename="familiar_dnifile1_filename"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile1_back_filename" invisible="True"/>
+                                        <field name="familiar_dnifile1_back" widget="binary" filename="familiar_dnifile1_back_filename"/>
+                                    </td>
+                                    <td style="border: none"></td>
+                                    <field name="is_beneficiary1"/>
+                                </tr>
+                                <tr>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dni2"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_full_name2"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_gender2"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_relationship2"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_birthday2"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_address2"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile2_filename" invisible="True"/>
+                                        <field name="familiar_dnifile2" widget="binary" filename="familiar_dnifile2_filename"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile2_back_filename" invisible="True"/>
+                                        <field name="familiar_dnifile2_back" widget="binary" filename="familiar_dnifile2_back_filename"/>
+                                    </td>
+                                    <td style="border: none"></td>
+                                    <field name="is_beneficiary2"/>
+                                </tr>
+                                <tr>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dni3"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_full_name3"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_gender3"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_relationship3"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_birthday3"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_address3"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile3_filename" invisible="True"/>
+                                        <field name="familiar_dnifile3" widget="binary" filename="familiar_dnifile3_filename"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile3_back_filename" invisible="True"/>
+                                        <field name="familiar_dnifile3_back" widget="binary" filename="familiar_dnifile3_back_filename"/>
+                                    </td>
+                                    <td style="border: none"></td>
+                                    <field name="is_beneficiary3"/>
+                                </tr>
+                                <tr>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dni4"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_full_name4"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_gender4"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_relationship4"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_birthday4"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_address4"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile4_filename" invisible="True"/>
+                                        <field name="familiar_dnifile4" widget="binary" filename="familiar_dnifile4_filename"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile4_back_filename" invisible="True"/>
+                                        <field name="familiar_dnifile4_back" widget="binary" filename="familiar_dnifile4_back_filename"/>
+                                    </td>
+                                    <td style="border: none"></td>
+                                    <field name="is_beneficiary4"/>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered" style="padding: 0px 30px 0px 30px; border:none; ">
+                            <colgroup>
+                                <col width="8%"/>
+                                <col width="24%"/>
+                                <col width="8%"/>
+                                <col width="8%"/>
+                                <col width="8%"/>
+                                <col width="20%"/>
+                                <col width="12%"/>
+                                <col width="12%"/>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="8" class="text-center" style="border: 2px solid black;">Other Beneficiaries</th>
+                                </tr>
+                                <tr>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">N&#176;DNI</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">NAME AND SURNAME</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Genre</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Relationship</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Date</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Address</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">File DNI(Front)</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">File DNI(Back)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dni5"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_full_name5"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_gender5"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_relationship5"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_birthday5"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_address5"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile5_filename" invisible="True"/>
+                                        <field name="familiar_dnifile5" widget="binary" filename="familiar_dnifile5_filename"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile5_back_filename" invisible="True"/>
+                                        <field name="familiar_dnifile5_back" widget="binary" filename="familiar_dnifile5_back_filename"/>
+                                    </td>
+                                    <td style="border: none"></td>
+                                    <field name="is_beneficiary5"/>
+                                </tr>
+                                <tr>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dni6"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_full_name6"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_gender6"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_relationship6"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_birthday6"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_address6"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile6_filename" invisible="True"/>
+                                        <field name="familiar_dnifile6" widget="binary" filename="familiar_dnifile6_filename"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile6_back_filename" invisible="True"/>
+                                        <field name="familiar_dnifile6_back" widget="binary" filename="familiar_dnifile6_back_filename"/>
+                                    </td>
+                                    <td style="border: none"></td>
+                                    <field name="is_beneficiary6"/>
+                                </tr>
+                                <tr>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dni7"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_full_name7"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_gender7"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_relationship7"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_birthday7"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_address7"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile7_filename" invisible="True"/>
+                                        <field name="familiar_dnifile7" widget="binary" filename="familiar_dnifile7_filename"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile7_back_filename" invisible="True"/>
+                                        <field name="familiar_dnifile7_back" widget="binary" filename="familiar_dnifile7_back_filename"/>
+                                    </td>
+                                    <td style="border: none"></td>
+                                    <field name="is_beneficiary7"/>
+                                </tr>
+                                <tr>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dni8"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_full_name8"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_gender8"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_relationship8"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_birthday8"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_address8"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile8_filename" invisible="True"/>
+                                        <field name="familiar_dnifile8" widget="binary" filename="familiar_dnifile8_filename"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile8_back_filename" invisible="True"/>
+                                        <field name="familiar_dnifile8_back" widget="binary" filename="familiar_dnifile8_back_filename"/>
+                                    </td>
+                                    <td style="border: none"></td>
+                                    <field name="is_beneficiary8"/>
+                                </tr>
+                            </tbody>
+                        </table>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_partner_document_tree" model="ir.ui.view">
+        <field name="name">res.partner.document.tree</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <tree
+                decoration-success="document_okay == True and children_okay == True">
+                <header>
+                    <button string="Download documents" name="download_attach_files" type="object" class="oe_highlight"/>
+                </header>
+                <field name="name"/>
+                <field name="is_current_dni"/>
+                <field name="is_current_dni_back"/>
+                <field name="is_services_receipt"/>
+                <field name="is_certijoven"/>
+                <field name="certificate_of_vaccination" invisible="True"/> 
+                <field name="health_card" invisible="True"/> 
+                <field name="contributions_report" invisible="True"/> 
+                <field name="is_electronic_fine" invisible="True"/> 
+                <field name="is_t_record"/>
+                <field name="document_okay" widget="boolean_toggle" readonly="True"/>
+                <field name="children_okay" widget="boolean_toggle" readonly="True"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_res_partner_document_action" model="ir.actions.act_window">
+        <field name="name">Partners</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('belong_applicant_id','!=',False),('belong_applicant_id.active','=',True),('belong_applicant_id.stage_id.name','in',('Propuesta de contrato','Contrato firmado'))]</field>
+        <field name="view_id" ref="view_res_partner_document_tree"/>
+    </record>
+
+</odoo>

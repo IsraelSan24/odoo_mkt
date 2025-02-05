@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="report_equipment_charge_action" model="ir.actions.report">
+        <field name="name">Equipment Charge</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">mkt_maintenance.report_equipment_charge</field>
+        <field name="report_file">mkt_maintenance.report_equipment_charge</field>
+        <field name="print_report_name">'Delivery of Mobile Equipment - %s' % (object.name or '')</field>
+        <field name="binding_model_id" ref="maintenance.model_maintenance_equipment"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_equipment_charge"/>
+    </record>
+
+    <record id="report_equipment_status_action" model="ir.actions.report">
+        <field name="name">Equipment Status Report</field>
+        <field name="model">equipment.status</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">mkt_maintenance.report_equipment_status</field>
+        <field name="report_file">mkt_maintenance.report_equipment_status</field>
+        <field name="print_report_name">'Equipment Status - %s' % (object.name or '')</field>
+        <field name="binding_model_id" ref="model_equipment_status"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_equipment_status"/>
+    </record>
+
+</odoo>

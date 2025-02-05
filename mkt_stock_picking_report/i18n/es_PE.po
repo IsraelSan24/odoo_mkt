@@ -1,0 +1,528 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mkt_stock_picking_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0-20230919\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-22 17:20+0000\n"
+"PO-Revision-Date: 2024-07-22 17:20+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mkt_stock_picking_report
+#: model:ir.actions.report,print_report_name:mkt_stock_picking_report.report_stock_picking_action
+msgid "(object.name or '')"
+msgstr ""
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<span> Admission</span>"
+msgstr "<span> Ingreso</span>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<span> Other</span>"
+msgstr "<span> Otros</span>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<span> Removal from warehouse</span>"
+msgstr "<span> Salida de almacén</span>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<span> Return</span>"
+msgstr "<span> Devolución</span>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<span> Transfer to store</span>"
+msgstr "<span> Traslado para tienda</span>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "<span><strong>Customer Address</strong></span>"
+msgstr "<span><strong>Dirección del cliente</strong></span>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "<span><strong>Vendor Address</strong></span>"
+msgstr "<span><strong>Dirección del vendedor</strong></span>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "<span><strong>Warehouse Address</strong></span>"
+msgstr "<span><strong>Dirección del almacén</strong></span>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong><i>INTERNET CONNECTION REQUIRED</i></strong>"
+msgstr "<strong><i>ES NECESARIO UNA CONEXION A INTERNET</i></strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid ""
+"<strong><i>YOU CAN SCAN THE QR CODE WITH YOUR CELL PHONE TO VALIDATE THE "
+"OUTGOING CHARGE</i></strong>"
+msgstr ""
+"<strong><i>PUEDE SCANEAR CON CELULAR EL CODIGO QR PARA VALIDAR EL CARGO DE "
+"SALIDA</i></strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>ARRIVAL ADDRESS</strong>"
+msgstr "<strong>DOMICILIO DE LLEGADA</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>Address: </strong>"
+msgstr "<strong>Dirección: </strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>C/P: </strong>"
+msgstr ""
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>COD. Customer: </strong>"
+msgstr "<strong>COD. Cliente: </strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.stock_picking_report_page
+msgid "<strong>Code:</strong>"
+msgstr "<strong>Código:</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>D.N.I:</strong> ______________________"
+msgstr ""
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>DEPARTURE ADDRESS</strong>"
+msgstr "<strong>DOMICILIO DE PARTIDA</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.stock_picking_report_page
+msgid "<strong>Date of issue:</strong>"
+msgstr "<strong>Fecha de emisión:</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.stock_picking_report_page
+msgid "<strong>Destination:</strong>"
+msgstr "<strong>Destino:</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>District: </strong>"
+msgstr "<strong>Distrito: </strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "<strong>From</strong>"
+msgstr "<strong>Desde</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>Gentlemen: </strong>"
+msgstr "<strong>Señores: </strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "<strong>Lot/Serial Number</strong>"
+msgstr "<strong>Lote/Número de serie</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>Name or Company Name:</strong>"
+msgstr "<strong>Nombre o Razón Social:</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>Name:</strong> ______________________"
+msgstr "<strong>Nombre:</strong> ______________________"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>N° Brevete:</strong>"
+msgstr ""
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "<strong>Order</strong>"
+msgstr "<strong>Pedido</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.stock_picking_report_page
+msgid "<strong>Origin:</strong>"
+msgstr "<strong>Origen:</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>Password:</strong>"
+msgstr "<strong>Clave:</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>Plate:</strong>"
+msgstr "<strong>Placa:</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "<strong>Product Barcode</strong>"
+msgstr "<strong>Código de barras del producto</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "<strong>Product</strong>"
+msgstr "<strong>Producto</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "<strong>Quantity</strong>"
+msgstr "<strong>Cantidad</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>R.U.C: </strong>"
+msgstr ""
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>R.U.C:</strong>"
+msgstr ""
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>REASON FOR THE TRANSFER</strong>"
+msgstr "<strong>MOTIVO DEL TRASLADO</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>Receipt Conformed</strong>"
+msgstr "<strong>Recibí Conforme</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "<strong>Scheduled Date</strong>"
+msgstr "<strong>Fecha programada</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "<strong>Status</strong>"
+msgstr "<strong>Estado</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>TARGET</strong>"
+msgstr "<strong>DESTINATARIO</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>TRANSPORTER</strong>"
+msgstr "<strong>TRANSPORTISTA</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "<strong>To</strong>"
+msgstr "<strong>A</strong>"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "<strong>Verified by Marketing Alterno Perú S.A.C.</strong>"
+msgstr "<strong>Verificado por Marketing Alterno Perú S.A.C.</strong>"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__add_address
+msgid "Address"
+msgstr "Dirección"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.view_stock_picking_out_charge_form
+msgid "Addressee"
+msgstr "Destinatario"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "Advertising &amp; Promotional Marketing"
+msgstr "Publicidad &amp; Marketing Promocional"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__arrival_location
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.view_stock_picking_out_charge_form
+msgid "Arrival Location"
+msgstr "Lugar de llegada"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__carrier_briefcase
+msgid "Briefcase Carrier"
+msgstr "N° Brevete"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "CODE"
+msgstr "CÓDIGO"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__add_cp
+msgid "CP"
+msgstr ""
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.view_stock_picking_out_charge_form
+msgid "Carrier"
+msgstr "Transportista"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.stock_picking_report_page
+msgid "Code"
+msgstr "Código"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__add_code_customer
+msgid "Customer Code"
+msgstr "Código de cliente"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "DESCRIPTION"
+msgstr "DESCRIPCIÓN"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.stock_picking_report_page
+msgid "Description"
+msgstr "Descripción"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.stock_picking_report_page
+msgid "Details:"
+msgstr "Detalles:"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__add_district
+msgid "District"
+msgstr "Distrito"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.login_page
+msgid "Enter"
+msgstr "Ingresa"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.login_page
+msgid "Exit Charge"
+msgstr "Cargo de Salida"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "F. Issue:"
+msgstr "F. Emisión:"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "F. Start of Transfer:"
+msgstr "F. Inicio de Traslado:"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__generated_password
+msgid "Generated Password"
+msgstr "Contraseña generada"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.invalid_credentials
+msgid "Go back to login"
+msgstr "Volver atrás"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__mt_incoming
+msgid "Incoming"
+msgstr "Ingreso"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.invalid_credentials
+msgid "Invalid Credentials"
+msgstr "Credenciales no válidas"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "Jr. Libertad 757 Urb. Orbea - Lima"
+msgstr ""
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__is_locked_report_information
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.view_stock_picking_out_charge_form
+msgid "Lock"
+msgstr "Bloquear"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "Logo"
+msgstr ""
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "Magdalena del Mar"
+msgstr ""
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__add_name
+msgid "Name Addressee"
+msgstr "Señores"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__carrier_name_company
+msgid "Name Carrier"
+msgstr "Nombre o Razón Social"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.login_page
+msgid "N° of movement"
+msgstr "N° de movimiento"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "OUTGOING CHARGE"
+msgstr "CARGO DE SALIDA"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__origin_location
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.view_stock_picking_out_charge_form
+msgid "Origin Location"
+msgstr "Domicilio de Partida"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__mt_other
+msgid "Other"
+msgstr "Otros"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.login_page
+msgid "Password"
+msgstr "Clave"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__carrier_plate
+msgid "Plate Carrier"
+msgstr "Placa"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "QR Code"
+msgstr "QR Código"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "QUANTITY"
+msgstr "CANTIDAD"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.stock_picking_report_page
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "R.U.C. 20512433821"
+msgstr ""
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__add_ruc
+msgid "RUC"
+msgstr ""
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__carrier_ruc
+msgid "RUC Carrier"
+msgstr "R.U.C"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.view_stock_picking_out_charge_form
+msgid "Reason for transfer"
+msgstr "Motivo del traslado"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.view_stock_picking_out_charge_form
+msgid "Referral Guide"
+msgstr "Guía de remisión"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__mt_return
+msgid "Return"
+msgstr "Devolución"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "Series:"
+msgstr "Serie:"
+
+#. module: mkt_stock_picking_report
+#: model:ir.actions.report,name:mkt_stock_picking_report.report_stock_picking_action
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.stock_picking_report_page
+msgid "Stock Picking Report"
+msgstr "Informe Cargo de Salida"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__mt_store_transfer
+msgid "Store stock transfer"
+msgstr "Traslado de almacén"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "Telephone numbers: 208-7100 / 208-7151 / 208-7152"
+msgstr "Teléfonos: 208-7100 / 208-7151 / 208-7152"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.invalid_credentials
+msgid "The username or password you entered is incorrect. Please try again."
+msgstr ""
+"El N° de movimiento o la clave que ha introducido son incorrectos. Por "
+"favor, inténtelo de nuevo."
+
+#. module: mkt_stock_picking_report
+#: model:ir.model,name:mkt_stock_picking_report.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "UNIT"
+msgstr "UNIDAD"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.stock_picking_report_page
+msgid "Unit"
+msgstr "Unidad"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "Warehouse Address"
+msgstr "Dirección del almacén"
+
+#. module: mkt_stock_picking_report
+#: model:ir.model.fields,field_description:mkt_stock_picking_report.field_stock_picking__mt_storage_output
+msgid "Warehouse issue"
+msgstr "Salida de almacén"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_operations_document
+msgid "Waybill Transactions"
+msgstr "Operaciones de Albarán"
+
+#. module: mkt_stock_picking_report
+#: model_terms:ir.ui.view,arch_db:mkt_stock_picking_report.report_stock_picking_document
+msgid "______________________"
+msgstr ""

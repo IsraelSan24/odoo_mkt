@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mail_action_refund_requirement" model="mail.activity.type">
+        <field name="name">Refund Requirement</field>
+        <field name="icon">fa-tasks</field>
+        <field name="res_model">documental.requirements</field>
+    </record>
+
+</odoo>

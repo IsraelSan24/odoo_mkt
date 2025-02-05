@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem name="SIST Stock" id="menu_sist_stock_root" groups="mkt_stock_sistemas.groups_stock_sist" web_icon="mkt_stock_sistemas,static/description/icon.png"/>
+    <menuitem name="SIST Stock" id="menu_sist_stock_quant" parent="menu_sist_stock_root" sequence="0" action="location_open_quants_sist"/>
+    <menuitem name="In" id="menu_sist_stock_move_in" parent="menu_sist_stock_root" sequence="1" action="location_open_in_sist"/>
+    <menuitem name="Out" id="menu_sist_sotck_move_out" parent="menu_sist_stock_root" sequence="2" action="location_open_out_sist"/>
+
+    <menuitem name="Report" id="menu_sist_report" parent="menu_sist_stock_root" sequence="3"/>
+    <menuitem name="SIST Stock Report" id="menu_stock_report" parent="menu_sist_report" sequence="0" action="action_stock_sist_report_view"/>
+
+</odoo>

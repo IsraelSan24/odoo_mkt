@@ -1,0 +1,139 @@
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
+from odoo.addons.mkt_recruitment.models.apiperu import apiperu_dni
+
+
+class Applicant(models.Model):
+    _inherit = 'hr.applicant'
+
+    vat = fields.Char(string='Vat')
+    photo = fields.Image(string='Photo')
+    is_autoemployee = fields.Boolean(default=False, compute='_compute_auto_employee_and_documents', string='Employee created from stage', store=True)
+    has_documents = fields.Boolean(default=False, compute='_compute_auto_employee_and_documents', string='Document created from stage', store=True)
+    hr_responsible_contract_id = fields.Many2one(comodel_name='res.users', string='Approved by')
+    applicant_partner_id = fields.Many2one(comodel_name='applicant.partner', string='Applicant partner')
+
+
+    def write(self, vals):
+        res = super(Applicant, self).write(vals)
+        for rec in self:
+            if rec.partner_id:
+                for partner in rec.partner_id:
+                    partner.write({
+                        'belong_applicant_id': rec.id
+                    })
+        return res
+
+
+    def _message_post_after_hook(self, message, msg_vals):
+        if self.email_from and not self.partner_id:
+            # we consider that posting a message with a specified recipient (not a follower, a specific one)
+            # on a document without customer means that it was created through the chatter using
+            # suggested recipients. This heuristic allows to avoid ugly hacks in JS.
+            new_partner = message.partner_ids.filtered(lambda partner: partner.email == self.email_from)
+            if new_partner:
+                if new_partner.create_date.date() == fields.Date.today():
+                    new_partner.write({
+                        'name': self.partner_name,
+                        'type': 'private',
+                        'phone': self.partner_phone,
+                        'mobile': self.partner_mobile,
+                        'l10n_latam_identification_type_id': self.env['l10n_latam.identification.type'].search([('name','=','DNI')]).id,
+                        'vat': self.vat,
+                        'image_1920': self.photo,
+                        'personal_email': self.email_from,
+                    })
+                self.search([
+                    ('partner_id', '=', False),
+                    ('email_from', '=', new_partner.email),
+                    ('stage_id.fold', '=', False)]).write({'partner_id': new_partner.id})
+        return super(Applicant, self)._message_post_after_hook(message, msg_vals)
+
+
+    @api.depends('stage_id')
+    def _compute_auto_employee_and_documents(self):
+        self.create_employee_by_stage()
+        self.update_data_partner()
+        self.access_portal_partner()
+
+
+    def update_data_partner(self):
+        if self.stage_id.update_data:
+            applicant_partner = self.env['applicant.partner'].search([('dni','=',self.vat)], order='create_date desc')
+            if applicant_partner and applicant_partner.state != 'uploaded':
+                applicant_partner.update_partner()
+
+
+    def access_portal_partner(self):
+        if self.stage_id.access_portal:
+            contact = self.env['res.partner'].search([('vat','=',self.vat)], order='create_date desc')
+            portal_wizar_vals = {}
+            if contact and len(contact) == 1:
+                self.hr_responsible_contract_id = self.env.user.id
+                try:
+                    portal_wizard_user_vals = {
+                        'wizard_id': self.env['portal.wizard'].create(portal_wizar_vals).id,
+                        'partner_id': contact.id,
+                        'email': contact.email,
+                        'user_id': contact.user_id,
+                    }
+                    portal_wizard_user = self.env['portal.wizard.user'].create(portal_wizard_user_vals)
+                    portal_wizard_user.action_grant_access()
+                except:
+                    pass
+            if len(contact) > 1:
+                raise UserError(_('More than one contact has been found with the same DNI, please solve the problem to continue with the process.'))
+            if len(contact) < 1:
+                raise UserError(_('No contacts were found with the same DNI, please solve the problem to continue with the process.'))
+
+
+    def create_employee_by_stage(self):
+        employee = False
+        for applicant in self:
+            if not applicant.is_autoemployee and applicant.stage_id.employee_stage:
+                contact_name = False
+                if applicant.partner_id:
+                    address_id = applicant.partner_id.address_get(['contact'])['contact']
+                    contact_name = applicant.partner_id.display_name
+                else:
+                    if not applicant.partner_name:
+                        raise UserError(_('You must define a Contact Name for this applicant.'))
+                    new_partner_id = self.env['res.partner'].create({
+                        'is_company': False,
+                        'type': 'private',
+                        'name': applicant.partner_name,
+                        'email': applicant.email_from,
+                        'phone': applicant.partner_phone,
+                        'mobile': applicant.partner_mobile
+                    })
+                    applicant.partner_id = new_partner_id
+                    address_id = new_partner_id.address_get(['contact'])['contact']
+                if applicant.partner_name or contact_name:
+                    values = {
+                        'name': applicant.partner_name or contact_name,
+                        'job_id': applicant.job_id.id,
+                        'job_title': applicant.job_id.name,
+                        'address_home_id': address_id,
+                        'department_id': applicant.department_id.id or False,
+                        'address_id': applicant.company_id and applicant.company_id.partner_id
+                                and applicant.company_id.partner_id.id or False,
+                        'work_phone': applicant.department_id.company_id.phone,
+                        'applicant_id': applicant.ids,
+                        'image_1920': applicant.photo,
+                    }
+                    self.env['hr.employee'].create(values)
+                    applicant.is_autoemployee = True
+
+
+    @api.model
+    def create(self, vals):
+        if vals.get('partner_name'):
+            try:
+                vals['partner_name'] = apiperu_dni(vals.get('vat'))
+            except:
+                pass
+        if vals.get('email_from'):
+            vals['email_from'] = vals['email_from'].lower()
+        if vals.get('vat'):
+            vals['vat'] = vals['vat'].strip()
+        return super(Applicant, self).create(vals)

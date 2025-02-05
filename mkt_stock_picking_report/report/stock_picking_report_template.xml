@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_stock_picking_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=lang)" />
+            <html>
+            <script type="text/javascript" src="/mkt_stock_picking_report/static/js/main.js"></script>
+            <link rel="stylesheet" type="text/css" href="/mkt_stock_picking_report/static/css/style.css" />
+            <body>
+                <div class="page">
+                    <div class="content">
+                        <div class="row justify-content-between">
+                            <div class="overflow-hidden pl-3 pr-3" style="width: 70%;">
+                                <div class="row text-center justify-content-center align-items-center" style="padding-left: 6.25em;">
+                                    <img src="/mkt_stock_picking_report/static/description/images/logo.png" alt="Logo" style="width: 450px; height: auto;" />
+                                </div>
+                                <div class="row text-center mt-3 d-inline-block" style="line-height: 7px; padding-left: 9.25em;">
+                                    <p style="font-size: 20px; font-weight: bold;">Advertising &amp; Promotional Marketing</p>
+                                    <p>Jr. Libertad 757 Urb. Orbea - Lima</p>
+                                    <p>Magdalena del Mar</p>
+                                    <p>Telephone numbers: 208-7100 / 208-7151 / 208-7152</p>
+                                </div>
+                                <div class="row mt-4">
+                                    <div style="width: 43%;">
+                                        <div class="input-group border border-dark rounded-lg">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text bg-secondary text-white">F. Issue:</div>
+                                            </div>
+                                            <div class="form-control">
+                                                <span t-esc="o.scheduled_date" style="font-size: 13px;"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="width: 1%;"></div>
+                                    <div style="width: 56%;">
+                                        <div class="input-group border border-dark rounded-lg">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text bg-secondary text-white">F. Start of Transfer:</div>
+                                            </div>
+                                            <div class="form-control">
+                                                <span t-esc="o.date_done" style="font-size: 13px;"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 1%;"></div>
+                            <div class="rounded-lg text-center pt-5" style="width: 29%; border: 3px solid black;">
+                                <div class="col">
+                                    <p style="font-size: 20px; font-weight: bold;">R.U.C. 20512433821</p>
+                                    <p style="font-size: 22px; font-weight: bold;">OUTGOING CHARGE</p>
+                                    <p><span style="font-size: 22px; font-weight: bold; color: red;" t-esc="o.name"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="border border-dark rounded-lg overflow-hidden" style="width: 49.5%;">
+                                <div class="row p-2 text-center bg-secondary justify-content-center">
+                                    <div class="col-12 text-center">
+                                        <strong>DEPARTURE ADDRESS</strong>
+                                    </div>
+                                </div>
+                                <div class="row p-2 d-flex" style="line-height: 15px;">
+                                    <div class="col-12">
+                                        <p style="white-space: nowrap;"><span t-esc="o.origin_location" /></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 1%;"></div>
+                            <div class="border border-dark rounded-lg overflow-hidden" style="width: 49.5%;">
+                                <div class="row p-2 text-center bg-secondary justify-content-center">
+                                    <div class="col-12 text-center">
+                                        <strong>ARRIVAL ADDRESS</strong>
+                                    </div>
+                                </div>
+                                <div class="row p-2 d-flex" style="line-height: 15px;">
+                                    <div class="col-12">
+                                        <p style="white-space: nowrap;"><span t-esc="o.arrival_location" /></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row table-container">
+                            <table class="mt-3">
+                                <thead>
+                                    <tr class="font-weight-bold bg-secondary">
+                                        <th>CODE</th>
+                                        <th>DESCRIPTION</th>
+                                        <th>UNIT</th>
+                                        <th>QUANTITY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.move_ids_without_package" t-as="line">
+                                        <tr class="text-center no-page-break">
+                                            <td>
+                                                <t t-if="line.product_id">
+                                                    <span t-esc="line.product_id.default_code or 'N/A'" />
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <span t-esc="line.description_picking" />
+                                                <t t-if="line.lot_ids">
+                                                    Series: 
+                                                    <t t-foreach="line.lot_ids" t-as="line_lot">
+                                                        <span t-esc="line_lot.name"/>
+                                                    </t>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <span t-esc="line.product_uom.with_context(lang='es_ES').name" />
+                                            </td>
+                                            <td>
+                                                <span t-esc="line.quantity_done" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="footer mt-3 pt-2">
+                        <div class="row mt-2">
+                            <div class="border border-dark overflow-hidden rounded-lg" style="width: 49.5%;">
+                                <div class="row p-2 pl-4 bg-secondary justify-content-center">
+                                    <div class="col-12 text-center">
+                                        <strong>TARGET</strong>
+                                    </div>
+                                </div>
+                                <div class="row p-3 d-flex" style="line-height: 7px;">
+                                    <div class="col-12">
+                                        <p style="white-space: nowrap;"><strong>Gentlemen: </strong> <span t-esc="o.add_name" class="text-secondary" /></p>
+                                        <p style="white-space: nowrap;"><strong>Address: </strong> <span t-esc="o.add_address" class="text-secondary" /></p>
+                                        <p style="white-space: nowrap;"><strong>District: </strong> <span t-esc="o.add_district" class="text-secondary" /></p>
+                                        <p style="white-space: nowrap;"><strong>R.U.C: </strong> <span t-esc="o.add_ruc" class="text-secondary" /></p>
+                                        <p style="white-space: nowrap;"><strong>COD. Customer: </strong> <span t-esc="o.add_code_customer" class="text-secondary" /></p>
+                                        <p style="white-space: nowrap;"><strong>C/P: </strong> <span t-esc="o.add_cp" class="text-secondary" /></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 1%;"></div>
+                            <div class="border border-dark overflow-hidden rounded-lg" style="width: 49.5%;">
+                                <div class="row text-center p-2 pl-4 bg-secondary">
+                                    <div class="col-12 text-center">
+                                        <strong>TRANSPORTER</strong>
+                                    </div>
+                                </div>
+                                <div class="row p-3 d-flex" style="line-height: 7px;">
+                                    <div class="col-12">
+                                        <p style="white-space: nowrap;"><strong>Name or Company Name:</strong> <span t-esc="o.carrier_name_company" class="text-secondary" /></p>
+                                        <p style="white-space: nowrap;"><strong>R.U.C:</strong> <span t-esc="o.carrier_ruc" class="text-secondary" /></p>
+                                        <p style="white-space: nowrap;"><strong>Plate:</strong> <span t-esc="o.carrier_plate" class="text-secondary" /></p>
+                                        <p style="white-space: nowrap;"><strong>N° Brevete:</strong> <span t-esc="o.carrier_briefcase" class="text-secondary" /></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2 justify-content-center">
+                            <div class="border border-dark overflow-hidden rounded-lg" style="width: 72%;">
+                                <div class="row p-2 pl-4 bg-secondary">
+                                    <div class="col-12 text-center">
+                                        <strong>REASON FOR THE TRANSFER</strong>
+                                    </div>
+                                </div>
+                                <div class="row pl-4 pt-3" style="line-height: 6px;">
+                                    <div class="col-6">
+                                        <p>
+                                            <span class="border border-dark d-inline-block"
+                                                style="width: 20px; height: 16px; display: inline-block; vertical-align: center; text-align: center; padding-bottom: 5px;">
+                                                <span t-if="o.mt_store_transfer" style="display: inline-block;"><i
+                                                        class="fa fa-check" aria-hidden="true"></i></span>
+                                                <span t-if="not o.mt_store_transfer"></span>
+                                            </span>
+                                            <span> Transfer to store</span>
+                                        </p>
+                                        <p>
+                                            <span class="border border-dark d-inline-block"
+                                                style="width: 20px; height: 16px; display: inline-block; vertical-align: center; text-align: center; padding-bottom: 5px;">
+                                                <span t-if="o.mt_return" style="display: inline-block;"><i class="fa fa-check"
+                                                        aria-hidden="true"></i></span>
+                                                <span t-if="not o.mt_return"></span>
+                                            </span>
+                                            <span> Return</span>
+                                        </p>
+                                        <p>
+                                            <span class="border border-dark d-inline-block"
+                                                style="width: 20px; height: 16px; display: inline-block; vertical-align: center; text-align: center; padding-bottom: 5px;">
+                                                <span t-if="o.mt_incoming" style="display: inline-block;"><i class="fa fa-check"
+                                                        aria-hidden="true"></i></span>
+                                                <span t-if="not o.mt_incoming"></span>
+                                            </span>
+                                            <span> Admission</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p>
+                                            <span class="border border-dark d-inline-block"
+                                                style="width: 20px; height: 16px; display: inline-block; vertical-align: center; text-align: center; padding-bottom: 5px;">
+                                                <span t-if="o.mt_storage_output" style="display: inline-block;"><i
+                                                        class="fa fa-check" aria-hidden="true"></i></span>
+                                                <span t-if="not o.mt_storage_output"></span>
+                                            </span>
+                                            <span> Removal from warehouse</span>
+                                        </p>
+                                        <p>
+                                            <span class="border border-dark d-inline-block"
+                                                style="width: 20px; height: 16px; display: inline-block; vertical-align: center; text-align: center; padding-bottom: 5px;">
+                                                <span t-if="o.mt_other" style="display: inline-block;"><i class="fa fa-check"
+                                                        aria-hidden="true"></i></span>
+                                                <span t-if="not o.mt_other"></span>
+                                            </span>
+                                            <span> Other</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 1%;"></div>
+                            <div class="border border-dark rounded-lg" style="width: 27%; line-height: 8px;">
+                                <div class="row mt-4">
+                                    <div class="col-12 text-center p-3 pt-5">
+                                        <p>______________________</p>
+                                        <p><strong>Receipt Conformed</strong></p>
+                                        <p><strong>Name:</strong> ______________________</p>
+                                        <p><strong>D.N.I:</strong> ______________________</p>                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                                <div class="col-md-12 d-flex pt-2 pb-2">
+                                    <div class="text-center">
+                                        <t t-foreach="docs" t-as="stock_picking">
+                                            <a t-att-href="'/report/url/' + str(stock_picking.id)">
+                                                <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'report/url/' + str(stock_picking.id) + '&amp;width=100&amp;height=100'" alt="QR Code"/>
+                                            </a>
+                                        </t>
+                                    </div>
+                                    <div class="text-center mt-2 ml-3" style="line-height: 4px;">
+                                        <div class="col-12">
+                                            <p><strong>Verified by Marketing Alterno Perú S.A.C.</strong></p>
+                                            <p style="white-space: nowrap;"><strong><i>YOU CAN SCAN THE QR CODE WITH YOUR CELL PHONE TO VALIDATE THE OUTGOING CHARGE</i></strong></p>
+                                            <p><strong><i>INTERNET CONNECTION REQUIRED</i></strong></p>
+                                            <p><strong>Password:</strong> <span t-esc="o.generated_password"/></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </body>
+            </html>
+        </t>
+    </template>
+    <template id="report_stockpickingdocument">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="mkt_stock_picking_report.report_stock_picking_document" />
+            </t>
+        </t>
+    </template>
+
+</odoo>

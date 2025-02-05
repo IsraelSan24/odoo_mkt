@@ -1,0 +1,288 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record id="equipmentstatus" model="website.page">
+        <field name="name">Equipment Status</field>
+        <field name="type">qweb</field>
+        <field name="url">/equipmentstatus</field>
+        <!-- <field name="website_published">True</field> -->
+        
+        <field name="key">mkt_maintenance.equipmentstatus</field>
+        <field name="arch" type="xml">
+            <t name="Request" t-name="mkt_maintenance.equipmentstatus">
+                <t t-call="website.layout">
+                    <link rel="stylesheet" type="text/css" href="/mkt_maintenance/static/src/css/website_menu.css"/>
+                    <script type="text/javascript" src="/mkt_maintenance/static/src/js/website.js"></script>
+                    <div id="wrap" class="oe_structure">
+                        <div class="container o_equipment_status">
+                            <h2>Equipment Status Report</h2>
+                            <form action="/equipmentstatus/requested" role="form" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <div class="row border border-info rounded bg-white mb-3">
+                                    <div class="col-md-3 p-3 bg-info">
+                                        <img src="/mkt_maintenance/static/src/img/proud.svg" style="width:200px; filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));"/>
+                                    </div>
+                                    <div class="col-md-9 p-3">
+                                        <div class="row">
+                                            <!-- Estado del Equipo -->
+                                            <div class="form-group col-md-12">
+                                                <label for="status">Equipment Status</label>
+                                                <select name="status" required="1" class="form-control">
+                                                    <option value="assigned">Assigned</option>
+                                                    <option value="returned">Returned</option>
+                                                    <option value="maintenance">Under Maintenance</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <!-- Código del Equipo -->
+                                            <div class="form-group col-md-6">
+                                                <label for="name">Equipment Code</label>
+                                                <input type="text" name="name" required="1" class="form-control" id="codigo_equipo" placeholder="Código del Equipo"/>
+                                            </div>
+                                            <!-- equipment_id (Autocompletado) -->
+                                            <div class="form-group col-md-6" style="display:none;">
+                                                <label for="equipment_id">Equipment</label>
+                                                <input type="text" name="equipment_id" class="form-control" id="equipment_id" readonly="readonly"/>
+                                            </div>
+                                            <!-- Category (Autocompletado) -->
+                                            <div class="form-group col-md-6">
+                                                <label for="category_id">Type</label>
+                                                <input type="text" name="category_id" class="form-control" id="category_equipo" readonly="readonly"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <!-- Ubicación (Autocompletado) -->
+                                            <div class="form-group col-md-6" style="display:none;">
+                                                <label for="location">Location</label>
+                                                <input type="text" name="location" class="form-control" id="ubicacion_equipo" readonly="readonly"/>
+                                            </div>
+                                            <div class="form-group col-md-6" style="display:none;">
+                                                <label for="employee_id">Assigned Employee</label>
+                                                <input type="text" name="employee_id" class="form-control" id="empleado_asignado_equipo" readonly="readonly"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <!-- Modelo (Autocompletado) -->
+                                            <div class="form-group col-md-6" style="display:none;">
+                                                <label for="model">Model</label>
+                                                <input type="text" name="model" class="form-control" id="modelo_equipo" readonly="readonly"/>
+                                            </div>
+
+                                            <!-- Número de Serie (Autocompletado) -->
+                                            <div class="form-group col-md-6" style="display:none;">
+                                                <label for="serial_number">Serial Number</label>
+                                                <input type="text" name="serial_number" class="form-control" id="numero_serie_equipo" readonly="readonly"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Empleado Asignado (Autocompletado) -->
+                                <div class="row border border-info rounded bg-white mb-3">
+                                    <div class="col-md-9 p-3">
+                                        
+                                        <div class="row">
+                                                    <!-- País -->
+                                            <div class="form-group col-md-6">
+                                                <label for="country_id">Country</label>
+                                                <select name="country_id" id="country_id" class="form-control" required="True">
+                                                    <option value="">Countries...</option>
+                                                    <t t-foreach="countries or []" t-as="country">
+                                                        <option t-att-value="country.id" id="country_name">
+                                                            <t t-esc="country.name"/>
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                            </div>
+                                                    <!-- Department -->
+                                            <div class="form-group col-md-6">
+                                                <label for="state_id">Department</label>
+                                                <select name="state_id" id="state_id" class="form-control" required="True">
+                                                    <option value="">Department...</option>
+                                                        <t t-foreach="states or []" t-as="state">
+                                                            <option t-att-value="state.id" id="state_name" t-att-data-country_id="state.country_id.id">
+                                                                <t t-esc="state.name"/>
+                                                            </option>
+                                                        </t>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                                    <!-- Province -->
+                                            <div class="form-group col-md-6">
+                                                <label for="city_id">Province</label>
+                                                <select name="city_id" id="city_id" class="form-control" required="True">
+                                                    <option value="">Province...</option>
+                                                        <t t-foreach="cities or []" t-as="citie">
+                                                            <option t-att-value="citie.id" id="citie_name" t-att-data-state_id="citie.state_id.id">
+                                                                <t t-esc="citie.name"/>
+                                                            </option>
+                                                        </t>
+                                                </select>
+                                            </div>
+                                                    <!-- District -->
+                                            <div class="form-group col-md-6">
+                                                <label for="district_id">District</label>
+                                                <select name="district_id" id="district_id" class="form-control" required="True">
+                                                    <option value="">District...</option>
+                                                    <t t-foreach="districts or []" t-as="district">
+                                                        <option t-att-value="district.id" id="district_name" t-att-data-city_id="district.city_id.id">
+                                                            <t t-esc="district.name"/>
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 p-3 bg-info">
+                                        <img src="/mkt_maintenance/static/src/img/location.svg" style="width:200px; filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));"/>
+                                    </div>
+                                </div>
+                                <!-- Campos para subir imágenes -->
+                                <div class="row bg-white mt-3 border rounded rounded-lg">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="row bg-info d-flex align-items-center justify-content-center py-2 mb-2">
+                                                <div class="col text-center">
+                                                    <h5>Laptop photos</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-4">
+                                                    <div class="border border-info rounded p-3 h-100">
+                                                        <div class="form-group">
+                                                            <label for="photo_base"><strong class="text-info">Laptop base photo</strong></label>
+                                                            <div class="input-group">
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input" name="photo_base" id="photo_base" accept="image/*"/>
+                                                                    <label class="custom-file-label text-muted truncate" for="photo_base">Select file</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="border border-info rounded p-3 h-100">
+                                                        <div class="form-group">
+                                                            <label for="photo_left_side"><strong class="text-info">Left Side Photo</strong></label>
+                                                            <div class="input-group">
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input" name="photo_left_side" id="photo_left_side" accept="image/*"/>
+                                                                    <label class="custom-file-label text-muted truncate" for="photo_left_side">Select file</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="border border-info rounded p-3 h-100">
+                                                        <div class="form-group">
+                                                            <label for="photo_right_side"><strong class="text-info">Right Side Photo</strong></label>
+                                                            <div class="input-group">
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input" name="photo_right_side" id="photo_right_side" accept="image/*"/>
+                                                                    <label class="custom-file-label text-muted truncate" for="photo_right_side">Select file</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-4">
+                                                    <div class="border border-info rounded p-3 h-100">
+                                                        <div class="form-group">
+                                                            <label for="photo_open_screen"><strong class="text-info">Laptop Open Screen Photo</strong></label>
+                                                            <div class="input-group">
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input" name="photo_open_screen" id="photo_open_screen" accept="image/*"/>
+                                                                    <label class="custom-file-label text-muted truncate" for="photo_open_screen">Select file</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="border border-info rounded p-3 h-100">
+                                                        <div class="form-group">
+                                                            <label for="photo_open_keyboard"><strong class="text-info">Laptop Open Keyboard Photo</strong></label>
+                                                            <div class="input-group">
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input" name="photo_open_keyboard" id="photo_open_keyboard" accept="image/*"/>
+                                                                    <label class="custom-file-label text-muted truncate" for="photo_open_keyboard">Select file</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="border border-info rounded p-3 h-100">
+                                                        <div class="form-group">
+                                                            <label for="photo_closed"><strong class="text-info">Laptop Closed Photo</strong></label>
+                                                            <div class="input-group">
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input" name="photo_closed" id="photo_closed" accept="image/*"/>
+                                                                    <label class="custom-file-label text-muted truncate" for="photo_closed">Select file</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-4">
+                                                    <div class="border border-info rounded p-3 h-100">
+                                                        <div class="form-group">
+                                                            <label for="photo_charger"><strong class="text-info">Charger Photo</strong></label>
+                                                            <div class="input-group">
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input" name="photo_charger" id="photo_charger" accept="image/*"/>
+                                                                    <label class="custom-file-label text-muted truncate" for="photo_charger">Select file</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Botón de Envío -->
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+
+    <record id="equipmentstatus_requested" model="website.page">
+        <field name="name">Equipment Status Requested</field>
+        <field name="type">qweb</field>
+        <field name="url">/equipmentstatus_requested</field>
+        <!-- <field name="website_published">True</field> -->
+        <field name="key">mkt_maintenance.equipmentstatus_requested</field>
+        <field name="arch" type="xml">
+            <t name="Requested" t-name="mkt_maintenance.equipmentstatus_requested">
+                <t t-call="website.layout">
+                    <div id="wrap" class="container mt-5">
+                        <div class="alert alert-success text-center" role="alert">
+                            <h4 class="alert-heading">Form Sent!</h4>
+                            <p>Your information has been successfully submitted. Thank you for completing the form.</p>
+                            <hr/>
+                            <p class="mb-0">
+                                <a href="/equipmentstatus" class="btn btn-outline-success mt-3">
+                                    <i class="fa fa-arrow-left"></i> Back to form
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+
+</odoo>

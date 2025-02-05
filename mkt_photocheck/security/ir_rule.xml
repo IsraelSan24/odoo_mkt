@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="photocheck_show_myrecord_rule" model="ir.rule">
+        <field name="name">My own Photocheck</field>
+        <field name="model_id" ref="mkt_photocheck.model_photocheck"/>
+        <field name="domain_force">
+            [
+                '|','|',
+                ('create_uid', '=', user.id),
+                ('photocheck_brand_group_id.responsible_id', '=', user.id),
+                ('photocheck_supervisor_id.user_id', '=', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('mkt_photocheck.photocheck_user')), (4, ref('mkt_photocheck.photocheck_boss'))]"/>
+    </record>
+
+    <record id="photocheck_show_allrecord_rule" model="ir.rule">
+        <field name="name">All Photocheck</field>
+        <field name="model_id" ref="mkt_photocheck.model_photocheck"/>
+        <field name="domain_force">
+            [(1, '=', 1)]
+        </field>
+        <field name="groups" eval="[(4,ref('mkt_photocheck.photocheck_admin'))]"/>
+    </record>
+
+    <record id="photocheck_show_somerecord_rule" model="ir.rule">
+        <field name="name">Some Photocheck</field>
+        <field name="model_id" ref="mkt_photocheck.model_photocheck"/>
+        <field name="domain_force">
+            [('state', '!=', 'draft')]
+        </field>
+        <field name="groups" eval="[(4,ref('mkt_photocheck.photocheck_designer'))]"/>
+    </record>
+
+</odoo>

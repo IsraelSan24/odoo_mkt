@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <template id="requerimientos">
+      <t t-call="website.layout">
+        <div class="container">
+          <title>Requerimientos</title>
+          <form action="/guardar/requerimiento" method="post">
+            <div style="display:flex;">
+              <div style="width: -webkit-fill-available;margin:auto;" class="form-group form-field o_website_form_required_custom">
+                  <br/>
+                  <br/>
+                  <p>
+                    <h2>
+                        <b>Requerimientos</b>
+                    </h2>
+                  </p>
+                  <br/>
+                  <div class="col-lg-7 col-md-8">
+                      <input type="text" id="fecha_solicitud" name="fecha_solicitud" style="display:none;"/>
+                      <input type="number" id="idnumeric_requerimiento" name="idnumeric_requerimiento"  style="display:none;"/>
+                  </div>
+                  <div class="card text-white bg-secondary mb-3" id="card-requerimiento-fase1">
+                    <div class="card-header">Datos del Proveedor</div>
+                    <div class="card-body" id="card-body-requerimiento">
+                      <div id="card1-body-requerimiento-div">
+                        <label class="col-md-12 col-sm-12 control-label" for="banco">Banco</label>
+                        <div class="col-lg-12 col-md-12" id="contenedor1-requerimiento">
+                          <select id="campo1-requerimiento" class="browser-default custom-select" name="banco">
+                              <option value="Cuenta Registrada">Cuenta Registrada</option>
+                              <option value="Banco de Comercio">Banco de Comercio</option>
+                              <option value="Banco de Crédito del Perú">Banco de Crédito del Perú</option>
+                              <option value="Banco Interamericano de Finanzas (BanBif)">Banco Interamericano de Finanzas (BanBif)</option>
+                              <option value="Banco Pichincha">Banco Pichincha</option>
+                              <option value="BBVA">BBVA</option>
+                              <option value="Interbank">Interbank</option>
+                              <option value="MiBanco">MiBanco</option>
+                              <option value="Scotiabank Perú">Scotiabank Perú</option>
+                              <option value="Banco GNB Perú">Banco GNB Perú</option>
+                              <option value="Banco Ripley">Banco Ripley</option>
+                              <option value="Banco Santander Perú">Banco Santander Perú</option>
+                          </select>
+                        </div>
+                      <!-- <br/>-->  
+                        <label class="col-md-12 col-sm-12 control-label" for="ncta">N. de Cta. Cte.</label>
+                        <div class="col-lg-12 col-md-12" id="contenedor2-requerimiento">
+                          <input type="text" class="form-control" name="ncta" autocomplete="off"/>
+                        </div>
+                      </div>
+                      <div style="margin: auto;">
+                        <label class="col-md-12 col-sm-12 control-label" for="Girado">Girado a</label>
+                        <div class="col-lg-12 col-md-12" id="contenedor3-requerimiento">
+                          <input type="text" class="form-control" name="Girado" autocomplete="off"/>
+                        </div>
+                        <!-- <br/>-->  
+                        <label class="col-md-12 col-sm-12 control-label" for="suma">DNI o RUC</label>
+                        <div class="col-lg-12 col-md-12" id="contenedor4-requerimiento">
+                          <input type="number" class="form-control" name="suma" autocomplete="off"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                 
+              </div>
+            </div>
+            <br/>
+            <div class="card text-white bg-secondary mb-3" id="card-requerimiento-fase2">
+              <div class="card-header">Datos del Requerimiento</div>
+              <div class="card-body" id="card-requerimiento-fase2-body">
+                <div class="card-requerimiento-fase2-div">
+                  <label class="col-md-12 col-sm-12 control-label" for="cliente">Cliente</label>
+                  <div class="col-md-12 col-sm-12" id="card-requerimiento-fase2-cliente">
+                      <input type="text" class="form-control" name="cliente" autocomplete="off"/>
+                  </div>
+                  <label class="col-md-12 col-sm-12 control-label" for="actividad">Actividad</label>
+                  <div class="col-md-12 col-sm-12"  id="card-requerimiento-fase2-actividad">
+                      <input type="text" class="form-control" rows="5" name="actividad" autocomplete="off"/>
+                  </div>
+                  <!-- New field view -->
+                  <label class="col-md-12 col-sm-12 control-label" for="importe_s_char">Por la Suma de</label>
+                  <div class="col-md-12 col-sm-12"  id="card-requerimiento-fase2-actividad">
+                      <input type="text" class="form-control" name="importe_s_char" autocomplete="off"/>
+                  </div>
+                 
+                </div>
+                <div style="margin: auto;">
+                  <label class="col-md-12 col-sm-12 control-label" for="ppto">N. de PPTO</label>
+                  <div class="col-md-12 col-sm-12">
+                      <input type="text" class="form-control" name="ppto" autocomplete="off"/>
+                  </div>
+                  <label class="col-md-12 col-sm-12 control-label" for="centro_costo">Centro de Costo</label>
+                  <div class="col-md-12 col-sm-12">
+                      <input type="text" class="form-control" name="centro_costo" autocomplete="off"/>
+                  </div>
+                  <label class="col-md-12 col-sm-12 control-label" for="importe_s">Importe (S/)</label>
+                  <div class="col-md-12 col-sm-12">
+                      <input type="text" class="form-control decimales" name="importe_s" autocomplete="off"/>
+                  </div>
+                </div>
+                <div style="margin: auto;">
+                  <label class="col-md-12 col-sm-12 control-label" for="importe_uss">Importe (USS)</label>
+                  <div class="col-md-12 col-sm-12">
+                      <input type="text" class="form-control decimales" name="importe_uss" autocomplete="off"/>
+                  </div>
+                  <label class="col-md-12 col-sm-12 control-label" for="importe_cheque">N. de Cheque</label>
+                  <div class="col-md-12 col-sm-12"> 
+                      <input type="text" class="form-control decimales" name="importe_cheque" autocomplete="off"/>
+                  </div>
+                  <label class="col-md-12 col-sm-12 control-label" for="operacion">N. de Operación</label>
+                  <div class="col-md-12 col-sm-12">
+                      <input type="text" class="form-control decimales"  name="operacion" autocomplete="off"/>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body" id="card-boy-concepto">
+                <label class="col-md-12 col-sm-12 control-label" for="concepto">Concepto</label>
+                <div class="col-lg-12 col-md-12" style="width: 100%;height: 150px;">
+                    <textarea class="form-control" rows="5" name="concepto" autocomplete="off"></textarea>
+                
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div class="card text-white bg-secondary mb-3" style="height:250px;background-color: #555555 !important;">
+              <div class="card-header">Datos del Responsable</div>
+              <div class="card-body">
+                <label class="col-md-3 col-sm-4 control-label" style="font-size:15px;" for="responsable">Apellidos y Nombres : </label>
+                <div class="col-lg-7 col-md-10">
+                    <input type="text" class="form-control"  name="responsable" autocomplete="off"/>
+                </div>
+                <label class="col-md-3 col-sm-4 control-label" style="font-size:15px;" for="dni_responsable">DNI : </label>
+                <div class="col-lg-7 col-md-10">
+                    <input type="number" class="form-control"  name="dni_responsable" autocomplete="off"/>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div class="card text-white bg-secondary mb-3" style="height:250px;background-color: #555555 !important;">
+              <div class="card-header">Detalle</div>
+              <div class="card-body">
+                <textarea class="form-control" rows="5" name="detalle_responsable" autocomplete="off"></textarea>
+              </div>
+            </div>
+            <br/>
+            <br/>
+            <div class="form-group" style="display:flex;">
+              <div class="col-md-4">
+                <button style="width:150px;height:50px;" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-danger">Guardar y Enviar</button>
+              </div>
+            </div>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Añadir Destinatario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <label class="col-md-3 col-sm-4 control-label" style="font-size:15px;" for="responsable">Correo : </label>
+                    <div class="col-lg-7 col-md-10">
+                        <input id="correos_requerimientos" name="correos_requerimientos" type="email"  class="form-control" autocomplete="off" required="true"/>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a href='/guardar/requerimiento'> 
+                      <button id="enviar_requerimiento" name="enviar_requerimiento" type="submit" class="btn btn-primary">Enviar y Guardar</button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <br/>
+          </form>
+        </div>
+      </t>
+    </template>
+
+    <template id="liquidacion">
+      <t t-call="website.layout">
+        <div class="container">
+          <form id="form_liquidaciones" action="/guardar/liquidacion" method="post">
+            <br/>
+            <br/>
+             <center><h2>
+                <b>Formato de Liquidacion</b>
+             </h2></center>
+             <div class="card text-white bg-secondary mb-3" id="card_contenedor_liquidacion">
+                <div class="card-header">Datos del Responsable</div>
+                <div class="card-body" id="card_contenedor_liquidacion_body">
+                  <div id="card_contenedor_liquidacion_div">
+                    <label for="exampleFormControlInput1">Responsable</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="responsable" autocomplete="off"/>
+                    <input type="number" id="idnumeric_liquidacion" name="idnumeric_liquidacion" style="display:none;"/>
+                    <input type="text" id="fecha_liquidacion" name="fecha_liquidacion" style="display:none;"/>
+                    <input type="text" style="display:contents;" name="total_liquidacion" id="total_liquidacion"/>
+                    <input type="text" style="display:contents;" name="saldo_liquidacion" id="saldo_liquidacion"/>
+                  </div>
+                  <div id="card_contenedor_liquidacion_div_segundo">
+                    <label for="exampleFormControlInput2">DNI</label>
+                    <input type="number" class="form-control" id="exampleFormControlInput2" name="dni"  autocomplete="off"/>
+                  </div>
+                </div>
+             </div>
+             <div class="card text-white bg-secondary mb-3" id="card_contenedor_liquidacion_segundo">
+                <div class="card-header">Datos de Documento de Liquidacion</div>
+                <div class="card-body" id="card_contenedor_liquidacion_body_segundo">
+                  <div id="card_contenedor_liquidacion_div_tercer">
+                      <label for="exampleFormControlInput5">Valor</label>
+                      <input type="text" class="form-control decimales"  id="valor" name="valor"  autocomplete="off"/>
+                  </div>
+                  <div id="card_contenedor_liquidacion_div_cuatro">
+                    <label for="exampleFormControlInput6">Centro Costo</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput6" name="centro_costo"  autocomplete="off"/>
+                  </div>
+                </div>
+             </div>
+          
+            <br/>
+            <div class="container-lg">
+              <div class="table-responsive">
+                <div class="table-wrapper" id="table-liquidacion">
+                  <table id="table-liquidacion-border" class="table table-bordered" name="reporte_liquidacion">
+                    <thead>
+                      <tr>
+                        <th id="porcentaje-fecha">Fecha</th>
+                        <th id="porcentaje-documento">Documento</th>
+                        <th id="porcentaje-motivo">Motivo</th>
+                        <th id="porcentaje-monto">Monto</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><input type="date" class="form-control" name="fecha_tabla1" id="fecha_tabla" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="documento1" id="documento" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="motivo1" id="motivo" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control decimales" name="monto1" id="monto1" autocomplete="off"/></td>
+                      </tr>
+                      <tr>
+                        <td><input type="date" class="form-control" name="fecha_tabla2" id="fecha_tabla" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="documento2" id="documento" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="motivo2" id="motivo" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control decimales" name="monto2" id="monto2" autocomplete="off"/></td>
+                      </tr>
+                      <tr>
+                        <td><input type="date" class="form-control" name="fecha_tabla3" id="fecha_tabla" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="documento3" id="documento" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="motivo3" id="motivo" autocomplete="off"/></td>
+                        <td><input type="text"  class="form-control decimales" name="monto3" id="monto3" autocomplete="off"/></td>
+                      </tr>
+                      <tr>
+                        <td><input type="date" class="form-control" name="fecha_tabla4" id="fecha_tabla" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="documento4" id="documento" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="motivo4" id="motivo" autocomplete="off"/></td>
+                        <td><input type="text"  class="form-control decimales" name="monto4" id="monto4" autocomplete="off"/></td>
+                      </tr>
+                      <tr>
+                        <td><input type="date" class="form-control" name="fecha_tabla5" id="fecha_tabla" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="documento5" id="documento" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="motivo5" id="motivo" autocomplete="off"/></td>
+                        <td><input type="text"  class="form-control decimales" name="monto5" id="monto5" autocomplete="off"/></td>
+                      </tr>
+                       <tr>
+                        <td><input type="date" class="form-control" name="fecha_tabla6" id="fecha_tabla" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="documento6" id="documento" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="motivo6" id="motivo" autocomplete="off"/></td>
+                        <td><input type="text"  class="form-control decimales" name="monto6" id="monto6" autocomplete="off"/></td>
+                      </tr>
+                       <tr>
+                        <td><input type="date" class="form-control" name="fecha_tabla7" id="fecha_tabla" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="documento7" id="documento" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="motivo7" id="motivo" autocomplete="off"/></td>
+                        <td><input type="text"  class="form-control decimales" name="monto7" id="monto7" autocomplete="off"/></td>
+                      </tr>
+                       <tr>
+                        <td><input type="date" class="form-control" name="fecha_tabla8" id="fecha_tabla" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="documento8" id="documento" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="motivo8" id="motivo" autocomplete="off"/></td>
+                        <td><input type="text"  class="form-control decimales" name="monto8" id="monto8" autocomplete="off"/></td>
+                      </tr>
+                       <tr>
+                        <td><input type="date" class="form-control" name="fecha_tabla9" id="fecha_tabla" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="documento9" id="documento" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="motivo9" id="motivo" autocomplete="off"/></td>
+                        <td><input type="text"  class="form-control decimales" name="monto9" id="monto9" autocomplete="off"/></td>
+                      </tr>
+                       <tr>
+                        <td><input type="date" class="form-control" name="fecha_tabla10" id="fecha_tabla" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="documento10" id="documento" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="motivo10" id="motivo" autocomplete="off"/></td>
+                        <td><input type="text"  class="form-control decimales" name="monto10" id="monto10" autocomplete="off"/></td>
+                      </tr>
+                       <tr>
+                        <td><input type="date" class="form-control" name="fecha_tabla11" id="fecha_tabla" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="documento11" id="documento" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="motivo11" id="motivo" autocomplete="off"/></td>
+                        <td><input type="text"  class="form-control decimales" name="monto11" id="monto11" autocomplete="off"/></td>
+                      </tr>
+                       <tr>
+                        <td><input type="date" class="form-control" name="fecha_tabla12" id="fecha_tabla" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="documento12" id="documento" autocomplete="off"/></td>
+                        <td><input type="text" class="form-control" name="motivo12" id="motivo" autocomplete="off"/></td>
+                        <td><input type="text"  class="form-control decimales" name="monto12" id="monto12" autocomplete="off"/></td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>
+                        </th>
+                        <th>
+                        </th>
+                        <th>
+                        </th>
+                        <th>Total : <span id="total_liquidacion_mostrar"/></th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div> 
+            <div class="form-group" style="display: flex;">
+              <div class="col-md-4">
+                <button style="width:150px;height:50px;" data-toggle="modal" data-target="#exampleModalCenter2" class="btn btn-danger">Guardar y Enviar</button>
+              </div>
+            </div>
+            <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Añadir Destinatario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <label class="col-md-3 col-sm-4 control-label" style="font-size:15px;" for="responsable">Correo : </label>
+                    <div class="col-lg-7 col-md-10">
+                        <input id="correos_liquidacion" name="correos_liquidacion" type="email"  class="form-control" autocomplete="off" required="true"/>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a href='/guardar/liquidacion'> 
+                      <button id="enviar_liquidacion" name="enviar_liquidacion" type="submit" class="btn btn-primary">Enviar y Guardar</button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <br/> 
+          </form>
+        </div>
+      </t>
+    </template>
+
+    <template id="gastos">
+      <t t-call="website.layout">
+        <div class="container">
+         <form id="form_gastos" action="/guardar/gastos" method="post">
+            <br/>
+            <br/>
+            <center>
+              <h2>
+                <b>PLANILLA DE GASTO POR MOVILIDAD</b>
+              </h2>
+            </center>
+            <br/>
+            <div class="card text-white bg-secondary mb-3" id="conter-primero-gastos">
+              <div class="card-header">Datos del Documento</div>
+              <div class="card-body" id="contenedor-gastos">
+                <div class="conter-div-gastos">
+                  <label for="exampleFormControlInput7" style="font-size:14px;">N° de PPTO :</label>
+                  <input type="text" class="form-control" id="ppto" name="ppto" autocomplete="off"/>
+                  <label for="exampleFormControlInput3" style="font-size:14px;">Periodo :</label>
+                  <input type="text" class="form-control" id="periodo" name="periodo" autocomplete="off"/>
+                </div>
+                <div class="conter-div-gastos">
+                  <label for="exampleFormControlInput8" style="font-size:14px;">Centro Costo :</label>
+                  <input type="text" class="form-control" id="costo" name="costo" autocomplete="off"/>
+                </div>
+              </div>
+            </div>
+
+            <br/>
+            <div class="card text-white bg-secondary mb-3" id="conter-segundo-gastos" style="display:none;">
+              <div class="card-header">Datos de Empresa</div>
+              <div class="card-body" id="contenedor-gastos-body">
+                <div class="conter-div-gastos">
+                  <label for="exampleFormControlInput1" style="font-size:14px;">Razon Social :</label>
+                  <input type="text" class="form-control" id="razon" name="razon" autocomplete="off"/>
+                  <input type="text" id="emision" name="emision" style="display:none;"/>
+                  <input type="number" id="idnumeric_gastos" name="idnumeric_gastos"  style="display:none;"/>
+                  <input type="text" name="total_gastos" id="total_gastos" style="display:none;"/>
+                  <input type="text" name="fecha_importe1" id="fecha_importe1" style="display:none;"/>
+                  <input type="text" name="importe_total_fecha1" id="importe_total_fecha1" style="display:none;"/>
+                  <input type="text" name="fecha_importe2" id="fecha_importe2" style="display:none;"/>
+                  <input type="text" name="importe_total_fecha2" id="importe_total_fecha2" style="display:none;"/>
+                  <input type="text" name="fecha_importe3" id="fecha_importe3" style="display:none;"/>
+                  <input type="text" name="importe_total_fecha3" id="importe_total_fecha3" style="display:none;"/>
+                  <input type="text" name="fecha_importe4" id="fecha_importe4" style="display:none;"/>
+                  <input type="text" name="importe_total_fecha4" id="importe_total_fecha4" style="display:none;"/>
+                  <input type="text" name="fecha_importe5" id="fecha_importe5" style="display:none;"/>
+                  <input type="text" name="importe_total_fecha5" id="importe_total_fecha5" style="display:none;"/>
+                  <label for="exampleFormControlInput2" style="font-size:14px;">RUC :</label>
+                  <input type="number" class="form-control" id="ruc" name="ruc" autocomplete="off"/>
+                </div>
+              </div>
+            </div>
+            
+            <br/>
+            <div class="card text-white bg-secondary mb-3"  id="conter-tercer-gastos">
+              <div class="card-header">Datos del Trabajador</div>
+              <div class="card-body" id="contenedor-gastos_datos">
+                <div class="conter-div-gastos">
+                  <label for="exampleFormControlInput5" style="font-size:14px;">Nombre y Apellido :</label>
+                  <input type="text" class="form-control" id="datos" name="datos" autocomplete="off"/>
+                </div>
+                <div class="conter-div-gastos">
+                  <label for="exampleFormControlInput6" style="font-size:14px;">DNI :</label>
+                  <input type="number" class="form-control" id="dni" name="dni"  autocomplete="off"/>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <br/>
+            <div class="container-lg">
+              <div class="table-responsive">
+                <div class="table-wrapper" id="table-scroll-gastos">
+                  <table class="table table-bordered">
+                      <thead>
+                          <tr>
+                            <th ROWSPAN="2" style="width:170px;vertical-align: inherit;">Fecha</th>
+                            <th colspan="2" style="width:700px;text-align: center;">Desplazamiento</th>
+                            <th colspan="1" style="width:200px;text-align: center;">Importe</th>
+                          </tr>
+                          <tr>
+                            <th>Motivo</th>
+                            <th>Destino</th>
+                            <th>S/</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><input type="date" class="form-control" name="fecha_tabla1" id="fecha_tabla1" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="motivo1" id="motivo1" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="destino1" id="documento1" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control decimales" name="importe1" id="importe1" autocomplete="off"/></td>
+                        </tr>
+                        <tr>
+                          <td><input type="date" class="form-control" name="fecha_tabla2" id="fecha_tabla2" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="motivo2" id="motivo2" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="destino2" id="documento2" autocomplete="off"/></td>
+                          <td><input type="text"  class="form-control decimales" name="importe2" id="importe2" autocomplete="off"/></td>
+                        </tr>
+                        <tr>
+                          <td><input type="date" class="form-control" name="fecha_tabla3" id="fecha_tabla3" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="motivo3" id="motivo3" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="destino3" id="documento3" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control decimales" name="importe3" id="importe3" autocomplete="off"/></td>
+                        </tr>
+                        <tr>
+                          <td><input type="date" class="form-control" name="fecha_tabla4" id="fecha_tabla4" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="motivo4" id="motivo4" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="destino4" id="documento4" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control decimales" name="importe4" id="importe4" autocomplete="off"/></td>
+                        </tr>
+                        <tr>
+                          <td><input type="date" class="form-control" name="fecha_tabla5" id="fecha_tabla5" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="motivo5" id="motivo5" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="destino5" id="documento5" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control decimales" name="importe5" id="importe5" autocomplete="off"/></td>
+                        </tr> 
+                        <tr>
+                          <td><input type="date" class="form-control" name="fecha_tabla6" id="fecha_tabla6" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="motivo6" id="motivo6" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="destino6" id="documento6" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control decimales" name="importe6" id="importe6" autocomplete="off"/></td>
+                        </tr> 
+                        <tr>
+                          <td><input type="date" class="form-control" name="fecha_tabla7" id="fecha_tabla7" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="motivo7" id="motivo7" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="destino7" id="documento7" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control decimales" name="importe7" id="importe7" autocomplete="off"/></td>
+                        </tr> 
+                        <tr>
+                          <td><input type="date" class="form-control" name="fecha_tabla8" id="fecha_tabla8" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="motivo8" id="motivo8" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="destino8" id="documento8" autocomplete="off"/></td>
+                          <td><input type="text"  class="form-control decimales" name="importe8" id="importe8" autocomplete="off"/></td>
+                        </tr> 
+                        <tr>
+                          <td><input type="date" class="form-control" name="fecha_tabla9" id="fecha_tabla9" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="motivo9" id="motivo9" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="destino9" id="documento9" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control decimales" name="importe9" id="importe9" autocomplete="off"/></td>
+                        </tr> 
+                        <tr>
+                          <td><input type="date" class="form-control" name="fecha_tabla10" id="fecha_tabla10" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="motivo10" id="motivo10" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control" name="destino10" id="documento10" autocomplete="off"/></td>
+                          <td><input type="text" class="form-control decimales" name="importe10" id="importe10" autocomplete="off"/></td>
+                        </tr> 
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th>
+                          </th>
+                          <th>
+                          </th>
+                          <th>
+                          </th>
+                          <th>Total : <span id="total_gastos_mostrar"/></th>
+                        </tr>
+                     </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" style="display:flex;">
+               <div class="col-md-4">
+                <button style="width:150px;height:50px;" data-toggle="modal" data-target="#exampleModalCenter3" class="btn btn-danger">Guardar y Enviar</button>
+               </div>
+            </div> 
+            <div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Añadir Destinatario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <label class="col-md-3 col-sm-4 control-label" style="font-size:15px;" for="responsable">Correo :</label>
+                    <div class="col-lg-7 col-md-10">
+                        <input id="correos_gastos" name="correos_gastos" type="email"  class="form-control" autocomplete="off" required="true"/>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a href='/guardar/gastos'> 
+                      <button id="enviar_gastos" name="enviar_gastos" type="submit" class="btn btn-primary">Enviar y Guardar</button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </t>
+    </template> 
+
+    <template id="equipos">
+      <t t-call="website.layout">
+        <div class="container">
+          <title>Entrega de Equipos</title>
+          <form action="/guardar/equipos" method="post">
+            <br/>
+            <br/>
+            <center>
+            <h3>
+              <b>ACTA DE ENTREGA DE EQUIPO MOVILES PORTATIL</b>
+            </h3>
+            </center>
+            <br/>
+            <input type="text" id="fecha_equipos" name="fecha_equipos" style="display:none;"/>
+            <input type="number" id="idnumeric_equipos" name="idnumeric_equipos"  style="display:none;"/>
+            <div class="card text-white bg-secondary mb-3"  id="conter-primero-equipos">
+              <div class="card-header">Datos del Trabajador</div>
+              <div class="card-body" id="contenedor-equipos-body">
+                <div class="conter-div-equipos">
+                  <label for="exampleFormControlInput1" style="font-size:14px;">Nombre :</label>
+                  <input type="text" class="form-control" id="nombre_equipos" name="nombre_equipos" autocomplete="off"/>
+                </div>
+                <div class="conter-div-equipos">
+                  <label for="exampleFormControlInput2" style="font-size:14px;">DNI :</label>
+                  <input type="number" class="form-control" id="dni_equipos" name="dni_equipos" autocomplete="off"/>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div class="card text-white bg-secondary mb-3"  id="conter-segundo-equipos">
+              <div class="card-header">Datos del Equipo</div>
+              <div class="card-body" id="contenedor-equipos-body-segundo">
+                <div class="conter-div-equipos">
+                  <label for="exampleFormControlInput5" style="font-size:14px;">Equipo :</label>
+                  <input type="text" class="form-control" id="equipo" name="equipo" autocomplete="off"/>
+                  <label for="exampleFormControlInput5" style="font-size:14px;">IMEI / SERIE :</label>
+                  <input type="text" class="form-control" id="serie_equipos" name="serie_equipos" autocomplete="off"/>
+                  <label for="exampleFormControlInput5" style="font-size:14px;">Operador :</label>
+                  <input type="text" class="form-control" id="operador_equipos" name="operador_equipos" autocomplete="off"/>
+                  <label for="exampleFormControlInput5" style="font-size:14px;">CARGADOR / BATERIA :</label>
+                  <input type="text" class="form-control" id="cargador_equipos" name="cargador_equipos" autocomplete="off"/>
+                  <label for="exampleFormControlInput5" style="font-size:14px;">Valorizado en S/.</label>
+                  <input type="number" class="form-control" id="valorizado_equipos" name="valorizado_equipos" autocomplete="off"/>
+                </div>
+                <div class="conter-div-equipos">
+                  <label for="exampleFormControlInput6" style="font-size:14px;">Marca :</label>
+                  <input type="text" class="form-control" id="marca_equipo" name="marca_equipo" autocomplete="off"/>
+                  <label for="exampleFormControlInput6" style="font-size:14px;">Modelo :</label>
+                  <input type="text" class="form-control" id="modelo_equipo" name="modelo_equipo" autocomplete="off"/>
+                   <label for="exampleFormControlInput6" style="font-size:14px;">Numero :</label>
+                  <input type="text" class="form-control" id="numero_equipo" name="numero_equipo" autocomplete="off"/>
+                  <label for="exampleFormControlInput6" style="font-size:14px;">Inventario :</label>
+                  <input type="text" class="form-control" id="inventario_equipo" name="inventario_equipo" autocomplete="off"/>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div class="form-group" style="display:flex;">
+               <div class="col-md-4">
+                <button style="width:150px;height:50px;" data-toggle="modal" data-target="#exampleModalCenter4" class="btn btn-danger">Guardar y Enviar</button>
+               </div>
+            </div>
+            <div class="modal fade" id="exampleModalCenter4" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Añadir Destinatario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <label class="col-md-3 col-sm-4 control-label" style="font-size:15px;">Correo :</label>
+                    <div class="col-lg-7 col-md-10">
+                        <input id="correos_equipos" name="correos_equipos" type="email"  class="form-control" autocomplete="off" required="true"/>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a href='/guardar/equipos'> 
+                      <button id="enviar_equipos" name="enviar_equipos" type="submit" class="btn btn-primary">Enviar y Guardar</button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div> 
+          </form>
+        </div>
+      </t>
+    </template>
+
+    <record id="correo_enviado" model="website.page">
+        <field name="name">correo_enviado</field>
+        <field name="type">qweb</field>
+        <field name="url">/correo_enviado</field>
+        <field name="website_published">True</field>
+        <field name="arch" type="xml">
+            <t name="correo_enviado">
+              <t t-call="website.layout">
+                <div id="wrap">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="container">
+                      <div class="row">
+                          <div class="col-lg-8">
+                              <div class="alert alert-success" role="status">
+                                  Su Correo se Envio Correctamente.Gracias
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+              </t>
+            </t>
+        </field>
+    </record>
+  </data>
+</odoo>

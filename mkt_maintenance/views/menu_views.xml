@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="equipment_status_menu"
+              name="Equipment Status"
+              parent="maintenance.menu_maintenance_title"
+              sequence="25" 
+              groups="maintenance.group_equipment_manager,base.group_user"/> <!-- Puedes ajustar la secuencia para controlar la posición -->
+              
+    <menuitem id="equipment_status_submenu"
+              name="Equipment Status Report"
+              parent="equipment_status_menu"
+              action="view_equipment_status_action"
+              sequence="0"/>
+
+</odoo>

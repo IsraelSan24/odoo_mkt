@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_equipment_details_view_form" model="ir.ui.view">
+        <field name="name">hr.equipment.details.view.form</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <field name="warranty_date" position="after">
+                <field name="details_equipment"/>
+                <field name="screen"/>
+                <field name="disk"/>
+            </field>
+            <field name="serial_no" position="after">
+                <field name="partner_brand_id"/>
+                <field name="ram"/>
+                <field name="processor"/>
+                <field name="operating_system"/>
+            </field>
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="attach_report" string="Attach - Reception Charge" type="object" class="oe_highlight" groups="maintenance.group_equipment_manager"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

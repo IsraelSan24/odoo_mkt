@@ -1,0 +1,19 @@
+#conter-primero-equipos{
+    height:180px;
+    background-color: #555555 !important;
+}
+#conter-segundo-equipos{
+  height:450px;
+  background-color: #555555 !important;
+}
+#contenedor-equipos-body{
+  display:flex;
+}
+#contenedor-equipos-body-segundo{
+  display:flex;
+}
+.conter-div-equipos{
+  margin:auto;
+  width:450px;
+  margin-top: 0px;
+}

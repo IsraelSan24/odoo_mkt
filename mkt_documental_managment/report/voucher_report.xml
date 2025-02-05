@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <template id="report_voucher_document">
+            <t t-call="web.external_layout">
+            <!-- <t t-call="web.html_container"> -->
+                <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+                <html>
+                    <link rel="stylesheet" href="/mkt_documental_managment/static/src/css/voucher.css"/>
+                    <!-- HEADER -->
+                    <div class="row">
+                        <div class="col header_left">
+                            <img t-if="o.env.user.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.env.user.company_id.logo)" style="max-height: 100px; max-width: 200px;"/>
+                        </div>
+                        <div class="col header_middle">
+                            <p>
+                                <strong><span t-esc="o.env.user.company_id.name"/></strong><br/>
+                                <span t-esc="o.env.user.company_id.street"/><br/>
+                                <span t-esc="o.env.user.company_id.city"/> -
+                                <span t-esc="o.env.user.company_id.state_id.name"/> -
+                                <span t-esc="o.env.user.company_id.country_id.name"/><br/>
+                                <span t-esc="o.env.user.company_id.phone"/><br/>
+                                <span t-esc="o.env.user.company_id.email"/><br/>
+                                <span t-esc="o.env.user.company_id.website"/>
+                            </p>
+                        </div>
+                        <div class="col header_right">
+                            <div class="header_right_rq"><span t-esc="o.requirement_id.name"/></div>
+                            <div class="header_right_voucher"><span id="voucher_id" t-esc="o.name"/></div>
+                            <div class="header_right_sett"><span t-esc="o.settlement_id.name"/></div>
+                        </div>
+                    </div>
+                    <!-- BODY -->
+                    <div class="row">
+                        <div class="col body_upper_left">
+                            <div class="row">
+                                <div class="col body_upper_left_inside_left">
+                                    <span style="font-weight:700;">GIRADO A</span><br/>
+                                    <span style="font-weight:700;">DNI o RUC</span><br/>
+                                    <span style="font-weight:700;">TRANSFERENCIA</span><br/>
+                                    <span style="font-weight:700;">BANCO</span><br/>
+                                    <span style="font-weight:700;">CTA. BANCARIA</span>
+                                    <span style="font-weight:700;">SOLCITANTE</span>
+                                </div>
+                                <div class="col body_upper_left_inside_right">
+                                    : <span t-esc="o.paid_partner_id.name"/><br/>
+                                    : <span t-esc="o.vat_paid_partner"/><br/>
+                                    <t t-if="o.card == False">
+                                        : <span>BANCARIA</span><br/>
+                                    </t>
+                                    <t t-else="">
+                                        : <span>TARJETA</span><br/>
+                                    </t>
+                                    <t t-if="o.bank_id.name">: <span t-esc="o.bank_id.name"/><br/></t>
+                                    <t t-else=""><span>:</span><br/></t>
+                                    <t t-if="o.account_bank">: <span t-esc="o.account_bank"/><br/></t>
+                                    <t t-else=""><span>:</span><br/></t>
+                                    : <span t-esc="o.user_id.name"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col body_upper_right">
+                            <div class="row">
+                                <div class="col body_upper_right_inside_left">
+                                    <span style="font-weight:700;">PRESUPUESTO</span><br/>
+                                    <span style="font-weight:700;">CENTRO DE COSTO</span><br/>
+                                    <span style="font-weight:700;">CLIENTE</span><br/>
+                                    <span style="font-weight:700;">MES/AÑO</span><br/>
+                                    <span style="font-weight:700;">CAMPAÑA</span>
+                                </div>
+                                <div class="col body_upper_right_inside_right">
+                                    : <span t-esc="o.budget_id.name"/><br/>
+                                    : <span t-esc="o.cost_center_id.code"/><br/>
+                                    : <span t-esc="o.partner_id.name"/><br/>
+                                    : <span t-esc="o.year_month_id.name"/><br/>
+                                    : <span t-esc="o.campaign_id.name"/><br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page">
+                        <t t-if="o.document_ids">
+                            <b>Concepto: <span t-esc="o.concept"/></b>
+                            <h5>Requerimiento/Documento</h5>
+                            <div class="row table_content">
+                                <table class="table table-sm">
+                                    <colgroup>
+                                        <col width="30%"/>
+                                        <col width="20%"/>
+                                        <col width="30%"/>
+                                        <col width="20%"/>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">PROVEEDOR</th>
+                                            <th class="text-left">DOCUMENTO</th>
+                                            <th class="text-left">RAZÓN</th>
+                                            <th class="text-right">IMPORTE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="amount_doc" t-value="0"/>
+                                        <t t-foreach="o.document_ids" t-as="line">
+                                            <tr>
+                                                <td class="text-left"><span t-esc="line.ruc"/>/<span t-esc="line.partner"/></td>
+                                                <td class="text-left"><span t-esc="line.document_type.name"/>/<span t-esc="line.document"/></td>
+                                                <td class="text-left"><span t-esc="line.reason"/></td>
+                                                <td class="text-right"><span t-esc="line.amount"/></td>
+                                            </tr>
+                                            <t t-set="amount_doc" t-value="amount_doc + line.amount"/>
+                                        </t>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3">Total</td>
+                                            <td class="text-right"><span t-esc="amount_doc" t-options="{'widget':'float','precision':2}"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">Monto solicitado: <span t-esc="o.amount_char"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <t t-if="o.check_or_operation != 'operation'">
+                                                    Cheque: <span t-esc="o.check_number"/>
+                                                </t>
+                                                <t t-else="">
+                                                    Operación: <span t-esc="o.operation_number"/>
+                                                </t>
+                                            </td>
+                                            <td colspan="2">Fecha de pago: <span t-esc="o.payment_date"/></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </t>
+                        <t t-if="o.justification_ids">
+                            <b>Concepto:</b> <span t-esc="o.concept"/>
+                            <h5>Requerimiento/Justificación</h5>
+                            <div class="row table_content">
+                                <table class="table table-sm">
+                                    <colgroup>
+                                        <col width="40%"/>
+                                        <col width="40%"/>
+                                        <col width="20%"/>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">AUTORIZADO POR</th>
+                                            <th class="text-left">RAZÓN</th>
+                                            <th class="text-right">IMPORTE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="amount_just" t-value="0"/>
+                                        <t t-foreach="o.justification_ids" t-as="just_line">
+                                            <tr>
+                                                <td class="text-left"><span t-esc="just_line.partner.name"/></td>
+                                                <td class="text-left"><span t-esc="just_line.reason"/></td>
+                                                <td class="text-right"><span t-esc="just_line.amount"/></td>
+                                            </tr>
+                                            <t t-set="amount_just" t-value="amount_just + just_line.amount"/>
+                                        </t>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2">Total</td>
+                                            <td class="text-right"><span t-esc="amount_just" t-options="{'widget':'float','precision':2}"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">Monto solicitado: <span t-esc="o.amount_char"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <t t-if="o.check_or_operation != 'operation'">
+                                                    Cheque: <span t-esc="o.check_number"/>
+                                                </t>
+                                                <t t-else="">
+                                                    Operación: <span t-esc="o.operation_number"/>
+                                                </t>
+                                            </td>
+                                            <td colspan="2">Fecha de pago: <span t-esc="o.payment_date"/></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </t>
+
+                        <t t-set="display_detraction" t-value="any(l.detraction_amount for l in o.settlement_line_ids)"/>
+                        <t t-set="display_retention" t-value="any(l.retention_amount for l in o.settlement_line_ids)"/>
+                        <h5>Liquidación</h5>
+                        <div class="row table_content">
+                            <table class="table table-sm">
+                                <!-- <colgroup>
+                                    <col width="30%"/>
+                                    <col width="20%"/>
+                                    <col width="30%"/>
+                                    <col width="20%"/>
+                                </colgroup> -->
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">PROVEEDOR</th>
+                                        <th class="text-left">DOCUMENTO</th>
+                                        <th class="text-left">RAZÓN</th>
+                                        <th class="text-right">IMPORTE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="amount_sett" t-value="0"/>
+                                    <t t-foreach="o.settlement_line_ids" t-as="sett_line">
+                                        <tr>
+                                            <td class="text-left"><span t-esc="sett_line.ruc"/>/<span t-esc="sett_line.partner"/></td>
+                                            <td class="text-left"><span t-esc="sett_line.document_type.name"/>/<span t-esc="sett_line.document"/></td>
+                                            <td class="text-left"><span t-esc="sett_line.reason"/></td>
+                                            <td class="text-right"><span t-esc="sett_line.amount"/></td>
+                                        </tr>
+                                        <t t-set="amount_sett" t-value="amount_sett + sett_line.amount"/>
+                                    </t>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3">Total</td>
+                                        <td colspan="1" class="text-right"><span t-esc="amount_sett" t-options="{'widget':'float','precision':2}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">Monto liquidado: <span t-esc="o.settled_total_amount_char"/></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <t t-if="display_detraction or display_retention">
+                            <h5>Percepciones en liquidación</h5>
+                            <div class="row table_content">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">DOCUMENTO</th>
+                                            <th class="text-left">FECHA DE PAGO</th>
+                                            <t t-if="display_detraction"><th class="text-left">N° OP. DTR</th></t>
+                                            <t t-if="display_retention"><th class="text-left">N° OP. RTN.</th></t>
+                                            <t t-if="display_detraction"><th class="text-left">N° DOCUMENTO DTR</th></t>
+                                            <t t-if="display_retention"><th class="text-left">N° DOCUMENTO RTN</th></t>
+                                            <th class="text-left">MONTO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="percep_amount" t-value="0"/>
+                                        <t t-foreach="o.settlement_line_ids" t-as="per_line">
+                                            <tr>
+                                                <td class="text-left"><span t-esc="per_line.document_type.name"/>/<span t-esc="per_line.document"/></td>
+                                                <td class="text-left"><span t-esc="per_line.detraction_payment_date"/></td>
+                                                <td class="text-left"><span t-esc="per_line.detraction_operation_number"/></td>
+                                                <td class="text-left"><span t-esc="per_line.detraction_number"/></td>
+                                                <t t-if="display_detraction"><td class="text-left"><span t-esc="per_line.detraction_amount"/></td></t>
+                                                <t t-if="display_retention"><td class="text-left"><span t-esc="per_line.retention_amount"/></td></t>
+                                            </tr>
+                                            <t t-if="display_detraction">
+                                                <t t-set="percep_amount" t-value="percep_amount + per_line.detraction_amount"/>
+                                            </t>
+                                            <t t-if="display_retention">
+                                                <t t-set="percep_amount" t-value="percep_amount + per_line.retention_amount"/>
+                                            </t>
+                                        </t>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="4">Total</td>
+                                            <td colspan="1" class="text-left"><span t-esc="percep_amount" t-options="{'widget':'float','precision':2}"/></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </t>
+
+
+                    </div>
+
+                    <!-- FOOTER -->
+                    <div class="footer">
+                        <div class="text-center" style="border-top: 1px solid black;">
+                            <div class="text-muted">
+                                Page: <span class="page"/> / <span class="topage"/>
+                            </div>
+                        </div>
+                    </div>
+                </html>
+            </t>
+        </template>
+
+        <template id="report_voucher">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="mkt_documental_managment.report_voucher_document" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+
+</odoo>

@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+
+        <template id="customize_jobs_page" inherit_id="website_hr_recruitment.index">
+            <xpath expr="//div[@class='container oe_website_jobs']" position="before">
+                <script type="text/javascript" src="/mkt_recruitment/static/src/js/website_menu.js"></script>
+
+                <div class="row justify-content-center mt-2 p-2">
+                    <div class="col-lg-6">
+                        <input id="jobSearchInput" type="text" class="form-control" placeholder="Search for jobs by name or reference"/>
+                    </div>
+                </div>
+           
+            </xpath>
+
+            <xpath expr="//h3[@class='text-secondary mt0 mb4']/span" position="after">
+                <br/><span t-field="job.reference_name" class="text-info"/>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

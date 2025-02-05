@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_quotation_budget_tree" model="ir.ui.view">
+        <field name="name">quotation.budget.tree</field>
+        <field name="model">quotation.budget</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <!-- <field name="budget_id"/> -->
+                <!-- <field name="partner_id"/>
+                <field name="atention_id"/>
+                <field name="state" widget="badge"
+                    decoration-muted="state == 'draft'"
+                    decoration-warning="state in ('extracted_data','waiting_intern_control_validation','waiting_invoicing_validation')"
+                    decoration-info="state == 'cotized'"
+                    decoration-success="state == 'done'"/> -->
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_quotation_budget_form" model="ir.ui.view">
+        <field name="name">quotation.budget.form</field>
+        <field name="model">quotation.budget</field>
+        <field name="arch" type="xml">
+            <form>
+                <!-- <header>
+                    <field name="is_cotized" invisible="True"/>
+                    <button string="Get Budget Lines" name="button_get_budget_line" type="object" class="oe_highlight"
+                        icon="fa-rocket" attrs="{'invisible':[('is_fill','=',True)]}"
+                        groups="mkt_quotation.quotation_budget_user"/>
+                    <button string="Clean Budget Lines" name="button_clean_budget_line" type="object" class="oe_highlight"
+                        icon="fa-bath" attrs="{'invisible':['|',('is_fill','=',False),('state','!=','extracted_data')]}"
+                        groups="mkt_quotation.quotation_budget_user"/>
+                    <button string="Cotized in Budget" name="button_quote_budget" type="object" icon="fa-rocket"
+                        attrs="{'invisible':['|',('is_cotized','=',True),('state','!=','extracted_data')]}"
+                        groups="mkt_quotation.quotation_budget_user"/>
+                    <button string="Uncotized in Budget" name="button_unquote_budget" type="object" icon="fa-bath"
+                        attrs="{'invisible':['|',('is_cotized','=',False),('state','not in',('cotized','refused'))]}"
+                        groups="mkt_quotation.quotation_budget_user"/>
+                    <button string="Sign" name="button_petitioner_signature" icon="fa-pencil-square-o"
+                        type="object" class="oe_highlight" attrs="{'invisible':[('state','not in',('cotized','refused'))]}"
+                        groups="mkt_quotation.quotation_budget_user"/>
+                    <button string="Sign" name="button_intern_control_signature" icon="fa-pencil-square-o"
+                        type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','waiting_intern_control_validation')]}"
+                        groups="mkt_quotation.quotation_budget_intern_control"/>
+                    <button string="Sign" name="button_invoicing_signature" icon="fa-pencil-square-o"
+                        type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','waiting_invoicing_validation')]}"
+                        groups="mkt_quotation.quotation_budget_invoicing"/>
+                    <button string="Refuse" name="button_refuse_intern_control" type="object" class="oe_highlight"
+                        icon="fa-thumbs-o-down" attrs="{'invisible':[('state','!=','waiting_intern_control_validation')]}"
+                        groups="mkt_quotation.quotation_budget_intern_control"/>
+                    <button string="Refuse" name="button_refuse_invoicing" type="object" class="oe_highlight"
+                        icon="fa-thumbs-o-down" attrs="{'invisible':[('state','not in',('waiting_invoicing_validation','done'))]}"
+                        groups="mkt_quotation.quotation_budget_invoicing"/>
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="draft,extracted_data,cotized,waiting_intern_control_validation,waiting_invoicing_validation,done"/>
+                </header> -->
+                <sheet>
+                    <!-- <widget name="web_ribbon" title="Data Extracted" bg_color="bg-warning" attrs="{'invisible':[('state','!=','extracted_data')]}"/>
+                    <widget name="web_ribbon" title="Cotized" bg_color="bg-info" attrs="{'invisible':[('state','!=','cotized')]}"/>
+                    <widget name="web_ribbon" title="To Validate" bg_color="bg-warning" attrs="{'invisible':[('state','not in',('waiting_intern_control_validation','waiting_invoicing_validation'))]}"/>
+                    <widget name="web_ribbon" title="Done" bg_color="bg-success" attrs="{'invisible':[('state','!=','done')]}"/> -->
+                    <group>
+                        <h1>
+                            <field name="name" readonly="True"/>
+                        </h1>
+                    </group>
+                    <!-- <group>
+                        <group>
+                            <field name="is_fill" invisible="True"/>
+                            <field name="budget_id" attrs="{'readonly':[('state','not in',('draft','extracted_data'))]}"/>
+                            <field name="partner_id" readonly="True"/>
+                            <field name="atention_id" attrs="{'readonly':[('state','not in',('draft','extracted_data','refused'))]}"/>
+                        </group>
+                        <group>
+                            <field name="is_petitioner_signed" invisible="True"/>
+                            <field name="is_intern_control_signed" invisible="True"/>
+                            <field name="is_invoicing_signed" invisible="True"/>
+                            <field name="petitioner_signature" widget="image" attrs="{'invisible':[('is_petitioner_signed','=',False)]}" readonly="True"/>
+                            <field name="intern_control_signature" widget="image" attrs="{'invisible':[('is_intern_control_signed','=',False)]}" readonly="True"/>
+                            <field name="invoicing_signature" widget="image" attrs="{'invisible':[('is_invoicing_signed','=',False)]}" readonly="True"/>
+                        </group>
+                    </group> -->
+                    <!-- <notebook>
+                        <page string="Budget">
+                            <field name="quotation_line_ids" mode="tree" attrs="{'invisible':[('state','not in',('draft','extracted_data','refused'))]}" options="{'no_open': '1'}">
+                                <tree create="1" editable="bottom" delete="1">
+                                    <field name="quotation_id" invisible="True"/>
+                                    <field name="budget_id"/>
+                                    <field name="budget_line_id" invisible="True"/>
+                                    <field name="settlement_name"/>
+                                    <field name="settlement_detail_id"/>
+                                    <field name="settlement_detail_date" invisible="True"/>
+                                    <field name="settlement_detail_document_type" invisible="True"/>
+                                    <field name="settlement_detail_document" invisible="True"/>
+                                    <field name="reason"/>
+                                    <field name="amount" sum="Amount Total"/>
+                                </tree>
+                            </field>
+                            <field name="restricted_quotation_line_ids" mode="tree" attrs="{'invisible':[('state','in',('draft','extracted_data','refused'))]}" options="{'no_open': '1'}">
+                                <tree create="0" delete="0">
+                                    <field name="settlement_detail_id"/>
+                                    <field name="settlement_name"/>
+                                    <field name="reason"/>
+                                    <field name="amount" sum="Amount Total"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Payroll">
+                            <field name="quotation_payroll_ids" mode="tree" attrs="{'invisible':[('state','not in',('draft','extracted_data','refused'))]}" options="{'no_open': '1'}">
+                                <tree create="1" editable="bottom" delete="1">
+                                    <field name="reason"/>
+                                    <field name="amount" sum="Amount Total"/>
+                                </tree>
+                            </field>
+                            <field name="restricted_quotation_payroll_ids" mode="tree" attrs="{'invisible':[('state','in',('draft','extracted_data','refused'))]}" options="{'no_open': '1'}">
+                                <tree create="0" delete="0">
+                                    <field name="reason"/>
+                                    <field name="amount" sum="Amount Total"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook> -->
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_quotation_budget_action" model="ir.actions.act_window">
+        <field name="name">Quotation</field>
+        <field name="res_model">quotation.budget</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

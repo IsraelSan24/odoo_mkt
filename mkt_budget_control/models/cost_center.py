@@ -1,0 +1,18 @@
+from odoo import _, api, fields, models
+
+class CostCenter(models.Model):
+    _name = 'cost.center'
+    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _description = 'Cost Center(CC)'
+    _rec_name = 'code'
+
+
+    name = fields.Char(string="Name", required=True, tracking=True)
+    code = fields.Char(string="Cost center number", required=True, tracking=True)
+    partner_id = fields.Many2one(comodel_name="res.partner", string="Social Reason", required=True)
+    executive_id = fields.Many2one(comodel_name="res.users", string="Executive")
+    responsible_id = fields.Many2one(comodel_name="res.users", string="Responsible")
+
+    _sql_constraints = [
+        ('name_uniq', 'unique (name)', 'Name must be unique.')
+    ]

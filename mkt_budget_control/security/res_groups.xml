@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        
+        <record id="module_category_budget" model="ir.module.category">
+            <field name="name">Budget Control</field>
+        </record>
+
+        <record id="budget_control_administrator" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="mkt_budget_control.module_category_budget"/>
+        </record>
+
+        <record id="budget_control_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="mkt_budget_control.module_category_budget"/>
+        </record>
+
+    </data>
+
+</odoo>

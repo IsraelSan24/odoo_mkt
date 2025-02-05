@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_equipment_status_tree" model="ir.ui.view">
+        <field name="name">equipment.status.tree</field>
+        <field name="model">equipment.status</field>
+        <field name="arch" type="xml">
+            <tree 
+                decoration-info="state == 'draft'" 
+                decoration-warning="state == 'to_do'"
+                decoration-success="state == 'done'"
+                decoration-danger="state == 'refused'">
+                <field name="name_code"/>
+                <field name="name"/>
+                <field name="equipment_id"/>
+                <field name="employee_id"/>
+                <field name="equipment_name" optional="hide"/>
+                <field name="observation"/>
+                <field name="state" widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-warning="state == 'to_do'"
+                    decoration-success="state == 'done'"
+                    decoration-danger="state == 'refused'"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_equipment_status_form" model="ir.ui.view">
+        <field name="name">equipment.status.form</field>
+        <field name="model">equipment.status</field>
+        <field name="arch" type="xml">
+            <form string="Informe de Estado del Equipo">
+                <header>
+                    <button name="button_to_do" string="Ready" icon="fa-paper-plane" type="object" class="oe_highlight" groups="maintenance.group_equipment_manager,base.group_user" attrs="{'invisible':[('state','in',('to_do','done'))]}"/>
+                    <button name="button_draft" string="return" icon="fa-reply" type="object" class="oe_highlight" groups="maintenance.group_equipment_manager,base.group_user" attrs="{'invisible':[('state','!=','to_do')]}"/>
+                    <button name="button_done" string="Done" icon="fa-check" type="object" class="oe_highlight" groups="maintenance.group_equipment_manager,base.group_user" attrs="{'invisible':[('state','!=','to_do')]}"/>
+                    <button name="button_refuse" string="Refuse" icon="fa-exclamation-triangle" type="object" class="oe_highlight" groups="maintenance.group_equipment_manager,base.group_user" attrs="{'invisible':[('state','!=','to_do')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,to_do,done"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Refuse" bg_color="bg-danger"
+                        attrs="{'invisible':[('state','!=','refused')]}"/>
+                    <widget name="web_ribbon" title="Done" bg_color="bg-success"
+                        attrs="{'invisible':[('state','!=','done')]}"/>
+                    <group>
+                        <group>
+                            <field name="name_code"/>
+                            <field name="name"/>
+                            <field name="equipment_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+                            <field name="equipment_name"/>
+                            <field name="employee_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+
+                            <field name="location"/>
+                            <field name="category_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+                            <field name="partner_brand_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+                            <field name="model"/>
+                            <field name="serial_no"/>
+                        </group>
+                        <group>
+                            <field name="status"/>
+                            <field name="country_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+                            <field name="state_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+                            <field name="city_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+                            <field name="district_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+                            <field name="active" invisible="True"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Lista de Caracteristicas" class="col-md-4">
+                            <field name="ram"/>
+                            <field name="processor"/>
+                            <field name="operating_system"/>
+                            <field name="screen"/>
+                            <field name="disk"/>
+                            <field name="observation"/>
+                        </group>
+                        <group string="Lista de Chequeo de Componentes" class="col-md-8">
+                            <field name="component_ids">
+                                <tree editable="bottom">
+                                    <field name="component_name" string="Componente"/>
+                                    <field name="condition" string="Condition"/>
+                                    <field name="observation" string="Observation"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="photo_base" filename="photo_base_filename"/>
+                            <field name="photo_left_side" filename="photo_left_side_filename"/>
+                            <field name="photo_right_side" filename="photo_right_side_filename"/>
+                        </group>
+                        <group>
+                            <field name="photo_open_screen" filename="photo_open_screen_filename"/>
+                            <field name="photo_open_keyboard" filename="photo_open_keyboard_filename"/>
+                            <field name="photo_closed" filename="photo_closed_filename"/>
+                        </group>
+                        <group>
+                            <field name="photo_charger" filename="photo_charger_filename"/>
+                            <field name="photo_keyboard" filename="photo_keyboard_filename"/>
+                            <field name="photo_camera" filename="photo_camera_filename"/>
+                        </group>
+                        <group>
+                            <field name="photo_microphone" filename="photo_microphone_filename"/>
+                            <field name="photo_additional" filename="photo_additional_filename"/>
+                            <field name="photo_additional_new" filename="photo_additional_new_filename"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field> 
+    </record>
+
+    <record id="view_equipment_status_kanban" model="ir.ui.view">
+        <field name="name">equipment.status.kanban</field>
+        <field name="model">equipment.status</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="name_code"/>
+                <field name="name"/>
+                <field name="equipment_id"/>
+                <field name="employee_id"/>
+                <field name="status"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click d-flex">
+                            <div class="oe_kanban_details ">
+                                <strong class="o_kanban_record_title d-flex flex-column p-10 justify-content-start">
+                                    <field name="name_code"/>
+                                    <h2><field name="name"/></h2>
+                                    <h3><field name="employee_id"/></h3>
+                                    <h3><field name="status"/></h3>                   
+                                    <h3><field name="state" widget="badge"
+                                        decoration-info="state == 'draft'" 
+                                        decoration-warning="state == 'to_do'"
+                                        decoration-success="state == 'done'"
+                                        decoration-danger="state == 'refused'"/>
+                                    </h3>         
+                                </strong>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_equipment_status_search" model="ir.ui.view">
+        <field name="name">equipment.status.search</field>
+        <field name="model">equipment.status</field>
+        <field name="arch" type="html">
+            <search>
+                <field name="name_code"/>
+                <field name="name"/>
+                <field name="equipment_id"/>
+                <field name="employee_id"/>
+                <field name="status"/>
+                <group expand="1" string="Group By">
+                    <filter string="NameCode" name="name_code" context="{'group_by':'name_code'}"/>
+                    <filter string="Code" name="name" context="{'group_by':'name'}"/>
+                    <filter string="Equipment" name="equipment_id" context="{'group_by':'equipment_id'}"/>
+                    <filter string="Employee" name="employee_id" context="{'group_by':'employee_id'}"/>
+                    <filter string="Status" name="status" context="{'group_by':'status'}"/>
+                </group>
+                <separator/>
+                <filter name="inactive" string="Archived" domain="[('active','=',False)]" help="Show inactive Equipment status"/>
+                <searchpanel>
+                    <field name="status" string="Status" enable_counters="1"/>
+                    <field name="state_id" string="Department" select="multi" enable_counters="1" icon="fa-map-marker"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_equipment_status_action" model="ir.actions.act_window">
+        <field name="name">Equipment Status</field>
+        <field name="res_model">equipment.status</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+</odoo>

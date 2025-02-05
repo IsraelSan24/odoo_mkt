@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="login_page" name="Login Page">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Exit Charge</h1>
+                <form t-attf-action="/report/url/#{stock_picking_id}" method="post">
+                    <div class="form-group">
+                        <label for="username">N° of movement</label>
+                        <input type="text" id="username" name="username" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enter</button>
+                </form>
+            </div>
+        </t>
+    </template>
+    <template id="invalid_credentials" name="Invalid Credentials">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Invalid Credentials</h1>
+                <p>The username or password you entered is incorrect. Please try again.</p>
+                <a t-attf-href="/report/url/#{stock_picking_id}" class="btn btn-primary">Go back to login</a>
+            </div>
+        </t>
+    </template>
+
+</odoo>

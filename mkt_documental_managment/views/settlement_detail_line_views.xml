@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_settlement_detail_line_tree" model="ir.ui.view">
+        <field name="name">settlement.detail.line.tree</field>
+        <field name="model">settlement.detail.line</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name" required="True"/>
+                <field name="service_type_id" options="{'no_create':True,'no_edit':True}"/>
+                <field name="igv_tax"/>
+                <field name="tax_igv_id" invisible="True"/>
+                <field name="igv_included" invisible="True"/>
+                <field name="quantity"/>
+                <field name="unit_price"/>
+                <field name="base_amount" sum="Base Total"/>
+                <field name="igv" sum="IGV Total"/>
+                <field name="amount" sum="Amount Total"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_restricted_settlement_detail_line_tree" model="ir.ui.view">
+        <field name="name">restricted.settlement.detail.line.tree</field>
+        <field name="model">settlement.detail.line</field>
+        <field name="arch" type="xml">
+            <tree create="0" delete="0">
+                <field name="name" required="True"/>
+                <field name="service_type_id" options="{'no_create':True,'no_edit':True}"/>
+                <field name="igv_tax"/>
+                <field name="tax_igv_id" invisible="True"/>
+                <field name="igv_included" invisible="True"/>
+                <field name="quantity"/>
+                <field name="unit_price"/>
+                <field name="base_amount" sum="Base Total"/>
+                <field name="igv" sum="IGV Total"/>
+                <field name="amount" sum="Amount Total"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

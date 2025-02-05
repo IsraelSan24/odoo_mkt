@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+      <record id="mail_template_gastos" model="mail.template">
+          <field name="name">Gastos</field>
+          <field name="model_id" ref="gestion_documental_mkt.model_report_email"/>
+          <field name="subject">Envio de Gasto por Movilidad {{object.number_gasto_email}}</field>
+          <field name="email_to">{{object.correos_gastos}}</field>
+          <field name="email_from">{{object.correo_copia_gasto}}</field>
+          <field name="email_cc">{{object.correo_copia_gasto}}</field>
+          <field name="body_html">
+          <![CDATA[
+            <div>
+              Estimado Colaborador.
+              <br/>
+              Se le adjunta la Planilla de  Gasto por Movilidad.
+              <br/>
+              Saludos.
+            </div>
+          ]]>
+          </field>
+      </record> 
+    </data>
+</odoo>

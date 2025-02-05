@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_equipment_charge_document">
+        <t t-if="not o " t-set="o" t-value="doc"/>
+
+        <t t-call="web.external_layout">
+            <div id="equipment_charge_document" style="padding: 1.25rem">
+                <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
+                    <table class="table">
+                        <colgroup>
+                            <col width="20%"/>
+                            <col width="60%"/>
+                            <col width="20%"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th scope="col"  style="border: none">
+                                    <img t-if="o.env.user.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.env.user.company_id.logo)" style="width: 200px; height: auto; min-height: 60px; max-height: 100px;"/>
+                                </th>
+                                <th scope="col" style="border: none">
+                                    <p style="font-size:1.225rem">
+                                        <u>
+                                            <strong class="text-center">
+                                                CARGO DE RECEPCION DE IMPLEMENTOS
+                                            </strong>
+                                        </u>
+                                    </p>
+                                </th>
+                                <th scope="col" style="border: none">
+                                    <p style="font-size:1.125rem">
+                                        <strong>
+                                            N° 
+                                        </strong>
+                                        <span style="color: red;">
+                                            <t t-if="o.correlative_charge_int">
+                                                <span t-esc="'E-' + str(o.correlative_charge_int).zfill(4)"/>
+                                            </t>
+                                            <t t-else="">
+                                                _______
+                                            </t>
+                                        </span>
+                                    </p>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="border: none"></th>
+                                <th style="border: none"></th>
+                                <th style="border: none">
+                                    <p style="font-size:0.925rem">
+                                        <strong>
+                                            <t t-if="o.assign_date">
+                                                <span t-esc="o.assign_date"/>
+                                            </t>
+                                            <t t-else="">
+                                                _______
+                                            </t>
+                                        </strong>
+                                    </p>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <br/>
+                    <p style="text-align: left, font-size:0.825rem">
+                        Asunto: Recepcion de Implementos:
+                    </p>
+                    <table class="table table-bordered">
+                        <colgroup>
+                            <col width="20%"/>
+                            <col width="30%"/>
+                            <col width="20%"/>
+                            <col width="30%"/>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td scope="col">
+                                    EOUIPO
+                                </td>
+                                <td scope="col">
+                                    <t t-if="o.category_id">
+                                        <span t-esc="o.category_id.name"/>
+                                    </t>
+                                    <t t-else="">
+                                        _______
+                                    </t>
+                                </td>
+                                <td scope="col">
+                                    MARCA
+                                </td>
+                                <td scope="col">
+                                    <t t-if="o.partner_brand_id">
+                                        <span t-esc="o.partner_brand_id.name"/>
+                                    </t>
+                                    <t t-else="">
+                                        _______
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="col">
+                                    IMEI / SERIE
+                                </td>
+                                <td scope="col">
+                                    <t t-if="o.serial_no">
+                                        <span t-esc="o.serial_no"/>
+                                    </t>
+                                    <t t-else="">
+                                        _______
+                                    </t>
+                                </td>
+                                <td scope="col">
+                                    MODELO
+                                </td>
+                                <td scope="col">
+                                    <t t-if="o.model">
+                                        <span t-esc="o.model"/>
+                                    </t>
+                                    <t t-else="">
+                                        _______
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="col">
+                                    DETALLES
+                                </td>
+                                <td scope="col">
+                                    <t t-if="o.details_equipment">
+                                       <span t-esc="o.details_equipment"/>
+                                    </t>
+                                    <t t-else="">
+                                        _______
+                                    </t>
+                                </td>
+                                <td scope="col">
+                                    INVENTARIO
+                                </td>
+                                <td scope="col">
+                                    <t t-if="o.name">
+                                       <span t-esc="o.name"/>
+                                    </t>
+                                    <t t-else="">
+                                        _______
+                                    </t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered" style="width: 40%">
+                        <colgroup>
+                            <col width="20%"/>
+                            <col width="20%"/>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Valorizado en S/.
+                                </td>
+                                <td>
+                                    <t t-if="o.cost">
+                                        <span t-esc="o.cost"/>
+                                    </t>
+                                    <t t-else="">
+                                        _______
+                                    </t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        Conste por la presente, dejo constancia, Yo 
+                        <t t-if="o.employee_id">
+                            <span t-esc="o.employee_id.name"/> 
+                        </t>
+                        <t t-else="">
+                            _______
+                        </t>
+                        identificado con DNI N° 
+                        <t t-if="o.employee_id.address_home_id">
+                            <span t-esc="o.employee_id.address_home_id.vat"/> 
+                        </t>
+                        <t t-else="">
+                            _______
+                        </t>
+                        domiciliado en 
+                        <t t-if="o.employee_id.address_home_id">
+                            <span t-esc="o.employee_id.address_home_id.street"/>, 
+                        </t>
+                        <t t-else="">
+                            _______
+                        </t>
+                        <t t-if="o.employee_id.address_home_id">
+                            <span t-esc="o.employee_id.address_home_id.l10n_pe_district.name"/>, 
+                        </t>
+                        <t t-else="">
+                            _______
+                        </t>
+                        <t t-if="o.employee_id.address_home_id">
+                            <span t-esc="o.employee_id.address_home_id.city_id.name"/>, 
+                        </t>
+                        <t t-else="">
+                            _______
+                        </t>
+                        <t t-if="o.employee_id.address_home_id">
+                            <span t-esc="o.employee_id.address_home_id.state_id.name"/> , 
+                        </t>
+                        <t t-else="">
+                            _______
+                        </t>
+                        dejo constancia de haber recibido de parte de la empresa 
+                        <strong>
+                            MARKETING ALTERNO PERU S.A.C
+                        </strong>
+                        ; los implementos detallados lineas arriba para el uso de mis labores en la cuenta asignada, los cuales seran utilizados exclusivamente para el desempeño de mes labores dentro del vinculo laboral como EMPLEADO; 
+                        Por la presente me comprometo a cuidar dichos implementos y/o equipos con tota! responsabilidad para evitar algun tipo de perdida, robo y/o deterioro, siendo de mi conocimiento que todo implemento es exclusivo de la empresa, 
+                        y deben ser utilizados en horario de trabajo asignado, asimismo deberan ser devueltos a la empresa al momento de culminar mi vinculo laboral.
+                    </p>
+                    <p>
+                        Asi mismo, es de mi conocimiento que en caso de no reponer y/o no devolver los implementos y/o equipos asignados una vez finalizado vinculo con la empresa, AUTORIZO por la presente al encargado de la EMPRESA y/o Area de Planillas, lo siguiente:
+                    </p>
+                    <ul>
+                        <li>
+                            Es de conocimiento del TRABAJADOR, que al realizar la devolucion de los implementos (especialmente equipos tecnologicos (laptop, celular, etc.), seran revisados por el area especializada de Tecnologia y/o de ser necesario 
+                            sera derivado a un proveedor especializado, asimismo las partes acuerdan que de encontrar fallas que perjudiquen o alteren el funcionamiento o estructura del equipo, se procedera a indicarle el monto aplicable para descuento, 
+                            brindandole alternativa de 24 horas para la reparacion del daño o proceder directamente con aplicación del descuento de su Liquidacion de Bs; Es de mutuo acuerdo que todo plazo que sea necesario para dar por finalizado este 
+                            procedimiento de verificacion y devolucion de implementos, no existiendo posibilidad de reclamos posteriores y una vez finalizado se procedera con la entrega de LBS sin necesidad de reconocimiento de intereses legales y/o suma 
+                            accesoria de dinero.    
+                        </li>
+                        <li>
+                            Que, extinguiendose e! plazo estricto de 24 horas luego del Cese laboral (Renuncia y/o Despido), y no haber realizado la devolucion de los implementos y/o equipos, AUTORIZO al encargado del area de Planillas - 
+                            <strong>
+                                MARKETING ALTERNO PERU
+                            </strong>
+                             la facultad que se me realice el descuento respectivo a mi remuneracion pendiente, comisiones y/o liquidacion de beneficios sociales hasta cubrir el monto del VALOR de los implementos (y/o equipos 
+                            moviles) asignados. evitando de esa manera todo tipo de asuntos de índole legal que se pudieran iniciar en mi contra), pues una vez realizado lo mencionado lineas anteriores no existira opcion a reclamo de indole 
+                            administrativo, civil, laboral y/o penal por ninguna de las partes por ser de mi conocimiento y habiendo otorgado mi libre consentimiento a realizar cada uno de los descuentos por tratarse de un libre acuerdo entre ambas partes.
+                        </li>
+                        <li>
+                            Queda establecido que de no devolver los implementos asignados y estos superen un VALOR considerable, la empresa procedera aplicando los descuentos correspondientes, generando un reporte (historial laboral) y 
+                            dar inicio acciones netamente de índole legal procediendo con la denuncia correspondiente según lo establecido en nuestra normatividad penal, conforme a nuestro ordenamiento jurídico penal, configurandose “Apropiación 
+                            Ilícita” conducta que encuadra en el CAPITULO III, normatividad contenida en su Artículo 190º del Código Penal Peruano, sobre los implementos que fueron asignados y quedaron bajo su custodia, lo cual ocasionaría el 
+                            inicio de acciones de tipo penal.
+                        </li>
+                        <li>
+                            Dejo constancia que he sido debidamente informado que la presentacion de “Denuncias Policiales” por perdida y/o robo de los implementos no exonerará al trabajador de realizar la devolucion de los implementos, 
+                            y se procedera con los procedimientos antes señalados (descuento y formalizacion de denuncia penal)
+                        </li>
+                    </ul>
+                    <p>
+                        Siendo lo señalado lineas anteriores de mi conocimiendo, y otorgando mi autorizacion a los encargados de la empresa a cumplir con lo detallado en las clausulas que anteceden, en señal de conformidad con el contenido 
+                        de la presente y la recepcion de los implementos detallados en la parte introductoria, los cuales se encuentran en perfecto estado de funcionamiento, firmo el presente acuerdo de responsabilidad en señal de conformidad.
+                    </p>
+                    <p>
+                        <strong>
+                            DECLARO BAJO JURAMENTO, QUE EN CASO DE MI FALLECIMIENTO LOS BENEFICIARIOS PARA EL COBRO DEL MONTO CORRESPONDIENTE AL SEGURO DE VIDA LEY, A QUE SE REFIERE EL ARTICULO 1&#176; DEL D.L. 688 Y SEGÚN LAS DISPOSICIONES LEGALES VIGENTES SOBRE EL PARTICULAR, SON LAS SIGUIENTES PERSONAS:
+                        </strong>
+                    </p>
+                    <colgroup>
+                        <col width="10%"/>
+                        <col width="20%"/>
+                        <col width="40%"/>
+                        <col width="20%"/>
+                        <col width="10%"/>
+                    </colgroup>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="border: none">
+                                    <div style="min-height: 50px;"></div>
+                                </th>
+                                <th scope="col" style="border: none">
+                                    <div style="min-height: 50px;"></div>
+                                </th>
+                                <th scope="col" style="border: none">
+                                    <div style="min-height: 50px;"></div>
+                                </th>
+                                <th scope="col" style="border: none">
+                                    <div style="min-height: 50px;"></div>
+                                </th>
+                                <th scope="col" style="border: none">
+                                    <div style="min-height: 50px;"></div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col" style="border: none">
+                                </th>
+                                <th scope="col" style="border-top: 2px solid; border-bottom: none;">
+                                    <p class="text-center">
+                                        Firma
+                                    </p>
+                                </th>
+                                <th scope="col" style="border: none">
+                                </th>
+                                <th scope="col" style="border-top: 2px solid; border-bottom: none;">
+                                    <p class="text-center">
+                                        Huella Digital
+                                    </p>
+                                </th>
+                                <th scope="col" style="border: none">
+                                </th>
+                            </tr>
+                        </thead>
+                        <br/>
+                    </table>
+                    <p>
+                        DNI N° 
+                        <t t-if="o.employee_id.address_home_id">
+                            <span t-esc="o.employee_id.address_home_id.vat"/> 
+                        </t>
+                        <t t-else="">
+                            _______
+                        </t>
+                    </p>
+                </div>
+            </div>
+        </t> 
+
+    </template>
+
+    <template id="report_equipment_charge">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="mkt_maintenance.report_equipment_charge_document" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <template id="requerimiento_layout" inherit_id="web.internal_layout">
+        <xpath expr="//div[1]" position="replace">
+          <div class="header">
+          </div>
+        </xpath>
+    </template>
+
+    <template id="report_requerimiento" name="requerimiento">
+       <t t-call="web.html_container">
+          <t t-call="web.internal_layout">
+            <img style="position:absolute;width:865px;height:1300px;" src="/gestion_documental_mkt/static/img/requerimiento.jpg"/>
+            <!--Numero Correlativo Requerimiento-->
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:746px;margin-top:52px;font-size:18px;font-weight:900;color:red;" t-esc="numeros_requerimiento_text"/>
+            </div>
+             <!--Primera parte-->
+            <div style="position:absolute;">
+              <span style="float:left;margin-left:140px;margin-top:136px;font-size:13px;font-weight:600;" t-esc="fecha_solicitud"/>
+            </div>
+            <div style="position:absolute;">
+              <span style="float:left;margin-left:140px;margin-top:156px;font-size:13px;font-weight:600;" t-esc="banco"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:140px;margin-top:179px;font-size:13px;font-weight: 600;" t-esc="ncta"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:140px;margin-top:199px;font-size:13px;font-weight: 600;" t-esc="Girado"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:140px;margin-top:221px;font-size:13px;font-weight: 600;" t-esc="suma"/>
+            </div>
+             <div style="position:absolute;">
+                <span style="float:left;margin-left:140px;margin-top:240px;font-size:13px;font-weight: 600;" t-esc="cliente"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:140px;margin-top:260px;font-size:13px;font-weight: 600;" t-esc="actividad"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="width:392px;float:left;margin-left:140px;margin-top:280px;font-size:13px;font-weight:600;" t-esc="concepto"/>
+            </div>
+
+            <!--Segunda parte-->
+            <div style="position:absolute;">
+              <span style="float:left;margin-left:724px;margin-top:137px;font-size:13px;font-weight:600;" t-esc="ppto"/>
+            </div>
+             <div style="position:absolute;">
+                <span style="float:left;margin-left:724px;margin-top:156px;font-size:13px;font-weight:600;" t-esc="centro_costo"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:724px;margin-top:176px;font-size:13px;font-weight:600;" t-esc="importe_s"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:724px;margin-top:200px;font-size:13px;font-weight:600;" t-esc="importe_uss"/>
+            </div>
+             <div style="position:absolute;">
+                <span style="float:left;margin-left:724px;margin-top:220px;font-size:13px;font-weight:600;" t-esc="importe_cheque"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:724px;margin-top:240px;font-size:13px;font-weight:600;" t-esc="operacion"/>
+            </div>
+            <!-- New field Char Amount -->
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:39px;margin-top:300px;font-size:13px;font-weight:600;" t-esc="importe_s_char"/>
+            </div>
+
+            <!--Detalles del Footer-->
+            <div style="position:absolute;">
+              <span style="float:left;margin-left:515px;margin-top:520px;font-size:13px;font-weight:600;" t-esc="responsable"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:515px;margin-top:539px;font-size:13px;font-weight:600;" t-esc="dni_responsable"/>
+            </div>
+            <div style="position:absolute;width:650px;">
+                <span style="width:650px;float:left;margin-left:120px;margin-top:573px;font-size:13px;font-weight:600;" t-esc="detalle_responsable"/>
+            </div>
+
+            <!--COPIA DE REPORTE**************************************************************************************************************************-->
+            <!--Numero Correlativo Requerimiento-->
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:746px;margin-top:700px;font-size:18px;font-weight:900;color:red;" t-esc="numeros_requerimiento_text"/>
+            </div>
+            <!--Primera parte copia -->
+            <div style="position:absolute;">
+              <span style="float:left;margin-left:140px;margin-top:788px;font-size:13px;font-weight:600;" t-esc="fecha_solicitud"/>
+            </div>
+            <div style="position:absolute;">
+              <span style="float:left;margin-left:140px;margin-top:807px;font-size:13px;font-weight:600;" t-esc="banco"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:140px;margin-top:826px;font-size:13px;font-weight: 600;" t-esc="ncta"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:140px;margin-top:848px;font-size:13px;font-weight: 600;" t-esc="Girado"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:140px;margin-top:867px;font-size:13px;font-weight: 600;" t-esc="suma"/>
+            </div>
+             <div style="position:absolute;">
+                <span style="float:left;margin-left:140px;margin-top:888px;font-size:13px;font-weight: 600;" t-esc="cliente"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:140px;margin-top:908px;font-size:13px;font-weight: 600;" t-esc="actividad"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="width:392px;float:left;margin-left:140px;margin-top:929px;font-size:13px;font-weight: 600;" t-esc="concepto"/>
+            </div>
+             <!--Segunda parte copia -->
+            <div style="position:absolute;">
+              <span style="float:left;margin-left:724px;margin-top:788px;font-size:13px;font-weight:600;" t-esc="ppto"/>
+            </div>
+             <div style="position:absolute;">
+                <span style="float:left;margin-left:724px;margin-top:808px;font-size:13px;font-weight:600;" t-esc="centro_costo"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:724px;margin-top:829px;font-size:13px;font-weight:600;" t-esc="importe_s"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:724px;margin-top:850px;font-size:13px;font-weight:600;" t-esc="importe_uss"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:724px;margin-top:867px;font-size:13px;font-weight:600;" t-esc="importe_cheque"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:724px;margin-top:889px;font-size:13px;font-weight:600;" t-esc="operacion"/>
+            </div>
+            <!-- New field Char Amount -->
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:39px;margin-top:949px;font-size:13px;font-weight:600;" t-esc="importe_s_char"/>
+            </div>
+
+            <!--Detalles del Footer copia-->
+            <div style="position:absolute;">
+              <span style="float:left;margin-left:515px;margin-top:1170px;font-size:13px;font-weight:600;" t-esc="responsable"/>
+            </div>
+            <div style="position:absolute;">
+                <span style="float:left;margin-left:515px;margin-top:1190px;font-size:13px;font-weight:600;" t-esc="dni_responsable"/>
+            </div>
+            <div style="position:absolute;width:650px;">
+                <span style="width:650px;float:left;margin-left:120px;margin-top:1223px;font-size:13px;font-weight:600;" t-esc="detalle_responsable"/>
+            </div>
+
+          </t>
+       </t>
+    </template>
+
+    
+    <record id="paperformat_requerimiento" model="report.paperformat">
+      <field name="name">A4 Requerimiento</field>
+      <field name="default" eval="True"/>
+      <field name="format">custom</field>
+      <field name="page_height">0</field>
+      <field name="page_width">0</field>
+      <field name="orientation">Portrait</field>
+      <field name="margin_top">0</field>
+      <field name="margin_bottom">0</field>
+      <field name="margin_left">3</field>
+      <field name="margin_right">0</field>
+      <field name="header_line" eval="False"/>
+      <field name="header_spacing">0</field>
+      <field name="dpi">90</field>
+    </record>
+
+    
+    <record id="action_report_requerimiento" model="ir.actions.report">
+        <field name="name">Requerimiento</field>
+        <field name="model">report.requerimiento</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">gestion_documental_mkt.report_requerimiento</field>
+        <field name="report_file">gestion_documental_mkt.report_requerimiento</field>
+        <field name="binding_model_id" ref="model_report_requerimiento"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_requerimiento"/>
+    </record>
+
+
+  </data>
+</odoo>

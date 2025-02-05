@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    
+    <template id="report_stock_picking_operations_document" name="Stock Picking Operations" inherit_id="stock.report_picking">
+        <xpath expr="//div[@class='page']" position="replace">
+            <div class="page">
+                <link rel="stylesheet" type="text/css" href="/mkt_stock_picking_report/static/css/style.css" />
+                <div class="content">
+                    <div class="row justify-content-between">
+                        <div class="overflow-hidden pl-3 pr-3" style="width: 70%;">
+                            <div class="row text-center justify-content-center align-items-center" style="padding-left: 6.25em;">
+                                <img src="/mkt_stock_picking_report/static/description/images/logo.png" alt="Logo"
+                                    style="width: 450px; height: auto;" />
+                            </div>
+                            <div class="row text-center mt-3 d-inline-block" style="line-height: 7px; padding-left: 9.25em;">
+                                <p style="font-size: 20px; font-weight: bold;">Advertising &amp; Promotional Marketing</p>
+                                <p>Jr. Libertad 757 Urb. Orbea - Lima</p>
+                                <p>Magdalena del Mar</p>
+                                <p>Telephone numbers: 208-7100 / 208-7151 / 208-7152</p>
+                            </div>
+                            <div class="row mt-4">
+                                <div style="width: 43%;">
+                                    <div class="input-group border border-dark rounded-lg">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text bg-secondary text-white">F. Issue:</div>
+                                        </div>
+                                        <div class="form-control">
+                                            <span t-esc="o.scheduled_date" style="font-size: 13px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="width: 1%;"></div>
+                                <div style="width: 56%;">
+                                    <div class="input-group border border-dark rounded-lg">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text bg-secondary text-white">F. Start of Transfer:</div>
+                                        </div>
+                                        <div class="form-control">
+                                            <span t-esc="o.date_done" style="font-size: 13px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 1%;"></div>
+                        <div class="rounded-lg text-center pt-4" style="width: 29%; border: 3px solid black;">
+                            <div class="col">
+                                <div class="text-center justify-content-center" t-field="o.name"
+                                    t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:225px;height:41px; margin-right: 3px;'}"
+                                    style="left:0;" />
+                                <p style="font-size: 26px; font-weight: bold;">Waybill Transactions</p>
+                                <p><span style="font-size: 22px; font-weight: bold; color: red;" t-esc="o.name"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div t-if="o.picking_type_id.code == 'incoming' and o.picking_type_id.warehouse_id.partner_id">
+                            <div class="col-auto border border-dark rounded-lg overflow-hidden" name="div_outgoing_address">
+                                <div class="row p-2 text-center bg-secondary justify-content-center">
+                                    <div class="col-12 text-center">Warehouse Address</div>
+                                </div>
+                                <div class="row p-2 d-flex">
+                                    <div class="col-12">
+                                        <div t-field="o.picking_type_id.warehouse_id.partner_id"
+                                            t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}' />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 5px;"></div>
+                        <div class="col-auto p-0 border border-dark rounded-lg overflow-hidden" name="div_incoming_address">
+                            <t t-set="show_partner" t-value="False" />
+                            <div t-if="o.picking_type_id.code=='incoming' and o.partner_id">
+                                <div class="row p-2 text-center bg-secondary justify-content-center">
+                                    <div class="col-12 text-center">
+                                        <span><strong>Vendor Address</strong></span>
+                                        <t t-set="show_partner" t-value="True" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div t-if="o.picking_type_id.code=='internal' and o.partner_id"
+                                class="border border-dark rounded-lg overflow-hidden">
+                                <div class="row p-2 text-center bg-secondary justify-content-center">
+                                    <div class="col-12 text-center">
+                                        <span><strong>Warehouse Address</strong></span>
+                                        <t t-set="show_partner" t-value="True" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div t-if="o.picking_type_id.code=='outgoing' and o.partner_id and o.partner_id != o.partner_id.commercial_partner_id"
+                                class="border border-dark rounded-lg overflow-hidden">
+                                <div class="row p-2 text-center bg-secondary justify-content-center">
+                                    <div class="col-12 text-center">
+                                        <span><strong>Customer Address</strong></span>
+                                        <t t-set="show_partner" t-value="True" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div t-if="show_partner" name="partner_header">
+                                <div class="row p-2 d-flex">
+                                    <div class="col-12">
+                                        <div t-field="o.partner_id.commercial_partner_id"
+                                            t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}' />
+                                        <p t-if="o.sudo().partner_id.commercial_partner_id.vat">
+                                            <t t-esc="o.company_id.country_id.vat_label or 'Tax ID'" />: <span
+                                                t-field="o.sudo().partner_id.commercial_partner_id.vat" />
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div t-if="o.origin" name="div_origin" >
+                            <div class="col-auto border border-dark overflow-hidden rounded-lg" style="margin-right:5px;">
+                                <div class="row text-center p-2 pl-4 bg-secondary">
+                                    <strong>Order</strong>
+                                </div>
+                                <div class="row p-3 d-flex">
+                                    <div class="col-12">
+                                        <p t-field="o.origin" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto border border-dark overflow-hidden rounded-lg">
+                            <div name="div_state">
+                                <div class="row text-center p-2 pl-4 bg-secondary">
+                                    <strong>Status</strong>
+                                </div>
+                                <div class="row p-3 d-flex">
+                                    <div class="col-12">
+                                        <p t-field="o.state" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width:3px;"></div>
+                        <div class="col-auto border border-dark overflow-hidden rounded-lg">
+                            <div name="div_sched_date">
+                                <div class="row text-center p-2 pl-4 bg-secondary">
+                                    <strong>Scheduled Date</strong>
+                                </div>
+                                <div class="row p-3 d-flex">
+                                    <div class="col-12">
+                                        <p t-field="o.scheduled_date" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="row mt-2 table-container">
+                        <table t-if="o.move_line_ids and o.move_ids_without_package">
+                            <t t-set="has_barcode"
+                                t-value="any(move_line.product_id and move_line.product_id.sudo().barcode or move_line.package_id for move_line in o.move_line_ids)" />
+                            <t t-set="has_serial_number"
+                                t-value="any(move_line.lot_id or move_line.lot_name for move_line in o.move_line_ids)"
+                                groups="stock.group_production_lot" />
+                            <thead>
+                                <tr class="font-weight-bold bg-secondary">
+                                    <th name="th_product">
+                                        <strong>Product</strong>
+                                    </th>
+                                    <th>
+                                        <strong>Quantity</strong>
+                                    </th>
+                                    <th name="th_from" t-if="o.picking_type_id.code != 'incoming'" align="left"
+                                        groups="stock.group_stock_multi_locations">
+                                        <strong>From</strong>
+                                    </th>
+                                    <th name="th_to" t-if="o.picking_type_id.code != 'outgoing'"
+                                        groups="stock.group_stock_multi_locations">
+                                        <strong>To</strong>
+                                    </th>
+                                    <th name="th_serial_number" class="text-center" t-if="has_serial_number">
+                                        <strong>Lot/Serial Number</strong>
+                                    </th>
+                                    <th name="th_barcode" class="text-center" t-if="has_barcode">
+                                        <strong>Product Barcode</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.move_line_ids_without_package" t-as="ml">
+                                    <tr>
+                                        <td>
+                                            <span t-field="ml.product_id.display_name" /><br />
+                                            <span t-field="ml.product_id.description_picking" />
+                                        </td>
+                                        <td>
+                                            <span t-if="o.state != 'done'" t-field="ml.product_uom_qty" />
+                                            <span t-if="o.state == 'done'" t-field="ml.qty_done" />
+                                            <span t-field="ml.product_uom_id" groups="uom.group_uom" />
+                                        </td>
+                                        <td t-if="o.picking_type_id.code != 'incoming'" groups="stock.group_stock_multi_locations">
+                                            <span t-esc="ml.location_id.display_name" />
+                                            <t t-if="ml.package_id">
+                                                <span t-field="ml.package_id" />
+                                            </t>
+                                        </td>
+                                        <td t-if="o.picking_type_id.code != 'outgoing'" groups="stock.group_stock_multi_locations">
+                                            <div>
+                                                <span t-field="ml.location_dest_id" />
+                                                <t t-if="ml.result_package_id">
+                                                    <span t-field="ml.result_package_id" />
+                                                </t>
+                                            </div>
+                                        </td>
+                                        <td class=" text-center h6" t-if="has_serial_number">
+                                            <div t-if="has_serial_number and (ml.lot_id or ml.lot_name)"
+                                                t-esc="ml.lot_id.name or ml.lot_name"
+                                                t-options="{'widget': 'barcode', 'humanreadable': 1, 'width': 400, 'height': 100, 'img_style': 'width:100%;height:35px;'}" />
+                                        </td>
+                                        <td class="text-center" t-if="has_barcode">
+                                            <t t-if="product_barcode != ml.product_id.barcode">
+                                                <span t-if="ml.product_id and ml.product_id.barcode">
+                                                    <div t-field="ml.product_id.barcode"
+                                                        t-options="{'widget': 'barcode', 'symbology': 'auto', 'width': 400, 'height': 100, 'quiet': 0, 'img_style': 'height:35px;'}" />
+                                                </span>
+                                                <t t-set="product_barcode" t-value="ml.product_id.barcode" />
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

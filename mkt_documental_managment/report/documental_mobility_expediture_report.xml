@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="external_layout_documental_mobility_expediture">
+        <t t-if="not o " t-set="o" t-value="doc"/>
+        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>        
+        </div>
+    </template>
+
+    <template id="report_documental_mobility_expediture_document">
+        <t t-call="mkt_documental_managment.external_layout_documental_mobility_expediture">
+            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+            
+            <div class="header">
+                <table style="border: none">
+                    <colgroup>
+                        <col width="15%"/>
+                        <col width="60%"/>
+                        <col width="15%"/>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="text-center">
+                                <h4>
+                                    <u>
+                                        MOBILITY EXPEDITURE 
+                                    </u>
+                                </h4>
+                            </th>
+                            <th>
+                                <u>
+                                    <img t-if="o.env.user.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.env.user.company_id.logo)" style="width: 180px; min-height: 60px; max-height: 85px;"/>
+                                </u>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                            </th>
+                            <th style="text-align:left; font-size:0.825rem">
+                                <span t-field="o.name"/>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="text-align:left; font-size:0.825rem">
+                                <span t-esc="o.env.user.company_id.name"/>
+                            </th>
+                            <th style="text-align:left; font-size:0.825rem">
+                                Date: <t t-esc="(o.date - relativedelta(hours=5)).strftime('%Y-%m-%d %H:%M:%S')"/>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="text-align:left; font-size:0.825rem">
+                                RUC: <span t-esc="o.env.user.company_id.vat"/>
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <br/>
+            <div class="page">
+                <link rel="stylesheet" type="text/css" href="/mkt_documental_managment/static/src/css/documental_mobility_styles.css"/>
+                <div class="row">
+                    <div class="col-12" style="padding: 0px 45px 20px 45px">
+                        <table style="border:none;">
+                            <colgroup>
+                                <col width="30%"/>
+                                <col width="15%"/>
+                                <col width="10%"/>
+                                <col width="30%"/>
+                                <col width="15%"/>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Worker
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            : <span t-esc="o.full_name.partner_id.name"/>
+                                        </strong>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            PPTO NUMBER
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <t t-if="o.budget_id">
+                                                : <span t-esc="o.budget_id.name"/>
+                                            </t>
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            DNI
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <t t-if="o.dni">
+                                                : <span t-esc="o.dni"/>
+                                            </t>
+                                        </strong>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            CC
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <t t-if="o.cost_center_id">
+                                                : <span t-esc="o.cost_center_id.code"/>
+                                            </t>
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Currency type
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            : Soles(S/.)
+                                        </strong>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            PERIOD
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <t t-if="o.period">
+                                                : <span t-esc="o.period"/>
+                                            </t>
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br/>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">DATE</th>
+                            <th scope="col">MOTIVE</th>
+                            <th scope="col">ORIGIN</th>
+                            <th scope="col">DESTINY</th>
+                            <th scope="col">PARTIAL IMPORT</th>
+                            <th scope="col">AMOUNT</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tbody-report">
+                        <t t-set="mob_amount" t-value="0"/>
+                        <t t-set="i" t-value="0"/>
+                        <t t-set="val" t-value="0"/>
+                        <t t-set="aux" t-value="0"/>
+
+                        <t t-set="sorted_lines" t-value="sorted(o.mobility_detail_ids, key=lambda l: l.date)" />
+
+                        <t t-foreach="sorted_lines" t-as="line">
+                            <tr>
+                                <td><span t-field="line.date"/></td>
+                                <td><span t-field="line.reason"/></td>
+                                <td><span t-field="line.origin_place"/></td>
+                                <td><span t-field="line.destiny"/></td>
+                                <td>S/.<span t-field="line.amount" t-options="{'widget':'float','precision':2}"/></td>
+
+                                <t t-if="i == val">
+                                    <td t-att-rowspan="line.rowspan_quant">
+                                        S/.<span t-field="line.partial_amount" t-options="{'widget':'float','precision':2}"/>
+                                    </td>
+                                </t>
+
+                            </tr> 
+                            <t t-if="aux != line.rowspan_quant">
+                                <t t-set="val" t-value="val + line.rowspan_quant"/>
+                            </t>
+                            <t t-else="">
+                                <t t-if="i == val">
+                                    <t t-set="val" t-value="val + line.rowspan_quant"/>
+                                </t>
+                            </t>
+                            <t t-set="i" t-value="i + 1"/>
+                            <t t-set="aux" t-value="line.rowspan_quant"/>
+                            <t t-set="mob_amount" t-value="mob_amount + line.amount"/>
+                        </t>
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">TOTAL</td>
+                            <td>
+                                S/.<span t-esc="mob_amount" t-options="{'widget':'float','precision':2}"/>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+
+            <div class="footer">
+                <table class="table" style="border: none;">
+                    <colgroup>
+                        <col width="40%"/>
+                        <col width="20%"/>
+                        <col width="40%"/>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <td style="border: none;" class="text-center">
+                                <t t-if="o.petitioner_signature">
+                                    <img t-att-src="image_data_uri(o.petitioner_signature)"/>
+                                </t>
+                            </td>
+                            <td style="border: none;">
+                            </td>
+                            <td style="border: none;" class="text-center">
+                                <t t-if="o.executive_signature">
+                                    <img t-att-src="image_data_uri(o.executive_signature)"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-left:none; border-right:none; border-bottom:none; border-top: 2px solid" class="text-center">
+                                Signature of the Worker
+                            </td>
+                            <td style="border: none;">
+                            </td>
+                            <td style="border-left:none; border-right:none; border-bottom:none; border-top: 2px solid" class="text-center">
+                                Signature of the Executive
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_documental_mobility_expediture_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="lang" t-value="o.env.context.get('lang')"/>
+                <t t-call="mkt_documental_managment.report_documental_mobility_expediture_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

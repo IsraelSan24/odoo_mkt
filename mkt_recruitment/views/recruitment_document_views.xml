@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_recruitment_document_tree" model="ir.ui.view">
+        <field name="name">recruitment.document.tree</field>
+        <field name="model">recruitment.document</field>
+        <field name="arch" type="xml">
+            <tree>
+                <header>
+                    <button string="Update documents" name="write_data" type="object" class="oe_highlight"/>
+                </header>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="state" widget="badge"
+                    decoration-info="state == 'to_sign'"
+                    decoration-success="state == 'signed'"
+                    decoration-danger="state == 'cancelled'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_recruitment_document_form" model="ir.ui.view">
+        <field name="name">recruitment.document.form</field>
+        <field name="model">recruitment.document</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Update" name="write_data" type="object" class="oe_highlight"/>
+                    <button string="Send to applicant" name="send_to_sign" icon="fa-pencil-square-o" type="object"
+                        class="oe_highlight" attrs="{'invisible':[('state','not in',('draft','cancelled'))]}"/>
+                    <button string="Cancel" name="refuse" icon="fa-thumbs-o-down" type="object"
+                        class="oe_highlight" attrs="{'invisible':[('state','not in',('to_sign','signed'))]}"
+                        confirm="Please confirm to cancel the sheet"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,to_sign,signed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="preview_recruitment_document"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-globe icon">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Applicant</span>
+                                <span class="o_stat_text">Preview</span>
+                            </div>
+                        </button>
+                    </div>
+                    <group>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="partner_id" attrs="{'readonly': [('state', 'in', ('to_sign','signed'))]}"/>
+                            <field name="date_document" attrs="{'readonly': [('state', 'in', ('to_sign','signed'))]}"/>
+                            <field name="active" invisible="True"/>
+                        </group>
+                        <group>
+                            <field name="user_id" attrs="{'readonly': [('state', 'in', ('to_sign','signed'))]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="applicant_signature" widget="image" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="signed_by" readonly="True"/>
+                            <field name="signed_on" readonly="True"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_recruitment_document_search" model="ir.ui.view">
+        <field name="name">recruitment.document.search</field>
+        <field name="model">recruitment.document</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id" string="Partner or DNI" filter_domain="['|',('partner_id.vat','ilike',self),('partner_id.name','ilike',self)]"/>
+                <filter name="inactive" string="Archived" domain="[('active','=',False)]" help="Show inactive documents"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_recruitment_document_action" model="ir.actions.act_window">
+        <field name="name">Document Recruitment</field>
+        <field name="res_model">recruitment.document</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

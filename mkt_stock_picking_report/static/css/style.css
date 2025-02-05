@@ -1,0 +1,42 @@
+@media print {
+    .content, .content * {
+        page-break-inside: avoid;
+    }
+    .content div {
+        page-break-inside: auto;
+    }
+    .page-break {
+        page-break-before: always;
+    }
+    .no-page-break {
+        page-break-inside: avoid;
+    }
+    .table-container {
+        page-break-inside: avoid;
+    }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 2px solid black;
+    border-radius: 8px;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+.checkmark-box {
+    display: inline-block;
+    width: 18px;
+    height: 12px;
+    border: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+    font-family: 'Arial Unicode MS', Arial, sans-serif;
+    line-height: 12px;
+}

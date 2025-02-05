@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_equipment_status,access.equipment.status,model_equipment_status,maintenance.group_equipment_manager,1,1,1,1
+access_equipment_status_admin_user,equipment.status.admin.user,model_equipment_status,maintenance.group_equipment_manager,1,1,1,1
+access_equipment_component,access.equipment.component,model_equipment_component,maintenance.group_equipment_manager,1,1,1,1
+access_equipment_component_admin_user,equipment.component.admin.user,model_equipment_component,maintenance.group_equipment_manager,1,1,1,1

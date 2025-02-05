@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_partner_family,access.res.partner.family,model_res_partner_family,,1,1,1,1
+access_recruitment_document_payroll,access.recruitment.document.payroll,model_recruitment_document,hr_contract.group_hr_contract_manager,1,1,1,0
+access_recruitment_document_recruiter,access.recruitment.document.recruiter,model_recruitment_document,hr_recruitment.group_hr_recruitment_manager,1,0,0,0
+access_contract_mass,access.contract.mass,model_contract_mass,hr_contract.group_hr_contract_manager,1,1,1,0
+access_employer_signature,access.employer.signature,model_employer_signature,hr.group_hr_manager,1,1,1,1
+access_applicant_contract,access.applicant.contract,model_applicant_contract,hr_contract.group_hr_contract_manager,1,0,0,0
+access_applicant_partner,access.applicant.partner,model_applicant_partner,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_hr_contract_manager,hr.contract.manager,model_hr_contract,hr_contract.group_hr_contract_manager,1,1,1,0
+access_recruiter_team,access.recruiter.team,model_recruiter_team,,1,1,1,1
+access_summary_employees,access.summary.employees,model_summary_employees,,1,0,0,0
+access_imports,access.imports,model_imports,,1,1,1,1

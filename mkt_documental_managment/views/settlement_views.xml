@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_settlement_tree" model="ir.ui.view">
+        <field name="name">settlement.tree</field>
+        <field name="model">settlement</field>
+        <field name="arch" type="xml">
+            <tree>
+                <header>
+                    <button string="Update journal" name="update_journals" type="object" class="oe_highlight"/>
+                    <button string="Download files" name="download_files" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting"/>
+                    <button string="Attach files" name="attach_files" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting"/>
+                    <button string="CPE" name="validation_voucher" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting"/>
+                </header>
+                <button string="CPE" name="validation_voucher" type="object" class="oe_highlight"
+                    groups="mkt_documental_managment.documental_requirement_admin"/>
+                <field name="accountable_month_id" optional="show"/>
+                <field name="detraction_document" optional="show"/>
+                <field name="detraction_date" optional="show"/>
+                <field name="subdiary" optional="show"/>
+                <field name="voucher_number"/>
+                <field name="voucher_date" optional="show"/>
+                <field name="requirement_id" optional="show"/>
+                <field name="date" optional="show"/>
+                <field name="dni_ruc" optional="show"/>
+                <field name="partner" optional="show"/>
+                <field name="currency" optional="show"/>
+                <field name="document_type_id" optional="show"/>
+                <field name="document" optional="show"/>
+                <field name="document_filename" invisible="1"/>
+                <field name="document_file" optional="show" widget="binary" filename="document_filename"/>
+                <field name="reason" optional="show"/>
+                <field name="tax_id" optional="show"/>
+                <field name="detraction" optional="show"/>
+                <field name="retention" optional="show"/>
+                <field name="vendor" optional="show"/>
+                <field name="amount" optional="show"/>
+                <field name="cpe_state" widget="badge"
+                    decoration-info="cpe_state == 'to_validate'"
+                    decoration-success="cpe_state == 'accepted'"
+                    decoration-danger="cpe_state == 'non_existent'"
+                    decoration-warning="cpe_state == 'failed'"/>
+                <field name="state" widget="badge"
+                    decoration-muted="state == 'draft'"
+                    decoration-warning="state in ('executive','responsible','intern_control','administration')"
+                    decoration-success="state == 'settled'"
+                    decoration-danger="state == 'refused'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_settlement_form" model="ir.ui.view">
+        <field name="name">settlement.form</field>
+        <field name="model">settlement</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="requirement_id" invisible="1"/>
+                            <field name="state" readonly="False"
+                                groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <field name="document_type_id" options="{'no_create': '1', 'no_edit': '1', 'no_open': '1'}"
+                                attrs="{'readonly':[('state','not in',('draft','refused'))]}" required="1"/>
+                            <field name="date" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <field name="dni_ruc" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <field name="partner" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <field name="document" attrs="{'invisible':[('document_type_code','=','PM')],'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <field name="mobility_id" attrs="{'invisible':[('document_type_code','!=','PM')],'readonly':[('state','not in',('draft','refused'))]}"
+                                options="{'no_create':'1','no_edit':'1'}"/>
+                            <field name="igv_included" attrs="{'readonly':[('state','!=','intern_control')]}"/>
+                        </group>
+                        <group>
+                            <field name="document_filename" invisible="1"/>
+                            <field name="document_file" widget="binary" filename="document_filename"
+                                attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <field name="reason" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <field name="document_type_code" invisible="1"/>
+                            <field name="service_type_id" options="{'no_create': '1', 'no_edit': '1', 'no_open': '1'}"
+                                attrs="{'invisible':[('document_type_code','=','DS')],'readonly':[('state','not in',('draft','intern_control','refused'))]}"/>
+                            <field name="settle_amount" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <field name="settle_igv" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <!-- El cambio del read_only se debio a que el dia 03/10/2024 a las aprox 17:00 prismary dijo que no podria cambiar el impuesto de una linea de una liquidacion ya que estaba en rechazado -->
+                            <field name="tax_id" attrs="{'readonly':[('state','not in',('draft','refused','intern_control'))]}"
+                                options="{'no_create':'1','no_edit':'1','no_open':'1'}"/>
+                            <field name="movement_number" attrs="{'readonly':[('state','!=','intern_control')]}"
+                                groups="mkt_documental_managment.documental_requirement_intern_control"/>
+                            <button string="Compute amounts" name="compute_amounts" type="object" class="oe_highlight"
+                                groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <button string="New amounts" name="button_compute_amounts" type="object" class="oe_highlight"
+                                groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <!-- <button string="Compute detraction/retention" name="compute_detraction_retention" type="object" class="oe_highlight"
+                                groups="mkt_documental_managment.documental_requirement_admin"/> -->
+                        </group>
+                    </group>
+                    <group string="Additional information">
+                        <group>
+                            <field name="detraction"/>
+                            <field name="retention"/>
+                            <field name="vendor"/>
+                            <!-- <field name="amount"/> -->
+                        </group>
+                        <group>
+                            <field name="cpe_state" widget="badge"
+                                decoration-info="cpe_state == 'to_validate'"
+                                decoration-success="cpe_state == 'accepted'"
+                                decoration-danger="cpe_state == 'non_existent'"
+                                decoration-warning="cpe_state == 'failed'"/>
+                            <field name="income_tax" widget="boolean_toggle"
+                                groups="mkt_documental_managment.documental_requirement_intern_control"/>
+                            <field name="income_tax_id" attrs="{'invisible':[('income_tax','=',False)]}"
+                                groups="mkt_documental_managment.documental_requirement_intern_control"
+                                options="{'no_create': '1', 'no_edit': '1', 'no_open': '1'}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_accounting_settlement_form" model="ir.ui.view">
+        <field name="name">accounting.settlement.form</field>
+        <field name="model">settlement</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Attach file" name="attach_files" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting"/>
+                    <button string="CPE" name="validation_voucher" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting"/>
+                    <button string="Update journal" name="update_journals" type="object" class="oe_highlight"/>
+                    <field name="cpe_state" widget="statusbar" statusbar_visible="to_validate,accepted,non_existent,failed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <h1>
+                                <field name="document_type_id" readonly="1"/>
+                                <span>/</span>
+                                <field name="document" readonly="1" force_save="1"/>
+                            </h1>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="requirement_id" invisible="1"/>
+                            <field name="state" invisible="1"/>
+                            <field name="date" readonly="1"/>
+                            <field name="dni_ruc" readonly="1"/>
+                            <field name="partner" readonly="1"/>
+                            <field name="document" readonly="1" force_save="1"/>
+                            <field name="reason" readonly="1"/>
+                            <field name="document_filename" invisible="1"/>
+                            <field name="document_file" widget="binary" filename="document_filename" readonly="1"/>
+                            <field name="detraction_document"/>
+                            <field name="detraction_date"/>
+                        </group>
+                        <group>
+                            <field name="accountable_month_id" options="{'no_create': '1', 'no_edit': '1', 'no_open': '1'}"/>
+                            <field name="subdiary"/>
+                            <field name="voucher_number"/>
+                            <field name="voucher_date"/>
+                            <field name="main_gloss"/>
+                            <field name="conversion_type"/>
+                            <field name="flag_currency_conversion"/>
+                            <field name="exchange_type_date"/>
+                            <field name="change_type"/>
+                            <field name="due_date"/>
+                            <field name="detail_gloss"/>
+                            <field name="currency"/>
+                            <field name="settle_amount"/>
+                            <field name="settle_igv"/>
+                            <field name="tax_id"/>
+                            <field name="movement_number"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="detraction"/>
+                        <field name="retention"/>
+                        <field name="vendor"/>
+                        <field name="amount"/>
+                    </group>
+                    <notebook>
+                        <page string="Journal items">
+                            <field name="journal_ids" options="{'no_open':'1'}">
+                                <tree create="1" editable="bottom" delete="1">
+                                    <field name="settlement_id" invisible="1"/>
+                                    <field name="name"/>
+                                    <field name="account_id"/>
+                                    <field name="account_code"/>
+                                    <field name="cost_center_id"/>
+                                    <field name="debit" sum="Debit"/>
+                                    <field name="credit" sum="Credit"/>
+                                    <field name="annex_code"/>
+                                    <field name="document_number"/>
+                                    <field name="auxiliar_annex_code"/>
+                                    <field name="reference_document_type"/>
+                                    <field name="reference_document_number"/>
+                                    <field name="reference_document_date"/>
+                                    <field name="rate_type"/>
+                                    <field name="detraction_retention_type"/>
+                                    <field name="soles_detraction_retention_amount"/>
+                                </tree>
+                            </field>                        
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_settlement_action" model="ir.actions.act_window">
+        <field name="name">Vouchers</field>
+        <field name="res_model">settlement</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5,0,0),
+            (0,0,{'view_mode':'tree','view_id': ref('view_settlement_tree')}),
+            (0,0,{'view_mode':'form','view_id': ref('view_accounting_settlement_form')})]"/>
+        <field name="domain">[('state','in',('administration','settled'))]</field>
+    </record>
+
+    <record id="view_settlement_proof_of_purchase_action" model="ir.actions.server">
+        <field name="name">Proof of purchase</field>
+        <field name="model_id" ref="model_settlement"/>
+        <field name="binding_model_id" ref="model_settlement"/>
+        <field name="state">code</field>
+        <field name="code">action = env['settlement'].get_settlement_proof_of_purchase_action()</field>
+    </record>
+</odoo>

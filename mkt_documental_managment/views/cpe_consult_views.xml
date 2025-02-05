@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_cpe_consult_tree" model="ir.ui.view">
+        <field name="name">cpe.consult.tree</field>
+        <field name="model">cpe.consult</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="ruc"/>
+                <field name="document_type_code"/>
+                <field name="document_serie"/>
+                <field name="document_number"/>
+                <field name="emision_date"/>
+                <field name="total"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_cpe_consult_form" model="ir.ui.view">
+        <field name="name">cpe.consult.form</field>
+        <field name="model">cpe.consult</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Consult" name="button_cpe_consult" type="object"
+                        class="oe_highlight" attrs="{'invisible':[('id','=',False)]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <h1>
+                            <field name="name" readonly="True"/>
+                        </h1>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="ruc"/>
+                            <field name="document_type_code"/>
+                            <field name="document_serie"/>
+                        </group>
+                        <group>
+                            <field name="document_number"/>
+                            <field name="emision_date"/>
+                            <field name="total"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cpe_consult_action" model="ir.actions.act_window">
+        <field name="name">CPE Consult</field>
+        <field name="res_model">cpe.consult</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

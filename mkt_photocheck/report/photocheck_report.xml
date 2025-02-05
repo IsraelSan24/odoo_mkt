@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_photocheck_document">
+            <t t-call="web.external_layout">
+                <!-- <t t-call="web.html_container"> -->
+                    <t t-raw="0"/>
+                        <t t-set="o" t-value="o.with_context(lang=lang)" />
+                        <html>
+                            <link rel="stylesheet" type="text/css" href="/mkt_photocheck/static/src/css/photocheck.css"/>
+                            <div class="row content">
+                                <div class="col-4 info">
+                                    <img class="img1" src="/mkt_photocheck/static/images/photocheck.jpg"/>
+                                </div>
+                                <div class="col-8 derecho">
+                                    <div class="clearfix"></div>
+                                    <div class="photo-content">
+                                        <img t-if="o.photo" t-att-src="'data:image/png;base64,%s' % to_text(o.photo)" class="pho_photo"/>
+                                    </div>
+                                    <div class="texto">
+                                        <span class="pho_name" t-esc="o.initial_name"/><br/>
+                                        <span class="pho_last_name" t-esc="o.last_name"/><br/>
+                                        <span class="pho_job_id" t-esc="o.job_id.name"/><br/>
+                                        <span class="pho_dni" t-esc="o.dni" /><br/>
+                                    </div>
+                                    <div class="logos">
+                                        <t t-if="o.brand_counter == 1" >
+                                            <div>
+                                                <img t-if="o.brand_ids[0].logo" t-att-src="'data:image/png;base64,%s' % to_text(o.brand_ids[0].logo)" class="img_logo"/><br/>
+                                            </div>
+                                        </t>
+                                        <t t-if="o.brand_counter == 2">
+                                            <div class="flex_logo_2">
+                                                <img t-if="o.brand_ids[0].logo" t-att-src="'data:image/png;base64,%s' % to_text(o.brand_ids[0].logo)" class="img_logo2"/>
+                                                <img t-if="o.brand_ids[1].logo" t-att-src="'data:image/png;base64,%s' % to_text(o.brand_ids[1].logo)" class="img_logo2"/>
+                                            </div>
+                                        </t>
+                                        <t t-if="o.brand_counter == 3">
+                                            <div>
+                                                <img t-if="o.brand_ids[0].logo" t-att-src="'data:image/png;base64,%s' % to_text(o.brand_ids[0].logo)" class="img_logo3"/><br/>
+                                                <img t-if="o.brand_ids[1].logo" t-att-src="'data:image/png;base64,%s' % to_text(o.brand_ids[1].logo)" class="img_logo3"/><br/>
+                                                <img t-if="o.brand_ids[2].logo" t-att-src="'data:image/png;base64,%s' % to_text(o.brand_ids[2].logo)" class="img_logo3"/><br/>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <div class="pho_web">
+                                        <span>www.marketing-alterno.com</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </html>
+                <!-- </t> -->
+            </t>
+        </template>
+
+        <template id="report_photocheck">
+            <t t-call="web.html_container">
+                <page name="name" string="string">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-call="mkt_photocheck.report_photocheck_document" t-lang="lang"/>
+                    </t>
+                    
+                </page>
+            </t>
+        </template>
+
+    </data>
+</odoo>

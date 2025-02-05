@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <template id="report_affidavit_document">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=o.employee_id.lang)"/>
+                <html>
+                    <link rel="stylesheet" type="text/css" href="/mkt_documental_managment/static/src/css/portal_styles.css"/>
+                    <div class="container mt-5">
+                        <div class="card">
+                            <div class="card-body" style="font-family: 'Georgia', serif;">
+                                <p class="text-danger text-right mb-2" style="font-size: 32px;"><strong><span t-esc="o.name"/></strong></p>
+                                <h4 class="card-title text-center text-uppercase mb-4" style="font-size: 32px;">
+                                    <strong>Declaración Jurada</strong>
+                                </h4>
+                                
+                                <p class="text-justify" style="font-size: 21px;">
+                                    Yo, <strong class="text-decoration"><span t-esc="o.employee_id.name"/></strong> con documento de identidad Nº <strong><span t-esc="o.user_vat"/></strong>, desempeñándome como <strong><span t-esc="o.job_id.name"/></strong>, ubicada en <strong><span t-esc="o.location"/></strong> en el Distrito de <strong><span t-esc="o.district_id.name"/></strong> provincia de <strong><span t-esc="o.city_id.name"/></strong>, del Departamento de <strong><span t-esc="o.state_id.name"/></strong>.
+                                </p>
+
+                                <h4 class="mt-4"><strong>Declaro:</strong></h4>
+
+                                <p class="text-justify" style="font-size: 21px;">
+                                    A concepto de: <strong><span t-esc="o.concept"/></strong> para la actividad de <strong><span t-esc="o.activity"/></strong> y se gastó la cantidad de <strong><span t-esc="o.amount"/></strong> <strong><span t-esc="o.amount_currency_type"/></strong>.
+                                </p>
+                                
+                                <p class="text-justify" style="font-size: 21px;">
+                                    Me afirmo en lo expresado, en señal de lo cual firmo el presente documento.
+                                </p>
+
+                                <p class="text-left mb-5" style="font-size: 21px;">
+                                    Lima, 
+                                    <t t-if="o.date">
+                                        <strong><span t-esc="'%02d' % o.date.day"/></strong>
+                                    </t>
+                                    <t t-else="">
+                                        __________
+                                    </t>
+                                    de 
+                                    <t t-if="o.date">
+                                        <strong><span t-esc="o.date_month"/></strong>
+                                    </t>
+                                    <t t-else="">
+                                        __________
+                                    </t>
+                                    del 
+                                    <t t-if="o.date">
+                                        <strong><span t-esc="o.date.year"/></strong>
+                                    </t>
+                                    <t t-else="">
+                                        __________
+                                    </t>
+                                </p>
+
+                                <div style="height:115px;"></div>
+                                <div class="row text-center mt-5" style="margin-top: 150px;">
+                                    <div class="col-6">
+                                        <div>
+                                            <t t-if="o.petitioner_signature">
+                                                <img t-att-src="image_data_uri(o.petitioner_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <div class="signature-line"></div>
+                                        </div>
+                                        <p class="mb-0" style="font-size: 18px;">Firma</p>
+                                        <p style="font-size: 18px;"><strong><span t-esc="o.employee_id.name"/></strong></p>
+                                        <p style="font-size: 18px;">Nombres y Apellidos</p>
+                                        <p style="font-size: 18px;">DNI Nº <strong><span t-esc="o.user_vat"/></strong></p>
+                                    </div>
+                                    <div class="col-6">
+                                        <div>
+                                            <t t-if="o.executive_signature">
+                                                <img t-att-src="image_data_uri(o.executive_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <div class="signature-line"></div>
+                                        </div>
+                                        <p class="mb-0" style="font-size: 18px;">Firma</p>
+                                        <p style="font-size: 18px;"><strong>Marketing Alterno Perú SAC</strong></p>
+                                        <p style="font-size: 18px;">RUC: <strong>20512433821</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </html>
+            </t>
+        </template>
+
+        <template id="report_affidavit">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="mkt_documental_managment.report_affidavit_document" t-lang="o.employee_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+
+</odoo>

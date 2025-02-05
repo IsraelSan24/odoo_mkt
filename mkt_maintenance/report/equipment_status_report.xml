@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_equipment_status">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <table width="100%" style="border-collapse: collapse;">
+                            <tr>
+                                <td width="50%" style="vertical-align: middle;">
+                                    <t t-if="user.company_id and user.company_id.logo">
+                                        <img t-att-src="'data:image/png;base64,%s' % to_text(user.company_id.logo)" style="width: 180px; min-height: 60px; max-height: 85px;"/>
+                                    </t>
+                                </td>
+                                <td width="50%" style="text-align: right; vertical-align: middle;">
+                                <h4 style="margin: 0;">
+                                    <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%A, %d de %B de %Y')"/>
+                                </h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="height: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td width="70%" style="vertical-align: middle;">
+                                <h2 style="margin: 0;">COMPUTER EQUIPMENT STATUS REPORT</h2>
+                                </td>
+                                <td width="30%" style="text-align: right; vertical-align: middle;">
+                                <h4 style="margin: 0;">N°: <span t-field="o.name_code"/></h4>
+                                </td>
+                            </tr>
+                        </table>
+                        <h3>Equipment Details</h3>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr style="background-color: black; color: white;">
+                                    <th>COD. INVENTORY</th>
+                                    <th>TYPE</th>
+                                    <th>BRAND</th>
+                                    <th>MODEL</th>
+                                    <th>SERIAL NUMBER</th>
+                                    <th>USER</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span t-field="o.equipment_name"/></td>
+                                    <td><span t-field="o.category_id"/></td>
+                                    <td><span t-field="o.partner_brand_id"/></td>
+                                    <td><span t-field="o.model"/></td>
+                                    <td><span t-field="o.serial_no"/></td>
+                                    <td><span t-field="o.employee_id"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h3>Features</h3>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr style="background-color: black; color: white;">
+                                    <th>OPERATING SYSTEM</th>
+                                    <th>DISPLAY</th>
+                                    <th>DISK</th>
+                                    <th>RAM</th>
+                                    <th>PROCESSOR</th>
+                                    <th>OBSERVATION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span t-field="o.operating_system"/></td>
+                                    <td><span t-field="o.screen"/></td>
+                                    <td><span t-field="o.disk"/></td>
+                                    <td><span t-field="o.ram"/></td>
+                                    <td><span t-field="o.processor"/></td>
+                                    <td><span t-field="o.observation"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h3>Checklist</h3>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr style="background-color: black; color: white;">
+                                    <th>Component</th>
+                                    <th>B</th>
+                                    <th>M</th>
+                                    <th>Observation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.component_ids" t-as="checklist">
+                                    <tr>
+                                        <td><span t-field="checklist.component_name"/></td>
+                                        <td><input type="checkbox" t-att-checked="checklist.condition == 'good'"/></td>
+                                        <td><input type="checkbox" t-att-checked="checklist.condition == 'bad'"/></td>
+                                        <td><span t-field="checklist.observation"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <div style="margin-top: 50px;">
+                            <div style="float: left; width: 50%; text-align: center;">
+                                <p>........................................................</p>
+                                <p>SIGNATURE</p>
+                                <p>TECHNICIAN: <span  style="font-weight: 900;" t-esc="user.name"/></p>
+                            </div>
+                            <div style="float: right; width: 50%; text-align: center;">
+                                <p>........................................................</p>
+                                <p>SIGNATURE</p>
+                                <p>User: <span style="font-weight: 900;" t-field="o.employee_id"/></p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="" style="height:30px"></div>
+                    <t t-if="o.photo_base">
+                        <div class="page" style="width: 297mm; height: 210mm; padding: 10mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; page-break-inside: avoid; page-break-after: always;">
+                            <div style="text-align: center; margin-bottom: 5mm; width: 320mm;">
+                                <strong>Laptop Base Photo</strong>
+                            </div>
+                            <div style="width: 320mm; height: 200mm; display: flex; justify-content: center; align-items: center; border: 2px solid #000; overflow: hidden;">
+                                <img t-att-src="image_data_uri(o.photo_base)" alt="Laptop Base Photo" style="width: 100%; height: 100%; object-fit: contain;"/>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="o.photo_left_side">
+                        <div class="page" style="width: 297mm; height: 210mm; padding: 10mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; page-break-inside: avoid; page-break-after: always;">
+                            <div style="text-align: center; margin-bottom: 5mm; width: 320mm;">
+                                <strong>Left Side Photo</strong>
+                            </div>
+                            <div style="width: 320mm; height: 200mm; display: flex; justify-content: center; align-items: center; border: 2px solid #000; overflow: hidden;">
+                                <img t-att-src="image_data_uri(o.photo_left_side)" alt="Left Side Photo" style="width: 100%; height: 100%; object-fit: contain;"/>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="o.photo_right_side">
+                        <div class="page" style="width: 297mm; height: 210mm; padding: 10mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; page-break-inside: avoid; page-break-after: always;">
+                            <div style="text-align: center; margin-bottom: 5mm; width: 320mm;">
+                                <strong>Right Side Photo</strong>
+                            </div>
+                            <div style="width: 320mm; height: 200mm; display: flex; justify-content: center; align-items: center; border: 2px solid #000; overflow: hidden;">
+                                <img t-att-src="image_data_uri(o.photo_right_side)" alt="Right Side Photo" style="width: 100%; height: 100%; object-fit: contain;"/>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="o.photo_closed">
+                        <div class="page" style="width: 297mm; height: 210mm; padding: 10mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; page-break-inside: avoid; page-break-after: always;">
+                            <div style="text-align: center; margin-bottom: 5mm; width: 320mm;">
+                                <strong>Laptop Closed Photo</strong>
+                            </div>
+                            <div style="width: 320mm; height: 200mm; display: flex; justify-content: center; align-items: center; border: 2px solid #000; overflow: hidden;">
+                                <img t-att-src="image_data_uri(o.photo_closed)" alt="Closed Photo" style="width: 100%; height: 100%; object-fit: contain;"/>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="o.photo_open_screen">
+                        <div class="page" style="width: 297mm; height: 210mm; padding: 10mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; page-break-inside: avoid; page-break-after: always;">
+                            <div style="text-align: center; margin-bottom: 5mm; width: 320mm;">
+                                <strong>Laptop Open Screen Photo</strong>
+                            </div>
+                            <div style="width: 320mm; height: 200mm; display: flex; justify-content: center; align-items: center; border: 2px solid #000; overflow: hidden;">
+                                <img t-att-src="image_data_uri(o.photo_open_screen)" alt="Open Photo Screen" style="width: 100%; height: 100%; object-fit: contain;"/>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="o.photo_open_keyboard">
+                        <div class="page" style="width: 297mm; height: 210mm; padding: 10mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; page-break-inside: avoid; page-break-after: always;">
+                            <div style="text-align: center; margin-bottom: 5mm; width: 320mm;">
+                                <strong>Laptop Open keyboard Photo</strong>
+                            </div>
+                            <div style="width: 320mm; height: 200mm; display: flex; justify-content: center; align-items: center; border: 2px solid #000; overflow: hidden;">
+                                <img t-att-src="image_data_uri(o.photo_open_keyboard)" alt="Open Photo Keyboard" style="width: 100%; height: 100%; object-fit: contain;"/>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="o.photo_charger">
+                        <div class="page" style="width: 297mm; height: 210mm; padding: 10mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; page-break-inside: avoid; page-break-after: always;">
+                            <div style="text-align: center; margin-bottom: 5mm; width: 320mm;">
+                                <strong>Charger Photo</strong>
+                            </div>
+                            <div style="width: 320mm; height: 200mm; display: flex; justify-content: center; align-items: center; border: 2px solid #000; overflow: hidden;">
+                                <img t-att-src="image_data_uri(o.photo_charger)" alt="Charger Photo" style="width: 100%; height: 100%; object-fit: contain;"/>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="o.photo_additional">
+                        <div class="page" style="width: 297mm; height: 210mm; padding: 10mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; page-break-inside: avoid; page-break-after: always;">
+                            <div style="text-align: center; margin-bottom: 5mm; width: 320mm;">
+                                <strong>Laptop Additional Photo</strong>
+                            </div>
+                            <div style="width: 320mm; height: 200mm; display: flex; justify-content: center; align-items: center; border: 2px solid #000; overflow: hidden;">
+                                <img t-att-src="image_data_uri(o.photo_additional)" alt="Additional Photo" style="width: 100%; height: 100%; object-fit: contain;"/>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="o.photo_additional_new">
+                        <div class="page" style="width: 297mm; height: 210mm; padding: 10mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; page-break-inside: avoid; page-break-after: always;">
+                            <div style="text-align: center; margin-bottom: 5mm; width: 320mm;">
+                                <strong>Laptop New Additional Photo</strong>
+                            </div>
+                            <div style="width: 320mm; height: 200mm; display: flex; justify-content: center; align-items: center; border: 2px solid #000; overflow: hidden;">
+                                <img t-att-src="image_data_uri(o.photo_additional_new)" alt="New Additional Photo" style="width: 100%; height: 100%; object-fit: contain;"/>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="o.photo_microphone">
+                        <div class="page" style="width: 297mm; height: 210mm; padding: 10mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; page-break-inside: avoid; page-break-after: always;">
+                            <div style="text-align: center; margin-bottom: 5mm; width: 320mm;">
+                                <strong>Laptop Microphone Photo</strong>
+                            </div>
+                            <div style="width: 320mm; height: 200mm; display: flex; justify-content: center; align-items: center; border: 2px solid #000; overflow: hidden;">
+                                <img t-att-src="image_data_uri(o.photo_microphone)" alt="Microphone Photo" style="width: 100%; height: 100%; object-fit: contain;"/>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="o.photo_keyboard">
+                        <div class="page" style="width: 297mm; height: 210mm; padding: 10mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; page-break-inside: avoid; page-break-after: always;">
+                            <div style="text-align: center; margin-bottom: 5mm; width: 320mm;">
+                                <strong>Laptop Keyboard Photo</strong>
+                            </div>
+                            <div style="width: 320mm; height: 200mm; display: flex; justify-content: center; align-items: center; border: 2px solid #000; overflow: hidden;">
+                                <img t-att-src="image_data_uri(o.photo_keyboard)" alt="Keyboard Photo" style="width: 100%; height: 100%; object-fit: contain;"/>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="o.photo_camera">
+                        <div class="page" style="width: 297mm; height: 210mm; padding: 10mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; page-break-inside: avoid; page-break-after: always;">
+                            <div style="text-align: center; margin-bottom: 5mm; width: 320mm;">
+                                <strong>Laptop Camera Photo</strong>
+                            </div>
+                            <div style="width: 320mm; height: 200mm; display: flex; justify-content: center; align-items: center; border: 2px solid #000; overflow: hidden;">
+                                <img t-att-src="image_data_uri(o.photo_camera)" alt="Camera Photo" style="width: 100%; height: 100%; object-fit: contain;"/>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

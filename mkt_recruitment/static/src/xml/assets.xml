@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <templates>
+        <t t-name="mkt_recruitment.portal_my_details_family_row">
+            <tr>
+                <td><t t-esc="family_member.name"/></td>
+                <td><t t-esc="family_member.gender"/></td>
+                <td><t t-esc="family_member.age"/></td>
+                <td><t t-esc="family_member.dni"/></td>
+            </tr>
+        </t>
+    </templates>
+
+</odoo>

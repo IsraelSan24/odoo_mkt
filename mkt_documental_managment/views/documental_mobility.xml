@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_tree_mobility" model="ir.ui.view">
+        <field name="name">view.tree.mobility</field>
+        <field name="model">documental.mobility.expediture</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state == 'done'">
+                <field name="name"/>
+                <field name="full_name" widget="many2one_avatar_user"/>
+                <field name="city_id"/>
+                <field name="budget_id" optional="show"/>
+                <field name="cost_center_id" optional="show"/>
+                <field name="amount_total" optional="show"/>
+                <field name="requirement_id" optional="hide"/>
+                <field name="date" optional="hide"/>
+                <field name="state" widget="badge"
+                    decoration-muted="state == 'draft'"
+                    decoration-primary="state == 'executive'"
+                    decoration-success="state == 'done'"
+                    decoration-danger="state == 'refused'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_form_mobility" model="ir.ui.view">
+        <field name="name">view.form.mobility</field>
+        <field name="model">documental.mobility.expediture</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="is_petitioner_signed" invisible="True"/>
+                    <button string="Sign" name="button_petitioner_signature"
+                        icon="fa-pencil-square-o" type="object" class="oe_highlight"
+                        attrs="{'invisible':[('state','not in',('draft','refused'))]}"
+                        groups="mkt_documental_managment.documental_mobility_user"/>
+                    <field name="is_executive_signed" invisible="True"/>
+                    <button string="Sign" name="button_executive_signature"
+                        icon="fa-pencil-square-o" type="object" class="oe_highlight"
+                        attrs="{'invisible':[('state','!=','executive')]}"
+                        groups="mkt_documental_managment.documental_mobility_boss"/>
+                    <button string="Refuse" name="button_refused" type="object" class="oe_highlight"
+                        attrs="{'invisible':[('state','!=','executive')]}"
+                        groups="mkt_documental_managment.documental_mobility_boss"/>
+                    <button string="Refuse" name="button_intern_control_refuse" type="object" class="oe_highlight"
+                        attrs="{'invisible':[('state','!=','done')]}"
+                        groups="mkt_documental_managment.documental_requirement_intern_control"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,executive,done"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Done" bg_color="bg-success" attrs="{'invisible':[('state','!=','done')]}"/>
+                    <widget name="web_ribbon" title="Refused" bg_color="bg-danger" attrs="{'invisible':[('state','!=','refused')]}"/>
+                    <group>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </group>
+                    <group string="Responsible Data">
+                        <group>
+                            <field name="full_name" readonly="True" required="True"/>
+                            <field name="city_id" readonly="True" required="True"/>
+                            <field name="dni" readonly="True" required="True"/>
+                            <field name="date" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="petitioner_signature" widget="image"
+                                attrs="{'invisible':[('is_petitioner_signed','=',False)]}" readonly="True"/>
+                        </group>
+                    </group>
+                    <group string="Document Data">
+                        <group>
+                            <field name="used" invisible="1"/>
+                            <field name="requirement_id" readonly="1"/>
+                            <field name="budget_id" attrs="{'readonly': [('state','not in',('draft','refused'))]}"/>
+                            <field name="cost_center_id"/>
+                            <field name="period" attrs="{'readonly': [('state','not in',('draft','refused'))]}"/>
+                            <field name="employee_id" invisible="True" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="executive_signature" widget="image"
+                                attrs="{'invisible':[('is_executive_signed','=',False)]}" readonly="True"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Items">
+                            <field name="mobility_detail_ids" mode="tree" attrs="{'invisible':[('state','not in',('draft','refused'))]}" options="{'no_open':'1'}">
+                                <tree create="1" editable="bottom" delete="1" default_order="date asc">
+                                    <field name="sequence_handle" widget="handle"/>
+                                    <field name="date"/>
+                                    <field name="reason"/>
+                                    <field name="origin_place"/>
+                                    <field name="destiny"/>
+                                    <field name="document_filename" invisible="True"/>
+                                    <field name="document_file" widget="binary" filename="document_filename"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                    <field name="partial_amount" readonly="True"/>
+                                </tree>
+                            </field>
+                            <field name="restrict_mobility_detail_ids" mode="tree" attrs="{'invisible':[('state','in',('draft','refused'))]}" options="{'no_open':'1'}">
+                                <tree create="0" delete="0" default_order="date asc">
+                                    <field name="date" attrs="{'readonly': [('parent.state','!=','draft')]}"/>
+                                    <field name="reason" attrs="{'readonly': [('parent.state','!=','draft')]}"/>
+                                    <field name="origin_place" attrs="{'readonly': [('parent.state','!=','draft')]}"/>
+                                    <field name="destiny" attrs="{'readonly': [('parent.state','!=','draft')]}"/>
+                                    <field name="document_filename" invisible="True"/>
+                                    <field name="document_file" attrs="{'readonly': [('parent.state','!=','draft')]}" widget="binary" filename="document_filename"/>
+                                    <field name="amount" sum="Total Amount" attrs="{'readonly': [('parent.state','!=','draft')]}"/>
+                                    <field name="partial_amount" readonly="True"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_view_mobility" model="ir.actions.act_window">
+        <field name="name">Documental Mobility Expediture</field>
+        <field name="res_model">documental.mobility.expediture</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

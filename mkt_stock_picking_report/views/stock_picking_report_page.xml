@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="stock_picking_report_page" name="Stock Picking Report Page">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Stock Picking Report</h1>
+                <p><strong>Code:</strong> <span t-esc="stock_picking.name"/></p>
+                <p><strong>Date of issue:</strong> <span t-esc="stock_picking.scheduled_date"/></p>
+                <p><strong>Origin:</strong> <span t-esc="stock_picking.origin_location"/></p>
+                <p><strong>Destination:</strong> <span t-esc="stock_picking.arrival_location"/></p>
+                <h3>Details:</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Description</th>
+                                <th>Unit</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="stock_picking.move_ids_without_package" t-as="line">
+                                <tr>
+                                    <td><t t-esc="line.product_id.default_code or 'N/A'"/></td>
+                                    <td><t t-esc="line.description_picking"/></td>
+                                    <td><t t-esc="line.product_uom.with_context(lang='es_ES').name"/></td>
+                                    <td><t t-esc="line.quantity_done"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

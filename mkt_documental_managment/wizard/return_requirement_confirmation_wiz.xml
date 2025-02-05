@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_return_requirement_confirmation_wiz_form" model="ir.ui.view">
+        <field name="name">return.requirement.confirmation.wiz.form</field>
+        <field name="model">return.requirement.confirmation</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <p>
+                        You are going to create an automatic return requirement with your signature.
+                    </p>
+                    <p class="text-muted">You can sign the settlement and not create a return requirement clicking on 'Only Sign'.</p>
+                </group>
+                <footer>
+                    <button name="sign_and_return" string="Sign and create return" type="object" class="oe_highlight"/>
+                    <button name="only_sign" string="Only sign" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

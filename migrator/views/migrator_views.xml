@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_migrator_tree" model="ir.ui.view">
+        <field name="name">view.migrator.tree</field>
+        <field name="model">migrator</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_migrator_form" model="ir.ui.view">
+        <field name="name">migrator.form</field>
+        <field name="model">migrator</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <group string="1. Province - Brand">
+                            <button name="migrate_province" string="Migrate Province" type="object"
+                                class="oe_highlight"/>
+                            <button name="migrate_brand" string="Migrate Brand" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                        <group string="2. Campaign - Brand">
+                            <button name="migrate_budget_campaign" string="Migrate Campaign" type="object"
+                                class="oe_highlight"/>
+                            <button name="migrate_d_budget_class" string="Migrate Class" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="3. Document type - Month Year">
+                            <button name="migrate_document_type" string="Migrate Document type" type="object"
+                                class="oe_highlight"/>
+                            <button name="migrate_month_year" string="Migrate Month Year" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                        <group string="4. Payroll payment - Service type">
+                            <button name="migrate_payroll_payment" string="Migrate Payroll payment" type="object"
+                                class="oe_highlight"/>
+                            <button name="migrate_service_type" string="Migrate Service type" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="5. Cost center - Budget">
+                            <button name="migrate_d_cost_center" string="Migrate Cost center" type="object"
+                                class="oe_highlight"/>
+                            <button name="migrate_d_bugdet" string="Migrate Budget" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                        <group string="6. Documentary - Requirement">
+                            <button name="migrate_documentary" string="Migrate documentary" type="object"
+                                class="oe_highlight"/>
+                            <button name="migrate_requirement" string="Migrate requirement" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="7. Requirement line - Settlement">
+                            <button name="migrate_requirement_line" string="Migrate Requirement Line" type="object"
+                                class="oe_highlight"/>
+                            <button name="migrate_settlement_detail" string="Migrate Settlement" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                        <group string="8. Settlement line - Justification">
+                            <button name="migrate_settlement_detail_line" string="Migrate Settlement line" type="object"
+                                class="oe_highlight"/>
+                            <button name="migrate_requirement_justification" string="Migrate Justification" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="8.5. Requirement from Justification">
+                            <button name="migrate_requirement_line_from_just" string="Migrate Requirement Line from Just" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="9. Budget line - Delete budget messages">
+                            <button name="migrate_d_budget_line" string="Migrate Budget Line" type="object"
+                                class="oe_highlight"/>
+                            <button name="delete_mail_message_d_budget" string="Delete Budget messages" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                        <group string="10. Replace budget messages - Delete cost center messasges">
+                            <button name="replace_mail_message_budget" string="Replace budget message" type="object"
+                                class="oe_highlight"/>
+                            <button name="delete_mail_message_d_cost_center" string="Delete cost center message" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="11. Replace cost center message - Delete documentary message">
+                            <button name="replace_mail_message_cost_center" string="Replace cost center message" type="object"
+                                class="oe_highlight"/>
+                            <button name="delete_mail_message_documentary" string="Delete documentary message" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                        <group string="12. Replace documentary settlement - Replace requirement message">
+                            <button name="replace_mail_message_settlement_documentary" string="Replace settlement message" type="object"
+                                class="oe_highlight"/>
+                            <button name="replace_mail_message_requirement_documentary" string="Replace requirement message" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="13. Compute All - Delete attachment documentary">
+                            <button name="compute_all" string="Compute all" type="object"
+                                class="oe_highlight"/>
+                            <button name="delete_attachment_documentary" string="Delete Attachment documentary" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                        <group string="14. Replace attachment requirement">
+                            <button name="replace_attachment_requirements" string="Replace attachments requirements" type="object"
+                                class="oe_highlight"/>
+                            <button name="replace_attachment_settlements" string="Replace attachments settlements" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="15. Delete attachment requirement - Replace attachment requirement detail">
+                            <button name="delete_attachment_requirement" string="Delete attachment requirement" type="object"
+                                class="oe_highlight"/>
+                            <button name="replace_attachment_requirement_detail" string="Replace attachment requirement detail" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                        <group string="16. Delete attachment settlement - Replace attachment settlement detail">
+                            <button name="delete_attachment_settlement" string="Delete attachment settlement" type="object"
+                                class="oe_highlight"/>
+                            <button name="replace_attachment_settlement_detail" string="Replace attachment settlement detail" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="17. Replace attachment documental.settlements - Delete attachment d budget line">
+                            <button name="replace_attachment_settlement_null" string="Replace attachment documental.settlements" type="object"
+                                class="oe_highlight"/>
+                            <button name="delete_attachment_d_budget_line" string="Delete attachment d.budget.line" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                        <group string="18. Replace attachment budget line - Migrate mobility">
+                            <button name="replace_attachment_budget_line" string="Replace attachment budget line" type="object"
+                                class="oe_highlight"/>
+                            <button name="migrate_mobility" string="Migrate mobility" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="18. Migrate mobility - Delete mobility message">
+                            <button name="migrate_mobility_line" string="Migrate mobility line" type="object"
+                                class="oe_highlight"/>
+                            <button name="delete_message_mobility" string="Delete mobility message" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                        <group string="19. Replace mail message mobility - Delete attachment mobility">
+                            <button name="replace_mail_message_mobility" string="Replace mobility message" type="object"
+                                class="oe_highlight"/>
+                            <button name="delete_attachment_mobility" string="Delete attachment mobility" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="20. Replace attachment mobility">
+                            <button name="replace_attachment_mobility" string="Replace attachment mobility" type="object"
+                                class="oe_highlight"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_migrator_action" model="ir.actions.act_window">
+        <field name="name">Migrator</field>
+        <field name="res_model">migrator</field>
+        <field name="view_mode">tree,form</field>            
+    </record>
+
+</odoo>

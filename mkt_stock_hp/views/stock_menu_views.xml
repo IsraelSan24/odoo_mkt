@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem name="HP Stock" id="menu_hp_stock_root" web_icon="mkt_stock_hp,static/description/icon.png"/>
+    <!-- <menuitem name="HP Stock" id="menu_hp_stock_quant" parent="menu_hp_stock_root" sequence="0" action="location_open_quants_hp"/> -->
+    <menuitem name="Report View" id="menu_view_report" parent="menu_hp_stock_root" sequence="0" action="action_report_stock_hp"/>
+    <menuitem name="In" id="menu_hp_stock_move_in" parent="menu_hp_stock_root" sequence="1" action="location_open_in_hp"/>
+    <menuitem name="Out" id="menu_hp_stock_move_out" parent="menu_hp_stock_root" sequence="2" action="location_open_out_hp"/>
+    
+    <menuitem name="Report" id="menu_hp_report" parent="menu_hp_stock_root" sequence="3"/>
+    <menuitem name="HP Stock Report" id="menu_stock_report" parent="menu_hp_report" sequence="0" action="action_stock_hp_report_view"/>
+
+
+    <record model='ir.actions.act_url' id="action_to_portal">
+        <field name="name">Portal</field>
+        <field name="url">https://odoo.marketing-alterno.com/</field>
+    </record>
+    <menuitem name="Portal" id="menu_hp_to_portal" parent="menu_hp_stock_root" sequence="4" action="action_to_portal"/>
+    
+
+</odoo>

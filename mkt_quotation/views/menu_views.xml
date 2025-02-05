@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="quotation_budget_root" name="Quotation" web_icon="mkt_quotation,static/description/icon.png"/>
+
+    <menuitem id="quotation_menu" name="Quotations" action="view_quotation_budget_action" parent="quotation_budget_root" sequence="0"/>
+
+</odoo>

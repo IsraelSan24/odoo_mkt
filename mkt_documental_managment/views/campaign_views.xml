@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_budget_campaign_tree" model="ir.ui.view">
+        <field name="name">budget.campaign.tree</field>
+        <field name="model">budget.campaign</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_budget_campaign_form" model="ir.ui.view">
+        <field name="name">budget.campaign.form</field>
+        <field name="model">budget.campaign</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_budget_campaign_action" model="ir.actions.act_window">
+        <field name="name">Campaign</field>
+        <field name="res_model">budget.campaign</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

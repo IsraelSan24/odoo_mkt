@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="payroll_menu" name="Payroll" parent="hr.menu_hr_root" sequence="4"
+        groups="mkt_payroll.group_payroll_paycheck"/>
+        <menuitem id="paycheck_submenu" name="Paychecks" action="view_paycheck_action" parent="payroll_menu" sequence="0"/>
+
+</odoo>

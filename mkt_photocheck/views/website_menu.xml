@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="request_photocheck" model="website.page">
+            <field name="name">Request photocheck</field>
+            <field name="type">qweb</field>  
+            <field name="url">/photocheck</field>
+            <field name="website_published">True</field>
+            <field name="key">mkt_photocheck.request_photocheck</field>
+            <field name="arch" type="xml">
+                <t name="Requested" t-name="mkt_photocheck.request_photocheck">
+                    <t t-call="website.layout">
+                        <meta charset="UTF-8"/>
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                        <link rel="stylesheet" type="text/css" href="/mkt_photocheck/static/src/css/crop.css"/>
+                        <link rel="stylesheet" type="text/css" href="/mkt_photocheck/static/src/css/cropper.css"/>
+                        <script type="text/javascript" src="/mkt_photocheck/static/src/js/cropper.js"></script> 
+                        <script type="text/javascript" src="/mkt_photocheck/static/src/js/jquery.js"></script>
+                        <script type="text/javascript" src="/mkt_photocheck/static/src/js/index.js"></script>
+                        <script type="text/javascript" src="/mkt_photocheck/static/src/js/updatedata.js"></script>
+                        <link rel="stylesheet" type="text/css" href="/mkt_photocheck/static/src/css/form.css"/>
+                        <div id="wrap">
+                            <div class="oe_structure">
+                                <div class="container d-flex justify-content-center align-items-center mt-5 mb-5">
+                                    <div class="row border rounded-5 p-3 bg-white shadow box-area">
+                                        <div class="col-md-4 co rounded-4 d-flex justify-content-center align-items-stretch left-box border border-primary p-0" style="overflow: hidden;">
+                                            <div class="col-4 p-0 rounded-start-4" style="overflow: hidden;">
+                                                <img src="/mkt_photocheck/static/images/photocheck.jpg" class="img-fluid rounded-start-4" style="width: 150px;height: 100%"/>
+                                            </div>
+                                            <div class="col-8 d-flex flex-column pt-5" id="datos-container">
+                                                <div class="featured-image mb-3">
+                                                    <img src="/mkt_photocheck/static/images/photo.jpg" class="img-fluid" style="width: 170px;" id="photos"/>
+                                                </div>
+                                                <h2 id="first_names" class="first_names" style="font-weight: 700;">MARIA</h2>
+                                                <h4 id="last_names" class="last_names">CASTRO CASTRO</h4>
+                                                <h4 id="jobs" class="jobs" style="font-weight: 700;">ANALYST</h4>
+                                                <h4 id="dnis" class="dnis" style="font-weight: 700;">44775566</h4>
+                                                <h4 id="brands" class="brands" style="font-weight: 700;">MARKETING</h4>
+                                                <span style="height: 11px;"></span>
+                                                <p class="text-p" style="font-size:13px; font-weight: 700;">www.marketing-alterno.com</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 right-box o_brand_supervisor">
+                                            <script type="text/javascript" src="/mkt_photocheck/static/src/js/dni.js"></script>
+                                            <form id="photocheck_form" role="form" action="/photocheck/requested" method="POST" enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                <div class="header-text mb-4">
+                                                    <h2>Photocheck</h2>
+                                                    <p>Enter personnel details.</p>
+                                                </div>
+                                                <div class="row align-items-center">
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                                            <div class="container2">
+                                                                <div class="group">
+                                                                    <img src="/mkt_photocheck/static/images/user.jpg" alt="" class="crop-image" id="crop-image" required="True"/>
+                                                                    <input type="file" id="photo" accept=".png,.jpg,.jpeg" name="photo" capture="camera"/>
+                                                                    <label for="photo" class="label-file" required="True">Click here to upload an image</label>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <div class="input-group mb-2">
+                                                                <input type="text" name="dni" id="dni" class="form-control form-control-lg bg-light fs-6" placeholder="DNI" required="True"/>
+                                                                <button type="button" class="btn btn-secondary custom-button ml-1" onclick="consultarDNI()">
+                                                                    <i class="fa fa-search"></i>
+                                                                </button>
+                                                            </div>
+                                                            <div class="input-group mb-2">
+                                                                <input type="text" name="first_name" id="first_name" class="form-control form-control-lg bg-light fs-6" placeholder="first_name" required="True"/>
+                                                            </div>
+                                                            <div class="input-group mb-2">
+                                                                <input type="text" name="last_name" id="last_name" class="form-control form-control-lg bg-light fs-6" placeholder="last_name" required="True"/>
+                                                            </div>
+                                                            <div class="input-group mb-2">
+                                                                <select name="job_id" id="job_id" class="form-control form-control-lg bg-light fs-6" required="True">
+                                                                    <option value="">Jobs...</option>
+                                                                    <t t-foreach="jobs or []" t-as="job">
+                                                                        <option t-att-value="job.id" id="job_name" required="True">
+                                                                            <t t-esc="job.name"/>
+                                                                        </option>
+                                                                    </t>
+                                                                </select>
+                                                            </div>
+                                                            <div class="input-group mb-2">
+                                                                <select name="photocheck_brand_group_id" id="photocheck_brand_group_id" class="form-control form-control-lg bg-light fs-6" required="True">
+                                                                    <option value="">Brand...</option>
+                                                                    <t t-foreach="brands or []" t-as="brand">
+                                                                        <option t-att-value="brand.id" required="True">
+                                                                            <t t-esc="brand.name"/>
+                                                                        </option>
+                                                                    </t>
+                                                                </select>
+                                                            </div>
+                                                            <div class="input-group mb-2">
+                                                                <select name="photocheck_supervisor_id" id="photocheck_supervisor_id" class="form-control form-control-lg bg-light fs-6" required="True">
+                                                                    <option value="">Supervisor...</option>
+                                                                    <t t-foreach="supervisors or []" t-as="supervisor">
+                                                                        <option t-att-value="supervisor.id" t-att-data-brand_group_ids="supervisor.brand_group_ids.ids" required="True">
+                                                                            <t t-esc="supervisor.name"/>
+                                                                        </option>
+                                                                    </t>
+                                                                </select>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix oe_login_buttons">
+                                                    <button type="submit" class="btn btn-primary btn-lg pull-left col-md-6 col-sm-12" id="submit-button">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal" id="Modal1">
+                            <div class="modal-content">
+                                <div class="modal-header" id="existingModalLabel">
+                                    <p>Crop your photo</p>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="content-imagen-cropper">
+                                        <img src="" alt="" class="img-cropper" id="img-cropper"/>
+                                    </div>
+                                    <div class="content-imagen-sample">
+                                        <div src="" alt="" class="img-sample" id="img-croppered"></div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="rotate">
+                                        <div class="row">
+                                            <span class="col">Rotate image</span>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-6"><button class="fa fa-repeat btn btn-primary"></button></div>
+                                            <div class="col-md-6 col-sm-6 col-6"><button class="fa fa-undo btn btn-danger"></button></div>
+                                        </div>
+                                    </div>
+                                    <div class="flip">
+                                        <div class="row">
+                                            <span class="col">Flip image</span>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-6"><button class="fa fa-arrows-h btn btn-primary"></button></div>
+                                            <div class="col-md-6 col-sm-6 col-6"><button class="fa fa-arrows-v btn btn-danger"></button></div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="cut">Trim</button>
+                                    <button class="btn btn-danger" id="close">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="modal-overlay3" id="confirmationModal">
+                            <div class="modal-content3">
+                                <div class="modal-header3">
+                                    <h5>Confirmation</h5>
+                                    <button type="button" class="modal-close4 modal-close3"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+                                </div>
+                                <div class="modal-body3">
+                                    Are you sure you want to submit the form?
+                                </div>
+                                <div class="modal-footer3">
+                                    <button type="button" class="modal-button3 modal-button-secondary3 modal-close3">Cancel</button>
+                                    <button type="button" class="modal-button3 modal-button-primary3" id="confirm-button">Confirm</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="loading-overlay" id="loadingOverlay">
+                            <div class="loading-spinner"></div>
+                        </div>
+                    </t>
+                </t>
+            </field>
+        </record>
+
+        <record id="photocheck_requested" model="website.page">
+            <field name="name">Photocheck requested</field>
+            <field name="type">qweb</field>
+            <field name="url">/photocheck-requested</field>
+            <field name="website_published">True</field>
+            <field name="key">mkt_photocheck.photocheck_requested</field>
+            <field name="arch" type="xml">
+                <t name="Requested" t-name="mkt_photocheck.photocheck_requested">
+                <t t-call="website.layout">
+                    <div id="wrap" class="container mt-5">
+                        <div class="alert alert-success text-center" role="alert">
+                            <h4 class="alert-heading">Request Sent!</h4>
+                            <p>Your photocheck has been sent successfully. Thank you for filling in the form.</p>
+                            <hr/>
+                            <p class="mb-0">
+                                <a href="/photocheck" class="btn btn-outline-success mt-3">
+                                    <i class="fa fa-arrow-left"></i> Back to Form
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+            </field>
+        </record>
+
+    </data>
+
+</odoo>

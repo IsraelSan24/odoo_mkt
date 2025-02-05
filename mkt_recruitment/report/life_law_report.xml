@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_lifelaw_document">
+        <t t-if="not o " t-set="o" t-value="doc"/>
+
+        <t t-call="web.external_layout">
+            <div id="life_low_document" style="padding: 1.25rem">
+                <div style="width: 100%;text-align: justify; height: auto; font-size:0.825rem;">
+                    <h6>
+                        <strong class="text-center">
+                            DECLARACIÓN JURADA DE BENEFICIARIOSSEGURO VIDA LEY - D.L.N&#176; 688
+                        </strong>
+                    </h6>
+                    <table class="table">
+                        <colgroup>
+                            <col width="30%"/>
+                            <col width="40%"/>
+                            <col width="30%"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th scope="col" style="border-bottom: none; border-top: none; border-right: 1px solid; border-left: none;">
+                                </th>
+                                <th scope="col" style="text-align: left;">
+                                    Póliza N&#176;
+                                </th>
+                                <th scope="col" style="border-bottom: none; border-top: none; border-right: none; border-left: 1px solid;">
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <p>
+                        <strong>
+                            CONSTE POR EL PRESENTE DOCUMENTO POR EL CUAL, YO 
+                            <t t-if="o.applicant_signature">
+                                <span t-esc="o.partner_name"/>
+                            </t>
+                            <t t-else="">
+                                ______________
+                            </t>
+                            CON DNI 
+                            <t t-if="o.applicant_signature">
+                                <span t-esc="o.vat"/>
+                            </t>
+                            <t t-else="">
+                                ______________
+                            </t>
+                            DOMICILIO 
+                            <t t-if="o.applicant_signature">
+                                <span t-esc="o.street"/> 
+                            </t>
+                            <t t-else="">
+                                ______________
+                            </t>
+                            DISTRITO 
+                            <t t-if="o.applicant_signature">
+                                <span t-esc="o.district"/>
+                            </t>
+                            <t t-else="">
+                                ______________
+                            </t>
+                        </strong>
+                    </p>
+                    <p>
+                        <strong>
+                            TELEFONO 
+                            <t t-if="o.applicant_signature">
+                                <span t-esc="o.phone"/>
+                            </t>
+                            <t t-else="">
+                                ______________
+                            </t>
+                        </strong>
+                    </p>
+                    <p>
+                        <strong>
+                            DECLARO BAJO JURAMENTO, QUE EN CASO DE MI FALLECIMIENTO LOS BENEFICIARIOS PARA EL COBRO DEL MONTO CORRESPONDIENTE AL SEGURO DE VIDA LEY, A QUE SE REFIERE EL ARTICULO 1&#176; DEL D.L. 688 Y SEGÚN LAS DISPOSICIONES LEGALES VIGENTES SOBRE EL PARTICULAR, SON LAS SIGUIENTES PERSONAS:
+                        </strong>
+                    </p>
+                    <colgroup>
+                        <col width="11%"/>
+                        <col width="22%"/>
+                        <col width="11%"/>
+                        <col width="22%"/>
+                        <col width="6%"/>
+                        <col width="6%"/>
+                        <col width="22%"/>
+                    </colgroup>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="7" class="text-center">
+                                    <strong>
+                                        PRIMER BENEFICIARIO(S)
+                                    </strong>
+                                    <br/>
+                                    Cónyuge e Hijos (a falta del cónyuge se puede nombrar a la Concubina - Art. 326&#176; Código Civil)
+                                    </th>
+                            </tr>
+                            <tr>
+                                <th scope="col" rowspan="2" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        DNI
+                                    </strong>
+                                </th>
+                                <th scope="col" rowspan="2" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        Nombres y Apellidos
+                                    </strong>
+                                </th>
+                                <th scope="col" rowspan="2" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        F. Nac.
+                                    </strong>
+                                </th>
+                                <th scope="col" rowspan="2" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        Parentesco
+                                    </strong>
+                                </th>
+                                <th scope="col" colspan="2" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        Genero
+                                    </strong>
+                                </th>
+                                <th scope="col" rowspan="2" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        Domicilio
+                                    </strong>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        F
+                                    </strong>
+                                </th>
+                                <th scope="col" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        M
+                                    </strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_dni1"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_full_name1"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_birthday1"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_relationship1"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender1 == 'female'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender1 == 'male'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_address1"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_dni2"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_full_name2"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_birthday2"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_relationship2"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender2 == 'female'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender2 == 'male'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_address2"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_dni3"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_full_name3"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_birthday3"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_relationship3"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender3 == 'female'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender3 == 'male'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_address3"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_dni4"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_full_name4"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_birthday4"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_relationship4"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender4 == 'female'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender4 == 'male'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_address4"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        <strong>
+                            Solo a falta del Primer beneficiario(s) se podrá nombrar como beneficiario(s) a:
+                        </strong>
+                    </p>
+                    <colgroup>
+                        <col width="11%"/>
+                        <col width="22%"/>
+                        <col width="11%"/>
+                        <col width="22%"/>
+                        <col width="6%"/>
+                        <col width="6%"/>
+                        <col width="22%"/>
+                    </colgroup>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="7" class="text-center">
+                                    <strong>
+                                        OTROS(S) BENEFICIARIO(S)
+                                    </strong>
+                                    <br/>
+                                    Padres y Hermanos Menores de Edad - Art. 1&#176; D.L.688
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col" rowspan="2" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        DNI
+                                    </strong>
+                                </th>
+                                <th scope="col" rowspan="2" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        Nombres y Apellidos
+                                    </strong>
+                                </th>
+                                <th scope="col" rowspan="2" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        F. Nac.
+                                    </strong>
+                                </th>
+                                <th scope="col" rowspan="2" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        Parentesco
+                                    </strong>
+                                </th>
+                                <th scope="col" colspan="2" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        Genero
+                                    </strong>
+                                </th>
+                                <th scope="col" rowspan="2" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        Domicilio
+                                    </strong>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        F
+                                    </strong>
+                                </th>
+                                <th scope="col" class="text-center" style="padding: 0.25rem">
+                                    <strong>
+                                        M
+                                    </strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_dni5"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_full_name5"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_birthday5"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_relationship5"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender5 == 'female'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender5 == 'male'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_address5"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_dni6"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_full_name6"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_birthday6"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_relationship6"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender6 == 'female'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender6 == 'male'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_address6"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_dni7"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_full_name7"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_birthday7"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_relationship7"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender7 == 'female'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender7 == 'male'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_address7"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_dni8"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_full_name8"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_birthday8"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_relationship8"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender8 == 'female'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.familiar_gender8 == 'male'">
+                                        <div class="text-center">X</div>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.familiar_address8"/>
+                                    </t>
+                                    <t t-else="">
+                                        ______________
+                                    </t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        <strong>
+                            ME AFIRMO Y RATIFICO EN LO EXPRESADO, EN SEÑAL DE LO CUAL FIRMO EL PRESENTE DOCUMENTO, ANTE NOTARIO PUBLICO EN LA CIUDAD DE 
+                            <t t-if="o.applicant_signature">
+                                <span t-esc="o.province"/>
+                            </t>
+                            <t t-else="">
+                                ______________
+                            </t>
+                            , A LOS 
+                            <t t-if="o.applicant_signature">
+                                <span t-esc="o.signed_on.day"/>
+                            </t>
+                            <t t-else="">
+                                ______________
+                            </t>
+                                DIAS DEL MES 
+                            <t t-if="o.applicant_signature">
+                                <span t-esc="o.signed_on_month"/>
+                            </t>
+                            <t t-else="">
+                                ______________
+                            </t>
+                                DEL AÑO 
+                            <t t-if="o.applicant_signature">
+                                <span t-esc="o.signed_on.year"/>
+                            </t>
+                            <t t-else="">
+                                ______________
+                            </t>
+                            .
+                        </strong>
+                    </p>
+                    <!-- <div class="footer"> -->
+                    <div>
+                        <div class="row">
+                            <div class="col-6 text-center">
+                                <div style="min-height: 100px;"></div>
+                                <div class="text-center" style="border-top: 1px solid">
+                                    FIRMA
+                                </div>
+                                <div>
+                                    <strong>
+                                        CERTIFICACIÓN NOTARIAL
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t> 
+
+    </template>
+
+    <template id="report_lifelaw">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="mkt_recruitment.report_lifelaw_document" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

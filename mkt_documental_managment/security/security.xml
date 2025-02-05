@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <!-- REQUIREMENT -->
+        <record id="module_category_documental_requirement" model="ir.module.category">
+            <field name="name">Documental Requirement</field>
+        </record>
+
+        <record id="documental_requirement_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_requirement"/>
+        </record>
+
+        <record id="documental_requirement_boss" model="res.groups">
+            <field name="name">Boss</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_requirement"/>
+        </record>
+
+        <record id="documental_requirement_budget_executive" model="res.groups">
+            <field name="name">Budget Executive</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_requirement"/>
+        </record>
+
+        <record id="documental_requirement_intern_control" model="res.groups">
+            <field name="name">Intern Control</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_requirement"/>
+        </record>
+
+        <record id="documental_requirement_intern_control_read" model="res.groups">
+            <field name="name">Intern Control only read</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_requirement"/>
+        </record>
+
+        <record id="documental_requirement_accounting" model="res.groups">
+            <field name="name">Accounting</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_requirement"/>
+        </record>
+
+        <record id="documental_requirement_administration" model="res.groups">
+            <field name="name">Administration</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_requirement"/>
+        </record>
+
+        <record id="documental_requirement_admin" model="res.groups">
+            <field name="name">Admin</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_requirement"/>
+        </record>
+
+        <!-- SETTLEMENT -->
+        <record id="module_category_documental_settlement" model="ir.module.category">
+            <field name="name">Documental Settlement</field>
+        </record>
+
+        <record id="documental_settlement_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_settlement"/>
+        </record>
+
+        <record id="documental_settlement_boss" model="res.groups">
+            <field name="name">Boss</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_settlement"/>
+        </record>
+
+        <record id="documental_settlement_budget_executive" model="res.groups">
+            <field name="name">Budget Executive</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_settlement"/>
+        </record>
+
+        <record id="documental_settlement_intern_control" model="res.groups">
+            <field name="name">Intern Control</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_settlement"/>
+        </record>
+    
+        <record id="documental_settlement_intern_control_read" model="res.groups">
+            <field name="name">Intern Control only read</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_settlement"/>
+        </record>
+
+        <record id="documental_settlement_accounting" model="res.groups">
+            <field name="name">Account</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_settlement"/>
+        </record>
+
+        <record id="documental_settlement_administration" model="res.groups">
+            <field name="name">Administration</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_settlement"/>
+        </record>
+
+        <record id="documental_settlement_admin" model="res.groups">
+            <field name="name">Admin</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_settlement"/>
+        </record>
+
+        <!-- MOBILITY -->
+        <record id="module_category_documental_mobility" model="ir.module.category">
+            <field name="name">Documental Mobility</field>
+        </record>
+
+        <record id="documental_mobility_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_mobility"/>
+        </record>
+
+        <record id="documental_mobility_boss" model="res.groups">
+            <field name="name">Boss</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_mobility"/>
+        </record>
+
+        <record id="documental_mobility_admin" model="res.groups">
+            <field name="name">Admin</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_mobility"/>
+        </record>
+
+        <!-- REPORT ADMINISTRATION -->
+        <!-- <record id="module_category_report_administration" model="ir.module.category">
+            <field name="name">Administration Transfers</field>
+        </record>
+
+        <record id="report_administration_administration" model="res.groups">
+            <field name="name">Administration</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_report_administration"/>
+        </record> -->
+
+        <record id="module_category_budget" model="ir.module.category">
+            <field name="name">Budget Control</field>
+        </record>
+
+        <record id="budget_control_administrator" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_budget"/>
+        </record>
+
+        <record id="budget_control_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_budget"/>
+        </record>
+    </data> 
+
+</odoo>

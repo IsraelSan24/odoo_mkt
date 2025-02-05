@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <!-- DOCUMENTAL REQUIREMENTS -->
+        <!-- <report id="report_documental_requirements"
+            string="DOCUMENTAL REQUIREMENT REPORT"
+            model="documental.requirements"
+            report_type="qweb-pdf"
+            name="mkt_documental_managment.report_documental_requirement_template"
+            file="mkt_documental_managment.report_documental_requirement_template"
+            paperformat="mkt_documental_managment.paperformat_documental_requirement"
+            print_report_name="(object._get_report_documental_requirement_base_filename())"
+        /> -->
+
+        <!-- DOCUMENTAL SETTLEMENTS -->
+        <!-- <report id="report_documental_settlements"
+            string="DOCUMENTAL SETTLEMENTS REPORT"
+            model="documental.settlements"
+            report_type="qweb-pdf"
+            name="mkt_documental_managment.report_documental_settlement_template"
+            file="mkt_documental_managment.report_documental_settlement_template"
+            paperformat="mkt_documental_managment.paperformat_documental_settlement"
+            print_report_name="(object._get_report_documental_settlement_base_filename())"
+        /> -->
+
+        <!-- DOCUMENTAL MOBILITY EXPEDITURE -->
+        <report id="report_documental_mobility_expediture"
+            string="DOCUMENTAL MOBILITY EXPEDITURE REPORT"
+            model="documental.mobility.expediture"
+            report_type="qweb-pdf"
+            name="mkt_documental_managment.report_documental_mobility_expediture_template"
+            file="mkt_documental_managment.report_documental_mobility_expediture_template"
+            paperformat="mkt_documental_managment.paperformat_documental_mobility_expediture"
+            print_report_name="(object._get_report_documental_mobility_expediture_base_filename())"
+        />
+
+    </data>
+
+</odoo>

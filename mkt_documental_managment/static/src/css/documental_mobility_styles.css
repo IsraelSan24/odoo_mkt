@@ -1,0 +1,19 @@
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.signature {
+    display: inline-block;
+    width: 33%;
+    text-align: center;
+}
+
+.signature img {
+    max-height: 80px;
+	margin-left: 30%;
+}
+
+.label {
+    margin-top: 10px;
+}

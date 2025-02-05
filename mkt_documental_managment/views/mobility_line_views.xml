@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_mobility_line_tree" model="ir.ui.view">
+        <field name="name">mobility.line.tree</field>
+        <field name="model">documental.mobility.expediture.detail</field>
+        <field name="arch" type="xml">
+            <tree default_order="documental_mobility_id asc"> 
+                <field name="documental_mobility_id"/>
+                <field name="date"/>
+                <field name="reason"/>
+                <field name="origin_place"/>
+                <field name="destiny"/>
+                <field name="amount"/>
+                <field name="user_id"/>
+                <field name="state" widget="badge"
+                    decoration-muted="state == 'draft'"
+                    decoration-primary="state == 'executive'"
+                    decoration-success="state == 'done'"
+                    decoration-danger="state == 'refused'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_mobility_line_search" model="ir.ui.view">
+        <field name="name">mobility.line.search</field>
+        <field name="model">documental.mobility.expediture.detail</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="0" string="Group by">
+                    <filter string="Date by month" name="group_by_month" context="{'group_by':'date:month'}"/>
+                    <filter string="Date by day" name="group_by_day" context="{'group_by':'date:day'}"/>
+                    <filter string="User" name="group_by_user" context="{'group_by':'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_mobility_line_action" model="ir.actions.act_window">
+        <field name="name">Mobility line</field>
+        <field name="res_model">documental.mobility.expediture.detail</field>
+        <field name="context">{
+            'search_default_group_by_month':1,
+            'search_default_group_by_day':1,
+            'search_default_group_by_user':1,
+            }
+        </field>
+        <field name="view_mode">tree</field>
+    </record>
+
+</odoo>

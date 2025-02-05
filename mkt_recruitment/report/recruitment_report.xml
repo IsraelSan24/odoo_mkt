@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <!-- <record id="report_recruitmentdocument_action" model="ir.actions.report">
+            <field name="name">Recruitment Document</field>
+            <field name="model">recruitment.document</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mkt_recruitment.report_recruitmentdocument</field>
+            <field name="report_file">mkt_recruitment.report_recruitmentdocument</field>
+            <field name="print_report_name">'Recruitment Document - %s' % (object.partner_id.name or '')</field>
+            <field name="binding_model_id" ref="model_recruitment_document"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_recruitment_document"/>
+        </record> -->
+    </data>
+
+</odoo>

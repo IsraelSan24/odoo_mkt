@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="contract_e_template_search" name="Contract Search">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>CONTRACT SEARCH</h1>
+                <!-- <form id="contract_search_form" role="form" t-attf-action="/contracteconsult/search/#{contract_id}" method="POST"> -->
+                <form id="contract_search_form" role="form" t-attf-action="/contracteconsult/search/success" method="POST">
+                <!-- <form id="contract_search_form" role="form" t-attf-action="/my/contracts/#{contract_id}" method="POST"> -->
+                    <div class="form-group">
+                        <label for="contract_id"># Contract</label>
+                        <input type="text" id="contract_id" name="contract_id" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control"/>
+
+                        <label for="vat">Vat</label>
+                        <input type="text" id="vat" name="vat" class="form-control"/>
+
+                        <!-- <label for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control"/> -->
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </t>
+    </template>
+
+    <template id="contract_e_template_invalid" name="Invalid Credentials">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Invalid credentials</h1>
+                <p>There are not exist one contract with these information</p>
+                <a t-attf-href="/contracteconsult/search" class="btn btn-primary">Go back to search</a>
+            </div>
+        </t>
+    </template>
+
+    <template id="contract_e_template_success" name="Contract">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1 class="text-center">Contract valid!</h1>
+                <p>Contract state: <span t-esc="state"/>.</p>
+                <h3 class="text-center">Contract Trazability</h3>
+                <ul class="list-group list-group-flush flex-wrap flex-row flex-lg-column">
+                    <li class="list-group-item flex-grow-1">
+                        <span>User name: </span><span t-esc="contract_user"/>
+                    </li>
+                    <li class="list-group-item flex-grow-1">
+                        <span>User email: </span><span t-esc="contract_email"/>
+                    </li>
+                    <li class="list-group-item flex-grow-1">
+                        <span>Device: </span><span t-esc="device"/>
+                    </li>
+                    <li class="list-group-item flex-grow-1">
+                        <span>OS: </span><span t-esc="os"/>
+                    </li>
+                    <li class="list-group-item flex-grow-1">
+                        <span>Browser: </span><span t-esc="browser"/>
+                    </li>
+                    <li class="list-group-item flex-grow-1">
+                        <span>Employee signature date: </span><span t-esc="signed_on"/>
+                    </li>
+                    <li class="list-group-item flex-grow-1">
+                        <span>Hash: </span><span t-esc="access_token"/>
+                    </li>
+                    <li class="list-group-item flex-grow-1">
+                        <span>Latitude: </span><span t-esc="latitude"/>
+                    </li>
+                    <li class="list-group-item flex-grow-1">
+                        <span>Longitude: </span><span t-esc="longitude"/>
+                    </li>
+                </ul>
+                <a t-attf-href="/contracteconsult/search" class="btn btn-primary">Go back to search</a>
+            </div>
+        </t>
+    </template>
+
+</odoo>

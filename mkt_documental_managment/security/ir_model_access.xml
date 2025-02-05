@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="model_access_doc_mng_requirements" model="ir.model.access">
+        <field name="name">model.access.doc.mng.requirements</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <record id="model_access_doc_mng_settlements" model="ir.model.access">
+        <field name="name">model.access.doc.mng.settlements</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_settlements"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+    <!-- SETTLEMENT DETAIL ACCESS LISTO -->
+    <record id="model_access_doc_mng_settlements_datail" model="ir.model.access">
+        <field name="name">model.access.doc.mng.settlements.detail</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_settlements_detail"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="model_access_doc_mng_mobility" model="ir.model.access">
+        <field name="name">model.access.doc.mng.mobility</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_mobility_expediture"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <!-- MOBILITY DETAIL LISTO -->
+    <record id="model_access_doc_mng_mobility_detail" model="ir.model.access">
+        <field name="name">model.access.doc.mng.mobility.detail</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_mobility_expediture_detail"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <!-- SETTLEMENT LINE TYPE LISTO -->
+    <record id="model_access_settlement_line_type" model="ir.model.access">
+        <field name="name">model.access.settlement.line.type</field>
+        <field name="model_id" ref="mkt_documental_managment.model_settlement_line_type"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <!-- REQUIREMENT PAYROLL LISTO -->
+    <record id="model_access_requirement_payroll" model="ir.model.access">
+        <field name="name">model.access.requirement.payroll</field>
+        <field name="model_id" ref="mkt_documental_managment.model_requirement_payroll"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <!-- REPORT ADMINISTRATION LISTO -->
+    <record id="model_access_report_administration" model="ir.model.access">
+        <field name="name">model.access.report.administration</field>
+        <field name="model_id" ref="mkt_documental_managment.model_report_administration"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <!-- REPORT ADMINISTRATION LINE LISTO -->
+    <record id="model_access_report_administration_line" model="ir.model.access">
+        <field name="name">model.access.report.administration.line</field>
+        <field name="model_id" ref="mkt_documental_managment.model_report_administration_line"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <!-- REQUIREMENT SERVICE TYPE LISTO -->
+    <record id="model_access_requirement_service_type" model="ir.model.access">
+        <field name="name">model.access.requirement.service.type</field>
+        <field name="model_id" ref="mkt_documental_managment.model_requirement_service_type"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <!-- SETTLEMENT DETAIL LINE ACCESS LISTO -->
+    <record id="model_access_settlement_detail_line" model="ir.model.access">
+        <field name="name">model.access.settlement.detail.line</field>
+        <field name="model_id" ref="mkt_documental_managment.model_settlement_detail_line"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <!-- REQUIREMENT ACCESS REQUIREMENT DETAIL LISTO -->
+    <record id="model_access_requirement_detail" model="ir.model.access">
+        <field name="name">model.access.requirement.detail</field>
+        <field name="model_id" ref="mkt_documental_managment.model_requirement_detail"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <!-- REQUIREMENT ACCESS REQUIREMENT DETAIL LINE LISTO -->
+    <record id="model_access_requirement_detail_line" model="ir.model.access">
+        <field name="name">model.access.requirement.detail.line</field>
+        <field name="model_id" ref="mkt_documental_managment.model_requirement_detail_line"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <!-- REQUIREMENT ACCESS REQUIREMENT DETAIL JUSTIFICATION LISTO -->
+    <record id="model_access_requirement_detail_justification" model="ir.model.access">
+        <field name="name">model.access.requirement.detail.justification</field>
+        <field name="model_id" ref="mkt_documental_managment.model_requirement_detail_justification"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <!-- TAX TAXES LISTO -->
+    <record id="model_access_tax_taxes" model="ir.model.access">
+        <field name="name">model.access.tax.taxes</field>
+        <field name="model_id" ref="mkt_documental_managment.model_tax_taxes"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <!-- EXPENSE CONTROL LISTO -->
+    <record id="model_access_expense_control" model="ir.model.access">
+        <field name="name">model.access.expense.control</field>
+        <field name="model_id" ref="mkt_documental_managment.model_expense_control"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <!-- EXPENSES CONTROL REPORT LISTO -->
+    <record id="model_access_expenses_control_report" model="ir.model.access">
+        <field name="name">model.access.expenses.control.report</field>
+        <field name="model_id" ref="mkt_documental_managment.model_expenses_control_report"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!-- REQUIREMENT ACCESS USER LISTO -->
+    <record id="model_access_doc_requirement_user" model="ir.model.access">
+        <field name="name">model.access.doc.requirement.user</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_requirement_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+    <!-- REQUIREMENT ACCESS BOSS LISTO -->
+    <record id="model_access_doc_requirement_boss" model="ir.model.access">
+        <field name="name">model.access.doc.requirement.boss</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_requirement_boss"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+    <!-- REQUIREMENT ACCESS INTERN CONTROL LISTO -->
+    <record id="model_access_doc_requirement_intern_control" model="ir.model.access">
+        <field name="name">model.access.doc.requirement.intern.control</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_requirement_intern_control"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+    <!-- REQUIREMENT ACCESS ADMINISTRATION LISTO -->
+    <record id="model_access_doc_requirement_administration" model="ir.model.access">
+        <field name="name">model.access.doc.requirement.administration</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_requirement_administration"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+    <!-- REQUIREMENT ACCESS ADMIN LISTO -->
+    <record id="model_access_doc_requirement_admin" model="ir.model.access">
+        <field name="name">model.access.doc.requirement.admin</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_requirement_admin"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <!-- SETTLEMENT USER ACCESS LISTO -->
+    <record id="model_access_doc_settlement_user" model="ir.model.access">
+        <field name="name">model.access.doc.settlement.user</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_settlements"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_settlement_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+    <!-- SETTLEMENT BOSS ACCESS LISTO -->
+    <record id="model_access_doc_settlement_boss" model="ir.model.access">
+        <field name="name">model.access.doc.settlement.boss</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_settlements"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_settlement_boss"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+    <!-- SETTLEMENT INTERN CONTROL ACCESS LISTO -->
+    <record id="model_access_doc_settlement_intern_control" model="ir.model.access">
+        <field name="name">model.access.doc.settlement.intern.control</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_settlements"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_settlement_intern_control"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+    <!-- SETTLEMENT ADMINISTRATION ACCESS LISTO -->
+    <record id="model_access_doc_settlement_administration" model="ir.model.access">
+        <field name="name">model.access.doc.settlement.administration</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_settlements"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_settlement_administration"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+    <!-- MOBILITY ADMIN LISTO -->
+    <record id="model_access_doc_settlement_admin" model="ir.model.access">
+        <field name="name">model.access.doc.settlement.admin</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_settlements"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_settlement_admin"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <!-- MOBILITY USER ACCESS LISTO -->
+    <record id="model_access_doc_mobility_user" model="ir.model.access">
+        <field name="name">model.access.doc.mobility.user</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_mobility_expediture"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_mobility_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <record id="model_access_doc_mobility_boss" model="ir.model.access">
+        <field name="name">model.access.doc.mobility.boss</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_mobility_expediture"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_mobility_boss"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <record id="model_access_doc_mobility_intern_control" model="ir.model.access">
+        <field name="name">model.access.doc.mobility.intern.control</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_mobility_expediture"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_mobility_intern_control"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+    <!-- MOBILITY ACCESS ADMIN LISTO -->
+    <record id="model_access_doc_mobility_admin" model="ir.model.access">
+        <field name="name">model.access.doc.mobility.admin</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_mobility_expediture"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_mobility_admin"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <!-- REQUIREMENT REPORT LISTO -->
+    <record id="model_access_requirement_report" model="ir.model.access">
+        <field name="name">model.access.requirement.report</field>
+        <field name="model_id" ref="mkt_documental_managment.model_requirement_report"/>
+        <field name="group_id" ref="mkt_documental_managment.documental_requirement_administration"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!-- RES PROVINCE LISTO -->
+    <record id="model_access_res_province" model="ir.model.access">
+        <field name="name">model.access.res.province</field>
+        <field name="model_id" ref="mkt_documental_managment.model_res_province"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!-- RES PARTNER BRAND LISTO -->
+    <record id="model_access_res_partner_brand" model="ir.model.access">
+        <field name="name">model.access.res.partner.brand</field>
+        <field name="model_id" ref="mkt_documental_managment.model_res_partner_brand"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!-- BUDGET CLASS LISTO -->
+    <record id="model_access_budget_class" model="ir.model.access">
+        <field name="name">model.access.budget.class</field>
+        <field name="model_id" ref="mkt_documental_managment.model_budget_class"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!-- BUDGET CAMPAIGN LISTO -->
+    <record id="model_access_budget_campaign" model="ir.model.access">
+        <field name="name">model.access.budget.campaign</field>
+        <field name="model_id" ref="mkt_documental_managment.model_budget_campaign"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!-- COST CENTER LISTO -->
+    <record id="model_access_cost_center" model="ir.model.access">
+        <field name="name">model.access.cost.center</field>
+        <field name="model_id" ref="mkt_documental_managment.model_cost_center"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <!-- YEAR MONTH LISTO -->
+    <record id="model_access_year_month" model="ir.model.access">
+        <field name="name">model.access.year.month</field>
+        <field name="model_id" ref="mkt_documental_managment.model_year_month"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!-- BUDGET LISTO -->
+    <record id="model_access_budget" model="ir.model.access">
+        <field name="name">model.access.budget</field>
+        <field name="model_id" ref="mkt_documental_managment.model_budget"/>
+        <field name="group_id" ref="mkt_documental_managment.budget_control_administrator"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <!-- BUDGET ADMINISTRATOR ACCESS LISTO -->
+    <record id="model_access_budget_control_administrator" model="ir.model.access">
+        <field name="name">model.access.budget.control.administrator</field>
+        <field name="model_id" ref="mkt_documental_managment.model_budget"/>
+        <field name="group_id" ref="mkt_documental_managment.budget_control_administrator"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <!-- BUDGET USER ACCESS LISTO -->
+    <record id="model_access_budget_control_user" model="ir.model.access">
+        <field name="name">model.access.budget.control.user</field>
+        <field name="model_id" ref="mkt_documental_managment.model_budget"/>
+        <field name="group_id" ref="mkt_documental_managment.budget_control_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+    <!-- BUDGET LINE LISTO -->
+    <record id="model_access_budget_line" model="ir.model.access">
+        <field name="name">model.access.budget.line</field>
+        <field name="model_id" ref="mkt_documental_managment.model_budget_line"/>
+        <field name="group_id" ref=""/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+</odoo>
