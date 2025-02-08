@@ -1,0 +1,25 @@
+<odoo>
+    <record id="action_space_room" model="ir.actions.act_window">
+        <field name="name">Spaces</field>
+        <field name="res_model">space.room</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <record id="action_space_booking" model="ir.actions.act_window">
+        <field name="name">Reservations</field>
+        <field name="res_model">space.booking</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="domain">[('end_datetime', '>', context_today())]</field>
+    </record>
+
+    <record id="action_space_item" model="ir.actions.act_window">
+        <field name="name">Aditional Items</field>
+        <field name="res_model">space.booking.item</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_space_root" name="Spaces reservations" sequence="10"/>
+    <menuitem id="menu_space_rooms" name="Spaces" parent="menu_space_root" action="action_space_room"/>
+    <menuitem id="menu_space_bookings" name="Reservations" parent="menu_space_root" action="action_space_booking"/>
+    <menuitem id="menu_space_items" name="Aditional Items" parent="menu_space_root" action="action_space_item"/>
+</odoo>
