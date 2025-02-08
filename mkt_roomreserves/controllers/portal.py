@@ -28,18 +28,17 @@ class SpaceBooking(http.Controller):
 
     @http.route('/reservation/submit', type='http', auth="public", website=True, methods=["POST"])
     def submit_reservation(self, **kwargs):
-        user = request.env.user if request.env.user.id != request.env.ref('base.public_user').id else request.env.ref('base.odoo_bot')
         reservation_datetime = kwargs.get('reservation_datetime')
         start_datetime = datetime.strptime(reservation_datetime, "%Y-%m-%dT%H:%M").strftime("%Y-%m-%d %H:%M:%S")
 
         vals = {
-            'user_id': user.id,
             'room_id': int(kwargs.get('room_id')),
             'start_datetime': start_datetime,
             'duration': float(kwargs.get('duration', 1)),
             'state': 'pending',
             'first_name': kwargs.get('first_name'),
             'last_name': kwargs.get('last_name'),
+            'notes': kwargs.get('notes'),
         }
 
         booking = request.env['space.booking'].sudo().create(vals)
@@ -48,6 +47,7 @@ class SpaceBooking(http.Controller):
         self.notify_receptionist(booking)
 
         return request.render("mkt_roomreserves.reservation_success")
+
 
     @http.route('/spacebooking/success', type='http', auth='public', website=True)
     def reservation_success(self, **kw):
@@ -74,31 +74,32 @@ class SpaceBooking(http.Controller):
             pass
         return None
 
+
     def notify_receptionist(self, booking):
         receptionist_group = request.env.ref('mkt_roomreserves.group_receptionist')
         receptionists = request.env['res.users'].sudo().search([
             ('groups_id', 'in', [receptionist_group.id])
         ])
-
-        # Get the OdooBot user (or system user)
-        odoobot_user = request.env.ref('base.user_root')  # 'base.user_root' refers to the OdooBot user
-        odoobot_partner_id = odoobot_user.partner_id.id
+        
+        internal_user = request.env['res.users'].sudo().browse(90)
+        internal_partner_id = internal_user.partner_id.id
 
         if receptionists:
-            # Create notifications for each receptionist
             notification_ids = [(0, 0, {
                 'res_partner_id': receptionist.partner_id.id,
                 'notification_type': 'inbox'
             }) for receptionist in receptionists]
 
-            # Create the mail message
             request.env['mail.message'].sudo().create({
                 'message_type': 'notification',
-                'body': f'Se ha solicitado una nueva reserva para la habitación {booking.room_id.name} el {booking.start_datetime}. Reservado por: {booking.first_name} {booking.last_name}.',
+                'body': (
+                    f"Se ha solicitado una nueva reserva para la habitación {booking.room_id.name} "
+                    f"el {booking.start_datetime}. Reservado por: {booking.first_name} {booking.last_name}."
+                ),
                 'subject': 'Nueva Solicitud de Reserva',
                 'partner_ids': [(4, receptionist.partner_id.id) for receptionist in receptionists],
                 'model': 'space.booking',
                 'res_id': booking.id,
                 'notification_ids': notification_ids,
-                'author_id': odoobot_partner_id  # Set OdooBot as the author
+                'author_id': internal_partner_id,
             })

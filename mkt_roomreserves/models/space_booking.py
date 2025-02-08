@@ -35,6 +35,19 @@ class SpaceBooking(models.Model):
     first_name = fields.Char(string="First Name")
     last_name = fields.Char(string="Last Name")
 
+    full_name = fields.Char(
+        string="Full Name", 
+        compute="_compute_full_name", 
+        store=True
+    )
+
+    @api.depends('user_id', 'first_name', 'last_name')
+    def _compute_full_name(self):
+        for record in self:
+            if record.user_id:
+                record.full_name = record.user_id.partner_id.name
+            else:
+                record.full_name = f"{record.first_name or ''} {record.last_name or ''}".strip()
 
     @api.depends('room_name')
     def _compute_name(self):

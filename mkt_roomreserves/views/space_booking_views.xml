@@ -3,7 +3,7 @@
         <field name="model">space.booking</field>
         <field name="arch" type="xml">
             <tree string="Space Bookings" default_order="start_datetime desc" decoration-success="state == 'confirmed'" decoration-danger="state == 'canceled'">
-                <field name="user_id" readonly="1" string="User"/>
+                <field name="full_name" readonly="1" string="Name"/>
                 <field name="room_id" string="Room"/>
                 <field name="start_datetime" string="Start Date"/>
                 <field name="duration" string="Duration (hrs)"/>
@@ -32,6 +32,7 @@
                 <sheet>
                     <group col="4" string="Booking Details">
                         <field name="user_id" readonly="1" string="Booked By"/>
+                        <field name="full_name" readonly="1" string="Full name"/>
                         <field name="room_id" string="Room"/>
                         <field name="start_datetime" string="Start Datetime"/>
                         <field name="duration" string="Duration (hours)"/>
