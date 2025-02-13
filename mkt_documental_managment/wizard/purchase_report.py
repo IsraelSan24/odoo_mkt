@@ -335,7 +335,7 @@ class AccountPurchaseReport(models.Model):
                 LEFT JOIN cost_center AS cc ON cc.id=sj.cost_center_id
                 LEFT JOIN settlement_line_type AS slt ON slt.id=s.document_type_id
                 LEFT JOIN tax_taxes AS tt ON tt.id=s.tax_id
-            WHERE dr.settlement_state IN ('administration','settled') AND s.document_type_id IN %s AND LPAD(EXTRACT(MONTH FROM s.voucher_date)::text, 2, '0') IN %s AND EXTRACT(YEAR FROM s.voucher_date)::text IN %s
+            WHERE dr.settlement_state IN ('executive','responsible','intern_control','administration','to_settle','settled','refused') AND s.document_type_id IN %s AND LPAD(EXTRACT(MONTH FROM s.voucher_date)::text, 2, '0') IN %s AND EXTRACT(YEAR FROM s.voucher_date)::text IN %s
             ORDER BY requirement_id DESC
         """
         document_type_ids = tuple(self.document_type_ids.ids)

@@ -24,6 +24,15 @@ cpe_states = [
     ('failed', 'FAILED'),
 ]
 
+payment_types = [
+    ('spent_amount', 'Spent Amount'),
+    ('real_currency', 'Real Currency')
+]
+
+document_currencies = [
+        ('soles', 'Soles'),
+        ('dolares', 'Dolares')
+    ]
 
 def get_default_tax(self):
     return self.env['tax.taxes'].search([('name','=','IGV(18%)')]).id
@@ -92,6 +101,18 @@ class Settlement(models.Model):
     detraction_document = fields.Char(string='Detraction document')
     detraction_date = fields.Date(string='Detraction date')
     accountable_month_id = fields.Many2one(comodel_name='months', domain="[('open_month','=',True)]", string='Accountable month')
+
+    payment_type = fields.Selection(selection=payment_types, string='Differentiated payment')
+
+    alternative_amount = fields.Float(string="Alternative Amount")
+
+    document_currency = fields.Selection(selection=document_currencies, default=lambda self: self.currency, string='Document Currency')
+    
+
+    @api.onchange('payment_type')
+    def _onchange_payment_type(self):
+        if not self.payment_type:
+            self.alternative_amount = 0.0
 
 
     @api.model
@@ -300,12 +321,12 @@ class Settlement(models.Model):
         for rec in self:
             values_total_amount = {
                 'name': 'Total amount',
-                'account_id': account_invoices_soles.id if rec.currency == 'soles' else account_invoice_dolares.id,
+                'account_id': account_invoices_soles.id if rec.document_currency == 'soles' else account_invoice_dolares.id,
                 'debit': 0.00,
                 'credit': rec.settle_amount,
                 'annex_code': rec.dni_ruc,
                 'document_number': rec.document,
-            }            
+            }          
             values_detraction_credit = {
                 'name': _('Detraction'),
                 'account_id': self.env['account.account'].search([('code','=','421203')]).id,
@@ -551,27 +572,30 @@ class Settlement(models.Model):
     #             rec.vendor = 0
 
 
-    @api.depends('currency_id','requirement_id','service_type_id','settle_amount')
+    @api.depends('currency_id', 'requirement_id', 'service_type_id', 'settle_amount', 'alternative_amount')
     def _compute_amounts(self):
         for rec in self:
-            sale_change_type = self.env['change.type'].search([('date','=',rec.date)]).mapped('sell')
+            sale_change_type = self.env['change.type'].search([('date', '=', rec.date)]).mapped('sell')
             change_type = 1
-            if len(sale_change_type) != 0 and rec.currency_id.name == 'USD':
+            if sale_change_type and rec.currency_id.name == 'USD':
                 change_type = sale_change_type[0]
-            if rec.settle_amount * change_type > rec.service_type_id.amount_from:
+            
+            effective_amount = rec.alternative_amount if rec.alternative_amount else rec.settle_amount
+
+            if effective_amount * change_type > rec.service_type_id.amount_from:
                 if rec.service_type_id.detraction:
-                    rec.vendor = rec.settle_amount - round( ( rec.settle_amount * rec.service_type_id.percentage ) / 100, 0 )
-                    rec.detraction = round( ( rec.settle_amount * rec.service_type_id.percentage ) / 100, 0 )
+                    rec.vendor = effective_amount - round((rec.settle_amount * rec.service_type_id.percentage) / 100, 0)
+                    rec.detraction = round((rec.settle_amount * rec.service_type_id.percentage) / 100, 0)
                     rec.retention = 0.00
-                if rec.service_type_id.retention:
-                    rec.vendor = rec.settle_amount - round( ( rec.settle_amount * rec.service_type_id.percentage ) / 100, 2 )
+                elif rec.service_type_id.retention:
+                    rec.vendor = effective_amount - round((rec.settle_amount* rec.service_type_id.percentage) / 100, 2)
                     rec.detraction = 0.00
-                    rec.retention = round( ( rec.settle_amount * rec.service_type_id.percentage ) / 100, 2 )
-                if not rec.service_type_id.detraction and not rec.service_type_id.retention:
-                    rec.vendor = rec.settle_amount
+                    rec.retention = round((rec.settle_amount * rec.service_type_id.percentage) / 100, 2)
+                else:
+                    rec.vendor = effective_amount
                     rec.detraction = 0.00
                     rec.retention = 0.00
             else:
-                rec.vendor = rec.settle_amount
+                rec.vendor = effective_amount
                 rec.detraction = 0.00
                 rec.retention = 0.00
