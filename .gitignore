@@ -1,0 +1,9 @@
+*.pyc
+*.pyc
+*.pyc
+*.cpython-39.pyc
+employee_personal_information\__pycache__\__init__.cpython-39.pyc
+employee_personal_information\models\__pycache__\__init__.cpython-39.pyc
+employee_personal_information\models\__pycache__\hr_employee.cpython-39.pyc
+employee_personal_information/__pycache__/__init__.cpython-39.pyc
+*employee_personal_information/__pycache__/__init__.cpython-39.pyc
