@@ -95,6 +95,8 @@ class DocumentalRequirements(models.Model):
     refund_employee_id = fields.Many2one(comodel_name="hr.employee", string="Refund employee")
     card_payment = fields.Boolean(string="Payment with Card", default=False)
 
+    accounting_account = fields.Char(copy=False, string="accounting account", store=True)
+
     partner_id = fields.Many2one(comodel_name="res.partner", related='budget_id.partner_id', string='Customer')
     partner_bool = fields.Boolean(string="Partner Bool", default=False)
     campaign_id = fields.Many2one(comodel_name="budget.campaign", related='budget_id.campaign_id', string='Activity')
@@ -374,6 +376,37 @@ class DocumentalRequirements(models.Model):
             self.bank = False
             self.customer_account_number = False
 
+        if self.dni_or_ruc and self.paid_to:
+            if len(self.dni_or_ruc) == 8:
+                if self.paid_to.spreadsheet == 'mkt_spreadsheet' and self.paid_to.province_id.name == 'Lima':
+                    self.accounting_account = '141301'
+                elif self.paid_to.spreadsheet == 'mkt_spreadsheet' and self.paid_to.province_id.name != 'Lima':
+                    self.accounting_account = '141303'
+                elif self.paid_to.spreadsheet == 'sp_spreadsheet':
+                    self.accounting_account = '162904'
+                else:
+                    self.accounting_account = ''
+            elif len(self.dni_or_ruc) == 11:
+                if self.unify == True:
+                    if self.amount_currency_type == 'soles':
+                        self.accounting_account = '422101'
+                    elif self.amount_currency_type == 'dolares':
+                        self.accounting_account = '422102'
+                    else:
+                        self.accounting_account = ''
+                else:
+                    if self.amount_currency_type == 'soles':
+                        self.accounting_account = '421201 '
+                    elif self.amount_currency_type == 'dolares':
+                        self.accounting_account = '421202'
+                    else:
+                        self.accounting_account = ''
+            else:
+                self.accounting_account = ''
+
+
+        for rec in self.settlement_ids:
+            rec.compute_province()
 
     @api.onchange('amount_currency_type')
     def onchange_amount(self):
@@ -1003,17 +1036,20 @@ class DocumentalRequirements(models.Model):
     def settlement_petitioner_sign(self):
         alias_name = self.env.user.partner_id.alias_name
         user_name = alias_name if alias_name else self.env.user.name
+
+        self.settlement_attach_files()
+
         if self.unify:
-            self.settlement_attach_files()
             self.requirement_state = 'executive'
         else:
-            self.settlement_attach_files()
             if not self.petitioner_signature:
-                raise ValidationError(_( 'Before to sign the settlement, be sure to sign the requirement.' ))
-        if self.settlement_ids:
-	        self.document_format_validation()
-        else:
-            raise ValidationError( _('Please, make sure to write at least one line in the settlement line') )
+                raise ValidationError(_('Before signing the settlement, make sure to sign the requirement.'))
+
+        if not self.settlement_ids:
+            raise ValidationError(_('Please make sure to write at least one line in the settlement line.'))
+
+        self.document_format_validation()
+
         self.write({
             'settlement_petitioner_user_id': self.env.user.id,
             'settlement_petitioner_signature': signature_generator(user_name),
