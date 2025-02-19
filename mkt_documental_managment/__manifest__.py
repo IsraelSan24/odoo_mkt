@@ -52,6 +52,7 @@
         'wizard/cash_report.xml',
         'wizard/purchase_report.xml',
         'wizard/settlement_report_wiz.xml',
+        'wizard/bank_report.xml',
 
         'views/years_views.xml',
         'views/documental_requirements.xml',

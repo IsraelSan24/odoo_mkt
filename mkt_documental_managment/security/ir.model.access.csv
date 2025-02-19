@@ -54,6 +54,7 @@ access_settlement_line,access.settlement.line,model_settlement_line,,1,1,1,1
 access_expenses_report,access.access.report,model_expenses_report,,1,1,1,1
 access_requirement_modify,access.requirement.modify,model_requirement_modify,,1,1,1,1
 access_cash_report,access.cash.report,model_cash_report,,1,1,1,1
+access_bank_report,access.bank.report,model_bank_report,,1,1,1,1
 access_settlement_report,access.settlement.report,model_settlement_report,,1,1,1,1
 access_settlement_journal,access.settlement.journal,model_settlement_journal,,1,1,1,1
 access_account_purchase_report,access.account.purchase.report,model_account_purchase_report,,1,1,1,1

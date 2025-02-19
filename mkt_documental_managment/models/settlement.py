@@ -105,9 +105,15 @@ class Settlement(models.Model):
     payment_type = fields.Selection(selection=payment_types, string='Differentiated payment')
 
     alternative_amount = fields.Float(string="Alternative Amount")
-
-    document_currency = fields.Selection(selection=document_currencies, default=lambda self: self.currency, string='Document Currency')
     
+    document_currency = fields.Selection(selection=document_currencies, string='Document Currency')
+
+
+    @api.onchange('requirement_id')
+    def _onchange_requirement_id(self):
+        if self.requirement_id:
+            self.document_currency = self.requirement_id.amount_currency_type
+
 
     @api.onchange('payment_type')
     def _onchange_payment_type(self):

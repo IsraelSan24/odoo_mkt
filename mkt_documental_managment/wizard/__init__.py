@@ -8,3 +8,4 @@ from . import requirement_modify
 from . import cash_report
 from . import purchase_report
 from . import settlement_report
+from . import bank_report
