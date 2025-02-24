@@ -364,49 +364,47 @@ class DocumentalRequirements(models.Model):
 
     @api.onchange('paid_to')
     def onchange_dni(self):
-        if self.paid_to:
-            self.dni_or_ruc = self.paid_to.vat
-            if self.paid_to.vat:
-                if len(self.paid_to.vat) == 11:
-                    self.is_ruc = True
-                if len(self.paid_to.vat) == 8:
-                    self.is_ruc = False
-        else:
-            self.dni_or_ruc = False
-            self.bank = False
-            self.customer_account_number = False
-
-        if self.dni_or_ruc and self.paid_to:
-            if len(self.dni_or_ruc) == 8:
-                if self.paid_to.spreadsheet == 'mkt_spreadsheet' and self.paid_to.province_id.name == 'Lima':
-                    self.accounting_account = '141301'
-                elif self.paid_to.spreadsheet == 'mkt_spreadsheet' and self.paid_to.province_id.name != 'Lima':
-                    self.accounting_account = '141303'
-                elif self.paid_to.spreadsheet == 'sp_spreadsheet':
-                    self.accounting_account = '162904'
-                else:
-                    self.accounting_account = ''
-            elif len(self.dni_or_ruc) == 11:
-                if self.unify == True:
-                    if self.amount_currency_type == 'soles':
-                        self.accounting_account = '422101'
-                    elif self.amount_currency_type == 'dolares':
-                        self.accounting_account = '422102'
-                    else:
-                        self.accounting_account = ''
-                else:
-                    if self.amount_currency_type == 'soles':
-                        self.accounting_account = '421201 '
-                    elif self.amount_currency_type == 'dolares':
-                        self.accounting_account = '421202'
-                    else:
-                        self.accounting_account = ''
+        for rec in self:
+            if rec.paid_to:
+                rec.dni_or_ruc = rec.paid_to.vat
+                if rec.paid_to.vat:
+                    if len(rec.paid_to.vat) == 11:
+                        rec.is_ruc = True
+                    if len(rec.paid_to.vat) == 8:
+                        rec.is_ruc = False
             else:
-                self.accounting_account = ''
+                rec.dni_or_ruc = False
+                rec.bank = False
+                rec.customer_account_number = False
 
+            if rec.dni_or_ruc and rec.paid_to:
+                if len(rec.dni_or_ruc) == 8:
+                    if rec.paid_to.spreadsheet == 'mkt_spreadsheet' and rec.paid_to.province_id.name == 'Lima':
+                        rec.accounting_account = '141301'
+                    elif rec.paid_to.spreadsheet == 'mkt_spreadsheet' and rec.paid_to.province_id.name != 'Lima':
+                        rec.accounting_account = '141303'
+                    elif rec.paid_to.spreadsheet == 'sp_spreadsheet':
+                        rec.accounting_account = '162904'
+                    else:
+                        rec.accounting_account = ''
+                elif len(rec.dni_or_ruc) == 11:
+                    if rec.unify == True:
+                        if rec.amount_currency_type == 'soles':
+                            rec.accounting_account = '422101'
+                        elif rec.amount_currency_type == 'dolares':
+                            rec.accounting_account = '422102'
+                        else:
+                            rec.accounting_account = ''
+                    else:
+                        if rec.amount_currency_type == 'soles':
+                            rec.accounting_account = '421201 '
+                        elif rec.amount_currency_type == 'dolares':
+                            rec.accounting_account = '421202'
+                        else:
+                            rec.accounting_account = ''
+                else:
+                    rec.accounting_account = ''
 
-        for rec in self.settlement_ids:
-            rec.compute_province()
 
     @api.onchange('amount_currency_type')
     def onchange_amount(self):
