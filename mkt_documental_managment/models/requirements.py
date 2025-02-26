@@ -33,6 +33,7 @@ urgency_status = [
 
 states = [
     ('draft', 'Draft'),
+    ('external_control', 'External control'),
     ('executive', 'Executive'),
     ('responsible', 'Responsible'),
     ('intern_control', 'Intern Control'),
@@ -240,6 +241,9 @@ class DocumentalRequirements(models.Model):
     settlement_administration_signature = fields.Binary(string='Administration', copy=False, attachment=True)
     settlement_administration_signed_on = fields.Datetime(string='Settlement administration signed on', copy=False, tracking=True)
     settlement_administration_user_id = fields.Many2one(comodel_name='res.users', copy=False, string='Settlement administration signed by')
+
+    province = fields.Char(related='employee_id.address_home_id.province_id.name', copy=False, string='Province', store=True)
+    is_province = fields.Boolean(related='employee_id.address_home_id.is_province', copy=False, string='Is province?', store=True)
 
 
     @api.depends('total_paid',
@@ -797,14 +801,28 @@ class DocumentalRequirements(models.Model):
         }
 
 
-    #* Requirement refuse actions
+    def button_refuse_external_control(self):
+        self = self.sudo()
+        self.update({
+            'user_petitioner_signed_id':   False,
+            'petitioner_signature': False,
+            'petitioner_signed_on': False,
+            'is_petitioner_signed': False,
+            'requirement_state': 'refused',
+        })
+        self.settlement_refuse_boss()
+        self.mobility_unused_validation()
+
+
     def button_refuse_boss(self):
         self = self.sudo()
-        self.user_petitioner_signed_id = False
-        self.petitioner_signature = False
-        self.petitioner_signed_on = False
-        self.is_petitioner_signed = False
-        self.requirement_state = 'refused'
+        self.update({
+            'user_petitioner_signed_id': False,
+            'petitioner_signature': False,
+            'petitioner_signed_on': False,
+            'is_petitioner_signed': False,
+            'requirement_state': 'refused',
+        })
         self.settlement_refuse_boss()
         self.mobility_unused_validation()
 
@@ -957,7 +975,7 @@ class DocumentalRequirements(models.Model):
             'user_petitioner_signed_id': self.env.user.id,
             'petitioner_signature': signature_generator(user_name),
             'petitioner_signed_on': fields.Datetime.now(),
-            'requirement_state': 'executive',
+            'requirement_state': 'external_control' if self.budget_id.sudo().partner_brand_id.employee_ids.sudo() else 'executive',
             'is_petitioner_signed': True,
         })
         self.blacklist_validation()
@@ -967,6 +985,13 @@ class DocumentalRequirements(models.Model):
         self._compute_total_detraction()
         self.mobility_use_validation()
         self.maximum_amount_validation()
+
+
+    def button_requirement_external_control_confirm(self):
+        for rec in self.sudo():
+            rec.write({
+                'requirement_state': 'executive',
+            })
 
 
     def button_boss_signature(self):
@@ -1032,27 +1057,26 @@ class DocumentalRequirements(models.Model):
 
 
     def settlement_petitioner_sign(self):
+        if self.balance < 0:
+            raise ValidationError(_('The is negative, please correct it to sign.'))
         alias_name = self.env.user.partner_id.alias_name
         user_name = alias_name if alias_name else self.env.user.name
-
-        self.settlement_attach_files()
-
         if self.unify:
-            self.requirement_state = 'executive'
+            self.settlement_attach_files()
+            self.requirement_state = 'external_control' if self.budget_id.sudo().partner_brand_id.employee_ids.sudo() else 'executive'
         else:
+            self.settlement_attach_files()
             if not self.petitioner_signature:
-                raise ValidationError(_('Before signing the settlement, make sure to sign the requirement.'))
-
-        if not self.settlement_ids:
-            raise ValidationError(_('Please make sure to write at least one line in the settlement line.'))
-
-        self.document_format_validation()
-
+                raise ValidationError(_( 'Before to sign the settlement, be sure to sign the requirement.' ))
+        if self.settlement_ids:
+            self.document_format_validation()
+        else:
+            raise ValidationError( _('Please, make sure to write at least one line in the settlement line') )
         self.write({
             'settlement_petitioner_user_id': self.env.user.id,
             'settlement_petitioner_signature': signature_generator(user_name),
             'settlement_petitioner_signed_on': fields.Datetime.now(),
-            'settlement_state': 'executive'
+            'settlement_state': 'external_control' if self.budget_id.sudo().partner_brand_id.employee_ids.sudo() else 'executive'
         })
         self.blacklist_validation()
         self.create_settlement_line()
@@ -1060,7 +1084,18 @@ class DocumentalRequirements(models.Model):
         self._compute_total_retention()
         self._compute_total_detraction()
         self.mobility_use_validation()
-        self.maximum_amount_validation()
+
+
+    def button_settlement_external_control_confirm(self):
+        for rec in self.sudo():
+            if rec.unify:
+                rec.requirement_state = 'external_control' if rec.budget_id.sudo().partner_brand_id.employee_ids.sudo() else 'executive'
+            else:
+                if rec.requirement_state in ('draft','external_control'):
+                    raise ValidationError(_( 'Before to sign the settlement, be sure to sign the requirement.' ))
+            rec.write({
+                'settlement_state': 'executive',
+            })
 
 
     def compute_total_vendor_retention_detraction(self):
@@ -1173,6 +1208,20 @@ class DocumentalRequirements(models.Model):
             ('settlement_name','=',self.name)
         ])
         budget_lines.unlink()
+
+
+    def settlement_refuse_external_control(self):
+        self = self.sudo()
+        self.settlement_petitioner_user_id = False
+        self.settlement_petitioner_signature = False
+        self.settlement_petitioner_signed_on = False
+        self.mobility_unused_validation()
+        self.settlement_state = 'refused'
+        if self.unify:
+            self.requirement_state = 'refused'
+        else:
+            pass
+        self.start_time = False
 
 
     def settlement_refuse_boss(self):

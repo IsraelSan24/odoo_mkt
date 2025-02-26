@@ -1,7 +1,7 @@
 from odoo import _, fields, models
 
-class ResPartnerBrand(models.Model):
-    _name = 'res.partner.brand'
+class ResPartnerBrandEmployee(models.Model):
+    _inherit = 'res.partner.brand'
     _description = 'A simple brand'
 
-    name = fields.Char(string="Brand", required=True)
+    employee_ids = fields.Many2many('hr.employee', 'hr_brand_employee_rel', 'brand_id', 'employee_id', string="Employes")

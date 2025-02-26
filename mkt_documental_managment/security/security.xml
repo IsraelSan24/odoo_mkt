@@ -13,6 +13,11 @@
             <field name="category_id" ref="mkt_documental_managment.module_category_documental_requirement"/>
         </record>
 
+        <record id="documental_requirement_external_control" model="res.groups">
+            <field name="name">External Control</field>
+            <field name="category_id" ref="mkt_documental_managment.module_category_documental_requirement"/>
+        </record>
+
         <record id="documental_requirement_boss" model="res.groups">
             <field name="name">Boss</field>
             <field name="category_id" ref="mkt_documental_managment.module_category_documental_requirement"/>

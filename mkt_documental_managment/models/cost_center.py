@@ -14,6 +14,7 @@ class CostCenter(models.Model):
     partner_brand_id = fields.Many2one(comodel_name="res.partner.brand", string="Brand", required=True)
     executive_id = fields.Many2one(comodel_name="res.users", string="Executive")
     responsible_id = fields.Many2one(comodel_name="res.users", string="Responsible")
+    external_control_revision = fields.Boolean(default=False, string="Requiered external control revision?")
 
     _sql_constraints = [
         ('name_uniq', 'unique (name)', 'Name must be unique.')
