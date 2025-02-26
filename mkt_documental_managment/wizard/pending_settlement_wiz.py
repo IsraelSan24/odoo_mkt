@@ -169,7 +169,7 @@ class PendingSettlement(models.Model):
                 LEFT JOIN cost_center AS cc ON cc.id=b.cost_center_id
                 LEFT JOIN res_users AS ru ON ru.id=dr.full_name
                 LEFT JOIN res_partner AS rp2 ON rp2.id=ru.partner_id
-            WHERE dr.settlement_state IN ('draft','executive','responsible','intern_control','refused') AND dr.payment_date IS NOT NULL AND dr.active = True
+            WHERE dr.settlement_state IN ('draft','external_control','executive','responsible','intern_control','refused') AND dr.payment_date IS NOT NULL AND dr.active = True
             ORDER BY dr.name DESC
         """
         self._cr.execute(query)

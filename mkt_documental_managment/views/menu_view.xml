@@ -15,7 +15,7 @@
 
     <!-- DOCUMENTAL MANAGEMENT -->
     <menuitem id="doc_mng_root" name="Documental Managment"
-        groups="mkt_documental_managment.documental_requirement_user,mkt_documental_managment.documental_requirement_boss,mkt_documental_managment.documental_requirement_budget_executive,mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_intern_control_read"
+        groups="mkt_documental_managment.documental_requirement_user,mkt_documental_managment.documental_requirement_boss,mkt_documental_managment.documental_requirement_external_control,mkt_documental_managment.documental_requirement_budget_executive,mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_intern_control_read"
         web_icon="mkt_documental_managment,static/description/icon_documental.png"/>
         <menuitem id="doc_mng_requirements" name="Requirements" action="action_view_requirement" parent="doc_mng_root" sequence="0"/>
         <menuitem id="settlement_submenu" name="Settlements" action="view_requirement_settlement_action" parent="doc_mng_root" sequence="1"/>
@@ -61,5 +61,8 @@
                 groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting"/>
             <menuitem id="years_submenu" name="Years" action="view_years_action" parent="configuration_menu" sequence="74"
                 groups="mkt_documental_managment.documental_requirement_admin"/>
+    
+    <menuitem id="groups_categorys_submenu" name="Groups Categorys" parent="hr.menu_human_resources_configuration" action="view_groups_categorys_action" sequence="150"/>
+    <menuitem id="user_groups_submenu" name="User Groups" parent="hr.menu_human_resources_configuration" action="view_employee_group_action" sequence="160"/>
 
 </odoo>

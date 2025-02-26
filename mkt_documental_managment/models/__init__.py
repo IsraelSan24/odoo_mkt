@@ -8,7 +8,7 @@ from . import requirement_service_type
 from . import res_partner
 # from . import res_province
 # from . import cost_center
-# from . import res_partner_brand
+from . import res_partner_brand
 from . import budget_class
 from . import budget_campaign
 from . import budget
@@ -38,3 +38,7 @@ from . import months
 from . import requirement_payment
 from . import years
 from . import settlement_update
+from . import hr_employee
+from . import user_groups
+from . import groups_categorys
+from . import res_users
