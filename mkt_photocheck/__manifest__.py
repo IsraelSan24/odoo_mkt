@@ -30,6 +30,7 @@
         'views/photocheck_brand_group_views.xml',
         'views/photocheck_supervisor_views.xml',
         'views/photocheck_job_views.xml',
+        'views/photocheck_city_views.xml',
         'views/website_menu.xml',
         'views/menu_views.xml',
         

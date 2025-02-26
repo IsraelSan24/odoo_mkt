@@ -8,10 +8,12 @@ class Photocheck(http.Controller):
     @http.route('/photocheck', type='http', auth='public', website=True)
     def photocheck(self, **kw):
         jobs = request.env['photocheck.job'].sudo().search([])
+        citys = request.env['photocheck.city'].sudo().search([])
         brands = request.env['photocheck.brand.group'].sudo().search([])
         supervisors = request.env['photocheck.supervisor'].sudo().search([])
         values = {
             'jobs': jobs,
+            'citys': citys,
             'brands': brands,
             'supervisors': supervisors
         }

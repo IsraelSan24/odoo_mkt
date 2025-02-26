@@ -5,4 +5,5 @@ access_photocheck_designer,access.photocheck.designer,model_photocheck,mkt_photo
 access_photocheck_admin,access.photocheck.admin,model_photocheck,mkt_photocheck.photocheck_admin,1,1,1,1
 access_photocheck_brand_group,access.photocheck.brand.group,model_photocheck_brand_group,,1,1,1,0
 access_photocheck_job,access.photocheck.job,model_photocheck_job,,1,1,1,0
+access_photocheck_city,access.photocheck.city,model_photocheck_city,,1,1,1,0
 access_photocheck_supervisor,access.photocheck.supervisor,model_photocheck_supervisor,,1,1,1,0

@@ -106,6 +106,16 @@
                                                                 </select>
                                                                 
                                                             </div>
+                                                            <div class="input-group mb-2">
+                                                                <select name="city_id" id="city_id" class="form-control form-control-lg bg-light fs-6" required="True">
+                                                                    <option value="">City...</option>
+                                                                    <t t-foreach="citys or []" t-as="city">
+                                                                        <option t-att-value="city.id" id="city_name" required="True">
+                                                                            <t t-esc="city.name"/>
+                                                                        </option>
+                                                                    </t>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
