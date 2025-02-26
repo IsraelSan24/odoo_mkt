@@ -41,6 +41,7 @@ class Photocheck(models.Model):
     photocheck_brand_group_id = fields.Many2one(comodel_name='photocheck.brand.group', string='Brand Group')
     dni = fields.Char(required=True, string='DNI')
     job_id = fields.Many2one(comodel_name='photocheck.job', string='Job')
+    city_id = fields.Many2one(comodel_name='photocheck.city', string='City')
     complete_name = fields.Char(string='Complete Name')
     request_date =  fields.Datetime(string='Request Date')
     done_date =  fields.Datetime(string='Done Date')

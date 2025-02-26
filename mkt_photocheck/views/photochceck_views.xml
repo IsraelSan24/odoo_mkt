@@ -16,6 +16,7 @@
                 <field name="brand_ids" widget="many2many_tags" optional="hide"/>
                 <field name="dni"/>
                 <field name="job_id"/>
+                <field name="city_id"/>
                 <field name="complete_name" invisible="True"/>
                 <field name="state" widget="badge"
                     decoration-info="state == 'draft'"
@@ -62,6 +63,7 @@
                             <field name="first_name" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
                             <field name="last_name" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
                             <field name="job_id" options="{'no_create':True,'no_open':True}" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <field name="city_id" options="{'no_create':True,'no_open':True}" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
                         </group>
                         <group>
                             <field name="photo_name" invisible="True"/>
@@ -119,7 +121,7 @@
                                     <field name="name"/>
                                     <h2><field name="initial_name"/></h2>
                                     <h3><field name="last_name"/></h3>
-                                    <h3><field name="job_id"/></h3>                   
+                                    <h3><field name="job_id"/></h3>
                                     <h3><field name="dni"/></h3>
                                     <h3 class="text-danger"><field name="photocheck_brand_group_id"/></h3>
                                     <h3><field name="state" widget="badge"
@@ -152,6 +154,7 @@
                     <filter string="First Name" name="first_name" context="{'group_by':'first_name'}"/>
                     <filter string="Last Name" name="last_name" context="{'group_by':'last_name'}"/>
                     <filter string="Job" name="job_id" context="{'group_by':'job_id'}"/>
+                    <filter string="City" name="city_id" context="{'group_by':'city_id'}"/>
                     <filter string="Brand" name="photocheck_brand_group_id" context="{'group_by':'photocheck_brand_group_id'}"/>
                     <filter string="Supervisor" name="photocheck_supervisor_id" context="{'group_by':'photocheck_supervisor_id'}"/>
                 </group>
@@ -159,7 +162,11 @@
                 <filter name="inactive" string="Archived" domain="[('active','=',False)]" help="Show inactive requirements"/>
                 <searchpanel>
                     <field name="photocheck_brand_group_id" string="Brands" enable_counters="1"/>
+                    <field name="city_id" string="City" select="multi" enable_counters="1" icon="fa-map-marker"/>
                 </searchpanel> 
+                <!-- <searchpanel>
+                    <field name="city_id" string="City" select="multi" enable_counters="1" icon="fa-map-marker"/>
+                </searchpanel> -->
             </search>
         </field>
     </record>

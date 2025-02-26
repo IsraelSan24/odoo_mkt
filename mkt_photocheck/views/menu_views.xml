@@ -11,5 +11,6 @@
             <menuitem id="photocheck_brand_group_menu" name="Photocheck Brand Group" action="view_photocheck_brand_group_action" parent="configuration_menu" groups="mkt_photocheck.photocheck_admin,mkt_photocheck.photocheck_designer" sequence="10"/>
             <menuitem id="photocheck_supervisor_menu" name="Photocheck Supervisor" action="view_photocheck_supervisor_action" parent="configuration_menu" groups="mkt_photocheck.photocheck_admin,mkt_photocheck.photocheck_designer" sequence="11"/>
             <menuitem id="photocheck_job" name="Photocheck Job" action="view_photocheck_job_action" parent="configuration_menu" groups="mkt_photocheck.photocheck_admin,mkt_photocheck.photocheck_designer" sequence="12"/>
+            <menuitem id="photocheck_city" name="Photocheck City" action="view_photocheck_city_action" parent="configuration_menu" groups="mkt_photocheck.photocheck_admin,mkt_photocheck.photocheck_designer" sequence="13"/>
 
 </odoo>
