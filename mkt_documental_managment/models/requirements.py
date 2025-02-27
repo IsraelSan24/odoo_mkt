@@ -242,8 +242,17 @@ class DocumentalRequirements(models.Model):
     settlement_administration_signed_on = fields.Datetime(string='Settlement administration signed on', copy=False, tracking=True)
     settlement_administration_user_id = fields.Many2one(comodel_name='res.users', copy=False, string='Settlement administration signed by')
 
-    province = fields.Char(related='employee_id.address_home_id.province_id.name', copy=False, string='Province', store=True)
-    is_province = fields.Boolean(related='employee_id.address_home_id.is_province', copy=False, string='Is province?', store=True)
+    province = fields.Char(related='paid_to.province_id.name', copy=False, string='Province', store=True)
+    is_province = fields.Boolean(related='paid_to.is_province', copy=False, string='Is province?', store=True)
+
+
+    def compute_province(self):
+        for rec in self:
+            rec.paid_to.compute_is_province()
+            rec.province = rec.paid_to.province_id.name
+            rec.is_province = rec.paid_to.is_province
+            rec.onchange_dni()
+            
 
 
     @api.depends('total_paid',
