@@ -86,6 +86,10 @@
         'views/requirement_payment_views.xml',
         'views/mobility_line_views.xml',
         'views/settlement_update_views.xml',
+        'views/brand_views.xml',
+        'views/groups_categorys_views.xml',
+        'views/user_groups_views.xml',
+        'views/hr_employee_views.xml',
         'views/menu_view.xml',
     ],
     'assets': {

@@ -11,8 +11,24 @@
             ('refund_user_id','=',user.id),
             ('refund_employee_id.parent_id.user_id','=',user.id)
         ]</field>
-        <!-- <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_requirement_user')),(4,ref('mkt_documental_managment.documental_requirement_boss'))]"/> -->
         <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_requirement_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="external_control_requirement_rule" model="ir.rule">
+        <field name="name">External control rule</field>
+        <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
+        <field name="domain_force">[
+            '|', '|',
+            ('create_uid', '=', user.id),
+            ('employee_id', 'in', user.get_employes()),
+            ('budget_id.partner_brand_id', 'in', user.get_brands()),
+            ('is_province', '=', user.employee_id.is_supervize_province)
+        ]</field>
+        <field name="groups" eval="[(4, ref('mkt_documental_managment.documental_requirement_external_control'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_create" eval="True"/>
         <field name="perm_write" eval="True"/>
@@ -37,7 +53,6 @@
         <field name="perm_unlink" eval="True"/>
     </record>
 
-    <!-- <record id="show_budget_executive_requirement_rule" model="ir.rule"> -->
     <record id="budget_responsible_requirement_rule" model="ir.rule">
         <field name="name">Responsible requirement</field>
         <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
@@ -52,7 +67,6 @@
     <record id="show_two_requirement_signatures_rule" model="ir.rule">
         <field name="name">Show two signatures in Requirement</field>
         <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
-        <!-- <field name="domain_force">[('is_petitioner_signed','=',True),('is_boss_signed','=',True)]</field> -->
         <field name="domain_force">[(1,'=',1)]</field>
         <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_requirement_intern_control'))]"/>
         <field name="perm_read" eval="True"/>

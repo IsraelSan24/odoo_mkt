@@ -7,6 +7,7 @@ access_budget_administrator,access.budget,model_budget,mkt_documental_managment.
 access_budget_line,access.budget.line,model_budget_line,,1,1,1,1
 access_requirement_user,access.documental.requirements,model_documental_requirements,mkt_documental_managment.documental_requirement_user,1,1,1,0
 access_requirement_boss,access.documental.requirements,model_documental_requirements,mkt_documental_managment.documental_requirement_boss,1,1,0,0
+access_requirement_external_control,access.documental.requirements,model_documental_requirements,mkt_documental_managment.documental_requirement_external_control,1,0,0,0
 access_requirement_budget_executive,access.documental.requirements,model_documental_requirements,mkt_documental_managment.documental_requirement_budget_executive,1,1,0,0
 access_requirement_intern_control,access.documental.requirements,model_documental_requirements,mkt_documental_managment.documental_requirement_intern_control,1,1,0,0
 access_requirement_intern_control_read_only,access.documental.requirements,model_documental_requirements,mkt_documental_managment.documental_requirement_intern_control_read,1,0,0,0
@@ -63,3 +64,5 @@ access_months,access.months,model_months,,1,1,1,1
 access_years,access.years,model_years,,1,1,1,1
 access_requirement_payment,access.requirement.payment,model_requirement_payment,,1,1,1,1
 access_settlement_update,access.settlement.update,model_settlement_update,,1,1,1,0
+access_groups_categorys,access.groups.categorys,model_groups_categorys,,1,1,1,0
+access_user_groups,access.user.groups,model_user_groups,,1,1,1,0

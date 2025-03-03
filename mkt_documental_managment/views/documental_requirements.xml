@@ -39,6 +39,8 @@
                 <field name="concept" optional="show"/>
                 <field name="budget_id" optional="show"/>
                 <field name="cost_center_id" optional="show"/>
+                <field name="province" optional="show"/>
+                <field name="is_province" optional="show"/>
                 <field name="detraction_amount" optional="hide"/>
                 <field name="full_name" widget="many2one_avatar_user" optional="show"/>
                 <button name="button_accounting_check" icon="fa-linux" type="object"
@@ -48,13 +50,13 @@
                 <field name="unify" widget="boolean_toggle" readonly="1"/>
                 <field name="requirement_state" widget="badge"
                     decoration-muted="requirement_state == 'draft'"
-                    decoration-warning="requirement_state in ('executive','responsible','intern_control','administration')"
+                    decoration-warning="requirement_state in ('external_control','executive','responsible','intern_control','administration')"
                     decoration-info="requirement_state == 'to_settle' and timer_state == 'on_time'"
                     decoration-success="requirement_state == 'settled'"
                     decoration-danger="requirement_state == 'refused' or ( requirement_state == 'to_settle' and timer_state == 'late' )"/>
                 <field name="settlement_state" widget="badge"
                     decoration-muted="settlement_state == 'draft'"
-                    decoration-warning="settlement_state in ('executive','responsible','intern_control','administration')"
+                    decoration-warning="settlement_state in ('external_control','executive','responsible','intern_control','administration')"
                     decoration-success="settlement_state in 'settled'"
                     decoration-danger="settlement_state in 'refused'"/>
                 <field name="payment_date" optional="hide"/>
@@ -123,7 +125,7 @@
                     <notebook>
                         <page string="Requirement" attrs="{'invisible':[('unify','=',True)]}">
                             <header>
-                                <field name="requirement_state" widget="statusbar" statusbar_visible="executive,responsible,intern_control,administration"/>
+                                <field name="requirement_state" widget="statusbar" statusbar_visible="external_control,executive,responsible,intern_control,administration"/>
                             </header>
                             <field name="restricted_requirement_detail_ids" options="{'no_open':'1'}">
                                 <tree create="0" delete="0">
@@ -140,7 +142,7 @@
                         </page>
                         <page string="Settlement">
                             <header>
-                                <field name="settlement_state" widget="statusbar" statusbar_visible="executive,responsible,intern_control,administration"/>
+                                <field name="settlement_state" widget="statusbar" statusbar_visible="external_control,executive,responsible,intern_control,administration"/>
                             </header>
                             <field name="lock_settlement_ids" options="{'no_open':'1'}">
                                 <tree create="0" delete="0">
@@ -354,6 +356,15 @@
                                     attrs="{'invisible':[('requirement_state','not in',('draft','refused'))]}"
                                     groups="mkt_documental_managment.documental_requirement_user"/>
 
+                                <button string="Conirm" name="button_requirement_external_control_confirm"
+                                    icon="fa-pencil-square-o" type="object" class="oe_highlight"
+                                    attrs="{'invisible':['|',('requirement_state','!=','external_control'),('is_current_executive','=',False)]}"
+                                    groups="mkt_documental_managment.documental_requirement_external_control"/>
+                                <button string="Refuse" name="button_refuse_external_control" type="object" class="oe_highlight"
+                                    icon="fa-thumbs-o-down" attrs="{'invisible':['|',('requirement_state','!=','external_control'),('is_current_executive','=',False)]}"
+                                    groups="mkt_documental_managment.documental_requirement_external_control"
+                                    confirm="Please confirm to refuse"/>
+
                                 <button string="Sign" name="button_boss_signature"
                                     icon="fa-pencil-square-o" type="object" class="oe_highlight"
                                     attrs="{'invisible':['|',('requirement_state','!=','executive'),('is_current_executive','=',False)]}"
@@ -395,7 +406,7 @@
                                     groups="mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_admin"
                                     confirm="Please confirm to refuse"/>
 
-                                <field name="requirement_state" widget="statusbar" statusbar_visible="executive,responsible,intern_control,administration"/>
+                                <field name="requirement_state" widget="statusbar" statusbar_visible="external_control,executive,responsible,intern_control,administration"/>
                             </header>
                             <!-- <div class="alert alert-warning" role="alert" attrs="{'invisible':[('repeated','=',False)]}">
                                 <field name="repeated_document" style="color:red;" readonly="True" force_save="True"/>
@@ -404,7 +415,7 @@
                                 <field name="repeated_document" style="color:red;" readonly="True" force_save="True"/>
                             </div>
                             <field name="requirement_detail_ids" attrs="{'readonly':[('requirement_state','not in',('draft','refused'))]}"
-                                groups="mkt_documental_managment.documental_requirement_user,mkt_documental_managment.documental_requirement_boss,mkt_documental_managment.documental_requirement_budget_executive">
+                                groups="mkt_documental_managment.documental_requirement_user,mkt_documental_managment.documental_requirement_boss,mkt_documental_managment.documental_requirement_external_control,mkt_documental_managment.documental_requirement_budget_executive">
                                 <tree>
                                     <field name="sequence_handle" widget="handle"/>
                                     <field name="repeated" invisible="True"/>
@@ -474,12 +485,21 @@
                                 </group>
                             </group>
                         </page>
-                        <page string="Settlement" name="settlement" attrs="{'invisible':[('unify','!=',True),('requirement_state','not in',('executive','responsible','intern_control','administration','to_settle','settled','refused'))]}">
+                        <page string="Settlement" name="settlement" attrs="{'invisible':[('unify','!=',True),('requirement_state','not in',('external_control','executive','responsible','intern_control','administration','to_settle','settled','refused'))]}">
                             <header>
                                 <button string="Sign" name="settlement_petitioner_sign"
                                     icon="fa-pencil-square-o" type="object" class="oe_highlight"
                                     attrs="{'invisible':[('settlement_state','not in',('draft','refused'))]}"
                                     groups="mkt_documental_managment.documental_requirement_user"/>
+
+                                <button string="Sign" name="settlement_executive_sign"
+                                    icon="fa-pencil-square-o" type="object" class="oe_highlight"
+                                    attrs="{'invisible':['|',('settlement_state','!=','external_control'),('is_current_executive','=',False)]}"
+                                    groups="mkt_documental_managment.documental_requirement_external_control"/>
+                                <button string="Refuse" name="settlement_refuse_external_control" type="object" class="oe_highlight"
+                                    icon="fa-thumbs-o-down" attrs="{'invisible':['|',('settlement_state','!=','external_control'),('is_current_executive','=',False)]}"
+                                    groups="mkt_documental_managment.documental_requirement_external_control"
+                                    confirm="Please confirm to refuse"/>
 
                                 <button string="Sign" name="settlement_executive_sign"
                                     icon="fa-pencil-square-o" type="object" class="oe_highlight"
@@ -522,7 +542,7 @@
                                     groups="mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_admin"
                                     confirm="Please confirm to refuse"/>
 
-                                <field name="settlement_state" widget="statusbar" statusbar_visible="executive,responsible,intern_control,administration"/>
+                                <field name="settlement_state" widget="statusbar" statusbar_visible="external_control,executive,responsible,intern_control,administration"/>
                             </header>
                             <div class="alert alert-warning" role="alert" attrs="{'invisible':[('settlement_repeated_document','=',False)]}">
                                 <field name="settlement_repeated_document" style="color:red;" readonly="True" force_save="True"/>
@@ -530,7 +550,7 @@
                             <button string="Create line" name="create_settlement_line" type="object" class="oe_highlight" groups="mkt_documental_managment.documental_requirement_admin"/>
                             <button string="CPE's" name="validation_vouchers" type="object" class="oe_highlight" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"/>
                             <field name="settlement_ids" attrs="{'readonly':[('settlement_state','not in',('draft','refused'))]}"
-                                groups="mkt_documental_managment.documental_requirement_user,mkt_documental_managment.documental_requirement_boss,mkt_documental_managment.documental_requirement_budget_executive">
+                                groups="mkt_documental_managment.documental_requirement_user,mkt_documental_managment.documental_requirement_external_control,mkt_documental_managment.documental_requirement_boss,mkt_documental_managment.documental_requirement_budget_executive">
                                 <tree>
                                     <button string="CPE" name="validation_voucher" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"
                                         type="object" class="oe_highlight"/>
@@ -689,6 +709,7 @@
                 <field name="full_name"/>
                 <separator/>
                 <filter name="inactive" string="Archived" domain="[('active','=',False)]" help="Show inactive requirements"/>
+                <filter string="External control" name="external_control" domain="['|',('requirement_state','=','external_control'),('settlement_state','=','external_control')]"/>
                 <filter string="Executive" name="executive" domain="['|',('requirement_state','=','executive'),('settlement_state','=','executive')]"/>
                 <filter string="Responsible" name="responsible" domain="['|',('requirement_state','=','responsible'),('settlement_state','=','responsible')]"/>
                 <filter string="Intern Control" name="intern_control" domain="['|',('requirement_state','=','intern_control'),('settlement_state','=','intern_control')]"/>
