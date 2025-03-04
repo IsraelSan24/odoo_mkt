@@ -9,7 +9,7 @@ class ResPartner(models.Model):
     deduction_acc_number = fields.Char(string="Account Number")
     province_id = fields.Many2one(comodel_name="res.province", string="Assigned Province", store=True)
     alias_name = fields.Char(string='Alias name')
-    blacklist = fields.Boolean(default=False, string='Blacklist')
+    blacklist = fields.Boolean(default=False, string='Blacklist', tracking=True)
     is_province = fields.Boolean(string='Blacklist', compute="compute_is_province", store=True)
 
     @api.depends('province_id')

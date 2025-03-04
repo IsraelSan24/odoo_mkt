@@ -242,17 +242,24 @@ class DocumentalRequirements(models.Model):
     settlement_administration_signed_on = fields.Datetime(string='Settlement administration signed on', copy=False, tracking=True)
     settlement_administration_user_id = fields.Many2one(comodel_name='res.users', copy=False, string='Settlement administration signed by')
 
-    province = fields.Char(related='paid_to.province_id.name', copy=False, string='Province', store=True)
     is_province = fields.Boolean(related='paid_to.is_province', copy=False, string='Is province?', store=True)
+    document_file = fields.Binary(string='File', attachment=True)
+    document_filename = fields.Char(compute='_compute_filename', string='Filename', store=True)
 
 
     def compute_province(self):
         for rec in self:
             rec.paid_to.compute_is_province()
-            rec.province = rec.paid_to.province_id.name
+            # rec.province = rec.paid_to.province_id.name
             rec.is_province = rec.paid_to.is_province
-            rec.onchange_dni()
-            
+            # rec.onchange_dni()
+
+
+    @api.depends('document_file')
+    def _compute_filename(self):
+        for rec in self:
+            if rec.document_file:
+                rec.document_filename = 'Voucher document'
 
 
     @api.depends('total_paid',
@@ -984,7 +991,8 @@ class DocumentalRequirements(models.Model):
             'user_petitioner_signed_id': self.env.user.id,
             'petitioner_signature': signature_generator(user_name),
             'petitioner_signed_on': fields.Datetime.now(),
-            'requirement_state': 'external_control' if self.budget_id.sudo().partner_brand_id.employee_ids.sudo() else 'executive',
+            # 'requirement_state': 'external_control' if (self.budget_id.sudo().partner_brand_id.for_province == True) or (self.env.user.sudo().employee_id.sudo().group_ids.sudo()) else 'executive',
+            'requirement_state': 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False)) else 'executive',
             'is_petitioner_signed': True,
         })
         self.blacklist_validation()
@@ -1072,7 +1080,7 @@ class DocumentalRequirements(models.Model):
         user_name = alias_name if alias_name else self.env.user.name
         if self.unify:
             self.settlement_attach_files()
-            self.requirement_state = 'external_control' if self.budget_id.sudo().partner_brand_id.employee_ids.sudo() else 'executive'
+            self.requirement_state = 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False)) else 'executive'
         else:
             self.settlement_attach_files()
             if not self.petitioner_signature:
@@ -1085,7 +1093,7 @@ class DocumentalRequirements(models.Model):
             'settlement_petitioner_user_id': self.env.user.id,
             'settlement_petitioner_signature': signature_generator(user_name),
             'settlement_petitioner_signed_on': fields.Datetime.now(),
-            'settlement_state': 'external_control' if self.budget_id.sudo().partner_brand_id.employee_ids.sudo() else 'executive'
+            'settlement_state': 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False)) else 'executive'
         })
         self.blacklist_validation()
         self.create_settlement_line()
@@ -1098,7 +1106,7 @@ class DocumentalRequirements(models.Model):
     def button_settlement_external_control_confirm(self):
         for rec in self.sudo():
             if rec.unify:
-                rec.requirement_state = 'external_control' if rec.budget_id.sudo().partner_brand_id.employee_ids.sudo() else 'executive'
+                rec.requirement_state = 'executive'
             else:
                 if rec.requirement_state in ('draft','external_control'):
                     raise ValidationError(_( 'Before to sign the settlement, be sure to sign the requirement.' ))
@@ -1156,6 +1164,7 @@ class DocumentalRequirements(models.Model):
 
 
     def settlement_intern_control_sign(self):
+        self._compute_settlement_vendor()
         alias_name = self.env.user.partner_id.alias_name
         user_name = alias_name if alias_name else self.env.user.name
         if not self.unify:
