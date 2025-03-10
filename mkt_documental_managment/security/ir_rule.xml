@@ -26,7 +26,7 @@
             ('create_uid', '=', user.id),
             ('employee_id', 'in', user.get_employes()),
             ('budget_id.partner_brand_id', 'in', user.get_brands()),
-            ('is_province', '=', user.employee_id.is_supervize_province)
+            ('is_province_supervizor', '=', user.employee_id.is_supervize_province)
         ]</field>
         <field name="groups" eval="[(4, ref('mkt_documental_managment.documental_requirement_external_control'))]"/>
         <field name="perm_read" eval="True"/>

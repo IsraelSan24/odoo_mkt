@@ -37,6 +37,10 @@
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_intern_control_read" sequence="43"/>
             <menuitem id="expenses_report_submenu" name="Expenses report" action="view_expenses_report_action"
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="44"/>
+            <menuitem id="accounting_expenses_report_submenu" name="Accounting expenses report" action="view_accounting_expenses_report_action"
+                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="45"/>
+            <menuitem id="mobility_report_submenu" name="Mobility Report" action="view_mobility_report_action"
+                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_accounting" sequence="47"/>
             <menuitem id="bank_report_submenu" name="Bank report" action="view_bank_report_action"
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_accounting" sequence="51"/>
         <menuitem id="accounting_menu" name="Accounting" parent="doc_mng_root" sequence="6" groups="mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_admin"/>

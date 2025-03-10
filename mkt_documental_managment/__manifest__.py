@@ -53,6 +53,8 @@
         'wizard/purchase_report.xml',
         'wizard/settlement_report_wiz.xml',
         'wizard/bank_report.xml',
+        'wizard/mobility_report.xml',
+        'wizard/accounting_expenses_report_wiz.xml',
 
         'views/years_views.xml',
         'views/documental_requirements.xml',
@@ -90,6 +92,7 @@
         'views/groups_categorys_views.xml',
         'views/user_groups_views.xml',
         'views/hr_employee_views.xml',
+        'views/res_bank_views.xml',
         'views/menu_view.xml',
     ],
     'assets': {

@@ -42,3 +42,4 @@ from . import hr_employee
 from . import user_groups
 from . import groups_categorys
 from . import res_users
+from . import res_bank
