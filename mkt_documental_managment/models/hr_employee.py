@@ -6,7 +6,7 @@ _logger = logging.getLogger(__name__)
 class HrEmployeeGroups(models.Model):
     _inherit = 'hr.employee'
 
-    is_supervize_province = fields.Boolean(defatul=False, copy=False, string='Province to supervize')
+    is_supervize_province = fields.Boolean(default=False, copy=False, string='Province to supervize')
     brand_ids = fields.Many2many('res.partner.brand', 'hr_brand_employee_rel', 'employee_id', 'brand_id', string="Brands")
     group_ids = fields.Many2many('user.groups', 'hr_group_employee_rel', 'employee_id', 'group_id', string="Groups")
     
