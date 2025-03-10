@@ -36,6 +36,7 @@
                 <field name="amount_currency_type" invisible="True"/>
                 <field name="amount_soles" optional="show"/>
                 <field name="amount_uss" optional="show"/>
+                <field name="total_vendor" optional="hide" groups="mkt_documental_managment.documental_requirement_administration"/>
                 <field name="concept" optional="show"/>
                 <field name="budget_id" optional="show"/>
                 <field name="cost_center_id" optional="show"/>
