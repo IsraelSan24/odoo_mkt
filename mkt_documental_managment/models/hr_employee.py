@@ -9,9 +9,10 @@ class HrEmployeeGroups(models.Model):
     is_supervize_province = fields.Boolean(default=False, copy=False, string='Province to supervize')
     brand_ids = fields.Many2many('res.partner.brand', 'hr_brand_employee_rel', 'employee_id', 'brand_id', string="Brands")
     group_ids = fields.Many2many('user.groups', 'hr_group_employee_rel', 'employee_id', 'group_id', string="Groups")
+    group_supervise_ids = fields.Many2many('user.groups', 'hr_group_employee_supervise_rel', 'supervise_employee_id', 'supervise_group_id', string="Groups to supervise")
     
 
-    @api.onchange('brand_ids', 'group_ids', 'is_supervize_province')
+    @api.onchange('brand_ids', 'group_ids', 'is_supervize_province','group_supervise_ids')
     def _onchange_fields(self):
         _logger.info('\n\n\n ----------------------------------------------------_onchange_fields----------------------------------------------------: %s \n\n\n', '_onchange_fields')
         self.env['ir.rule'].clear_caches()

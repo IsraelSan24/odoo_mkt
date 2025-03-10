@@ -171,7 +171,7 @@ class RequirementReport(models.TransientModel):
                 ws.write(row, 2, line['cost_center'], stl3)
                 ws.write(row, 3, line['supplier'], stl3)
                 ws.write(row, 4, line['concept'], stl3)
-                ws.write(row, 5, line['Lima'] if line['is_province'] == False else 'Province', stl3)
+                ws.write(row, 5, line['province_paid_to'], stl3)
                 ws.write(row, 6, line['payment_date'], stl4)
                 ws.write(row, 7, line['operation_number'], stl3)
                 ws.write(row, 8, line['currency'], stl3)
@@ -235,7 +235,7 @@ class RequirementReport(models.TransientModel):
                 cc.code AS cost_center,
                 rp.name AS supplier,
                 dr.concept AS concept,
-                dr.is_province AS is_province,
+                dr.province_paid_to AS province_paid_to,
                 dr.payment_date AS payment_date,
                 COALESCE(dr.operation_number, dr.check_number) AS operation_number,
                 CASE

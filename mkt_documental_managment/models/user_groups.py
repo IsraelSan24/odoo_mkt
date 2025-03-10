@@ -7,6 +7,7 @@ class UserGroups(models.Model):
     reference = fields.Char(string='Reference')
     category = fields.Many2one(comodel_name='groups.categorys',string='Category')
     employee_ids = fields.Many2many('hr.employee', 'hr_group_employee_rel', 'group_id', 'employee_id', string='Employees')
+    employee_supervise_ids = fields.Many2many('hr.employee', 'hr_group_employee_supervise_rel', 'supervise_group_id', 'supervise_employee_id', string='Employees supervise')
 
 
     def action_user_group_from(self):

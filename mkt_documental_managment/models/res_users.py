@@ -18,10 +18,9 @@ class ResUsers(models.Model):
 
     def get_employes(self):
         _logger.info('\n\n\n ----------------------------------------------------get_employee----------------------------------------------------: %s \n\n\n', 'get_employee')
-        employes = []
-        for rec in self.employee_id.group_ids:
-            employes += rec.employee_ids
+        employes = self.env['hr.employee']
+        for groups in self.employee_id.group_supervise_ids:
+            for rec in groups:
+                employes |= rec.employee_ids
         _logger.info('\n\n\n ----------------------------------------------------employeers----------------------------------------------------: %s \n\n\n', employes)
-        if employes:
-            return employes.ids
-        return []
+        return employes.ids if employes else []
