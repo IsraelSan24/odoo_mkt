@@ -9,3 +9,5 @@ from . import cash_report
 from . import purchase_report
 from . import settlement_report
 from . import bank_report
+from . import mobility_report
+from . import accounting_expenses_report_wiz

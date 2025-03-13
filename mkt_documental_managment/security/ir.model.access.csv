@@ -38,6 +38,7 @@ access_service_type,access.requirement.service.type,model_requirement_service_ty
 access_report_administration,access.report.administration,model_report_administration,,1,1,1,1
 access_report_administration_line,access.report.administration.line,model_report_administration_line,,1,1,1,1
 access_expenses_control_report,access.expenses.control.report,model_expenses_control_report,,1,1,1,1
+access_accounting_expenses_control_report,access.accounting.expenses.control.report,model_accounting_expenses_report,,1,1,1,1
 access_expense_control,access.expense.control,model_expense_control,,1,1,1,1
 access_requirement_report,access.requirement.report,model_requirement_report,,1,1,1,1
 access_dni_consult,access.dni.consult,model_dni_consult,,1,1,1,1
@@ -55,6 +56,8 @@ access_settlement_line,access.settlement.line,model_settlement_line,,1,1,1,1
 access_expenses_report,access.access.report,model_expenses_report,,1,1,1,1
 access_requirement_modify,access.requirement.modify,model_requirement_modify,,1,1,1,1
 access_cash_report,access.cash.report,model_cash_report,,1,1,1,1
+access_mobility_report,access.mobility.report,model_mobility_report,,1,1,1,1
+access_bank_report,access.bank.report,model_bank_report,,1,1,1,1
 access_bank_report,access.bank.report,model_bank_report,,1,1,1,1
 access_settlement_report,access.settlement.report,model_settlement_report,,1,1,1,1
 access_settlement_journal,access.settlement.journal,model_settlement_journal,,1,1,1,1

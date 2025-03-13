@@ -87,14 +87,14 @@ class RequirementReport(models.TransientModel):
         }
         style3 = {
             'font_color':'#000000',
-            'bg_color':'#8A8A8A',
+            'bg_color':'#9CADCE',
             'align':'center',
             'border':1,
             'bold':True
         }
         style4 = {
             'font_color':'#000000',
-            'bg_color':'#8A8A8A',
+            'bg_color':'#9CADCE',
             'align':'center',
             'border':1,
             'bold':True,
@@ -102,7 +102,7 @@ class RequirementReport(models.TransientModel):
         }
         style5 = {
             'font_color':'#000000',
-            'bg_color':'#A2A2A2',
+            'bg_color':'#9CADCE',
             'align':'center',
             'border':1,
             'bold':True,
@@ -137,27 +137,28 @@ class RequirementReport(models.TransientModel):
         ws.write('C2:C2', _('CC N°'), stl1)
         ws.write('D2:D2', _('PROVIDER'), stl1)
         ws.write('E2:E2', _('CONCEPT'), stl1)
-        ws.write('F2:F2', _('PAYMENT DATE'), stl1)
-        ws.write('G2:G2', _('TRANFER N°'), stl1)
-        ws.write('H2:H2', _('CURRENCY'), stl1)
-        ws.write('I2:I2', _('REQUIRED AMOUNT'), stl1)
-        ws.write('J2:J2', _('RETENTION'), stl1)
-        ws.write('K2:K2', _('DETRACTION'), stl1)
-        ws.write('L2:L2', _('VENDOR'), stl1)
-        ws.write('M2:M2', _('DOCUMENT TYPE'), stl2)
-        ws.write('N2:N2', _('DOCUMENT'), stl2)
-        ws.write('O2:O2', _('VENDOR'), stl2)
-        ws.write('P2:P2', _('RETENTION'), stl2)
-        ws.write('Q2:Q2', _('DETRACTION'), stl2)
-        ws.write('R2:R2', _('AMOUNT'), stl2)
-        ws.write('S2:S2', _('TOTAL'), stl2)
-        ws.write('T2:T2', _('RESPONSIBLE'), stl2)
-        ws.write('U2:U2', _('REFUND EMPLOYEE'), stl2)
-        ws.write('V2:V2', _('REFUND MKT'), stl2)
-        ws.write('W2:W2', _('PAYROLL'), stl1)
-        ws.write('X2:X2', _('STATE(RQ)'), stl1)
-        ws.write('Y2:Y2', _('STATE(FL)'), stl1)
-        ws.autofilter('A2:Y2')
+        ws.write('F2:F2', _('LIMA/PROVINCE'), stl1)
+        ws.write('G2:G2', _('PAYMENT DATE'), stl1)
+        ws.write('H2:H2', _('TRANFER N°'), stl1)
+        ws.write('I2:I2', _('CURRENCY'), stl1)
+        ws.write('J2:J2', _('REQUIRED AMOUNT'), stl1)
+        ws.write('K2:K2', _('RETENTION'), stl1)
+        ws.write('L2:L2', _('DETRACTION'), stl1)
+        ws.write('M2:M2', _('VENDOR'), stl1)
+        ws.write('N2:N2', _('DOCUMENT TYPE'), stl2)
+        ws.write('O2:O2', _('DOCUMENT'), stl2)
+        ws.write('P2:P2', _('VENDOR'), stl2)
+        ws.write('Q2:Q2', _('RETENTION'), stl2)
+        ws.write('R2:R2', _('DETRACTION'), stl2)
+        ws.write('S2:S2', _('AMOUNT'), stl2)
+        ws.write('T2:T2', _('TOTAL'), stl2)
+        ws.write('U2:U2', _('RESPONSIBLE'), stl2)
+        ws.write('V2:V2', _('REFUND EMPLOYEE'), stl2)
+        ws.write('W2:W2', _('REFUND MKT'), stl2)
+        ws.write('X2:X2', _('PAYROLL'), stl1)
+        ws.write('Y2:Y2', _('STATE(RQ)'), stl1)
+        ws.write('Z2:Z2', _('STATE(FL)'), stl1)
+        ws.autofilter('A2:Z2')
 
         records = self._get_query()
         row = 2
@@ -170,29 +171,30 @@ class RequirementReport(models.TransientModel):
                 ws.write(row, 2, line['cost_center'], stl3)
                 ws.write(row, 3, line['supplier'], stl3)
                 ws.write(row, 4, line['concept'], stl3)
-                ws.write(row, 5, line['payment_date'], stl4)
-                ws.write(row, 6, line['operation_number'], stl3)
-                ws.write(row, 7, line['currency'], stl3)
-                ws.write(row, 8, line['amount'], stl3)
-                ws.write(row, 9, line['retention'], stl3)
-                ws.write(row, 10, line['detraction'], stl3)
-                ws.write(row, 11, line['vendor'], stl3)
-                ws.write(row, 12, line['document_type'], stl5)
-                ws.write(row, 13, line['document'], stl5)
-                ws.write(row, 14, line['settlement_vendor'], stl5)
-                ws.write(row, 15, line['settlement_retention'], stl5)
-                ws.write(row, 16, line['settlement_detraction'], stl5)
-                ws.write(row, 17, line['settlement_amount'], stl5)
+                ws.write(row, 5, line['province_paid_to'], stl3)
+                ws.write(row, 6, line['payment_date'], stl4)
+                ws.write(row, 7, line['operation_number'], stl3)
+                ws.write(row, 8, line['currency'], stl3)
+                ws.write(row, 9, line['amount'], stl3)
+                ws.write(row, 10, line['retention'], stl3)
+                ws.write(row, 11, line['detraction'], stl3)
+                ws.write(row, 12, line['vendor'], stl3)
+                ws.write(row, 13, line['document_type'], stl5)
+                ws.write(row, 14, line['document'], stl5)
+                ws.write(row, 15, line['settlement_vendor'], stl5)
+                ws.write(row, 16, line['settlement_retention'], stl5)
+                ws.write(row, 17, line['settlement_detraction'], stl5)
+                ws.write(row, 18, line['settlement_amount'], stl5)
                 if total_lines == 0:
-                    ws.write_formula(row, 18, '=SUM(R%s:R%s)' % ( ( row + 1 ), ( row + 1 ) ), stl5)
+                    ws.write_formula(row, 19, '=SUM(R%s:R%s)' % ( ( row + 1 ), ( row + 1 ) ), stl5)
                 else:
-                    ws.write_formula(row, 18, '=SUM(R%s:R%s)' % ( ( row + 1 ), ( row + 1 ) + total_lines - 1 ), stl5)
-                ws.write(row, 19, line['responsible'], stl5)
-                ws.write(row, 20, '=S%s-I%s' % ( ( row + 1 ), ( row + 1 ) ), stl5)
-                ws.write(row, 21, '', stl5)
-                ws.write(row, 22, line['payroll'], stl5)
-                ws.write(row, 23, self.change_state_name(line['requirement_state']), stl3)
-                ws.write(row, 24, self.change_state_name(line['settlement_state']), stl3)
+                    ws.write_formula(row, 19, '=SUM(R%s:R%s)' % ( ( row + 1 ), ( row + 1 ) + total_lines - 1 ), stl5)
+                ws.write(row, 20, line['responsible'], stl5)
+                ws.write(row, 21, '=S%s-I%s' % ( ( row + 1 ), ( row + 1 ) ), stl5)
+                ws.write(row, 22, '', stl5)
+                ws.write(row, 23, line['payroll'], stl5)
+                ws.write(row, 24, self.change_state_name(line['requirement_state']), stl3)
+                ws.write(row, 25, self.change_state_name(line['settlement_state']), stl3)
                 row += 1
             else:
                 ws.write(row, 0, '', stl7)
@@ -207,19 +209,20 @@ class RequirementReport(models.TransientModel):
                 ws.write(row, 9, '', stl7)
                 ws.write(row, 10, '', stl7)
                 ws.write(row, 11, '', stl7)
-                ws.write(row, 12, line['document_type'], stl7)
-                ws.write(row, 13, line['document'], stl7)
-                ws.write(row, 14, line['settlement_vendor'], stl6)
-                ws.write(row, 15, line['settlement_retention'], stl6)
-                ws.write(row, 16, line['settlement_detraction'], stl6)
-                ws.write(row, 17, line['settlement_amount'], stl6)
-                ws.write(row, 18, ' ', stl6)
-                ws.write(row, 19, line['responsible'], stl7)
-                ws.write(row, 20, ' ', stl6)
-                ws.write(row, 21, '', stl6)
-                ws.write(row, 22, line['payroll'], stl6)
-                ws.write(row, 23, self.change_state_name(line['requirement_state']), stl3)
+                ws.write(row, 12, '', stl7)
+                ws.write(row, 13, line['document_type'], stl7)
+                ws.write(row, 14, line['document'], stl7)
+                ws.write(row, 15, line['settlement_vendor'], stl6)
+                ws.write(row, 16, line['settlement_retention'], stl6)
+                ws.write(row, 17, line['settlement_detraction'], stl6)
+                ws.write(row, 18, line['settlement_amount'], stl6)
+                ws.write(row, 19, ' ', stl6)
+                ws.write(row, 20, line['responsible'], stl7)
+                ws.write(row, 21, ' ', stl6)
+                ws.write(row, 22, '', stl6)
+                ws.write(row, 23, line['payroll'], stl6)
                 ws.write(row, 24, self.change_state_name(line['requirement_state']), stl3)
+                ws.write(row, 25, self.change_state_name(line['requirement_state']), stl3)
                 row += 1
             line_aux = line['requirement']
 
@@ -232,6 +235,7 @@ class RequirementReport(models.TransientModel):
                 cc.code AS cost_center,
                 rp.name AS supplier,
                 dr.concept AS concept,
+                dr.province_paid_to AS province_paid_to,
                 dr.payment_date AS payment_date,
                 COALESCE(dr.operation_number, dr.check_number) AS operation_number,
                 CASE

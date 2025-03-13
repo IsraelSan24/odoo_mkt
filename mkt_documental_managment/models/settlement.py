@@ -107,6 +107,8 @@ class Settlement(models.Model):
     alternative_amount = fields.Float(string="Alternative Amount")
     
     document_currency = fields.Selection(selection=document_currencies, string='Document Currency')
+    paid_to = fields.Many2one(related='requirement_id.paid_to', store=True)
+    accounting_account = fields.Char(copy=False, string="accounting account", store=True)
 
 
     @api.onchange('requirement_id')
@@ -138,6 +140,46 @@ class Settlement(models.Model):
                 self.tax_id = zero_igv_id
         else:
             self.mobility_id = False
+
+
+    @api.onchange('paid_to')
+    def onchange_set_paid_to(self):
+        for rec in self:
+            if not rec.document_type_id.id:
+                rec.accounting_account = ''
+                continue
+            
+            if rec.document_type_id.id == 1:
+                currency = rec.document_currency or rec.requirement_id.amount_currency_type
+                if currency == 'soles':
+                    rec.accounting_account = '421201'
+                elif currency == 'dolares':
+                    rec.accounting_account = '421202'
+                else:
+                    rec.accounting_account = ''
+            
+            elif rec.document_type_id.id in [11, 31]:
+                rec.accounting_account = '633028' if rec.paid_to.province_id.name == 'Lima' else '633029'
+            
+            elif rec.document_type_id.id == 22:
+                rec.accounting_account = '141301' if rec.paid_to.province_id.name == 'Lima' else '141303'
+            
+            elif rec.document_type_id.id == 2:
+                rec.accounting_account = '633060'
+            
+            elif rec.document_type_id.id == 16:
+                rec.accounting_account = '633051' if rec.paid_to.province_id.name == 'Lima' else '633052'
+            
+            elif rec.document_type_id.id in [7, 24, 26]:
+                if len(rec.dni_ruc or '') == 8:
+                    rec.accounting_account = '143101' if rec.paid_to.province_id.name == 'Lima' else '141303'
+                elif len(rec.dni_ruc or '') == 11:
+                    rec.accounting_account = '422101'
+                else:
+                    rec.accounting_account = ''
+            
+            else:
+                rec.accounting_account = ''
 
 
     @api.onchange('accountable_month_id')

@@ -29,14 +29,18 @@
         <menuitem id="reporting_menu" name="Reporting" parent="doc_mng_root" sequence="5"/>
             <menuitem id="administration_report" name="Print Administrative Report" action="action_requirement_report_view"
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_admin" sequence="40"/>
-            <menuitem id="cash_report_submenu" name="Cash report" action="view_cash_report_action"
-                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="41"/>
+            <!-- <menuitem id="cash_report_submenu" name="Cash report" action="view_cash_report_action"
+                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="41"/> -->
             <menuitem id="settlement_report_submenu" name="Fee Receipt Report" action="view_settlement_report_action"
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="42"/>
             <menuitem id="pending_settlement_submenu" name="Pending settlements" action="action_pending_settlement_view"
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_intern_control_read" sequence="43"/>
             <menuitem id="expenses_report_submenu" name="Expenses report" action="view_expenses_report_action"
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="44"/>
+            <menuitem id="accounting_expenses_report_submenu" name="Accounting expenses report" action="view_accounting_expenses_report_action"
+                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="45"/>
+            <menuitem id="mobility_report_submenu" name="Mobility Report" action="view_mobility_report_action"
+                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_accounting" sequence="47"/>
             <menuitem id="bank_report_submenu" name="Bank report" action="view_bank_report_action"
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_accounting" sequence="51"/>
         <menuitem id="accounting_menu" name="Accounting" parent="doc_mng_root" sequence="6" groups="mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_admin"/>

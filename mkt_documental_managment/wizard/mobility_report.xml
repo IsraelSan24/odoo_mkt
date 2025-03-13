@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_mobility_report_form" model="ir.ui.view">
+        <field name="name">mobility.report.form</field>
+        <field name="model">mobility.report</field>
+        <field name="arch" type="xml">
+            <form string="Mobility Report">
+                <footer>
+                    <button string="Print Mobility XLSX" name="action_print_xlsx" type="object" icon="fa-print" class="oe_highlight"/>
+                    <button string="Cancel" type="object" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mobility_report_action" model="ir.actions.act_window">
+        <field name="name">Mobility Report</field>
+        <field name="res_model">mobility.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_mobility_report_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

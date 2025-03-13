@@ -9,6 +9,12 @@
         <field name="arch" type="xml">
             <xpath expr="//sheet/group" position="after">
                 <group>
+                    <field name="for_province"/>
+                </group>
+                <group>
+                    <field name="for_capital"/>
+                </group>
+                <group>
                     <field name="employee_ids"/>
                 </group>
             </xpath>

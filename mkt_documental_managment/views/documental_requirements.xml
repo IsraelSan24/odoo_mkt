@@ -36,11 +36,11 @@
                 <field name="amount_currency_type" invisible="True"/>
                 <field name="amount_soles" optional="show"/>
                 <field name="amount_uss" optional="show"/>
+                <field name="total_vendor" optional="hide" groups="mkt_documental_managment.documental_requirement_administration"/>
                 <field name="concept" optional="show"/>
                 <field name="budget_id" optional="show"/>
                 <field name="cost_center_id" optional="show"/>
-                <field name="province" optional="show"/>
-                <field name="is_province" optional="show"/>
+                <field name="province_paid_to" optional="show" groups="mkt_documental_managment.documental_requirement_administration"/>
                 <field name="detraction_amount" optional="hide"/>
                 <field name="full_name" widget="many2one_avatar_user" optional="show"/>
                 <button name="button_accounting_check" icon="fa-linux" type="object"
@@ -286,6 +286,7 @@
                             <field name="payment_date" attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
                             <field name="check_or_operation" widget="radio" options="{'horizontal': True}"
                                 attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
+		            <field name="document_file" options="{'horizontal': True}" attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
                         </group>
                         <group>
                             <field name="payment_bank_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}" attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
@@ -358,10 +359,10 @@
 
                                 <button string="Conirm" name="button_requirement_external_control_confirm"
                                     icon="fa-pencil-square-o" type="object" class="oe_highlight"
-                                    attrs="{'invisible':['|',('requirement_state','!=','external_control'),('is_current_executive','=',False)]}"
+                                    attrs="{'invisible':[('requirement_state','!=','external_control')]}"
                                     groups="mkt_documental_managment.documental_requirement_external_control"/>
                                 <button string="Refuse" name="button_refuse_external_control" type="object" class="oe_highlight"
-                                    icon="fa-thumbs-o-down" attrs="{'invisible':['|',('requirement_state','!=','external_control'),('is_current_executive','=',False)]}"
+                                    icon="fa-thumbs-o-down" attrs="{'invisible':[('requirement_state','!=','external_control')]}"
                                     groups="mkt_documental_managment.documental_requirement_external_control"
                                     confirm="Please confirm to refuse"/>
 
@@ -492,12 +493,12 @@
                                     attrs="{'invisible':[('settlement_state','not in',('draft','refused'))]}"
                                     groups="mkt_documental_managment.documental_requirement_user"/>
 
-                                <button string="Sign" name="settlement_executive_sign"
+                                <button string="Sign" name="button_settlement_external_control_confirm"
                                     icon="fa-pencil-square-o" type="object" class="oe_highlight"
-                                    attrs="{'invisible':['|',('settlement_state','!=','external_control'),('is_current_executive','=',False)]}"
+                                    attrs="{'invisible':[('settlement_state','!=','external_control')]}"
                                     groups="mkt_documental_managment.documental_requirement_external_control"/>
                                 <button string="Refuse" name="settlement_refuse_external_control" type="object" class="oe_highlight"
-                                    icon="fa-thumbs-o-down" attrs="{'invisible':['|',('settlement_state','!=','external_control'),('is_current_executive','=',False)]}"
+                                    icon="fa-thumbs-o-down" attrs="{'invisible':[('settlement_state','!=','external_control')]}"
                                     groups="mkt_documental_managment.documental_requirement_external_control"
                                     confirm="Please confirm to refuse"/>
 

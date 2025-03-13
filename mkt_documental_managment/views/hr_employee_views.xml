@@ -10,10 +10,13 @@
                 <page name="custom_page" string="Brands">
                     <field name="is_supervize_province"/>
                     <group>
-                        <field name="brand_ids"/>
+                        <field name="brand_ids" widget="many2many_tags" options="{'no_create': True, 'no_edit': True}"/>
                     </group>
                     <group>
-                        <field name="group_ids"/>
+                        <field name="group_ids" widget="many2many_tags" options="{'no_create': True, 'no_edit': True}"/>
+                    </group>
+                    <group>
+                        <field name="group_supervise_ids" widget="many2many_tags" options="{'no_create': True, 'no_edit': True}"/>
                     </group>
                 </page>
             </xpath>
