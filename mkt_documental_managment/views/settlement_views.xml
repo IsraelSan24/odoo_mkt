@@ -14,6 +14,8 @@
                         groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting"/>
                     <button string="CPE" name="validation_voucher" type="object" class="oe_highlight"
                         groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting"/>
+                    <button name="compute_accounting_account" string="Actualizar Cuenta" type="object" class="btn-primary"
+                        groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting"/>
                 </header>
                 <button string="CPE" name="validation_voucher" type="object" class="oe_highlight"
                     groups="mkt_documental_managment.documental_requirement_admin"/>
@@ -62,6 +64,8 @@
                     <group>
                         <group>
                             <field name="requirement_id" invisible="1"/>
+                            <field name="accounting_account" readonly="True"
+                                groups="mkt_documental_managment.documental_requirement_accounting"/>
                             <field name="state" readonly="False"
                                 groups="mkt_documental_managment.documental_requirement_admin"/>
                             <field name="document_type_id" options="{'no_create': '1', 'no_edit': '1', 'no_open': '1'}"
@@ -73,8 +77,11 @@
                             <field name="mobility_id" attrs="{'invisible':[('document_type_code','!=','PM')],'readonly':[('state','not in',('draft','refused'))]}"
                                 options="{'no_create':'1','no_edit':'1'}"/>
                             <field name="igv_included" attrs="{'readonly':[('state','!=','intern_control')]}"/>
-                            <field name="payment_type"/>
-                            <field name="alternative_amount" attrs="{'invisible': [('payment_type', '=', False)]}"/>
+                            <field name="wrong_payment" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <field name="wrong_why" attrs="{'invisible': [('wrong_payment', '=', False)]}"/>
+                            <field name="differentiated_payment" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
+                            <field name="payment_type" attrs="{'invisible': [('differentiated_payment', '=', False)]}"/>
+                            <field name="alternative_amount" attrs="{'invisible': [('payment_type', '=', False), ('differentiated_payment', '=', False)]}"/>
                         </group>
                         <group>
                             <field name="document_filename" invisible="1"/>
@@ -84,8 +91,9 @@
                             <field name="document_type_code" invisible="1"/>
                             <field name="service_type_id" options="{'no_create': '1', 'no_edit': '1', 'no_open': '1'}"
                                 attrs="{'invisible':[('document_type_code','=','DS')],'readonly':[('state','not in',('draft','intern_control','refused'))]}"/>
-                            <field name="settle_amount" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
-                            <field name="document_currency"/>
+                            <field name="settle_amount" attrs="{'readonly':[('state','not in',('draft','refused'))], 'invisible': [('wrong_payment', '=', True)]}"/>
+                            <field name="settle_amount_wrong" attrs="{'readonly':[('state','not in',('draft','refused'))], 'invisible': [('wrong_payment', '=', False)]}"/>
+                            <field name="document_currency" required="1"/>
                             <field name="settle_igv" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
                             <!-- El cambio del read_only se debio a que el dia 03/10/2024 a las aprox 17:00 prismary dijo que no podria cambiar el impuesto de una linea de una liquidacion ya que estaba en rechazado -->
                             <field name="tax_id" attrs="{'readonly':[('state','not in',('draft','refused','intern_control'))]}"
@@ -163,6 +171,7 @@
                             <field name="detraction_date"/>
                         </group>
                         <group>
+                            <field name="wrong_payment" invisible="1"/>
                             <field name="accountable_month_id" options="{'no_create': '1', 'no_edit': '1', 'no_open': '1'}"/>
                             <field name="subdiary"/>
                             <field name="voucher_number"/>
@@ -175,7 +184,8 @@
                             <field name="due_date"/>
                             <field name="detail_gloss"/>
                             <field name="currency"/>
-                            <field name="settle_amount"/>
+                            <field name="settle_amount" attrs="{'invisible': [('wrong_payment', '=', True)]}"/>
+                            <field name="settle_amount_wrong" attrs="{'invisible': [('wrong_payment', '=', False)]}"/>
                             <field name="settle_igv"/>
                             <field name="tax_id"/>
                             <field name="movement_number"/>

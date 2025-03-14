@@ -37,6 +37,7 @@
                 <field name="amount_soles" optional="show"/>
                 <field name="amount_uss" optional="show"/>
                 <field name="total_vendor" optional="hide" groups="mkt_documental_managment.documental_requirement_administration"/>
+                <field name="to_pay_supplier" optional="hide"/>
                 <field name="concept" optional="show"/>
                 <field name="budget_id" optional="show"/>
                 <field name="cost_center_id" optional="show"/>
@@ -48,6 +49,7 @@
                 <field name="account_check" optional="hide"/>
                 <field name="refund_requirement_id" optional="hide"/>
                 <field name="unify" widget="boolean_toggle" readonly="1"/>
+                <field name="divided_payment" widget="boolean_toggle" readonly="1"/>
                 <field name="requirement_state" widget="badge"
                     decoration-muted="requirement_state == 'draft'"
                     decoration-warning="requirement_state in ('external_control','executive','responsible','intern_control','administration')"
@@ -90,6 +92,9 @@
                         <group>
                             <field name="unify" widget="boolean_toggle"
                                 attrs="{'readonly':['|',('requirement_state','not in',('draft','refused')),('settlement_state','not in',('draft','refused'))]}"/>
+                            <field name="divided_payment" widget="boolean_toggle"
+                                attrs="{'readonly':['|',('requirement_state','not in',('draft','refused')),('settlement_state','not in',('draft','refused'))]}"/>
+                            <field name="show_payments_tab" invisible="1"/>
                         </group>
                     </group>
                     <group>
@@ -136,7 +141,6 @@
                                     <field name="to_pay" sum="Vendor total"/>
                                     <field name="detraction" sum="Detraction total"/>
                                     <field name="retention" sum="Retention total"/>
-                                    <field name="amount" sum="Amount total"/>
                                 </tree>
                             </field>
                         </page>
@@ -146,6 +150,7 @@
                             </header>
                             <field name="lock_settlement_ids" options="{'no_open':'1'}">
                                 <tree create="0" delete="0">
+                                    <field name="wrong_payment" invisible="1"/>
                                     <field name="date"/>
                                     <field name="dni_ruc"/>
                                     <field name="partner"/>
@@ -153,13 +158,44 @@
                                     <field name="document"/>
                                     <field name="reason"/>
                                     <field name="settle_igv" optional="hide"/>
-                                    <field name="settle_amount" optional="hide"/>
+                                    <field name="settle_amount" attrs="{'invisible': [('wrong_payment', '=', True)]}" optional="hide"/>
+                                    <field name="settle_amount_wrong" attrs="{'invisible': [('wrong_payment', '=', False)]}" optional="hide"/>
                                     <field name="vendor" sum="Vendor total"/>
                                     <field name="detraction" sum="Detraction total"/>
                                     <field name="retention" sum="Retention total"/>
                                     <field name="amount" sum="Amount total"/>
+                                    <field name="vendor" optional="show"/>
                                 </tree>
                             </field>
+                        </page>
+                        <page string="Payments" name="payments" attrs="{'invisible': [('show_payments_tab', '=', False)]}">
+                            <field name="requirement_payment_ids">
+                                <tree>
+                                    <field name="requirement_state" invisible="True"/>
+                                    <field name="is_amount_editable" invisible="True"/>
+                                    <field name="is_administration_editable" invisible="True"/>
+                                    <field name="date_requested" attrs="{'readonly': [('requirement_state', 'not in', ('draft', 'refused'))]}"/>
+                                    <field name="check_or_operation"
+                                        groups="mkt_documental_managment.documental_requirement_administration"/>
+                                    <field name="payment_bank_id" 
+                                        attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                                    <field name="operation_number" 
+                                        attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                                    <field name="payment_date" 
+                                        attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                                    <field name="requirement_payroll_id" 
+                                        groups="mkt_documental_managment.documental_requirement_administration"/>
+                                    <field name="amount" sum="Total" attrs="{'readonly': [('is_amount_editable', '=', False)]}"/>
+                                    <field name="in_bank" widget="boolean_toggle" 
+                                        attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group></group>
+                                <group>
+                                    <field name="pending_to_pay" readonly="True"/>
+                                </group>
+                            </group>
                         </page>
                     </notebook>
                 </sheet>
@@ -190,8 +226,6 @@
                         groups="mkt_documental_managment.documental_requirement_admin"/>
                     <button string="Compute amounts" name="compute_settlement_amounts" type="object" class="oe_highlight"
                         groups="mkt_documental_managment.documental_requirement_admin"/>
-                    <button string="Update amount" name="compute_amount_soles_uss" type="object" class="oe_highlight"
-                        groups="mkt_documental_managment.documental_requirement_admin"/>
                     <button string="Update balance" name="button_update_balance" type="object" class="oe_highlight"
                         groups="mkt_documental_managment.documental_requirement_admin"/>
                     <button string="Compute balance" name="compute_balance" type="object" class="oe_highlight"
@@ -221,6 +255,9 @@
                         <group>
                             <field name="unify" widget="boolean_toggle"
                                 attrs="{'readonly':['|',('requirement_state','not in',('draft','refused')),('settlement_state','not in',('draft','refused'))]}"/>
+                            <field name="divided_payment" widget="boolean_toggle"
+                                attrs="{'readonly':['|',('requirement_state','not in',('draft','refused')),('settlement_state','not in',('draft','refused'))]}"/>
+                            <field name="show_payments_tab" invisible="1"/>
                         </group>
                     </group>
                     <group>
@@ -271,6 +308,7 @@
                             <field name="amount_currency_type" widget='radio' attrs="{'readonly':['|',('requirement_state','not in',('draft','refused')),('settlement_state','not in',('draft','refused'))]}" options="{'horizontal': true}"/>
                             <field name="amount_soles" attrs="{'invisible': [('amount_currency_type', '!=', 'soles')]}" force_save="True" readonly="True"/>
                             <field name="amount_uss" attrs="{'invisible': [('amount_currency_type', '!=', 'dolares')]}" force_save="True" readonly="True"/>
+                            <field name="to_pay_supplier"/>
                             <field name="balance"/>
                         </group>
                         <group>
@@ -281,35 +319,50 @@
                         </group>
                     </group>
                     <group groups="mkt_documental_managment.documental_requirement_administration" attrs="{'invisible':[('unify','=',False)]}">
-                    <!-- <group groups="mkt_documental_managment.documental_requirement_administration" invisible="1"> -->
                         <group>
-                            <field name="payment_date" attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
-                            <field name="check_or_operation" widget="radio" options="{'horizontal': True}"
-                                attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
-		            <field name="document_file" options="{'horizontal': True}" attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
+                            <field name="payment_date" 
+                                attrs="{'readonly':[('settlement_state','!=','administration')], 'invisible':[('payment_date','=',False)]}" 
+                                force_save="1"/>
+                            <field name="check_or_operation" widget="radio" options="{'horizontal': True}" 
+                                attrs="{'readonly':[('settlement_state','!=','administration')], 'invisible':[('check_or_operation','=',False)]}" 
+                                force_save="1"/>
                         </group>
                         <group>
-                            <field name="payment_bank_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}" attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
-                            <field name="operation_number" attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
-                            <field name="requirement_payroll_id" attrs="{'readonly':[('settlement_state','!=','administration')]}" force_save="1"/>
+                            <field name="payment_bank_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}" 
+                                attrs="{'readonly':[('settlement_state','!=','administration')], 'invisible':[('payment_bank_id','=',False)]}" 
+                                force_save="1"/>
+                            <field name="operation_number" 
+                                attrs="{'readonly':[('settlement_state','!=','administration')], 'invisible':[('operation_number','=',False)]}" 
+                                force_save="1"/>
+                            <field name="requirement_payroll_id" 
+                                attrs="{'readonly':[('settlement_state','!=','administration')], 'invisible':[('requirement_payroll_id','=',False)]}" 
+                                force_save="1"/>
                         </group>
                     </group>
+
                     <group groups="mkt_documental_managment.documental_requirement_administration" attrs="{'invisible':[('unify','=',True)]}">
-                    <!-- <group groups="mkt_documental_managment.documental_requirement_administration" invisible="1"> -->
                         <group>
-                            <!-- <field name="in_bank" invisible="True"/> -->
-                            <!-- <field name="payment_date" attrs="{'readonly':['|',('requirement_state','!=','administration'),('settlement_state','!=','administration')]}"/> -->
-                            <field name="payment_date" attrs="{'readonly':[('requirement_state','!=','administration')]}" force_save="1"/>
-                            <!-- <field name="check_or_operation" widget="radio" attrs="{'readonly':['|',('requirement_state','!=','administration'),('settlement_state','!=','administration')]}"/> -->
-                            <field name="check_or_operation" widget="radio" attrs="{'readonly':[('requirement_state','!=','administration')]}" force_save="1"/>
+                            <field name="payment_date" 
+                                attrs="{'readonly':[('requirement_state','!=','administration')], 'invisible':[('payment_date','=',False)]}" 
+                                force_save="1"/>
+                            <field name="check_or_operation" widget="radio" 
+                                attrs="{'readonly':[('requirement_state','!=','administration')], 'invisible':[('check_or_operation','=',False)]}" 
+                                force_save="1"/>
                             <field name="repeated" invisible="True"/>
                         </group>
                         <group>
-                            <!-- <field name="operation_number" attrs="{'invisible': [('check_or_operation','=','check')],'readonly':['|',('requirement_state','!=','administration'),('settlement_state','!=','administration')]}"/> -->
-                            <field name="payment_bank_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}" attrs="{'readonly':[('requirement_state','!=','administration')]}" force_save="1"/>
-                            <field name="operation_number" attrs="{'invisible': [('check_or_operation','=','check')],'readonly':[('requirement_state','!=','administration')]}" force_save="1"/>
-                            <field name="check_number" attrs="{'invisible': [('check_or_operation','=','operation')],'readonly':[('requirement_state','!=','administration')]}" force_save="1"/>
-                            <field name="requirement_payroll_id" attrs="{'readonly':[('requirement_state','!=','administration')]}" force_save="1"/>
+                            <field name="payment_bank_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}" 
+                                attrs="{'readonly':[('requirement_state','!=','administration')], 'invisible':[('payment_bank_id','=',False)]}" 
+                                force_save="1"/>
+                            <field name="operation_number" 
+                                attrs="{'invisible': [('check_or_operation','=','check')], 'readonly':[('requirement_state','!=','administration')], 'invisible':[('operation_number','=',False)]}" 
+                                force_save="1"/>
+                            <field name="check_number" 
+                                attrs="{'invisible': [('check_or_operation','=','operation')], 'readonly':[('requirement_state','!=','administration')], 'invisible':[('check_number','=',False)]}" 
+                                force_save="1"/>
+                            <field name="requirement_payroll_id" 
+                                attrs="{'readonly':[('requirement_state','!=','administration')], 'invisible':[('requirement_payroll_id','=',False)]}" 
+                                force_save="1"/>
                         </group>
                     </group>
                     <group invisible="True">
@@ -328,28 +381,6 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Justifications" groups="mkt_documental_managment.documental_requirement_admin">
-                            <!-- <field name="requirement_detail_justification_ids" mode="tree" attrs="{'invisible':[('state','not in',('draft','refused'))]}" options="{'no_open': '1'}"> -->
-                            <field name="requirement_detail_justification_ids" mode="tree" options="{'no_open': '1'}">
-                                <tree create="1" editable="bottom" delete="1">
-                                    <field name="partner"/>
-                                    <field name="document_filename" invisible="True"/>
-                                    <field name="document_file" widget="binary" filename="document_filename"/>
-                                    <field name="reason"/>
-                                    <field name="amount" sum="Total Amount"/>
-                                </tree>
-                            </field>
-                            <!-- <field name="restricted_requirement_detail_justification_ids" mode="tree" attrs="{'invisible':[('state','in',('draft','refused'))]}" options="{'no_open': '1'}"> -->
-                            <field name="restricted_requirement_detail_justification_ids" mode="tree" options="{'no_open': '1'}">
-                                <tree create="0" delete="0">
-                                    <field name="partner"/>
-                                    <field name="document_filename" invisible="True"/>
-                                    <field name="document_file" widget="binary" filename="document_filename"/>
-                                    <field name="reason"/>
-                                    <field name="amount" sum="Total Amount"/>
-                                </tree>
-                            </field>
-                        </page>
                         <page string="Requirement" attrs="{'invisible':[('unify','!=',False)]}">
                             <header>
                                 <button string="Sign" name="button_petitioner_signature"
@@ -357,10 +388,11 @@
                                     attrs="{'invisible':[('requirement_state','not in',('draft','refused'))]}"
                                     groups="mkt_documental_managment.documental_requirement_user"/>
 
-                                <button string="Conirm" name="button_requirement_external_control_confirm"
+                                <button string="Confirm" name="button_requirement_external_control_confirm"
                                     icon="fa-pencil-square-o" type="object" class="oe_highlight"
                                     attrs="{'invisible':[('requirement_state','!=','external_control')]}"
                                     groups="mkt_documental_managment.documental_requirement_external_control"/>
+
                                 <button string="Refuse" name="button_refuse_external_control" type="object" class="oe_highlight"
                                     icon="fa-thumbs-o-down" attrs="{'invisible':[('requirement_state','!=','external_control')]}"
                                     groups="mkt_documental_managment.documental_requirement_external_control"
@@ -450,11 +482,10 @@
                                     <!-- <field name="document_file" widget="binary" filename="document_filename"/> -->
                                     <field name="reason"/>
                                     <field name="required_igv" optional="hide" sum="Required IGV total"/>
-                                    <field name="required_amount" optional="hide" sum="Required amount total"/>
+                                    <field name="required_amount" sum="Required amount total"/>
                                     <field name="to_pay"/>
                                     <field name="detraction"/>
                                     <field name="retention"/>
-                                    <field name="amount" sum="Total Amount"/>
                                 </tree>
                             </field>
                             <group groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_intern_control_read"
@@ -563,6 +594,7 @@
                                         groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"/>
                                     <field name="handler" widget="handle"/>
                                     <field name="repeated" invisible="1"/>
+                                    <field name="wrong_payment" invisible="1"/>
                                     <field name="settle_no"/>
                                     <field name="date"/>
                                     <field name="dni_ruc"/>
@@ -573,8 +605,10 @@
                                     <field name="document_filename" invisible="1"/>
                                     <field name="document_file" widget="binary" filename="document_filename"/>
                                     <field name="reason"/>
-                                    <field name="settle_igv" sum="Amount total"/>
-                                    <field name="settle_amount" sum="IGV total"/>
+                                    <field name="settle_igv" sum="IGV total"/>
+                                    <field name="settle_amount" attrs="{'invisible': [('wrong_payment', '=', True)]}" optional="hide" sum="Amount total"/>
+                                    <field name="settle_amount_wrong" attrs="{'invisible': [('wrong_payment', '=', False)]}" optional="hide"/>
+                                    <field name="vendor" optional="show"/>
                                 </tree>
                             </field>
                             <field name="lock_settlement_ids" attrs="{'readonly':[('settlement_state','!=','intern_control')]}"
@@ -589,6 +623,7 @@
                                         decoration-warning="cpe_state == 'failed'"
                                         groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"/>
                                     <field name="repeated" invisible="1"/>
+                                    <field name="wrong_payment" invisible="1"/>
                                     <field name="settle_no"/>
                                     <field name="date"/>
                                     <field name="dni_ruc"/>
@@ -597,12 +632,14 @@
                                     <field name="document"/>
                                     <field name="movement_number" groups="mkt_documental_managment.documental_requirement_intern_control"/>
                                     <field name="reason"/>
-                                    <field name="settle_igv" optional="hide" sum="Amount total"/>
-                                    <field name="settle_amount" optional="hide" sum="IGV total"/>
+                                    <field name="settle_igv" sum="IGV total"/>
+                                    <field name="settle_amount" attrs="{'invisible': [('wrong_payment', '=', True)]}" optional="hide" sum="Amount total"/>
+                                    <field name="settle_amount_wrong" attrs="{'invisible': [('wrong_payment', '=', False)]}" optional="hide"/>
                                     <field name="vendor" optional="hide" sum="Vendor total"/>
                                     <field name="detraction" optional="hide" sum="Detraction total"/>
                                     <field name="retention" optional="hide" sum="Retention total"/>
                                     <field name="amount" sum="Vendor total"/>
+                                    <field name="vendor" optional="show"/>
                                 </tree>
                             </field>
                             <group>
@@ -622,20 +659,31 @@
                                 </group>
                             </group>
                         </page>
-                        <page string="Payments" name="payments" groups="mkt_documental_managment.documental_requirement_admin">
+                        <page string="Payments" name="payments" attrs="{'invisible': [('show_payments_tab', '=', False)]}">
                             <field name="requirement_payment_ids">
                                 <tree>
-                                    <field name="check_or_operation"/>
-                                    <field name="operation_number"/>
-                                    <field name="payment_date"/>
-                                    <field name="requirement_payroll_id"/>
-                                    <field name="amount" sum="Total"/>
+                                    <field name="requirement_state" invisible="True"/>
+                                    <field name="is_amount_editable" invisible="True"/>
+                                    <field name="is_administration_editable" invisible="True"/>
+                                    <field name="date_requested" attrs="{'readonly': [('requirement_state', 'not in', ('draft', 'refused'))]}"/>
+                                    <field name="check_or_operation"
+                                        groups="mkt_documental_managment.documental_requirement_administration"/>
+                                    <field name="payment_bank_id" 
+                                        attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                                    <field name="operation_number" 
+                                        attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                                    <field name="payment_date" 
+                                        attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                                    <field name="requirement_payroll_id" 
+                                        groups="mkt_documental_managment.documental_requirement_administration"/>
+                                    <field name="amount" sum="Total" attrs="{'readonly': [('is_amount_editable', '=', False)]}"/>
+                                    <field name="in_bank" widget="boolean_toggle" 
+                                        attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
                                 </tree>
                             </field>
                             <group>
-                                <group></group>
                                 <group>
-                                    <field name="pending_to_pay"/>
+                                    <field name="pending_to_pay" readonly="True"/>
                                 </group>
                             </group>
                         </page>

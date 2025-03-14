@@ -16,7 +16,7 @@
                         <field name="partner" attrs="{'invisible': [('is_justification', '=', True)], 'readonly':[('state','not in',('draft','refused'))]}"/>
 			<field name="document_type" options="{'no_create':'1','no_edit':'1','no_open':'1'}"
                             attrs="{'readonly':[('state','not in',('draft','refused'))]}" required="1"/>
-                        <field name="document" attrs="{'invisible':[('document_type_code','=','PM')], 'readonly':[('state','not in',('draft','refused'))]}"/>
+                        <field name="document" attrs="{'invisible':[('document_type_code','in',('PM','JF'))], 'readonly':[('state','not in',('draft','refused'))]}"/>
                         <field name="mobility_id" attrs="{'invisible':[('document_type_code','!=','PM')],'readonly':[('state','not in',('draft','refused'))]}"
                             options="{'no_create':'1','no_edit':'1'}"/>
                         <field name="igv_included" attrs="{'readonly':[('state','!=','intern_control')]}"
@@ -30,8 +30,8 @@
                             attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
                         <field name="reason" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
                         <field name="document_type_code" invisible="1"/>
-			<field name="service_type_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"
-                            attrs="{'invisible':[('is_justification', '=', True),('document_type_code','=','DS')],'readonly':[('state','not in',('draft','intern_control','refused'))]}"/>
+                        <field name="service_type_id" options="{'no_create':'1','no_edit':'1','no_open':'1'}"
+                                        attrs="{'invisible':[('document_type_code','in',('DS'))],'readonly':[('state','not in',('draft','intern_control','refused'))]}"/>
                         <field name="required_amount" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
                         <field name="required_igv" attrs="{'invisible': [('is_justification', '=', True)], 'readonly':[('state','not in',('draft','refused'))]}"/>
                         <field name="tax_igv_id" attrs="{'invisible': [('is_justification', '=', True)], 'readonly':[('state','not in',('draft','intern_control'))]}"
@@ -43,7 +43,6 @@
                         <field name="detraction"/>
                         <field name="retention"/>
                         <field name="to_pay"/>
-                        <field name="amount"/>
                     </group>
                     <field name="requirement_detail_line_ids" options="{'no_open': '1'}"
                         attrs="{'readonly':[('state','!=','intern_control')]}"
