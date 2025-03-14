@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <record id="view_requirement_payment_form" model="ir.ui.view">
         <field name="name">requirement.payment.form</field>
         <field name="model">requirement.payment</field>
@@ -9,18 +8,37 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="check_or_operation"/>
-                            <field name="payment_date"/>
+                            <field name="current_partner_bank_ids" invisible="True"/>
+                            <field name="date_requested" attrs="{'readonly': [('requirement_state','not in',('draft','refused'))]}"/>
+                            <field name="check_or_operation" attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                            <field name="in_bank" widget="boolean_toggle" 
+                                groups="mkt_documental_managment.documental_requirement_administration"/>
+                            <field name="wrong_payment" widget="boolean_toggle" 
+                                attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
                         </group>
                         <group>
-                            <field name="operation_number"/>
-                            <field name="requirement_payroll_id" options="{'no_create':'1','no_open':'1','no_edit':'1'}"/>
-                            <field name="amount"/>
+                            <field name="payment_bank_id" attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                            <field name="operation_number" attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                            <field name="payment_date" attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                            <field name="requirement_payroll_id" groups="mkt_documental_managment.documental_requirement_administration"/>
+                            <field name="amount" sum="Total" attrs="{'readonly': [('is_amount_editable', '=', False)]}"/>
+                        </group>
+                    </group>
+                    
+                    <group>
+                        <group>                            
+                            <field name="requirement_state" invisible="True"/>
+                            <field name="is_amount_editable" invisible="True"/>
+                            <field name="is_administration_editable" invisible="True"/>
+                        </group>
+                        <group>
+                            <field name="document_file" filename="document_filename" 
+                                groups="mkt_documental_managment.documental_requirement_administration"/>
+                            <field name="document_filename" invisible="1"/>
                         </group>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
-
 </odoo>

@@ -574,33 +574,6 @@ class DocumentalSettlements(models.Model):
             for rec in self.settlement_detail_ids:
                 if not rec.document_file:
                     raise ValidationError(_("The 'File' field is required. Be sure to upload one document for each detail line in the Settlement."))
-            # for rec in self.settlement_detail_ids:
-            #     if rec.ruc:
-            #         if len(rec.ruc) == 11 and rec.document_type.is_ruc == True:
-            #             ruc = rec.ruc
-            #             raw_info = ConsultarRUC(ruc)[0]
-            #             info = raw_info[0]
-            #             print_recept_info = raw_info[1][1].replace('\n','').replace('\t','').replace('\r','').replace('</br>','').replace('<td>','').replace('</td>','').replace('<tr>','').replace('</tr>','').strip().replace(' ','')
-            #             if 'IMPORTANTE' in info[1]:
-            #                 info.pop(1)
-            #             if 'PERSONA' not in info[1]:
-            #                 electronic_issuance_info = info[12]
-            #             else:
-            #                 electronic_issuance_info = info[13]
-            #             if ruc[:2] == '20' and rec.document_type.name == 'BOLETA':
-            #                 raise ValidationError(_('A supplier with RUC %s can issue invoices, but you are selected a sales receipt. Instead, the supplier must issue an invoice.') % (ruc))
-            #             if ruc[:2] == '10' and rec.document_type.name == 'BOLETA' and ('FACTURA' in print_recept_info + electronic_issuance_info):
-            #                 raise ValidationError(_('A supplier with RUC %s can issue invoices, but you are selected a sales receipt. Please, modify the line in the Settlement detail.') % (ruc))
-            #             if ruc[:2] == '10' and rec.document_type.name == 'FACTURA' and ('FACTURA' not in print_recept_info + electronic_issuance_info):
-            #                 raise ValidationError(_('The supplier with RUC %s cannot issue invoices. Please select a sales receipt.') % (ruc))
-            #             for i in range(0,8):
-            #                 info[i] = info[i].replace('\n','').replace('\t','').replace('\r','').replace('</br>','')
-            #             if 'PERSONA' not in info[1]:
-            #                 if (info[5] != 'ACTIVO') or (info[6] != 'HABIDO'):
-            #                     raise ValidationError(_('The contact %s is found as %s and its condition is %s.') % (info[0].split('-')[-1].strip(), info[5].strip().replace(' ','').replace('BAJADEOFICIO','BAJA DE OFICIO - ').replace('SUSPENSIONTEMPORAL','SUSPENSION TEMPORAL').replace('BAJADEFINITIVA','BAJA DEFINITIVA - ').replace('BAJAPROV.POROFICIO','BAJA PROVICIONAL POR OFICIO - ').replace('FechadeBaja','Fecha de Baja'), info[6].split('   ')[0].strip()))
-            #             else:
-            #                 if info[6] != 'ACTIVO' or info[7] != 'HABIDO':
-            #                     raise ValidationError(_('The contact %s is found as %s and its condition is %s.') % (info[2].split('-')[-1].strip(), info[6].strip().replace(' ','').replace('BAJADEFINITIVA','BAJA DEFINITIVA - ').replace('BAJADEOFICIO','BAJA DE OFICIO - ').replace('SUSPENSIONTEMPORAL','SUSPENSION TEMPORAL').replace('BAJAPROV.POROFICIO','BAJA PROVICIONAL POR OFICIO - ').replace('FechadeBaja','Fecha de Baja'), info[7].split('</br>')[0].split('   ')[0].strip()))
         else:
             raise ValidationError(_('Please, make sure to write at least one line in the Settlement detail.'))
 
