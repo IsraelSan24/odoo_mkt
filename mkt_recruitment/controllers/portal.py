@@ -419,7 +419,6 @@ class RecruitmentPortal(portal.CustomerPortal):
                 'contract_signature': signature,
                 'signature_state': 'signed',
             })
-            contract_sudo.with_context(from_signed_function=True).write({'state': 'open'})
             contract_sudo.send_email_to_employee_signed()
             request.env.cr.commit()
         except (TypeError, binascii.Error) as e:
