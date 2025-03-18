@@ -1,4 +1,4 @@
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, SUPERUSER_ID
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from odoo.exceptions import UserError, ValidationError
@@ -78,6 +78,7 @@ class DocumentalRequirements(models.Model):
 
     name = fields.Char(copy=False, default=lambda self: _('New'), required=True, string="RQ Number")
     unify = fields.Boolean(default=True, string='Unify')
+    divided_payment = fields.Boolean(default=False, string='Divided payment')
     state = fields.Selection(string='State', selection=state, default='draft', tracking=True)
     timer_state = fields.Selection([
         ('on_time','On time'),
@@ -115,7 +116,7 @@ class DocumentalRequirements(models.Model):
     amount_currency_type = fields.Selection(string='Currency type', selection=currency_type, default='soles', tracking=True)
     currency_id = fields.Many2one(comodel_name='res.currency')
 
-    check_or_operation = fields.Selection(string="Check/Operation", selection=[('check','Check'),('operation','Operation')], default='operation', copy=False, tracking=True)
+    check_or_operation = fields.Selection(string="Check/Operation", selection=[('check','Check'),('operation','Operation')], copy=False, tracking=True)
     check_number = fields.Char(string='Check Number', copy=False, tracking=True)
     operation_number = fields.Char(string='Operation Number', copy=False, tracking=True)
     payment_date = fields.Date(string="Payment Date", copy=False, tracking=True)
@@ -247,6 +248,8 @@ class DocumentalRequirements(models.Model):
     document_file = fields.Binary(string='File', attachment=True)
     document_filename = fields.Char(compute='_compute_filename', string='Filename', store=True)
 
+    show_payments_tab = fields.Boolean(compute="_compute_show_payments_tab")
+
 
     def compute_province(self):
         for rec in self:
@@ -263,7 +266,7 @@ class DocumentalRequirements(models.Model):
         for rec in self:
             if rec.document_file:
                 rec.document_filename = 'Voucher document'
-
+            
 
     @api.depends('total_paid',
                  'amount_uss',
@@ -278,13 +281,15 @@ class DocumentalRequirements(models.Model):
 
 
     @api.depends('amount_uss',
-                 'amount_soles',
-                 'settlement_ids',
-                 'requirement_detail_ids',
-                 'requirement_payment_ids')
+                'amount_soles',
+                'settlement_ids',
+                'requirement_detail_ids',
+                'requirement_payment_ids',
+                'requirement_payment_ids.amount',  # Asegura que se recalcule cuando cambia el monto
+                'requirement_payment_ids.wrong_payment')  # Asegura que se recalcule cuando cambia este campo
     def _compute_total_paid(self):
         for rec in self:
-            rec.total_paid = sum(rec.requirement_payment_ids.mapped('amount'))
+            rec.total_paid = sum(rec.requirement_payment_ids.filtered(lambda p: not p.wrong_payment).mapped('amount'))
 
 
     def update_payment_lines(self):
@@ -443,7 +448,7 @@ class DocumentalRequirements(models.Model):
             self.operation_number = False
         if self.check_or_operation == 'operation':
             self.check_number = False
-
+ 
 
     @api.onchange('amount_soles','amount_uss','requirement_detail_ids')
     def onchange_amount_char(self):
@@ -492,19 +497,15 @@ class DocumentalRequirements(models.Model):
             rec.settlement_amount = round(sum(not_return_lines.mapped('settle_amount')) - sum(detraction_lines.mapped('settle_amount')),2)
 
 
-    @api.depends('amount_uss','amount_soles','settlement_amount','settlement_ids')
+    @api.depends('amount_uss', 'amount_soles', 'total_vendor', 'to_pay_supplier', 'settlement_ids')
     def _compute_balance(self):
         for rec in self:
             requirement_amount = rec.amount_soles if rec.amount_soles != 0 else rec.amount_uss
+            settlement_amount = sum(rec.settlement_ids.mapped('settle_amount'))
             if rec.unify:
-                not_return_lines = rec.settlement_ids.filtered(lambda line: not line.document_type_id.is_return)
-                settlement_amount = sum( not_return_lines.mapped('settle_amount') )
-                rec.balance = round( settlement_amount - requirement_amount, 2 )
+                rec.balance = round(settlement_amount - requirement_amount, 2)
             else:
-                if rec.amount_currency_type == 'soles':
-                    rec.balance = round(  rec.settlement_amount - rec.amount_soles, 2 )
-                if rec.amount_currency_type == 'dolares':
-                    rec.balance = round( rec.settlement_amount - rec.amount_uss, 2 )
+                rec.balance = round(rec.total_vendor - rec.to_pay_supplier, 2)
 
 
     @api.depends('paid_to')
@@ -536,18 +537,6 @@ class DocumentalRequirements(models.Model):
                 rec.budget_track = rec.budget_id.name
 
 
-    def compute_amount_soles_uss(self):
-        for rec in self:
-            requirement_amount = sum(rec.requirement_detail_ids.mapped('amount'))
-            settlement_amount = sum(rec.settlement_ids.mapped('settle_amount'))
-            if rec.amount_currency_type == 'soles':
-                rec.amount_soles = settlement_amount if rec.unify else requirement_amount
-                rec.amount_uss = False
-            if rec.amount_currency_type == 'dolares':
-                rec.amount_soles = False
-                rec.amount_uss = settlement_amount if rec.unify else requirement_amount
-
-
     @api.depends('unify',
                  'requirement_detail_ids',
                  'requirement_detail_justification_ids',
@@ -556,7 +545,7 @@ class DocumentalRequirements(models.Model):
                  'settlement_ids')
     def _compute_amount_soles_uss(self):
         for rec in self:
-            requirement_amount = sum(rec.requirement_detail_ids.mapped('required_amount')) + sum(rec.requirement_detail_justification_ids.mapped('amount'))
+            requirement_amount = sum(rec.requirement_detail_ids.mapped('required_amount'))
             not_return_lines = rec.settlement_ids.filtered(lambda line: not line.document_type_id.is_return)
             settlement_amount = round(sum( not_return_lines.mapped('settle_amount') ), 2)
             if rec.amount_currency_type == 'soles':
@@ -606,12 +595,7 @@ class DocumentalRequirements(models.Model):
     @api.depends('requirement_detail_ids','settlement_ids')
     def _compute_settlement_vendor(self):
         for rec in self:
-            if rec.unify:
-                rec.total_vendor = sum( rec.settlement_ids.mapped('vendor') )
-            else:
-                rec.total_vendor = sum( rec.requirement_detail_ids.mapped('to_pay') )
-                if len(rec.requirement_detail_ids) == 0 and len(rec.requirement_detail_justification_ids) != 0:
-                    rec.total_vendor = sum( rec.requirement_detail_justification_ids.mapped('amount') )
+            rec.total_vendor = sum( rec.settlement_ids.mapped('vendor') )
 
 
     @api.depends('requirement_detail_ids','amount_currency_type','settlement_ids')
@@ -624,30 +608,35 @@ class DocumentalRequirements(models.Model):
 
 
     @api.depends('requirement_detail_ids',
-                 'requirement_detail_justification_ids',
-                 'amount_currency_type',
-                 'requirement_detail_ids.requirement_detail_line_ids',
-                 'requirement_detail_ids.amount')
+                'amount_currency_type',
+                'requirement_detail_ids.requirement_detail_line_ids',
+                'requirement_detail_ids.amount',
+                'requirement_payment_ids',
+                'requirement_payment_ids.amount',
+                'settlement_ids',
+                'settlement_ids.vendor')
     def _compute_detraction_to_pay(self):
         for rec in self:
             rec.detraction_amount = sum(rec.requirement_detail_ids.mapped('detraction'))
             detraction = number_to_string(rec.detraction_amount)
             rec.retention_amount = sum(rec.requirement_detail_ids.mapped('retention'))
+
             if rec.amount_soles:
-                rec.to_pay_supplier = rec.amount_soles - sum(rec.requirement_detail_ids.mapped('detraction')) - sum(rec.requirement_detail_ids.mapped('retention'))
+                rec.to_pay_supplier = rec.amount_soles - rec.detraction_amount - rec.retention_amount
                 rec.detraction_amount_char = (detraction.replace("uno mil", "un mil") + " soles").upper()
-                if rec.amount_soles >= 0 and rec.amount_soles < 1000000000000:
-                    rec.amount_char = (number_to_string(round(rec.amount_soles,2)).replace("uno mil", "un mil") + " soles").upper()
+                if 0 <= rec.amount_soles < 1000000000000:
+                    rec.amount_char = (number_to_string(round(rec.amount_soles, 2)).replace("uno mil", "un mil") + " soles").upper()
             elif rec.amount_uss:
-                rec.to_pay_supplier = rec.amount_uss - sum(rec.requirement_detail_ids.mapped('detraction')) - sum(rec.requirement_detail_ids.mapped('retention'))
+                rec.to_pay_supplier = rec.amount_uss - rec.detraction_amount - rec.retention_amount
                 rec.detraction_amount_char = (detraction.replace("uno mil", "un mil") + " dólares").upper()
-                if rec.amount_uss >= 0 and rec.amount_uss < 1000000000000:
-                    rec.amount_char = (number_to_string(round(rec.amount_uss,2)).replace("uno mil", "un mil") + " dólares").upper()
-            else:
+                if 0 <= rec.amount_uss < 1000000000000:
+                    rec.amount_char = (number_to_string(round(rec.amount_uss, 2)).replace("uno mil", "un mil") + " dólares").upper()
+            if rec.unify:
+                rec.to_pay_supplier = rec.total_vendor
+            elif not rec.amount_soles and not rec.amount_uss:
                 rec.to_pay_supplier = 0.00
 
 
-    # * Actions
     def compute_settlement_total_lines(self):
         self._compute_settlement_total_lines()
 
@@ -806,6 +795,12 @@ class DocumentalRequirements(models.Model):
         else:
             self.in_bank = True
 
+    
+    @api.depends('requirement_payment_ids.in_bank', 'divided_payment')
+    def _compute_in_bank(self):
+        for req in self:
+            req.in_bank = bool(req.requirement_payment_ids) and all(req.requirement_payment_ids.mapped('in_bank'))
+
 
     def button_current_rq(self):
         self.ensure_one()
@@ -820,6 +815,7 @@ class DocumentalRequirements(models.Model):
         }
 
 
+    #* Requirement refuse actions
     def button_refuse_external_control(self):
         self = self.sudo()
         self.update({
@@ -983,6 +979,22 @@ class DocumentalRequirements(models.Model):
     def button_petitioner_signature(self):
         alias_name = self.env.user.partner_id.alias_name
         user_name = alias_name if alias_name else self.env.user.name
+        
+        for req in self:
+            if req.divided_payment:
+                payment_records = req.requirement_payment_ids
+
+                if not payment_records:
+                    raise ValidationError(_('You cannot sign without any payment records.'))
+                
+                total_paid = sum(req.requirement_payment_ids.mapped('amount') or [0])
+                
+                if total_paid != req.to_pay_supplier:
+                    raise ValidationError(_('The payment parts must sum the total amount of the requirement.'))
+                
+                if any(payment.amount <= 0 for payment in req.requirement_payment_ids):
+                    raise ValidationError(_('Payments cannot be negative or zero.'))
+
         if self.dni_or_ruc:
             vat = self.dni_or_ruc
             if len(vat) == 11:
@@ -990,12 +1002,13 @@ class DocumentalRequirements(models.Model):
                     for rec in self.requirement_detail_ids:
                         if (rec.ruc != self.dni_or_ruc) and rec.document_type.name != 'JUSTIFICACION':
                             raise ValidationError(_('The RUC in the quotation lines does not match with the RUC in the hereby Requirement.'))
+
         self.write({
             'user_petitioner_signed_id': self.env.user.id,
             'petitioner_signature': signature_generator(user_name),
             'petitioner_signed_on': fields.Datetime.now(),
             # 'requirement_state': 'external_control' if (self.budget_id.sudo().partner_brand_id.for_province == True) or (self.env.user.sudo().employee_id.sudo().group_ids.sudo()) else 'executive',
-            'requirement_state': 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False) or ((self.employee_id.sudo().group_ids.sudo().employee_supervise_ids.sudo()))) else 'executive',
+            'requirement_state': 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False)) else 'executive',
             'is_petitioner_signed': True,
         })
         self.blacklist_validation()
@@ -1006,6 +1019,7 @@ class DocumentalRequirements(models.Model):
         self.mobility_use_validation()
         self.maximum_amount_validation()
 
+    
 
     def button_requirement_external_control_confirm(self):
         for rec in self.sudo():
@@ -1059,6 +1073,27 @@ class DocumentalRequirements(models.Model):
     def button_administration_signature(self):
         alias_name = self.env.user.partner_id.alias_name
         user_name = alias_name if alias_name else self.env.user.name
+        
+        for req in self:
+            if req.divided_payment:
+                payment_records = req.requirement_payment_ids
+
+                if not payment_records:
+                    raise ValidationError(_('You cannot sign without any payment records.'))
+                
+                total_paid = sum(req.requirement_payment_ids.mapped('amount') or [0])
+                
+                if total_paid != req.to_pay_supplier:
+                    raise ValidationError(_('The payment parts must sum the total amount of the requirement.'))
+                
+                if any(payment.amount <= 0 for payment in req.requirement_payment_ids):
+                    raise ValidationError(_('Payments cannot be negative or zero.'))
+                
+        # Validación: Todos los payments deben tener operation_number completado
+        missing_operations = self.requirement_payment_ids.filtered(lambda p: not p.operation_number)
+        if missing_operations:
+            raise ValidationError(_('All payments must have an operation number before signing.'))
+
         self.write({
             'administration_signature': signature_generator(user_name),
             'is_administration_signed': True,
@@ -1066,7 +1101,7 @@ class DocumentalRequirements(models.Model):
             'administration_signed_on': fields.Datetime.now(),
             'user_administration_signed_id': self.env.user.id,
             'start_time': fields.Datetime.now(),
-            })
+        })
 
 
     # * Settlement signature actions
@@ -1077,6 +1112,20 @@ class DocumentalRequirements(models.Model):
 
 
     def settlement_petitioner_sign(self):
+        for req in self:
+            if req.divided_payment:
+                payment_records = req.requirement_payment_ids
+
+                if not payment_records:
+                    raise ValidationError(_('You cannot sign without any payment records.'))
+                
+                total_paid = sum(req.requirement_payment_ids.mapped('amount') or [0])
+                
+                if total_paid != req.to_pay_supplier:
+                    raise ValidationError(_('The payment parts must sum the total amount of the requirement.'))
+                
+                if any(payment.amount <= 0 for payment in req.requirement_payment_ids):
+                    raise ValidationError(_('Payments cannot be negative or zero.'))
         if self.balance < 0:
             raise ValidationError(_('The is negative, please correct it to sign.'))
         alias_name = self.env.user.partner_id.alias_name
@@ -1190,6 +1239,20 @@ class DocumentalRequirements(models.Model):
     def settlement_administration_sign(self):
         alias_name = self.env.user.partner_id.alias_name
         user_name = alias_name if alias_name else self.env.user.name
+        for req in self:
+            if req.divided_payment:
+                payment_records = req.requirement_payment_ids
+
+                if not payment_records:
+                    raise ValidationError(_('You cannot sign without any payment records.'))
+                
+                total_paid = sum(req.requirement_payment_ids.mapped('amount') or [0])
+                
+                if total_paid != req.to_pay_supplier:
+                    raise ValidationError(_('The payment parts must sum the total amount of the requirement.'))
+                
+                if any(payment.amount <= 0 for payment in req.requirement_payment_ids):
+                    raise ValidationError(_('Payments cannot be negative or zero.'))
         if not self.unify:
             if not self.administration_signature:
                 raise ValidationError( _( 'Before to sign the settlement, be sure to sign the requirement.' ) )
@@ -1230,7 +1293,7 @@ class DocumentalRequirements(models.Model):
         ])
         budget_lines.unlink()
 
-
+    
     def settlement_refuse_external_control(self):
         self = self.sudo()
         self.settlement_petitioner_user_id = False
@@ -1511,6 +1574,15 @@ class DocumentalRequirements(models.Model):
                 settle_no += 1
                 line.settle_no = settle_no
         return
+    
+
+    @api.depends("divided_payment")
+    def _compute_show_payments_tab(self):
+        for record in self:
+            record.show_payments_tab = (
+                record.divided_payment or 
+                self.env.user.has_group("mkt_documental_managment.documental_requirement_administration")
+            )
 
 
     @api.model

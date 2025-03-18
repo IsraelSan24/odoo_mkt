@@ -203,7 +203,10 @@ class DocumentalMobilityExpediture(models.Model):
     def button_done(self):
         for rec in self.mobility_detail_ids:
             if sum( self.env['documental.mobility.expediture.detail'].search([('user_id','=',rec.user_id.id),('date','=',rec.date),('state','!=','refused')]).mapped('amount') ) > 45:
-                raise ValidationError(_('The mobility must not exceed the maximum amount of 45. On the date %s the maximum is exceeded.\n Note: If you consider that in the %s Mobility Form you have not consumed more than 45 soles, they may have been consumed in other records.') % (rec.date, rec.documental_mobility_id.name))
+                raise ValidationError(_('The mobility must not exceed the maximum amount of 45. On the date %s the maximum is exceeded.\n'
+                        'Note: If you consider that in the %s Mobility Form you have not consumed more than 45 soles, '
+                        'they may have been consumed in other records.') % (str(rec.date), rec.documental_mobility_id.name))
+
 
 
     # @api.model

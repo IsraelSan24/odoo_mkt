@@ -51,7 +51,8 @@ class Settlement(models.Model):
     date = fields.Date(default=datetime.now(), string='Date')
     dni_ruc = fields.Char(string='DNI/RUC')
     partner = fields.Char(string='Partner')
-    document_type_id = fields.Many2one(comodel_name='settlement.line.type', string='Document type', domain="[('visible_in_liquidation', '=', True)]", default=lambda self: self._default_document_type())
+    paid_to = fields.Many2one(related='requirement_id.paid_to', store=True)
+    document_type_id = fields.Many2one(comodel_name='settlement.line.type', string='Document type', domain="[('visible_in_liquidation', '=', True)]", default=lambda self: self._default_document_type(), store=True)
     mobility_id = fields.Many2one(comodel_name='documental.mobility.expediture', domain="[('used','=',False)]", string='Mobility')
     document = fields.Char(string='Document')
     movement_number = fields.Char(string='Movement number')
@@ -101,14 +102,23 @@ class Settlement(models.Model):
     detraction_document = fields.Char(string='Detraction document')
     detraction_date = fields.Date(string='Detraction date')
     accountable_month_id = fields.Many2one(comodel_name='months', domain="[('open_month','=',True)]", string='Accountable month')
-
-    payment_type = fields.Selection(selection=payment_types, string='Differentiated payment')
-
-    alternative_amount = fields.Float(string="Alternative Amount")
-    
-    document_currency = fields.Selection(selection=document_currencies, string='Document Currency')
-    paid_to = fields.Many2one(related='requirement_id.paid_to', store=True)
     accounting_account = fields.Char(copy=False, string="accounting account", store=True)
+
+    differentiated_payment = fields.Boolean(default=False, string='Differentiated payment')
+    payment_type = fields.Selection(selection=payment_types, string='Motive')
+    wrong_payment = fields.Boolean(default=False, string='Wrong payment')
+    wrong_why = fields.Char(copy=False, string="Why?", store=True)
+    settle_amount_wrong = fields.Monetary(string="Settle Amount")
+    alternative_amount = fields.Float(string="Alternative Amount")
+    document_currency = fields.Selection(selection=document_currencies, string='Document Currency')
+
+
+    @api.onchange('wrong_payment')
+    def _onchange_wrong_payment(self):
+        if self.wrong_payment:
+            self.settle_amount = 0.0
+        else:
+            self.settle_amount_wrong = 0.0
 
 
     @api.onchange('requirement_id')
@@ -128,56 +138,47 @@ class Settlement(models.Model):
         return self.env['settlement.line.type'].search([('name', '=', 'FACTURA')], limit=1).id
 
 
-    @api.onchange('mobility_id','document_type_id')
+    @api.onchange('mobility_id', 'document_type_id')
     def _onchange_document_type(self):
-        zero_igv_id = self.env['tax.taxes'].search([('percentage','=',0)]).id
-        if self.document_type_code == 'PM':
-            if self.mobility_id:
-                self.document = self.mobility_id.name
-                self.dni_ruc = self.mobility_id.dni
-                self.date = self.mobility_id.date
-                self.settle_amount = self.mobility_id.amount_total
-                self.tax_id = zero_igv_id
-        else:
-            self.mobility_id = False
-
-
-    @api.onchange('paid_to')
-    def onchange_set_paid_to(self):
         for rec in self:
-            if not rec.document_type_id.id:
+            zero_igv_id = rec.env['tax.taxes'].search([('percentage', '=', 0)]).id
+            if rec.document_type_code == 'PM' and rec.mobility_id:
+                rec.document = rec.mobility_id.name
+                rec.dni_ruc = rec.mobility_id.dni
+                rec.date = rec.mobility_id.date
+                rec.settle_amount = rec.mobility_id.amount_total
+                rec.tax_id = zero_igv_id
+            else:
+                rec.mobility_id = False
+
+    @api.onchange('paid_to', 'document_type_id', 'requirement_id.dni_or_ruc')
+    def compute_accounting_account(self):
+        for rec in self:
+            if not rec.document_type_id:
                 rec.accounting_account = ''
                 continue
-            
-            if rec.document_type_id.id == 1:
-                currency = rec.document_currency or rec.requirement_id.amount_currency_type
-                if currency == 'soles':
-                    rec.accounting_account = '421201'
-                elif currency == 'dolares':
-                    rec.accounting_account = '421202'
-                else:
-                    rec.accounting_account = ''
-            
+
+            currency = rec.document_currency or rec.requirement_id.amount_currency_type
+
+            if rec.document_type_id.id in [1, 3, 6, 10, 13, 18]:
+                rec.accounting_account = '421201' if currency == 'soles' else '421202' if currency == 'dolares' else ''
+            elif rec.document_type_id.id == 14:
+                rec.accounting_account = '424101' if currency == 'soles' else '424102' if currency == 'dolares' else ''
             elif rec.document_type_id.id in [11, 31]:
                 rec.accounting_account = '633028' if rec.paid_to.province_id.name == 'Lima' else '633029'
-            
             elif rec.document_type_id.id == 22:
                 rec.accounting_account = '141301' if rec.paid_to.province_id.name == 'Lima' else '141303'
-            
             elif rec.document_type_id.id == 2:
                 rec.accounting_account = '633060'
-            
             elif rec.document_type_id.id == 16:
                 rec.accounting_account = '633051' if rec.paid_to.province_id.name == 'Lima' else '633052'
-            
-            elif rec.document_type_id.id in [7, 24, 26]:
-                if len(rec.dni_ruc or '') == 8:
+            elif rec.document_type_id.id in [7, 8, 12, 24, 25, 26, 32, 33]:
+                if len(rec.requirement_id.dni_or_ruc or '') == 8:
                     rec.accounting_account = '143101' if rec.paid_to.province_id.name == 'Lima' else '141303'
-                elif len(rec.dni_ruc or '') == 11:
+                elif len(rec.requirement_id.dni_or_ruc or '') == 11:
                     rec.accounting_account = '422101'
                 else:
                     rec.accounting_account = ''
-            
             else:
                 rec.accounting_account = ''
 
@@ -367,6 +368,9 @@ class Settlement(models.Model):
         account_invoices_soles = self.env['account.account'].search([('code','=','421201')])
         account_invoice_dolares = self.env['account.account'].search([('code','=','421202')])
         for rec in self:
+            account_id = account_invoices_soles.id if rec.document_currency == 'soles' else account_invoice_dolares.id
+            if not account_id:
+                account_id = account_invoices_soles.id if rec.currency == 'soles' else account_invoice_dolares.id
             values_total_amount = {
                 'name': 'Total amount',
                 'account_id': account_invoices_soles.id if rec.document_currency == 'soles' else account_invoice_dolares.id,
