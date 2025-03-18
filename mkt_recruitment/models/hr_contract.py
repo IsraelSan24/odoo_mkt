@@ -12,8 +12,9 @@ import string
 from babel.dates import format_date
 _logger = logging.getLogger(__name__)
 
-signature_state = [
+signature_states = [
     ('to_sign','To Sign'),
+    ('cancel','Cancel'),
     ('signed','Signed'),
 ]
 
@@ -34,7 +35,8 @@ class Contract(models.Model):
     wage_in_text = fields.Char(compute='_compute_result', string='Wage in text', tracking=True)
     contract_months = fields.Char(string='Duration of the contract', tracking=True)
     residual_contract_days = fields.Char(string='Residual contract days')
-    signature_state = fields.Selection(selection=signature_state, string='Signature state')
+    signature_state = fields.Selection(selection=signature_states, string='Employee signature status', copy=False)
+    signature_employer_state = fields.Selection(selection=signature_states, string='Signature employer state', default='to_sign', copy=False)
     is_renovation = fields.Boolean(default=False, string='Renovation', tracking=True)
     signed_by_employer = fields.Boolean(default=False, string='Signed by employer', copy=False, tracking=True)
     employer_signature_id = fields.Many2one(comodel_name='employer.signature', default=employer_signature_default, string='Employer signature', tracking=True)
@@ -203,6 +205,8 @@ class Contract(models.Model):
 
 
     def button_refuse(self):
+        self.signature_employer_state = 'cancel'
+        self.signature_state = 'cancel'
         self.contract_signature = False
         self.signed_by = False
         self.signed_on = False
@@ -308,8 +312,31 @@ class Contract(models.Model):
             'url': self.get_portal_url(),
         }
 
+    def button_signature_employer_state(self):
+        for rec in self:
+            if rec.state == 'cancel':
+                rec.signature_employer_state = 'cancel'
+                rec.signature_state = 'cancel'
+            else:
+                if rec.contract_signature and isinstance(rec.contract_signature, bytes):
+                    rec.signature_state = 'signed'
+                else:
+                    rec.signature_state = 'to_sign'
+                if rec.employer_signature and isinstance(rec.employer_signature, bytes):
+                    rec.signature_employer_state = 'signed'
+                else:
+                    rec.signature_employer_state = 'to_sign'
+                if rec.state in ['draft', 'open']:
+                    if rec.signature_state == 'signed' and rec.signature_employer_state == 'signed':
+                       rec.state = 'open'
+                    elif rec.signature_employer_state != 'signed':
+                        rec.state = 'draft'
+
 
     def button_employer_signature(self):
+        self.signature_employer_state = 'signed'
+        if self.state == 'draft':
+            self.state = 'open'
         self.signed_by_employer = True
         self.employer_signature = self.employer_signature_id.signature
         pdf_content = self.env.ref('mkt_recruitment.report_contract_action').sudo()._render_qweb_pdf([self.id])[0]
