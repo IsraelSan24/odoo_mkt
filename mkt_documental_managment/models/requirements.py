@@ -107,7 +107,7 @@ class DocumentalRequirements(models.Model):
 
     budget_id = fields.Many2one(comodel_name="budget", string="PPTO Number", domain="[('state','=','active')]")
     budget_track = fields.Char(string="Budget", compute="compute_track_field", store=True, tracking=True)
-    cost_center_id = fields.Many2one(comodel_name="cost.center", related='budget_id.cost_center_id', string='CC Number')
+    cost_center_id = fields.Many2one(comodel_name="cost.center", related='budget_id.cost_center_id', string='CC Number', copy=False)
     cost_center_bool = fields.Boolean(string="Cost center bool", default=False)
     year_month_id = fields.Many2one(comodel_name="year.month", related='budget_id.year_month_id', string="Month/Year")
     year_month_bool = fields.Boolean(string="Month/year bool", default=False)
@@ -249,6 +249,39 @@ class DocumentalRequirements(models.Model):
     document_filename = fields.Char(compute='_compute_filename', string='Filename', store=True)
 
     show_payments_tab = fields.Boolean(compute="_compute_show_payments_tab")
+
+    computed_payment_date = fields.Date(
+        string="Fecha de Pago",
+        compute="_compute_payment_fields",
+        store=True
+    )
+    computed_operation_number = fields.Char(
+        string="Número de Operación",
+        compute="_compute_payment_fields",
+        store=True
+    )
+
+
+    @api.constrains('in_bank')
+    def _update_payments_in_bank(self):
+        for record in self:
+            record.requirement_payment_ids.write({'in_bank': record.in_bank})
+
+
+    @api.constrains('requirement_payment_ids')
+    def _check_payments_in_bank(self):
+        for record in self:
+            if any(record.requirement_payment_ids.mapped('in_bank')):
+                record.write({'in_bank': True})
+
+
+    @api.depends('payment_date', 'requirement_payment_ids.payment_date',
+                 'operation_number', 'requirement_payment_ids.operation_number')
+    def _compute_payment_fields(self):
+        for rec in self:
+            payment = rec.requirement_payment_ids.sorted(lambda p: p.payment_date, reverse=True)[:1]
+            rec.computed_payment_date = rec.payment_date or (payment.payment_date if payment else False)
+            rec.computed_operation_number = rec.operation_number or (payment.operation_number if payment else False)
 
 
     def compute_province(self):
@@ -592,7 +625,7 @@ class DocumentalRequirements(models.Model):
                 rec.total_retention_text = ( number_to_string(round(rec.total_retention, 2)) + 'dolares' ).upper()
 
 
-    @api.depends('requirement_detail_ids','settlement_ids')
+    @api.depends('requirement_detail_ids','settlement_ids','settlement_ids.vendor','settlement_ids.service_type_id','requirement_payment_ids',)
     def _compute_settlement_vendor(self):
         for rec in self:
             rec.total_vendor = sum( rec.settlement_ids.mapped('vendor') )
@@ -614,7 +647,9 @@ class DocumentalRequirements(models.Model):
                 'requirement_payment_ids',
                 'requirement_payment_ids.amount',
                 'settlement_ids',
-                'settlement_ids.vendor')
+                'settlement_ids.vendor',
+                'requirement_detail_ids.to_pay',
+                'requirement_detail_ids.service_type_id')
     def _compute_detraction_to_pay(self):
         for rec in self:
             rec.detraction_amount = sum(rec.requirement_detail_ids.mapped('detraction'))
@@ -635,6 +670,11 @@ class DocumentalRequirements(models.Model):
                 rec.to_pay_supplier = rec.total_vendor
             elif not rec.amount_soles and not rec.amount_uss:
                 rec.to_pay_supplier = 0.00
+
+
+    def compute_detraction_to_pay(self):
+        self._compute_detraction_to_pay()
+        self._compute_settlement_vendor()
 
 
     def compute_settlement_total_lines(self):

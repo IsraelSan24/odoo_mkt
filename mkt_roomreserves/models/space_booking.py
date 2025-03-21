@@ -12,7 +12,7 @@ states = [
 
 class SpaceBooking(models.Model):
     _name = 'space.booking'
-    _inherit = ['mail.thread']
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = 'Space reservation'
 
     name = fields.Char(string="Reservation", compute="_compute_name", store=True)
@@ -31,23 +31,36 @@ class SpaceBooking(models.Model):
         store=True
     )
     notes = fields.Text(string="Notes")
-    state = fields.Selection(selection=states, default='draft')
+    state = fields.Selection(selection=states, default='draft', tracking=True)
     first_name = fields.Char(string="First Name")
     last_name = fields.Char(string="Last Name")
 
     full_name = fields.Char(
-        string="Full Name", 
-        compute="_compute_full_name", 
+        string="Full Name",
+        default=lambda self: self._default_full_name(),
         store=True
     )
 
-    @api.depends('user_id', 'first_name', 'last_name')
-    def _compute_full_name(self):
+    contact = fields.Char(string="Contact")
+
+    is_receptionist = fields.Boolean(
+        compute='_compute_is_receptionist',
+        store=False
+    )
+
+
+    @api.depends()
+    def _compute_is_receptionist(self):
         for record in self:
-            if record.user_id:
-                record.full_name = record.user_id.partner_id.name
-            else:
+            record.is_receptionist = self.env.user.has_group('mkt_roomreserves.group_receptionist')
+
+
+    def _default_full_name(self):
+        for record in self:
+            if record.first_name and record.last_name:
                 record.full_name = f"{record.first_name or ''} {record.last_name or ''}".strip()
+            else:
+                record.full_name = record.user_id.partner_id.name
 
     @api.depends('room_name')
     def _compute_name(self):
