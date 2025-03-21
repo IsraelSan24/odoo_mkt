@@ -624,7 +624,7 @@ class Settlement(models.Model):
     #             rec.vendor = 0
 
 
-    @api.depends('currency_id', 'requirement_id', 'service_type_id', 'settle_amount', 'alternative_amount')
+    @api.depends('currency_id', 'requirement_id', 'service_type_id', 'settle_amount', 'alternative_amount', 'differentiated_payment', 'date')
     def _compute_amounts(self):
         for rec in self:
             sale_change_type = self.env['change.type'].search([('date', '=', rec.date)]).mapped('sell')
@@ -632,7 +632,7 @@ class Settlement(models.Model):
             if sale_change_type and rec.currency_id.name == 'USD':
                 change_type = sale_change_type[0]
             
-            effective_amount = rec.alternative_amount if rec.alternative_amount else rec.settle_amount
+            effective_amount = rec.alternative_amount if rec.alternative_amount and rec.differentiated_payment else rec.settle_amount
 
             if effective_amount * change_type > rec.service_type_id.amount_from:
                 if rec.service_type_id.detraction:

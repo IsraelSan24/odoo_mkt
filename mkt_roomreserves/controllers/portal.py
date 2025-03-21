@@ -2,6 +2,7 @@ from odoo import http
 from odoo.http import request
 from datetime import datetime
 import requests
+import pytz
 
 class SpaceBooking(http.Controller):
 
@@ -29,7 +30,12 @@ class SpaceBooking(http.Controller):
     @http.route('/reservation/submit', type='http', auth="public", website=True, methods=["POST"])
     def submit_reservation(self, **kwargs):
         reservation_datetime = kwargs.get('reservation_datetime')
-        start_datetime = datetime.strptime(reservation_datetime, "%Y-%m-%dT%H:%M").strftime("%Y-%m-%d %H:%M:%S")
+        
+        # Convertir a objeto datetime y ajustar a UTC-5
+        local_tz = pytz.timezone('America/Bogota')  # Usa la zona horaria correcta
+        naive_dt = datetime.strptime(reservation_datetime, "%Y-%m-%dT%H:%M")
+        localized_dt = local_tz.localize(naive_dt)  # Añadir la zona horaria local
+        start_datetime = localized_dt.astimezone(pytz.utc).strftime("%Y-%m-%d %H:%M:%S")  # Convertir a UTC
 
         vals = {
             'room_id': int(kwargs.get('room_id')),
@@ -38,7 +44,9 @@ class SpaceBooking(http.Controller):
             'state': 'pending',
             'first_name': kwargs.get('first_name'),
             'last_name': kwargs.get('last_name'),
+            'full_name': f"{kwargs.get('first_name', '').strip()} {kwargs.get('last_name', '').strip()}".strip(),
             'notes': kwargs.get('notes'),
+            'contact': kwargs.get('contact'),
         }
 
         booking = request.env['space.booking'].sudo().create(vals)

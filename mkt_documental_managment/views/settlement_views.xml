@@ -81,7 +81,7 @@
                             <field name="wrong_why" attrs="{'invisible': [('wrong_payment', '=', False)]}"/>
                             <field name="differentiated_payment" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
                             <field name="payment_type" attrs="{'invisible': [('differentiated_payment', '=', False)]}"/>
-                            <field name="alternative_amount" attrs="{'invisible': [('payment_type', '=', False), ('differentiated_payment', '=', False)]}"/>
+                            <field name="alternative_amount" attrs="{'invisible': ['|', ('payment_type', '=', False), ('differentiated_payment', '=', False)]}"/>
                         </group>
                         <group>
                             <field name="document_filename" invisible="1"/>
