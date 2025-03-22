@@ -16,7 +16,7 @@ class ApplicantPartner(http.Controller):
         districts = request.env['l10n_pe.res.city.district'].sudo().search([])
         nationalities = request.env['res.country'].sudo().search([('demonym','!=',False)])
         identifications = request.env['l10n_latam.identification.type'].sudo().search([
-            ('name', 'in', ('DNI', 'PTP', 'Pasaporte', 'Cédula Extranjera', 'Carnet de Extranjeria'))
+            ('name', 'in', ('DNI', 'PTP', 'Pasaporte', 'Cédula Extranjera'))
         ])
         values = {
             'countries': countries,
@@ -58,6 +58,11 @@ class RecruitmentPortal(portal.CustomerPortal):
         "l10n_pe_district",
         "vat",
         "gender",
+        "education_level",
+        "education_start_date",
+        "education_end_date",
+        "institution",
+        "profession",
         "birthday",
         "marital",
         "children",
@@ -184,6 +189,7 @@ class RecruitmentPortal(portal.CustomerPortal):
         districts = request.env['l10n_pe.res.city.district'].sudo().search([])
         cities = request.env['res.city'].sudo().search([])
         genders = partner.gender
+        education_levels = partner.education_level
         maritals = partner.marital
         familiar_relationship1s = partner.familiar_relationship1
         familiar_relationship2s = partner.familiar_relationship2
@@ -208,6 +214,7 @@ class RecruitmentPortal(portal.CustomerPortal):
             'states': states,
             'cities': cities,
             'genders': genders,
+            'education_levels': education_levels,
             'maritals': maritals,
             'familiar_relationship1s': familiar_relationship1s,
             'familiar_relationship2s': familiar_relationship2s,
@@ -419,6 +426,7 @@ class RecruitmentPortal(portal.CustomerPortal):
                 'contract_signature': signature,
                 'signature_state': 'signed',
             })
+            contract_sudo.with_context(from_signed_function=True).write({'state': 'open'})
             contract_sudo.send_email_to_employee_signed()
             request.env.cr.commit()
         except (TypeError, binascii.Error) as e:
