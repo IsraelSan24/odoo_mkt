@@ -17,6 +17,8 @@
                     <button string="Update amounts" name="compute_settlement_amounts" type="object" class="oe_highlight"
                         groups="mkt_documental_managment.documental_requirement_admin"/>
                     <button string="Download formats" name="download_attach_files" type="object" class="oe_highlight"/>
+                    <button string="Update To Pay" name="compute_detraction_to_pay" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
                 </header>
                 <field name="is_refund" invisible="True"/>
                 <field name="timer_state" readonly="True" optional="hide"/>
@@ -61,8 +63,8 @@
                     decoration-warning="settlement_state in ('external_control','executive','responsible','intern_control','administration')"
                     decoration-success="settlement_state in 'settled'"
                     decoration-danger="settlement_state in 'refused'"/>
-                <field name="payment_date" optional="hide"/>
-                <field name="operation_number" optional="hide"/>
+                <field name="computed_payment_date" optional="hide"/>
+                <field name="computed_operation_number" optional="hide"/>
                 <field name="check_number" optional="hide"/>
                 <button name="button_current_rq"
                     type="object" class="fa fa-tripadvisor" readonly="1"
@@ -606,9 +608,9 @@
                                     <field name="document_file" widget="binary" filename="document_filename"/>
                                     <field name="reason"/>
                                     <field name="settle_igv" sum="IGV total"/>
-                                    <field name="settle_amount" attrs="{'invisible': [('wrong_payment', '=', True)]}" optional="hide" sum="Amount total"/>
+                                    <field name="settle_amount" attrs="{'invisible': [('wrong_payment', '=', True)]}" optional="show" sum="Amount total"/>
                                     <field name="settle_amount_wrong" attrs="{'invisible': [('wrong_payment', '=', False)]}" optional="hide"/>
-                                    <field name="vendor" optional="show"/>
+                                    <field name="vendor" optional="hide" sum="Total vendor"/>
                                 </tree>
                             </field>
                             <field name="lock_settlement_ids" attrs="{'readonly':[('settlement_state','!=','intern_control')]}"
@@ -635,11 +637,9 @@
                                     <field name="settle_igv" sum="IGV total"/>
                                     <field name="settle_amount" attrs="{'invisible': [('wrong_payment', '=', True)]}" optional="hide" sum="Amount total"/>
                                     <field name="settle_amount_wrong" attrs="{'invisible': [('wrong_payment', '=', False)]}" optional="hide"/>
-                                    <field name="vendor" optional="hide" sum="Vendor total"/>
+                                    <field name="vendor" optional="shpw" sum="Vendor total"/>
                                     <field name="detraction" optional="hide" sum="Detraction total"/>
                                     <field name="retention" optional="hide" sum="Retention total"/>
-                                    <field name="amount" sum="Vendor total"/>
-                                    <field name="vendor" optional="show"/>
                                 </tree>
                             </field>
                             <group>

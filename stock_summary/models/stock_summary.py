@@ -7,6 +7,7 @@ class StockSummary(models.Model):
     _auto = False
 
     report_product_id = fields.Many2one(comodel_name="product.product", string="Product")
+    report_product_default_code = fields.Char(string="Product Default Code", related="report_product_id.default_code")
     report_product_template = fields.Char(string="Product", related="report_product_id.product_tmpl_id.name")
     report_usage_status = fields.Selection(selection=[
             ('new', 'New'),
@@ -49,6 +50,7 @@ class StockSummary(models.Model):
             SELECT
                 sq.id AS id,
                 pt.name AS report_product,
+                pp.default_code AS report_product_default_code,
                 spl.usage_status AS report_usage_status,
                 pp.id AS report_product_id,
                 spl.name AS report_lot,

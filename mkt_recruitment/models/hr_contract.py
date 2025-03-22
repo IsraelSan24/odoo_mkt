@@ -334,27 +334,29 @@ class Contract(models.Model):
 
 
     def button_employer_signature(self):
-        self.signature_employer_state = 'signed'
-        if self.state == 'draft':
-            self.state = 'open'
-        self.signed_by_employer = True
-        self.employer_signature = self.employer_signature_id.signature
-        pdf_content = self.env.ref('mkt_recruitment.report_contract_action').sudo()._render_qweb_pdf([self.id])[0]
-        pdf_data = base64.b64encode(pdf_content)
-        self.employer_signed_on = fields.Datetime.now()
-        attach = {
-            'name': self.name,
-            'datas': pdf_data,
-            'store_fname': self.name,
-            'res_model': self._name,
-            'res_id': self.id,
-            'type': 'binary',
-        }
-        self.message_post(
-            body = _('Contract signed'),
-            attachment_ids=[self.env['ir.attachment'].create(attach).id],
-            message_type='comment',
-        )
+        for rec in self:
+            if rec.signature_employer_state == 'to_sign':
+                rec.signature_employer_state = 'signed'
+                if rec.state == 'draft':
+                    rec.state = 'open'
+                rec.signed_by_employer = True
+                rec.employer_signature = rec.employer_signature_id.signature
+                pdf_content = rec.env.ref('mkt_recruitment.report_contract_action').sudo()._render_qweb_pdf([rec.id])[0]
+                pdf_data = base64.b64encode(pdf_content)
+                rec.employer_signed_on = fields.Datetime.now()
+                attach = {
+                    'name': rec.name,
+                    'datas': pdf_data,
+                    'store_fname': rec.name,
+                    'res_model': rec._name,
+                    'res_id': rec.id,
+                    'type': 'binary',
+                }
+                rec.message_post(
+                    body = _('Contract signed'),
+                    attachment_ids=[rec.env['ir.attachment'].create(attach).id],
+                    message_type='comment',
+                )
 
 
     def get_tag_education_level(self):

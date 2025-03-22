@@ -51,6 +51,7 @@ class SpaceBooking(models.Model):
 
     @api.depends()
     def _compute_is_receptionist(self):
+        """Determina si el usuario actual pertenece al grupo 'mkt_roomreserves.group_receptionist'."""
         for record in self:
             record.is_receptionist = self.env.user.has_group('mkt_roomreserves.group_receptionist')
 
