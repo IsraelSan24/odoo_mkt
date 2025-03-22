@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-                <page name="custom_page" string="Brands">
+                <page name="custom_page" string="Supervision">
                     <field name="is_supervize_province" string="Is supervisor from province"/>
                     <group>
                         <field name="brand_ids" widget="many2many_tags" options="{'no_create': True, 'no_edit': True}"/>

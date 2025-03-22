@@ -8,7 +8,6 @@
                 <group
                     name="locations"
                     col="2"
-                    groups="hr_attendance.group_hr_attendance_manager"
                 >
                     <label for="check_in_latitude_text" string="Check-in Location" />
                     <span class="oe_inline">
@@ -35,22 +34,18 @@
             <field name="worked_hours" position="after">
                 <field
                     name="check_in_latitude_text"
-                    groups="hr_attendance.group_hr_attendance_manager"
                     optional="show"
                 />
                 <field
                     name="check_in_longitude_text"
-                    groups="hr_attendance.group_hr_attendance_manager"
                     optional="show"
                 />
                 <field
                     name="check_out_latitude_text"
-                    groups="hr_attendance.group_hr_attendance_manager"
                     optional="show"
                 />
                 <field
                     name="check_out_longitude_text"
-                    groups="hr_attendance.group_hr_attendance_manager"
                     optional="show"
                 />
             </field>

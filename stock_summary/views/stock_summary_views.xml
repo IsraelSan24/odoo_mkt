@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="report_product_template"/>
+                <field name="report_product_default_code"/>
                 <field name="report_lot" optional="show"/>
                 <field name="report_usage_status" optional="show" widget="badge"
                     decoration-success="report_usage_status == 'new'"
