@@ -1,11 +1,13 @@
-from odoo import models, _
+from odoo import models, _, fields
 
 
 class MobilityReport(models.TransientModel):
     _name = 'mobility.report'
     _description = 'Mobility Report XLSX'
     _inherit = ['report.formats']
-
+    
+    date_from = fields.Date(string="Start Date", required=True)
+    date_to = fields.Date(string="End Date", required=True)
 
     def action_print_xlsx(self):
         return self.print_report_formats(function_name='xlsx', report_format='xlsx')
@@ -121,7 +123,11 @@ class MobilityReport(models.TransientModel):
             LEFT JOIN res_users rs ON dme.full_name = rs.id
             LEFT JOIN res_partner rp ON rs.partner_id = rp.id
             WHERE dme.state != 'draft'
+            AND dmed.date BETWEEN %s AND %s
             ORDER BY dme.date DESC, dmed.date DESC;
         """
-        self.env.cr.execute(query)
+
+        params = (self.date_from, self.date_to)
+
+        self._cr.execute(query, params)
         return self.env.cr.dictfetchall()

@@ -168,11 +168,11 @@ class Settlement(models.Model):
                 rec.accounting_account = '633028' if rec.paid_to.province_id.name == 'Lima' else '633029'
             elif rec.document_type_id.id == 22:
                 rec.accounting_account = '141301' if rec.paid_to.province_id.name == 'Lima' else '141303'
-            elif rec.document_type_id.id == 2:
+            elif rec.document_type_id.id in [2, 7, 24, 26]:
                 rec.accounting_account = '633060'
             elif rec.document_type_id.id == 16:
                 rec.accounting_account = '633051' if rec.paid_to.province_id.name == 'Lima' else '633052'
-            elif rec.document_type_id.id in [7, 8, 12, 24, 25, 26, 32, 33]:
+            elif rec.document_type_id.id in [8, 12, 25, 32, 33]:
                 if len(rec.requirement_id.dni_or_ruc or '') == 8:
                     rec.accounting_account = '143101' if rec.paid_to.province_id.name == 'Lima' else '141303'
                 elif len(rec.requirement_id.dni_or_ruc or '') == 11:

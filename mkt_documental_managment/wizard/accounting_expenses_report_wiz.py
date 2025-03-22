@@ -10,6 +10,9 @@ class AccountingExpensesReport(models.TransientModel):
     _name = 'accounting.expenses.report'
     _description = 'Accounting expenses report'
     _inherit = ['report.formats']
+    
+    date_from = fields.Date(string="Start Date", required=True)
+    date_to = fields.Date(string="End Date", required=True)
 
     def change_state_name(self, state):
         final_state = ''
@@ -248,7 +251,7 @@ class AccountingExpensesReport(models.TransientModel):
                 ws.write(row, 7, line['dni_ruc_requirement'] if len(line['dni_ruc_requirement'] or '') == 8 else '', format3)
                 ws.write(row, 8, line['dni_ruc_requirement'] if len(line['dni_ruc_requirement'] or '') != 8 else '', format3)
                 ws.write(row, 9, line['paid_to'], format3)
-                ws.write(row, 10, line['province'] or ' ', format3)
+                ws.write(row, 10, (line['province'] or '').upper(), format3)
                 ws.write(row, 11, line['concept'], format3)
                 ws.write(row, 12, line['requirement'], format3)
                 ws.write(row, 13, line['currency'], format3)
@@ -292,7 +295,7 @@ class AccountingExpensesReport(models.TransientModel):
                 ws.write(row, 7, line['dni_ruc_requirement'] if len(line['dni_ruc_requirement'] or '') == 8 else '', format5)
                 ws.write(row, 8, line['dni_ruc_requirement'] if len(line['dni_ruc_requirement'] or '') != 8 else '', format5)
                 ws.write(row, 9, line['paid_to'], format5)
-                ws.write(row, 10, line['province'], format5)
+                ws.write(row, 10, (line['province'] or '').upper(), format5)
                 ws.write(row, 11, line['concept'], format5)
                 ws.write(row, 12, line['requirement'], format5)
                 ws.write(row, 13, '', format5)
@@ -363,7 +366,7 @@ class AccountingExpensesReport(models.TransientModel):
                 tt.percentage AS tax_percentage,
                 s.income_tax AS income_tax,
                 s.income_tax_id AS income_tax_id,
-	            tt2.percentage AS income_tax_percentage,
+                tt2.percentage AS income_tax_percentage,
                 CAST((s.settle_amount - s.settle_igv) AS numeric(10,2)) AS amount_line,
                 dr.requirement_state AS requirement_state,
                 dr.settlement_state AS settlement_state,
@@ -384,9 +387,14 @@ class AccountingExpensesReport(models.TransientModel):
                 LEFT JOIN res_partner AS rp2 ON rp2.id=ru.partner_id
                 LEFT JOIN documental_requirements AS dr2 ON dr2.id=dr.refund_requirement_id
                 LEFT JOIN tax_taxes AS tt2 ON tt2.id=s.income_tax_id
-                WHERE (dr.intern_control_signed_on IS NOT NULL OR dr.settlement_intern_control_signed_on IS NOT NULL) AND dr.active != False
+            WHERE (dr.intern_control_signed_on IS NOT NULL OR dr.settlement_intern_control_signed_on IS NOT NULL) 
+                AND dr.active != False
+                AND COALESCE(dr.intern_control_signed_on, dr.settlement_intern_control_signed_on) BETWEEN %s AND %s
             ORDER BY dr.name DESC, s.date ASC
         """
-        self._cr.execute(query)
+
+        params = (self.date_from, self.date_to)
+
+        self._cr.execute(query, params)
         res_query = self._cr.dictfetchall()
         return res_query
