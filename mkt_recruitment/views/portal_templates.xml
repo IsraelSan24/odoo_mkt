@@ -36,7 +36,7 @@
                                 <div class="col-md-6">
                                     <script type="text/javascript" src="/mkt_recruitment/static/src/js/portal_my_details.js"></script>
                                     <div t-attf-class="form-group #{error.get('name') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="name">Name</label>
+                                        <label class="form-control-label text-info" for="name">Name and Surname</label>
                                         <t t-if="partner.is_validate == False">
                                             <input type="text" id="name" name="name" t-attf-class="form-control #{error.get('name') and 'is-invalid' or ''}" t-att-value="name or partner.name" />
                                         </t>
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div t-attf-class="form-group #{error.get('email') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="email">Email</label>
+                                        <label class="form-control-label text-info" for="email">E-mail address</label>
                                         <t t-if="partner.is_validate == False">
                                             <input type="email" id="email" name="email" t-attf-class="form-control #{error.get('email') and 'is-invalid' or ''}" t-att-value="email or partner.email" style="display: none;"/>
                                             <input type="email" id="email" name="personal_email" t-attf-class="form-control #{error.get('email') and 'is-invalid' or ''}" t-att-value="personal_email or partner.personal_email"/>
@@ -78,7 +78,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div t-attf-class="form-group #{error.get('phone') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="phone">Phone</label>
+                                        <label class="form-control-label text-info" for="phone">N° Cell Phone</label>
                                         <t t-if="partner.is_validate == False">
                                             <input type="tel" id="phone" name="phone" t-attf-class="form-control #{error.get('phone') and 'is-invalid' or ''}" t-att-value="phone or partner.phone" />
                                         </t>
@@ -203,7 +203,7 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <div t-attf-class="form-group #{error.get('children') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="children">Children</label>*
+                                        <label class="form-control-label text-info" for="children">N° Children</label>*
                                         <t t-if="partner.is_validate == False">
                                             <input type="number" name="children" t-attf-class="form-control #{error.get('children') and 'is-invalid' or ''}" t-att-value="children or partner.children"/>
                                         </t>
@@ -486,6 +486,182 @@
                             <div class="text-center" style="color:#FFFFFF; font-weight: 700;">
                                 <i class="fa fa-map-marker fa-3x mb-2 spin-animation" role="img" aria-label="Ubicación" ></i>
                                 <p class="mb-0">Personal location</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3 bg-white border rounded rounded-lg">
+                        <div class="col-md-3 bg-info d-flex align-items-center justify-content-center py-3">
+                            <div class="text-center">
+                                <i class="fa fa-graduation-cap fa-3x mb-2 spin-animation" role="img" aria-label="Educación" ></i>
+                                <p class="mb-0">Personal Education</p>
+                            </div>
+                        </div>
+                        <div class="col-md-9 order-md-1 order-2 p-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div t-attf-class="form-group #{error.get('education_level') and 'o_has_error' or ''}">
+                                        <label class="form-control-label text-info" for="education_level">Education Level</label>*
+                                        <t t-if="partner.is_validate == False">
+                                        
+                                            <select name="education_level" id="education_level" t-attf-class="form-control #{error.get('education_level') and 'is-invalid' or ''}" t-att-value="education_levels or partner.education_level">
+                                                <option value="">Select Education Level</option>
+                                                <option value="wo_formal_education" t-att-selected="education_levels == 'wo_formal_education'">WITHOUT FORMAL EDUCATION</option>
+                                                <option value="incomplete_special_education" t-att-selected="education_levels == 'incomplete_special_education'">INCOMPLETE SPECIAL EDUCATION</option>
+                                                <option value="complete_special_education" t-att-selected="education_levels == 'complete_special_education'">COMPLETE SPECIAL EDUCATION</option>
+                                                <option value="incomplete_primary_education" t-att-selected="education_levels == 'incomplete_primary_education'">INCOMPLETE PRIMARY EDUCATION</option>
+                                                <option value="complete_primary_education" t-att-selected="education_levels == 'complete_primary_education'">COMPLETE PRIMARY EDUCATION</option>
+                                                <option value="incomplete_seconday_education" t-att-selected="education_levels == 'incomplete_seconday_education'">INCOMPLETE SECONDARY EDUCATION</option>
+                                                <option value="complete_secondary_education" t-att-selected="education_levels == 'complete_secondary_education'">COMPLETE SECONDARY EDUCATION</option>
+                                                <option value="incomplete_technical_education" t-att-selected="education_levels == 'incomplete_technical_education'">INCOMPLETE TECHNICAL EDUCATION</option>
+                                                <option value="complete_technical_education" t-att-selected="education_levels == 'complete_technical_education'">COMPLETE TECHNICAL EDUCATION</option>
+                                                <option value="incomplete_higher_education" t-att-selected="education_levels == 'incomplete_higher_education'">INCOMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
+                                                <option value="complete_higher_education" t-att-selected="education_levels == 'complete_higher_education'">COMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
+                                                <option value="incomplete_universitary_education" t-att-selected="education_levels == 'incomplete_universitary_education'">INCOMPLETE UNIVERSITARY EDUCATION</option>
+                                                <option value="complete_universitary_education" t-att-selected="education_levels == 'complete_universitary_education'">COMPLETE UNIVERSITARY EDUCATION</option>
+                                                <option value="bachelor_degree" t-att-selected="education_levels == 'bachelor_degree'">BACHELOR DEGREE</option>
+                                                <option value="titled" t-att-selected="education_levels == 'titled'">TITLED</option>
+                                                <option value="incomplete_masters_studies" t-att-selected="education_levels == 'incomplete_masters_studies'">INCOMPLETE STUDIES OF MASTER</option>
+                                                <option value="complete_masters_studies" t-att-selected="education_levels == 'complete_masters_studies'">COMPLETE STUDIES OF MASTER</option>
+                                                <option value="master_degree" t-att-selected="education_levels == 'master_degree'">MASTER DEGREE</option>
+                                                <option value="complete_doctoral_studies" t-att-selected="education_levels == 'complete_doctoral_studies'">COMPLETE DOCTORAL STUDIES</option>
+                                                <option value="incomplete_doctoral_studies" t-att-selected="education_levels == 'incomplete_doctoral_studies'">INCOMPLETE DOCTORAL STUDIES</option>
+                                                <option value="doctoral_degree" t-att-selected="education_levels == 'doctoral_degree'">DOCTORAL DEGREE</option>
+                                            </select>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="partner.education_level">
+                                                <select name="education_level" id="education_level" t-attf-class="form-control #{error.get('education_level') and 'is-invalid' or ''}" t-att-value="education_levels or partner.education_level" style="display: none;">
+                                                    <option value="">Select Education Level</option>
+                                                    <option value="wo_formal_education" t-att-selected="education_levels == 'wo_formal_education'">WITHOUT FORMAL EDUCATION</option>
+                                                    <option value="incomplete_special_education" t-att-selected="education_levels == 'incomplete_special_education'">INCOMPLETE SPECIAL EDUCATION</option>
+                                                    <option value="complete_special_education" t-att-selected="education_levels == 'complete_special_education'">COMPLETE SPECIAL EDUCATION</option>
+                                                    <option value="incomplete_primary_education" t-att-selected="education_levels == 'incomplete_primary_education'">INCOMPLETE PRIMARY EDUCATION</option>
+                                                    <option value="complete_primary_education" t-att-selected="education_levels == 'complete_primary_education'">COMPLETE PRIMARY EDUCATION</option>
+                                                    <option value="incomplete_seconday_education" t-att-selected="education_levels == 'incomplete_seconday_education'">INCOMPLETE SECONDARY EDUCATION</option>
+                                                    <option value="complete_secondary_education" t-att-selected="education_levels == 'complete_secondary_education'">COMPLETE SECONDARY EDUCATION</option>
+                                                    <option value="incomplete_technical_education" t-att-selected="education_levels == 'incomplete_technical_education'">INCOMPLETE TECHNICAL EDUCATION</option>
+                                                    <option value="complete_technical_education" t-att-selected="education_levels == 'complete_technical_education'">COMPLETE TECHNICAL EDUCATION</option>
+                                                    <option value="incomplete_higher_education" t-att-selected="education_levels == 'incomplete_higher_education'">INCOMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
+                                                    <option value="complete_higher_education" t-att-selected="education_levels == 'complete_higher_education'">COMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
+                                                    <option value="incomplete_universitary_education" t-att-selected="education_levels == 'incomplete_universitary_education'">INCOMPLETE UNIVERSITARY EDUCATION</option>
+                                                    <option value="complete_universitary_education" t-att-selected="education_levels == 'complete_universitary_education'">COMPLETE UNIVERSITARY EDUCATION</option>
+                                                    <option value="bachelor_degree" t-att-selected="education_levels == 'bachelor_degree'">BACHELOR DEGREE</option>
+                                                    <option value="titled" t-att-selected="education_levels == 'titled'">TITLED</option>
+                                                    <option value="incomplete_masters_studies" t-att-selected="education_levels == 'incomplete_masters_studies'">INCOMPLETE STUDIES OF MASTER</option>
+                                                    <option value="complete_masters_studies" t-att-selected="education_levels == 'complete_masters_studies'">COMPLETE STUDIES OF MASTER</option>
+                                                    <option value="master_degree" t-att-selected="education_levels == 'master_degree'">MASTER DEGREE</option>
+                                                    <option value="complete_doctoral_studies" t-att-selected="education_levels == 'complete_doctoral_studies'">COMPLETE DOCTORAL STUDIES</option>
+                                                    <option value="incomplete_doctoral_studies" t-att-selected="education_levels == 'incomplete_doctoral_studies'">INCOMPLETE DOCTORAL STUDIES</option>
+                                                    <option value="doctoral_degree" t-att-selected="education_levels == 'doctoral_degree'">DOCTORAL DEGREE</option>
+                                                </select>
+                                                <br/>
+                                                <span t-esc="partner.education_level"/>
+                                            </t>
+                                            <t t-else="">
+                                                <select name="education_level" id="education_level" t-attf-class="form-control #{error.get('education_level') and 'is-invalid' or ''}" t-att-value="education_levels or partner.education_level" style="display: none;">
+                                                    <option value="">Select Education Level</option>
+                                                    <option value="wo_formal_education" t-att-selected="education_levels == 'wo_formal_education'">WITHOUT FORMAL EDUCATION</option>
+                                                    <option value="incomplete_special_education" t-att-selected="education_levels == 'incomplete_special_education'">INCOMPLETE SPECIAL EDUCATION</option>
+                                                    <option value="complete_special_education" t-att-selected="education_levels == 'complete_special_education'">COMPLETE SPECIAL EDUCATION</option>
+                                                    <option value="incomplete_primary_education" t-att-selected="education_levels == 'incomplete_primary_education'">INCOMPLETE PRIMARY EDUCATION</option>
+                                                    <option value="complete_primary_education" t-att-selected="education_levels == 'complete_primary_education'">COMPLETE PRIMARY EDUCATION</option>
+                                                    <option value="incomplete_seconday_education" t-att-selected="education_levels == 'incomplete_seconday_education'">INCOMPLETE SECONDARY EDUCATION</option>
+                                                    <option value="complete_secondary_education" t-att-selected="education_levels == 'complete_secondary_education'">COMPLETE SECONDARY EDUCATION</option>
+                                                    <option value="incomplete_technical_education" t-att-selected="education_levels == 'incomplete_technical_education'">INCOMPLETE TECHNICAL EDUCATION</option>
+                                                    <option value="complete_technical_education" t-att-selected="education_levels == 'complete_technical_education'">COMPLETE TECHNICAL EDUCATION</option>
+                                                    <option value="incomplete_higher_education" t-att-selected="education_levels == 'incomplete_higher_education'">INCOMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
+                                                    <option value="complete_higher_education" t-att-selected="education_levels == 'complete_higher_education'">COMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
+                                                    <option value="incomplete_universitary_education" t-att-selected="education_levels == 'incomplete_universitary_education'">INCOMPLETE UNIVERSITARY EDUCATION</option>
+                                                    <option value="complete_universitary_education" t-att-selected="education_levels == 'complete_universitary_education'">COMPLETE UNIVERSITARY EDUCATION</option>
+                                                    <option value="bachelor_degree" t-att-selected="education_levels == 'bachelor_degree'">BACHELOR DEGREE</option>
+                                                    <option value="titled" t-att-selected="education_levels == 'titled'">TITLED</option>
+                                                    <option value="incomplete_masters_studies" t-att-selected="education_levels == 'incomplete_masters_studies'">INCOMPLETE STUDIES OF MASTER</option>
+                                                    <option value="complete_masters_studies" t-att-selected="education_levels == 'complete_masters_studies'">COMPLETE STUDIES OF MASTER</option>
+                                                    <option value="master_degree" t-att-selected="education_levels == 'master_degree'">MASTER DEGREE</option>
+                                                    <option value="complete_doctoral_studies" t-att-selected="education_levels == 'complete_doctoral_studies'">COMPLETE DOCTORAL STUDIES</option>
+                                                    <option value="incomplete_doctoral_studies" t-att-selected="education_levels == 'incomplete_doctoral_studies'">INCOMPLETE DOCTORAL STUDIES</option>
+                                                    <option value="doctoral_degree" t-att-selected="education_levels == 'doctoral_degree'">DOCTORAL DEGREE</option>
+                                                </select>
+                                            </t>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div t-attf-class="form-group #{error.get('education_start_date') and 'o_has_error' or ''}">
+                                        <label class="form-control-label text-info" for="education_start_date">Start Date</label>*
+                                        <t t-if="partner.is_validate == False">
+                                            <input type="date" id="education_start_date" name="education_start_date" t-attf-class="form-control #{error.get('education_start_date') and 'is-invalid' or ''}" t-att-value="education_start_date or partner.education_start_date"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="partner.education_start_date">
+                                                <input type="date" id="education_start_date" name="education_start_date" t-attf-class="form-control #{error.get('education_start_date') and 'is-invalid' or ''}" t-att-value="education_start_date or partner.education_start_date" style="display: none;"/>
+                                                <br/>
+                                                <span t-esc="partner.education_start_date"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="date" id="education_start_date" name="education_start_date" t-attf-class="form-control #{error.get('education_start_date') and 'is-invalid' or ''}" t-att-value="education_start_date or partner.education_start_date" style="display: none;"/>
+                                            </t>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div t-attf-class="form-group #{error.get('education_end_date') and 'o_has_error' or ''}">
+                                        <label class="form-control-label text-info" for="education_end_date">End Date</label>*
+                                        <t t-if="partner.is_validate == False">
+                                            <input type="date" id="education_end_date" name="education_end_date" t-attf-class="form-control #{error.get('education_end_date') and 'is-invalid' or ''}" t-att-value="education_end_date or partner.education_end_date"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="partner.education_end_date">
+                                                <input type="date" id="education_end_date" name="education_end_date" t-attf-class="form-control #{error.get('education_end_date') and 'is-invalid' or ''}" t-att-value="education_end_date or partner.education_end_date" style="display: none;"/>
+                                                <br/>
+                                                <span t-esc="partner.education_end_date"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="date" id="education_end_date" name="education_end_date" t-attf-class="form-control #{error.get('education_end_date') and 'is-invalid' or ''}" t-att-value="education_end_date or partner.education_end_date" style="display: none;"/>
+                                            </t>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div t-attf-class="form-group #{error.get('institution') and 'o_has_error' or ''}">
+                                        <label class="form-control-label text-info" for="institution">Institution</label>*
+                                        <t t-if="partner.is_validate == False">
+                                            <input type="text" name="institution" t-attf-class="form-control #{error.get('institution') and 'is-invalid' or ''}" t-att-value="institution or partner.institution"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="partner.institution">
+                                                <input type="text" name="institution" t-attf-class="form-control #{error.get('institution') and 'is-invalid' or ''}" t-att-value="institution or partner.institution" style="display: none;"/>
+                                                <br/>
+                                                <span t-esc="partner.institution"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="text" name="institution" t-attf-class="form-control #{error.get('institution') and 'is-invalid' or ''}" t-att-value="institution or partner.institution" style="display: none;"/>
+                                            </t>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div t-attf-class="form-group #{error.get('profession') and 'o_has_error' or ''}">
+                                        <label class="form-control-label text-info" for="profession">Profession</label>*
+                                        <t t-if="partner.is_validate == False">
+                                            <input type="text" name="profession" t-attf-class="form-control #{error.get('profession') and 'is-invalid' or ''}" t-att-value="profession or partner.profession"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="partner.profession">
+                                                <input type="text" name="profession" t-attf-class="form-control #{error.get('profession') and 'is-invalid' or ''}" t-att-value="profession or partner.profession" style="display: none;"/>
+                                                <br/>
+                                                <span t-esc="partner.profession"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="text" name="profession" t-attf-class="form-control #{error.get('profession') and 'is-invalid' or ''}" t-att-value="profession or partner.profession" style="display: none;"/>
+                                            </t>
+                                        </t>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

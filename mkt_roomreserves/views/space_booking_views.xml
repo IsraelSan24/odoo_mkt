@@ -23,20 +23,23 @@
 
                     <button name="action_confirm" type="object" string="Confirm" 
                         class="btn btn-primary" states="pending"
-                        groups="!mkt_roomreserves.group_user_booking"/>
+                        groups="mkt_roomreserves.group_receptionist"/>
 
                     <button name="action_cancel" type="object" string="Cancel" 
                         class="btn btn-danger" states="pending,confirmed"
-                        groups="!mkt_roomreserves.group_user_booking"/>
+                        groups="mkt_roomreserves.group_receptionist"/>
+                    
+                    <field name="state" readonly="1" widget="statusbar" statusbar_visible="pending,confirmed,canceled"/>
                 </header>
                 <sheet>
                     <group col="4" string="Booking Details">
+                        <field name="is_receptionist" invisible="1"/>
                         <field name="user_id" readonly="1" string="Booked By"/>
-                        <field name="full_name" readonly="1" string="Full name"/>
+                        <field name="full_name" string="Full name" attrs="{'readonly': [('is_receptionist', '=', False)]}"/>
                         <field name="room_id" string="Room"/>
                         <field name="start_datetime" string="Start Datetime"/>
                         <field name="duration" string="Duration (hours)"/>
-                        <field name="state" readonly="1" widget="statusbar" statusbar_visible="pending,confirmed,canceled"/>
+                        <field name="contact" string="Contact" readonly="1"/>
                     </group>
 
                     <notebook>
@@ -53,6 +56,11 @@
                         </page>
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>
