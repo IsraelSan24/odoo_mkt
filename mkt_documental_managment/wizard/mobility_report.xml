@@ -6,6 +6,10 @@
         <field name="model">mobility.report</field>
         <field name="arch" type="xml">
             <form string="Mobility Report">
+                <group>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </group>
                 <footer>
                     <button string="Print Mobility XLSX" name="action_print_xlsx" type="object" icon="fa-print" class="oe_highlight"/>
                     <button string="Cancel" type="object" special="cancel"/>
