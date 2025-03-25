@@ -75,8 +75,8 @@ class Settlement(models.Model):
     tax_id = fields.Many2one(comodel_name='tax.taxes', default=get_default_tax, domain="[('tax_type','=','igv')]", string='Tax')
     igv_included = fields.Boolean(default=True, string='Included IGV?')
 
-    income_tax = fields.Boolean(default=False, string='Income tax')
-    income_tax_id = fields.Many2one(comodel_name='tax.taxes', domain="[('tax_type','=','income_tax')]", string='Income tax')
+    income_tax = fields.Boolean(default=False, string='Income tax', tracking=True)
+    income_tax_id = fields.Many2one(comodel_name='tax.taxes', domain="[('tax_type','=','income_tax')]", string='Income tax', tracking=True)
 
     state = fields.Selection(related='requirement_id.settlement_state', string='State', store=True)
     cpe_state = fields.Selection(selection=cpe_states, default='to_validate', string='CPE STATES')

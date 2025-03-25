@@ -122,9 +122,9 @@
                                 decoration-danger="cpe_state == 'non_existent'"
                                 decoration-warning="cpe_state == 'failed'"/>
                             <field name="income_tax" widget="boolean_toggle"
-                                groups="mkt_documental_managment.documental_requirement_intern_control"/>
+                                groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"/>
                             <field name="income_tax_id" attrs="{'invisible':[('income_tax','=',False)]}"
-                                groups="mkt_documental_managment.documental_requirement_intern_control"
+                                groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"
                                 options="{'no_create': '1', 'no_edit': '1', 'no_open': '1'}"/>
                         </group>
                     </group>
