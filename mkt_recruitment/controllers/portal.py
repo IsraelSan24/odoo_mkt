@@ -73,31 +73,31 @@ class RecruitmentPortal(portal.CustomerPortal):
         "is_validate",
         "familiar_dni1",
         "familiar_dni2","familiar_dni3","familiar_dni4",
-        "familiar_dni5","familiar_dni6","familiar_dni7","familiar_dni8",
+        "familiar_dni5","familiar_dni6","familiar_dni7","familiar_dni8","familiar_dni9","familiar_dni10",
         "familiar_full_name1",
         "familiar_full_name2","familiar_full_name3",
         "familiar_full_name4","familiar_full_name5","familiar_full_name6",
-        "familiar_full_name7","familiar_full_name8",
+        "familiar_full_name7","familiar_full_name8","familiar_full_name9","familiar_full_name10",
         "familiar_birthday1",
         "familiar_birthday2","familiar_birthday3",
         "familiar_birthday4","familiar_birthday5","familiar_birthday6",
-        "familiar_birthday7","familiar_birthday8",
+        "familiar_birthday7","familiar_birthday8","familiar_birthday9","familiar_birthday10",
         "familiar_relationship1",
         "familiar_relationship2",
         "familiar_relationship3","familiar_relationship4",
         "familiar_relationship5","familiar_relationship6",
-        "familiar_relationship7","familiar_relationship8",
+        "familiar_relationship7","familiar_relationship8","familiar_relationship9","familiar_relationship10",
         "familiar_gender1",
         "familiar_gender2","familiar_gender3",
         "familiar_gender4","familiar_gender5","familiar_gender6",
-        "familiar_gender7","familiar_gender8",
+        "familiar_gender7","familiar_gender8","familiar_gender9","familiar_gender10",
         "familiar_address1",
         "familiar_address2","familiar_address3",
         "familiar_address4","familiar_address5","familiar_address6",
-        "familiar_address7","familiar_address8",
+        "familiar_address7","familiar_address8","familiar_address9","familiar_address10",
         "familiar_dnifile1","familiar_dnifile2","familiar_dnifile3",
         "familiar_dnifile4","familiar_dnifile5","familiar_dnifile6",
-        "familiar_dnifile7","familiar_dnifile8",
+        "familiar_dnifile7","familiar_dnifile8","familiar_dnifile9","familiar_dnifile10",
         "private_pension_system","national_pension_system",
         "afp_first_job","coming_from_onp",
         "current_dni","services_receipt","certijoven",
@@ -199,6 +199,8 @@ class RecruitmentPortal(portal.CustomerPortal):
         familiar_relationship6s = partner.familiar_relationship6
         familiar_relationship7s = partner.familiar_relationship7
         familiar_relationship8s = partner.familiar_relationship8
+        familiar_relationship9s = partner.familiar_relationship9
+        familiar_relationship10s = partner.familiar_relationship10
         familiar_gender1s = partner.familiar_gender1
         familiar_gender2s = partner.familiar_gender2
         familiar_gender3s = partner.familiar_gender3
@@ -207,6 +209,8 @@ class RecruitmentPortal(portal.CustomerPortal):
         familiar_gender6s = partner.familiar_gender6
         familiar_gender7s = partner.familiar_gender7
         familiar_gender8s = partner.familiar_gender8
+        familiar_gender9s = partner.familiar_gender9
+        familiar_gender10s = partner.familiar_gender10
         values.update({
             'partner': partner,
             'countries': countries,
@@ -224,6 +228,8 @@ class RecruitmentPortal(portal.CustomerPortal):
             'familiar_relationship6s': familiar_relationship6s,
             'familiar_relationship7s': familiar_relationship7s,
             'familiar_relationship8s': familiar_relationship8s,
+            'familiar_relationship9s': familiar_relationship9s,
+            'familiar_relationship10s': familiar_relationship10s,
             'familiar_gender1s': familiar_gender1s,
             'familiar_gender2s': familiar_gender2s,
             'familiar_gender3s': familiar_gender3s,
@@ -232,6 +238,8 @@ class RecruitmentPortal(portal.CustomerPortal):
             'familiar_gender6s': familiar_gender6s,
             'familiar_gender7s': familiar_gender7s,
             'familiar_gender8s': familiar_gender8s,
+            'familiar_gender9s': familiar_gender9s,
+            'familiar_gender10s': familiar_gender10s,
             'has_check_vat': hasattr(request.env['res.partner'], 'check_vat'),
             'redirect': redirect,
             'page_name': 'my_details',
@@ -263,6 +271,14 @@ class RecruitmentPortal(portal.CustomerPortal):
                 familiar_dnifile4_content = post['familiar_dnifile4'].read()
                 familiar_dnifile4_base64 = base64.b64encode(familiar_dnifile4_content)
                 update_values['familiar_dnifile4'] = familiar_dnifile4_base64
+            if 'familiar_dnifile5' in post and post['familiar_dnifile5']:
+                familiar_dnifile5_content = post['familiar_dnifile5'].read()
+                familiar_dnifile5_base64 = base64.b64encode(familiar_dnifile5_content)
+                update_values['familiar_dnifile5'] = familiar_dnifile5_base64
+            if 'familiar_dnifile6' in post and post['familiar_dnifile6']:
+                familiar_dnifile6_content = post['familiar_dnifile6'].read()
+                familiar_dnifile6_base64 = base64.b64encode(familiar_dnifile6_content)
+                update_values['familiar_dnifile6'] = familiar_dnifile6_base64
             if 'familiar_dnifile1_back' in post and post['familiar_dnifile1_back']:
                 familiar_dnifile1_back_content = post['familiar_dnifile1_back'].read()
                 familiar_dnifile1_back_base64 = base64.b64encode(familiar_dnifile1_back_content)
@@ -279,6 +295,14 @@ class RecruitmentPortal(portal.CustomerPortal):
                 familiar_dnifile4_back_content = post['familiar_dnifile4_back'].read()
                 familiar_dnifile4_back_base64 = base64.b64encode(familiar_dnifile4_back_content)
                 update_values['familiar_dnifile4_back'] = familiar_dnifile4_back_base64
+            if 'familiar_dnifile5_back' in post and post['familiar_dnifile5_back']:
+                familiar_dnifile5_back_content = post['familiar_dnifile5_back'].read()
+                familiar_dnifile5_back_base64 = base64.b64encode(familiar_dnifile5_back_content)
+                update_values['familiar_dnifile5_back'] = familiar_dnifile5_back_base64
+            if 'familiar_dnifile6_back' in post and post['familiar_dnifile6_back']:
+                familiar_dnifile6_back_content = post['familiar_dnifile6_back'].read()
+                familiar_dnifile6_back_base64 = base64.b64encode(familiar_dnifile6_back_content)
+                update_values['familiar_dnifile6_back'] = familiar_dnifile6_back_base64
             if 'current_dni' in post and post['current_dni']:
                 current_dni_content = post['current_dni'].read()
                 current_dni_base64 = base64.b64encode(current_dni_content)
@@ -330,14 +354,20 @@ class RecruitmentPortal(portal.CustomerPortal):
             'familiar_full_name2': partner.familiar_full_name2,
             'familiar_full_name3': partner.familiar_full_name3,
             'familiar_full_name4': partner.familiar_full_name4,
+            'familiar_full_name5': partner.familiar_full_name5,
+            'familiar_full_name6': partner.familiar_full_name6,
             'familiar_dni1': partner.familiar_dni1,
             'familiar_dni2': partner.familiar_dni2,
             'familiar_dni3': partner.familiar_dni3,
             'familiar_dni4': partner.familiar_dni4,
+            'familiar_dni5': partner.familiar_dni5,
+            'familiar_dni6': partner.familiar_dni6,
             'familiar_relationship1': partner.familiar_relationship1,
             'familiar_relationship2': partner.familiar_relationship2,
             'familiar_relationship3': partner.familiar_relationship3,
             'familiar_relationship4': partner.familiar_relationship4,
+            'familiar_relationship5': partner.familiar_relationship5,
+            'familiar_relationship6': partner.familiar_relationship6,
         }        
         values.update({
             'res_partner': res_partner_values,

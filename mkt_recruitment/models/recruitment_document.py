@@ -74,6 +74,8 @@ class RecruitmentDocument(models.Model):
     familiar_dni6 = fields.Char()
     familiar_dni7 = fields.Char()
     familiar_dni8 = fields.Char()
+    familiar_dni9 = fields.Char()
+    familiar_dni10 = fields.Char()
     
     familiar_full_name1 = fields.Char()
     familiar_full_name2 = fields.Char()
@@ -83,6 +85,8 @@ class RecruitmentDocument(models.Model):
     familiar_full_name6 = fields.Char()
     familiar_full_name7 = fields.Char()
     familiar_full_name8 = fields.Char()
+    familiar_full_name9 = fields.Char()
+    familiar_full_name10 = fields.Char()
 
     familiar_birthday1 = fields.Date()
     familiar_birthday2 = fields.Date()
@@ -92,6 +96,8 @@ class RecruitmentDocument(models.Model):
     familiar_birthday6 = fields.Date()
     familiar_birthday7 = fields.Date()
     familiar_birthday8 = fields.Date()
+    familiar_birthday9 = fields.Date()
+    familiar_birthday10 = fields.Date()
 
     familiar_relationship1 = fields.Selection(selection=relationship)
     familiar_relationship2 = fields.Selection(selection=relationship)
@@ -101,6 +107,8 @@ class RecruitmentDocument(models.Model):
     familiar_relationship6 = fields.Selection(selection=relationship)
     familiar_relationship7 = fields.Selection(selection=relationship)
     familiar_relationship8 = fields.Selection(selection=relationship)
+    familiar_relationship9 = fields.Selection(selection=relationship)
+    familiar_relationship10 = fields.Selection(selection=relationship)
 
     familiar_gender1 = fields.Selection(selection=genders)
     familiar_gender2 = fields.Selection(selection=genders)
@@ -110,6 +118,8 @@ class RecruitmentDocument(models.Model):
     familiar_gender6 = fields.Selection(selection=genders)
     familiar_gender7 = fields.Selection(selection=genders)
     familiar_gender8 = fields.Selection(selection=genders)
+    familiar_gender9 = fields.Selection(selection=genders)
+    familiar_gender10 = fields.Selection(selection=genders)
 
     familiar_address1 = fields.Char()
     familiar_address2 = fields.Char()
@@ -119,6 +129,8 @@ class RecruitmentDocument(models.Model):
     familiar_address6 = fields.Char()
     familiar_address7 = fields.Char()
     familiar_address8 = fields.Char()
+    familiar_address9 = fields.Char()
+    familiar_address10 = fields.Char()
 
     is_beneficiary1 = fields.Boolean(default=True, string='Is Beneficiary?')
     is_beneficiary2 = fields.Boolean(default=True, string='Is Beneficiary?')
@@ -128,6 +140,8 @@ class RecruitmentDocument(models.Model):
     is_beneficiary6 = fields.Boolean(default=True, string='Is Beneficiary?')
     is_beneficiary7 = fields.Boolean(default=True, string='Is Beneficiary?')
     is_beneficiary8 = fields.Boolean(default=True, string='Is Beneficiary?')
+    is_beneficiary9 = fields.Boolean(default=True, string='Is Beneficiary?')
+    is_beneficiary10 = fields.Boolean(default=True, string='Is Beneficiary?')
 
     identification_type = fields.Char()
     private_pension_system = fields.Boolean()
@@ -252,6 +266,8 @@ class RecruitmentDocument(models.Model):
                     'familiar_dni6': rec.partner_id.familiar_dni6,
                     'familiar_dni7': rec.partner_id.familiar_dni7,
                     'familiar_dni8': rec.partner_id.familiar_dni8,
+                    'familiar_dni9': rec.partner_id.familiar_dni9,
+                    'familiar_dni10': rec.partner_id.familiar_dni10,
                     'familiar_full_name1': rec.partner_id.familiar_full_name1,
                     'familiar_full_name2': rec.partner_id.familiar_full_name2,
                     'familiar_full_name3': rec.partner_id.familiar_full_name3,
@@ -260,6 +276,8 @@ class RecruitmentDocument(models.Model):
                     'familiar_full_name6': rec.partner_id.familiar_full_name6,
                     'familiar_full_name7': rec.partner_id.familiar_full_name7,
                     'familiar_full_name8': rec.partner_id.familiar_full_name8,
+                    'familiar_full_name9': rec.partner_id.familiar_full_name9,
+                    'familiar_full_name10': rec.partner_id.familiar_full_name10,
                     'familiar_birthday1': rec.partner_id.familiar_birthday1,
                     'familiar_birthday2': rec.partner_id.familiar_birthday2,
                     'familiar_birthday3': rec.partner_id.familiar_birthday3,
@@ -268,6 +286,8 @@ class RecruitmentDocument(models.Model):
                     'familiar_birthday6': rec.partner_id.familiar_birthday6,
                     'familiar_birthday7': rec.partner_id.familiar_birthday7,
                     'familiar_birthday8': rec.partner_id.familiar_birthday8,
+                    'familiar_birthday9': rec.partner_id.familiar_birthday9,
+                    'familiar_birthday10': rec.partner_id.familiar_birthday10,
                     'familiar_relationship1': rec.partner_id.familiar_relationship1,
                     'familiar_relationship2': rec.partner_id.familiar_relationship2,
                     'familiar_relationship3': rec.partner_id.familiar_relationship3,
@@ -276,6 +296,8 @@ class RecruitmentDocument(models.Model):
                     'familiar_relationship6': rec.partner_id.familiar_relationship6,
                     'familiar_relationship7': rec.partner_id.familiar_relationship7,
                     'familiar_relationship8': rec.partner_id.familiar_relationship8,
+                    'familiar_relationship9': rec.partner_id.familiar_relationship9,
+                    'familiar_relationship10': rec.partner_id.familiar_relationship10,
                     'familiar_gender1': rec.partner_id.familiar_gender1,
                     'familiar_gender2': rec.partner_id.familiar_gender2,
                     'familiar_gender3': rec.partner_id.familiar_gender3,
@@ -284,6 +306,8 @@ class RecruitmentDocument(models.Model):
                     'familiar_gender6': rec.partner_id.familiar_gender6,
                     'familiar_gender7': rec.partner_id.familiar_gender7,
                     'familiar_gender8': rec.partner_id.familiar_gender8,
+                    'familiar_gender9': rec.partner_id.familiar_gender9,
+                    'familiar_gender10': rec.partner_id.familiar_gender10,
                     'familiar_address1': rec.partner_id.familiar_address1,
                     'familiar_address2': rec.partner_id.familiar_address2,
                     'familiar_address3': rec.partner_id.familiar_address3,
@@ -292,6 +316,8 @@ class RecruitmentDocument(models.Model):
                     'familiar_address6': rec.partner_id.familiar_address6,
                     'familiar_address7': rec.partner_id.familiar_address7,
                     'familiar_address8': rec.partner_id.familiar_address8,
+                    'familiar_address9': rec.partner_id.familiar_address9,
+                    'familiar_address10': rec.partner_id.familiar_address10,
                     'is_beneficiary1': rec.partner_id.is_beneficiary1,
                     'is_beneficiary2': rec.partner_id.is_beneficiary2,
                     'is_beneficiary3': rec.partner_id.is_beneficiary3,
@@ -300,6 +326,8 @@ class RecruitmentDocument(models.Model):
                     'is_beneficiary6': rec.partner_id.is_beneficiary6,
                     'is_beneficiary7': rec.partner_id.is_beneficiary7,
                     'is_beneficiary8': rec.partner_id.is_beneficiary8,
+                    'is_beneficiary9': rec.partner_id.is_beneficiary9,
+                    'is_beneficiary10': rec.partner_id.is_beneficiary10,
                     'private_pension_system': rec.partner_id.private_pension_system,
                     'afp_first_job': rec.partner_id.afp_first_job,
                     'coming_from_onp': rec.partner_id.coming_from_onp,

@@ -209,34 +209,6 @@
                                 <td scope="col" style="border: none">
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
-                    <table class="table table-bordered" style="padding: 0px 30px 0px 30px; border:none; ">
-                        <colgroup>
-                            <col width="8%"/>
-                            <col width="24%"/>
-                            <col width="8%"/>
-                            <col width="8%"/>
-                            <col width="8%"/>
-                            <col width="20%"/>
-                            <col width="4%"/>
-                            <col width="20%"/>
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th colspan="6" class="text-center" style="border: 2px solid black;">Other Beneficiaries</th>
-                            </tr>
-                            <tr>
-                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">N&#176;DNI</th>
-                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">NAME AND SURNAME</th>
-                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Genre</th>
-                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Relationship</th>
-                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Date</th>
-                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Address</th>
-                                <th scope="col" style="border: none"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
                             <tr>
                                 <td style="border: 2px solid black;">
                                     <field name="familiar_dni5" readonly="1"/>
@@ -287,6 +259,34 @@
                                 <td scope="col" style="border: none">
                                 </td>
                             </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered" style="padding: 0px 30px 0px 30px; border:none; ">
+                        <colgroup>
+                            <col width="8%"/>
+                            <col width="24%"/>
+                            <col width="8%"/>
+                            <col width="8%"/>
+                            <col width="8%"/>
+                            <col width="20%"/>
+                            <col width="4%"/>
+                            <col width="20%"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="6" class="text-center" style="border: 2px solid black;">Other Beneficiaries</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">N&#176;DNI</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">NAME AND SURNAME</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Genre</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Relationship</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Date</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Address</th>
+                                <th scope="col" style="border: none"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <tr>
                                 <td style="border: 2px solid black;">
                                     <field name="familiar_dni7" readonly="1"/>
@@ -334,6 +334,56 @@
                                 <td scope="col" style="border: none">
                                 </td>
                                 <field name="is_beneficiary8" readonly="1"/>
+                                <td scope="col" style="border: none">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_dni9" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_full_name9" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_gender9" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_relationship9" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_birthday9" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_address9" readonly="1"/>
+                                </td>
+                                <td scope="col" style="border: none">
+                                </td>
+                                <field name="is_beneficiary9" readonly="1"/>
+                                <td scope="col" style="border: none">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_dni10" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_full_name10" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_gender10" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_relationship10" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_birthday10" readonly="1"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="familiar_address10" readonly="1"/>
+                                </td>
+                                <td scope="col" style="border: none">
+                                </td>
+                                <field name="is_beneficiary10" readonly="1"/>
                                 <td scope="col" style="border: none">
                                 </td>
                             </tr>
