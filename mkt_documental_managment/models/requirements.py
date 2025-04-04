@@ -262,17 +262,20 @@ class DocumentalRequirements(models.Model):
     )
 
 
-    @api.constrains('in_bank')
-    def _update_payments_in_bank(self):
+    @api.depends('requirement_payment_ids.in_bank')
+    def _compute_in_bank(self):
+        """Computa el valor de 'in_bank' basado en los pagos relacionados sin generar loops."""
         for record in self:
-            record.requirement_payment_ids.write({'in_bank': record.in_bank})
+            record.in_bank = any(record.requirement_payment_ids.mapped('in_bank'))
 
-
-    @api.constrains('requirement_payment_ids')
-    def _check_payments_in_bank(self):
+    @api.onchange('in_bank')
+    def _onchange_in_bank(self):
+        """Actualiza los payments cuando el estado cambia manualmente en la interfaz."""
         for record in self:
-            if any(record.requirement_payment_ids.mapped('in_bank')):
-                record.write({'in_bank': True})
+            if record.in_bank:
+                record.requirement_payment_ids.write({'in_bank': True})
+            else:
+                record.requirement_payment_ids.write({'in_bank': False})
 
 
     @api.depends('payment_date', 'requirement_payment_ids.payment_date',
@@ -1172,7 +1175,7 @@ class DocumentalRequirements(models.Model):
         user_name = alias_name if alias_name else self.env.user.name
         if self.unify:
             self.settlement_attach_files()
-            self.requirement_state = 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False)) or (self.employee_id.sudo().group_ids.sudo().employee_supervise_ids.sudo()) else 'executive'
+            self.requirement_state = 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False) or (self.employee_id.sudo().group_ids.sudo().employee_supervise_ids.sudo())) else 'executive'
         else:
             self.settlement_attach_files()
             if not self.petitioner_signature:
@@ -1185,7 +1188,7 @@ class DocumentalRequirements(models.Model):
             'settlement_petitioner_user_id': self.env.user.id,
             'settlement_petitioner_signature': signature_generator(user_name),
             'settlement_petitioner_signed_on': fields.Datetime.now(),
-            'settlement_state': 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False)) or (self.employee_id.sudo().group_ids.sudo().employee_supervise_ids.sudo()) else 'executive'
+            'settlement_state': 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False) or (self.employee_id.sudo().group_ids.sudo().employee_supervise_ids.sudo())) else 'executive'
         })
         self.blacklist_validation()
         self.create_settlement_line()

@@ -14,7 +14,7 @@ class MobilityReport(models.TransientModel):
 
 
     def _get_file_name(self, function_name, file_name=False):
-        dic_name = super(MobilityReport, self)._get_file_name(function_name, file_name=_('Mobility Report'))
+        dic_name = super(MobilityReport, self)._get_file_name(function_name, file_name=_('MKT Mobility Report'))
         return dic_name
     
     

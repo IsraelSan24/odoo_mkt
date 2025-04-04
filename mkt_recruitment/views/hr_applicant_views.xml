@@ -50,6 +50,10 @@
             <field name="user_id" position="attributes">
                 <attribute name="readonly">True</attribute>
             </field>
+            <xpath expr="//widget[@name='web_ribbon' and @bg_color='bg-danger']" position="after">
+                <widget name="web_ribbon" title="Reinstatement" bg_color="bg-warning" attrs="{'invisible': [('is_reinstatement', '=', False)]}"/>
+                <field name="is_reinstatement" invisible="1"/>
+            </xpath>
         </field>
     </record>
 
@@ -60,6 +64,15 @@
         <field name="arch" type="xml">
             <xpath expr="//div[@class='o_kanban_record_headings']/b[@class='o_kanban_record_title mt8']/field[@name='partner_name']" position="replace">
                 <field name="name"/>
+            </xpath>
+            <xpath expr="//field[@name='activity_state']" position="after">
+                <field name="is_reinstatement" />
+            </xpath>
+
+            <xpath expr="//div[@class='ribbon ribbon-top-right' and @attrs]" position="after">
+                <div class="ribbon ribbon-top-right" style="pointer-events: none;" attrs="{'invisible': [('is_reinstatement', '=', False)]}">
+                    <span class="bg-warning">Reingreso</span>
+                </div>
             </xpath>
         </field>
     </record>

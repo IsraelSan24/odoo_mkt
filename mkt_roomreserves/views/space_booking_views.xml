@@ -91,4 +91,16 @@
             </search>
         </field>
     </record>
+    <data noupdate="1">
+        <record id="ir_cron_auto_finish_reservations" model="ir.cron">
+            <field name="name">Auto-Finish Reservations</field>
+            <field name="model_id" ref="model_space_booking"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_auto_finish_reservations()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
 </odoo>

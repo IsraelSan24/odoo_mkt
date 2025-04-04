@@ -84,7 +84,7 @@ class Budget(models.Model):
 
 
     def action_view_settlement(self):
-        settlement = self.env['documental.settlements'].search([('state','=','settled'),('budget_id','=',self.id)]).ids
+        settlement = self.env['documental.settlements'].search([('state', 'not in', ['draft', 'rejected']),('budget_id', '=', self.id)]).ids
         open_view_settlement = {
             'name': _('Settlements'),
             'view_mode': 'tree,form',

@@ -6,7 +6,8 @@ states = [
         ('draft', 'Draft'),
         ('pending', 'Pending'),
         ('confirmed', 'Confirmed'),
-        ('cancelled', 'Cancelled')
+        ('cancelled', 'Cancelled'),
+        ('finished', 'Finished')
     ]
 
 
@@ -51,30 +52,29 @@ class SpaceBooking(models.Model):
 
     @api.depends()
     def _compute_is_receptionist(self):
-        """Determina si el usuario actual pertenece al grupo 'mkt_roomreserves.group_receptionist'."""
         for record in self:
             record.is_receptionist = self.env.user.has_group('mkt_roomreserves.group_receptionist')
 
 
     def _default_full_name(self):
-        for record in self:
-            if record.first_name and record.last_name:
-                record.full_name = f"{record.first_name or ''} {record.last_name or ''}".strip()
-            else:
-                record.full_name = record.user_id.partner_id.name
+        first_name = self.env.user.partner_id.name.split()[0] if self.env.user.partner_id.name else ''
+        last_name = " ".join(self.env.user.partner_id.name.split()[1:]) if self.env.user.partner_id.name else ''
+        return f"{first_name} {last_name}".strip() if first_name or last_name else ''
 
-    @api.depends('room_name')
+
+    @api.depends('full_name', 'room_name')
     def _compute_name(self):
-         for record in self:
-             if record.room_name:
-                 record.name = "Reservation room '%s'" % record.room_name
-             else:
-                 record.name = "Reservation"
+        for record in self:
+            full_name = record.full_name or ""
+            room_name = record.room_name or ""
+            record.name = f"{full_name} - {room_name}"
     
+
     @api.depends('room_id.item_ids')
     def _compute_item_ids(self):
         for rec in self:
             rec.item_ids = rec.room_id.item_ids
+
 
     @api.depends('start_datetime', 'duration')
     def _compute_end_datetime(self):
@@ -83,20 +83,6 @@ class SpaceBooking(models.Model):
                 record.end_datetime = record.start_datetime + timedelta(hours=record.duration)
             else:
                 record.end_datetime = False
-
-
-    @api.constrains('start_datetime', 'duration', 'room_id', 'quantity')
-    def _check_availability(self):
-        for record in self:
-            conflicts = self.search([
-                ('room_id', '=', record.room_id.id),
-                ('start_datetime', '<', record.start_datetime + timedelta(hours=record.duration)),
-                ('start_datetime', '>=', record.start_datetime),
-                ('id', '!=', record.id),
-                ('state', '!=', 'cancelled')
-            ])
-            if conflicts:
-                raise ValidationError('The room is already reserved in this time frame.')
 
 
     @api.model
@@ -129,42 +115,62 @@ class SpaceBooking(models.Model):
             ('groups_id', 'in', [self.env.ref('base.group_system').id])
         ])
         users = [user] + list(system_users)
-        
+
         # Obtener los nombres de los ítems relacionados con la reserva
         item_names = ', '.join(self.item_ids.mapped('name'))
+        subject = f'Reservation {action}'
+        body = f'''
+            <p>Your reservation has been <b>{action.lower()}</b> for {self.room_name} at {self.start_datetime}.</p>
+            <p>Item(s): {item_names}</p>
+        '''
 
-        if users:
-            notification_ids = [(0, 0, {
-                'res_partner_id': user.partner_id.id,
-                'notification_type': 'inbox'
-            }) for user in users]
-            self.env['mail.message'].create({
-                'message_type': 'notification',
-                'body': f'A room has been {action.lower()}: {self.room_name} with the item(s): {item_names}',
-                'subject': f'Reservation {action}',
-                'partner_ids': [(4, user.partner_id.id) for user in users],
-                'model': self._name,
-                'res_id': self.id,
-                'notification_ids': notification_ids,
-                'author_id': self.env.user.partner_id.id
-            })
+        # Usar login en lugar de email
+        email_users = [u for u in users if u.login and '@' in u.login]
+
+        if email_users:
+            email_to = ','.join([u.login for u in email_users])
+            mail_values = {
+                'subject': subject,
+                'body_html': body,
+                'email_to': email_to,
+                'email_from': self.env.user.login or 'no-reply@example.com',
+            }
+            self.env['mail.mail'].create(mail_values).send()
 
 
     def _notify_receptionist(self, action):
         receptionist_group = self.env.ref('mkt_roomreserves.group_receptionist')
         receptionists = self.env['res.users'].search([('groups_id', 'in', [receptionist_group.id])])
-        if receptionists:
-            notification_ids = [(0, 0, {
-                'res_partner_id': user.partner_id.id,
-                'notification_type': 'inbox'
-            }) for user in receptionists]
-            self.env['mail.message'].create({
-                'message_type': 'notification',
-                'body': f'A reservation request has been {action.lower()} for room: {self.room_name}.',
-                'subject': f'Room Reservation {action}',
-                'partner_ids': [(4, user.partner_id.id) for user in receptionists],
-                'model': self._name,
-                'res_id': self.id,
-                'notification_ids': notification_ids,
-                'author_id': self.env.user.partner_id.id
-            })
+
+        subject = f'Room Reservation {action}'
+        body = f'''
+            <p>A reservation request has been <b>{action.lower()}</b> for room {self.room_name} by {self.full_name}.</p>
+        '''
+
+        # Usar login en lugar de email
+        email_receptionists = [r for r in receptionists if r.login and '@' in r.login]
+
+        if email_receptionists:
+            email_to = ','.join([r.login for r in email_receptionists])
+            mail_values = {
+                'subject': subject,
+                'body_html': body,
+                'email_to': email_to,
+                'email_from': self.env.user.login or 'no-reply@example.com',
+            }
+            self.env['mail.mail'].create(mail_values).send()
+
+    @api.model
+    def _cron_auto_finish_reservations(self):
+        """ Cambia automáticamente a 'finished' las reservas que hayan terminado hace más de un día """
+        today = fields.Datetime.now()
+        one_day_ago = today - timedelta(days=1)
+
+        bookings_to_finish = self.search([
+            ('end_datetime', '<=', one_day_ago),
+            ('state', '=', 'confirmed')
+        ])
+
+        for booking in bookings_to_finish:
+            booking.state = 'finished'
+            booking._notify_user_and_superuser('Finished')

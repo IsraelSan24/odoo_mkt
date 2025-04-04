@@ -48,6 +48,10 @@
                     name="check_out_longitude_text"
                     optional="show"
                 />
+                <field
+                    name="within_allowed_area"
+                    optional="show"
+                />
             </field>
         </field>
     </record>

@@ -11,6 +11,7 @@ class RequirementPayment(models.Model):
     check_or_operation = fields.Selection(selection=[('check','Check'),('operation','Operation')], default='operation', string='Check/Operation', tracking=True)
     payment_bank_id = fields.Many2one(comodel_name="res.bank", string="Bank", domain="[('id','in',current_partner_bank_ids)]", default=lambda self: self._default_payment_bank_id(), tracking=True)
     operation_number = fields.Char(string='Operation number', tracking=True)
+    check_number = fields.Char(string='Check number', tracking=True)
     payment_date = fields.Date(string='Payment date', tracking=True)
     requirement_payroll_id = fields.Many2one(comodel_name='requirement.payroll', string='Payroll', tracking=True)
     amount = fields.Float(string='Amount', tracking=True)
@@ -25,16 +26,30 @@ class RequirementPayment(models.Model):
         compute='_compute_bank'
     )
 
+
+    @api.constrains('in_bank')
+    def _update_documental_requirement_in_bank(self):
+        """Si cualquier RP tiene in_bank=True, marcar DR como True.
+           Si todos los RP son False, marcar DR como False."""
+        for record in self:
+            if record.requirement_id:
+                new_value = any(record.requirement_id.requirement_payment_ids.mapped('in_bank'))
+                if record.requirement_id.in_bank != new_value:  # Solo escribir si es necesario
+                    record.requirement_id.sudo().write({'in_bank': new_value})
+                
+
     @api.depends('check_or_operation')
     def _compute_bank(self):
         bank_ids = self.env['res.partner'].browse(1).bank_ids.mapped('bank_id').ids
         self.current_partner_bank_ids = bank_ids
+
 
     def _default_payment_bank_id(self):
         bank = self.env['res.bank'].browse(4)
         if bank.exists():
             return bank.id
         return False
+
 
     @api.depends("requirement_id.requirement_state")
     def _compute_is_amount_editable(self):

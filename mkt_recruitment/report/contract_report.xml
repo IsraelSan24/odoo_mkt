@@ -28,59 +28,59 @@
                             </p>
                             <p style="font-size:0.625rem">
                                 El se&#241;or &#40;a&#41; 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.partner_name">
                                     <span t-esc="o.partner_name"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                  identificado con DNI 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.vat">
                                     <span t-esc="o.vat"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                  &#44; con domicilio en 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.country">
                                     <span t-esc="o.country"/> 
                                 </t>
                                 <t t-else="">
                                     __________, 
                                 </t>
-                                <t t-if="o.signed_on">
+                                <t t-if="o.province">
                                     <span t-esc="o.province"/>, 
                                 </t>
                                 <t t-else="">
                                     __________, 
                                 </t>
-                                <t t-if="o.signed_on">
+                                <t t-if="o.department">
                                     <span t-esc="o.department"/>, 
                                 </t>
                                 <t t-else="">
                                     __________, 
                                 </t>
-                                <t t-if="o.signed_on">
+                                <t t-if="o.district">
                                     <span t-esc="o.district"/>,
                                 </t>
                                 <t t-else="">
                                     __________, 
                                 </t>
-                                <t t-if="o.signed_on">
+                                <t t-if="o.street">
                                     <span t-esc="o.street"/>, 
                                 </t>
                                 <t t-else="">
                                     __________, 
                                 </t>
                                  &#44; n&#250;mero telef&#243;nico 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.phone">
                                     <span t-esc="o.phone"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                  &#44; y correo electr&#243;nico autorizado para toda comunicaci&#243;n de &#237;ndole laboral 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.email">
                                     <span t-esc="o.email"/>
                                 </t>
                                 <t t-else="">
@@ -121,7 +121,7 @@
                                     MARKETING 
                                 </strong>
                                 se encuentra en la necesidad de cubrir los servicios espec&#237;ficos dado que ha suscrito un Contrato de Locaci&#243;n de Servicios con 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.cost_center">
                                     <span t-esc="o.cost_center"/>
                                 </t>
                                 <t t-else="">
@@ -143,7 +143,7 @@
                                     EL TRABAJADOR 
                                 </strong>
                                 para que asuma el puesto de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.job_id">
                                     <span t-esc="o.job_id.name"/>
                                 </t>
                                 <t t-else="">
@@ -158,49 +158,49 @@
                             </p>
                             <p style="font-size:0.625rem">
                                 El plazo de duraci&#243;n del presente contrato es de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.contract_months">
                                     <span t-esc="o.contract_months"/>
                                 </t>
                                 <t t-else="">
                                     __________, 
                                 </t>
                                 &#44; el mismo que regir&#225; desde el 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.date_start">
                                     <span t-esc="'%02d' % o.date_start.day"/>
                                 </t>
                                 <t t-else="">
                                     __________, 
                                 </t>
                                  de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.date_start_month">
                                     <span t-esc="o.date_start_month"/> 
                                 </t>
                                 <t t-else="">
                                     __________, 
                                 </t>
                                 del 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.date_start">
                                     <span t-esc="o.date_start.year"/>
                                 </t>
                                 <t t-else="">
                                     __________, 
                                 </t>
                                  hasta el dia 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.date_end">
                                     <span t-esc="'%02d' % o.date_end.day"/>
                                 </t>
                                 <t t-else="">
                                     __________, 
                                 </t>
                                  de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.date_end_month">
                                     <span t-esc="o.date_end_month"/>
                                 </t>
                                 <t t-else="">
                                     __________, 
                                 </t>
                                  del 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.date_end">
                                     <span t-esc="o.date_end.year"/>
                                 </t>
                                 <t t-else="">
@@ -227,14 +227,14 @@
                                     EL TRABAJADOR
                                 </strong>
                                 &#44; LA EMPRESA le abonar&#225; una remuneraci&#243;n de S&#47; 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.wage">
                                     <span t-esc="o.wage" t-options='{"widget": "float", "precision": 2, "thousands_sep": ",", "decimal_point": "."}'/>
                                 </t>
                                 <t t-else="">
                                     __________, 
                                 </t>
                                 &#46; &#40;
-                                <t t-if="o.signed_on">
+                                <t t-if="o.wage_in_text">
                                     <span t-esc="o.wage_in_text"/>
                                 </t>
                                 <t t-else="">
@@ -676,7 +676,7 @@
                                     MARKETING
                                 </strong>
                                 mantiene con su cliente 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.partner_name">
                                     <span t-esc="o.partner_name"/>
                                 </t>
                                 <t t-else="">
@@ -882,21 +882,21 @@
                             </h6>
                             <p style="font-size:0.625rem">
                                 Yo&#44; 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.partner_name">
                                     <span t-esc="o.partner_name"/>
                                 </t>
                                 <t t-else="">
                                     __________, 
                                 </t>
                                  identificado&#40;a&#41; con DNI N&#176; 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.vat">
                                     <span t-esc="o.vat"/>
                                 </t>
                                 <t t-else="">
                                     __________, 
                                 </t>
                                  declaro que he recibido de mi empleador MARKETING ALTERNO PERU SAC&#44; donde laboro en calidad de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.job_id">
                                     <span t-esc="o.job_id.name"/>
                                 </t>
                                 <t t-else="">
@@ -997,7 +997,7 @@
                                         MARKETING ALTERNO PERU S&#46;A&#46;C&#46;
                                     </strong>
                                     identificado con RUC N&#176; 
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.company_vat">
                                         <span t-esc="o.company_vat"/>
                                     </t>
                                     <t t-else="">
@@ -1094,7 +1094,7 @@
                                 LIBERTAD NRO&#46; 757&#44; MAGDALENA DEL MAR&#44; debidamente representado por su apoderada la Srta&#46; CUERVAS AMOROS BERTHA MARIA
                                 con DNI N&#176; 10771669 a la que se le denominara simplemente EL EMPLEADOR&#44; y de la otra parte 
                                 <strong>
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.partner_name">
                                         <span t-esc="o.partner_name"/>
                                     </t>
                                     <t t-else="">
@@ -1103,7 +1103,7 @@
                                 </strong>
                                 con D&#46;N&#46;I&#46; N&#176; 
                                 <strong>
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.vat">
                                         <span t-esc="o.vat"/>&#44; 
                                     </t>
                                     <t t-else="">
@@ -1111,28 +1111,28 @@
                                     </t>
                                 </strong>
                                 domicilio en 
-                                <t t-if="o.contract_signature">
+                                <t t-if="o.street">
                                     <span t-esc="o.street"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 Distrito de 
-                                <t t-if="o.contract_signature">
+                                <t t-if="o.district">
                                     <span t-esc="o.district"/>&#44;
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 provincia de
-                                <t t-if="o.contract_signature">
+                                <t t-if="o.province">
                                     <span t-esc="o.province"/>,
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 Departamento de 
-                                <t t-if="o.contract_signature">
+                                <t t-if="o.department">
                                     <span t-esc="o.department"/>&#44;
                                 </t>
                                 <t t-else="">
@@ -1157,7 +1157,7 @@
                                     2&#46;&#45; SEGUNDO&#46;&#45; 
                                 </strong>
                                 Por el presente contrato&#44; EL TRABAJADOR se obliga a prestar sus servicios al EMPLEADOR en el cargo de
-                                <t t-if="o.contract_signature">
+                                <t t-if="o.job_id">
                                     <span t-esc="o.job_id.name"/> &#40;A&#41;
                                 </t>
                                 <t t-else="">
@@ -1177,7 +1177,7 @@
                                 </strong>
                                 En contraprestación a los servicios del TRABAJADOR&#44; el EMPLEADOR se obliga a pagar una remuneración es
                                 de S&#47;&#46; 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.wage">
                                     <span t-esc="o.wage" t-options='{"widget": "float", "precision": 2, "thousands_sep": ",", "decimal_point": "."}'/>
                                 </t>
                                 <t t-else="">
@@ -1204,7 +1204,7 @@
                                     5&#46;&#45; QUINTO&#46;&#45; 
                                 </strong>
                                 el plazo del presente contrato es de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.contract_months">
                                     <span t-esc="o.contract_months"/>&#44; 
                                 </t>
                                 <t t-else="">
@@ -1492,7 +1492,7 @@
                                 </strong>
                                 con don 
                                 <strong>
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.partner_name">
                                         <span t-esc="o.partner_name"/>&#58;
                                     </t>
                                     <t t-else="">
@@ -1518,7 +1518,7 @@
                                             Nombre
                                         </td>
                                         <td scope="col" style="border: none">
-                                            <t t-if="o.contract_signature">
+                                            <t t-if="o.partner_name">
                                                 &#58; <span t-esc="o.partner_name"/>
                                             </t>
                                             <t t-else="">
@@ -1531,7 +1531,7 @@
                                             Nacionalidad
                                         </td>
                                         <td scope="col" style="border: none">
-                                            <t t-if="o.contract_signature">
+                                            <t t-if="o.nationality">
                                                 &#58; <span t-esc="o.nationality"/>
                                             </t>
                                             <t t-else="">
@@ -1544,7 +1544,7 @@
                                             Profesión u Ocupación
                                         </td>
                                         <td scope="col" style="border: none">
-                                            <t t-if="o.contract_signature">
+                                            <t t-if="o.education_level">
                                                 &#58; <span t-esc="o.education_level"/>
                                             </t>
                                             <t t-else="">
@@ -1557,7 +1557,7 @@
                                             Puesto a ocupar
                                         </td>
                                         <td scope="col" style="border: none">
-                                            <t t-if="o.contract_signature">
+                                            <t t-if="o.job_id">
                                                 &#58; <span t-esc="o.job_id.name"/>
                                             </t>
                                             <t t-else="">
@@ -1655,14 +1655,14 @@
                                     SEGUNDO OTRO SI DECIMOS&#58; 
                                 </strong>
                                 Mediante el presente delegamos a la señorita 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.partner_name">
                                     <span t-esc="o.partner_name"/>
                                 </t>
                                 <t t-else="">
                                     __________&#44;
                                 </t>
                                 identificado con DNI N&#176; 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.vat">
                                     <span t-esc="o.vat"/>
                                 </t>
                                 <t t-else="">
@@ -1674,27 +1674,27 @@
                             </p>
                             <br/>
                             <p style="font-size:0.875rem;">
-                                <t t-if="o.signed_on">
+                                <t t-if="o.province">
                                     <span t-esc="o.province"/>&#44;
                                 </t>
                                 <t t-else="">
                                     __________&#44;
                                 </t>
-                                <t t-if="o.signed_on">
+                                <t t-if="o.date_start">
                                     <span t-esc="'%02d' % o.date_start.day"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.date_start_month">
                                     <span t-esc="o.date_start_month"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.date_start">
                                     <span t-esc="o.date_start.year"/>&#46;
                                 </t>
                                 <t t-else="">
@@ -1837,27 +1837,27 @@
                             </p>
                             <br/>
                             <p class="text-right">
-                                <t t-if="o.signed_on">
+                                <t t-if="o.province">
                                     <span t-esc="o.province"/>&#44;
                                 </t>
                                 <t t-else="">
                                     __________&#44;
                                 </t>
-                                <t t-if="o.signed_on">
+                                <t t-if="o.date_start">
                                     <span t-esc="'%02d' % o.date_start.day"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.date_start_month">
                                     <span t-esc="o.date_start_month"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.date_start">
                                     <span t-esc="o.date_start.year"/>&#46;
                                 </t>
                                 <t t-else="">
@@ -1969,7 +1969,7 @@
                                 </strong>
                                 "; Y&#44; DE LA OTRA PARTE&#44; 
                                 <strong>
-                                    <t t-if="o.contract_signature">
+                                    <t t-if="o.partner_name">
                                         &#58; <span t-esc="o.partner_name"/> 
                                     </t>
                                     <t t-else="">
@@ -1982,7 +1982,7 @@
                                 </strong>
                                 N&#176; 
                                 <strong>
-                                    <t t-if="o.contract_signature">
+                                    <t t-if="o.vat">
                                         <span t-esc="o.vat"/>
                                     </t>
                                     <t t-else="">
@@ -1991,7 +1991,7 @@
                                 </strong>
                                 NACIONALIDAD 
                                 <strong>
-                                    <t t-if="o.contract_signature">
+                                    <t t-if="o.nationality">
                                         <span t-esc="o.nationality"/>
                                     </t>
                                     <t t-else="">
@@ -2000,7 +2000,7 @@
                                 </strong>
                                 DE SEXO 
                                 <strong>
-                                    <t t-if="o.contract_signature">
+                                    <t t-if="o.gender">
                                         <span t-esc="o.gender"/> 
                                     </t>
                                     <t t-else="">
@@ -2009,7 +2009,7 @@
                                 </strong>
                                 DE 
                                 <strong>
-                                    <t t-if="o.contract_signature">
+                                    <t t-if="o.age">
                                         <span t-esc="o.age"/>
                                     </t>
                                     <t t-else="">
@@ -2018,7 +2018,7 @@
                                 </strong>
                                 AÑOS DE EDAD&#44; DE ESTADO CIVIL 
                                 <strong>
-                                    <t t-if="o.contract_signature">
+                                    <t t-if="o.marital">
                                         <span t-esc="o.marital"/> &#40;A&#41;
                                     </t>
                                     <t t-else="">
@@ -2027,7 +2027,7 @@
                                 </strong>
                                 &#44; DE PROFESIÓN 
                                 <strong>
-                                    <t t-if="o.contract_signature">
+                                    <t t-if="o.education_level">
                                         &#58; <span t-esc="o.education_level"/>
                                     </t>
                                     <t t-else="">
@@ -2036,35 +2036,35 @@
                                 </strong>
                                 COMPLETA CON DOMICILIO 
                                 <strong>
-                                    <t t-if="o.contract_signature">
+                                    <t t-if="o.country">
                                         &#40;<span t-esc="o.country"/>&#41; 
                                     </t>
                                     <t t-else="">
                                         &#40;__________&#41; 
                                     </t>
                                     Cal&#46; 
-                                    <t t-if="o.contract_signature">
+                                    <t t-if="o.street">
                                         <span t-esc="o.street"/>,
                                     </t>
                                     <t t-else="">
                                         __________
                                     </t>
                                     Distrito de 
-                                    <t t-if="o.contract_signature">
+                                    <t t-if="o.district">
                                         <span t-esc="o.district"/>&#44;
                                     </t>
                                     <t t-else="">
                                         __________
                                     </t>
                                     provincia de 
-                                    <t t-if="o.contract_signature">
+                                    <t t-if="o.province">
                                         <span t-esc="o.province"/>,
                                     </t>
                                     <t t-else="">
                                         __________
                                     </t>
                                     Departamento de 
-                                    <t t-if="o.contract_signature">
+                                    <t t-if="o.department">
                                         <span t-esc="o.department"/>&#44;
                                     </t>
                                     <t t-else="">
@@ -2108,7 +2108,7 @@
                                 </strong>
                                 REQUIERE CONTAR CON LOS SERVICIOS DE UN 
                                 <strong>
-                                    <t t-if="o.contract_signature">
+                                    <t t-if="o.job_id">
                                         <span t-esc="o.job_id.name"/> 
                                     </t>
                                     <t t-else="">
@@ -2395,13 +2395,13 @@
                                 </strong>
                                 UNA REMUNERACIÓN BRUTA MENSUAL POR LA SUMA DE S&#47; 
                                 <strong>
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.wage">
                                         <span t-esc="o.wage" t-options='{"widget": "float", "precision": 2, "thousands_sep": ",", "decimal_point": "."}'/>
                                     </t>
                                     <t t-else="">
                                         __________
                                     </t>
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.wage_in_text">
                                         &#40;<span t-esc="o.wage_in_text"/>
                                     </t>
                                     <t t-else="">
@@ -3014,7 +3014,7 @@
                                     </strong>
                                         con RUC No&#46; 20512433821&#44; con domicilio en Jr&#46; Libertad 757 Urb&#46; Orbea&#44; distrito de Magdalena del mar&#44; provincia y departamento de Lima&#44; debidamente representado por su apoderada CUERVAS AMOROS BERTHA MARIA identificada con DNI N&#176; 10771669&#44; y por otra parte&#44;     
                                     O Don 
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.partner_name">
                                         <span t-esc="o.partner_name"/>
                                     </t>
                                     <t t-else="">
@@ -3025,40 +3025,40 @@
                                         TRABAJADOR
                                     </strong>
                                     &#34;&#41;&#44; identificado con DNI N&#176; 
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.vat">
                                         <span t-esc="o.vat"/>
                                     </t>
                                     <t t-else="">
                                         __________, 
                                     </t>
                                      con domicilio en 
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.department">
                                         <span t-esc="o.department"/>, 
                                     </t>
                                     <t t-else="">
                                         __________, 
                                     </t>
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.district">
                                         <span t-esc="o.district"/>, 
                                     </t>
                                     <t t-else="">
                                         __________, 
                                     </t>
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.street">
                                         <span t-esc="o.street"/>, 
                                     </t>
                                     <t t-else="">
                                         __________, 
                                     </t>
                                      N&#250;mero telef&#243;nico 
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.phone">
                                         <span t-esc="o.phone"/>, 
                                     </t>
                                     <t t-else="">
                                         __________, 
                                     </t>
                                      y para todo efecto de notificaciones&#44; correo electr&#243;nico 
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.email">
                                         <span t-esc="o.email"/>, 
                                     </t>
                                     <t t-else="">
@@ -3098,7 +3098,7 @@
                                         MARKETING
                                     </strong>
                                     se encuentra en la necesidad de cubrir los servicios intermitentes que le permite cubrir las necesidades permanentes&#44; pero discontinuas&#44; dado que ha suscrito un Contrato de Prestaci&#243;n de Servicios con la empresa 
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.cost_center">
                                         <span t-esc="o.cost_center"/>
                                     </t>
                                     <t t-else="">
@@ -3391,7 +3391,7 @@
                                     <ol  style="list-style-type: lower-alpha; font-size:0.563rem">
                                         <li>
                                             Una remuneraci&#243;n b&#225;sica fija cuyo monto ascender&#225; a&#58; S&#47; 
-                                            <t t-if="o.signed_on">
+                                            <t t-if="o.wage">
                                                 <span t-esc="o.wage" t-options='{"widget": "float", "precision": 2, "thousands_sep": ",", "decimal_point": "."}'/>
                                             </t>
                                             <t t-else="">
@@ -3775,21 +3775,21 @@
                                         __
                                     </t>
                                     &#44; en dos ejemplares de un mismo tenor y para un solo efecto&#44; que se suscribe el 
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.date_start">
                                         <span t-esc="o.date_start.day"/>
                                     </t>
                                     <t t-else="">
                                         __
                                     </t>
                                      del 
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.date_start">
                                         <span t-esc="o.date_start.month"/>
                                     </t>
                                     <t t-else="">
                                         __
                                     </t>
                                       del 
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.date_start">
                                         <span t-esc="o.date_start.year"/>
                                     </t>
                                     <t t-else="">
@@ -3852,14 +3852,14 @@
                                 </p>
                                 <p style="font-size:0.625rem">
                                     Yo&#44; 
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.partner_name">
                                         <span t-esc="o.partner_name"/>
                                     </t>
                                     <t t-else="">
                                         __________
                                     </t>
                                      identificado&#40;a&#41; con DNI N&#176; 
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.vat">
                                         <span t-esc="o.vat"/>
                                     </t>
                                     <t t-else="">
@@ -3870,7 +3870,7 @@
                                         MARKETING ALTERNO PERU SAC
                                     </strong>
                                     &#44; donde laboró en calidad de 
-                                    <t t-if="o.signed_on">
+                                    <t t-if="o.job_id">
                                         <span t-esc="o.job_id.name"/>
                                     </t>
                                     <t t-else="">
@@ -3975,7 +3975,7 @@
                                             MARKETING ALTERNO PERU S&#46;A&#46;C&#46;
                                         </strong>
                                         identificado con RUC N&#176; 
-                                        <t t-if="o.signed_on">
+                                        <t t-if="o.company_vat">
                                             <span t-esc="o.company_vat"/>
                                         </t>
                                         <t t-else="">
@@ -4067,49 +4067,49 @@
                                     EL EMPLEADOR
                                 </strong>
                                 &#44; y de la otra parte 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.partner_name">
                                     <span t-esc="o.partner_name"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                  con D&#46;N&#46;I&#46; N&#176; 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.vat">
                                     <span t-esc="o.vat"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 &#44; domicilio en 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.street">
                                     <span t-esc="o.street"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 &#44; Distrito de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.district">
                                     <span t-esc="o.district"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 &#44; Provincia de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.province">
                                     <span t-esc="o.province"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 &#46;&#44; Departamento de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.department">
                                     <span t-esc="o.department"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                  y correo electronico personal 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.email">
                                     <span t-esc="o.email"/>
                                 </t>
                                 <t t-else="">
@@ -4143,7 +4143,7 @@
                                     EL TRABAJADOR
                                 </strong>
                                 a efectos que se desempe&#241;e como 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.job_id">
                                     <span t-esc="o.job_id.name"/>
                                 </t>
                                 <t t-else="">
@@ -4303,14 +4303,14 @@
                                     EL EMPLEADOR
                                 </strong>
                                 &#44; este le abonara una remuneracion de S&#47;
-                                <t t-if="o.signed_on">
+                                <t t-if="o.wage">
                                     <span t-esc="o.wage" t-options='{"widget": "float", "precision": 2, "thousands_sep": ",", "decimal_point": "."}'/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                  &#40;
-                                <t t-if="o.signed_on">
+                                <t t-if="o.wage_in_text">
                                     <span t-esc="o.wage_in_text"/>
                                 </t>
                                 <t t-else="">
@@ -4899,49 +4899,49 @@
                                     EL EMPLEADOR
                                 </strong>
                                 &#44; y de la otra parte 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.partner_name">
                                     <span t-esc="o.partner_name"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                  con D&#46;N&#46;I&#46; N&#176; 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.vat">
                                     <span t-esc="o.vat"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 &#44; domicilio en 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.street">
                                     <span t-esc="o.street"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 &#44; Distrito de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.district">
                                     <span t-esc="o.district"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 &#44; Provincia de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.province">
                                     <span t-esc="o.province"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 &#46;&#44; Departamento de 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.department">
                                     <span t-esc="o.department"/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                 y correo electronico personal 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.email">
                                     <span t-esc="o.email"/>
                                 </t>
                                 <t t-else="">
@@ -4975,7 +4975,7 @@
                                     EL TRABAJADOR
                                 </strong>
                                 a efectos que se desempe&#241;e como 
-                                <t t-if="o.signed_on">
+                                <t t-if="o.job_id">
                                     <span t-esc="o.job_id.name"/>
                                 </t>
                                 <t t-else="">
@@ -5140,14 +5140,14 @@
                                     EL EMPLEADOR
                                 </strong>
                                 &#44; este le abonara una remuneracion de S&#47;
-                                <t t-if="o.signed_on">
+                                <t t-if="o.wage">
                                     <span t-esc="o.wage" t-options='{"widget": "float", "precision": 2, "thousands_sep": ",", "decimal_point": "."}'/>
                                 </t>
                                 <t t-else="">
                                     __________
                                 </t>
                                  &#40;
-                                <t t-if="o.signed_on">
+                                <t t-if="o.wage_in_text">
                                     <span t-esc="o.wage_in_text"/>
                                 </t>
                                 <t t-else="">

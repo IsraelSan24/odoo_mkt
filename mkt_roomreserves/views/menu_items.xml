@@ -9,7 +9,6 @@
         <field name="name">Reservations</field>
         <field name="res_model">space.booking</field>
         <field name="view_mode">tree,form,calendar</field>
-        <field name="domain">[('end_datetime', '>', context_today())]</field>
     </record>
 
     <record id="action_space_item" model="ir.actions.act_window">

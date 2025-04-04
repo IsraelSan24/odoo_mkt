@@ -15,6 +15,7 @@
         'l10n_pe',
         'hr_contract',
         'mkt_cost_center',
+        'mkt_documental_managment',
         'l10n_latam_base',
     ],
     'data':[
