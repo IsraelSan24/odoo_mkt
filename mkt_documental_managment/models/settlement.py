@@ -168,10 +168,15 @@ class Settlement(models.Model):
                 rec.accounting_account = '633028' if rec.paid_to.province_id.name == 'Lima' else '633029'
             elif rec.document_type_id.id == 22:
                 rec.accounting_account = '141301' if rec.paid_to.province_id.name == 'Lima' else '141303'
-            elif rec.document_type_id.id in [2, 7, 24, 26]:
+            elif rec.document_type_id.id in [2, 5, 7, 24, 26]:
                 rec.accounting_account = '633060'
             elif rec.document_type_id.id == 16:
-                rec.accounting_account = '633051' if rec.paid_to.province_id.name == 'Lima' else '633052'
+                if "IMPUESTO PREDIAL" in (rec.partner or ""):
+                    rec.accounting_account = '643201'
+                elif "COPIA LITERAL" in (rec.requirement_id.concept or ""):
+                    rec.accounting_account = '644305'
+                else:
+                    rec.accounting_account = '633051' if rec.paid_to.province_id.name == 'Lima' else '633052'
             elif rec.document_type_id.id in [8, 12, 25, 32, 33]:
                 if len(rec.requirement_id.dni_or_ruc or '') == 8:
                     rec.accounting_account = '143101' if rec.paid_to.province_id.name == 'Lima' else '141303'
@@ -181,7 +186,6 @@ class Settlement(models.Model):
                     rec.accounting_account = ''
             else:
                 rec.accounting_account = ''
-
 
     @api.onchange('accountable_month_id')
     def _onchange_accountable_month(self):

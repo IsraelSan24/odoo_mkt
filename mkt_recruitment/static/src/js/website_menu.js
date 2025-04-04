@@ -109,33 +109,33 @@ document.addEventListener('DOMContentLoaded', function() {
       otrosMembersField.innerHTML = `
         
           <div class="col-md-12">
-              <h3 class="font-weight-bold text-info">Familiar${j + 5}</h3>
+              <h3 class="font-weight-bold text-info">Familiar${j + 7}</h3>
           </div>
           
           <div class="form-group col">
-              <label for="familiar_dni${j + 5}">DNI</label>
-              <input type="text" name="familiar_dni${j + 5}" id="familiar_dni${j + 5}" class="form-control" required="True"/>
+              <label for="familiar_dni${j + 7}">DNI</label>
+              <input type="text" name="familiar_dni${j + 7}" id="familiar_dni${j + 7}" class="form-control" required="True"/>
               <div class="invalid-feedback">
                 Por favor, ingrese su DNI.
               </div>
           </div>
           <div class="form-group col">
-              <label for="familiar_full_name${j + 5}" >Nombre</label>
-              <input type="text" name="familiar_full_name${j + 5}" id="familiar_full_name${j + 5}" class="form-control" required="True"/>
+              <label for="familiar_full_name${j + 7}" >Nombre</label>
+              <input type="text" name="familiar_full_name${j + 7}" id="familiar_full_name${j + 7}" class="form-control" required="True"/>
               <div class="invalid-feedback">
                 Por favor, ingrese su nombre.
               </div>
           </div>
           <div class="form-group col">
-              <label for="familiar_birthday${j + 5}">F. Nac</label>
-              <input type="date" name="familiar_birthday${j + 5}" class="form-control" id="familiar_birthday${j + 5}" required="True"/>
+              <label for="familiar_birthday${j + 7}">F. Nac</label>
+              <input type="date" name="familiar_birthday${j + 7}" class="form-control" id="familiar_birthday${j + 7}" required="True"/>
               <div class="invalid-feedback">
                 Por favor, ingrese su fecha de nacimiento.
               </div>
           </div>
           <div class="form-group col">
-              <label for="familiar_relationship${j + 5}">Parentesco</label>
-              <select class="form-control" name="familiar_relationship${j + 5}" id="familiar_relationship${j + 5}" required="True">
+              <label for="familiar_relationship${j + 7}">Parentesco</label>
+              <select class="form-control" name="familiar_relationship${j + 7}" id="familiar_relationship${j + 7}" required="True">
                   <option value="">Seleccione una opción</option>
                   <option value="Madre">Madre</option>
                   <option value="Padre">Padre</option>
@@ -147,8 +147,8 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
           </div>
           <div class="form-group col">
-              <label for="familiar_gender${j + 5}">Género</label>
-              <select class="form-control" name="familiar_gender${j + 5}" id="familiar_gender${j + 5}" required="True">
+              <label for="familiar_gender${j + 7}">Género</label>
+              <select class="form-control" name="familiar_gender${j + 7}" id="familiar_gender${j + 7}" required="True">
                   <option value="">Seleccione una opción</option>
                   <option value="male">Masculino</option>
                   <option value="female">Femenino</option>
@@ -158,15 +158,15 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
           </div>
           <div class="form-group col">
-              <label for="familiar_address${j + 5}">Dirección</label>
-              <input type="text" name="familiar_address${j + 5}" class="form-control" id="familiar_address${j + 5}" required="True"/>
+              <label for="familiar_address${j + 7}">Dirección</label>
+              <input type="text" name="familiar_address${j + 7}" class="form-control" id="familiar_address${j + 7}" required="True"/>
               <div class="invalid-feedback">
                 Por favor, ingrese una dirección.
               </div>
           </div>
           <div class="form-group col">
-              <label for="is_beneficiary${j + 5}">Beneficiario</label>
-              <input type="checkbox" name="is_beneficiary${j + 5}" class="form-control" id="is_beneficiary${j + 5}" checked/>
+              <label for="is_beneficiary${j + 7}">Beneficiario</label>
+              <input type="checkbox" name="is_beneficiary${j + 7}" class="form-control" id="is_beneficiary${j + 7}" checked/>
           </div>
           
         
@@ -210,8 +210,8 @@ radio.addEventListener('change', function() {
 function validateInputfamily() {
   var input = document.getElementById('familyMembers');
   var value = parseInt(input.value);
-  if (value < 0 || value > 4) {
-      alert('Only numbers 1, 2, 3 and 4 are allowed.');
+  if (value < 0 || value > 6) {
+      alert('Only numbers 1, 2, 3, 4, 5 and 6 are allowed.');
       input.value = '';
   }
 }
@@ -454,7 +454,8 @@ function populateModal() {
                   </tr>
               </thead>
               <tbody>`;
-      for (let j = 5; j < 5 + otrosMembersCount; j++) {
+      const inicioOtros = 7;  // Asegura que otros beneficiarios empiecen en 7
+      for (let j = inicioOtros; j < inicioOtros + otrosMembersCount; j++) {
           tableHTML += `
               <tr>
                   <td>${document.getElementById(`familiar_dni${j}`).value}</td>

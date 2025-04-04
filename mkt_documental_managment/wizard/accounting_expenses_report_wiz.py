@@ -40,7 +40,7 @@ class AccountingExpensesReport(models.TransientModel):
 
 
     def _get_file_name(self, function_name, file_name=False):
-        dic_name = super(AccountingExpensesReport, self)._get_file_name(function_name, file_name=_( 'Accounting Expenses report' ))
+        dic_name = super(AccountingExpensesReport, self)._get_file_name(function_name, file_name=_( 'MKT Accounting Expenses report' ))
         return dic_name
 
 
@@ -149,7 +149,7 @@ class AccountingExpensesReport(models.TransientModel):
         style8 = {
             'font_size': 11,
             'bg_color': '#FFC19B',
-            'align': 'center',
+            'align': 'right',
             'valign': 'vcenter',
             'border': 1,
             'num_format': '#,##0.00',
@@ -157,12 +157,27 @@ class AccountingExpensesReport(models.TransientModel):
     
         style9 = {
             'font_size': 11,
-            'align': 'center',
+            'align': 'right',
             'valign': 'vcenter',
             'border': 1,
             'num_format': '#,##0.00',
         }
+        
+        style10 = {
+            'font_size': 11,
+            'bg_color': '#FFC19B',
+            'align': 'left',
+            'valign': 'vcenter',
+            'border': 1,
+        }
 
+        style11 = {
+            'font_size': 11,
+            'align': 'left',
+            'valign': 'vcenter',
+            'border': 1,
+        }
+        
         format1 = workbook.add_format(style1)
         format2 = workbook.add_format(style2)
         format3 = workbook.add_format(style3)
@@ -172,6 +187,8 @@ class AccountingExpensesReport(models.TransientModel):
         format7 = workbook.add_format(style7)
         format8 = workbook.add_format(style8)
         format9 = workbook.add_format(style9)
+        format10 = workbook.add_format(style10)
+        format11 = workbook.add_format(style11)
 
         company = self.env.user.company_id.logo
         # if company:
@@ -197,9 +214,9 @@ class AccountingExpensesReport(models.TransientModel):
         ws.merge_range('H5:L5', _('PAID TO'), format2)
         ws.write('H6:H6', _('DNI'), format2)
         ws.write('I6:I6', _('RUC'), format2)
-        ws.write('J6:J6', _('Name'), format2)
-        ws.write('K6:K6', _('Province'), format2)
-        ws.write('L6:L6', _('Concept'), format2)
+        ws.write('J6:J6', _('NAME'), format2)
+        ws.write('K6:K6', _('PROVINCE'), format2)
+        ws.write('L6:L6', _('CONCEPT'), format2)
 
         ws.merge_range('M5:M6', _('REQUIREMENT'), format2)
         ws.merge_range('N5:N6', _('CURRENCY'), format2)
@@ -208,23 +225,23 @@ class AccountingExpensesReport(models.TransientModel):
         ws.merge_range('P5:R5', _('SETTLEMENT DATE'), format2)
         ws.write('P6:P6', _('D'), format2)
         ws.write('Q6:Q6', _('M'), format2)
-        ws.write('R6:R6', _('A'), format2)
+        ws.write('R6:R6', _('Y'), format2)
 
         ws.merge_range('S5:AA5', _('SETTLEMENT DETAIL'), format2)
-        ws.write('S6:S6', _('Date'), format2)
-        ws.write('T6:T6', _('Account'), format2)
+        ws.write('S6:S6', _('DATE'), format2)
+        ws.write('T6:T6', _('ACCOUNT'), format2)
         ws.write('U6:U6', _('DT'), format2)
-        ws.write('V6:V6', _('Document type'), format2)
-        ws.write('W6:W6', _('Document'), format2)
+        ws.write('V6:V6', _('DOCUMENT TYPE'), format2)
+        ws.write('W6:W6', _('DOCUMENT'), format2)
         ws.write('X6:X6', _('DNI'), format2)
         ws.write('Y6:Y6', _('RUC'), format2)
-        ws.write('Z6:Z6', _('Reason'), format2)
-        ws.write('AA6:AA6', _('Amount'), format2)
+        ws.write('Z6:Z6', _('REASON'), format2)
+        ws.write('AA6:AA6', _('AMOUNT'), format2)
 
         ws.merge_range('AB5:AG5', _('SETTLEMENT AMOUNT DETAILS'), format2)
-        ws.write('AB6:BB6', _('Total'), format2)
-        ws.write('AC6:AC6', _('Refund to employee'), format2)
-        ws.write('AD6:AD6', _('Refund to MKT'), format2)
+        ws.write('AB6:BB6', _('TOTAL'), format2)
+        ws.write('AC6:AC6', _('REFUND TO EMPLOYEE'), format2)
+        ws.write('AD6:AD6', _('REFUND TO MKT'), format2)
         ws.write('AE6:AE6', 'IGV(%)', format2)
         ws.write('AF6:AF6', _('IGV'), format2)
         ws.write('AG6:AG6', 'B.I', format2)
@@ -250,9 +267,9 @@ class AccountingExpensesReport(models.TransientModel):
                 ws.write(row, 6, line['card_payment'] or ' ', format3)
                 ws.write(row, 7, line['dni_ruc_requirement'] if len(line['dni_ruc_requirement'] or '') == 8 else '', format3)
                 ws.write(row, 8, line['dni_ruc_requirement'] if len(line['dni_ruc_requirement'] or '') != 8 else '', format3)
-                ws.write(row, 9, line['paid_to'], format3)
+                ws.write(row, 9, line['paid_to'], format10)
                 ws.write(row, 10, (line['province'] or '').upper(), format3)
-                ws.write(row, 11, line['concept'], format3)
+                ws.write(row, 11, line['concept'], format10)
                 ws.write(row, 12, line['requirement'], format3)
                 ws.write(row, 13, line['currency'], format3)
                 ws.write(row, 14, line['amount'], format8)
@@ -266,7 +283,7 @@ class AccountingExpensesReport(models.TransientModel):
                 ws.write(row, 22, line['movement_document'], format3)
                 ws.write(row, 23, line['dni_ruc_settlement'] if len(line['dni_ruc_settlement'] or '') == 8 else '', format3)
                 ws.write(row, 24, line['dni_ruc_settlement'] if len(line['dni_ruc_settlement'] or '') != 8 else '', format3)
-                ws.write(row, 25, str(line['partner']) + ' - ' + str(line['reason']), format3)
+                ws.write(row, 25, str(line['partner']) + ' - ' + str(line['reason']), format10)
                 ws.write(row, 26, line['settle_amount'], format8)
                 if total_lines == 0:
                     ws.write_formula(row, 27, '=SUM(U%s:U%s)' % ( ( row + 1 ), ( row + 1 ) ), format8)
@@ -294,9 +311,9 @@ class AccountingExpensesReport(models.TransientModel):
                 ws.write(row, 6, ' ', format5)
                 ws.write(row, 7, line['dni_ruc_requirement'] if len(line['dni_ruc_requirement'] or '') == 8 else '', format5)
                 ws.write(row, 8, line['dni_ruc_requirement'] if len(line['dni_ruc_requirement'] or '') != 8 else '', format5)
-                ws.write(row, 9, line['paid_to'], format5)
+                ws.write(row, 9, line['paid_to'], format11)
                 ws.write(row, 10, (line['province'] or '').upper(), format5)
-                ws.write(row, 11, line['concept'], format5)
+                ws.write(row, 11, line['concept'], format11)
                 ws.write(row, 12, line['requirement'], format5)
                 ws.write(row, 13, '', format5)
                 ws.write(row, 14, '', format9)
@@ -310,7 +327,7 @@ class AccountingExpensesReport(models.TransientModel):
                 ws.write(row, 22, line['movement_document'], format5)
                 ws.write(row, 23, line['dni_ruc_settlement'] if len(line['dni_ruc_settlement'] or '') == 8 else '', format5)
                 ws.write(row, 24, line['dni_ruc_settlement'] if len(line['dni_ruc_settlement'] or '') != 8 else '', format5)
-                ws.write(row, 25, str(line['partner']) + ' - ' + str(line['reason']), format5)
+                ws.write(row, 25, str(line['partner']) + ' - ' + str(line['reason']), format11)
                 ws.write(row, 26, line['settle_amount'], format9)
                 ws.write(row, 27, '', format9)
                 ws.write(row, 28, '=V%s-M%s' % ( ( row + 1 ), ( row + 1 ) ), format9)

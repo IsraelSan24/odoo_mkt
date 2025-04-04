@@ -493,10 +493,10 @@
                                 <span t-field="contract.date_end" t-options="{'widget': 'date'}"/>&amp;nbsp;
                             </td>
                             <td class="text-center">
-                                <span t-if="contract.state == 'draft'" class="badge badge-pill badge-warning">
+                                <span t-if="contract.signature_state == 'to_sign'" class="badge badge-pill badge-warning">
                                     <i class="fa fa-clock-o" role="img" ara-label="To Sign" title="To sign"/> To sign
                                 </span>
-                                <span t-if="contract.state == 'open'" class="badge badge-pill badge-success">
+                                <span t-if="contract.signature_state == 'signed'" class="badge badge-pill badge-success">
                                     <i class="fa fa-fw fa-check" role="img" aria-label="Signed" title="Signed"/> Signed
                                 </span>
                             </td>

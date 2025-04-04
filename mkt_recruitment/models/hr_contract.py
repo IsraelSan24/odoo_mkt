@@ -35,7 +35,7 @@ class Contract(models.Model):
     wage_in_text = fields.Char(compute='_compute_result', string='Wage in text', tracking=True)
     contract_months = fields.Char(string='Duration of the contract', tracking=True)
     residual_contract_days = fields.Char(string='Residual contract days')
-    signature_state = fields.Selection(selection=signature_states, string='Employee signature status', copy=False)
+    signature_state = fields.Selection(selection=signature_states, string='Employee signature status', default='to_sign', copy=False)
     signature_employer_state = fields.Selection(selection=signature_states, string='Signature employer state', default='to_sign', copy=False)
     is_renovation = fields.Boolean(default=False, string='Renovation', tracking=True)
     signed_by_employer = fields.Boolean(default=False, string='Signed by employer', copy=False, tracking=True)

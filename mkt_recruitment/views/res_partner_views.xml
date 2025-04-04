@@ -253,35 +253,6 @@
                                     <td style="border: none"></td>
                                     <field name="is_beneficiary4"/>
                                 </tr>
-                            </tbody>
-                        </table>
-                        <table class="table table-bordered" style="padding: 0px 30px 0px 30px; border:none; ">
-                            <colgroup>
-                                <col width="8%"/>
-                                <col width="24%"/>
-                                <col width="8%"/>
-                                <col width="8%"/>
-                                <col width="8%"/>
-                                <col width="20%"/>
-                                <col width="12%"/>
-                                <col width="12%"/>
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th colspan="8" class="text-center" style="border: 2px solid black;">Other Beneficiaries</th>
-                                </tr>
-                                <tr>
-                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">N&#176;DNI</th>
-                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">NAME AND SURNAME</th>
-                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Genre</th>
-                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Relationship</th>
-                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Date</th>
-                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Address</th>
-                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">File DNI(Front)</th>
-                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">File DNI(Back)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
                                 <tr>
                                     <td style="border: 2px solid black;">
                                         <field name="familiar_dni5"/>
@@ -342,6 +313,35 @@
                                     <td style="border: none"></td>
                                     <field name="is_beneficiary6"/>
                                 </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered" style="padding: 0px 30px 0px 30px; border:none; ">
+                            <colgroup>
+                                <col width="8%"/>
+                                <col width="24%"/>
+                                <col width="8%"/>
+                                <col width="8%"/>
+                                <col width="8%"/>
+                                <col width="20%"/>
+                                <col width="12%"/>
+                                <col width="12%"/>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="8" class="text-center" style="border: 2px solid black;">Other Beneficiaries</th>
+                                </tr>
+                                <tr>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">N&#176;DNI</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">NAME AND SURNAME</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Genre</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Relationship</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Date</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Address</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">File DNI(Front)</th>
+                                    <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">File DNI(Back)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 <tr>
                                     <td style="border: 2px solid black;">
                                         <field name="familiar_dni7"/>
@@ -402,9 +402,82 @@
                                     <td style="border: none"></td>
                                     <field name="is_beneficiary8"/>
                                 </tr>
+                                <tr>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dni9"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_full_name9"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_gender9"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_relationship9"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_birthday9"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_address9"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile9_filename" invisible="True"/>
+                                        <field name="familiar_dnifile9" widget="binary" filename="familiar_dnifile9_filename"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile9_back_filename" invisible="True"/>
+                                        <field name="familiar_dnifile9_back" widget="binary" filename="familiar_dnifile9back_filename"/>
+                                    </td>
+                                    <td style="border: none"></td>
+                                    <field name="is_beneficiary9"/>
+                                </tr>
+                                <tr>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dni10"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_full_name10"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_gender10"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_relationship10"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_birthday10"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_address10"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile10_filename" invisible="True"/>
+                                        <field name="familiar_dnifile10" widget="binary" filename="familiar_dnifile10_filename"/>
+                                    </td>
+                                    <td style="border: 2px solid black;">
+                                        <field name="familiar_dnifile10_back_filename" invisible="True"/>
+                                        <field name="familiar_dnifile10_back" widget="binary" filename="familiar_dnifile10_back_filename"/>
+                                    </td>
+                                    <td style="border: none"></td>
+                                    <field name="is_beneficiary10"/>
+                                </tr>
                             </tbody>
                         </table>
                 </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_partner_tree_view_inherit" model="ir.ui.view">
+        <field name="name">res.partner.tree.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <header>
+                    <button name="one_time_reorder_positions" type="object" string="Reordenar" class="oe_highlight"/>
+                </header>
             </xpath>
         </field>
     </record>

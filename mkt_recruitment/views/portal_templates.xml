@@ -794,6 +794,58 @@
                                                     </td>
                                                     <td><input type="text" class="form-control" name="familiar_address4" t-att-value="familiar_address4 or partner.familiar_address4"/></td>
                                                 </tr>
+                                                <tr>
+                                                    <td><input type="text" class="form-control" name="familiar_dni5" t-att-value="familiar_dni5 or partner.familiar_dni5"/></td>
+                                                    <td><input type="text" class="form-control" name="familiar_full_name5" t-att-value="familiar_full_name5 or partner.familiar_full_name5"/></td>
+                                                    <td><input type="date" class="form-control" name="familiar_birthday5" t-att-value="familiar_birthday5 or partner.familiar_birthday5"/></td>
+                                                    <td>
+                                                        <select name="familiar_relationship5" t-attf-class="form-control" t-att-value="familiar_relationship5s">
+                                                            <option value="">Relationship</option>
+                                                            <option value="Madre" t-att-selected="familiar_relationship5s == 'Madre'">Mother</option>
+                                                            <option value="Padre" t-att-selected="familiar_relationship5s == 'Padre'">Father</option>
+                                                            <option value="Hermano" t-att-selected="familiar_relationship5s == 'Hermano'">Brother</option>
+                                                            <option value="Hermana" t-att-selected="familiar_relationship5s == 'Hermana'">Sister</option>
+                                                            <option value="Esposo/a" t-att-selected="familiar_relationship5s == 'Esposo/a'">Spouse</option>
+                                                            <option value="Conviviente" t-att-selected="familiar_relationship5s == 'Conviviente'">Concubine</option>
+                                                            <option value="Hijo" t-att-selected="familiar_relationship5s == 'Hijo'">Son</option>
+                                                            <option value="Hija" t-att-selected="familiar_relationship5s == 'Hija'">Daughter</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="familiar_gender5" t-attf-class="form-control" t-att-value="familiar_gender5s">
+                                                            <option value="">Gender</option>
+                                                            <option value="male" t-att-selected="familiar_gender4s == 'male'">Male</option>
+                                                            <option value="female" t-att-selected="familiar_gender4s == 'female'">Female</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="form-control" name="familiar_address5" t-att-value="familiar_address5 or partner.familiar_address5"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" class="form-control" name="familiar_dni6" t-att-value="familiar_dni6 or partner.familiar_dni6"/></td>
+                                                    <td><input type="text" class="form-control" name="familiar_full_name6" t-att-value="familiar_full_name6 or partner.familiar_full_name6"/></td>
+                                                    <td><input type="date" class="form-control" name="familiar_birthday6" t-att-value="familiar_birthday6 or partner.familiar_birthday6"/></td>
+                                                    <td>
+                                                        <select name="familiar_relationship6" t-attf-class="form-control" t-att-value="familiar_relationship6s">
+                                                            <option value="">Relationship</option>
+                                                            <option value="Madre" t-att-selected="familiar_relationship6s == 'Madre'">Mother</option>
+                                                            <option value="Padre" t-att-selected="familiar_relationship6s == 'Padre'">Father</option>
+                                                            <option value="Hermano" t-att-selected="familiar_relationship6s == 'Hermano'">Brother</option>
+                                                            <option value="Hermana" t-att-selected="familiar_relationship6s == 'Hermana'">Sister</option>
+                                                            <option value="Esposo/a" t-att-selected="familiar_relationship6s == 'Esposo/a'">Spouse</option>
+                                                            <option value="Conviviente" t-att-selected="familiar_relationship6s == 'Conviviente'">Concubine</option>
+                                                            <option value="Hijo" t-att-selected="familiar_relationship6s == 'Hijo'">Son</option>
+                                                            <option value="Hija" t-att-selected="familiar_relationship6s == 'Hija'">Daughter</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="familiar_gender6" t-attf-class="form-control" t-att-value="familiar_gender6s">
+                                                            <option value="">Gender</option>
+                                                            <option value="male" t-att-selected="familiar_gender4s == 'male'">Male</option>
+                                                            <option value="female" t-att-selected="familiar_gender4s == 'female'">Female</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="form-control" name="familiar_address6" t-att-value="familiar_address6 or partner.familiar_address6"/></td>
+                                                </tr>
                                             </t>
                                             <t t-else="">
                                                 <tr>
@@ -996,144 +1048,6 @@
                                                         </t>
                                                     </td>
                                                 </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>    
-                    <div class="row mt-3 bg-white border rounded rounded-lg">
-                        <div class="col-md-12">
-                            <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
-                            <script type="text/javascript" src="/mkt_recruitment/static/src/js/my_account.js"/>
-                            <div class="form-group">
-                                <div class="row d-flex align-items-center justify-content-center py-2 mb-2" style="background:#6D3A84">
-                                    <div class="col text-center" style="color:#FFFFFF; font-weight: 700;">
-                                        <h5>Other Beneficiary</h5>
-                                        <p>Parents and minor siblings - Art. 1&#176; D.L. 688</p>
-                                    </div>
-                                </div>
-                                <div class="table-responsive w-100">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <td scope="col" style="color:#000000; font-weight: 700;">DNI</td>
-                                                <td scope="col" style="color:#000000; font-weight: 700;">Full name</td>
-                                                <td scope="col" style="color:#000000; font-weight: 700;">Birthday</td>
-                                                <td scope="col" style="color:#000000; font-weight: 700;">Relationship</td>
-                                                <td scope="col" style="color:#000000; font-weight: 700;">Gender</td>
-                                                <td scope="col" style="color:#000000; font-weight: 700;">Address</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <t t-if="partner.is_validate == False">
-                                                <tr>
-                                                    <td><input type="text" class="form-control" name="familiar_dni5" t-att-value="familiar_dni5 or partner.familiar_dni5"/></td>
-                                                    <td><input type="text" class="form-control" name="familiar_full_name5" t-att-value="familiar_full_name5 or partner.familiar_full_name5"/></td>
-                                                    <td><input type="date" class="form-control" name="familiar_birthday5" t-att-value="familiar_birthday5 or partner.familiar_birthday5"/></td>
-                                                    <td>
-                                                        <select name="familiar_relationship5" t-attf-class="form-control" t-att-value="familiar_relationship5s">
-                                                            <option value="">Relationship</option>
-                                                            <option value="Madre" t-att-selected="familiar_relationship5s == 'Madre'">Mother</option>
-                                                            <option value="Padre" t-att-selected="familiar_relationship5s == 'Padre'">Father</option>
-                                                            <option value="Hermano" t-att-selected="familiar_relationship5s == 'Hermano'">Brother</option>
-                                                            <option value="Hermana" t-att-selected="familiar_relationship5s == 'Hermana'">Sister</option>
-                                                            <option value="Esposo/a" t-att-selected="familiar_relationship5s == 'Esposo/a'">Spouse</option>
-                                                            <option value="Conviviente" t-att-selected="familiar_relationship5s == 'Conviviente'">Concubine</option>
-                                                            <option value="Hijo" t-att-selected="familiar_relationship5s == 'Hijo'">Son</option>
-                                                            <option value="Hija" t-att-selected="familiar_relationship5s == 'Hija'">Daughter</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="familiar_gender5" t-attf-class="form-control" t-att-value="familiar_gender5s">
-                                                            <option value="">Gender</option>
-                                                            <option value="male" t-att-selected="familiar_gender5s == 'male'">Male</option>
-                                                            <option value="female" t-att-selected="familiar_gender5s == 'female'">Female</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" class="form-control" name="familiar_address5" t-att-value="familiar_address5 or partner.familiar_address5"/></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" name="familiar_dni6" t-att-value="familiar_dni6 or partner.familiar_dni6"/></td>
-                                                    <td><input type="text" class="form-control" name="familiar_full_name6" t-att-value="familiar_full_name6 or partner.familiar_full_name6"/></td>
-                                                    <td><input type="date" class="form-control" name="familiar_birthday6" t-att-value="familiar_birthday6 or partner.familiar_birthday6"/></td>
-                                                    <td>
-                                                        <select name="familiar_relationship6" t-attf-class="form-control" t-att-value="familiar_relationship6s">
-                                                            <option value="">Relationship</option>
-                                                            <option value="Madre" t-att-selected="familiar_relationship6s == 'Madre'">Mother</option>
-                                                            <option value="Padre" t-att-selected="familiar_relationship6s == 'Padre'">Father</option>
-                                                            <option value="Hermano" t-att-selected="familiar_relationship6s == 'Hermano'">Brother</option>
-                                                            <option value="Hermana" t-att-selected="familiar_relationship6s == 'Hermana'">Sister</option>
-                                                            <option value="Esposo/a" t-att-selected="familiar_relationship6s == 'Esposo/a'">Spouse</option>
-                                                            <option value="Conviviente" t-att-selected="familiar_relationship6s == 'Conviviente'">Concubine</option>
-                                                            <option value="Hijo" t-att-selected="familiar_relationship6s == 'Hijo'">Son</option>
-                                                            <option value="Hija" t-att-selected="familiar_relationship6s == 'Hija'">Daughter</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="familiar_gender6" t-attf-class="form-control" t-att-value="familiar_gender6s">
-                                                            <option value="">Gender</option>
-                                                            <option value="male" t-att-selected="familiar_gender6s == 'male'">Male</option>
-                                                            <option value="female" t-att-selected="familiar_gender6s == 'female'">Female</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" class="form-control" name="familiar_address6" t-att-value="familiar_address6 or partner.familiar_address6"/></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" name="familiar_dni7" t-att-value="familiar_dni7 or partner.familiar_dni7"/></td>
-                                                    <td><input type="text" class="form-control" name="familiar_full_name7" t-att-value="familiar_full_name7 or partner.familiar_full_name7"/></td>
-                                                    <td><input type="date" class="form-control" name="familiar_birthday7" t-att-value="familiar_birthday7 or partner.familiar_birthday7"/></td>
-                                                    <td>
-                                                        <select name="familiar_relationship7" t-attf-class="form-control" t-att-value="familiar_relationship7s">
-                                                            <option value="">Relationship</option>
-                                                            <option value="Madre" t-att-selected="familiar_relationship7s == 'Madre'">Mother</option>
-                                                            <option value="Padre" t-att-selected="familiar_relationship7s == 'Padre'">Father</option>
-                                                            <option value="Hermano" t-att-selected="familiar_relationship7s == 'Hermano'">Brother</option>
-                                                            <option value="Hermana" t-att-selected="familiar_relationship7s == 'Hermana'">Sister</option>
-                                                            <option value="Esposo/a" t-att-selected="familiar_relationship7s == 'Esposo/a'">Spouse</option>
-                                                            <option value="Conviviente" t-att-selected="familiar_relationship7s == 'Conviviente'">Concubine</option>
-                                                            <option value="Hijo" t-att-selected="familiar_relationship7s == 'Hijo'">Son</option>
-                                                            <option value="Hija" t-att-selected="familiar_relationship7s == 'Hija'">Daughter</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="familiar_gender7" t-attf-class="form-control" t-att-value="familiar_gender7s">
-                                                            <option value="">Gender</option>
-                                                            <option value="male" t-att-selected="familiar_gender7s == 'male'">Male</option>
-                                                            <option value="female" t-att-selected="familiar_gender7s == 'female'">Female</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" class="form-control" name="familiar_address7" t-att-value="familiar_address7 or partner.familiar_address7"/></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" name="familiar_dni8" t-att-value="familiar_dni8 or partner.familiar_dni8"/></td>
-                                                    <td><input type="text" class="form-control" name="familiar_full_name8" t-att-value="familiar_full_name8 or partner.familiar_full_name8"/></td>
-                                                    <td><input type="date" class="form-control" name="familiar_birthday8" t-att-value="familiar_birthday8 or partner.familiar_birthday8"/></td>
-                                                    <td>
-                                                        <select name="familiar_relationship8" t-attf-class="form-control" t-att-value="familiar_relationship8s">
-                                                            <option value="">Relationship</option>
-                                                            <option value="Madre" t-att-selected="familiar_relationship8s == 'Madre'">Mother</option>
-                                                            <option value="Padre" t-att-selected="familiar_relationship8s == 'Padre'">Father</option>
-                                                            <option value="Hermano" t-att-selected="familiar_relationship8s == 'Hermano'">Brother</option>
-                                                            <option value="Hermana" t-att-selected="familiar_relationship8s == 'Hermana'">Sister</option>
-                                                            <option value="Esposo/a" t-att-selected="familiar_relationship8s == 'Esposo/a'">Spouse</option>
-                                                            <option value="Conviviente" t-att-selected="familiar_relationship8s == 'Conviviente'">Concubine</option>
-                                                            <option value="Hijo" t-att-selected="familiar_relationship8s == 'Hijo'">Son</option>
-                                                            <option value="Hija" t-att-selected="familiar_relationship8s == 'Hija'">Daughter</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="familiar_gender8" t-attf-class="form-control" t-att-value="familiar_gender8s">
-                                                            <option value="">Gender</option>
-                                                            <option value="male" t-att-selected="familiar_gender8s == 'male'">Male</option>
-                                                            <option value="female" t-att-selected="familiar_gender8s == 'female'">Female</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" class="form-control" name="familiar_address8" t-att-value="familiar_address8 or partner.familiar_address8"/></td>
-                                                </tr>
-                                            </t>
-                                            <t t-else="">
                                                 <tr>
                                                     <td>
                                                         <t t-if="partner.familiar_dni5">
@@ -1234,6 +1148,145 @@
                                                         </t>
                                                     </td>
                                                 </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                    <div class="row mt-3 bg-white border rounded rounded-lg">
+                        <div class="col-md-12">
+                            <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
+                            <script type="text/javascript" src="/mkt_recruitment/static/src/js/my_account.js"/>
+                            <div class="form-group">
+                                <div class="row d-flex align-items-center justify-content-center py-2 mb-2" style="background:#6D3A84">
+                                    <div class="col text-center" style="color:#FFFFFF; font-weight: 700;">
+                                        <h5>Other Beneficiary</h5>
+                                        <p>Parents and minor siblings - Art. 1&#176; D.L. 688</p>
+                                    </div>
+                                </div>
+                                <div class="table-responsive w-100">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td scope="col" style="color:#000000; font-weight: 700;">DNI</td>
+                                                <td scope="col" style="color:#000000; font-weight: 700;">Full name</td>
+                                                <td scope="col" style="color:#000000; font-weight: 700;">Birthday</td>
+                                                <td scope="col" style="color:#000000; font-weight: 700;">Relationship</td>
+                                                <td scope="col" style="color:#000000; font-weight: 700;">Gender</td>
+                                                <td scope="col" style="color:#000000; font-weight: 700;">Address</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-if="partner.is_validate == False">
+                                                
+                                                <tr>
+                                                    <td><input type="text" class="form-control" name="familiar_dni7" t-att-value="familiar_dni7 or partner.familiar_dni7"/></td>
+                                                    <td><input type="text" class="form-control" name="familiar_full_name7" t-att-value="familiar_full_name7 or partner.familiar_full_name7"/></td>
+                                                    <td><input type="date" class="form-control" name="familiar_birthday7" t-att-value="familiar_birthday7 or partner.familiar_birthday7"/></td>
+                                                    <td>
+                                                        <select name="familiar_relationship7" t-attf-class="form-control" t-att-value="familiar_relationship7s">
+                                                            <option value="">Relationship</option>
+                                                            <option value="Madre" t-att-selected="familiar_relationship7s == 'Madre'">Mother</option>
+                                                            <option value="Padre" t-att-selected="familiar_relationship7s == 'Padre'">Father</option>
+                                                            <option value="Hermano" t-att-selected="familiar_relationship7s == 'Hermano'">Brother</option>
+                                                            <option value="Hermana" t-att-selected="familiar_relationship7s == 'Hermana'">Sister</option>
+                                                            <option value="Esposo/a" t-att-selected="familiar_relationship7s == 'Esposo/a'">Spouse</option>
+                                                            <option value="Conviviente" t-att-selected="familiar_relationship7s == 'Conviviente'">Concubine</option>
+                                                            <option value="Hijo" t-att-selected="familiar_relationship7s == 'Hijo'">Son</option>
+                                                            <option value="Hija" t-att-selected="familiar_relationship7s == 'Hija'">Daughter</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="familiar_gender7" t-attf-class="form-control" t-att-value="familiar_gender7s">
+                                                            <option value="">Gender</option>
+                                                            <option value="male" t-att-selected="familiar_gender7s == 'male'">Male</option>
+                                                            <option value="female" t-att-selected="familiar_gender7s == 'female'">Female</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="form-control" name="familiar_address7" t-att-value="familiar_address7 or partner.familiar_address7"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" class="form-control" name="familiar_dni8" t-att-value="familiar_dni8 or partner.familiar_dni8"/></td>
+                                                    <td><input type="text" class="form-control" name="familiar_full_name8" t-att-value="familiar_full_name8 or partner.familiar_full_name8"/></td>
+                                                    <td><input type="date" class="form-control" name="familiar_birthday8" t-att-value="familiar_birthday8 or partner.familiar_birthday8"/></td>
+                                                    <td>
+                                                        <select name="familiar_relationship8" t-attf-class="form-control" t-att-value="familiar_relationship8s">
+                                                            <option value="">Relationship</option>
+                                                            <option value="Madre" t-att-selected="familiar_relationship8s == 'Madre'">Mother</option>
+                                                            <option value="Padre" t-att-selected="familiar_relationship8s == 'Padre'">Father</option>
+                                                            <option value="Hermano" t-att-selected="familiar_relationship8s == 'Hermano'">Brother</option>
+                                                            <option value="Hermana" t-att-selected="familiar_relationship8s == 'Hermana'">Sister</option>
+                                                            <option value="Esposo/a" t-att-selected="familiar_relationship8s == 'Esposo/a'">Spouse</option>
+                                                            <option value="Conviviente" t-att-selected="familiar_relationship8s == 'Conviviente'">Concubine</option>
+                                                            <option value="Hijo" t-att-selected="familiar_relationship8s == 'Hijo'">Son</option>
+                                                            <option value="Hija" t-att-selected="familiar_relationship8s == 'Hija'">Daughter</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="familiar_gender8" t-attf-class="form-control" t-att-value="familiar_gender8s">
+                                                            <option value="">Gender</option>
+                                                            <option value="male" t-att-selected="familiar_gender8s == 'male'">Male</option>
+                                                            <option value="female" t-att-selected="familiar_gender8s == 'female'">Female</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="form-control" name="familiar_address8" t-att-value="familiar_address8 or partner.familiar_address8"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" class="form-control" name="familiar_dni9" t-att-value="familiar_dni9 or partner.familiar_dni9"/></td>
+                                                    <td><input type="text" class="form-control" name="familiar_full_name9" t-att-value="familiar_full_name9 or partner.familiar_full_name9"/></td>
+                                                    <td><input type="date" class="form-control" name="familiar_birthday9" t-att-value="familiar_birthday9 or partner.familiar_birthday9"/></td>
+                                                    <td>
+                                                        <select name="familiar_relationship9" t-attf-class="form-control" t-att-value="familiar_relationship9s">
+                                                            <option value="">Relationship</option>
+                                                            <option value="Madre" t-att-selected="familiar_relationship9s == 'Madre'">Mother</option>
+                                                            <option value="Padre" t-att-selected="familiar_relationship9s == 'Padre'">Father</option>
+                                                            <option value="Hermano" t-att-selected="familiar_relationship9s == 'Hermano'">Brother</option>
+                                                            <option value="Hermana" t-att-selected="familiar_relationship9s == 'Hermana'">Sister</option>
+                                                            <option value="Esposo/a" t-att-selected="familiar_relationship9s == 'Esposo/a'">Spouse</option>
+                                                            <option value="Conviviente" t-att-selected="familiar_relationship9s == 'Conviviente'">Concubine</option>
+                                                            <option value="Hijo" t-att-selected="familiar_relationship9s == 'Hijo'">Son</option>
+                                                            <option value="Hija" t-att-selected="familiar_relationship9s == 'Hija'">Daughter</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="familiar_gender9" t-attf-class="form-control" t-att-value="familiar_gender9s">
+                                                            <option value="">Gender</option>
+                                                            <option value="male" t-att-selected="familiar_gender9s == 'male'">Male</option>
+                                                            <option value="female" t-att-selected="familiar_gender9s == 'female'">Female</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="form-control" name="familiar_address9" t-att-value="familiar_address9 or partner.familiar_address9"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" class="form-control" name="familiar_dni10" t-att-value="familiar_dni10 or partner.familiar_dni10"/></td>
+                                                    <td><input type="text" class="form-control" name="familiar_full_name10" t-att-value="familiar_full_name10 or partner.familiar_full_name10"/></td>
+                                                    <td><input type="date" class="form-control" name="familiar_birthday10" t-att-value="familiar_birthday10 or partner.familiar_birthday10"/></td>
+                                                    <td>
+                                                        <select name="familiar_relationship10" t-attf-class="form-control" t-att-value="familiar_relationship10s">
+                                                            <option value="">Relationship</option>
+                                                            <option value="Madre" t-att-selected="familiar_relationship10s == 'Madre'">Mother</option>
+                                                            <option value="Padre" t-att-selected="familiar_relationship10s == 'Padre'">Father</option>
+                                                            <option value="Hermano" t-att-selected="familiar_relationship10s == 'Hermano'">Brother</option>
+                                                            <option value="Hermana" t-att-selected="familiar_relationship10s == 'Hermana'">Sister</option>
+                                                            <option value="Esposo/a" t-att-selected="familiar_relationship10s == 'Esposo/a'">Spouse</option>
+                                                            <option value="Conviviente" t-att-selected="familiar_relationship10s == 'Conviviente'">Concubine</option>
+                                                            <option value="Hijo" t-att-selected="familiar_relationship10s == 'Hijo'">Son</option>
+                                                            <option value="Hija" t-att-selected="familiar_relationship10s == 'Hija'">Daughter</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="familiar_gender10" t-attf-class="form-control" t-att-value="familiar_gender10s">
+                                                            <option value="">Gender</option>
+                                                            <option value="male" t-att-selected="familiar_gender10s == 'male'">Male</option>
+                                                            <option value="female" t-att-selected="familiar_gender10s == 'female'">Female</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="form-control" name="familiar_address10" t-att-value="familiar_address10 or partner.familiar_address10"/></td>
+                                                </tr>
+                                            </t>
+                                            <t t-else="">
                                                 <tr>
                                                     <td>
                                                         <t t-if="partner.familiar_dni7">
@@ -1329,6 +1382,106 @@
                                                         <t t-if="partner.familiar_address8">
                                                             <br/>
                                                             <span t-esc="partner.familiar_address8"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <t t-if="partner.familiar_dni9">
+                                                            <br/>
+                                                            <span t-esc="partner.familiar_dni9"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.familiar_full_name9">
+                                                            <br/>
+                                                            <span t-esc="partner.familiar_full_name9"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.familiar_birthday9">
+                                                            <br/>
+                                                            <span t-esc="partner.familiar_birthday9"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.familiar_relationship9">
+                                                            <br/>
+                                                            <span t-esc="partner.familiar_relationship9"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.familiar_gender9">
+                                                            <br/>
+                                                            <span t-esc="partner.familiar_gender9"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.familiar_address9">
+                                                            <br/>
+                                                            <span t-esc="partner.familiar_address9"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <t t-if="partner.familiar_dni10">
+                                                            <br/>
+                                                            <span t-esc="partner.familiar_dni10"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.familiar_full_name10">
+                                                            <br/>
+                                                            <span t-esc="partner.familiar_full_name10"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.familiar_birthday10">
+                                                            <br/>
+                                                            <span t-esc="partner.familiar_birthday10"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.familiar_relationship10">
+                                                            <br/>
+                                                            <span t-esc="partner.familiar_relationship10"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.familiar_gender10">
+                                                            <br/>
+                                                            <span t-esc="partner.familiar_gender10"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.familiar_address10">
+                                                            <br/>
+                                                            <span t-esc="partner.familiar_address10"/>
                                                         </t>
                                                         <t t-else="">
                                                         </t>

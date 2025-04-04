@@ -102,6 +102,8 @@ class Partner(models.Model):
     familiar_dni6 = fields.Char()
     familiar_dni7 = fields.Char()
     familiar_dni8 = fields.Char()
+    familiar_dni9 = fields.Char()
+    familiar_dni10 = fields.Char()
 
     familiar_full_name1 = fields.Char()
     familiar_full_name2 = fields.Char()
@@ -111,6 +113,8 @@ class Partner(models.Model):
     familiar_full_name6 = fields.Char()
     familiar_full_name7 = fields.Char()
     familiar_full_name8 = fields.Char()
+    familiar_full_name9 = fields.Char()
+    familiar_full_name10 = fields.Char()
 
     familiar_birthday1 = fields.Date()
     familiar_birthday2 = fields.Date()
@@ -120,6 +124,8 @@ class Partner(models.Model):
     familiar_birthday6 = fields.Date()
     familiar_birthday7 = fields.Date()
     familiar_birthday8 = fields.Date()
+    familiar_birthday9 = fields.Date()
+    familiar_birthday10 = fields.Date()
 
     familiar_relationship1 = fields.Selection(selection=relationship)
     familiar_relationship2 = fields.Selection(selection=relationship)
@@ -129,6 +135,8 @@ class Partner(models.Model):
     familiar_relationship6 = fields.Selection(selection=relationship)
     familiar_relationship7 = fields.Selection(selection=relationship)
     familiar_relationship8 = fields.Selection(selection=relationship)
+    familiar_relationship9 = fields.Selection(selection=relationship)
+    familiar_relationship10 = fields.Selection(selection=relationship)
 
     familiar_gender1 = fields.Selection(selection=genders)
     familiar_gender2 = fields.Selection(selection=genders)
@@ -138,6 +146,8 @@ class Partner(models.Model):
     familiar_gender6 = fields.Selection(selection=genders)
     familiar_gender7 = fields.Selection(selection=genders)
     familiar_gender8 = fields.Selection(selection=genders)
+    familiar_gender9 = fields.Selection(selection=genders)
+    familiar_gender10 = fields.Selection(selection=genders)
 
     familiar_address1 = fields.Char()
     familiar_address2 = fields.Char()
@@ -147,6 +157,8 @@ class Partner(models.Model):
     familiar_address6 = fields.Char()
     familiar_address7 = fields.Char()
     familiar_address8 = fields.Char()
+    familiar_address9 = fields.Char()
+    familiar_address10 = fields.Char()
     
     familiar_dnifile1 = fields.Binary()
     familiar_dnifile2 = fields.Binary()
@@ -156,6 +168,8 @@ class Partner(models.Model):
     familiar_dnifile6 = fields.Binary()
     familiar_dnifile7 = fields.Binary()
     familiar_dnifile8 = fields.Binary()
+    familiar_dnifile9 = fields.Binary()
+    familiar_dnifile10 = fields.Binary()
 
     familiar_dnifile1_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
     familiar_dnifile2_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
@@ -165,6 +179,8 @@ class Partner(models.Model):
     familiar_dnifile6_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
     familiar_dnifile7_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
     familiar_dnifile8_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
+    familiar_dnifile9_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
+    familiar_dnifile10_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
 
     familiar_dnifile1_back = fields.Binary()
     familiar_dnifile2_back = fields.Binary()
@@ -174,6 +190,8 @@ class Partner(models.Model):
     familiar_dnifile6_back = fields.Binary()
     familiar_dnifile7_back = fields.Binary()
     familiar_dnifile8_back = fields.Binary()
+    familiar_dnifile9_back = fields.Binary()
+    familiar_dnifile10_back = fields.Binary()
 
     familiar_dnifile1_back_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
     familiar_dnifile2_back_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
@@ -183,6 +201,8 @@ class Partner(models.Model):
     familiar_dnifile6_back_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
     familiar_dnifile7_back_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
     familiar_dnifile8_back_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
+    familiar_dnifile9_back_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
+    familiar_dnifile10_back_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
 
     is_beneficiary1 = fields.Boolean(default=True, string='Is Beneficiary?')
     is_beneficiary2 = fields.Boolean(default=True, string='Is Beneficiary?')
@@ -192,6 +212,8 @@ class Partner(models.Model):
     is_beneficiary6 = fields.Boolean(default=True, string='Is Beneficiary?')
     is_beneficiary7 = fields.Boolean(default=True, string='Is Beneficiary?')
     is_beneficiary8 = fields.Boolean(default=True, string='Is Beneficiary?')
+    is_beneficiary9 = fields.Boolean(default=True, string='Is Beneficiary?')
+    is_beneficiary10 = fields.Boolean(default=True, string='Is Beneficiary?')
 
     current_dni = fields.Binary(string='Current DNI(Front)')
     current_dni_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
@@ -309,8 +331,8 @@ class Partner(models.Model):
 
 
     @api.depends('vat','current_dni','current_dni_back','services_receipt','certijoven','t_record','electronic_fine','certificate_of_vaccination','health_card','contributions_report',
-                 'familiar_dnifile1','familiar_dnifile2','familiar_dnifile3','familiar_dnifile4','familiar_dnifile5','familiar_dnifile6','familiar_dnifile7','familiar_dnifile8',
-                 'familiar_dnifile1_back','familiar_dnifile2_back','familiar_dnifile3_back','familiar_dnifile4_back','familiar_dnifile5_back','familiar_dnifile6_back','familiar_dnifile7_back','familiar_dnifile8_back')
+                 'familiar_dnifile1','familiar_dnifile2','familiar_dnifile3','familiar_dnifile4','familiar_dnifile5','familiar_dnifile6','familiar_dnifile7','familiar_dnifile8','familiar_dnifile9','familiar_dnifile10', 
+                 'familiar_dnifile1_back','familiar_dnifile2_back','familiar_dnifile3_back','familiar_dnifile4_back','familiar_dnifile5_back','familiar_dnifile6_back','familiar_dnifile7_back','familiar_dnifile8_back','familiar_dnifile9_back','familiar_dnifile10_back')
     def compute_document_filename(self):
         for rec in self:
             if rec.vat and rec.current_dni:
@@ -372,6 +394,16 @@ class Partner(models.Model):
             if rec.familiar_dni8 and rec.familiar_dnifile8_back:
                 rec.familiar_dnifile8_back_filename = _('DNI(Back)-') + rec.familiar_dni8
 
+            if rec.familiar_dni9 and rec.familiar_dnifile9:
+                rec.familiar_dnifile9_filename = _('DNI(Front)-') + rec.familiar_dni9
+            if rec.familiar_dni9 and rec.familiar_dnifile9_back:
+                rec.familiar_dnifile9_back_filename = _('DNI(Back)-') + rec.familiar_dni9
+
+            if rec.familiar_dni10 and rec.familiar_dnifile10:
+                rec.familiar_dnifile10_filename = _('DNI(Front)-') + rec.familiar_dni10
+            if rec.familiar_dni10 and rec.familiar_dnifile10_back:
+                rec.familiar_dnifile10_back_filename = _('DNI(Back)-') + rec.familiar_dni10
+
 
     @api.onchange('birthday')
     def _onchange_age(self):
@@ -425,6 +457,8 @@ class Partner(models.Model):
                         'familiar_dni6': rec.familiar_dni6,
                         'familiar_dni7': rec.familiar_dni7,
                         'familiar_dni8': rec.familiar_dni8,
+                        'familiar_dni9': rec.familiar_dni9,
+                        'familiar_dni10': rec.familiar_dni10,
                         'familiar_full_name1': rec.familiar_full_name1,
                         'familiar_full_name2': rec.familiar_full_name2,
                         'familiar_full_name3': rec.familiar_full_name3,
@@ -433,6 +467,8 @@ class Partner(models.Model):
                         'familiar_full_name6': rec.familiar_full_name6,
                         'familiar_full_name7': rec.familiar_full_name7,
                         'familiar_full_name8': rec.familiar_full_name8,
+                        'familiar_full_name9': rec.familiar_full_name9,
+                        'familiar_full_name10': rec.familiar_full_name10,
                         'familiar_birthday1': rec.familiar_birthday1,
                         'familiar_birthday2': rec.familiar_birthday2,
                         'familiar_birthday3': rec.familiar_birthday3,
@@ -441,6 +477,8 @@ class Partner(models.Model):
                         'familiar_birthday6': rec.familiar_birthday6,
                         'familiar_birthday7': rec.familiar_birthday7,
                         'familiar_birthday8': rec.familiar_birthday8,
+                        'familiar_birthday9': rec.familiar_birthday9,
+                        'familiar_birthday10': rec.familiar_birthday10,
                         'familiar_relationship1': rec.familiar_relationship1,
                         'familiar_relationship2': rec.familiar_relationship2,
                         'familiar_relationship3': rec.familiar_relationship3,
@@ -449,6 +487,8 @@ class Partner(models.Model):
                         'familiar_relationship6': rec.familiar_relationship6,
                         'familiar_relationship7': rec.familiar_relationship7,
                         'familiar_relationship8': rec.familiar_relationship8,
+                        'familiar_relationship9': rec.familiar_relationship9,
+                        'familiar_relationship10': rec.familiar_relationship10,
                         'familiar_gender1': rec.familiar_gender1,
                         'familiar_gender2': rec.familiar_gender2,
                         'familiar_gender3': rec.familiar_gender3,
@@ -457,6 +497,8 @@ class Partner(models.Model):
                         'familiar_gender6': rec.familiar_gender6,
                         'familiar_gender7': rec.familiar_gender7,
                         'familiar_gender8': rec.familiar_gender8,
+                        'familiar_gender9': rec.familiar_gender9,
+                        'familiar_gender10': rec.familiar_gender10,
                         'familiar_address1': rec.familiar_address1,
                         'familiar_address2': rec.familiar_address2,
                         'familiar_address3': rec.familiar_address3,
@@ -465,6 +507,8 @@ class Partner(models.Model):
                         'familiar_address6': rec.familiar_address6,
                         'familiar_address7': rec.familiar_address7,
                         'familiar_address8': rec.familiar_address8,
+                        'familiar_address9': rec.familiar_address9,
+                        'familiar_address10': rec.familiar_address10,
                         'is_beneficiary1': rec.is_beneficiary1,
                         'is_beneficiary2': rec.is_beneficiary2,
                         'is_beneficiary3': rec.is_beneficiary3,
@@ -473,6 +517,8 @@ class Partner(models.Model):
                         'is_beneficiary6': rec.is_beneficiary6,
                         'is_beneficiary7': rec.is_beneficiary7,
                         'is_beneficiary8': rec.is_beneficiary8,
+                        'is_beneficiary9': rec.is_beneficiary9,
+                        'is_beneficiary10': rec.is_beneficiary10,
                         'private_pension_system': rec.private_pension_system,
                         'afp_first_job': rec.afp_first_job,
                         'coming_from_onp': rec.coming_from_onp,
@@ -510,6 +556,8 @@ class Partner(models.Model):
                     'familiar_dni6': rec.familiar_dni6,
                     'familiar_dni7': rec.familiar_dni7,
                     'familiar_dni8': rec.familiar_dni8,
+                    'familiar_dni9': rec.familiar_dni9,
+                    'familiar_dni10': rec.familiar_dni10,
                     'familiar_full_name1': rec.familiar_full_name1,
                     'familiar_full_name2': rec.familiar_full_name2,
                     'familiar_full_name3': rec.familiar_full_name3,
@@ -518,6 +566,8 @@ class Partner(models.Model):
                     'familiar_full_name6': rec.familiar_full_name6,
                     'familiar_full_name7': rec.familiar_full_name7,
                     'familiar_full_name8': rec.familiar_full_name8,
+                    'familiar_full_name9': rec.familiar_full_name9,
+                    'familiar_full_name10': rec.familiar_full_name10,
                     'familiar_birthday1': rec.familiar_birthday1,
                     'familiar_birthday2': rec.familiar_birthday2,
                     'familiar_birthday3': rec.familiar_birthday3,
@@ -526,6 +576,8 @@ class Partner(models.Model):
                     'familiar_birthday6': rec.familiar_birthday6,
                     'familiar_birthday7': rec.familiar_birthday7,
                     'familiar_birthday8': rec.familiar_birthday8,
+                    'familiar_birthday9': rec.familiar_birthday9,
+                    'familiar_birthday10': rec.familiar_birthday10,
                     'familiar_relationship1': rec.familiar_relationship1,
                     'familiar_relationship2': rec.familiar_relationship2,
                     'familiar_relationship3': rec.familiar_relationship3,
@@ -534,6 +586,8 @@ class Partner(models.Model):
                     'familiar_relationship6': rec.familiar_relationship6,
                     'familiar_relationship7': rec.familiar_relationship7,
                     'familiar_relationship8': rec.familiar_relationship8,
+                    'familiar_relationship9': rec.familiar_relationship9,
+                    'familiar_relationship10': rec.familiar_relationship10,
                     'familiar_gender1': rec.familiar_gender1,
                     'familiar_gender2': rec.familiar_gender2,
                     'familiar_gender3': rec.familiar_gender3,
@@ -542,6 +596,8 @@ class Partner(models.Model):
                     'familiar_gender6': rec.familiar_gender6,
                     'familiar_gender7': rec.familiar_gender7,
                     'familiar_gender8': rec.familiar_gender8,
+                    'familiar_gender9': rec.familiar_gender9,
+                    'familiar_gender10': rec.familiar_gender10,
                     'familiar_address1': rec.familiar_address1,
                     'familiar_address2': rec.familiar_address2,
                     'familiar_address3': rec.familiar_address3,
@@ -550,6 +606,8 @@ class Partner(models.Model):
                     'familiar_address6': rec.familiar_address6,
                     'familiar_address7': rec.familiar_address7,
                     'familiar_address8': rec.familiar_address8,
+                    'familiar_address9': rec.familiar_address9,
+                    'familiar_address10': rec.familiar_address10,
                     'is_beneficiary1': rec.is_beneficiary1,
                     'is_beneficiary2': rec.is_beneficiary2,
                     'is_beneficiary3': rec.is_beneficiary3,
@@ -558,6 +616,8 @@ class Partner(models.Model):
                     'is_beneficiary6': rec.is_beneficiary6,
                     'is_beneficiary7': rec.is_beneficiary7,
                     'is_beneficiary8': rec.is_beneficiary8,
+                    'is_beneficiary9': rec.is_beneficiary9,
+                    'is_beneficiary10': rec.is_beneficiary10,
                     'private_pension_system': rec.private_pension_system,
                     'afp_first_job': rec.afp_first_job,
                     'coming_from_onp': rec.coming_from_onp,
@@ -702,3 +762,101 @@ class Partner(models.Model):
                 'url': '/web/content/%s?download=true' % zip_attachment.id,
                 'target': 'self',
             }
+
+    def one_time_reorder_positions(self):
+        for rec in self:
+            update_vals = {}
+
+            # Desplazar los datos asegurando que no se sobrescriben
+            if rec.familiar_dni8:
+                update_vals.update({
+                    'familiar_dni10': rec.familiar_dni8,
+                    'familiar_full_name10': rec.familiar_full_name8,
+                    'familiar_birthday10': rec.familiar_birthday8,
+                    'familiar_relationship10': rec.familiar_relationship8,
+                    'familiar_gender10': rec.familiar_gender8,
+                    'familiar_address10': rec.familiar_address8,
+                    'familiar_dnifile10': rec.familiar_dnifile8,
+                    'familiar_dnifile10_filename': rec.familiar_dnifile8_filename,
+                    'familiar_dnifile10_back': rec.familiar_dnifile8_back,
+                    'familiar_dnifile10_back_filename': rec.familiar_dnifile8_back_filename,
+                    'is_beneficiary10': rec.is_beneficiary8,
+                })
+
+            if rec.familiar_dni7:
+                update_vals.update({
+                    'familiar_dni9': rec.familiar_dni7,
+                    'familiar_full_name9': rec.familiar_full_name7,
+                    'familiar_birthday9': rec.familiar_birthday7,
+                    'familiar_relationship9': rec.familiar_relationship7,
+                    'familiar_gender9': rec.familiar_gender7,
+                    'familiar_address9': rec.familiar_address7,
+                    'familiar_dnifile9': rec.familiar_dnifile7,
+                    'familiar_dnifile9_filename': rec.familiar_dnifile7_filename,
+                    'familiar_dnifile9_back': rec.familiar_dnifile7_back,
+                    'familiar_dnifile9_back_filename': rec.familiar_dnifile7_back_filename,
+                    'is_beneficiary9': rec.is_beneficiary7,
+                })
+
+            if rec.familiar_dni6:
+                update_vals.update({
+                    'familiar_dni8': rec.familiar_dni6,
+                    'familiar_full_name8': rec.familiar_full_name6,
+                    'familiar_birthday8': rec.familiar_birthday6,
+                    'familiar_relationship8': rec.familiar_relationship6,
+                    'familiar_gender8': rec.familiar_gender6,
+                    'familiar_address8': rec.familiar_address6,
+                    'familiar_dnifile8': rec.familiar_dnifile6,
+                    'familiar_dnifile8_filename': rec.familiar_dnifile6_filename,
+                    'familiar_dnifile8_back': rec.familiar_dnifile6_back,
+                    'familiar_dnifile8_back_filename': rec.familiar_dnifile6_back_filename,
+                    'is_beneficiary8': rec.is_beneficiary6,
+                })
+
+            if rec.familiar_dni5:
+                update_vals.update({
+                    'familiar_dni7': rec.familiar_dni5,
+                    'familiar_full_name7': rec.familiar_full_name5,
+                    'familiar_birthday7': rec.familiar_birthday5,
+                    'familiar_relationship7': rec.familiar_relationship5,
+                    'familiar_gender7': rec.familiar_gender5,
+                    'familiar_address7': rec.familiar_address5,
+                    'familiar_dnifile7': rec.familiar_dnifile5,
+                    'familiar_dnifile7_filename': rec.familiar_dnifile5_filename,
+                    'familiar_dnifile7_back': rec.familiar_dnifile5_back,
+                    'familiar_dnifile7_back_filename': rec.familiar_dnifile5_back_filename,
+                    'is_beneficiary7': rec.is_beneficiary5,
+                })
+
+            # Limpiar las posiciones 5 y 6 después de mover los datos
+            update_vals.update({
+                'familiar_dni5': False,
+                'familiar_full_name5': False,
+                'familiar_birthday5': False,
+                'familiar_relationship5': False,
+                'familiar_gender5': False,
+                'familiar_address5': False,
+                'familiar_dnifile5': False,
+                'familiar_dnifile5_filename': False,
+                'familiar_dnifile5_back': False,
+                'familiar_dnifile5_back_filename': False,
+                'is_beneficiary5': False,
+
+                'familiar_dni6': False,
+                'familiar_full_name6': False,
+                'familiar_birthday6': False,
+                'familiar_relationship6': False,
+                'familiar_gender6': False,
+                'familiar_address6': False,
+                'familiar_dnifile6': False,
+                'familiar_dnifile6_filename': False,
+                'familiar_dnifile6_back': False,
+                'familiar_dnifile6_back_filename': False,
+                'is_beneficiary6': False,
+            })
+
+            # Aplicar la actualización en la base de datos
+            if update_vals:
+                rec.write(update_vals)
+
+        print("✔ Reordenamiento masivo completado. Puedes eliminar esta función ahora.")

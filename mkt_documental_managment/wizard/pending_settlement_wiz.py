@@ -145,7 +145,7 @@ class PendingSettlement(models.Model):
     def _get_query(self):
         query = """
             SELECT
-                dr.payment_date AS payment_date,
+                COALESCE(dr.payment_date, rp.payment_date) AS payment_date,
                 dr.name AS requirement,
                 dr.concept AS concept,
                 CASE
@@ -156,21 +156,29 @@ class PendingSettlement(models.Model):
                     WHEN dr.amount_soles > 0 THEN dr.amount_soles
                     WHEN dr.amount_uss > 0 THEN dr.amount_uss
                 END AS amount,
-                rp.name AS paid_to,
+                rp2.name AS paid_to,
                 dr.card_payment AS credit_card,
                 b.name AS budget,
                 cc.code AS cost_center,
-                rp2.name AS responsible,
+                rp3.name AS responsible,
                 dr.requirement_state AS requirement_state,
                 dr.settlement_state AS settlement_state
             FROM documental_requirements AS dr
-                LEFT JOIN res_partner AS rp ON rp.id=dr.paid_to
-                LEFT JOIN budget AS b ON b.id=dr.budget_id
-                LEFT JOIN cost_center AS cc ON cc.id=b.cost_center_id
-                LEFT JOIN res_users AS ru ON ru.id=dr.full_name
-                LEFT JOIN res_partner AS rp2 ON rp2.id=ru.partner_id
-            WHERE dr.settlement_state IN ('draft','external_control','executive','responsible','intern_control','refused') AND dr.payment_date IS NOT NULL AND dr.active = True
-            ORDER BY dr.name DESC
+            LEFT JOIN res_partner AS rp2 ON rp2.id = dr.paid_to
+            LEFT JOIN budget AS b ON b.id = dr.budget_id
+            LEFT JOIN cost_center AS cc ON cc.id = b.cost_center_id
+            LEFT JOIN res_users AS ru ON ru.id = dr.full_name
+            LEFT JOIN res_partner AS rp3 ON rp3.id = ru.partner_id
+            LEFT JOIN (
+                SELECT requirement_id, MIN(payment_date) AS payment_date 
+                FROM requirement_payment 
+                GROUP BY requirement_id
+            ) rp ON rp.requirement_id = dr.id
+            WHERE 
+                (dr.payment_date IS NOT NULL OR rp.payment_date IS NOT NULL)
+                AND dr.settlement_state IN ('draft', 'external_control', 'executive', 'responsible', 'intern_control', 'refused')
+                AND dr.active = TRUE
+            ORDER BY dr.name DESC;
         """
         self._cr.execute(query)
         res_query = self._cr.dictfetchall()
