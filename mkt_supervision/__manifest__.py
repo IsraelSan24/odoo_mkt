@@ -1,0 +1,20 @@
+{
+    'name': 'Supervisión',
+    'version': '1.0',
+    'summary': 'Supervisión de empleados',
+    'description': 'Módulo para supervisar',
+    'category': 'Human Resources',
+    'author': 'Israel Santana',
+    'depends': ['base', 'hr_attendance', 'report_xlsx', 'stock', 'hr_attendance_geolocation'],
+    'data': [
+        'security/supervision_security.xml',
+        'security/ir.model.access.csv',
+        'reports/hr_attendance_wizard.xml',
+        'views/stock_request_view.xml',
+        'views/stock_request_line_view.xml',
+        'views/menu.xml',
+        "views/stock_picking_views.xml",
+    ],
+    'installable': True,
+    'application': True,
+}

@@ -32,7 +32,7 @@ class BankReport(models.TransientModel):
 
 
     def _get_file_name(self, function_name, file_name=False):
-        dic_name = super(BankReport, self)._get_file_name(function_name, file_name=_('Bank report'))
+        dic_name = super(BankReport, self)._get_file_name(function_name, file_name=_('MKT Bank report'))
         return dic_name
 
 
@@ -128,6 +128,13 @@ class BankReport(models.TransientModel):
             'bold':True,
             'align': 'center',
         }
+        style8 = {
+            'font_color':'#000000',
+            'align':'center',
+            'border':1,
+            'bold':True,
+            'num_format':'dd/mm/yy',
+        }
 
         stl1 = workbook.add_format(style1)
         stl2 = workbook.add_format(style2)
@@ -136,6 +143,7 @@ class BankReport(models.TransientModel):
         stl5 = workbook.add_format(style5)
         stl6 = workbook.add_format(style6)
         stl7 = workbook.add_format(style7)
+        stl8 = workbook.add_format(style8)
 
         ws.write('A2:A2', _('RQ N°'), stl1)
         ws.write('B2:B2', _('BUDGET N°'), stl1)
@@ -216,16 +224,16 @@ class BankReport(models.TransientModel):
                 ws.write(row, 32, self.change_state_name(line['settlement_state']), stl3)
                 row += 1
             else:
-                ws.write(row, 0, '', stl7)
-                ws.write(row, 1, '', stl7)
-                ws.write(row, 2, '', stl7)
-                ws.write(row, 3, '', stl7)
-                ws.write(row, 4, '', stl7)
-                ws.write(row, 5, '', stl7)
-                ws.write(row, 6, '', stl7)
-                ws.write(row, 7, '', stl7)
-                ws.write(row, 8, '', stl7)
-                ws.write(row, 9, '', stl7)
+                ws.write(row, 0, line['requirement'], stl7)
+                ws.write(row, 1, line['budget'], stl7)
+                ws.write(row, 2, line['ruc'] if line['ruc'] and len(line['ruc']) == 8 else '', stl7)
+                ws.write(row, 3, line['ruc'] if line['ruc'] and len(line['ruc']) != 8 else '', stl7)
+                ws.write(row, 4, line['cost_center'], stl7)
+                ws.write(row, 5, (line['supplier'] or '').upper(), stl7)
+                ws.write(row, 6, (line['concept'] or '').upper(), stl7)
+                ws.write(row, 7, line['payment_date'], stl8)
+                ws.write(row, 8, 'TR', stl8)
+                ws.write(row, 9, line['operation_number'], stl7)
                 ws.write(row, 10, '', stl7)
                 ws.write(row, 11, '', stl7)
                 ws.write(row, 12, '', stl7)
@@ -276,7 +284,7 @@ class BankReport(models.TransientModel):
                 END AS amount,
                 dr.total_retention AS retention,
                 dr.total_detraction AS detraction,
-                dr.total_vendor AS vendor,
+                dr.to_pay_supplier AS vendor,
                 s.document AS document,
                 slt.name AS document_type,
                 s.vendor AS settlement_vendor,

@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page name="custom_page" string="Supervision">
-                    <field name="is_supervize_province" string="Is supervisor from province"/>
+                    <field name="is_supervize_province"/>
                     <group>
                         <field name="brand_ids" widget="many2many_tags" options="{'no_create': True, 'no_edit': True}"/>
                     </group>

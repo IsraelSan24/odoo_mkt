@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_supervision_admin,access_supervision_admin,model_attendance_report,group_supervision_admin,1,1,1,1
+access_supervision_supervisor,access_supervision_supervisor,model_attendance_report,group_supervision_supervisor,1,0,0,0
+
+access_new_product_line_supervisor,access_new_product_line_supervisor,model_new_product_line,group_supervision_supervisor,1,1,1,1
+access_new_product_line_admin,access_new_product_line_admin,model_new_product_line,group_supervision_admin,1,1,1,1
+access_new_product_line_warehouse,access_new_product_line_warehouse,model_new_product_line,group_stock_request_warehouse,1,1,1,1
+access_stock_request_manager,access.stock.request.manager,model_stock_request,group_stock_request_manager,1,1,1,1
+access_stock_request_line_manager,access.stock.request.line.manager,model_stock_request_line,group_stock_request_manager,1,1,1,1
+access_stock_request_user,access.stock.request.user,model_stock_request,group_stock_request_user,1,1,1,1
+access_stock_request_line_user,access.stock.request.line.user,model_stock_request_line,group_stock_request_user,1,1,1,1
+access_stock_request_warehouse,access.stock.request.warehouse,model_stock_request,group_stock_request_warehouse,1,0,0,0
+access_stock_request_line_warehouse,access.stock.request.line.warehouse,model_stock_request_line,group_stock_request_warehouse,1,0,0,0

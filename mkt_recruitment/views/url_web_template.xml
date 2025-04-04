@@ -3293,7 +3293,7 @@
                                                     <p class="text-center font-weight-bold text-body">Spouse or children (In the absence of spouse, concubine may be named - Art 326°; Civil Code).</p>
                                                     <div class="form-group">
                                                         <label for="familyMembers">Number of family members</label>
-                                                        <input type="number" class="form-control" id="familyMembers" oninput="validateInputfamily()" min="0" max="4" value="0"/>
+                                                        <input type="number" class="form-control" id="familyMembers" oninput="validateInputfamily()" min="0" max="6" value="0"/>
                                                         <div class="invalid-feedback">
                                                             Please enter a valid number.
                                                         </div>

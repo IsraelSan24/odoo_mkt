@@ -15,9 +15,28 @@ class HrAttendance(models.Model):
     check_out_longitude_text = fields.Char("Check-out Longitude", compute="_compute_check_out_longitude_text")
     user_ip = fields.Char(string="User IP")
 
-    OFFICE_LATITUDE = -12.0919523  # Example: Lima, Peru
+    OFFICE_LATITUDE = -12.0919523
     OFFICE_LONGITUDE = -77.0696065
-    MAX_DISTANCE_KM = 1  # 1 km allowed radius
+    MAX_DISTANCE_KM = 1
+
+    HP_LATITUDE = -12.0982048
+    HP_LONGITUDE = -77.0291521
+    
+    within_allowed_area = fields.Boolean("Within Allowed Area", compute="_compute_within_allowed_area", store=True)
+
+
+    @api.depends("check_in_latitude", "check_in_longitude")
+    def _compute_within_allowed_area(self):
+        for record in self:
+            if record.check_in_latitude and record.check_in_longitude:
+                distance = self._haversine_distance(
+                    record.check_in_latitude, record.check_in_longitude,
+                    self.HP_LATITUDE, self.HP_LONGITUDE
+                )
+                record.within_allowed_area = distance <= self.MAX_DISTANCE_KM
+            else:
+                record.within_allowed_area = False
+
 
     @api.model
     def register_geolocated_attendance(self, latitude, longitude, ip, employee_id=None, action_type=None):
@@ -26,7 +45,7 @@ class HrAttendance(models.Model):
             raise ValidationError(_("Could not retrieve your location."))
 
         # Calculate distance
-        distance = self._haversine_distance(latitude, longitude, self.OFFICE_LATITUDE, self.OFFICE_LONGITUDE)
+        distance = self._haversine_distance(latitude, longitude, self.HP_LATITUDE, self.HP_LONGITUDE)
         if distance > self.MAX_DISTANCE_KM:
             raise ValidationError(_("You are outside the allowed area for attendance check-in/out."))
 
