@@ -607,10 +607,10 @@
                                     <field name="document_filename" invisible="1"/>
                                     <field name="document_file" widget="binary" filename="document_filename"/>
                                     <field name="reason"/>
-                                    <field name="settle_igv" sum="IGV total"/>
-                                    <field name="settle_amount" attrs="{'invisible': [('wrong_payment', '=', True)]}" optional="show" sum="Amount total"/>
+                                    <field name="settle_igv_sum" sum="IGV total"/>
+                                    <field name="settle_amount_sum" attrs="{'invisible': [('wrong_payment', '=', True)]}" optional="show" sum="Amount total"/>
                                     <field name="settle_amount_wrong" attrs="{'invisible': [('wrong_payment', '=', False)]}" optional="hide"/>
-                                    <field name="vendor" optional="hide" sum="Total vendor"/>
+                                    <field name="vendor_sum" optional="hide" sum="Total vendor"/>
                                 </tree>
                             </field>
                             <field name="lock_settlement_ids" attrs="{'readonly':[('settlement_state','!=','intern_control')]}"

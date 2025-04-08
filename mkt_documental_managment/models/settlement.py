@@ -111,6 +111,27 @@ class Settlement(models.Model):
     settle_amount_wrong = fields.Monetary(string="Settle Amount")
     alternative_amount = fields.Float(string="Alternative Amount")
     document_currency = fields.Selection(selection=document_currencies, string='Document Currency')
+    settle_igv_sum = fields.Float(compute='_compute_settle_igv_sum', store=True)
+    settle_amount_sum = fields.Float(compute='_compute_settle_amount_sum', store=True)
+    vendor_sum = fields.Float(compute='_compute_vendor_sum', store=True)
+
+
+    @api.depends('document_type_id', 'settle_igv')
+    def _compute_settle_igv_sum(self):
+        for rec in self:
+            rec.settle_igv_sum = -rec.settle_igv if rec.document_type_id.id == 3 else rec.settle_igv
+
+
+    @api.depends('document_type_id', 'settle_amount')
+    def _compute_settle_amount_sum(self):
+        for rec in self:
+            rec.settle_amount_sum = -rec.settle_amount if rec.document_type_id.id == 3 else rec.settle_amount
+
+
+    @api.depends('document_type_id', 'vendor')
+    def _compute_vendor_sum(self):
+        for rec in self:
+            rec.vendor_sum = -rec.vendor if rec.document_type_id.id == 3 else rec.vendor
 
 
     @api.onchange('wrong_payment')
@@ -628,7 +649,7 @@ class Settlement(models.Model):
     #             rec.vendor = 0
 
 
-    @api.depends('currency_id', 'requirement_id', 'service_type_id', 'settle_amount', 'alternative_amount', 'differentiated_payment', 'date')
+    @api.depends('currency_id', 'requirement_id', 'service_type_id', 'settle_amount', 'alternative_amount', 'differentiated_payment', 'date', 'settle_amount_sum')
     def _compute_amounts(self):
         for rec in self:
             sale_change_type = self.env['change.type'].search([('date', '=', rec.date)]).mapped('sell')
@@ -636,17 +657,17 @@ class Settlement(models.Model):
             if sale_change_type and rec.currency_id.name == 'USD':
                 change_type = sale_change_type[0]
             
-            effective_amount = rec.alternative_amount if rec.alternative_amount and rec.differentiated_payment else rec.settle_amount
+            effective_amount = rec.alternative_amount if rec.alternative_amount and rec.differentiated_payment else rec.settle_amount_sum
 
             if effective_amount * change_type > rec.service_type_id.amount_from:
                 if rec.service_type_id.detraction:
-                    rec.vendor = effective_amount - round((rec.settle_amount * rec.service_type_id.percentage) / 100, 0)
-                    rec.detraction = round((rec.settle_amount * rec.service_type_id.percentage) / 100, 0)
+                    rec.vendor = effective_amount - round((rec.settle_amount_sum * rec.service_type_id.percentage) / 100, 0)
+                    rec.detraction = round((rec.settle_amount_sum * rec.service_type_id.percentage) / 100, 0)
                     rec.retention = 0.00
                 elif rec.service_type_id.retention:
-                    rec.vendor = effective_amount - round((rec.settle_amount* rec.service_type_id.percentage) / 100, 2)
+                    rec.vendor = effective_amount - round((rec.settle_amount_sum* rec.service_type_id.percentage) / 100, 2)
                     rec.detraction = 0.00
-                    rec.retention = round((rec.settle_amount * rec.service_type_id.percentage) / 100, 2)
+                    rec.retention = round((rec.settle_amount_sum * rec.service_type_id.percentage) / 100, 2)
                 else:
                     rec.vendor = effective_amount
                     rec.detraction = 0.00
