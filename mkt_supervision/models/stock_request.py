@@ -216,12 +216,12 @@ class StockRequest(models.Model):
         for mr in self:
             if not mr.line_ids.filtered(lambda l: l.cancelled is False):
                 mr.write({"state": "rejected"})
-        
+    
     @api.depends("line_ids")
     def _compute_line_count(self):
         for rec in self:
             rec.line_count = len(rec.mapped("line_ids"))
-            
+    
     @api.depends("line_ids")
     def _compute_picking_count(self):
         for rec in self:

@@ -9,8 +9,8 @@ from . import contract_mass
 from . import hr_job
 from . import hr_contract_type
 from . import employer_signature
-from . import applicant_contract
 from . import hr_employee
+from . import applicant_contract
 from . import applicant_partner
 from . import res_country
 from . import recruiter_team

@@ -15,8 +15,8 @@
         'l10n_pe',
         'hr_contract',
         'mkt_cost_center',
-        'mkt_documental_managment',
         'l10n_latam_base',
+        'mkt_res_partner_brand',
     ],
     'data':[
         'security/ir_module_category.xml',
@@ -24,18 +24,7 @@
         'security/ir_rule.xml',
         'security/ir.model.access.csv',
 
-        'data/ir_sequence.xml',
-        'data/config_data.xml',
-        'data/recruitment_data.xml',
-        'data/mail_template.xml',
-
-        'report/life_law_report.xml',
-        'report/recruitment_report_template.xml',
-        'report/paperformat.xml',
-        'report/contract_report.xml',
-        'report/ir_actions_report.xml',
-
-	'views/imports_views.xml',
+	    'views/imports_views.xml',
         'views/website_hr_recruitment_templates.xml',
         'views/recruitment_document_views.xml',
         'views/recruitment_portal_templates.xml',
@@ -49,8 +38,8 @@
         'views/hr_job_views.xml',
         'views/employer_signature_views.xml',
         'views/hr_contract_history_views.xml',
-        'views/applicant_contract_views.xml',
         'views/hr_employee_views.xml',
+        'views/applicant_contract_views.xml',
         'views/applicant_partner_views.xml',
         'views/res_country_views.xml',
         'views/recruiter_team_views.xml',
@@ -58,6 +47,18 @@
         'views/customize_jobs_page.xml',
         'views/summary_employees_views.xml',
         'views/document_search_templates.xml',
+
+        'data/ir_sequence.xml',
+        'data/config_data.xml',
+        'data/recruitment_data.xml',
+        'data/mail_template.xml',
+
+        'report/life_law_report.xml',
+        'report/recruitment_report_template.xml',
+        'report/paperformat.xml',
+        'report/contract_report.xml',
+        'report/ir_actions_report.xml',
+
         'views/menu_views.xml'
     ],
     'assets':{

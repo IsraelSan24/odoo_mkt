@@ -1,6 +1,8 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from datetime import timedelta
+from odoo.fields import Datetime
+import babel.dates
 
 states = [
         ('draft', 'Draft'),
@@ -116,15 +118,21 @@ class SpaceBooking(models.Model):
         ])
         users = [user] + list(system_users)
 
-        # Obtener los nombres de los ítems relacionados con la reserva
+        # Formato de fecha/hora por zona horaria del usuario actual (quien realiza la acción)
+        tz = self.env.user.tz or 'UTC'
+        local_dt = Datetime.context_timestamp(self, self.start_datetime)
+        formatted_dt = babel.dates.format_datetime(local_dt, "d 'de' MMMM 'de' y 'a las' HH:mm", locale='es', tzinfo=tz)
+
+        # Nombres de ítems
         item_names = ', '.join(self.item_ids.mapped('name'))
-        subject = f'Reservation {action}'
+
+        subject = f'Reserva {action}'
         body = f'''
-            <p>Your reservation has been <b>{action.lower()}</b> for {self.room_name} at {self.start_datetime}.</p>
-            <p>Item(s): {item_names}</p>
+            <p>Tu reserva ha sido <b>{action.lower()}</b> para {self.room_name} el {formatted_dt}.</p>
+            <p>Ítems: {item_names}</p>
         '''
 
-        # Usar login en lugar de email
+        # Enviar a los usuarios que tengan un login válido tipo email
         email_users = [u for u in users if u.login and '@' in u.login]
 
         if email_users:
@@ -142,12 +150,17 @@ class SpaceBooking(models.Model):
         receptionist_group = self.env.ref('mkt_roomreserves.group_receptionist')
         receptionists = self.env['res.users'].search([('groups_id', 'in', [receptionist_group.id])])
 
-        subject = f'Room Reservation {action}'
+        # Formato de fecha/hora por zona horaria del usuario actual
+        tz = self.env.user.tz or 'UTC'
+        local_dt = Datetime.context_timestamp(self, self.start_datetime)
+        formatted_dt = babel.dates.format_datetime(local_dt, "d 'de' MMMM 'de' y 'a las' HH:mm", locale='es', tzinfo=tz)
+
+        subject = f'Reserva de Sala {action}'
         body = f'''
-            <p>A reservation request has been <b>{action.lower()}</b> for room {self.room_name} by {self.full_name}.</p>
+            <p>Una solicitud de reserva ha sido <b>{action.lower()}</b> para la sala {self.room_name} el {formatted_dt}, realizada por {self.full_name}.</p>
         '''
 
-        # Usar login en lugar de email
+        # Filtrar recepcionistas con login válido tipo email
         email_receptionists = [r for r in receptionists if r.login and '@' in r.login]
 
         if email_receptionists:
