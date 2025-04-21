@@ -76,7 +76,8 @@ class ExpensesReport(models.TransientModel):
         ws.set_column('AB:AB', 14.86)
         ws.set_column('AC:AC', 14.14)
         ws.set_column('AD:AD', 14.14)
-        ws.set_column('AE:AE', 38.86)
+        ws.set_column('AE:AE', 14.14)
+        ws.set_column('AF:AF', 38.86)
 
         style1 = {
             'font_size': 18,
@@ -199,26 +200,27 @@ class ExpensesReport(models.TransientModel):
         ws.write('O6:O6', _('M'), format2)
         ws.write('P6:P6', _('A'), format2)
 
-        ws.merge_range('Q5:U5', _('SETTLEMENT DETAIL'), format2)
+        ws.merge_range('Q5:T5', _('SETTLEMENT DETAIL'), format2)
         ws.write('Q6:Q6', _('Date'), format2)
         ws.write('R6:R6', _('Document type'), format2)
         ws.write('S6:S6', _('Document'), format2)
         ws.write('T6:T6', _('Reason'), format2)
+
+        ws.merge_range('U5:AB5', _('SETTLEMENT AMOUNT DETAILS'), format2)
         ws.write('U6:U6', _('Amount'), format2)
+        ws.write('V6:V6', _('Vendor'), format2)
+        ws.write('W6:W6', _('Total'), format2)
+        ws.write('X6:X6', _('Refund to employee'), format2)
+        ws.write('Y6:Y6', _('Refund to MKT'), format2)
+        ws.write('Z6:Z6', 'IGV(%)', format2)
+        ws.write('AA6:AA6', _('IGV'), format2)
+        ws.write('AB6:AB6', 'B.I', format2)
 
-        ws.merge_range('V5:AA5', _('SETTLEMENT AMOUNT DETAILS'), format2)
-        ws.write('V6:V6', _('Total'), format2)
-        ws.write('W6:W6', _('Refund to employee'), format2)
-        ws.write('X6:X6', _('Refund to MKT'), format2)
-        ws.write('Y6:Y6', 'IGV(%)', format2)
-        ws.write('Z6:Z6', _('IGV'), format2)
-        ws.write('AA6:AA6', 'B.I', format2)
-
-        ws.merge_range('AB5:AB6', _('ORIGIN'), format2)
-        ws.merge_range('AC5:AC6', _('STATE(RQ)'), format2)
-        ws.merge_range('AD5:AD6', _('STATE(FL)'), format2)
-        ws.merge_range('AE5:AE6', _('RESPONSIBLE'), format2)
-        ws.autofilter('B6:AE6')
+        ws.merge_range('AC5:AC6', _('ORIGIN'), format2)
+        ws.merge_range('AD5:AD6', _('STATE(RQ)'), format2)
+        ws.merge_range('AE5:AE6', _('STATE(FL)'), format2)
+        ws.merge_range('AF5:AF6', _('RESPONSIBLE'), format2)
+        ws.autofilter('B6:AF6')
 
 
         records = self._get_query()
@@ -247,22 +249,23 @@ class ExpensesReport(models.TransientModel):
                 ws.write(row, 18, line['movement_document'], format3)
                 ws.write(row, 19, str(line['partner']) + ' - ' + str(line['reason']), format3)
                 ws.write(row, 20, line['settle_amount'], format8)
+                ws.write(row, 21, line['vendor'], format8)
                 if total_lines == 0:
-                    ws.write_formula(row, 21, '=SUM(U%s:U%s)' % ( ( row + 1 ), ( row + 1 ) ), format8)
+                    ws.write_formula(row, 22, '=SUM(V%s:V%s)' % ( ( row + 1 ), ( row + 1 ) ), format8)
                 else:
-                    ws.write_formula(row, 21, '=SUM(U%s:U%s)' % ( ( row + 1 ), ( row + 1 ) + total_lines - 1), format8)
-                ws.write(row, 22, '=V%s-M%s' % ( ( row + 1 ), ( row + 1 ) ), format8)
-                ws.write(row, 23, '', format8)
-                ws.write(row, 24, line['tax_percentage'], format3)
-                ws.write(row, 25, line['settle_igv'], format8)
+                    ws.write_formula(row, 22, '=SUM(V%s:V%s)' % ( ( row + 1 ), ( row + 1 ) + total_lines - 1), format8)
+                ws.write(row, 23, '=W%s-M%s' % ( ( row + 1 ), ( row + 1 ) ), format8)
+                ws.write(row, 24, '', format8)
+                ws.write(row, 25, line['tax_percentage'], format3)
+                ws.write(row, 26, line['settle_igv'], format8)
                 if line['income_tax'] == True and line['income_tax_id']:
-                    ws.write_formula(row, 26, '=(U%s-Z%s) + %s*(U%s-Z%s)/100' % ( ( row + 1 ), ( row + 1 ), ( line['income_tax_percentage'] ), ( row + 1 ), ( row + 1 ) ), format8)
+                    ws.write_formula(row, 27, '=(U%s-AA%s) + %s*(U%s-AA%s)/100' % ( ( row + 1 ), ( row + 1 ), ( line['income_tax_percentage'] ), ( row + 1 ), ( row + 1 ) ), format8)
                 else:
-                    ws.write_formula(row, 26, '=(U%s-Z%s)' % ( ( row + 1 ), ( row + 1 ) ), format8)
-                ws.write(row, 27, line['origin'], format7 if line['origin'] else format3)
-                ws.write(row, 28, self.change_state_name(line['requirement_state']), format3)
-                ws.write(row, 29, self.change_state_name(line['settlement_state']), format3)
-                ws.write(row, 30, line['responsible'], format3)
+                    ws.write_formula(row, 27, '=(U%s-AA%s)' % ( ( row + 1 ), ( row + 1 ) ), format8)
+                ws.write(row, 28, line['origin'], format7 if line['origin'] else format3)
+                ws.write(row, 29, self.change_state_name(line['requirement_state']), format3)
+                ws.write(row, 30, self.change_state_name(line['settlement_state']), format3)
+                ws.write(row, 31, line['responsible'], format3)
                 row += 1
             else:
                 ws.write(row, 1, '', format5)
@@ -285,19 +288,20 @@ class ExpensesReport(models.TransientModel):
                 ws.write(row, 18, line['movement_document'], format5)
                 ws.write(row, 19, str(line['partner']) + ' - ' + str(line['reason']), format5)
                 ws.write(row, 20, line['settle_amount'], format9)
-                ws.write(row, 21, '', format9)
-                ws.write(row, 22, '=V%s-M%s' % ( ( row + 1 ), ( row + 1 ) ), format9)
-                ws.write(row, 23, '', format9)
-                ws.write(row, 24, line['tax_percentage'], format5)
-                ws.write(row, 25, line['settle_igv'], format9)
+                ws.write(row, 21, line['vendor'], format8)
+                ws.write(row, 22, '', format9)
+                ws.write(row, 23, '=V%s-M%s' % ( ( row + 1 ), ( row + 1 ) ), format9)
+                ws.write(row, 24, '', format9)
+                ws.write(row, 25, line['tax_percentage'], format5)
+                ws.write(row, 26, line['settle_igv'], format9)
                 if line['income_tax_id']:
-                    ws.write_formula(row, 26, '=(U%s-Z%s) + %s*(U%s-Z%s)/100' % ( ( row + 1 ), ( row + 1 ), ( line['income_tax_percentage'] ), ( row + 1 ), ( row + 1 ) ), format8)
+                    ws.write_formula(row, 27, '=(U%s-AA%s) + %s*(U%s-AA%s)/100' % ( ( row + 1 ), ( row + 1 ), ( line['income_tax_percentage'] ), ( row + 1 ), ( row + 1 ) ), format8)
                 else:
-                    ws.write_formula(row, 26, '=(U%s-Z%s)' % ( ( row + 1 ), ( row + 1 ) ), format9)
-                ws.write(row, 27, '', format5)
+                    ws.write_formula(row, 27, '=(U%s-AA%s)' % ( ( row + 1 ), ( row + 1 ) ), format9)
                 ws.write(row, 28, '', format5)
                 ws.write(row, 29, '', format5)
                 ws.write(row, 30, '', format5)
+                ws.write(row, 31, '', format5)
                 row += 1
             line_aux = line['requirement']
 
@@ -332,6 +336,7 @@ class ExpensesReport(models.TransientModel):
                 s.partner AS partner,
                 s.reason AS reason,
                 s.settle_amount_sum AS settle_amount,
+                s.vendor_sum AS vendor,
                 s.settle_igv_sum AS settle_igv,
                 tt.percentage AS tax_percentage,
                 s.income_tax AS income_tax,

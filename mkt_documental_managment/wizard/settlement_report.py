@@ -155,9 +155,9 @@ class SettlementReport(models.Model):
         query = """
             SELECT
                 s.date,
-                dt.short_name as code,
+                dt.short_name AS code,
                 s.document,
-                r.requirement_state as requirement_state,
+                r.requirement_state AS requirement_state,
                 s.dni_ruc,
                 s.partner,
                 s.reason,
@@ -165,14 +165,14 @@ class SettlementReport(models.Model):
                 s.settle_amount,
                 s.retention,
                 s.vendor,
-                rp.name as requester,
-                st.name as province,
-                r.name as rq_number,
-                b.name as budget,
-                cc.code as cost_center,
-                p.name as client,
-                r.operation_number,
-                r.payment_date
+                rp.name AS requester,
+                st.name AS province,
+                r.name AS rq_number,
+                b.name AS budget,
+                cc.code AS cost_center,
+                p.name AS client,
+                COALESCE(r.payment_date, rp_payment.payment_date) AS payment_date,
+                COALESCE(r.operation_number, r.check_number, rp_payment.operation_number) AS operation_number
             FROM 
                 settlement AS s
                 LEFT JOIN settlement_line_type dt ON s.document_type_id = dt.id
@@ -183,10 +183,19 @@ class SettlementReport(models.Model):
                 LEFT JOIN budget b ON r.budget_id = b.id
                 LEFT JOIN cost_center cc ON b.cost_center_id = cc.id
                 LEFT JOIN res_partner p ON b.partner_id = p.id
+                LEFT JOIN (
+                    SELECT
+                        requirement_id,
+                        MIN(payment_date) AS payment_date,
+                        MIN(operation_number) AS operation_number
+                    FROM requirement_payment
+                    GROUP BY requirement_id
+                ) rp_payment ON rp_payment.requirement_id = r.id
             WHERE
                 dt.short_name = 'RH'
+                AND (r.payment_date IS NOT NULL OR rp_payment.payment_date IS NOT NULL)
             ORDER BY
-                s.date DESC
+                s.date DESC;
         """
 
         document_type_ids = tuple(self.document_type_ids.ids)

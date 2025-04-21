@@ -268,12 +268,12 @@ class BankReport(models.TransientModel):
                 b.name AS budget,
                 cc.code AS cost_center,
                 dr.dni_or_ruc AS ruc,
-                dr.accounting_account as accounting_account,
+                dr.accounting_account AS accounting_account,
                 s.date AS date_line,
                 rp.name AS supplier,
                 dr.concept AS concept,
-                dr.payment_date AS payment_date,
-                COALESCE(dr.operation_number, dr.check_number) AS operation_number,
+                COALESCE(dr.payment_date, rp_payment.payment_date) AS payment_date,
+                COALESCE(dr.operation_number, dr.check_number, rp_payment.operation_number) AS operation_number,
                 CASE
                     WHEN dr.amount_currency_type = 'soles' THEN 'S/'
                     WHEN dr.amount_currency_type = 'dolares' THEN '$$'
@@ -290,7 +290,6 @@ class BankReport(models.TransientModel):
                 s.vendor AS settlement_vendor,
                 s.retention AS settlement_retention,
                 s.detraction AS settlement_detraction,
-                -- s.amount AS settlement_amount,
                 s.settle_amount AS settlement_amount,
                 s.dni_ruc AS dni_ruc_line,
                 s.partner AS partner_line,
@@ -301,16 +300,24 @@ class BankReport(models.TransientModel):
                 dr.settlement_state AS settlement_state,
                 dr.settlement_total_lines AS settlement_lines
             FROM documental_requirements AS dr
-            LEFT JOIN budget AS b ON b.id=dr.budget_id
-            LEFT JOIN cost_center AS cc ON cc.id=b.cost_center_id
-            LEFT JOIN res_partner AS rp ON rp.id=dr.paid_to
-            LEFT JOIN settlement AS s ON dr.id=s.requirement_id
-            LEFT JOIN settlement_line_type AS slt ON slt.id=s.document_type_id
-            LEFT JOIN res_users AS ru ON ru.id=dr.full_name
-            LEFT JOIN res_partner AS rp2 ON rp2.id=ru.partner_id
-            LEFT JOIN requirement_payroll AS rpy ON rpy.id=dr.requirement_payroll_id
-            WHERE dr.payment_date IS NOT NULL
-            ORDER BY dr.name DESC
+            LEFT JOIN budget AS b ON b.id = dr.budget_id
+            LEFT JOIN cost_center AS cc ON cc.id = b.cost_center_id
+            LEFT JOIN res_partner AS rp ON rp.id = dr.paid_to
+            LEFT JOIN settlement AS s ON dr.id = s.requirement_id
+            LEFT JOIN settlement_line_type AS slt ON slt.id = s.document_type_id
+            LEFT JOIN res_users AS ru ON ru.id = dr.full_name
+            LEFT JOIN res_partner AS rp2 ON rp2.id = ru.partner_id
+            LEFT JOIN requirement_payroll AS rpy ON rpy.id = dr.requirement_payroll_id
+            LEFT JOIN (
+                SELECT
+                    requirement_id,
+                    MIN(payment_date) AS payment_date,
+                    MIN(operation_number) AS operation_number
+                FROM requirement_payment
+                GROUP BY requirement_id
+            ) rp_payment ON rp_payment.requirement_id = dr.id
+            WHERE COALESCE(dr.payment_date, rp_payment.payment_date) IS NOT NULL
+            ORDER BY dr.name DESC;
         """
         self._cr.execute(query)
         res_query = self._cr.dictfetchall()
