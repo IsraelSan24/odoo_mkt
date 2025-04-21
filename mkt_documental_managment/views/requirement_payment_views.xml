@@ -10,16 +10,16 @@
                         <group>
                             <field name="current_partner_bank_ids" invisible="True"/>
                             <field name="date_requested" attrs="{'readonly': [('requirement_state','not in',('draft','refused'))]}"/>
-                            <field name="check_or_operation" attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                            <field name="check_or_operation" attrs="{'readonly': [('is_administration_editable', '=', False)],'invisible':[('requirement_state','in',('draft','refused'))]}"/>
                             <field name="in_bank" widget="boolean_toggle" 
                                 groups="mkt_documental_managment.documental_requirement_administration"/>
                             <field name="wrong_payment" widget="boolean_toggle" 
-                                attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                                attrs="{'readonly': [('is_administration_editable', '=', False)]}" groups="sp_documentary.documental_requirement_administration"/>
                         </group>
                         <group>
-                            <field name="payment_bank_id" attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
-                            <field name="operation_number" attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
-                            <field name="payment_date" attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                            <field name="payment_bank_id" attrs="{'readonly': [('is_administration_editable', '=', False)],'invisible':[('requirement_state','in',('draft','refused'))]}"/>
+                            <field name="operation_number" attrs="{'readonly': [('is_administration_editable', '=', False)],'invisible':[('requirement_state','in',('draft','refused'))]}"/>
+                            <field name="payment_date" attrs="{'readonly': [('is_administration_editable', '=', False)],'invisible':[('requirement_state','in',('draft','refused'))]}"/>
                             <field name="requirement_payroll_id" groups="mkt_documental_managment.documental_requirement_administration"/>
                             <field name="amount" sum="Total" attrs="{'readonly': [('is_amount_editable', '=', False)]}"/>
                         </group>

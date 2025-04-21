@@ -537,7 +537,10 @@ class DocumentalRequirements(models.Model):
     def _compute_balance(self):
         for rec in self:
             requirement_amount = rec.amount_soles if rec.amount_soles != 0 else rec.amount_uss
-            settlement_amount = sum(rec.settlement_ids.mapped('settle_amount_sum'))
+            settlement_amount = sum(
+                line.alternative_amount if line.differentiated_payment else line.settle_amount_sum
+                for line in rec.settlement_ids
+            )
             if rec.unify:
                 rec.balance = round(settlement_amount - requirement_amount, 2)
             else:
@@ -583,7 +586,12 @@ class DocumentalRequirements(models.Model):
         for rec in self:
             requirement_amount = sum(rec.requirement_detail_ids.mapped('required_amount'))
             not_return_lines = rec.settlement_ids.filtered(lambda line: not line.document_type_id.is_return)
-            settlement_amount = round(sum( not_return_lines.mapped('settle_amount_sum') ), 2)
+            settlement_amount = round(
+                sum(
+                    line.alternative_amount if line.differentiated_payment else line.settle_amount_sum
+                    for line in not_return_lines
+                ), 2
+            )
             if rec.amount_currency_type == 'soles':
                 rec.amount_soles = settlement_amount if rec.unify else requirement_amount
                 rec.amount_uss = False
