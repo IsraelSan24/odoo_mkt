@@ -17,3 +17,5 @@ from . import recruiter_team
 from . import res_users
 from . import summary_employees
 from . import imports
+from . import massive_contract_end
+from . import hr_departure_reason

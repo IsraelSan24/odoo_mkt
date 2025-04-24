@@ -6,10 +6,12 @@
         <menuitem id="res_partner_pending_document_submenu" name="Partner document" action="view_res_partner_document_action" parent="recruitment_document_menu" sequence="1"/>
         <menuitem id="applicant_partner_submenu" name="Applicant partner" action="view_applicant_partner_action" parent="recruitment_document_menu" sequence="2"/>
 
+    <menuitem id="contract_end_menu" name="Contract ends" parent="hr.menu_hr_root" sequence="80"/>
+        <menuitem id="massive_contract_end_menu" name="Massive contract end" action="view_massive_contract_end_action" parent="contract_end_menu" sequence="1"/>
+
     <menuitem id="contracts_menu" name="Contracts" parent="hr.menu_hr_root" sequence="90"/>
         <menuitem id="employee_contract_submenu" name="Employee Contracts" action="hr_contract.action_hr_contract" parent="contracts_menu" sequence="0"/>
         <menuitem id="contract_mass_submenu" name="Massive contract" action="view_contract_mass_action" parent="contracts_menu" sequence="1"/>
-        <menuitem id="applicant_contract_submenu" name="Applicant Contract" action="view_applicant_contract_action" parent="contracts_menu" sequence="2"/>
 
     <menuitem id="recruitment_applicant_menu" name="Recruitment Document" parent="hr.menu_hr_root" sequence="91"/>
         <menuitem id="emp_recruitment_document_submenu" name="Sheets" action="view_recruitment_document_action" parent="recruitment_applicant_menu" sequence="0"/>
@@ -26,7 +28,5 @@
     <menuitem id="menu_hr_recruitment_configuration" name="Configuration" groups="hr.group_hr_manager" parent="hr_recruitment.menu_hr_recruitment_root"
         sequence="100"/>
 
-    <menuitem id="masive_update" name="Masive update" groups="hr.group_hr_manager" action="view_imports_action" parent="contacts.res_partner_menu_config"
-        sequence="11"/>
 
 </odoo>
