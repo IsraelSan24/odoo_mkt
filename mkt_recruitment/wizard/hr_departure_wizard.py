@@ -10,7 +10,7 @@ class HrDepartureWizard(models.TransientModel):
 
     def action_departure_employees(self):
         employee = self.employee_id
-        equipments = self.env['maintenance.equipment'].search([('employee_id.id','=','employee')])
+        equipments = self.env['maintenance.equipment'].search([('employee_id','=','employee.id')])
         if equipments:
             raise UserError(_('This employee has devices assigned to him, please contact the systems area to have him reassigned.'))
         if self.env.context.get('toggle_active', False) and employee.active:

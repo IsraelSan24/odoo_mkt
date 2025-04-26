@@ -105,11 +105,11 @@ class Applicant(models.Model):
                 if self.is_reinstatement == False:
                     portal_wizard_user.action_grant_access()
                 else:
-                    if contact.user_id.active == False:
+                    user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1)
+                    if user.active == False:
                         contact.user_id.toggle_active()
-                        user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1)
-                        if user:
-                            user.login = self.email_from
+                    if user:
+                        user.login = self.email_from
             elif len(contact) > 1:
                 raise UserError(_('More than one contact has been found with the same DNI, please solve the problem to continue with the process.'))
             elif len(contact) < 1:
