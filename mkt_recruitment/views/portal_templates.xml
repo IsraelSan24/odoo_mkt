@@ -421,26 +421,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div t-attf-class="form-group #{error.get('zip') and 'o_has_error' or ''}">
-                                        <script type="text/javascript" src="/mkt_recruitment/static/src/js/portal_my_details.js"></script>
-                                        <label class="form-control-label label-optional font-weight-bold" for="zipcode" style="color:#000000">Zip / Postal Code</label>*
-                                        <t t-if="partner.is_validate == False">
-                                            <input type="text" name="zipcode" t-attf-class="form-control #{error.get('zip') and 'is-invalid' or ''}" t-att-value="zipcode or partner.zip" />
-                                        </t>
-                                        <t t-else="">
-                                            <t t-if="partner.zip">
-                                                <input type="text" name="zipcode" t-attf-class="form-control #{error.get('zip') and 'is-invalid' or ''}" t-att-value="zipcode or partner.zip" style="display: none;"/>
-                                                <br/>
-                                                <span t-esc="partner.zip"/>
-                                            </t>
-                                            <t t-else="">
-                                                <input type="text" name="zipcode" t-attf-class="form-control #{error.get('zip') and 'is-invalid' or ''}" t-att-value="zipcode or partner.zip" style="display: none;"/>
-                                            </t>
-                                        </t>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div t-attf-class="form-group #{error.get('street') and 'o_has_error' or ''}">
                                         <script type="text/javascript" src="/mkt_recruitment/static/src/js/portal_my_details.js"></script>
                                         <label class="form-control-label" for="street" style="color:#000000">Street</label>*
@@ -665,6 +646,461 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mt-3 bg-white border rounded rounded-lg">
+                        <div class="col-md-12">
+                            <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
+                            <script type="text/javascript" src="/mkt_recruitment/static/src/js/my_account.js"/>
+                            <div class="form-group">
+                                <div class="row d-flex align-items-center justify-content-center py-2 mb-2" style="background:#6D3A84">
+                                    <div class="col text-center" style="color:#FFFFFF; font-weight: 700;">
+                                        <h5>Children</h5>
+                                        <p>Children (In the absence of a spouse, the Concubine can be appointed - Art 326°; Civil Code)</p>
+                                    </div>
+                                </div>
+                                <div class="table-responsive w-100">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td class="text-info" scope="col">DNI</td>
+                                                <td class="text-info" scope="col">Full name</td>
+                                                <td class="text-info" scope="col">Birthday</td>
+                                                <td class="text-info" scope="col">Relationship</td>
+                                                <td class="text-info" scope="col">Gender</td>
+                                                <td class="text-info" scope="col">Address</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-if="partner.is_validate == False">
+                                                <tr>
+                                                    <td><input type="text" class="form-control" name="child_dni1" t-att-value="child_dni1 or partner.child_dni1"/></td>
+                                                    <td><input type="text" class="form-control" name="child_full_name1" t-att-value="child_full_name1 or partner.child_full_name1"/></td>
+                                                    <td><input type="date" class="form-control" name="child_birthday1" t-att-value="child_birthday1 or partner.child_birthday1"/></td>
+                                                    <td>
+                                                        <select name="child_relationship1" t-attf-class="form-control" t-att-value="child_relationship1s">
+                                                            <option value="">Relationship</option>
+                                                            <option value="Hijo" t-att-selected="child_relationship1s == 'Hijo'">Son</option>
+                                                            <option value="Hija" t-att-selected="child_relationship1s == 'Hija'">Daughter</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="child_gender1" t-attf-class="form-control" t-att-value="child_gender1s">
+                                                            <option value="">Gender</option>
+                                                            <option value="male" t-att-selected="child_gender1s == 'male'">Male</option>
+                                                            <option value="female" t-att-selected="child_gender1s == 'female'">Female</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="form-control" name="child_address1" t-att-value="child_address1 or partner.child_address1"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" class="form-control" name="child_dni2" t-att-value="child_dni2 or partner.child_dni2"/></td>
+                                                    <td><input type="text" class="form-control" name="child_full_name2" t-att-value="child_full_name2 or partner.child_full_name2"/></td>
+                                                    <td><input type="date" class="form-control" name="child_birthday2" t-att-value="child_birthday2 or partner.child_birthday2"/></td>
+                                                    <td>
+                                                        <select name="child_relationship2" t-attf-class="form-control" t-att-value="child_relationship2s">
+                                                            <option value="">Relationship</option>
+                                                            <option value="Hijo" t-att-selected="child_relationship2s == 'Hijo'">Son</option>
+                                                            <option value="Hija" t-att-selected="child_relationship2s == 'Hija'">Daughter</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="child_gender2" t-attf-class="form-control" t-att-value="child_gender2s">
+                                                            <option value="">Gender</option>
+                                                            <option value="male" t-att-selected="child_gender2s == 'male'">Male</option>
+                                                            <option value="female" t-att-selected="child_gender2s == 'female'">Female</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="form-control" name="child_address2" t-att-value="child_address2 or partner.child_address2"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" class="form-control" name="child_dni3" t-att-value="child_dni3 or partner.child_dni3"/></td>
+                                                    <td><input type="text" class="form-control" name="child_full_name3" t-att-value="child_full_name3 or partner.child_full_name3"/></td>
+                                                    <td><input type="date" class="form-control" name="child_birthday3" t-att-value="child_birthday3 or partner.child_birthday3"/></td>
+                                                    <td>
+                                                        <select name="child_relationship3" t-attf-class="form-control" t-att-value="child_relationship3s">
+                                                            <option value="">Relationship</option>
+                                                            <option value="Hijo" t-att-selected="child_relationship3s == 'Hijo'">Son</option>
+                                                            <option value="Hija" t-att-selected="child_relationship3s == 'Hija'">Daughter</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="child_gender3" t-attf-class="form-control" t-att-value="child_gender3s">
+                                                            <option value="">Gender</option>
+                                                            <option value="male" t-att-selected="child_gender3s == 'male'">Male</option>
+                                                            <option value="female" t-att-selected="child_gender3s == 'female'">Female</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="form-control" name="child_address3" t-att-value="child_address3 or partner.child_address3"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" class="form-control" name="child_dni4" t-att-value="child_dni4 or partner.child_dni4"/></td>
+                                                    <td><input type="text" class="form-control" name="child_full_name4" t-att-value="child_full_name4 or partner.child_full_name4"/></td>
+                                                    <td><input type="date" class="form-control" name="child_birthday4" t-att-value="child_birthday4 or partner.child_birthday4"/></td>
+                                                    <td>
+                                                        <select name="child_relationship4" t-attf-class="form-control" t-att-value="child_relationship4s">
+                                                            <option value="">Relationship</option>
+                                                            <option value="Hijo" t-att-selected="child_relationship4s == 'Hijo'">Son</option>
+                                                            <option value="Hija" t-att-selected="child_relationship4s == 'Hija'">Daughter</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="child_gender4" t-attf-class="form-control" t-att-value="child_gender4s">
+                                                            <option value="">Gender</option>
+                                                            <option value="male" t-att-selected="child_gender4s == 'male'">Male</option>
+                                                            <option value="female" t-att-selected="child_gender4s == 'female'">Female</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="form-control" name="child_address4" t-att-value="child_address4 or partner.child_address4"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" class="form-control" name="child_dni5" t-att-value="child_dni5 or partner.child_dni5"/></td>
+                                                    <td><input type="text" class="form-control" name="child_full_name5" t-att-value="child_full_name5 or partner.child_full_name5"/></td>
+                                                    <td><input type="date" class="form-control" name="child_birthday5" t-att-value="child_birthday5 or partner.child_birthday5"/></td>
+                                                    <td>
+                                                        <select name="child_relationship5" t-attf-class="form-control" t-att-value="child_relationship5s">
+                                                            <option value="">Relationship</option>
+                                                            <option value="Hijo" t-att-selected="child_relationship5s == 'Hijo'">Son</option>
+                                                            <option value="Hija" t-att-selected="child_relationship5s == 'Hija'">Daughter</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="child_gender5" t-attf-class="form-control" t-att-value="child_gender5s">
+                                                            <option value="">Gender</option>
+                                                            <option value="male" t-att-selected="child_gender5s == 'male'">Male</option>
+                                                            <option value="female" t-att-selected="child_gender5s == 'female'">Female</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="form-control" name="child_address5" t-att-value="child_address5 or partner.child_address5"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" class="form-control" name="child_dni6" t-att-value="child_dni6 or partner.child_dni6"/></td>
+                                                    <td><input type="text" class="form-control" name="child_full_name6" t-att-value="child_full_name6 or partner.child_full_name6"/></td>
+                                                    <td><input type="date" class="form-control" name="child_birthday6" t-att-value="child_birthday6 or partner.child_birthday6"/></td>
+                                                    <td>
+                                                        <select name="child_relationship6" t-attf-class="form-control" t-att-value="child_relationship6s">
+                                                            <option value="">Relationship</option>
+                                                            <option value="Hijo" t-att-selected="child_relationship6s == 'Hijo'">Son</option>
+                                                            <option value="Hija" t-att-selected="child_relationship6s == 'Hija'">Daughter</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="child_gender6" t-attf-class="form-control" t-att-value="child_gender6s">
+                                                            <option value="">Gender</option>
+                                                            <option value="male" t-att-selected="child_gender6s == 'male'">Male</option>
+                                                            <option value="female" t-att-selected="child_gender6s == 'female'">Female</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="form-control" name="child_address6" t-att-value="child_address6 or partner.child_address6"/></td>
+                                                </tr>
+                                            </t>
+                                            <t t-else="">
+                                                <tr>
+                                                    <td>
+                                                        <t t-if="partner.child_dni1">
+                                                            <br/>
+                                                            <span t-esc="partner.child_dni1"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_full_name1">
+                                                            <br/>
+                                                            <span t-esc="partner.child_full_name1"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_birthday1">
+                                                            <br/>
+                                                            <span t-esc="partner.child_birthday1"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_relationship1">
+                                                            <br/>
+                                                            <span t-esc="partner.child_relationship1"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_gender1">
+                                                            <br/>
+                                                            <span t-esc="partner.child_gender1"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_address1">
+                                                            <br/>
+                                                            <span t-esc="partner.child_address1"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <t t-if="partner.child_dni2">
+                                                            <br/>
+                                                            <span t-esc="partner.child_dni2"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_full_name2">
+                                                            <br/>
+                                                            <span t-esc="partner.child_full_name2"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_birthday2">
+                                                            <br/>
+                                                            <span t-esc="partner.child_birthday2"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_relationship2">
+                                                            <br/>
+                                                            <span t-esc="partner.child_relationship2"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_gender2">
+                                                            <br/>
+                                                            <span t-esc="partner.child_gender2"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_address2">
+                                                            <br/>
+                                                            <span t-esc="partner.child_address2"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <t t-if="partner.child_dni3">
+                                                            <br/>
+                                                            <span t-esc="partner.child_dni3"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_full_name3">
+                                                            <br/>
+                                                            <span t-esc="partner.child_full_name3"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_birthday3">
+                                                            <br/>
+                                                            <span t-esc="partner.child_birthday3"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_relationship3">
+                                                            <br/>
+                                                            <span t-esc="partner.child_relationship3"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_gender3">
+                                                            <br/>
+                                                            <span t-esc="partner.child_gender3"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_address3">
+                                                            <br/>
+                                                            <span t-esc="partner.child_address3"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <t t-if="partner.child_dni4">
+                                                            <br/>
+                                                            <span t-esc="partner.child_dni4"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_full_name4">
+                                                            <br/>
+                                                            <span t-esc="partner.child_full_name4"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_birthday4">
+                                                            <br/>
+                                                            <span t-esc="partner.child_birthday4"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_relationship4">
+                                                            <br/>
+                                                            <span t-esc="partner.child_relationship4"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_gender4">
+                                                            <br/>
+                                                            <span t-esc="partner.child_gender4"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_address4">
+                                                            <br/>
+                                                            <span t-esc="partner.child_address4"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <t t-if="partner.child_dni5">
+                                                            <br/>
+                                                            <span t-esc="partner.child_dni5"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_full_name5">
+                                                            <br/>
+                                                            <span t-esc="partner.child_full_name5"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_birthday5">
+                                                            <br/>
+                                                            <span t-esc="partner.child_birthday5"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_relationship5">
+                                                            <br/>
+                                                            <span t-esc="partner.child_relationship5"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_gender5">
+                                                            <br/>
+                                                            <span t-esc="partner.child_gender5"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_address5">
+                                                            <br/>
+                                                            <span t-esc="partner.child_address5"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <t t-if="partner.child_dni6">
+                                                            <br/>
+                                                            <span t-esc="partner.child_dni6"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_full_name6">
+                                                            <br/>
+                                                            <span t-esc="partner.child_full_name6"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_birthday6">
+                                                            <br/>
+                                                            <span t-esc="partner.child_birthday6"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_relationship6">
+                                                            <br/>
+                                                            <span t-esc="partner.child_relationship6"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_gender6">
+                                                            <br/>
+                                                            <span t-esc="partner.child_gender6"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_address6">
+                                                            <br/>
+                                                            <span t-esc="partner.child_address6"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row mt-3 bg-white border rounded rounded-lg">
                         <div class="col-md-12">
                             <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
@@ -1563,6 +1999,28 @@
                                 <t t-else="">
                                     <div class="form-group col-xl-6" id="comingfromonp_container">
                                         <label for="coming_from_onp">Coming from ONP</label>
+                                        <br/>
+                                        <input type="checkbox" disabled="disabled"/>
+                                    </div>
+                                </t>
+                            </t>
+                            <t t-if="partner.is_validate == False">
+                                <div class="form-group col-xl-6 inactive" id="comingfromafp_container">
+                                    <label for="coming_from_afp">Coming from AFP</label>
+                                    <input id="coming_from_afp" type="checkbox" name="coming_from_afp" t-att-checked="coming_from_afp or partner.coming_from_afp"/>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <t t-if="partner.coming_from_afp">
+                                    <div class="form-group col-xl-6" id="comingfromafp_container">
+                                        <label for="coming_from_afp">Coming from AFP</label>
+                                        <br/>
+                                        <input type="checkbox" checked="checked" disabled="disabled"/>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="form-group col-xl-6" id="comingfromafp_container">
+                                        <label for="coming_from_afp">Coming from AFP</label>
                                         <br/>
                                         <input type="checkbox" disabled="disabled"/>
                                     </div>

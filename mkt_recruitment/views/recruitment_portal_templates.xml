@@ -241,18 +241,21 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <t t-if="res_partner['familiar_relationship1'] == 'Hijo' or res_partner['familiar_relationship1'] == 'Hija'">
+                                                <!-- Cambiado familiar_relationship1 a child_relationship1 -->
+                                                <t t-if="res_partner['child_relationship1'] == 'Hijo' or res_partner['child_relationship1'] == 'Hija'">
                                                     <td scope="col">
-                                                        <t t-if="res_partner['familiar_full_name1']">
-                                                            <span t-esc="res_partner['familiar_full_name1']"/>
+                                                        <!-- Cambiado familiar_full_name1 a child_full_name1 -->
+                                                        <t t-if="res_partner['child_full_name1']">
+                                                            <span t-esc="res_partner['child_full_name1']"/>
                                                         </t>
                                                         <t t-else="">
                                                             
                                                         </t>
                                                     </td>
                                                     <td scope="col">
-                                                        <t t-if="res_partner['familiar_dni1']">
-                                                            <span t-esc="res_partner['familiar_dni1']"/>
+                                                        <!-- Cambiado familiar_dni1 a child_dni1 -->
+                                                        <t t-if="res_partner['child_dni1']">
+                                                            <span t-esc="res_partner['child_dni1']"/>
                                                         </t>
                                                         <t t-else="">
                                                             
@@ -262,12 +265,12 @@
                                                         <div class="input-group">
                                                             <div class="custom-file">
                                                                 <t t-if="not partner.children_okay">
-                                                                    <input type="file" class="custom-file-input" id="familiar_dnifile1" name="familiar_dnifile1" t-att-value="partner.familiar_dnifile1 or ''"/>
+                                                                    <input type="file" class="custom-file-input" id="child_dnifile1" name="child_dnifile1" t-att-value="partner.child_dnifile1 or ''"/>
                                                                 </t>
                                                                 <t t-else="">
-                                                                    <input type="file" class="custom-file-input" id="familiar_dnifile1" name="familiar_dnifile1" t-att-value="partner.familiar_dnifile1 or ''" disabled="True"/>
+                                                                    <input type="file" class="custom-file-input" id="child_dnifile1" name="child_dnifile1" t-att-value="partner.child_dnifile1 or ''" disabled="True"/>
                                                                 </t>
-                                                                <label class="custom-file-label text-muted truncate" for="familiar_dnifile1">Select file</label>
+                                                                <label class="custom-file-label text-muted truncate" for="child_dnifile1">Select file</label>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -275,61 +278,12 @@
                                                         <div class="input-group">
                                                             <div class="custom-file">
                                                                 <t t-if="not partner.children_okay">
-                                                                    <input type="file" class="custom-file-input" name="familiar_dnifile1_back" t-att-value="partner.familiar_dnifile1_back or ''"/>
+                                                                    <input type="file" class="custom-file-input" name="child_dnifile1_back" t-att-value="partner.child_dnifile1_back or ''"/>
                                                                 </t>
                                                                 <t t-else="">
-                                                                    <input type="file" class="custom-file-input" name="familiar_dnifile1_back" t-att-value="partner.familiar_dnifile1_back or ''" disabled="True"/>
+                                                                    <input type="file" class="custom-file-input" name="child_dnifile1_back" t-att-value="partner.child_dnifile1_back or ''" disabled="True"/>
                                                                 </t>
-                                                                <label class="custom-file-label text-muted truncate" for="familiar_dnifile1_back">Select file</label>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </t>
-                                                <t t-else="">
-                                                        
-                                                </t>
-                                            </tr>
-                                            <tr>
-                                                <t t-if="res_partner['familiar_relationship2'] == 'Hijo' or res_partner['familiar_relationship2'] == 'Hija'">
-                                                    <td scope="col">
-                                                        <t t-if="res_partner['familiar_full_name2']">
-                                                            <span t-esc="res_partner['familiar_full_name2']"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                            
-                                                        </t>
-                                                    </td>
-                                                    <td scope="col">
-                                                        <t t-if="res_partner['familiar_dni2']">
-                                                            <span t-esc="res_partner['familiar_dni2']"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                            
-                                                        </t>
-                                                    </td>
-                                                    <td scope="col">
-                                                        <div class="input-group">
-                                                            <div class="custom-file">
-                                                                <t t-if="not partner.children_okay">
-                                                                    <input type="file" class="custom-file-input" name="familiar_dnifile2" t-att-value="partner.familiar_dnifile2 or ''"/>
-                                                                </t>
-                                                                <t t-else="">
-                                                                    <input type="file" class="custom-file-input" name="familiar_dnifile2" t-att-value="partner.familiar_dnifile2 or ''" disabled="True"/>
-                                                                </t>
-                                                                <label class="custom-file-label text-muted truncate" for="familiar_dnifile2">Select file</label>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td scope="col">
-                                                        <div class="input-group">
-                                                            <div class="custom-file">
-                                                                <t t-if="not partner.children_okay">
-                                                                    <input type="file" class="custom-file-input" name="familiar_dnifile2_back" t-att-value="partner.familiar_dnifile2_back or ''"/>
-                                                                </t>
-                                                                <t t-else="">
-                                                                    <input type="file" class="custom-file-input" name="familiar_dnifile2_back" t-att-value="partner.familiar_dnifile2_back or ''" disabled="True"/>
-                                                                </t>
-                                                                <label class="custom-file-label text-muted truncate" for="familiar_dnifile2_back">Select file</label>
+                                                                <label class="custom-file-label text-muted truncate" for="child_dnifile1_back">Select file</label>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -339,18 +293,21 @@
                                                 </t>
                                             </tr>
                                             <tr>
-                                                <t t-if="res_partner['familiar_relationship3'] == 'Hijo' or res_partner['familiar_relationship3'] == 'Hija'">
+                                                <!-- Cambiado familiar_relationship2 a child_relationship2 -->
+                                                <t t-if="res_partner['child_relationship2'] == 'Hijo' or res_partner['child_relationship2'] == 'Hija'">
                                                     <td scope="col">
-                                                        <t t-if="res_partner['familiar_full_name3']">
-                                                            <span t-esc="res_partner['familiar_full_name3']"/>
+                                                        <!-- Cambiado familiar_full_name2 a child_full_name2 -->
+                                                        <t t-if="res_partner['child_full_name2']">
+                                                            <span t-esc="res_partner['child_full_name2']"/>
                                                         </t>
                                                         <t t-else="">
                                                             
                                                         </t>
                                                     </td>
                                                     <td scope="col">
-                                                        <t t-if="res_partner['familiar_dni3']">
-                                                            <span t-esc="res_partner['familiar_dni3']"/>
+                                                        <!-- Cambiado familiar_dni2 a child_dni2 -->
+                                                        <t t-if="res_partner['child_dni2']">
+                                                            <span t-esc="res_partner['child_dni2']"/>
                                                         </t>
                                                         <t t-else="">
                                                             
@@ -360,12 +317,12 @@
                                                         <div class="input-group">
                                                             <div class="custom-file">
                                                                 <t t-if="not partner.children_okay">
-                                                                    <input type="file" class="custom-file-input" name="familiar_dnifile3" t-att-value="partner.familiar_dnifile3 or ''"/>
+                                                                    <input type="file" class="custom-file-input" name="child_dnifile2" t-att-value="partner.child_dnifile2 or ''"/>
                                                                 </t>
                                                                 <t t-else="">
-                                                                    <input type="file" class="custom-file-input" name="familiar_dnifile3" t-att-value="partner.familiar_dnifile3 or ''" disabled="True"/>
+                                                                    <input type="file" class="custom-file-input" name="child_dnifile2" t-att-value="partner.child_dnifile2 or ''" disabled="True"/>
                                                                 </t>
-                                                                <label class="custom-file-label text-muted truncate" for="familiar_dnifile3">Select file</label>
+                                                                <label class="custom-file-label text-muted truncate" for="child_dnifile2">Select file</label>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -373,12 +330,12 @@
                                                         <div class="input-group">
                                                             <div class="custom-file">
                                                                 <t t-if="not partner.children_okay">
-                                                                    <input type="file" class="custom-file-input" name="familiar_dnifile3_back" t-att-value="partner.familiar_dnifile3_back or ''"/>
+                                                                    <input type="file" class="custom-file-input" name="child_dnifile2_back" t-att-value="partner.child_dnifile2_back or ''"/>
                                                                 </t>
                                                                 <t t-else="">
-                                                                    <input type="file" class="custom-file-input" name="familiar_dnifile3_back" t-att-value="partner.familiar_dnifile3_back or ''" disabled="True"/>
+                                                                    <input type="file" class="custom-file-input" name="child_dnifile2_back" t-att-value="partner.child_dnifile2_back or ''" disabled="True"/>
                                                                 </t>
-                                                                <label class="custom-file-label text-muted truncate" for="familiar_dnifile3_back">Select file</label>
+                                                                <label class="custom-file-label text-muted truncate" for="child_dnifile2_back">Select file</label>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -388,18 +345,21 @@
                                                 </t>
                                             </tr>
                                             <tr>
-                                                <t t-if="res_partner['familiar_relationship4'] == 'Hijo' or res_partner['familiar_relationship4'] == 'Hija'">
+                                                <!-- Cambiado familiar_relationship3 a child_relationship3 -->
+                                                <t t-if="res_partner['child_relationship3'] == 'Hijo' or res_partner['child_relationship3'] == 'Hija'">
                                                     <td scope="col">
-                                                        <t t-if="res_partner['familiar_full_name4']">
-                                                            <span t-esc="res_partner['familiar_full_name4']"/>
+                                                        <!-- Cambiado familiar_full_name3 a child_full_name3 -->
+                                                        <t t-if="res_partner['child_full_name3']">
+                                                            <span t-esc="res_partner['child_full_name3']"/>
                                                         </t>
                                                         <t t-else="">
                                                             
                                                         </t>
                                                     </td>
                                                     <td scope="col">
-                                                        <t t-if="res_partner['familiar_dni4']">
-                                                            <span t-esc="res_partner['familiar_dni4']"/>
+                                                        <!-- Cambiado familiar_dni3 a child_dni3 -->
+                                                        <t t-if="res_partner['child_dni3']">
+                                                            <span t-esc="res_partner['child_dni3']"/>
                                                         </t>
                                                         <t t-else="">
                                                             
@@ -409,12 +369,12 @@
                                                         <div class="input-group">
                                                             <div class="custom-file">
                                                                 <t t-if="not partner.children_okay">
-                                                                    <input type="file" class="custom-file-input" name="familiar_dnifile4" t-att-value="partner.familiar_dnifile4 or ''"/>
+                                                                    <input type="file" class="custom-file-input" name="child_dnifile3" t-att-value="partner.child_dnifile3 or ''"/>
                                                                 </t>
                                                                 <t t-else="">
-                                                                    <input type="file" class="custom-file-input" name="familiar_dnifile4" t-att-value="partner.familiar_dnifile4 or ''" disabled="True"/>
+                                                                    <input type="file" class="custom-file-input" name="child_dnifile3" t-att-value="partner.child_dnifile3 or ''" disabled="True"/>
                                                                 </t>
-                                                                <label class="custom-file-label text-muted truncate" for="familiar_dnifile4">Select file</label>
+                                                                <label class="custom-file-label text-muted truncate" for="child_dnifile3">Select file</label>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -422,12 +382,64 @@
                                                         <div class="input-group">
                                                             <div class="custom-file">
                                                                 <t t-if="not partner.children_okay">
-                                                                    <input type="file" class="custom-file-input" name="familiar_dnifile4_back" t-att-value="partner.familiar_dnifile4_back or ''"/>
+                                                                    <input type="file" class="custom-file-input" name="child_dnifile3_back" t-att-value="partner.child_dnifile3_back or ''"/>
                                                                 </t>
                                                                 <t t-else="">
-                                                                    <input type="file" class="custom-file-input" name="familiar_dnifile4_back" t-att-value="partner.familiar_dnifile4_back or ''" disabled="True"/>
+                                                                    <input type="file" class="custom-file-input" name="child_dnifile3_back" t-att-value="partner.child_dnifile3_back or ''" disabled="True"/>
                                                                 </t>
-                                                                <label class="custom-file-label text-muted truncate" for="familiar_dnifile4_back">Select file</label>
+                                                                <label class="custom-file-label text-muted truncate" for="child_dnifile3_back">Select file</label>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </t>
+                                                <t t-else="">
+                                                        
+                                                </t>
+                                            </tr>
+                                            <tr>
+                                                <!-- Cambiado familiar_relationship4 a child_relationship4 -->
+                                                <t t-if="res_partner['child_relationship4'] == 'Hijo' or res_partner['child_relationship4'] == 'Hija'">
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_full_name4 a child_full_name4 -->
+                                                        <t t-if="res_partner['child_full_name4']">
+                                                            <span t-esc="res_partner['child_full_name4']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_dni4 a child_dni4 -->
+                                                        <t t-if="res_partner['child_dni4']">
+                                                            <span t-esc="res_partner['child_dni4']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <t t-if="not partner.children_okay">
+                                                                    <input type="file" class="custom-file-input" name="child_dnifile4" t-att-value="partner.child_dnifile4 or ''"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <input type="file" class="custom-file-input" name="child_dnifile4" t-att-value="partner.child_dnifile4 or ''" disabled="True"/>
+                                                                </t>
+                                                                <label class="custom-file-label text-muted truncate" for="child_dnifile4">Select file</label>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <t t-if="not partner.children_okay">
+                                                                    <input type="file" class="custom-file-input" name="child_dnifile4_back" t-att-value="partner.child_dnifile4_back or ''"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <input type="file" class="custom-file-input" name="child_dnifile4_back" t-att-value="partner.child_dnifile4_back or ''" disabled="True"/>
+                                                                </t>
+                                                                <label class="custom-file-label text-muted truncate" for="child_dnifile4_back">Select file</label>
                                                             </div>
                                                         </div>
                                                     </td>

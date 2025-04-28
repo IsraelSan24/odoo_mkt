@@ -99,7 +99,7 @@ class RecruitmentPortal(portal.CustomerPortal):
         "familiar_dnifile4","familiar_dnifile5","familiar_dnifile6",
         "familiar_dnifile7","familiar_dnifile8","familiar_dnifile9","familiar_dnifile10",
         "private_pension_system","national_pension_system",
-        "afp_first_job","coming_from_onp",
+        "afp_first_job","coming_from_onp","coming_from_afp",
         "current_dni","services_receipt","certijoven",
     ]
 
@@ -165,6 +165,7 @@ class RecruitmentPortal(portal.CustomerPortal):
             post['private_pension_system'] = post.get('private_pension_system', False)
             post['national_pension_system'] = post.get('national_pension_system', False)
             post['coming_from_onp'] = post.get('coming_from_onp', False)
+            post['coming_from_afp'] = post.get('coming_from_afp', False)
             post['afp_first_job'] = post.get('afp_first_job', False)
             error, error_message = self.details_form_validate(post)
             values.update({'error': error, 'error_message': error_message})
@@ -191,6 +192,18 @@ class RecruitmentPortal(portal.CustomerPortal):
         genders = partner.gender
         education_levels = partner.education_level
         maritals = partner.marital
+        child_relationship1s = partner.child_relationship1
+        child_relationship2s = partner.child_relationship2
+        child_relationship3s = partner.child_relationship3
+        child_relationship4s = partner.child_relationship4
+        child_relationship5s = partner.child_relationship5
+        child_relationship6s = partner.child_relationship6
+        child_gender1s = partner.child_gender1
+        child_gender2s = partner.child_gender2
+        child_gender3s = partner.child_gender3
+        child_gender4s = partner.child_gender4
+        child_gender5s = partner.child_gender5
+        child_gender6s = partner.child_gender6
         familiar_relationship1s = partner.familiar_relationship1
         familiar_relationship2s = partner.familiar_relationship2
         familiar_relationship3s = partner.familiar_relationship3
@@ -220,6 +233,18 @@ class RecruitmentPortal(portal.CustomerPortal):
             'genders': genders,
             'education_levels': education_levels,
             'maritals': maritals,
+            'child_relationship1s': child_relationship1s,
+            'child_relationship2s': child_relationship2s,
+            'child_relationship3s': child_relationship3s,
+            'child_relationship4s': child_relationship4s,
+            'child_relationship5s': child_relationship5s,
+            'child_relationship6s': child_relationship6s,
+            'child_gender1s': child_gender1s,
+            'child_gender2s': child_gender2s,
+            'child_gender3s': child_gender3s,
+            'child_gender4s': child_gender4s,
+            'child_gender5s': child_gender5s,
+            'child_gender6s': child_gender6s,
             'familiar_relationship1s': familiar_relationship1s,
             'familiar_relationship2s': familiar_relationship2s,
             'familiar_relationship3s': familiar_relationship3s,
@@ -255,54 +280,58 @@ class RecruitmentPortal(portal.CustomerPortal):
         partner = request.env.user.partner_id
         if post and request.httprequest.method == 'POST':
             update_values = {}
-            if 'familiar_dnifile1' in post and post['familiar_dnifile1']:
-                familiar_dnifile1_content = post['familiar_dnifile1'].read()
-                familiar_dnifile1_base64 = base64.b64encode(familiar_dnifile1_content)
-                update_values['familiar_dnifile1'] = familiar_dnifile1_base64
-            if 'familiar_dnifile2' in post and post['familiar_dnifile2']:
-                familiar_dnifile2_content = post['familiar_dnifile2'].read()
-                familiar_dnifile2_base64 = base64.b64encode(familiar_dnifile2_content)
-                update_values['familiar_dnifile2'] = familiar_dnifile2_base64
-            if 'familiar_dnifile3' in post and post['familiar_dnifile3']:
-                familiar_dnifile3_content = post['familiar_dnifile3'].read()
-                familiar_dnifile3_base64 = base64.b64encode(familiar_dnifile3_content)
-                update_values['familiar_dnifile3'] = familiar_dnifile3_base64
-            if 'familiar_dnifile4' in post and post['familiar_dnifile4']:
-                familiar_dnifile4_content = post['familiar_dnifile4'].read()
-                familiar_dnifile4_base64 = base64.b64encode(familiar_dnifile4_content)
-                update_values['familiar_dnifile4'] = familiar_dnifile4_base64
-            if 'familiar_dnifile5' in post and post['familiar_dnifile5']:
-                familiar_dnifile5_content = post['familiar_dnifile5'].read()
-                familiar_dnifile5_base64 = base64.b64encode(familiar_dnifile5_content)
-                update_values['familiar_dnifile5'] = familiar_dnifile5_base64
-            if 'familiar_dnifile6' in post and post['familiar_dnifile6']:
-                familiar_dnifile6_content = post['familiar_dnifile6'].read()
-                familiar_dnifile6_base64 = base64.b64encode(familiar_dnifile6_content)
-                update_values['familiar_dnifile6'] = familiar_dnifile6_base64
-            if 'familiar_dnifile1_back' in post and post['familiar_dnifile1_back']:
-                familiar_dnifile1_back_content = post['familiar_dnifile1_back'].read()
-                familiar_dnifile1_back_base64 = base64.b64encode(familiar_dnifile1_back_content)
-                update_values['familiar_dnifile1_back'] = familiar_dnifile1_back_base64
-            if 'familiar_dnifile2_back' in post and post['familiar_dnifile2_back']:
-                familiar_dnifile2_back_content = post['familiar_dnifile2_back'].read()
-                familiar_dnifile2_back_base64 = base64.b64encode(familiar_dnifile2_back_content)
-                update_values['familiar_dnifile2_back'] = familiar_dnifile2_back_base64
-            if 'familiar_dnifile3_back' in post and post['familiar_dnifile3_back']:
-                familiar_dnifile3_back_content = post['familiar_dnifile3_back'].read()
-                familiar_dnifile3_back_base64 = base64.b64encode(familiar_dnifile3_back_content)
-                update_values['familiar_dnifile3_back'] = familiar_dnifile3_back_base64
-            if 'familiar_dnifile4_back' in post and post['familiar_dnifile4_back']:
-                familiar_dnifile4_back_content = post['familiar_dnifile4_back'].read()
-                familiar_dnifile4_back_base64 = base64.b64encode(familiar_dnifile4_back_content)
-                update_values['familiar_dnifile4_back'] = familiar_dnifile4_back_base64
-            if 'familiar_dnifile5_back' in post and post['familiar_dnifile5_back']:
-                familiar_dnifile5_back_content = post['familiar_dnifile5_back'].read()
-                familiar_dnifile5_back_base64 = base64.b64encode(familiar_dnifile5_back_content)
-                update_values['familiar_dnifile5_back'] = familiar_dnifile5_back_base64
-            if 'familiar_dnifile6_back' in post and post['familiar_dnifile6_back']:
-                familiar_dnifile6_back_content = post['familiar_dnifile6_back'].read()
-                familiar_dnifile6_back_base64 = base64.b64encode(familiar_dnifile6_back_content)
-                update_values['familiar_dnifile6_back'] = familiar_dnifile6_back_base64
+            # Modificado: Reemplazar familiar_dnifile por child_dnifile para los hijos
+            if 'child_dnifile1' in post and post['child_dnifile1']:
+                child_dnifile1_content = post['child_dnifile1'].read()
+                child_dnifile1_base64 = base64.b64encode(child_dnifile1_content)
+                update_values['child_dnifile1'] = child_dnifile1_base64
+            if 'child_dnifile2' in post and post['child_dnifile2']:
+                child_dnifile2_content = post['child_dnifile2'].read()
+                child_dnifile2_base64 = base64.b64encode(child_dnifile2_content)
+                update_values['child_dnifile2'] = child_dnifile2_base64
+            if 'child_dnifile3' in post and post['child_dnifile3']:
+                child_dnifile3_content = post['child_dnifile3'].read()
+                child_dnifile3_base64 = base64.b64encode(child_dnifile3_content)
+                update_values['child_dnifile3'] = child_dnifile3_base64
+            if 'child_dnifile4' in post and post['child_dnifile4']:
+                child_dnifile4_content = post['child_dnifile4'].read()
+                child_dnifile4_base64 = base64.b64encode(child_dnifile4_content)
+                update_values['child_dnifile4'] = child_dnifile4_base64
+            if 'child_dnifile5' in post and post['child_dnifile5']:
+                child_dnifile5_content = post['child_dnifile5'].read()
+                child_dnifile5_base64 = base64.b64encode(child_dnifile5_content)
+                update_values['child_dnifile5'] = child_dnifile5_base64
+            if 'child_dnifile6' in post and post['child_dnifile6']:
+                child_dnifile6_content = post['child_dnifile6'].read()
+                child_dnifile6_base64 = base64.b64encode(child_dnifile6_content)
+                update_values['child_dnifile6'] = child_dnifile6_base64
+                
+            # Modificado: Reemplazar familiar_dnifile_back por child_dnifile_back para los hijos
+            if 'child_dnifile1_back' in post and post['child_dnifile1_back']:
+                child_dnifile1_back_content = post['child_dnifile1_back'].read()
+                child_dnifile1_back_base64 = base64.b64encode(child_dnifile1_back_content)
+                update_values['child_dnifile1_back'] = child_dnifile1_back_base64
+            if 'child_dnifile2_back' in post and post['child_dnifile2_back']:
+                child_dnifile2_back_content = post['child_dnifile2_back'].read()
+                child_dnifile2_back_base64 = base64.b64encode(child_dnifile2_back_content)
+                update_values['child_dnifile2_back'] = child_dnifile2_back_base64
+            if 'child_dnifile3_back' in post and post['child_dnifile3_back']:
+                child_dnifile3_back_content = post['child_dnifile3_back'].read()
+                child_dnifile3_back_base64 = base64.b64encode(child_dnifile3_back_content)
+                update_values['child_dnifile3_back'] = child_dnifile3_back_base64
+            if 'child_dnifile4_back' in post and post['child_dnifile4_back']:
+                child_dnifile4_back_content = post['child_dnifile4_back'].read()
+                child_dnifile4_back_base64 = base64.b64encode(child_dnifile4_back_content)
+                update_values['child_dnifile4_back'] = child_dnifile4_back_base64
+            if 'child_dnifile5_back' in post and post['child_dnifile5_back']:
+                child_dnifile5_back_content = post['child_dnifile5_back'].read()
+                child_dnifile5_back_base64 = base64.b64encode(child_dnifile5_back_content)
+                update_values['child_dnifile5_back'] = child_dnifile5_back_base64
+            if 'child_dnifile6_back' in post and post['child_dnifile6_back']:
+                child_dnifile6_back_content = post['child_dnifile6_back'].read()
+                child_dnifile6_back_base64 = base64.b64encode(child_dnifile6_back_content)
+                update_values['child_dnifile6_back'] = child_dnifile6_back_base64
+
             if 'current_dni' in post and post['current_dni']:
                 current_dni_content = post['current_dni'].read()
                 current_dni_base64 = base64.b64encode(current_dni_content)
@@ -368,6 +397,25 @@ class RecruitmentPortal(portal.CustomerPortal):
             'familiar_relationship4': partner.familiar_relationship4,
             'familiar_relationship5': partner.familiar_relationship5,
             'familiar_relationship6': partner.familiar_relationship6,
+            # hijos
+            'child_full_name1': partner.child_full_name1,
+            'child_full_name2': partner.child_full_name2,
+            'child_full_name3': partner.child_full_name3,
+            'child_full_name4': partner.child_full_name4,
+            'child_full_name5': partner.child_full_name5,
+            'child_full_name6': partner.child_full_name6,
+            'child_dni1': partner.child_dni1,
+            'child_dni2': partner.child_dni2,
+            'child_dni3': partner.child_dni3,
+            'child_dni4': partner.child_dni4,
+            'child_dni5': partner.child_dni5,
+            'child_dni6': partner.child_dni6,
+            'child_relationship1': partner.child_relationship1,
+            'child_relationship2': partner.child_relationship2,
+            'child_relationship3': partner.child_relationship3,
+            'child_relationship4': partner.child_relationship4,
+            'child_relationship5': partner.child_relationship5,
+            'child_relationship6': partner.child_relationship6,
         }        
         values.update({
             'res_partner': res_partner_values,

@@ -78,11 +78,96 @@
                             <field name="private_pension_system" readonly="1"/>
                             <field name="afp_first_job" readonly="1"/>
                             <field name="coming_from_onp" readonly="1"/>
+                            <field name="coming_from_afp" readonly="1"/>
                         </group>
                         <group>
                             <field name="national_pension_system" readonly="1"/>
                         </group>
                     </group>
+                    
+                    <table class="table table-bordered" style="padding: 0px 30px 0px 30px; border:none">
+                        <colgroup>
+                            <col width="8%"/>
+                            <col width="24%"/>
+                            <col width="8%"/>
+                            <col width="8%"/>
+                            <col width="8%"/>
+                            <col width="20%"/>
+                            <col width="4%"/>
+                            <col width="20%"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="6" class="text-center" style="border: 2px solid black;">Children</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">N&#176;DNI</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">NAME AND SURNAME</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Genre</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Relationship</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Date</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Address</th>
+                                <th scope="col" style="border: none"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="border: 2px solid black;"><field name="child_dni1" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_full_name1" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_gender1" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_relationship1" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_birthday1" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_address1" readonly="1"/></td>
+                                <td style="border: none"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;"><field name="child_dni2" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_full_name2" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_gender2" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_relationship2" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_birthday2" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_address2" readonly="1"/></td>
+                                <td style="border: none"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;"><field name="child_dni3" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_full_name3" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_gender3" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_relationship3" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_birthday3" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_address3" readonly="1"/></td>
+                                <td style="border: none"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;"><field name="child_dni4" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_full_name4" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_gender4" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_relationship4" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_birthday4" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_address4" readonly="1"/></td>
+                                <td style="border: none"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;"><field name="child_dni5" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_full_name5" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_gender5" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_relationship5" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_birthday5" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_address5" readonly="1"/></td>
+                                <td style="border: none"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;"><field name="child_dni6" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_full_name6" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_gender6" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_relationship6" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_birthday6" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_address6" readonly="1"/></td>
+                                <td style="border: none"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                     <table class="table table-bordered" style="padding: 0px 30px 0px 30px; border:none">
                         <colgroup>
                             <col width="8%"/>
