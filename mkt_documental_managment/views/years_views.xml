@@ -6,7 +6,8 @@
         <field name="model">years</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name"/>
+                <field name="number"/>
+                <field name="open_year"/>
             </tree>
         </field>
     </record>
@@ -18,9 +19,8 @@
             <form>
                 <sheet>
                     <group>
-                        <group>
-                            <field name="name"/>
-                        </group>
+                        <field name="number"/>
+                        <field name="open_year"/>
                     </group>
                 </sheet>
             </form>
@@ -28,10 +28,9 @@
     </record>
 
     <record id="view_years_action" model="ir.actions.act_window">
-        <field name="name">Years</field>
+        <field name="name">Años contables</field>
         <field name="res_model">years</field>
         <field name="view_mode">tree,form</field>
     </record>
-
 
 </odoo>

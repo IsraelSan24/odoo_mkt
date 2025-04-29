@@ -594,6 +594,7 @@
                                         decoration-danger="cpe_state == 'non_existent'"
                                         decoration-warning="cpe_state == 'failed'"
                                         groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"/>
+                                    <field name="cpe_company_state" widget="badge" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"/>
                                     <field name="handler" widget="handle"/>
                                     <field name="repeated" invisible="1"/>
                                     <field name="wrong_payment" invisible="1"/>

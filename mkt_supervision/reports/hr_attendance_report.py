@@ -16,6 +16,20 @@ class AttendanceReport(models.TransientModel):
         dic_name = super(AttendanceReport, self)._get_file_name(function_name, file_name=_('Attendance Report'))
         return dic_name
 
+    def _get_my_subordinates(self):
+        my_employee = self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1)
+        if not my_employee:
+            return []
+
+        subordinates = my_employee
+        to_check = my_employee
+        while to_check:
+            children = self.env['hr.employee'].search([('parent_id', 'in', to_check.ids)])
+            to_check = children - subordinates
+            subordinates |= to_check
+
+        return subordinates.ids
+
     def _get_datas_report_xlsx(self, workbook):
         ws = workbook.add_worksheet(_('Attendance Report'))
 
@@ -89,6 +103,10 @@ class AttendanceReport(models.TransientModel):
             row += 1
 
     def _get_query(self):
+        subordinate_ids = self._get_my_subordinates()
+        if not subordinate_ids:
+            return []
+
         query = """
             WITH attendance_data AS (
                 SELECT
@@ -98,6 +116,7 @@ class AttendanceReport(models.TransientModel):
                     MAX(at.check_out AT TIME ZONE 'UTC' AT TIME ZONE 'America/Lima') AS check_out,
                     BOOL_OR(at.within_allowed_area) AS within_allowed_area
                 FROM hr_attendance at
+                WHERE at.employee_id = ANY(%s)
                 GROUP BY at.employee_id, (at.check_in AT TIME ZONE 'UTC' AT TIME ZONE 'America/Lima')::date
             )
             SELECT
@@ -124,5 +143,5 @@ class AttendanceReport(models.TransientModel):
                 AND (at_out.check_out AT TIME ZONE 'UTC' AT TIME ZONE 'America/Lima') = ad.check_out
             ORDER BY ad.date DESC;
         """
-        self._cr.execute(query)
+        self._cr.execute(query, (subordinate_ids,))
         return self._cr.dictfetchall()

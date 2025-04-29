@@ -87,6 +87,26 @@ class SpaceBooking(models.Model):
                 record.end_datetime = False
 
 
+    @api.constrains('start_datetime', 'duration', 'room_id')
+    def _check_availability(self):
+        for record in self:
+            if not record.start_datetime or not record.duration:
+                continue
+
+            end_dt = record.start_datetime + timedelta(hours=record.duration)
+
+            conflicts = self.search([
+                ('room_id', '=', record.room_id.id),
+                ('id', '!=', record.id),
+                ('state', 'not in', ('cancelled', 'finished')),
+                ('start_datetime', '<', end_dt),
+                ('end_datetime', '>', record.start_datetime),
+            ])
+
+            if conflicts:
+                raise ValidationError('La sala ya está reservada en el rango de tiempo seleccionado.')
+    
+
     @api.model
     def create(self, vals):
         vals['name'] = vals.get('name', _('Reservation #%s' % self.env['ir.sequence'].next_by_code('space.booking.sequence')))
@@ -97,12 +117,14 @@ class SpaceBooking(models.Model):
         for record in self:
             record.state = 'pending'
             record._notify_receptionist('Requested')
+            record._check_availability()
 
 
     def action_confirm(self):
         for record in self:
             record.state = 'confirmed'
             record._notify_user_and_superuser('Confirmed')
+            record._check_availability()
 
 
     def action_cancel(self):

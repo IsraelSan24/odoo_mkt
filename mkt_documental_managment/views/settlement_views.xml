@@ -22,6 +22,7 @@
                 <field name="accountable_month_id" optional="show"/>
                 <field name="detraction_document" optional="show"/>
                 <field name="detraction_date" optional="show"/>
+                <field name="cost_center_id" optional="show"/>
                 <field name="subdiary" optional="show"/>
                 <field name="voucher_number"/>
                 <field name="voucher_date" optional="show"/>
@@ -82,6 +83,7 @@
                             <field name="differentiated_payment" attrs="{'readonly':[('state','not in',('draft','refused'))]}"/>
                             <field name="payment_type" attrs="{'invisible': [('differentiated_payment', '=', False)]}"/>
                             <field name="alternative_amount" attrs="{'invisible': ['|', ('payment_type', '=', False), ('differentiated_payment', '=', False)]}"/>
+                            <field name="alternative_igv" attrs="{'readonly':[('state','!=','intern_control')],'invisible': ['|', ('payment_type', '=', False), ('differentiated_payment', '=', False)]}" groups="mkt_documental_managment.documental_requirement_intern_control"/>
                         </group>
                         <group>
                             <field name="document_filename" invisible="1"/>

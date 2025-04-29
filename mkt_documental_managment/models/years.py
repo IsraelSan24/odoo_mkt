@@ -3,5 +3,6 @@ from odoo import fields, models
 class Years(models.Model):
     _name = 'years'
     _description = 'Years'
-    
-    name = fields.Char(required=True, string='Name')
+
+    number = fields.Char(required=True, string='Year Number')
+    open_year = fields.Boolean(string='Activate', default=True)

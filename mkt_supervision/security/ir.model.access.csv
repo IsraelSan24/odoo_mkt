@@ -1,6 +1,8 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_supervision_admin,access_supervision_admin,model_attendance_report,group_supervision_admin,1,1,1,1
-access_supervision_supervisor,access_supervision_supervisor,model_attendance_report,group_supervision_supervisor,1,0,0,0
+access_supervision_supervisor,access_supervision_supervisor,model_attendance_report,group_supervision_supervisor,1,0,1,0
+access_hr_employee_supervision_admin,access.hr.employee.supervision.admin,hr.model_hr_employee,mkt_supervision.group_supervision_admin,1,0,0,0
+access_hr_employee_supervision_supervisor,access.hr.employee.supervision.supervisor,hr.model_hr_employee,mkt_supervision.group_supervision_supervisor,1,0,0,0
 
 access_new_product_line_supervisor,access_new_product_line_supervisor,model_new_product_line,group_supervision_supervisor,1,1,1,1
 access_new_product_line_admin,access_new_product_line_admin,model_new_product_line,group_supervision_admin,1,1,1,1

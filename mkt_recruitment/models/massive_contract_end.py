@@ -52,7 +52,7 @@ class MassiveContractEnd(models.Model):
                 self.write({'employee_ids': [(4, emp.id) for emp in employees]})
         output = io.BytesIO()
         df_filtered = pd.DataFrame(error_rows)
-        with pd.ExcelWriter(output, engine='openpyxl') as writer:   
+        with pd.ExcelWriter(output, engine='openpyxl') as writer:  
             df_filtered.to_excel(writer, index=False, sheet_name='Errores')
         output.seek(0)
         modified_file = base64.b64encode(output.read())

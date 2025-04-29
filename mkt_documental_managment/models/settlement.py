@@ -7,6 +7,7 @@ from odoo.addons.mkt_documental_managment.models.cpe_consult import apiperu_cpe
 from dateutil.relativedelta import relativedelta
 import io
 import PyPDF2
+from PyPDF2.utils import PdfReadError
 import base64
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
@@ -80,6 +81,7 @@ class Settlement(models.Model):
 
     state = fields.Selection(related='requirement_id.settlement_state', string='State', store=True)
     cpe_state = fields.Selection(selection=cpe_states, default='to_validate', string='CPE STATES')
+    cpe_company_state = fields.Char(string='CPE Company State')
     line_ids = fields.One2many('settlement.line', 'settlement_id', string='Settlement line')
 
     journal_ids = fields.One2many('settlement.journal', 'settlement_id', string='Journal items')
@@ -102,6 +104,7 @@ class Settlement(models.Model):
     detraction_document = fields.Char(string='Detraction document')
     detraction_date = fields.Date(string='Detraction date')
     accountable_month_id = fields.Many2one(comodel_name='months', domain="[('open_month','=',True)]", string='Accountable month')
+    accountable_year_id = fields.Many2one(comodel_name='years', domain="[('open_year','=',True)]", string='Accountable Year')
     accounting_account = fields.Char(copy=False, string="accounting account", store=True)
 
     differentiated_payment = fields.Boolean(default=False, string='Differentiated payment')
@@ -110,10 +113,12 @@ class Settlement(models.Model):
     wrong_why = fields.Char(copy=False, string="Why?", store=True)
     settle_amount_wrong = fields.Monetary(string="Settle Amount")
     alternative_amount = fields.Float(string="Alternative Amount")
+    alternative_igv = fields.Float(string='Alternative IGV', digits=(10,3), default=0.00)
     document_currency = fields.Selection(selection=document_currencies, string='Document Currency')
     settle_igv_sum = fields.Float(compute='_compute_settle_igv_sum', store=True)
     settle_amount_sum = fields.Float(compute='_compute_settle_amount_sum', store=True)
     vendor_sum = fields.Float(compute='_compute_vendor_sum', store=True)
+    cost_center_id = fields.Many2one('cost.center', string='CC Number', related='requirement_id.cost_center_id', store=True, readonly=True, copy=False)
 
 
     @api.depends('document_type_id', 'settle_igv')
@@ -208,13 +213,15 @@ class Settlement(models.Model):
             else:
                 rec.accounting_account = ''
 
-    @api.onchange('accountable_month_id')
+    @api.onchange('accountable_month_id', 'accountable_year_id')
     def _onchange_accountable_month(self):
-        if self.subdiary and self.accountable_month_id:
-            voucher_number_before = self.env['settlement'].search([
-                ('accountable_month_id','=',self.accountable_month_id.id),
-                ('subdiary','=',self.subdiary),
-            ], limit=1, order='voucher_number desc').voucher_number
+        if self.subdiary and self.accountable_month_id and self.accountable_year_id:
+            domain = [
+                ('accountable_month_id', '=', self.accountable_month_id.id),
+                ('accountable_year_id', '=', self.accountable_year_id.id),
+                ('subdiary', '=', self.subdiary),
+            ]
+            voucher_number_before = self.env['settlement'].search(domain, limit=1, order='voucher_number desc').voucher_number
             if voucher_number_before:
                 new_number = str(int(voucher_number_before[2:6]) + 1).zfill(4)
                 self.voucher_number = voucher_number_before[:2] + new_number
@@ -242,42 +249,68 @@ class Settlement(models.Model):
 
     def download_files(self):
         combined_pdf_writer = PyPDF2.PdfFileWriter()
+
         for rec in self:
             attachments = self.env['ir.attachment'].search([
-                ('res_model','=',rec._name),
-                ('res_id','=',rec.id),
+                ('res_model', '=', rec._name),
+                ('res_id', '=', rec.id),
             ])
+            
             for attachment in attachments:
                 if attachment.name.lower().endswith('.pdf') or attachment.mimetype == 'application/pdf':
                     try:
                         pdf_data = io.BytesIO(base64.b64decode(attachment.datas))
                         pdf_reader = PyPDF2.PdfFileReader(pdf_data)
-                        
-                        output_pdf = io.BytesIO()
+
+                        if pdf_reader.isEncrypted:
+                            _logger.warning("PDF %s is encrypted and cannot be processed.", attachment.name)
+                            raise ValidationError(_(
+                                'The document %s is encrypted and cannot be processed.'
+                            ) % attachment.name)
+
+                        # Aplicar marca de agua por cada página
+                        temp_output = io.BytesIO()
                         pdf_writer = PyPDF2.PdfFileWriter()
+
                         for page_num in range(pdf_reader.numPages):
                             page = pdf_reader.getPage(page_num)
+                            try:
+                                page.merge_page(self._create_watermark_page(rec.subdiary, rec.voucher_number))
+                            except AttributeError:
+                                page.mergePage(self._create_watermark_page(rec.subdiary, rec.voucher_number))  # fallback para versiones viejas
                             pdf_writer.addPage(page)
-                            page.mergePage(self._create_watermark_page(rec.subdiary, rec.voucher_number))
-                        pdf_writer.write(output_pdf)
-                        output_pdf.seek(0)
-                        pdf_reader = PyPDF2.PdfFileReader(output_pdf)
-                        for page_num in range(pdf_reader.numPages):
-                            page = pdf_reader.getPage(page_num)
-                            combined_pdf_writer.addPage(page)
-                    except:
-                        raise ValidationError(
-                            _( 'The document %s on the requirement %s is not available. Please convert to PDF/A.' ) % ( attachment.name, rec.name )
-                        )
+
+                        pdf_writer.write(temp_output)
+                        temp_output.seek(0)
+
+                        # Leer el PDF con marca de agua y agregarlo al combinado
+                        marked_pdf_reader = PyPDF2.PdfFileReader(temp_output)
+                        for page_num in range(marked_pdf_reader.numPages):
+                            combined_pdf_writer.addPage(marked_pdf_reader.getPage(page_num))
+
+                    except PdfReadError as e:
+                        _logger.error("Error reading PDF %s: %s", attachment.name, str(e))
+                        raise ValidationError(_(
+                            'The document %s on the record #%s could not be read. Please convert to PDF/A format.'
+                        ) % (attachment.name, rec.display_name or rec.id))
+
+                    except Exception as e:
+                        _logger.exception("Unexpected error processing PDF %s", attachment.name)
+                        raise ValidationError(_(
+                            'The document %s on the record #%s is not available. Please convert to PDF/A. Error: %s'
+                        ) % (attachment.name, rec.display_name or rec.id, str(e)))
+
         output_pdf = io.BytesIO()
         combined_pdf_writer.write(output_pdf)
         output_pdf.seek(0)
+
         combined_pdf_attachment = self.env['ir.attachment'].create({
             'name': 'Invoices',
             'datas': base64.b64encode(output_pdf.read()),
             'type': 'binary',
             'mimetype': 'application/pdf',
         })
+
         return {
             'type': 'ir.actions.act_url',
             'url': '/web/content/%s?download=true' % combined_pdf_attachment.id,
@@ -285,12 +318,13 @@ class Settlement(models.Model):
         }
 
 
-    def _create_watermark_page(self, subdiary, voucher_number):
+    def _create_watermark_page(self, subdiary, voucher_number, cost_center_id):
         packet = io.BytesIO()
         can = canvas.Canvas(packet, pagesize=letter)
         can.setFontSize(12)
         can.setFillColor('Green')
         can.drawString(10, 5, '%s | %s' % (subdiary, voucher_number) )
+        can.drawString(500, 5, 'CC: %s' % (cost_center_id.code or ''))
         can.save()
         packet.seek(0)
         return PyPDF2.PdfFileReader(packet).getPage(0)
@@ -353,7 +387,14 @@ class Settlement(models.Model):
     def validation_voucher(self):
         for rec in self:
             if rec.document_type_id.short_name == 'FT':
-                cpe_data = apiperu_cpe(rec.dni_ruc, '01', (rec.document.split('-')[0]).upper(), rec.document.split('-')[1].lstrip('0'), rec.date.strftime("%Y-%m-%d"), rec.settle_amount)
+                cpe_data = apiperu_cpe(
+                    rec.dni_ruc, 
+                    '01', 
+                    (rec.document.split('-')[0]).upper(), 
+                    rec.document.split('-')[1].lstrip('0'), 
+                    rec.date.strftime("%Y-%m-%d"), 
+                    rec.settle_amount
+                )
                 if cpe_data and cpe_data.get('data'):
                     cpe_data_detail = cpe_data['data']
                     if cpe_data_detail and 'comprobante_estado_codigo' in cpe_data_detail:
@@ -361,10 +402,16 @@ class Settlement(models.Model):
                             rec.cpe_state = 'accepted'
                         else:
                             rec.cpe_state = 'non_existent'
+                        
+                        # Asignar el estado de la empresa como texto
+                        if 'empresa_estado_descripcion' in cpe_data_detail:
+                            rec.cpe_company_state = cpe_data_detail['empresa_estado_descripcion']
                     else:
                         rec.cpe_state = 'failed'
+                        rec.cpe_company_state = 'Desconocido'  # Valor predeterminado si no hay estado de empresa
                 else:
                     rec.cpe_state = 'failed'
+                    rec.cpe_company_state = 'Desconocido'  # Valor predeterminado si no hay datos de la API
 
 
     @api.onchange('exchange_type_date')

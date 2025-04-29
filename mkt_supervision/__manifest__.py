@@ -5,7 +5,7 @@
     'description': 'Módulo para supervisar',
     'category': 'Human Resources',
     'author': 'Israel Santana',
-    'depends': ['base', 'hr_attendance', 'report_xlsx', 'stock', 'hr_attendance_geolocation'],
+    'depends': ['base', 'hr_attendance', 'report_xlsx', 'stock', 'hr_attendance_geolocation', 'hr'],
     'data': [
         'security/supervision_security.xml',
         'security/ir.model.access.csv',

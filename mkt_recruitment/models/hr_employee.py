@@ -25,3 +25,13 @@ class HrEmployeePrivate(models.Model):
                 # _logger.info('\n\n\n ingreso: %s \n\n\n', 1)
                 rec.address_home_id = rec.env['res.partner'].sudo().search([('id', '=', rec.user_id.partner_id.id)], limit=1)
                 rec.identification_id = rec.address_home_id.vat
+
+class HrEmployeePublic(models.Model):
+    _inherit = "hr.employee.public"
+
+    is_supervize_province = fields.Boolean(default=False, copy=False, string='Province to supervize')
+    cost_center_id = fields.Many2one(comodel_name='cost.center', string='Cost center')
+    is_back_office = fields.Boolean(default=False, string='Back Office')
+    is_duplicated = fields.Boolean(default=False, string='Is duplicated?')
+    is_validated = fields.Boolean(default=False, string='Esta validado?')
+    device_id = fields.Char(string='Biometric Device ID')
