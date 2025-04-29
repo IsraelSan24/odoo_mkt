@@ -16,7 +16,7 @@ class ApplicantPartner(http.Controller):
         districts = request.env['l10n_pe.res.city.district'].sudo().search([])
         nationalities = request.env['res.country'].sudo().search([('demonym','!=',False)])
         identifications = request.env['l10n_latam.identification.type'].sudo().search([
-            ('name', 'in', ('DNI', 'PTP', 'Pasaporte', 'Cédula Extranjera'))
+            ('name', 'in', ('DNI', 'PTP', 'Pasaporte', 'Cédula Extranjera', 'Carnet de Extranjeria'))
         ])
         values = {
             'countries': countries,
@@ -386,12 +386,12 @@ class RecruitmentPortal(portal.CustomerPortal):
     def portal_my_contracts(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
         values = self._prepare_portal_layout_values()
         partner = request.env.user.partner_id
-        ContractDocument = request.env['hr.contract'].sudo()        
+        ContractDocument = request.env['hr.contract'].sudo()
         domain = self._prepare_contracts_domain(partner)
         searchbar_sortings = self._get_contract_searchbar_sortings()
         if not sortby:
             sortby = 'date'
-        sort_contract = searchbar_sortings[sortby]['contract']        
+        sort_contract = searchbar_sortings[sortby]['contract']
         if date_begin and date_end:
             domain += [('create_date','>',date_begin),('create_date','<=',date_end)]
         contract_count = ContractDocument.search_count(domain)
@@ -456,6 +456,7 @@ class RecruitmentPortal(portal.CustomerPortal):
                 'contract_signature': signature,
                 'signature_state': 'signed',
             })
+            contract_sudo.with_context(from_signed_function=True).write({'state': 'signed'})
             contract_sudo.send_email_to_employee_signed()
             request.env.cr.commit()
         except (TypeError, binascii.Error) as e:

@@ -10,3 +10,6 @@ access_hr_contract_manager,hr.contract.manager,model_hr_contract,hr_contract.gro
 access_recruiter_team,access.recruiter.team,model_recruiter_team,,1,1,1,1
 access_summary_employees,access.summary.employees,model_summary_employees,,1,0,0,0
 access_imports,access.imports,model_imports,,1,1,1,1
+access_massive.contract.end,access.massive.contract.end,model_massive_contract_end,,1,1,1,0
+access_employee_verification_wizard,access.employee.verification.wizard,model_employee_verification_wizard,,1,1,1,0
+access_merge_employee_wizard,access.merge.employee.wizard,model_merge_employee_wizard,,1,1,1,1

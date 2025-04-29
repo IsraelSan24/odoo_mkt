@@ -9,6 +9,7 @@
     'license':'AGPL-3',
     'depends':[
         'hr_recruitment',
+        'hr_maintenance',
         'website_hr_recruitment',
         'portal',
         'utm',
@@ -24,7 +25,23 @@
         'security/ir_rule.xml',
         'security/ir.model.access.csv',
 
-	    'views/imports_views.xml',
+        'wizard/merge_employee_wizard.xml',
+        'wizard/hr_departure_wizard.xml',
+        'wizard/employee_verification_wizard.xml',
+
+        'data/ir_sequence.xml',
+        'data/config_data.xml',
+        'data/recruitment_data.xml',
+        'data/mail_template.xml',
+
+        'report/life_law_report.xml',
+        'report/recruitment_report_template.xml',
+        'report/paperformat.xml',
+        'report/contract_report.xml',
+        'report/ir_actions_report.xml',
+
+        'views/massive_contract_end.xml',
+        'views/hr_departure_reason.xml',
         'views/website_hr_recruitment_templates.xml',
         'views/recruitment_document_views.xml',
         'views/recruitment_portal_templates.xml',
@@ -47,18 +64,6 @@
         'views/customize_jobs_page.xml',
         'views/summary_employees_views.xml',
         'views/document_search_templates.xml',
-
-        'data/ir_sequence.xml',
-        'data/config_data.xml',
-        'data/recruitment_data.xml',
-        'data/mail_template.xml',
-
-        'report/life_law_report.xml',
-        'report/recruitment_report_template.xml',
-        'report/paperformat.xml',
-        'report/contract_report.xml',
-        'report/ir_actions_report.xml',
-
         'views/menu_views.xml'
     ],
     'assets':{

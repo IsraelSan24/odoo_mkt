@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_merge_employee_wizard_form" model="ir.ui.view">
+        <field name="name">merge.employee.wizard.form</field>
+        <field name="model">merge.employee.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Merge record">
+                <group>
+                    <field name="destination_id"/>
+                </group>
+                <footer>
+                    <button name="action_merge" string="Merge" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -23,14 +23,15 @@
         <field name="use_date_range">TRUE</field>
     </record>
 
-    <record id="contract_mass_sequence" model="ir.sequence">
-        <field name="name">Contract massive</field>
+    <record id="contract_massive_sequence" model="ir.sequence">
+        <field name="name">contract_massive</field>
         <field name="code">contract.mass</field>
         <field name="active">TRUE</field>
-        <field name="prefix">CM</field>
-        <field name="padding">6</field>
+        <field name="prefix">CM%(year)s-</field>
+        <field name="padding">7</field>
         <field name="number_next">1</field>
         <field name="number_increment">1</field>
+        <field name="use_date_range">TRUE</field>
     </record>
 
 </odoo>
