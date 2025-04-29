@@ -35,4 +35,3 @@ class HrEmployeePublic(models.Model):
     is_duplicated = fields.Boolean(default=False, string='Is duplicated?')
     is_validated = fields.Boolean(default=False, string='Esta validado?')
     device_id = fields.Char(string='Biometric Device ID')
-
