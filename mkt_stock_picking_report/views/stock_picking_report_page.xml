@@ -17,6 +17,7 @@
                                 <th>Description</th>
                                 <th>Unit</th>
                                 <th>Quantity</th>
+                                <th>Valor (s/)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -26,6 +27,7 @@
                                     <td><t t-esc="line.description_picking"/></td>
                                     <td><t t-esc="line.product_uom.with_context(lang='es_ES').name"/></td>
                                     <td><t t-esc="line.quantity_done"/></td>
+                                    <td><t t-esc="line.product_id.standard_price or 'N/A'"/></td>
                                 </tr>
                             </t>
                         </tbody>
