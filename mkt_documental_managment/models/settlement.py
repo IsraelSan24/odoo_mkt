@@ -32,7 +32,8 @@ payment_types = [
 
 document_currencies = [
         ('soles', 'Soles'),
-        ('dolares', 'Dolares')
+        ('dolares', 'Dolares'),
+        ('euros', 'Euros')
     ]
 
 def get_default_tax(self):

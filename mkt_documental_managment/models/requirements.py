@@ -690,6 +690,7 @@ class DocumentalRequirements(models.Model):
 
     def compute_settlement_total_lines(self):
         self._compute_settlement_total_lines()
+        self._onchange_repeated_settlement_document()
 
 
     def download_attach_files(self):
