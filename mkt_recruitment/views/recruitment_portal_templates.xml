@@ -13,7 +13,7 @@
 
     <template id="portal_my_home_menu_contract" name="Portal layout : contract" inherit_id="portal.portal_breadcrumbs" priority="31">
         <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
-            <li t-if="page_name == 'contract' or contract_document and contract_document.state in ('draft','open')" t-attf-class="breadcrumb-item #{'active'}">
+            <li t-if="page_name == 'contract' or contract_document and contract_document.state in ('draft','signed','open')" t-attf-class="breadcrumb-item #{'active'}">
                 <a t-if="contract_document" t-attf-href="/my/contracts?{{ keep_query() }}">Contract Documents</a>
                 <t t-else="">Contract Documents</t>
             </li>

@@ -124,7 +124,6 @@ class RecruitmentPortal(portal.CustomerPortal):
         return [
             ('employee_id','=',employee.id),
             ('employee_id','!=',False),
-            ('state','in',('draft','open')),
             ('is_sended','=',True),
         ]
 

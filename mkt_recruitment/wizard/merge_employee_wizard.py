@@ -8,13 +8,14 @@ class MergeEmployeeWizard(models.TransientModel):
     _description = 'Merge partner records'
 
     destination_id = fields.Many2one(comodel_name='hr.employee', string="Destiny record", required=True, domain=lambda self: self.env.context.get('destination_domain', []))
-
     source_id = fields.Many2one('hr.employee', string='Merge Record')
+    employee_ids = fields.Many2many('hr.employee')
 
 
     # _logger.info('\n\n\n --------------------------onChange01--------------------------: %s \n\n\n', 1)
     @api.onchange('destination_id')
     def on_change_source(self):
+        self.employee_ids = self.env.context.get('active_ids', [])
         active_ids = self.env.context.get('active_ids', [])
         if self.destination_id.id == active_ids[0]:
             self.source_id = active_ids[1]

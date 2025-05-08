@@ -14,7 +14,7 @@ class HrEmployeePrivate(models.Model):
     # massive_contract_end_id = fields.Many2one(comodel_name='massive.contract.end', string='Ceses')
 
 
-    @api.onchange('address_home_id','cost_center_id','user_id')
+    @api.onchange('address_home_id','cost_center_id')
     def identification_id_onchange(self):
         for rec in self:
             if rec.address_home_id:
@@ -25,6 +25,17 @@ class HrEmployeePrivate(models.Model):
                 # _logger.info('\n\n\n ingreso: %s \n\n\n', 1)
                 rec.address_home_id = rec.env['res.partner'].sudo().search([('id', '=', rec.user_id.partner_id.id)], limit=1)
                 rec.identification_id = rec.address_home_id.vat
+
+
+    def name_get(self):
+        result = []
+        show_id_in_name = self.env.context.get('show_id_in_name', False)
+        for record in self:
+            name = record.name
+            if show_id_in_name and record.id:
+                name = f"{name} ({record.id})"
+            result.append((record.id, name))
+        return result
 
 class HrEmployeePublic(models.Model):
     _inherit = "hr.employee.public"

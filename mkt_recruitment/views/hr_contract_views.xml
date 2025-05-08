@@ -13,7 +13,6 @@
                 <header>
                     <button string="Update contract" name="write_data" type="object" class="oe_highlight"/>
                     <button string="Employer's massive signature" name="button_employer_signature" type="object" class="oe_highlight"/>
-                    <button string="Corregir una unica ves" name="button_signature_employer_state" type="object" class="oe_highlight"/>
                 </header>
             </xpath>
             <xpath expr="//field[@name='state']" position="after">
@@ -142,7 +141,7 @@
                 <button name="button_employer_signature" type="object" class="oe_highlight"
                     attrs="{'invisible':['|',('state','!=','signed'),('signed_by_employer','=',True)]}" string="Employer signature"/>
                 <button name="button_refuse" type="object" class="oe_highlight"
-                    attrs="{'invisible':[('state','!=','open')]}" string="Refuse"
+                    attrs="{'invisible': [('state', 'not in', ['open', 'signed'])]}" string="Refuse"
                     confirm="Please confirm to cancel the contract"/>
             </xpath>
         </field>
