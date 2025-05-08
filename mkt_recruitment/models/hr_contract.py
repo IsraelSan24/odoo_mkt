@@ -324,8 +324,6 @@ class Contract(models.Model):
         fecha_referencia = date(2025, 4, 22)
         for rec in self:
             if rec.state == 'draft' and isinstance(rec.contract_signature, bytes) and not isinstance(rec.employer_signature, bytes) and rec.date_start < fecha_referencia and rec.date_end > fecha_referencia:
-                _logger.info('\n\n\n --------------------------rec.contract_signature--------------------------: %s \n\n\n', rec.contract_signature)
-                _logger.info('\n\n\n --------------------------ingresooooooo--------------------------: %s \n\n\n', 1)
                 rec.state = 'signed'
 
 
@@ -333,7 +331,7 @@ class Contract(models.Model):
         for rec in self:
             if rec.signature_employer_state == 'to_sign':
                 rec.signature_employer_state = 'signed'
-                if rec.state == 'draft':
+                if rec.state == 'signed':
                     rec.state = 'open'
                 rec.signed_by_employer = True
                 rec.employer_signature = rec.employer_signature_id.signature

@@ -7,10 +7,27 @@
         <field name="arch" type="xml">
             <form string="Merge record">
                 <group>
-                    <field name="destination_id"/>
+                    <field name="destination_id" string="Destiny record" context="{'show_id_in_name': True}"/>
+                </group>
+                <group>
+                    <field name="employee_ids" nolabel="1">
+                        <tree>
+                            <field name="id"/>
+                            <field name="name"/>
+                            <field name="job_title"/>
+                            <field name="job_id"/>
+                            <field name="contract_id"/>
+                            <field name="address_home_id"/>
+                            <field name="user_id"/>
+                            <field name="cost_center_id" optional="hide"/>
+                            <field name="department_id" optional="hide"/>
+                            <field name="parent_id" optional="hide"/>
+                        </tree>
+                    </field>
                 </group>
                 <footer>
                     <button name="action_merge" string="Merge" type="object" class="btn-primary"/>
+                    <!-- <button name="action_merge" string="Merge" type="object" class="btn-primary" context="{'partner_show_db_id': True}"/> -->
                     <button string="Cancel" special="cancel"/>
                 </footer>
             </form>
@@ -18,3 +35,4 @@
     </record>
 
 </odoo>
+ 
