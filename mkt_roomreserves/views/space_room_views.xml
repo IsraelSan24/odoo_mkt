@@ -2,11 +2,11 @@
     <record id="view_space_room_tree" model="ir.ui.view">
         <field name="model">space.room</field>
         <field name="arch" type="xml">
-            <tree decoration-bf="is_active == False">
+            <tree decoration-bf="active == False">
                 <field name="name" string="Room"/>
                 <field name="floor" string="Floor"/>
                 <field name="capacity" string="Capacity"/>
-                <field name="is_active" string="Active" widget="boolean_toggle"/>
+                <field name="active" string="Active" widget="boolean_toggle"/>
             </tree>
         </field>
     </record>
@@ -21,7 +21,7 @@
                         <field name="description" string="Description" widget="text"/>
                         <field name="floor" string="Floor"/>
                         <field name="capacity" string="Capacity"/>
-                        <field name="is_active" string="Active" widget="boolean_toggle"/>
+                        <field name="active" string="Active" widget="boolean_toggle"/>
                     </group>
 
                     <!-- Agregar los ítems disponibles para la sala -->
@@ -35,6 +35,19 @@
 
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record id="view_space_room_search" model="ir.ui.view">
+        <field name="name">space.room.search</field>
+        <field name="model">space.room</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="floor"/>
+                <filter name="archived" string="Archivados" domain="[('active', '=', False)]"/>
+                <filter name="active" string="Activos" domain="[('active', '=', True)]"/>
+            </search>
         </field>
     </record>
 </odoo>

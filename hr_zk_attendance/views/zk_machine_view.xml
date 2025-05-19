@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="view_hr_employee_tree_sync_device_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.tree.inherit.sync.device</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <button name="sync_device_ids"
+                        string="Sync Device IDs"
+                        type="object"
+                        class="oe_highlight"
+                        icon="fa-refresh"/>
+            </xpath>
+        </field>
+    </record>
     <record id="view_zk_machine_form" model="ir.ui.view">
         <field name="name">zk.machine.form</field>
         <field name="model">zk.machine</field>

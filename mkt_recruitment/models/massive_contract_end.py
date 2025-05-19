@@ -82,7 +82,7 @@ class MassiveContractEnd(models.Model):
             motive = str(row['Motivo_Fin_Per_Lab_Id']).lstrip('0')
             employees = self.env['hr.employee'].search([('identification_id', '=', nro_Doc)])
             departure_reason = self.env['hr.departure.reason'].search([('motive_number', '=', motive)])
-            if departure_reason:
+            if not departure_reason:
                 raise UserError(_('El número de motivo de salida del DNI %s no esta registrado en el sistema.') % (nro_Doc))
             # Revizar si existe y en caso no que salte un UserError
             # Tambien debemos revizar una forma en la que no concidere las filas completamente en blancoo sea, si los tres campos estan vacios o por lo menos con el valor de una casilla vacia que podria ser 1.0?

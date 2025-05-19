@@ -24,6 +24,8 @@ import sys
 import datetime
 import logging
 import binascii
+from datetime import datetime, time
+from collections import defaultdict
 
 from . import zklib
 from .zkconst import *
@@ -43,7 +45,11 @@ _logger = logging.getLogger(__name__)
 class HrAttendance(models.Model):
     _inherit = 'hr.attendance'
 
-    device_id = fields.Char(string='Biometric Device ID')
+    device_id = fields.Char(
+        string='Biometric Device ID',
+        related='employee_id.device_id',
+        store=True,
+    )
 
 
 class ZkMachine(models.Model):
@@ -116,93 +122,89 @@ class ZkMachine(models.Model):
         machines = self.env['zk.machine'].search([])
         for machine in machines :
             machine.download_attendance()
-        
+
     def download_attendance(self):
-        _logger.info("++++++++++++Cron Executed++++++++++++++++++++++")
+        _logger.info("++++++++++++ Cron Executed ++++++++++++++++")
         zk_attendance = self.env['zk.machine.attendance']
-        att_obj = self.env['hr.attendance']
+        att_obj       = self.env['hr.attendance']
+
+        tz_local = pytz.timezone(self.env.user.partner_id.tz or 'GMT')
+
         for info in self:
-            machine_ip = info.name
-            zk_port = info.port_no
-            timeout = 15
+            # 1) Conectar al dispositivo
             try:
-                zk = ZK(machine_ip, port=zk_port, timeout=timeout, password=0, force_udp=False, ommit_ping=False)
+                zk = ZK(info.name, port=info.port_no, timeout=15,
+                    password=0, force_udp=False, ommit_ping=False)
             except NameError:
                 raise UserError(_("Pyzk module not Found. Please install it with 'pip3 install pyzk'."))
             conn = self.device_connect(zk)
-            if conn:
-                # conn.disable_device() #Device Cannot be used during this time.
-                try:
-                    user = conn.get_users()
-                except:
-                    user = False
-                try:
-                    attendance = conn.get_attendance()
-                except:
-                    attendance = False
-                if attendance:
-                    for each in attendance:
-                        atten_time = each.timestamp
-                        atten_time = datetime.strptime(atten_time.strftime('%Y-%m-%d %H:%M:%S'), '%Y-%m-%d %H:%M:%S')
-                        local_tz = pytz.timezone(
-                            self.env.user.partner_id.tz or 'GMT')
-                        local_dt = local_tz.localize(atten_time, is_dst=None)
-                        utc_dt = local_dt.astimezone(pytz.utc)
-                        utc_dt = utc_dt.strftime("%Y-%m-%d %H:%M:%S")
-                        atten_time = datetime.strptime(
-                            utc_dt, "%Y-%m-%d %H:%M:%S")
-                        atten_time = fields.Datetime.to_string(atten_time)
-                        if user:
-                            for uid in user:
-                                if uid.user_id == each.user_id:
-                                    get_user_id = self.env['hr.employee'].search(
-                                        [('device_id', '=', each.user_id)])
-                                    if get_user_id:
-                                        duplicate_atten_ids = zk_attendance.search(
-                                            [('device_id', '=', each.user_id), ('punching_time', '=', atten_time)])
-                                        if duplicate_atten_ids:
-                                            continue
-                                        else:
-                                            zk_attendance.create({'employee_id': get_user_id.id,
-                                                                  'device_id': each.user_id,
-                                                                  'attendance_type': str(each.status),
-                                                                  'punch_type': str(each.punch),
-                                                                  'punching_time': atten_time,
-                                                                  'address_id': info.address_id.id})
-                                            att_var = att_obj.search([('employee_id', '=', get_user_id.id),
-                                                                      ('check_out', '=', False)])
-                                            print('ddfcd', str(each.status))
-                                            if each.punch == 0: #check-in
-                                                if not att_var:
-                                                    att_obj.create({'employee_id': get_user_id.id,
-                                                                    'check_in': atten_time})
-                                            if each.punch == 1: #check-out
-                                                if len(att_var) == 1:
-                                                    att_var.write({'check_out': atten_time})
-                                                else:
-                                                    att_var1 = att_obj.search([('employee_id', '=', get_user_id.id)])
-                                                    if att_var1:
-                                                        att_var1[-1].write({'check_out': atten_time})
+            if not conn:
+                raise UserError(_('Unable to connect, please check parameters and network.'))
 
-                                    else:
-                                        print('ddfcd', str(each.status))
-                                        print('user', uid.name)
-                                        employee = self.env['hr.employee'].create(
-                                            {'device_id': each.user_id, 'name': uid.name})
-                                        zk_attendance.create({'employee_id': employee.id,
-                                                              'device_id': each.user_id,
-                                                              'attendance_type': str(each.status),
-                                                              'punch_type': str(each.punch),
-                                                              'punching_time': atten_time,
-                                                              'address_id': info.address_id.id})
-                                        att_obj.create({'employee_id': employee.id,
-                                                        'check_in': atten_time})
-                                else:
-                                    pass
-                    # zk.enableDevice()
-                    conn.disconnect
-                    return True
+            # 2) Leer marcaciones
+            try:
+                raw_att = conn.get_attendance() or []
+            except:
+                raw_att = []
+            if not raw_att:
+                raise UserError(_('Unable to get the attendance log, please try again.'))
+
+            # 3) Agrupar por empleado y fecha local
+            grouped = defaultdict(list)
+            for rec in raw_att:
+                grouped[(rec.user_id, rec.timestamp.date())].append(rec.timestamp)
+
+            # 4) Helper: local_to_utc_naive
+            def to_utc_naive(dt_local):
+                aware = tz_local.localize(dt_local, is_dst=None)
+                utc_dt = aware.astimezone(pytz.utc)
+                return utc_dt.replace(tzinfo=None)
+
+            # 5) Procesar cada grupo diario
+            for (device_id, day), timestamps in grouped.items():
+                timestamps.sort()
+                dt_in  = timestamps[0]
+                dt_out = timestamps[-1]
+                if dt_in == dt_out:
+                    dt_out = datetime.combine(day, time(23, 59))
+
+                in_naive  = to_utc_naive(dt_in)
+                out_naive = to_utc_naive(dt_out)
+
+                in_str  = fields.Datetime.to_string(in_naive)
+                out_str = fields.Datetime.to_string(out_naive)
+
+                # 6) Buscar empleado en Odoo
+                emp = self.env['hr.employee'].search([('device_id','=',device_id)], limit=1)
+                if not emp:
+                    _logger.warning("Empleado %s no existe; omitiendo.", device_id)
+                    continue
+
+                # 7) Calcular inicio/fin del día en UTC naive
+                #    - 00:00 local -> UTC-naive
+                #    - 23:59:59 local -> UTC-naive
+                local_start = datetime.combine(day, time(0,0))
+                local_end   = datetime.combine(day, time(23,59,59))
+                start_utc   = to_utc_naive(local_start)
+                end_utc     = to_utc_naive(local_end)
+
+                # 8) Crear o actualizar hr.attendance
+                existing = att_obj.search([
+                    ('employee_id','=', emp.id),
+                    ('check_in','>=', start_utc),
+                    ('check_in','<=', end_utc),
+                ], limit=1)
+
+                vals = {
+                    'employee_id': emp.id,
+                    'check_in':    in_str,
+                    'check_out':   out_str if out_naive > in_naive else False,
+                }
+                if existing:
+                    existing.write(vals)
                 else:
-                    raise UserError(_('Unable to get the attendance log, please try again later.'))
-            else:
-                raise UserError(_('Unable to connect, please check the parameters and network connections.'))
+                    att_obj.create(vals)
+
+            conn.disconnect()
+
+        return True
