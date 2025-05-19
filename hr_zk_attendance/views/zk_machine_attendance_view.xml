@@ -30,11 +30,11 @@
     <record id="view_zk_report_daily_attendance_search" model="ir.ui.view">
         <field name="name">zk.report.daily.attendance.search</field>
         <field name="model">zk.report.daily.attendance</field>
-        <field name="arch" type="xml" >
+        <field name="arch" type="xml">
             <search string="Hr Attendance Search">
                 <filter icon="terp-stock_align_left_24" string="My Attendance" name="my_attendance" domain="[('name.user_id.id', '=', uid)]" />
-                <filter name="today" string="Today" domain="[('punching_time', '&gt;=', datetime.datetime.now().replace(hour=0, minute=0, second=0)),('punching_time', '&lt;=', datetime.datetime.now().replace(hour=23, minute=59, second=59))]" />
-                <filter string="Current Month" name="month" domain="[('punching_time', '&gt;=', datetime.datetime.now().strftime('%Y-%m-01'))]" />
+                <filter name="today" string="Today" domain="[('punching_time', '&gt;=', datetime.datetime.now().replace(hour=0, minute=0, second=0)), ('punching_time', '&lt;=', datetime.datetime.now().replace(hour=23, minute=59, second=59))]" />
+                <filter string="Current Month" name="month" domain="[('punching_time', '>=', (context_today()).strftime('%Y-%m-01'))]" />
                 <separator/>
                 <field name="name" string="Name"/>
             </search>

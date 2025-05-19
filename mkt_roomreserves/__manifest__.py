@@ -4,7 +4,7 @@
     'category': 'Operations',
     'icon': '/mkt_roomreserves/static/description/icon.png',
     'summary': 'Module for scheduling and reservation of spaces',
-    'depends': ['base', 'mail', 'website'],
+    'depends': ['base', 'mail', 'website','mkt_supervision'],
     'data': [
         'security/space_security.xml',
         'security/ir.model.access.csv',

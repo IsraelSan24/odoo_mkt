@@ -8,7 +8,7 @@ class SpaceRoom(models.Model):
     description = fields.Text(string='Description')
     floor = fields.Integer(string='Floor')
     capacity = fields.Integer(string='Capacity')
-    is_active = fields.Boolean(string='Active', default=True)
+    active = fields.Boolean(string='Active', default=True)
     item_ids = fields.Many2many('space.booking.item', 'room_item_rel', 'room_id', 'item_id', string="Available Items")
 
 
