@@ -51,24 +51,25 @@ class RequirementReport(models.TransientModel):
         ws.set_column('E:E', 45.29)
         ws.set_column('F:F', 19.14)
         ws.set_column('G:G', 15.86)
-        ws.set_column('H:H', 10.86)
-        ws.set_column('I:I', 23.29)
-        ws.set_column('J:J', 16)
+        ws.set_column('H:H', 20)
+        ws.set_column('I:I', 12)
+        ws.set_column('J:J', 20)
         ws.set_column('K:K', 20)
         ws.set_column('L:L', 14.86)
-        ws.set_column('M:M', 33)
-        ws.set_column('N:N', 18.86)
-        ws.set_column('O:O', 15.43)
+        ws.set_column('M:M', 14)
+        ws.set_column('N:N', 25)
+        ws.set_column('O:O', 19)
         ws.set_column('P:P', 16.29)
         ws.set_column('Q:Q', 16.43)
         ws.set_column('R:R', 18)
         ws.set_column('S:S', 13.86)
-        ws.set_column('T:T', 52.29)
-        ws.set_column('U:U', 24.86)
+        ws.set_column('T:T', 14)
+        ws.set_column('U:U', 45)
         ws.set_column('V:V', 20)
         ws.set_column('W:W', 22.43)
         ws.set_column('X:X', 18.71)
         ws.set_column('Y:Y', 18.86)
+        ws.set_column('Z:Z', 18.86)
         ws.freeze_panes(2, 1)
 
         style1 = {
@@ -123,6 +124,14 @@ class RequirementReport(models.TransientModel):
             'bold':True,
             'align': 'center',
         }
+        style8 = {
+            'font_color':'#000000',
+            'bg_color':'#FFFFFF',
+            'align':'center',
+            'border':1,
+            'bold':True,
+            'num_format':'dd/mm/yy',
+        }
 
         stl1 = workbook.add_format(style1)
         stl2 = workbook.add_format(style2)
@@ -131,6 +140,7 @@ class RequirementReport(models.TransientModel):
         stl5 = workbook.add_format(style5)
         stl6 = workbook.add_format(style6)
         stl7 = workbook.add_format(style7)
+        stl8 = workbook.add_format(style8)
 
         ws.write('A2:A2', _('RQ N°'), stl1)
         ws.write('B2:B2', _('BUDGET N°'), stl1)
@@ -164,7 +174,14 @@ class RequirementReport(models.TransientModel):
         records = self._get_query()
         row = 2
         line_aux = False
+        line_aux = None
         for line in records:
+            # EXTRAEMOS LOS ARRAYS al inicio del loop
+            payments   = line.get('payment_dates')      or []
+            operations = line.get('operation_numbers')  or []
+            amounts    = line.get('payment_amounts')    or []
+            total_payments = len(payments)
+
             if line_aux != line['requirement']:
                 total_lines = line['settlement_lines'] or 0
                 ws.write(row, 0, line['requirement'], stl3)
@@ -187,16 +204,49 @@ class RequirementReport(models.TransientModel):
                 ws.write(row, 17, line['settlement_detraction'], stl5)
                 ws.write(row, 18, line['settlement_amount'], stl5)
                 if total_lines == 0:
-                    ws.write_formula(row, 19, '=SUM(R%s:R%s)' % ( ( row + 1 ), ( row + 1 ) ), stl5)
+                    ws.write_formula(row, 19, '=SUM(R%s:R%s)' % ((row + 1), (row + 1)), stl5)
                 else:
-                    ws.write_formula(row, 19, '=SUM(R%s:R%s)' % ( ( row + 1 ), ( row + 1 ) + total_lines - 1 ), stl5)
+                    ws.write_formula(row, 19, '=SUM(R%s:R%s)' % ((row + 1), (row + 1) + total_lines - 1), stl5)
                 ws.write(row, 20, line['responsible'], stl5)
-                ws.write(row, 21, '=S%s-I%s' % ( ( row + 1 ), ( row + 1 ) ), stl5)
+                ws.write(row, 21, '=S%s-I%s' % ((row + 1), (row + 1)), stl5)
                 ws.write(row, 22, '', stl5)
                 ws.write(row, 23, line['payroll'], stl5)
                 ws.write(row, 24, self.change_state_name(line['requirement_state']), stl3)
                 ws.write(row, 25, self.change_state_name(line['settlement_state']), stl3)
                 row += 1
+
+                # ——— AQUÍ insertamos las filas hijas para pagos adicionales (>1) ———
+                if total_payments > 1:
+                    for i in range(1, total_payments):
+                        ws.write(row, 0, line['requirement'], stl7)
+                        ws.write(row, 1, line['budget'], stl7)
+                        ws.write(row, 2, line['cost_center'], stl7)
+                        ws.write(row, 3, line['supplier'], stl7)
+                        ws.write(row, 4, line['concept'], stl7)
+                        ws.write(row, 5, line['province_paid_to'], stl7)
+
+                        # Usamos el i-ésimo pago
+                        ws.write(row, 6, payments[i],             stl8)
+                        ws.write(row, 7, operations[i] if i < len(operations) else '', stl7)
+                        ws.write(row, 8, line['currency'],                       stl7)
+                        ws.write(row, 9,  '',                          stl7)
+                        ws.write(row, 10, '',                          stl7)
+                        ws.write(row, 11, '',                          stl7)
+                        ws.write(row, 12, amounts[i] if i < len(amounts) else '', stl7)
+
+                        # dejamos settlement en blanco
+                        for c in range(13, 19):
+                            ws.write(row, c, '', stl6)
+
+                        ws.write(row, 19, '', stl6)
+                        ws.write(row, 20, line['responsible'], stl7)
+                        ws.write(row, 21, '', stl6)
+                        ws.write(row, 22, '', stl6)
+                        ws.write(row, 23, line['payroll'], stl6)
+                        ws.write(row, 24, '', stl3)
+                        ws.write(row, 25, '', stl3)
+                        row += 1
+
             else:
                 ws.write(row, 0, '', stl7)
                 ws.write(row, 1, '', stl7)
@@ -225,6 +275,7 @@ class RequirementReport(models.TransientModel):
                 ws.write(row, 24, self.change_state_name(line['requirement_state']), stl3)
                 ws.write(row, 25, self.change_state_name(line['requirement_state']), stl3)
                 row += 1
+
             line_aux = line['requirement']
 
 
@@ -237,49 +288,75 @@ class RequirementReport(models.TransientModel):
                 rp.name AS supplier,
                 dr.concept AS concept,
                 dr.province_paid_to AS province_paid_to,
-                COALESCE(dr.payment_date, rp_payment.payment_date) AS payment_date,
-                COALESCE(dr.operation_number, dr.check_number, rp_payment.operation_number) AS operation_number,
+
+                -- Primer payment_date si existe en requirement_payment, sino dr.payment_date
+                COALESCE(rp_pay.payment_dates[1], dr.payment_date) AS payment_date,
+
+                -- Primer operation_number
+                COALESCE(rp_pay.operation_numbers[1], dr.check_number, dr.operation_number) AS operation_number,
+
                 CASE
                     WHEN dr.amount_currency_type = 'soles' THEN 'S/'
                     WHEN dr.amount_currency_type = 'dolares' THEN '$$'
                 END AS currency,
+
+                -- Si hay >1 pago, tomo el primero; si no, monto normal
                 CASE
                     WHEN dr.amount_currency_type = 'soles' THEN dr.amount_soles
                     WHEN dr.amount_currency_type = 'dolares' THEN dr.amount_uss
                 END AS amount,
-                dr.total_retention AS retention,
-                dr.total_detraction AS detraction,
-                dr.to_pay_supplier AS vendor,
-                s.document AS document,
-                slt.name AS document_type,
-                s.vendor AS settlement_vendor,
-                s.retention AS settlement_retention,
-                s.detraction AS settlement_detraction,
-                s.settle_amount AS settlement_amount,
-                rp2.name AS responsible,
-                rpy.code AS payroll,
+
+                dr.total_retention   AS retention,
+                dr.total_detraction  AS detraction,
+                CASE
+                    WHEN COALESCE(rp_pay.payment_count, 0) > 1
+                        THEN rp_pay.payment_amounts[1]
+                    ELSE dr.to_pay_supplier
+                END AS vendor,
+                s.document           AS document,
+                slt.name             AS document_type,
+                s.vendor             AS settlement_vendor,
+                s.retention          AS settlement_retention,
+                s.detraction         AS settlement_detraction,
+                s.settle_amount      AS settlement_amount,
+                rp2.name             AS responsible,
+                rpy.code             AS payroll,
                 dr.settlement_administration_signed_on AS settlement_date,
                 dr.requirement_state AS requirement_state,
-                dr.settlement_state AS settlement_state,
-                dr.settlement_total_lines AS settlement_lines
+                dr.settlement_state  AS settlement_state,
+                dr.settlement_total_lines  AS settlement_lines,
+
+                -- Arrays completos para tu Python
+                rp_pay.payment_count,
+                rp_pay.payment_dates,
+                rp_pay.operation_numbers,
+                rp_pay.payment_amounts
+
             FROM documental_requirements AS dr
-            LEFT JOIN budget AS b ON b.id = dr.budget_id
-            LEFT JOIN cost_center AS cc ON cc.id = b.cost_center_id
-            LEFT JOIN res_partner AS rp ON rp.id = dr.paid_to
-            LEFT JOIN settlement AS s ON dr.id = s.requirement_id
+            LEFT JOIN budget           AS b   ON b.id   = dr.budget_id
+            LEFT JOIN cost_center     AS cc  ON cc.id  = b.cost_center_id
+            LEFT JOIN res_partner     AS rp  ON rp.id  = dr.paid_to
+            LEFT JOIN settlement      AS s   ON s.requirement_id = dr.id
             LEFT JOIN settlement_line_type AS slt ON slt.id = s.document_type_id
-            LEFT JOIN res_users AS ru ON ru.id = dr.full_name
-            LEFT JOIN res_partner AS rp2 ON rp2.id = ru.partner_id
+            LEFT JOIN res_users       AS ru  ON ru.id  = dr.full_name
+            LEFT JOIN res_partner     AS rp2 ON rp2.id = ru.partner_id
             LEFT JOIN requirement_payroll AS rpy ON rpy.id = dr.requirement_payroll_id
+
             LEFT JOIN (
-                SELECT requirement_id, 
-                    MIN(payment_date) AS payment_date, 
-                    MIN(operation_number) AS operation_number  -- Agregamos operation_number
-                FROM requirement_payment 
+                SELECT
+                    requirement_id,
+                    COUNT(*)                         AS payment_count,
+                    array_agg(payment_date  ORDER BY payment_date)       AS payment_dates,
+                    array_agg(operation_number  ORDER BY payment_date)   AS operation_numbers,
+                    array_agg(amount         ORDER BY payment_date)      AS payment_amounts
+                FROM requirement_payment
                 GROUP BY requirement_id
-            ) rp_payment ON rp_payment.requirement_id = dr.id
-            WHERE 
-                (dr.payment_date IS NOT NULL OR rp_payment.payment_date IS NOT NULL)
+            ) rp_pay ON rp_pay.requirement_id = dr.id
+
+            WHERE
+                dr.payment_date IS NOT NULL
+                OR rp_pay.payment_dates[1] IS NOT NULL
+
             ORDER BY dr.name DESC;
         """
         self._cr.execute(query)

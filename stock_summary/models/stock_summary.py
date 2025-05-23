@@ -28,10 +28,10 @@ class StockSummary(models.Model):
         return {
             'name': _('Product Image'),
             'type': 'ir.actions.act_window',
-            'res_model': 'gallery',
+            'res_model': 'product.template',
             'view_mode': 'form',
-            'views': [(self.env.ref('mkt_gallery.view_gallery_form').id, 'form')],
-            'res_id': self.env['gallery'].search([('product_id','=',self.report_product_id.product_tmpl_id.id)]).id,
+            'views': [(self.env.ref('stock_summary.view_product_template_image_modal_form').id, 'form')],
+            'res_id': self.report_product_id.product_tmpl_id.id,
             'target': 'new',
         }
 
@@ -79,13 +79,8 @@ class StockSummary(models.Model):
                     AND sm.state = 'done'
                 ), 0) AS report_outgoing_qty,
                 sq.quantity AS report_stock,
-                CASE WHEN EXISTS (
-                    SELECT 1
-                    FROM gallery
-                    WHERE product_id = pt.id
-                ) THEN TRUE ELSE FALSE END AS report_photo_loaded
+                CASE WHEN ia.id IS NOT NULL THEN TRUE ELSE FALSE END AS report_photo_loaded
         """
-
         return select
 
 
@@ -95,13 +90,17 @@ class StockSummary(models.Model):
 
     def _join(self):
         join = """
-                INNER JOIN product_product AS pp ON pp.id= sq.product_id
-                INNER JOIN product_template AS pt ON pt.id = pp.product_tmpl_id
-                INNER JOIN product_category AS pc ON pc.id = pt.categ_id
-                INNER JOIN stock_location AS sl ON sl.id = sq.location_id
-                LEFT JOIN stock_production_lot AS spl ON spl.id = sq.lot_id
+            INNER JOIN product_product AS pp ON pp.id = sq.product_id
+            INNER JOIN product_template AS pt ON pt.id = pp.product_tmpl_id
+            INNER JOIN product_category AS pc ON pc.id = pt.categ_id
+            INNER JOIN stock_location AS sl ON sl.id = sq.location_id
+            LEFT JOIN stock_production_lot AS spl ON spl.id = sq.lot_id
+            LEFT JOIN ir_attachment AS ia ON ia.res_model = 'product.template'
+                AND ia.res_id = pt.id
+                AND ia.res_field = 'image_1920'
             WHERE pp.active = TRUE AND pt.active = TRUE
-            GROUP BY sq.id, pt.name, spl.name, spl.usage_status, pc.name, pt.detailed_type, sl.name, sq.quantity, pp.id, sl.id, pt.id
+            GROUP BY sq.id, pt.name, spl.name, spl.usage_status, pc.name,
+                    pt.detailed_type, sl.name, sq.quantity, pp.id, sl.id, pt.id, ia.id
             ORDER BY pt.name
         """
         return join

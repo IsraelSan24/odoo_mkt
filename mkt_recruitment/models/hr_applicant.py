@@ -1,4 +1,4 @@
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, Command
 from datetime import timedelta
 from odoo.exceptions import UserError
 from odoo.addons.mkt_recruitment.models.apiperu import apiperu_dni
@@ -72,6 +72,7 @@ class Applicant(models.Model):
         self.create_employee_by_stage()
         self.update_data_partner()
         self.access_portal_partner()
+        self.contact_merge_stage()
 
 
     def update_data_partner(self):
@@ -79,6 +80,28 @@ class Applicant(models.Model):
             applicant_partner = self.env['applicant.partner'].search([('dni','=',self.vat)], order='create_date desc')
             if applicant_partner and applicant_partner.state != 'uploaded':
                 applicant_partner.update_partner()
+
+
+    def contact_merge_stage(self):
+        if self.stage_id.contact_merge:
+            contact = self.env['res.partner'].search([('vat', '=', self.vat)], order='create_date asc')
+            if contact and len(contact) == 2:
+                # Asignar como destino el más reciente
+                partner_ids_sorted = [contact[0].id, contact[1].id]
+                dst_partner = contact[1]  # Más reciente
+
+                context = dict(self.env.context)
+                context.update({
+                    'active_model': 'res.partner',
+                    'active_ids': partner_ids_sorted,
+                })
+
+                contact_merge = self.env['base.partner.merge.automatic.wizard'].with_context(context).create({
+                    'partner_ids': [Command.set(partner_ids_sorted)],
+                    'dst_partner_id': dst_partner.id,
+                    'state': 'selection',
+                })
+                contact_merge.action_merge()
 
 
     def access_portal_partner(self):

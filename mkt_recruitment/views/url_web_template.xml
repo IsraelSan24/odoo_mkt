@@ -3072,10 +3072,10 @@
                                                         </div>
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
-                                                                <label for="children">Sons</label>
-                                                                <input type="number" name="children" class="form-control" id="children" min="0" value="0"/>
+                                                                <label for="birthday">Date of Birth</label>
+                                                                <input type="date" name="birthday" class="form-control" id="birthday" required="True"/>
                                                                 <div class="invalid-feedback">
-                                                                    Please, the number of Sons.
+                                                                    Please enter your date of birth.
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-md-6">
@@ -3092,13 +3092,6 @@
                                                         </div>
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
-                                                                <label for="birthday">Date of Birth</label>
-                                                                <input type="date" name="birthday" class="form-control" id="birthday" required="True"/>
-                                                                <div class="invalid-feedback">
-                                                                    Please enter your date of birth.
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-md-6">
                                                                 <label for="marital">Marital Status</label>
                                                                 <select name="marital" class="form-control" id="marital" required="True">
                                                                     <option value="">Select an option</option>
@@ -3112,20 +3105,20 @@
                                                                     Please select your marital status.
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-6">
-                                                                <label for="email">E-mail address</label>
-                                                                <input type="email" name="email" class="form-control" id="email" required="True"/>
-                                                                <div class="invalid-feedback">
-                                                                    Please enter a valid email address.
-                                                                </div>
-                                                            </div>
                                                             <div class="form-group col-md-6">
                                                                 <label for="phone">Phone Number</label>
                                                                 <input type="number" name="phone" class="form-control" id="phone"/>
                                                                 <div class="invalid-feedback">
                                                                     Please enter a valid phone number.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-12">
+                                                                <label for="email">E-mail address</label>
+                                                                <input type="email" name="email" class="form-control" id="email" required="True"/>
+                                                                <div class="invalid-feedback">
+                                                                    Please enter a valid email address.
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -3149,6 +3142,24 @@
                                                                     Please enter a valid phone number.
                                                                 </div>
                                                             </div>
+                                                            
+                                                            <div class="form-group col-md-6">
+                                                                <label for="emergency_contact_relationship">Relationship</label>
+                                                                <select name="emergency_contact_relationship" class="form-control" id="emergency_contact_relationship" required="True">
+                                                                    <option value="">Select an option</option>
+                                                                    <option value="Madre">Mother</option>
+                                                                    <option value="Padre">Father</option>
+                                                                    <option value="Hermano">Brother</option>
+                                                                    <option value="Hermana">Sister</option>
+                                                                    <option value="Esposo/a">Spouse</option>
+                                                                    <option value="Conviviente">Concubine</option>
+                                                                    <option value="Hijo">Son</option>
+                                                                    <option value="Hija">Daughter</option>
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    Please select the relationship of your emergency contact.
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4 align-content-center">
@@ -3157,7 +3168,7 @@
                                                 </div>
                                                 <div class="row mb-3 border border-info rounded-lg p-3">
                                                     <div class="col-lg-4 align-content-center">
-                                                        <img src="/mkt_recruitment/static/src/img/address.svg" alt="" class="img-fluid mx-auto d-block"/>
+                                                        <div id="map" style="height: 400px; width: 100%; border-radius: 10px;"></div>
                                                     </div>
                                                     <div class="col-lg-8">
                                                         <h2 class="font-weight-bold text-info">Address</h2>
@@ -3210,14 +3221,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-row">
-                                                            <div class="form-group col-md-6">
-                                                                <label for="zip">Zip/Postal Code</label>
-                                                                <input type="text" name="zip" class="form-control" id="zip"/>
-                                                                <div class="invalid-feedback">
-                                                                    Please enter your Zip Code.
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-md-6">
+                                                            <div class="form-group col-md-12">
                                                                 <label for="street">Address</label>
                                                                 <input type="text" name="street" class="form-control" id="street"/>
                                                                 <div class="invalid-feedback">
@@ -3288,12 +3292,32 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="row mb-3 border border-primary rounded-lg p-3 d-flex flex-column">
+                                                    <h2 class="text-center font-weight-bold text-info">Children</h2>
+                                                    <p class="text-center font-weight-bold text-body">You may add up to 6 children as dependents.</p>
+                                                    <div class="form-group">
+                                                        <label for="children">Number of children</label>
+                                                        <!-- <input type="number" name="children" class="form-control" id="children" min="0" max="6" value="0"/> -->
+                                                        <input type="number" name="children" class="form-control" id="children" min="0" max="6" value="0"/>
+                                                            <div class="invalid-feedback">
+                                                                Please, the number of Sons.
+                                                        </div>
+                                                    </div>
+                                                    <div id="childrenFields" class="col-md-12"></div>
+                                                </div>
+
                                                 <div class="row mb-3 border border-info rounded-lg p-3 d-flex flex-column">
                                                     <h2 class="text-center font-weight-bold text-info">First Beneficiaries</h2>
                                                     <p class="text-center font-weight-bold text-body">Spouse or children (In the absence of spouse, concubine may be named - Art 326°; Civil Code).</p>
                                                     <div class="form-group">
                                                         <label for="familyMembers">Number of family members</label>
                                                         <input type="number" class="form-control" id="familyMembers" oninput="validateInputfamily()" min="0" max="6" value="0"/>
+                                                        <button type="button" class="btn btn-outline-primary mb-3" id="copyChildrenToBeneficiaries">
+                                                            Copiar hijos como beneficiarios
+                                                        </button>
+                                                        <button type="button" class="btn btn-outline-success mb-3" id="addEmptyBeneficiary">
+                                                            Añadir beneficiario vacío
+                                                        </button>
                                                         <div class="invalid-feedback">
                                                             Please enter a valid number.
                                                         </div>
@@ -3326,6 +3350,10 @@
                                                                 <div class="form-check">
                                                                     <input type="radio" class="form-check-input radio-option" id="coming_from_onp" name="coming_from_onp" value="coming_from_onp" />
                                                                     <label class="form-check-label" for="coming_from_onp">Coming from the ONP</label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input type="radio" class="form-check-input radio-option" id="coming_from_afp" name="coming_from_afp" value="coming_from_afp" />
+                                                                    <label class="form-check-label" for="coming_from_afp">Coming from the AFP</label>
                                                                 </div>
                                                             </div>
                                                             <div class="invalid-feedback">
@@ -3562,6 +3590,7 @@
                                 </div>
                         </div>
                     </div> 
+                    <script t-att-src="'https://maps.googleapis.com/maps/api/js?key=AIzaSyA2vu6a58k4C62ludQRYhIbJov6dTrYLL8&amp;callback=initMap'" async="true" defer="true"/>
                 </t>
             </t>
         </field>

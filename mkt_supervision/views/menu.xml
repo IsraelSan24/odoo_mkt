@@ -59,7 +59,7 @@
         <field name="name">Mis Empleados</field>
         <field name="res_model">hr.employee</field>
         <field name="view_mode">kanban,tree,form</field>
-        <field name="domain">['|', ('parent_id.user_id', '=', uid), ('user_id', '=', uid)]</field>
+        <field name="domain">['|','|', ('parent_id.user_id', '=', uid), ('user_id', '=', uid), ('parent_id.parent_id.user_id', '=', uid)]</field>
     </record>
     <record id="action_attendance_under_supervision" model="ir.actions.act_window">
         <field name="name">Asistencias Equipo</field>

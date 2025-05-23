@@ -65,6 +65,7 @@ class MassiveContractEnd(models.Model):
             }
         }
 
+
     def massive_employee_terminations_xlsx(self):
         if not self.file_employees:
             raise UserError(_('No hay un archivo adjunto.'))
@@ -92,7 +93,7 @@ class MassiveContractEnd(models.Model):
                     'departure_reason_id': departure_reason.id,
                 }
                 departure_wizard_employee = self.env['hr.departure.wizard'].sudo().create(departure_wizard_employee_vals).sudo()
-                departure_wizard_employee.action_departure_employees()
+                departure_wizard_employee.with_context(toggle_active=True).action_departure_employees()
         return {
             'effect': {
                 'fadeout': 'fast',

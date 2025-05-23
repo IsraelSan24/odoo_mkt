@@ -11,6 +11,7 @@ class HrEmployeePrivate(models.Model):
     is_back_office = fields.Boolean(default=False, string='Back Office')
     is_duplicated = fields.Boolean(default=False, string='Is duplicated?')
     is_validated = fields.Boolean(default=False, string='Esta validado?')
+    is_province = fields.Boolean(default=False, string='Is province?')
     # massive_contract_end_id = fields.Many2one(comodel_name='massive.contract.end', string='Ceses')
 
 
@@ -21,6 +22,11 @@ class HrEmployeePrivate(models.Model):
                 if rec.address_home_id.vat:
                     rec.identification_id = rec.address_home_id.vat
                     rec.user_id = rec.env['res.users'].sudo().search([('partner_id', '=', rec.address_home_id.id)], limit=1)
+                if rec.address_home_id.city_id:
+                    if rec.address_home_id.city_id.name == 'Lima':
+                        rec.is_province = False
+                    else:
+                        rec.is_province = True
             elif rec.user_id:
                 # _logger.info('\n\n\n ingreso: %s \n\n\n', 1)
                 rec.address_home_id = rec.env['res.partner'].sudo().search([('id', '=', rec.user_id.partner_id.id)], limit=1)
@@ -46,3 +52,4 @@ class HrEmployeePublic(models.Model):
     is_duplicated = fields.Boolean(default=False, string='Is duplicated?')
     is_validated = fields.Boolean(default=False, string='Esta validado?')
     device_id = fields.Char(string='Biometric Device ID')
+    is_province = fields.Boolean(default=False, string='Is province?')

@@ -8,7 +8,6 @@
         'stock',
         'product',
         'mkt_report_formats',
-        'mkt_gallery',
         'mkt_serie_state',
         'mkt_supervision',
     ],

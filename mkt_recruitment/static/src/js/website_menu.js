@@ -14,86 +14,239 @@
   }, false);
 })();
 
-document.addEventListener('DOMContentLoaded', function() {
-  var familyMembersField = document.getElementById('familyMembers');
-  var familyMembersFields = document.getElementById('familyMembersFields');
+document.addEventListener('DOMContentLoaded', function () {
+  var childrenInput = document.getElementById('children');
+  var childrenFields = document.getElementById('childrenFields');
 
-  familyMembersField.addEventListener('input', function() {
-    var numFamilyMembers = parseInt(this.value);
-    familyMembersFields.innerHTML = '';
+  if (childrenInput && childrenFields) {
+    childrenInput.addEventListener('input', function () {
+      var numChildren = parseInt(this.value);
+      childrenFields.innerHTML = '';
 
-    for (var i = 0; i < numFamilyMembers; i++) {
-      var familyMemberField = document.createElement('div');
-      familyMemberField.classList.add('form-row', 'mb-3');
-      familyMemberField.innerHTML = `
-        
+      if (isNaN(numChildren) || numChildren < 0 || numChildren > 6) {
+        alert('Sólo se permiten números entre 0 y 6.');
+        this.value = '';
+        return;
+      }
+
+      for (var i = 0; i < numChildren; i++) {
+        var childField = document.createElement('div');
+        childField.classList.add('form-row', 'mb-3');
+
+        childField.innerHTML = `
           <div class="col-md-12">
-              <h3 class="font-weight-bold text-info">Familiar${i + 1}</h3>
+              <h3 class="font-weight-bold text-success">Hijo(a) ${i + 1}</h3>
           </div>
-          
+
           <div class="form-group col">
-              <label for="familiar_dni${i + 1}">DNI</label>
-              <input type="text" name="familiar_dni${i + 1}" id="familiar_dni${i + 1}" class="form-control" required="True"/>
-              <div class="invalid-feedback">
-                Por favor, ingrese su DNI.
-              </div>
+              <label for="child_dni${i + 1}">DNI</label>
+              <input type="text" name="child_dni${i + 1}" id="child_dni${i + 1}" class="form-control" required />
+              <div class="invalid-feedback">Por favor, ingrese su DNI.</div>
           </div>
+
           <div class="form-group col">
-              <label for="familiar_full_name${i + 1}">Name</label>
-              <input type="text" name="familiar_full_name${i + 1}" id="familiar_full_name${i + 1}" class="form-control" required="True"/>
-              <div class="invalid-feedback">
-                Por favor, ingrese su nombre.
-              </div>
+              <label for="child_full_name${i + 1}">Nombre</label>
+              <input type="text" name="child_full_name${i + 1}" id="child_full_name${i + 1}" class="form-control" required />
+              <div class="invalid-feedback">Por favor, ingrese su nombre.</div>
           </div>
+
           <div class="form-group col">
-              <label for="familiar_birthday${i + 1}">F. Nac</label>
-              <input type="date" name="familiar_birthday${i + 1}" class="form-control" id="familiar_birthday${i + 1}" required="True"/>
-              <div class="invalid-feedback">
-                Por favor, ingrese su fecha de nacimiento.
-              </div>
+              <label for="child_birthday${i + 1}">F. Nac</label>
+              <input type="date" name="child_birthday${i + 1}" id="child_birthday${i + 1}" class="form-control" required />
+              <div class="invalid-feedback">Por favor, ingrese su fecha de nacimiento.</div>
           </div>
+
           <div class="form-group col">
-              <label for="familiar_relationship${i + 1}">Parentesco</label>
-              <select class="form-control" name="familiar_relationship${i + 1}" id="familiar_relationship${i + 1}" required="True">
+              <label for="child_relationship${i + 1}">Parentesco</label>
+              <select class="form-control" name="child_relationship${i + 1}" id="child_relationship${i + 1}" required>
                   <option value="">Seleccione una opción</option>
-                  <option value="Esposo/a">Esposo(a)</option>
-                  <option value="Conviviente">Conviviente</option>
                   <option value="Hijo">Hijo</option>
                   <option value="Hija">Hija</option>
               </select>
-              <div class="invalid-feedback">
-                Por favor, seleccione un parentesco.
-              </div>
+              <div class="invalid-feedback">Por favor, seleccione un parentesco.</div>
           </div>
+
           <div class="form-group col">
-              <label for="familiar_gender${i + 1}">Género</label>
-              <select class="form-control" name="familiar_gender${i + 1}" id="familiar_gender${i + 1}" required="True">
+              <label for="child_gender${i + 1}">Género</label>
+              <select class="form-control" name="child_gender${i + 1}" id="child_gender${i + 1}" required>
                   <option value="">Seleccione una opción</option>
                   <option value="male">Masculino</option>
                   <option value="female">Femenino</option>
               </select>
-              <div class="invalid-feedback">
-                Por favor, seleccione un género.
-              </div>
+              <div class="invalid-feedback">Por favor, seleccione un género.</div>
           </div>
+
           <div class="form-group col">
-              <label for="familiar_address${i + 1}">Dirección</label>
-              <input type="text" name="familiar_address${i + 1}" class="form-control" id="familiar_address${i + 1}" required="True"/>
-              <div class="invalid-feedback">
-                Por favor, ingrese una dirección.
-              </div>
+              <label for="child_address${i + 1}">Dirección</label>
+              <input type="text" name="child_address${i + 1}" id="child_address${i + 1}" class="form-control" required />
+              <div class="invalid-feedback">Por favor, ingrese una dirección.</div>
           </div>
-          <div class="form-group col">
-              <label for="is_beneficiary${i + 1}">Beneficiario</label>
-              <input type="checkbox" name="is_beneficiary${i + 1}" class="form-control" id="is_beneficiary${i + 1}" checked/>
-          </div>
-          
-        
-      `;
-      familyMembersFields.appendChild(familyMemberField);
+
+        `;
+
+        childrenFields.appendChild(childField);
+      }
+    });
+  }
+});
+
+
+const MAX_BENEFICIARIES = 6;
+
+// 🔁 Actualiza títulos "Familiar 1", "Familiar 2", etc.
+function updateBeneficiaryTitles() {
+  const rows = document.querySelectorAll('#familyMembersFields .form-row');
+  rows.forEach((row, idx) => {
+    const title = row.querySelector('h3');
+    if (title) {
+      title.textContent = `Familiar ${idx + 1}`;
     }
   });
+}
+
+// ✅ Crea una fila de beneficiario (vacía o con datos)
+function createBeneficiaryRow(autoGenerated = false, data = {}) {
+  const familyMembersFields = document.getElementById('familyMembersFields');
+
+  const currentCount = familyMembersFields.querySelectorAll('.form-row').length;
+  if (currentCount >= MAX_BENEFICIARIES) {
+    alert('No se pueden agregar más de 6 beneficiarios.');
+    return;
+  }
+
+  const index = currentCount + 1;
+
+  const row = document.createElement('div');
+  row.classList.add('form-row', 'mb-3');
+  if (autoGenerated) row.classList.add('auto-generated');
+
+  row.innerHTML = `
+    <div class="col-md-12 d-flex justify-content-between align-items-center">
+        <h3 class="font-weight-bold text-info">Familiar ${index}</h3>
+        <button type="button" class="btn btn-danger btn-sm text-white remove-beneficiary" title="Eliminar beneficiario">❌</button>
+    </div>
+
+    <div class="form-group col">
+        <label>DNI</label>
+        <input type="text" name="familiar_dni${index}" class="form-control" value="${data.dni || ''}" required />
+    </div>
+
+    <div class="form-group col">
+        <label>Nombre</label>
+        <input type="text" name="familiar_full_name${index}" class="form-control" value="${data.name || ''}" required />
+    </div>
+
+    <div class="form-group col">
+        <label>F. Nac</label>
+        <input type="date" name="familiar_birthday${index}" class="form-control" value="${data.birthday || ''}" required />
+    </div>
+
+    <div class="form-group col">
+        <label>Parentesco</label>
+        <select name="familiar_relationship${index}" class="form-control" required>
+            <option value="">Seleccione una opción</option>
+            <option value="Esposo/a" ${data.relationship === 'Esposo/a' ? 'selected' : ''}>Esposo(a)</option>
+            <option value="Conviviente" ${data.relationship === 'Conviviente' ? 'selected' : ''}>Conviviente</option>
+            <option value="Hijo" ${data.relationship === 'Hijo' ? 'selected' : ''}>Hijo</option>
+            <option value="Hija" ${data.relationship === 'Hija' ? 'selected' : ''}>Hija</option>
+        </select>
+    </div>
+
+    <div class="form-group col">
+        <label>Género</label>
+        <select name="familiar_gender${index}" class="form-control" required>
+            <option value="">Seleccione una opción</option>
+            <option value="male" ${data.gender === 'male' ? 'selected' : ''}>Masculino</option>
+            <option value="female" ${data.gender === 'female' ? 'selected' : ''}>Femenino</option>
+        </select>
+    </div>
+
+    <div class="form-group col">
+        <label>Dirección</label>
+        <input type="text" name="familiar_address${index}" class="form-control" value="${data.address || ''}" required />
+    </div>
+
+    <div class="form-group col">
+        <label>Beneficiario</label>
+        <input type="checkbox" name="is_beneficiary${index}" class="form-control" checked />
+    </div>
+  `;
+
+  // Botón para eliminar esta fila
+  row.querySelector('.remove-beneficiary').addEventListener('click', () => {
+    row.remove();
+    updateBeneficiaryTitles();
+  });
+
+  familyMembersFields.appendChild(row);
+  updateBeneficiaryTitles();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const familyMembersField = document.getElementById('familyMembers');
+  const addEmptyBtn = document.getElementById('addEmptyBeneficiary');
+  const copyBtn = document.getElementById('copyChildrenToBeneficiaries');
+  const familyMembersFields = document.getElementById('familyMembersFields');
+  const childrenFields = document.getElementById('childrenFields');
+
+  // Limpiar los autogenerados por el input
+  function clearAutoGeneratedBeneficiaries() {
+    familyMembersFields.querySelectorAll('.auto-generated').forEach(el => el.remove());
+    updateBeneficiaryTitles();
+  }
+
+  // 📌 Input para número de beneficiarios
+  if (familyMembersField) {
+    familyMembersField.addEventListener('input', function () {
+      const value = parseInt(this.value);
+      if (isNaN(value) || value < 0 || value > MAX_BENEFICIARIES) {
+        alert("Ingrese un número válido entre 0 y 6.");
+        this.value = '';
+        return;
+      }
+      clearAutoGeneratedBeneficiaries();
+      for (let i = 0; i < value; i++) {
+        createBeneficiaryRow(true);
+      }
+    });
+  }
+
+  // 📌 Botón para agregar beneficiario vacío
+  if (addEmptyBtn) {
+    addEmptyBtn.addEventListener('click', function () {
+      createBeneficiaryRow(false);
+    });
+  }
+
+  // 📌 Botón para copiar hijos a beneficiarios
+  if (copyBtn && childrenFields) {
+    copyBtn.addEventListener('click', function () {
+      const children = childrenFields.querySelectorAll('.form-row');
+      let total = familyMembersFields.querySelectorAll('.form-row').length;
+
+      for (const child of children) {
+        if (total >= MAX_BENEFICIARIES) {
+          alert("No se pueden agregar más de 6 beneficiarios.");
+          break;
+        }
+
+        const getVal = (selector) => child.querySelector(selector)?.value || '';
+        const data = {
+          dni: getVal('input[name^="child_dni"]'),
+          name: getVal('input[name^="child_full_name"]'),
+          birthday: getVal('input[name^="child_birthday"]'),
+          relationship: getVal('select[name^="child_relationship"]'),
+          gender: getVal('select[name^="child_gender"]'),
+          address: getVal('input[name^="child_address"]')
+        };
+
+        createBeneficiaryRow(false, data);
+        total++;
+      }
+    });
+  }
 });
+
 
 document.addEventListener('DOMContentLoaded', function() {
   var otrosMembersField = document.getElementById('otrosMembers');
@@ -181,6 +334,7 @@ var privatePensionCheckbox = document.getElementById('private_pension_system');
 var pensionOptionsContainer = document.getElementById('pension_options');
 var afpFirstJob = document.getElementById('afp_first_job');
 var comingFromOnp = document.getElementById('coming_from_onp');
+var comingFromAfp = document.getElementById('coming_from_afp');
 var radioOptions = document.querySelectorAll('.radio-option');
 
 privatePensionCheckbox.addEventListener('change', function() {
@@ -192,6 +346,7 @@ if (this.checked) {
   radioOptions.forEach(radio => radio.checked = false);
   afpFirstJob.checked = false;
   comingFromOnp.checked = false;
+  comingFromAfp.checked = false;
 }
 });
 
@@ -207,11 +362,27 @@ radio.addEventListener('change', function() {
 
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+  var childrenInput = document.getElementById('children');
+  if (childrenInput) {
+    childrenInput.addEventListener('input', validateInputChildren);
+  }
+});
+
 function validateInputfamily() {
   var input = document.getElementById('familyMembers');
   var value = parseInt(input.value);
   if (value < 0 || value > 6) {
       alert('Only numbers 1, 2, 3, 4, 5 and 6 are allowed.');
+      input.value = '';
+  }
+}
+
+function validateInputChildren() {
+  var input = document.getElementById('children');
+  var value = parseInt(input.value);
+  if (value < 0 || value > 6) {
+      alert('Only numbers between 0 and 6 are allowed for children.');
       input.value = '';
   }
 }
@@ -225,10 +396,10 @@ function validateInput() {
   }
 }
 
-
 function toggleCheckbox(checkbox) {
   var afpFirstJob = document.getElementById('afp_first_job');
   var comingFromOnp = document.getElementById('coming_from_onp');
+  var comingFromAfp = document.getElementById('coming_from_afp');
   var otherCheckbox = document.getElementById(checkbox.id === 'private_pension_system' ? 'national_pension_system' : 'private_pension_system');
   if (checkbox.checked) {
       otherCheckbox.checked = false;
@@ -238,11 +409,13 @@ function toggleCheckbox(checkbox) {
           document.getElementById('pension_options').style.display = 'none';
           afpFirstJob.checked = false;
           comingFromOnp.checked = false;
+          comingFromAfp.checked = false;
       }
   } else {
       document.getElementById('pension_options').style.display = 'none';
       afpFirstJob.checked = false;
       comingFromOnp.checked = false;
+      comingFromAfp.checked = false;
   }
 }
 
@@ -339,6 +512,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!this.checked && this.type === 'checkbox') {
         document.getElementById('afp_first_job').checked = false;
         document.getElementById('coming_from_onp').checked = false;
+        document.getElementById('coming_from_afp').checked = false;
       }
     });
   }
@@ -362,7 +536,7 @@ function populateModal() {
   document.getElementById('modal-province').innerText = getSelectedOptionTextById('state_id');
   document.getElementById('modal-city').innerText = getSelectedOptionTextById('city_id');
   document.getElementById('modal-district').innerText = getSelectedOptionTextById('district_id');
-  document.getElementById('modal-zip').innerText = document.getElementById('zip').value;
+  // document.getElementById('modal-zip').innerText = document.getElementById('zip').value;
   document.getElementById('modal-street').innerText = document.getElementById('street').value;
   document.getElementById('modal-reference_location').innerText = document.getElementById('reference_location').value;
   document.getElementById('modal-education_level').innerText = getSelectedOptionTextBySelector('select[name="education_level"]');
@@ -396,7 +570,9 @@ function populateModal() {
           pensionOptionText = '(AFP) Primer empleo';
       } else if (document.getElementById('coming_from_onp').checked) {
           pensionOptionText = 'Procedente de la ONP';
-      }
+      } else if (document.getElementById('coming_from_afp').checked) {
+          pensionOptionText = 'Procedente de la AFP';
+    }
   }
 
   if (modalPensionOption) {
@@ -590,3 +766,175 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   });
 });
+
+// MAPA DINAMICO CON GOOGLE MAPS
+
+let map;
+let marker;
+let geocoder;
+
+window.addEventListener('load', function () {
+  if (typeof google !== 'undefined' && google.maps) {
+    initMap();
+  }
+});
+
+
+function initMap() {
+  const defaultLatLng = { lat: -12.0464, lng: -77.0428 }; // Lima, Perú por defecto
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 6,
+    center: defaultLatLng,
+  });
+
+  geocoder = new google.maps.Geocoder();
+
+  map.addListener("click", (event) => {
+    placeMarker(event.latLng);
+    reverseGeocode(event.latLng);
+  });
+}
+
+function placeMarker(location) {
+  if (marker) {
+    marker.setPosition(location);
+  } else {
+    marker = new google.maps.Marker({
+      position: location,
+      map: map,
+    });
+  }
+}
+
+
+function reverseGeocode(latlng) {
+  geocoder.geocode({ location: latlng }, function (results, status) {
+    if (status === "OK" && results[0]) {
+      const components = results[0].address_components;
+
+      let country = "";
+      let department = "";
+      let province = "";
+      let district = "";
+
+      components.forEach((comp) => {
+        const types = comp.types;
+
+        if (types.includes("country")) {
+          country = comp.long_name;
+        }
+
+        if (types.includes("administrative_area_level_1")) {
+          department = comp.long_name;
+        }
+
+        if (types.includes("administrative_area_level_2")) {
+          province = comp.long_name;
+        }
+
+        if (types.includes("sublocality") || types.includes("locality")) {
+          district = comp.long_name;
+        }
+      });
+
+      console.log("🗺 Dirección detectada:");
+      console.log("País:", country);
+      console.log("Departamento:", department);
+      console.log("Provincia:", province);
+      console.log("Distrito:", district);
+
+      // Paso 1: Seleccionar país y esperar a que esté listo
+      setSelectByText("country_id", country, function () {
+        // Paso 2: Seleccionar departamento y esperar a que ubigeo.js lo procese
+        setSelectByText("state_id", department, function () {
+          // Paso 3: Seleccionar provincia (solo si el departamento ya está cargado)
+          setSelectByText("city_id", province, function () {
+            // Paso 4: Finalmente seleccionar distrito
+            setSelectByText("district_id", district);
+          });
+        });
+      });
+    } else {
+      alert("No se pudo obtener la ubicación.");
+    }
+  });
+}
+
+
+
+function normalizeText(text) {
+  return text
+    .toLowerCase()
+    .replace(/^(provincia|región|departamento|province|region|state|estado|municipio|city|localidad|county|comuna)\s+de\s+/gi, "") // limpia encabezados
+    .normalize("NFD") // descompone acentos
+    .replace(/[\u0300-\u036f]/g, "") // elimina acentos
+    .replace(/\s+/g, " ") // espacios únicos
+    .trim();
+}
+
+
+function setSelectByText(selectId, textToMatch, callback = null) {
+  const select = document.getElementById(selectId);
+  if (!select) {
+    console.warn(`⚠️ Select no encontrado: ${selectId}`);
+    if (typeof callback === "function") callback();
+    return;
+  }
+
+  const normalizedTarget = normalizeText(textToMatch);
+  const options = select.querySelectorAll("option");
+  let matched = false;
+
+  for (let i = 0; i < options.length; i++) {
+    const opt = options[i];
+    const optText = normalizeText(opt.textContent || "");
+
+    if (optText === normalizedTarget) {
+      select.selectedIndex = i;
+      matched = true;
+
+      const event = new Event("change", { bubbles: true });
+      select.dispatchEvent(event);
+
+      if (typeof callback === "function") {
+        setTimeout(callback, 250);
+      }
+      break;
+    }
+  }
+
+  // 🔁 Fallback: buscar por data-country_id si es state_id
+  if (!matched && selectId === "state_id") {
+    const countrySelect = document.getElementById("country_id");
+    const selectedCountryId = countrySelect?.value || null;
+
+    if (selectedCountryId) {
+      const fallbackOptions = Array.from(options).filter(opt =>
+        opt.dataset.country_id === selectedCountryId
+      );
+
+      for (let opt of fallbackOptions) {
+        const optText = normalizeText(opt.textContent || "");
+        if (optText.includes(normalizedTarget)) {
+          opt.selected = true;
+          const event = new Event("change", { bubbles: true });
+          select.dispatchEvent(event);
+
+          if (typeof callback === "function") {
+            setTimeout(callback, 250);
+          }
+          matched = true;
+          break;
+        }
+      }
+    }
+  }
+
+  if (!matched) {
+    console.warn(`⚠️ No se pudo encontrar match para "${textToMatch}" en "${selectId}"`);
+  }
+
+  if (typeof callback === "function") {
+    callback();
+  }
+}
