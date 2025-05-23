@@ -270,7 +270,7 @@ class ExpensesReport(models.TransientModel):
                 ws.write(row, 26, line['tax_percentage'], format3)
                 ws.write(row, 27, line['settle_igv'], format8)
                 ws.write(row, 28, line['alternative_igv'], format8)
-                if line.get('alternative_amount') and line.get('alternative_igv'):
+                if line.get('alternative_amount'):
                     ws.write_formula(row, 29, '=(V%s-AC%s)' % (row + 1, row + 1), format8)
                 elif line['income_tax'] and line['income_tax_id']:
                     ws.write_formula(

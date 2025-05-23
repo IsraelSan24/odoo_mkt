@@ -82,7 +82,7 @@ class Settlement(models.Model):
 
     state = fields.Selection(related='requirement_id.settlement_state', string='State', store=True)
     cpe_state = fields.Selection(selection=cpe_states, default='to_validate', string='CPE STATES')
-    cpe_company_state = fields.Char(string='CPE Company State')
+    cpe_company_state = fields.Char(string='CPE Company State', default='to_validate')
     line_ids = fields.One2many('settlement.line', 'settlement_id', string='Settlement line')
 
     journal_ids = fields.One2many('settlement.journal', 'settlement_id', string='Journal items')
@@ -195,7 +195,9 @@ class Settlement(models.Model):
                 rec.accounting_account = '633028' if rec.paid_to.province_id.name == 'Lima' else '633029'
             elif rec.document_type_id.id == 22:
                 rec.accounting_account = '141301' if rec.paid_to.province_id.name == 'Lima' else '141303'
-            elif rec.document_type_id.id in [2, 5, 7, 24, 26]:
+            elif rec.document_type_id.id in [7, 24, 26]:
+                rec.accounting_account = '141301' if rec.paid_to.province_id.name == 'Lima' else '141303'
+            elif rec.document_type_id.id in [2, 5]:
                 rec.accounting_account = '633060'
             elif rec.document_type_id.id == 16:
                 if "IMPUESTO PREDIAL" in (rec.partner or ""):
@@ -250,82 +252,99 @@ class Settlement(models.Model):
 
     def download_files(self):
         combined_pdf_writer = PyPDF2.PdfFileWriter()
+        failed = []
 
         for rec in self:
             attachments = self.env['ir.attachment'].search([
                 ('res_model', '=', rec._name),
                 ('res_id', '=', rec.id),
             ])
-            
+            processed_any = False
+
             for attachment in attachments:
                 if attachment.name.lower().endswith('.pdf') or attachment.mimetype == 'application/pdf':
                     try:
                         pdf_data = io.BytesIO(base64.b64decode(attachment.datas))
                         pdf_reader = PyPDF2.PdfFileReader(pdf_data)
-
                         if pdf_reader.isEncrypted:
-                            _logger.warning("PDF %s is encrypted and cannot be processed.", attachment.name)
-                            raise ValidationError(_(
-                                'The document %s is encrypted and cannot be processed.'
-                            ) % attachment.name)
+                            raise ValidationError(
+                                _('El documento %s está encriptado y no puede procesarse.') % attachment.name
+                            )
 
-                        # Aplicar marca de agua por cada página
+                        # crea un PDF con watermark
                         temp_output = io.BytesIO()
                         pdf_writer = PyPDF2.PdfFileWriter()
 
                         for page_num in range(pdf_reader.numPages):
                             page = pdf_reader.getPage(page_num)
+                            watermark = self._create_watermark_page(
+                                rec.subdiary,
+                                rec.voucher_number,
+                                getattr(rec, 'cost_center_id', False)
+                            )
                             try:
-                                page.merge_page(self._create_watermark_page(rec.subdiary, rec.voucher_number))
+                                page.merge_page(watermark)
                             except AttributeError:
-                                page.mergePage(self._create_watermark_page(rec.subdiary, rec.voucher_number))  # fallback para versiones viejas
+                                page.mergePage(watermark)
                             pdf_writer.addPage(page)
 
                         pdf_writer.write(temp_output)
                         temp_output.seek(0)
 
-                        # Leer el PDF con marca de agua y agregarlo al combinado
-                        marked_pdf_reader = PyPDF2.PdfFileReader(temp_output)
-                        for page_num in range(marked_pdf_reader.numPages):
-                            combined_pdf_writer.addPage(marked_pdf_reader.getPage(page_num))
+                        # lo añadimos al combinado
+                        marked_reader = PyPDF2.PdfFileReader(temp_output)
+                        for pn in range(marked_reader.numPages):
+                            combined_pdf_writer.addPage(marked_reader.getPage(pn))
 
-                    except PdfReadError as e:
-                        _logger.error("Error reading PDF %s: %s", attachment.name, str(e))
-                        raise ValidationError(_(
-                            'The document %s on the record #%s could not be read. Please convert to PDF/A format.'
-                        ) % (attachment.name, rec.display_name or rec.id))
+                        processed_any = True
 
                     except Exception as e:
-                        _logger.exception("Unexpected error processing PDF %s", attachment.name)
-                        raise ValidationError(_(
-                            'The document %s on the record #%s is not available. Please convert to PDF/A. Error: %s'
-                        ) % (attachment.name, rec.display_name or rec.id, str(e)))
+                        _logger.error("Error procesando PDF %s: %s", attachment.name, e)
+                        failed.append(attachment.name)
+
+            if not processed_any and attachments:
+                failed.extend([att.name for att in attachments if att.name.lower().endswith('.pdf')])
+
+        if combined_pdf_writer.getNumPages() == 0:
+            raise ValidationError(_(
+                'No se encontraron documentos PDF válidos para descargar.\n'
+                'Archivos fallidos: %s'
+            ) % ', '.join(failed))
 
         output_pdf = io.BytesIO()
         combined_pdf_writer.write(output_pdf)
         output_pdf.seek(0)
 
-        combined_pdf_attachment = self.env['ir.attachment'].create({
+        attachment_vals = {
             'name': 'Invoices',
             'datas': base64.b64encode(output_pdf.read()),
             'type': 'binary',
             'mimetype': 'application/pdf',
-        })
+        }
+        combined_attachment = self.env['ir.attachment'].create(attachment_vals)
 
         return {
             'type': 'ir.actions.act_url',
-            'url': '/web/content/%s?download=true' % combined_pdf_attachment.id,
+            'url': '/web/content/%s?download=true' % combined_attachment.id,
             'target': 'new',
         }
 
+    def _create_watermark_page(self, subdiary, voucher_number, cost_center_id=None):
+        """
+        subdiary: cadena o número
+        voucher_number: cadena
+        cost_center_id: registro de cost.center o False
+        """
+        code = ''
+        if cost_center_id and getattr(cost_center_id, 'code', False):
+            code = cost_center_id.code
 
-    def _create_watermark_page(self, subdiary, voucher_number, cost_center_id):
         packet = io.BytesIO()
         can = canvas.Canvas(packet, pagesize=letter)
         can.setFontSize(12)
         can.setFillColor('Green')
-        can.drawString(10, 5, '%s | %s' % (subdiary, voucher_number) )
-        can.drawString(500, 5, 'CC: %s' % (cost_center_id.code or ''))
+        can.drawString(10, 5, '%s | %s' % (subdiary or '', voucher_number or ''))
+        can.drawString(500, 5, 'CC: %s' % code)
         can.save()
         packet.seek(0)
         return PyPDF2.PdfFileReader(packet).getPage(0)
@@ -403,16 +422,17 @@ class Settlement(models.Model):
                             rec.cpe_state = 'accepted'
                         else:
                             rec.cpe_state = 'non_existent'
-                        
+
                         # Asignar el estado de la empresa como texto
                         if 'empresa_estado_descripcion' in cpe_data_detail:
                             rec.cpe_company_state = cpe_data_detail['empresa_estado_descripcion']
+                            _logger.info("Empresa estado: %s", cpe_data_detail.get('empresa_estado_descripcion'))  # <- aquí sí es seguro
                     else:
                         rec.cpe_state = 'failed'
-                        rec.cpe_company_state = 'Desconocido'  # Valor predeterminado si no hay estado de empresa
+                        rec.cpe_company_state = 'Desconocido'
                 else:
                     rec.cpe_state = 'failed'
-                    rec.cpe_company_state = 'Desconocido'  # Valor predeterminado si no hay datos de la API
+                    rec.cpe_company_state = 'Desconocido'
 
 
     @api.onchange('exchange_type_date')
@@ -707,15 +727,15 @@ class Settlement(models.Model):
             
             effective_amount = rec.alternative_amount if rec.alternative_amount and rec.differentiated_payment else rec.settle_amount_sum
 
-            if effective_amount * change_type > rec.service_type_id.amount_from:
+            if rec.settle_amount_sum * change_type > rec.service_type_id.amount_from:
                 if rec.service_type_id.detraction:
-                    rec.vendor = effective_amount - round((rec.settle_amount_sum * rec.service_type_id.percentage) / 100, 0)
-                    rec.detraction = round((rec.settle_amount_sum * rec.service_type_id.percentage) / 100, 0)
+                    rec.vendor = effective_amount - round((effective_amount * rec.service_type_id.percentage) / 100, 0)
+                    rec.detraction = round((effective_amount * rec.service_type_id.percentage) / 100, 0)
                     rec.retention = 0.00
                 elif rec.service_type_id.retention:
-                    rec.vendor = effective_amount - round((rec.settle_amount_sum* rec.service_type_id.percentage) / 100, 2)
+                    rec.vendor = effective_amount - round((effective_amount* rec.service_type_id.percentage) / 100, 2)
                     rec.detraction = 0.00
-                    rec.retention = round((rec.settle_amount_sum * rec.service_type_id.percentage) / 100, 2)
+                    rec.retention = round((effective_amount * rec.service_type_id.percentage) / 100, 2)
                 else:
                     rec.vendor = effective_amount
                     rec.detraction = 0.00

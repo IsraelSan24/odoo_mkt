@@ -6,3 +6,6 @@ class Years(models.Model):
 
     number = fields.Char(required=True, string='Year Number')
     open_year = fields.Boolean(string='Activate', default=True)
+
+    def name_get(self):
+        return [(rec.id, rec.number) for rec in self]

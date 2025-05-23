@@ -12,6 +12,6 @@
             <field name="name">Portal</field>
             <field name="url">https://odoo.marketing-alterno.com/</field>
         </record>
-        <menuitem id="menu_stock_to_portal" name="Portal" action="action_to_portal" parent="mkt_supervision.menu_mkt_supervision_root" sequence="4"/>
+        <menuitem id="menu_stock_to_portal" name="Portal" action="action_to_portal" parent="mkt_supervision.menu_mkt_supervision_root" sequence="5"/>
 
 </odoo>

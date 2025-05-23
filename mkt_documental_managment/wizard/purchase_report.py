@@ -340,7 +340,7 @@ class AccountPurchaseReport(models.Model):
         """
         document_type_ids = tuple(self.document_type_ids.ids)
         selected_months = tuple(self.month_ids.mapped('number')) if self.month_ids else ()
-        selected_years = tuple(self.year_ids.mapped('name')) if self.year_ids else ()
+        selected_years = tuple(self.year_ids.mapped('number')) if self.year_ids else ()
         if len(document_type_ids) == 1:
             document_type_ids = ( document_type_ids[0], )
 

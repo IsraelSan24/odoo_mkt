@@ -1,6 +1,9 @@
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, Command
+from datetime import timedelta
 from odoo.exceptions import UserError
 from odoo.addons.mkt_recruitment.models.apiperu import apiperu_dni
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class Applicant(models.Model):
@@ -69,6 +72,7 @@ class Applicant(models.Model):
         self.create_employee_by_stage()
         self.update_data_partner()
         self.access_portal_partner()
+        self.contact_merge_stage()
 
 
     def update_data_partner(self):
@@ -76,6 +80,28 @@ class Applicant(models.Model):
             applicant_partner = self.env['applicant.partner'].search([('dni','=',self.vat)], order='create_date desc')
             if applicant_partner and applicant_partner.state != 'uploaded':
                 applicant_partner.update_partner()
+
+
+    def contact_merge_stage(self):
+        if self.stage_id.contact_merge:
+            contact = self.env['res.partner'].search([('vat', '=', self.vat)], order='create_date asc')
+            if contact and len(contact) == 2:
+                # Asignar como destino el más reciente
+                partner_ids_sorted = [contact[0].id, contact[1].id]
+                dst_partner = contact[1]  # Más reciente
+
+                context = dict(self.env.context)
+                context.update({
+                    'active_model': 'res.partner',
+                    'active_ids': partner_ids_sorted,
+                })
+
+                contact_merge = self.env['base.partner.merge.automatic.wizard'].with_context(context).create({
+                    'partner_ids': [Command.set(partner_ids_sorted)],
+                    'dst_partner_id': dst_partner.id,
+                    'state': 'selection',
+                })
+                contact_merge.action_merge()
 
 
     def access_portal_partner(self):
@@ -102,12 +128,15 @@ class Applicant(models.Model):
                     'user_id': contact.user_id,
                 }
                 portal_wizard_user = self.env['portal.wizard.user'].create(portal_wizard_user_vals)
+                user = self.env['res.users'].with_context(active_test=False).search([('partner_id', '=', self.partner_id.id)], limit=1)
                 if self.is_reinstatement == False:
-                    portal_wizard_user.action_grant_access()
+                    if not user:
+                        portal_wizard_user.action_grant_access()
+                    else:
+                        portal_wizard_user.action_invite_again()
                 else:
-                    user = self.env['res.users'].search([('partner_id', '=', self.partner_id.id)], limit=1)
                     if user.active == False:
-                        contact.user_id.toggle_active()
+                        user.toggle_active()
                     if user:
                         user.login = self.email_from
             elif len(contact) > 1:
@@ -166,8 +195,9 @@ class Applicant(models.Model):
         if vals.get('email_from'):
             vals['email_from'] = vals['email_from'].lower()
         if vals.get('vat'):
-            reinstatement = self.env['hr.applicant'].search([('vat', '=', vals['vat'])], limit=1)
+            vals['vat'] = vals['vat'].strip()
+            time_range = fields.Datetime.today() - timedelta(days=10)
+            reinstatement = self.env['hr.applicant'].search([('vat', '=', vals['vat']),('stage_id.sequence', 'in', [4,5]),('create_date', '<', time_range)], limit=1)
             if reinstatement:
                 vals['is_reinstatement'] = True
-            vals['vat'] = vals['vat'].strip()
         return super(Applicant, self).create(vals)

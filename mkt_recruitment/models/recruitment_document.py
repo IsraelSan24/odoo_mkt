@@ -59,6 +59,7 @@ class RecruitmentDocument(models.Model):
     department = fields.Char(string='Department')
     emergency_contact = fields.Char(string='Emergency contact')
     emergency_phone = fields.Char(string='Emergency phone')
+    emergency_contact_relationship = fields.Selection(selection=relationship)
     birthday = fields.Char(string='Birthday')
     phone = fields.Char(string='Phone')
     company = fields.Char(string='Company')
@@ -147,6 +148,7 @@ class RecruitmentDocument(models.Model):
     private_pension_system = fields.Boolean()
     afp_first_job = fields.Boolean()
     coming_from_onp = fields.Boolean()
+    coming_from_afp = fields.Boolean()
     national_pension_system = fields.Boolean()
 
     job = fields.Char()
@@ -252,6 +254,7 @@ class RecruitmentDocument(models.Model):
                     'department': rec.partner_id.state_id.name,
                     'emergency_contact': rec.partner_id.emergency_contact,
                     'emergency_phone': rec.partner_id.emergency_phone,
+                    'emergency_contact_relationship': rec.partner_id.emergency_contact_relationship,
                     'birthday': rec.partner_id.birthday,
                     'phone': rec.partner_id.phone,
                     'company': rec.env.user.company_id.name,
@@ -331,6 +334,7 @@ class RecruitmentDocument(models.Model):
                     'private_pension_system': rec.partner_id.private_pension_system,
                     'afp_first_job': rec.partner_id.afp_first_job,
                     'coming_from_onp': rec.partner_id.coming_from_onp,
+                    'coming_from_afp': rec.partner_id.coming_from_afp,
                     'national_pension_system': rec.partner_id.national_pension_system,
                     'identification_type': rec.partner_id.l10n_latam_identification_type_id.name,
                     'job': rec.partner_id.employee_ids.job_id.name

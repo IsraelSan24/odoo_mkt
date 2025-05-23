@@ -31,7 +31,6 @@ class ContractMass(models.Model):
     _order = 'id desc'
 
     name = fields.Char(copy=False, required=True, default=lambda self: _('New'), string='Name')
-    cost_center_id = fields.Many2one(comodel_name='cost.center',required=True, string='Cost center')
     employee_ids = fields.Many2many(comodel_name="hr.employee", relation="contract_mass_employee_rel", string="Employee")
     renew_employee_ids = fields.Many2many(comodel_name="hr.employee",required=True, relation="contract_mass_renew_employee_rel", string="Employee", domain="[('contract_id', '!=', False),('contract_id.state','=','open')]")
     renew_contracts_ids = fields.Many2many(comodel_name='hr.contract', relation="contract_mass_renew_contracts_rel", string='Created contracts')
@@ -49,7 +48,7 @@ class ContractMass(models.Model):
     campaign = fields.Char(string='Campaign')
     state = fields.Selection(selection=states, default='draft', string='State')
     last_contract_ids = fields.Many2many(comodel_name='hr.contract', compute='_compute_last_contracts', string='Last contracts', store=True)
-    province_id = fields.Many2one(comodel_name='res.province', required=True, string='Manual or automatic')
+    province_id = fields.Boolean(default=True, required=True, string='Is Lima?')
 
 
     # Solo debe aparecer ste boton en el ultimo etado que ensi es el segundo
@@ -64,11 +63,14 @@ class ContractMass(models.Model):
             rec.is_sended = True
 
 
-    @api.onchange('cost_center_id')
-    def change_cost_center(self):
-        if self.cost_center_id:
-            employees = self.env['hr.employee'].search([('cost_center_id','=',self.cost_center_id.id),('contract_id', '=', False)])
-            renew_employees = self.env['hr.employee'].search([('cost_center_id','=',self.cost_center_id.id),('contract_id', '!=', False),('contract_id.state','=','open'),('address_home_id.province_id.id','=',self.province_id.id)])
+    @api.onchange('province_id')
+    def change_province_id(self):
+        if self.province_id:
+            employees = self.env['hr.employee'].search([('contract_id', '=', False)])
+            if self.province_id == True:
+                renew_employees = self.env['hr.employee'].search([('contract_id', '!=', False),('contract_id.state','=','open'),('address_home_id.province_id.name','=','Lima')])
+            else:
+                renew_employees = self.env['hr.employee'].search([('contract_id', '!=', False),('contract_id.state','=','open'),('address_home_id.province_id.name','!=','Lima')])
             self.write({'employee_ids': [(5, 0, 0)] + [(4, emp.id) for emp in employees]})
             self.write({'renew_employee_ids': [(5, 0, 0)] + [(4, emp.id) for emp in renew_employees]})
 
@@ -98,7 +100,7 @@ class ContractMass(models.Model):
                     'job_id': employee.job_id.id or employee.applicant_id.job_id.id,
                     'date_start': self.date_start,
                     'date_end': self.date_end,
-                    # 'contract_months': str(relativedelta(self.date_end, self.date_start).years * 12 + relativedelta(self.date_end, self.date_start).months) + _(' months.'),
+                    'contract_months': str(relativedelta(self.date_end, self.date_start).years * 12 + relativedelta(self.date_end, self.date_start).months) + _(' months.'),
                     'wage': self.wage,
                     'contract_type_id': self.contract_type_id.id,
                     'hr_responsible_id': self.hr_responsible_id.id,
@@ -119,7 +121,7 @@ class ContractMass(models.Model):
                 values = {
                     'employee_id': employee.id,
                     'date_start': new_date_start if self.mode_mode == 'auto' else self.date_start,
-                    'date_end': (new_date_start + relativedelta(months=1) - relativedelta(days=new_date_start.day)) if self.mode_mode == 'auto' else self.date_end,
+                    'date_end': (new_date_start + relativedelta(months=self.renewed_months) - relativedelta(days=new_date_start.day)) if self.mode_mode == 'auto' else self.date_end,
                     'contract_type_id': self.contract_type_id.id if self.mode_mode == 'manual' else employee_contract_type.id,
                     'wage': self.wage if self.mode_mode == 'manual' else employee_wage,
                     'structure_type_id': 1,

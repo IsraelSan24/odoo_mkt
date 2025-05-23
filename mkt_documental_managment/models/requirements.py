@@ -536,13 +536,8 @@ class DocumentalRequirements(models.Model):
     @api.depends('amount_uss', 'amount_soles', 'total_vendor', 'to_pay_supplier', 'settlement_ids')
     def _compute_balance(self):
         for rec in self:
-            requirement_amount = rec.amount_soles if rec.amount_soles != 0 else rec.amount_uss
-            settlement_amount = sum(
-                line.alternative_amount if line.differentiated_payment else line.settle_amount_sum
-                for line in rec.settlement_ids
-            )
             if rec.unify:
-                rec.balance = round(settlement_amount - requirement_amount, 2)
+                rec.balance = 0
             else:
                 rec.balance = round(rec.total_vendor - rec.to_pay_supplier, 2)
 
@@ -684,6 +679,7 @@ class DocumentalRequirements(models.Model):
 
 
     def compute_detraction_to_pay(self):
+        self._compute_amount_soles_uss()
         self._compute_detraction_to_pay()
         self._compute_settlement_vendor()
 
@@ -1026,6 +1022,38 @@ class DocumentalRequirements(models.Model):
                     raise ValidationError(_('''Your requirement exceeds the %s of the budget max amount.\n
                                             - If you need to do this Requirement, please contact the budget responsible.
                                             ''') % ( rec.budget_id.max_amount ))
+                
+
+    def _notify_executive_pending_signature(self):
+        executive_partner = self.budget_id.executive_id.partner_id
+        email = executive_partner.email
+
+        if email:
+            subject = f'Requisito pendiente de firma: {self.name}'
+            base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+            record_url = f"{base_url}/web#id={self.id}&model=documental.requirements&view_type=form"
+
+            body = f'''
+                <p>Estimado/a {executive_partner.name},</p>
+                <p>Se encuentra pendiente de su firma el documento <b>{self.name}</b>.</p>
+                <p>
+                    Puede revisarlo directamente en el sistema desde el siguiente enlace:<br/>
+                    <a href="{record_url}" target="_blank">{self.name}</a>
+                </p>
+            '''
+
+            mail_values = {
+                'subject': subject,
+                'body_html': body,
+                'email_to': email,
+                'email_from': self.env.user.login or 'no-reply@example.com',
+            }
+            self.env['mail.mail'].create(mail_values).send()
+
+            # Log
+            _logger.info(
+                f"[REQUISITO FIRMA] Notificación enviada a {email} para el requisito '{self.name}' (ID: {self.id})"
+            )
 
 
     def button_petitioner_signature(self):
@@ -1063,6 +1091,8 @@ class DocumentalRequirements(models.Model):
             'requirement_state': 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False)) or (self.employee_id.sudo().group_ids.sudo().employee_supervise_ids.sudo()) else 'executive',
             'is_petitioner_signed': True,
         })
+        if self.requirement_state == 'executive' and self.env.user != self.budget_id.executive_id:
+            self._notify_executive_pending_signature()
         self.blacklist_validation()
         self.create_requirement_detail()
         self._compute_settlement_vendor()
@@ -1075,6 +1105,7 @@ class DocumentalRequirements(models.Model):
 
     def button_requirement_external_control_confirm(self):
         for rec in self.sudo():
+            self._notify_executive_pending_signature()
             rec.write({
                 'requirement_state': 'executive',
             })
@@ -1199,6 +1230,8 @@ class DocumentalRequirements(models.Model):
             'settlement_petitioner_signed_on': fields.Datetime.now(),
             'settlement_state': 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False) or (self.employee_id.sudo().group_ids.sudo().employee_supervise_ids.sudo())) else 'executive'
         })
+        if self.settlement_state == 'executive' and self.env.user != self.budget_id.executive_id:
+            self._notify_executive_pending_signature()
         self.blacklist_validation()
         self.create_settlement_line()
         self._compute_settlement_vendor()
@@ -1209,6 +1242,7 @@ class DocumentalRequirements(models.Model):
 
     def button_settlement_external_control_confirm(self):
         for rec in self.sudo():
+            self._notify_executive_pending_signature()
             if rec.unify:
                 rec.requirement_state = 'executive'
             else:
@@ -1630,12 +1664,13 @@ class DocumentalRequirements(models.Model):
 
     @api.depends("divided_payment")
     def _compute_show_payments_tab(self):
+        user = self.env.user
+        has_access = (
+            user.has_group("mkt_documental_managment.documental_requirement_administration") or
+            user.has_group("mkt_documental_managment.documental_requirement_accounting")
+        )
         for record in self:
-            record.show_payments_tab = (
-                record.divided_payment or 
-                self.env.user.has_group("mkt_documental_managment.documental_requirement_administration")
-            )
-
+            record.show_payments_tab = record.divided_payment or has_access
 
     @api.model
     def create(self, vals):

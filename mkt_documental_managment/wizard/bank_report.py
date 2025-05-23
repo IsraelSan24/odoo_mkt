@@ -184,8 +184,16 @@ class BankReport(models.TransientModel):
         row = 2
         line_aux = False
         for line in records:
+            # Extraemos los arrays; nos aseguramos de que existan
+            payments   = line.get('payment_dates')      or []
+            operations = line.get('operation_numbers')  or []
+            amounts    = line.get('payment_amounts')    or []
+            total_payments = len(payments)
+
             if line_aux != line['requirement']:
                 total_lines = line['settlement_lines'] or 0
+
+                # 1) Fila principal: datos fijos + primer pago si existe
                 ws.write(row, 0, line['requirement'], stl3)
                 ws.write(row, 1, line['budget'], stl3)
                 ws.write(row, 2, line['ruc'] if line['ruc'] and len(line['ruc']) == 8 else '', stl3)
@@ -193,71 +201,124 @@ class BankReport(models.TransientModel):
                 ws.write(row, 4, line['cost_center'], stl3)
                 ws.write(row, 5, (line['supplier'] or '').upper(), stl3)
                 ws.write(row, 6, (line['concept'] or '').upper(), stl3)
-                ws.write(row, 7, line['payment_date'], stl4)
-                ws.write(row, 8, 'TR', stl4)
-                ws.write(row, 9, line['operation_number'], stl3)
-                ws.write(row, 10, line['currency'], stl3)
-                ws.write(row, 11, line['amount'], stl3)
-                ws.write(row, 12, line['accounting_account'] or '', stl3)
-                ws.write(row, 13, line['retention'], stl3)
-                ws.write(row, 14, line['detraction'], stl3)
-                ws.write(row, 15, line['vendor'], stl3)
-                ws.write(row, 16, '', stl3)
-                ws.write(row, 17, line['date_line'] or ' ', stl4)
-                ws.write(row, 18, line['dni_ruc_line'], stl5)
-                ws.write(row, 19, line['partner_line'], stl5)
-                ws.write(row, 20, line['document_type'], stl5)
-                ws.write(row, 21, line['document'], stl5)
-                ws.write(row, 22, line['settlement_vendor'], stl5)
-                ws.write(row, 23, line['settlement_retention'], stl5)
-                ws.write(row, 24, line['settlement_detraction'], stl5)
-                ws.write(row, 25, line['settlement_amount'], stl5)
-                if total_lines == 0:
-                    ws.write_formula(row, 26, '=SUM(R%s:R%s)' % ( ( row + 1 ), ( row + 1 ) ), stl5)
+
+                if total_payments > 0:
+                    # Primer pago
+                    ws.write(row, 7, payments[0], stl4)
+                    ws.write(row, 8, 'TR',         stl4)
+                    # operations puede venir vacío; protegemos:
+                    ws.write(row, 9, operations[0] if total_payments > 0 and operations else line['operation_number'], stl3)
+                    ws.write(row, 10, '',          stl3)
+                    ws.write(row, 11, amounts[0]   if total_payments > 0 and amounts    else line['amount'], stl3)
                 else:
-                    ws.write_formula(row, 26, '=SUM(R%s:R%s)' % ( ( row + 1 ), ( row + 1 ) + total_lines - 1 ), stl5)
+                    # No hay pagos en requirement_payment
+                    ws.write(row, 7, line['payment_date'],     stl4)
+                    ws.write(row, 8, 'TR',                     stl4)
+                    ws.write(row, 9, line['operation_number'], stl3)
+                    ws.write(row, 10, '',                      stl3)
+                    ws.write(row, 11, line['amount'],          stl3)
+
+                # resto de columnas fijas
+                ws.write(row, 12, line['accounting_account'] or '', stl3)
+                ws.write(row, 13, line['retention'],     stl3)
+                ws.write(row, 14, line['detraction'],    stl3)
+                ws.write(row, 15, line['vendor'],        stl3)
+                ws.write(row, 16, '',                     stl3)
+                ws.write(row, 17, line['date_line'] or ' ', stl4)
+                ws.write(row, 18, line['dni_ruc_line'],  stl5)
+                ws.write(row, 19, line['partner_line'],  stl5)
+                ws.write(row, 20, line['document_type'], stl5)
+                ws.write(row, 21, line['document'],      stl5)
+                ws.write(row, 22, line['settlement_vendor'],    stl5)
+                ws.write(row, 23, line['settlement_retention'], stl5)
+                ws.write(row, 24, line['settlement_detraction'],stl5)
+                ws.write(row, 25, line['settlement_amount'],    stl5)
+
+                # fórmula de settlement
+                if total_lines == 0:
+                    ws.write_formula(row, 26, '=SUM(R{0}:R{0})'.format(row+1), stl5)
+                else:
+                    ws.write_formula(
+                        row, 26,
+                        '=SUM(R{0}:R{1})'.format(row+1, row+total_lines),
+                        stl5
+                    )
+
                 ws.write(row, 27, line['responsible'], stl5)
-                ws.write(row, 28, '=S%s-I%s' % ( ( row + 1 ), ( row + 1 ) ), stl5)
-                ws.write(row, 29, '', stl5)
-                ws.write(row, 30, line['payroll'], stl5)
+                ws.write(row, 28, '=S{0}-I{0}'.format(row+1), stl5)
+                ws.write(row, 29, '',                stl5)
+                ws.write(row, 30, line['payroll'],   stl5)
                 ws.write(row, 31, self.change_state_name(line['requirement_state']), stl3)
-                ws.write(row, 32, self.change_state_name(line['settlement_state']), stl3)
+                ws.write(row, 32, self.change_state_name(line['settlement_state']),   stl3)
                 row += 1
+
+                # 2) Filas hijas para pagos adicionales (>1)
+                if total_payments > 1:
+                    for i in range(1, total_payments):
+                        ws.write(row, 0, line['requirement'], stl3)
+                        ws.write(row, 1, line['budget'], stl3)
+                        ws.write(row, 2, line['ruc'] if line['ruc'] and len(line['ruc']) == 8 else '', stl3)
+                        ws.write(row, 3, line['ruc'] if line['ruc'] and len(line['ruc']) != 8 else '', stl3)
+                        ws.write(row, 4, line['cost_center'], stl3)
+                        ws.write(row, 5, (line['supplier'] or '').upper(), stl3)
+                        ws.write(row, 6, (line['concept'] or '').upper(), stl3)
+
+                        ws.write(row, 7, payments[i],      stl8)
+                        ws.write(row, 8, 'TR',              stl8)
+                        ws.write(row, 9, operations[i] if i < len(operations) else '', stl7)
+                        ws.write(row, 10, '',               stl7)
+                        ws.write(row, 11, amounts[i] if i < len(amounts) else '',     stl7)
+
+                        # resto de settlement vacío
+                        for c in range(12, 26):
+                            ws.write(row, c, '', stl6)
+
+                        ws.write(row, 26, '', stl6)
+                        ws.write(row, 27, line['responsible'], stl7)
+                        ws.write(row, 28, '', stl6)
+                        ws.write(row, 29, '', stl6)
+                        ws.write(row, 30, line['payroll'], stl6)
+                        ws.write(row, 31, '', stl3)
+                        ws.write(row, 32, '', stl3)
+                        row += 1
+
             else:
+                # Bloque "else" original: continuación de settlement
                 ws.write(row, 0, line['requirement'], stl7)
-                ws.write(row, 1, line['budget'], stl7)
-                ws.write(row, 2, line['ruc'] if line['ruc'] and len(line['ruc']) == 8 else '', stl7)
-                ws.write(row, 3, line['ruc'] if line['ruc'] and len(line['ruc']) != 8 else '', stl7)
+                ws.write(row, 1, line['budget'],      stl7)
+                ws.write(row, 2, line['ruc'] if line['ruc'] and len(line['ruc']) == 8 else '',   stl7)
+                ws.write(row, 3, line['ruc'] if line['ruc'] and len(line['ruc']) != 8 else '',   stl7)
                 ws.write(row, 4, line['cost_center'], stl7)
                 ws.write(row, 5, (line['supplier'] or '').upper(), stl7)
                 ws.write(row, 6, (line['concept'] or '').upper(), stl7)
                 ws.write(row, 7, line['payment_date'], stl8)
-                ws.write(row, 8, 'TR', stl8)
+                ws.write(row, 8, 'TR',               stl8)
                 ws.write(row, 9, line['operation_number'], stl7)
-                ws.write(row, 10, '', stl7)
-                ws.write(row, 11, '', stl7)
-                ws.write(row, 12, '', stl7)
-                ws.write(row, 13, '', stl7)
-                ws.write(row, 14, '', stl7)
-                ws.write(row, 15, '', stl7)
-                ws.write(row, 16, '', stl7)
-                ws.write(row, 17, line['date_line'], stl7)
-                ws.write(row, 18, line['dni_ruc_line'], stl7)
-                ws.write(row, 19, line['partner_line'], stl7)
-                ws.write(row, 20, line['document_type'], stl7)
-                ws.write(row, 21, line['document'], stl7)
-                ws.write(row, 22, line['settlement_vendor'], stl6)
+                ws.write(row, 10, '',               stl7)
+                ws.write(row, 11, '',               stl7)
+                ws.write(row, 12, '',               stl7)
+                ws.write(row, 13, '',               stl7)
+                ws.write(row, 14, '',               stl7)
+                ws.write(row, 15, '',               stl7)
+                ws.write(row, 16, '',               stl7)
+                ws.write(row, 17, line['date_line'],        stl7)
+                ws.write(row, 18, line['dni_ruc_line'],     stl7)
+                ws.write(row, 19, line['partner_line'],     stl7)
+                ws.write(row, 20, line['document_type'],    stl7)
+                ws.write(row, 21, line['document'],         stl7)
+                ws.write(row, 22, line['settlement_vendor'],    stl6)
                 ws.write(row, 23, line['settlement_retention'], stl6)
-                ws.write(row, 24, line['settlement_detraction'], stl6)
-                ws.write(row, 25, line['settlement_amount'], stl6)
-                ws.write(row, 26, ' ', stl6)
-                ws.write(row, 27, line['responsible'], stl7)
-                ws.write(row, 28, ' ', stl6)
-                ws.write(row, 29, '', stl6)
-                ws.write(row, 30, line['payroll'], stl6)
+                ws.write(row, 24, line['settlement_detraction'],stl6)
+                ws.write(row, 25, line['settlement_amount'],   stl6)
+                ws.write(row, 26, ' ',                  stl6)
+                ws.write(row, 27, line['responsible'],   stl7)
+                ws.write(row, 28, ' ',                  stl6)
+                ws.write(row, 29, '',                   stl6)
+                ws.write(row, 30, line['payroll'],       stl6)
                 ws.write(row, 31, self.change_state_name(line['requirement_state']), stl3)
-                ws.write(row, 32, self.change_state_name(line['requirement_state']), stl3)
+                ws.write(row, 32, self.change_state_name(line['settlement_state']),   stl3)
                 row += 1
+
             line_aux = line['requirement']
 
 
@@ -272,16 +333,34 @@ class BankReport(models.TransientModel):
                 s.date AS date_line,
                 rp.name AS supplier,
                 dr.concept AS concept,
-                COALESCE(dr.payment_date, rp_payment.payment_date) AS payment_date,
-                COALESCE(dr.operation_number, dr.check_number, rp_payment.operation_number) AS operation_number,
+                
+                -- Primer payment_date si existe en requirement_payment, sino el de dr
+                COALESCE(
+                    rp_pay.payment_dates[1],
+                    dr.payment_date
+                ) AS payment_date,
+
+                -- Primer operation_number: primero payment, luego check, luego dr
+                COALESCE(
+                    rp_pay.operation_numbers[1],
+                    dr.check_number,
+                    dr.operation_number
+                ) AS operation_number,
+
                 CASE
                     WHEN dr.amount_currency_type = 'soles' THEN 'S/'
                     WHEN dr.amount_currency_type = 'dolares' THEN '$$'
                 END AS currency,
+
+                -- amount: primer payment_amount si hay >1, o el amount según tipo de moneda
                 CASE
-                    WHEN dr.amount_currency_type = 'soles' THEN dr.amount_soles
-                    WHEN dr.amount_currency_type = 'dolares' THEN dr.amount_uss
+                    WHEN COALESCE(rp_pay.payment_count, 0) > 1 THEN rp_pay.payment_amounts[1]
+                    ELSE CASE
+                        WHEN dr.amount_currency_type = 'soles' THEN dr.amount_soles
+                        WHEN dr.amount_currency_type = 'dolares' THEN dr.amount_uss
+                    END
                 END AS amount,
+
                 dr.total_retention AS retention,
                 dr.total_detraction AS detraction,
                 dr.to_pay_supplier AS vendor,
@@ -298,7 +377,14 @@ class BankReport(models.TransientModel):
                 dr.settlement_administration_signed_on AS settlement_date,
                 dr.requirement_state AS requirement_state,
                 dr.settlement_state AS settlement_state,
-                dr.settlement_total_lines AS settlement_lines
+                dr.settlement_total_lines AS settlement_lines,
+
+                -- Arrays completos para usar en Python
+                rp_pay.payment_count,
+                rp_pay.payment_dates,
+                rp_pay.operation_numbers,
+                rp_pay.payment_amounts
+
             FROM documental_requirements AS dr
             LEFT JOIN budget AS b ON b.id = dr.budget_id
             LEFT JOIN cost_center AS cc ON cc.id = b.cost_center_id
@@ -308,15 +394,19 @@ class BankReport(models.TransientModel):
             LEFT JOIN res_users AS ru ON ru.id = dr.full_name
             LEFT JOIN res_partner AS rp2 ON rp2.id = ru.partner_id
             LEFT JOIN requirement_payroll AS rpy ON rpy.id = dr.requirement_payroll_id
+
             LEFT JOIN (
                 SELECT
                     requirement_id,
-                    MIN(payment_date) AS payment_date,
-                    MIN(operation_number) AS operation_number
+                    COUNT(*) AS payment_count,
+                    array_agg(payment_date ORDER BY payment_date) AS payment_dates,
+                    array_agg(operation_number ORDER BY payment_date) AS operation_numbers,
+                    array_agg(amount ORDER BY payment_date) AS payment_amounts
                 FROM requirement_payment
                 GROUP BY requirement_id
-            ) rp_payment ON rp_payment.requirement_id = dr.id
-            WHERE COALESCE(dr.payment_date, rp_payment.payment_date) IS NOT NULL
+            ) rp_pay ON rp_pay.requirement_id = dr.id
+
+            WHERE COALESCE(dr.payment_date, rp_pay.payment_dates[1]) IS NOT NULL
             ORDER BY dr.name DESC;
         """
         self._cr.execute(query)

@@ -64,7 +64,7 @@
             <menuitem id="months_submenu" name="Months" action="view_months_action" parent="configuration_menu" sequence="73"
                 groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting"/>
             <menuitem id="years_submenu" name="Years" action="view_years_action" parent="configuration_menu" sequence="74"
-                groups="mkt_documental_managment.documental_requirement_admin"/>
+                groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting"/>
     <menuitem id="groups_categorys_submenu" name="Groups Categorys" parent="hr.menu_human_resources_configuration" action="view_groups_categorys_action" sequence="150"/>
     <menuitem id="user_groups_submenu" name="User Groups" parent="hr.menu_human_resources_configuration" action="view_employee_group_action" sequence="160"/>
 </odoo>
