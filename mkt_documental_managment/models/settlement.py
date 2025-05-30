@@ -55,7 +55,7 @@ class Settlement(models.Model):
     partner = fields.Char(string='Partner')
     paid_to = fields.Many2one(related='requirement_id.paid_to', store=True)
     document_type_id = fields.Many2one(comodel_name='settlement.line.type', string='Document type', domain="[('visible_in_liquidation', '=', True)]", default=lambda self: self._default_document_type(), store=True)
-    mobility_id = fields.Many2one(comodel_name='documental.mobility.expediture', domain="[('used','=',False)]", string='Mobility')
+    mobility_id = fields.Many2one(comodel_name='documental.mobility.expediture', domain="[('used','=',False), ('state','!=','draft')]", string='Mobility')
     document = fields.Char(string='Document')
     movement_number = fields.Char(string='Movement number')
     document_file = fields.Binary(string='File')
@@ -120,6 +120,15 @@ class Settlement(models.Model):
     settle_amount_sum = fields.Float(compute='_compute_settle_amount_sum', store=True)
     vendor_sum = fields.Float(compute='_compute_vendor_sum', store=True)
     cost_center_id = fields.Many2one('cost.center', string='CC Number', related='requirement_id.cost_center_id', store=True, readonly=True, copy=False)
+
+
+    @api.onchange('mobility_id')
+    def _onchange_mobility_id(self):
+        if self.mobility_id:
+            # Generar el PDF
+            report = self.env.ref('mkt_documental_managment.report_documental_mobility_expediture')
+            pdf_content, _ = report._render_qweb_pdf(self.mobility_id.id)
+            self.document_file = base64.b64encode(pdf_content)
 
 
     @api.depends('document_type_id', 'settle_igv')

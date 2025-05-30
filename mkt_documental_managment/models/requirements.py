@@ -1672,6 +1672,7 @@ class DocumentalRequirements(models.Model):
         for record in self:
             record.show_payments_tab = record.divided_payment or has_access
 
+
     @api.model
     def create(self, vals):
         if vals.get('name', _('New')) == _('New'):
@@ -1702,7 +1703,7 @@ class RequirementDetail(models.Model):
     document = fields.Char(string="Document")
     document_file = fields.Binary(string="File")
     document_filename = fields.Char(string="Filename", compute="compute_filename", store=True)
-    mobility_id = fields.Many2one(comodel_name='documental.mobility.expediture', domain="[('used','=',False)]", string='Mobility')
+    mobility_id = fields.Many2one(comodel_name='documental.mobility.expediture', domain="[('used','=',False), ('state','!=','draft')]", string='Mobility')
     currency_id = fields.Many2one(related='requirement_id.currency_id')
     required_amount = fields.Float(digits=(10,3), string='Required amount')
     required_igv = fields.Float(digits=(10,3), string='Required IGV')
@@ -1721,6 +1722,15 @@ class RequirementDetail(models.Model):
     repeated = fields.Boolean(compute='_compute_repeated', default=False, string='Repeated')
     # Campos invisibles controlados
     is_justification = fields.Boolean(string="Is justification?", compute="compute_hide_fields", store=False)
+
+
+    @api.onchange('mobility_id')
+    def _onchange_mobility_id(self):
+        if self.mobility_id:
+            # Generar el PDF
+            report = self.env.ref('mkt_documental_managment.report_documental_mobility_expediture')
+            pdf_content, _ = report._render_qweb_pdf(self.mobility_id.id)
+            self.document_file = base64.b64encode(pdf_content)
 
 
     @api.onchange('document_type')

@@ -791,11 +791,11 @@ class Partner(models.Model):
                     'health_card', 'contributions_report'
                 ]
             ] + [
-                getattr(self, f'familiar_dnifile{i}_filename') for i in range(1, 9)
-                if getattr(self, f'familiar_relationship{i}') == 'Hijo' or 'Hija'
+                getattr(self, f'child_dnifile{i}_filename') for i in range(1, 7)
+                if getattr(self, f'child_relationship{i}') == 'Hijo' or 'Hija'
             ] + [
-                getattr(self, f'familiar_dnifile{i}_back_filename') for i in range(1, 9)
-                if getattr(self, f'familiar_relationship{i}') == 'Hijo' or 'Hija'
+                getattr(self, f'child_dnifile{i}_back_filename') for i in range(1, 7)
+                if getattr(self, f'child_relationship{i}') == 'Hijo' or 'Hija'
             ])
         ])
         attachments_to_unlink.unlink()
@@ -816,14 +816,14 @@ class Partner(models.Model):
                 }
                 attachment = self.env['ir.attachment'].create(attach)
                 attachments.append(attachment.id)
-        for index in range(1, 9):
-            relationship_field = f'familiar_relationship{index}'
-            familiar_dni = f'familiar_dni{index}'
-            familiar_dnifile = f'familiar_dnifile{index}'
-            familiar_dnifile_back = f'familiar_dnifile{index}_back'
+        for index in range(1, 7):
+            relationship_field = f'child_relationship{index}'
+            child_dni = f'child_dni{index}'
+            child_dnifile = f'child_dnifile{index}'
+            child_dnifile_back = f'child_dnifile{index}_back'
 
-            if getattr(self, relationship_field) in ('Hijo','Hija') and getattr(self, familiar_dni) and getattr(self, familiar_dnifile):
-                field = familiar_dnifile
+            if getattr(self, relationship_field) in ('Hijo','Hija') and getattr(self, child_dni) and getattr(self, child_dnifile):
+                field = child_dnifile
                 attach = {
                     'name': getattr(self, f'{field}_filename'),
                     'datas': getattr(self, field),
@@ -834,8 +834,8 @@ class Partner(models.Model):
                 }
                 attachment = self.env['ir.attachment'].create(attach)
                 attachments.append(attachment.id)
-            if getattr(self, relationship_field) in ('Hijo','Hija') and getattr(self, familiar_dni) and getattr(self, familiar_dnifile_back):
-                field = familiar_dnifile_back
+            if getattr(self, relationship_field) in ('Hijo','Hija') and getattr(self, child_dni) and getattr(self, child_dnifile_back):
+                field = child_dnifile_back
                 attach = {
                     'name': getattr(self, f'{field}_filename'),
                     'datas': getattr(self, field),
