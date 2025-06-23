@@ -3590,7 +3590,7 @@
                                 </div>
                         </div>
                     </div> 
-                    <script t-att-src="'https://maps.googleapis.com/maps/api/js?key=AIzaSyA2vu6a58k4C62ludQRYhIbJov6dTrYLL8&amp;callback=initMap'" async="true" defer="true"/>
+                    <script t-att-src="'https://maps.googleapis.com/maps/api/js?key=AIzaSyCt9aqupWOk90FkPG3f_ZSYyKuqwk5yW_0&amp;callback=initMap'" async="true" defer="true"/>
                 </t>
             </t>
         </field>

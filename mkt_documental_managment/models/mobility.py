@@ -131,12 +131,16 @@ class DocumentalMobilityExpediture(models.Model):
     def button_petitioner_signature(self):
         alias_name = self.env.user.partner_id.alias_name
         user_name = alias_name if alias_name else self.env.user.name
+        responsible_name = self.budget_id.responsible_id.partner_id.alias_name
         self.attach_files()
         self.button_done()
         self.write({
             'petitioner_signature': signature_generator(user_name),
             'is_petitioner_signed': True,
             'petitioner_signed_on': fields.Datetime.now(),
+            'executive_signature': signature_generator(responsible_name),
+            'is_executive_signed': True,
+            'executive_signed_on': fields.Datetime.now(),
             'state': 'executive',
         })
 
@@ -145,9 +149,6 @@ class DocumentalMobilityExpediture(models.Model):
         alias_name = self.env.user.partner_id.alias_name
         user_name = alias_name if alias_name else self.env.user.name
         self.write({
-            'executive_signature': signature_generator(user_name),
-            'is_executive_signed': True,
-            'executive_signed_on': fields.Datetime.now(),
             'state': 'done',
         })
 

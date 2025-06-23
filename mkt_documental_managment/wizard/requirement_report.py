@@ -196,7 +196,7 @@ class RequirementReport(models.TransientModel):
                 ws.write(row, 9, line['amount'], stl3)
                 ws.write(row, 10, line['retention'], stl3)
                 ws.write(row, 11, line['detraction'], stl3)
-                ws.write(row, 12, line['vendor'], stl3)
+                ws.write(row, 12, amounts[0] if amounts else line['vendor'], stl3)
                 ws.write(row, 13, line['document_type'], stl5)
                 ws.write(row, 14, line['document'], stl5)
                 ws.write(row, 15, line['settlement_vendor'], stl5)
