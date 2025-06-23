@@ -18,6 +18,7 @@
         groups="mkt_documental_managment.documental_requirement_user,mkt_documental_managment.documental_requirement_boss,mkt_documental_managment.documental_requirement_external_control,mkt_documental_managment.documental_requirement_budget_executive,mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_administration,mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_intern_control_read"
         web_icon="mkt_documental_managment,static/description/icon_documental.png"/>
         <menuitem id="doc_mng_requirements" name="Requirements" action="action_view_requirement" parent="doc_mng_root" sequence="0"/>
+        <menuitem id="announcements_menu" name="Announcements" action="internal_announcement_action" parent="mkt_supervision.menu_mkt_supervision_root" sequence="5"/>
         <menuitem id="settlement_submenu" name="Settlements" action="view_requirement_settlement_action" parent="doc_mng_root" sequence="1"/>
         <menuitem id="doc_mng_settlements" name="Settlements" action="action_view_settlements" parent="doc_mng_root" sequence="2"
             groups="mkt_documental_managment.documental_requirement_admin"/>
@@ -32,23 +33,24 @@
             <!-- <menuitem id="cash_report_submenu" name="Cash report" action="view_cash_report_action"
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="41"/> -->
             <menuitem id="settlement_report_submenu" name="Fee Receipt Report" action="view_settlement_report_action"
-                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="42"/>
+                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_admin" sequence="42"/>
             <menuitem id="pending_settlement_submenu" name="Pending settlements" action="action_pending_settlement_view"
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_intern_control_read" sequence="43"/>
             <menuitem id="expenses_report_submenu" name="Expenses report" action="view_expenses_report_action"
-                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="44"/>
+                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_admin" sequence="44"/>
             <menuitem id="accounting_expenses_report_submenu" name="Accounting expenses report" action="view_accounting_expenses_report_action"
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="45"/>
-            <menuitem id="bank_report_submenu" name="Bank report" action="view_bank_report_action"
-                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_accounting" sequence="46"/>
             <menuitem id="mobility_report_submenu" name="Mobility Report" action="view_mobility_report_action"
-                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_intern_control" sequence="47"/>
+                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_intern_control" sequence="46"/>
         <menuitem id="accounting_menu" name="Accounting" parent="doc_mng_root" sequence="6" groups="mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_admin"/>
             <menuitem id="accounting_settlement_submenu" name="Voucher" action="view_settlement_action" parent="accounting_menu" sequence="0"/>
             <menuitem id="proof_of_purchase_submenu" name="Proof of purchase" action="view_settlement_proof_of_purchase_action" parent="accounting_menu" sequence="1"/>
             <menuitem id="account_purchase_report_submenu" name="Purchase report" action="view_account_purchase_report_action" parent="accounting_menu" sequence="2"/>
             <menuitem id="settlement_update_submenu" name="Update settlement" action="view_settlement_update_action" parent="accounting_menu"
                 groups="mkt_documental_managment.documental_requirement_admin" sequence="3"/>
+            <menuitem id="bank_report_submenu" name="Bank report" action="view_bank_report_action"
+                parent="accounting_menu" groups="mkt_documental_managment.documental_requirement_accounting" sequence="4"/>
+            <!-- <menuitem id="settlement_voucher_last_submenu" name="Last settlement voucher" action="action_settlement_voucher_last" parent="accounting_menu" sequence="5"/> -->
         <menuitem id="utilities_menu" name="Utilities" parent="doc_mng_root" sequence="7" groups="mkt_documental_managment.budget_control_user,mkt_documental_managment.budget_control_administrator"/>
             <menuitem id="budget_submenu" name="Budget" action="action_view_budget" parent="utilities_menu" sequence="61"/>
             <menuitem id="dni_consult_submenu" name="Consult DNI" action="view_dni_consult_action" parent="utilities_menu" sequence="62"/>

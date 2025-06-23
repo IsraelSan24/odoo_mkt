@@ -244,7 +244,9 @@ class AccountPurchaseReport(models.Model):
             ws.write(row, 9, line['exchange_type_date'], stl4)
             ws.write(row, 10, line['account_code'])
             ws.write(row, 11, line['annex_code'])
-            if line['cost_center_code'] in ('1991','2081','2091','2101'):
+            if line['cost_center_code'] in ('1471', '2741'):
+                ws.write(row, 12, '1471')
+            elif line['cost_center_code'] in ('1991', '2081', '2091', '2101'):
                 ws.write(row, 12, '1991')
             else:
                 ws.write(row, 12, line['cost_center_code'])
@@ -296,8 +298,8 @@ class AccountPurchaseReport(models.Model):
                 s.voucher_number AS voucher_number,
                 s.voucher_date AS voucher_date,
                 CASE
-                    WHEN s.currency = 'soles' THEN 'MN'
-                    WHEN s.currency = 'dolares' THEN 'US'
+                    WHEN s.document_currency = 'soles' THEN 'MN'
+                    WHEN s.document_currency = 'dolares' THEN 'US'
                     ELSE ' '
                 END AS currency_code,
                 s.change_type AS change_type,

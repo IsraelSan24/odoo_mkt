@@ -19,6 +19,8 @@
                     <button string="Download formats" name="download_attach_files" type="object" class="oe_highlight"/>
                     <button string="Update To Pay" name="compute_detraction_to_pay" type="object" class="oe_highlight"
                         groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Accounting Accounts" name="onchange_dni" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
                 </header>
                 <field name="is_refund" invisible="True"/>
                 <field name="timer_state" readonly="True" optional="hide"/>
@@ -110,6 +112,7 @@
                         <group>
                             <field name="current_partner_bank_ids" widget="many2many_tags"
                                 groups="mkt_documental_managment.documental_requirement_admin"/>
+                            <field name="accounting_account" invisible="True"/>
                             <field name="paid_to" readonly="True"/>
                             <field name="dni_or_ruc" force_save="True" readonly="True"/>
                             <field name="amount_currency_type" widget='radio' readonly="True" invisible="True"/>
@@ -625,6 +628,7 @@
                                         decoration-danger="cpe_state == 'non_existent'"
                                         decoration-warning="cpe_state == 'failed'"
                                         groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"/>
+                                    <field name="cpe_company_state" widget="badge" optional="show" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"/>    
                                     <field name="repeated" invisible="1"/>
                                     <field name="wrong_payment" invisible="1"/>
                                     <field name="settle_no"/>
@@ -680,6 +684,7 @@
                                     <field name="amount" sum="Total" attrs="{'readonly': [('is_amount_editable', '=', False)]}"/>
                                     <field name="in_bank" widget="boolean_toggle" 
                                         attrs="{'readonly': [('is_administration_editable', '=', False)]}"/>
+                                    <field name="bank_accounting_account" groups="mkt_documental_managment.documental_requirement_accounting"/>
                                 </tree>
                             </field>
                             <group>

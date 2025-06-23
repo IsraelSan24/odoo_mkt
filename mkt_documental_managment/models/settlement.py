@@ -1,6 +1,6 @@
 from odoo import _, api, fields, models
 from datetime import datetime
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from odoo.addons.mkt_documental_managment.models.api_dni import apiperu_dni
 from odoo.addons.mkt_documental_managment.models.api_ruc import apiperu_ruc
 from odoo.addons.mkt_documental_managment.models.cpe_consult import apiperu_cpe
@@ -388,16 +388,32 @@ class Settlement(models.Model):
         attachments = []
         for rec in self:
             if rec.document_file:
-                attach = {
-                    'name': rec.document_filename,
-                    'datas': rec.document_file,
-                    'store_fname': rec.document_filename,
-                    'res_model': rec._name,
-                    'res_id': rec.id,
-                    'type': 'binary',
-                }
-                attachment = self.env['ir.attachment'].create(attach)
-                attachments.append(attachment.id)
+                existing_attachments = self.env['ir.attachment'].search([
+                    ('res_model', '=', rec._name),
+                    ('res_id', '=', rec.id),
+                ], limit=1)
+
+                if existing_attachments:
+                    # Reemplazar contenido del archivo existente
+                    existing_attachments.write({
+                        'name': rec.document_filename,
+                        'datas': rec.document_file,
+                        'store_fname': rec.document_filename,
+                    })
+                    attachments.append(existing_attachments.id)
+                else:
+                    # Crear nuevo adjunto si no existe
+                    attach = {
+                        'name': rec.document_filename,
+                        'datas': rec.document_file,
+                        'store_fname': rec.document_filename,
+                        'res_model': rec._name,
+                        'res_id': rec.id,
+                        'type': 'binary',
+                    }
+                    attachment = self.env['ir.attachment'].create(attach)
+                    attachments.append(attachment.id)
+        return attachments
 
 
     # def cpe_validation(self):
