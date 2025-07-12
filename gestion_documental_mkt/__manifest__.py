@@ -8,7 +8,7 @@
     'license': 'AGPL-3',
     'data': [
         'views/templates.xml',
-        'views/views.xml',
+        #'views/views.xml',
         'report/report-requerimiento.xml',
         'report/report-liquidacion.xml',
         'report/report-gastos.xml',

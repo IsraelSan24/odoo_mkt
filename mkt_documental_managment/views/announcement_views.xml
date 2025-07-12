@@ -1,0 +1,38 @@
+<odoo>
+    <record id="view_announcement_kanban" model="ir.ui.view">
+        <field name="name">internal.announcement.kanban</field>
+        <field name="model">internal.announcement</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="message"/>
+                <field name="date"/>
+                <field name="author_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record">
+                            <div class="o_kanban_details">
+                                <strong><field name="name"/></strong>
+                                <div><field name="message"/></div>
+                                <div class="text-muted">
+                                    <small><field name="date"/> - <field name="author_id"/></small>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="internal_announcement_action" model="ir.actions.act_window">
+        <field name="name">Announcements</field>
+        <field name="res_model">internal.announcement</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Post your first announcement
+            </p>
+        </field>
+    </record>
+</odoo>

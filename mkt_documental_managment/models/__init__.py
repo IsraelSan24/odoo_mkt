@@ -27,6 +27,7 @@ from . import api_ruc
 from . import api_cpe
 from . import cpe_consult
 
+from . import announcement
 from . import settlement
 from . import settlement_line
 from . import settlement_journal
@@ -40,3 +41,4 @@ from . import user_groups
 from . import groups_categorys
 from . import res_users
 from . import res_bank
+# from . import settlement_voucher_last
