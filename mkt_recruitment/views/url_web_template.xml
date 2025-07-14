@@ -3038,13 +3038,14 @@
                                                                 </select>
                                                             </div>
                                                             <div class="form-group col-md-6">
-                                                                <label for="dni">Document number</label>
+                                                                <label for="dni">Document number <span>*</span></label>
                                                                 <div class="input-group">
                                                                     <input type="text" name="dni" class="form-control" id="dni" required="True"/>
                                                                     <button type="button" class="btn btn-secondary custom-button ml-1" onclick="consultarDNI()">
                                                                         <i class="fa fa-search"></i>
                                                                     </button>
                                                                 </div>
+                                                                <small class="form-text text-muted">*After filling the field, then click on the 🔍︎ icon</small>
                                                                 <div class="invalid-feedback">
                                                                     Please enter your DNI.
                                                                 </div>
@@ -3053,7 +3054,7 @@
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
                                                                 <label for="name">Name</label>
-                                                                <input type="text" name="name" class="form-control" id="name"/>
+                                                                <input type="text" name="name" class="form-control" id="name" readonly="readonly" placeholder="Click on the 🔍︎ to get your name ↗"/>
                                                                 <div class="invalid-feedback">
                                                                     Please enter your name.
                                                                 </div>
