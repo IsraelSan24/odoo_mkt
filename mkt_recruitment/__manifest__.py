@@ -76,6 +76,10 @@
             'mkt_recruitment/static/src/js/document_geolocalization.js',
             'mkt_recruitment/static/src/js/validation_digits_document.js',
         ],
+        'web.assets_backend': [
+            'mkt_recruitment/static/src/js/notification_effects.js',
+            'mkt_recruitment/static/src/scss/notification_effects.scss',
+        ],
     },
     'installable':True,
     'application':True,
