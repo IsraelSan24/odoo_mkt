@@ -5,6 +5,701 @@
         <t t-call="web.external_layout">
             <t t-set="o" t-value="o.with_context(lang=o.employee_id.lang)"/>
             <html>
+                <t t-if="o.contract_type_id.contract_short_name == 'CTPFBMSE'">
+                    <article>
+                        <div style="page-break-after: always">
+                            <h6 class="text-center">
+                                <strong>
+                                    <u>
+                                        <t t-if="o.is_renovation">
+                                            RENOVACIÓN DE CONTRATO DE TRABAJO A PLAZO FIJO BAJO MODALIDAD DE SERVICIO ESPECIFICO
+                                        </t>
+                                        <t t-else="">
+                                            CONTRATO DE TRABAJO A PLAZO FIJO BAJO MODALIDAD DE SERVICIO ESPECIFICO
+                                        </t>
+                                    </u>
+                                </strong>
+                            </h6>
+                            <br/>
+                            <p style="font-size:0.625rem">
+                                Conste por el presente documento, el contrato de trabajo por servicio específico (en adelante, el "CONTRATO") que, de acuerdo a lo previsto en el artículo 63° y siguientes que resulten aplicables de la Ley de Productividad y 
+                                Competitividad Laboral (en adelante, la "LPCL"), celebran:
+                            </p>
+                            <p style="font-size:0.625rem">
+                                O 
+                                <strong>
+                                    MARKETING ALTERNO PERU SAC 
+                                </strong>
+                                (en adelante, "MARKETING con RUC No. 20512433821, con domicilio en Jr. Libertad 757 Urb. Orbea, distrito de Magdalena del mar, provincia y departamento de Lima, debidamente representado por su apoderada Bertha María Cuervas 
+                                Amoros, identificado con DNI N° 10771669, y por otra parte,O Don 
+                                <strong>
+                                    <t t-if="o.partner_name">
+                                        <span t-esc="o.partner_name"/> 
+                                    </t>
+                                    <t t-else="">
+                                        __________&#44;
+                                    </t>
+                                </strong>
+                                (en adelante, el "TRABAJADOR"), identificado con DNI N° 
+                                <strong>
+                                    <t t-if="o.vat">
+                                        <span t-esc="o.vat"/>&#44; 
+                                    </t>
+                                    <t t-else="">
+                                        __________&#44;
+                                    </t>
+                                </strong>
+                                con domicilio en 
+                                <t t-if="o.street">
+                                    <span t-esc="o.street"/>
+                                </t>
+                                <t t-else="">
+                                    __________
+                                </t>
+                                Distrito de 
+                                <t t-if="o.district">
+                                    <span t-esc="o.district"/>&#44;
+                                </t>
+                                <t t-else="">
+                                    __________
+                                </t>
+                                provincia de
+                                <t t-if="o.province">
+                                    <span t-esc="o.province"/>,
+                                </t>
+                                <t t-else="">
+                                    __________
+                                </t>
+                                Departamento de 
+                                <t t-if="o.department">
+                                    <span t-esc="o.department"/>&#44;
+                                </t>
+                                <t t-else="">
+                                    __________
+                                </t>
+                                Número telefónico 
+                                <t t-if="o.phone">
+                                    <span t-esc="o.phone"/> 
+                                </t>
+                                <t t-else="">
+                                    __________
+                                </t>
+                                y para todo efecto de notificaciones, correo electrónico 
+                                <t t-if="o.email">
+                                    <span t-esc="o.email"/>. 
+                                </t>
+                                <t t-else="">
+                                    __________
+                                </t>
+                                Totalmente autorizado por el TRABAJADOR. MARKETING y EL TRABAJADOR (en adelante y conjuntamente, las " PARTES") suscriben el CONTRATO en los términos y condiciones contenidos en las siguientes cláusulas:
+                                a quien en adelante se le denominará EL TRABAJADOR; en los términos y condiciones siguientes:
+                            </p>
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    1&#46;&#45; ANTECEDENTES
+                                </strong>
+                            </p>
+                            <p style="font-size:0.625rem">
+                                MARKETING es una persona jurídica de derecho privado, constituida con el objeto de Tercerización y Asesoramiento de Marketing Interno y externo, Publicidad e Imagen Institucional en general; así como también brindar servicios en actividades publicitarias y comerciales, tales como impulso de ventas, Promotoria, encuestas, distribución de material publicitario y afines; Los servicios descritos se prestan a través de contratos con terceros a quienes se denominarán CLIENTES. Actualmente prestando servicios especializados PUBLICIDAD Y PROMOTORIA DE PRODUCTOS con determinados clientes.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    SEGUNDO&#46;&#45; 
+                                </strong>
+                                Por lo expuesto en la cláusula que antecede, EL EMPLEADOR tiene la necesidad transitoria de contratar personal en forma temporal para cubrir la demanda requerida como resultado del Contrato suscrito con el cliente comercial 
+                                <t t-if="o.cost_center">
+                                    <span t-esc="o.cost_center"/>
+                                </t>
+                                <t t-else="">
+                                    __________
+                                </t>
+                                , siendo necesaria la contratación  de personal que desarrolle labores de promotoría en favor de los productos de nuestro cliente, esta demanda se encuentra referida a prestar servicios de promoción de productos sólo durante algunos días de la semana.  
+                            </p>
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    2.1&#46;&#45; 
+                                </strong>
+                                En razón de la causa objetivas señalada en el párrafo anterior, La Empresa Contrata a Plazo Determinado bajo la modalidad de naturaleza temporal, los servicios específicos de EL TRABAJADOR a efectos que se desempeñe como 
+                                <t t-if="o.employee_job">
+                                    <!-- <span t-esc="o.job_id.name"/> &#40;A&#41; -->
+                                    <span t-esc="o.employee_job"/>
+                                </t>
+                                <t t-else="">
+                                    __________
+                                </t>
+                                , aclarando que no implica la comercialización final del producto.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    2.2&#46;&#45; 
+                                </strong>
+                                No obstante lo acordado en el párrafo precedente, EL EMPLEADOR esta facultado a efectuar cualquier modificación razonable, a la relación laboral, en función a la capacidad y aptitud de EL TRABAJADOR y a las necesidades y requerimiento de la misma. EL TRABAJADOR podrá ser asignado por EL EMPLEADOR a otra sede local donde sean requeridos sus servicios dentro del termino de su vigencia, comprometiéndose a respetar los términos del mismo y no pudiendo invocar por ello hostilidades en el o los puntos que se le asigne.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    TERCERA&#46;&#45; 
+                                </strong>
+                            </p>
+                            <p style="font-size:0.625rem">
+                                Las actividades de MARKETING se encuentran ligadas a la ejecución del Contrato Comercial principal con EL CLIENTE. Debido a ello, existen periodos en los cuales las actividades de promoción de productos por ciertos días de la semana deben suspenderse como consecuencia de falta de requerimientos de los clientes y/o cuando por otro motivo no se pueden realizar dichas actividades.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    CUARTA&#46;&#45; LUGAR DE LA PRESTACIÓN DE LOS SERVICIOS, JORNADA LABORAL Y OBLIGACIONES DEL TRABAJADOR
+                                </strong>
+                            </p>
+                            <p style="font-size:0.625rem">
+                                EL TRABAJADOR prestará sus servicios en puntos de venta programados y establecidos a nivel comercial. 
+                            </p>
+                            <p style="font-size:0.625rem">
+                                EL TRABAJADOR deberá cumplir con las normas y/o directivas internas, las contenidas en el Reglamento Interno de Trabajo, las normas laborales vigentes y las que imparta MARKETING por necesidades del servicio, en ejercicio de su facultad de dirección, de conformidad con el artículo 9 de la LPCL. Asimismo, se compromete a cumplir con las disposiciones sobre Exclusividad, Reserva, Confidencialidad, No Competencia y Propiedad Intelectual.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                Las partes convienen que MARKETING tiene facultades para organizar, fiscalizar, suprimir, modificar, reemplazar y sancionar, de modo no sustancial, la prestación de servicios (tiempo, lugar en el cual se prestara el servicio, forma, funciones y modalidad) de EL TRABAJADOR. En virtud de dicha facultad, MARKETING podrá disponer que EL TRABAJADOR desempeñe sus funciones bajo la jefatura del personal que MARKETING designe.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                Las partes acuerdan que, durante el plazo de duración del presente contrato, EL TRABAJADOR no podrá realizar servicios similares a los que son objeto del presente contrato a personas, empresas y/o instituciones que realicen la misma actividad económica o sean competencia de MARKETING salvo en los supuestos en que EL TRABAJADOR se encuentre en suspensión de labores.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    QUINTA&#46;&#45; VIGENCIA DEL CONTRATO
+                                </strong>
+                            </p>
+                            <p style="font-size:0.625rem">
+                                La duración del presente contrato será determinada en cada caso en concreto, Contemplando para el presente caso del 
+                                <t t-if="o.date_start">
+                                    <span t-esc="'%02d' % o.date_start.day"/>
+                                </t>
+                                <t t-else="">
+                                    __________ 
+                                </t>
+                                de 
+                                <t t-if="o.date_start">
+                                    <span t-esc="o.date_start_month"/>
+                                </t>
+                                <t t-else="">
+                                    __________ 
+                                </t>
+                                del 
+                                <t t-if="o.date_start">
+                                    <span t-esc="o.date_start.year"/> 
+                                </t>
+                                <t t-else="">
+                                    __________ 
+                                </t>
+                                al 
+                                <t t-if="o.date_end">
+                                    <span t-esc="'%02d' % o.date_end.day"/> 
+                                </t>
+                                <t t-else="">
+                                    __________ 
+                                </t>
+                                de 
+                                <t t-if="o.date_end">
+                                    <span t-esc="o.date_end_month"/> 
+                                </t>
+                                <t t-else="">
+                                    __________ 
+                                </t>
+                                del 
+                                <t t-if="o.date_end">
+                                    <span t-esc="o.date_end.year"/> 
+                                </t>
+                                <t t-else="">
+                                    __________ 
+                                </t>
+                                .
+                            </p>
+                            <table class="table">
+                                <colgroup>
+                                    <col width="40%"/>
+                                    <col width="20%"/>
+                                    <col width="40%"/>
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="o.contract_signature and o.signed_by_employer">
+                                                <img t-att-src="image_data_uri(o.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="o.contract_signature">
+                                                <img t-att-src="image_data_uri(o.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                            MARKETING ALTERNO PERU S&#46;A&#46;C
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                            El TRABAJADOR
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col" class="text-center" style="border: none">
+                                            RUC: 20512433821
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" class="text-center" style="border: none;"></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div style="page-break-after: always;">
+                            <p style="font-size:0.625rem"> 
+                                <strong>
+                                    SÉXTA&#46;&#45; CALIFICACIÓN DE TRABAJO
+                                </strong>   
+                            </p>
+                            <p style="font-size:0.625rem">
+                                Debido a que la información a la que tiene acceso EL TRABAJADOR tiene naturaleza confidencial y reservada para MARKETING y sus clientes, el puesto de PROMOTOR. Asimismo, por la naturaleza de las labores de impulso, promoción y ofrecimiento de los productos de los clientes, las mismas que son desarrolladas fuera del centro laboral, sin supervisión constante y permanente, EL TRABAJADOR es calificado como No Sujeto a Fiscalización Inmediata.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    SEPTIMA.- REMUNERACIÓN, CONDICIONES Y BENEFICIOS  
+                                </strong>
+                            </p>
+                            <p style="font-size:0.625rem">
+                                En atención a lo establecido en el Artículo 8° de la Ley de Productividad y Competitividad Laboral, ambas partes convienen, respetándose la manifestación de voluntad del trabajador y por acuerdo privado que EL TRABAJADOR, 
+                                por el servicio que preste a EL EMPLEADOR, y en absoluto conocimiento de la figura excepcional, percibirá una remuneración BRUTA diaria de S/. 37.67 por día efectivo de trabajo (Treinta y Siete y 67/100 Nuevos Soles), que 
+                                será liquidada en forma quincenal Los demás beneficios laborales que le correspondan a EL TRABAJADOR, se otorgarán en las oportunidades necesarias de cumplir con los plazos requeridos y establecidos en las leyes correspondientes. 
+                                Cabe resaltar que la programación de labores será previa coordinación comercial.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    OCTAVA&#46;&#45; DE LAS RECOMENDACIONES EN MATERIA DE SEGURIDAD Y SALUD EN EL TRABAJO
+                                </strong>
+                            </p>
+                            <p style="font-size:0.625rem">
+                                En cumplimiento de lo dispuesto por el literal c) del artículo 35 de la Ley N° 29783, Ley de Seguridad y Salud en el Trabajo, MARKETING, entrega a EL TRABAJADOR una descripción de las recomendaciones de seguridad y salud en el trabajo para el puesto que este ocupará en virtud de la celebración del presente Contrato y que EL TRABAJADOR se obliga a respetar, sin perjuicio de lo establecido en el Reglamento Interno de Seguridad y Salud en el Trabajo de la empresa, así como otras normas internas, lineamientos o directivas sobre la materia, las cuales le serán puestas a disposición al inicio de sus labores, el cual consta en el ANEXO C.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    NOVENA&#46;&#45; CONOCIMIENTO DE LEGISLACIÓN Y PROCEDIMIENTO EN MATERIA DE PREVENCIÓN DE ACTOS DE HOSTIGAMIENTO SEXUAL
+                                </strong>
+                            </p>
+                            <p style="font-size:0.625rem">
+                                Mediante la suscripción del presente documento, EL TRABAJADOR declara haber sido informado sobre la existencia y alcances  de  la  Ley  No. 27942 - Ley de Prevención y Sanción del Hostigamiento Sexual- y su Reglamento aprobado mediante Decreto Supremo No. 014-2019-MIMP - en adelante, el "Reglamento", comprometiéndose a cumplir estrictamente las disposiciones y los procedimientos establecidos en la "Política sobre Prevención y Sanción de Actos de Hostigamiento Sexual" - en adelante, la "Política" implementada por MARKETING. EL TRABAJADOR se compromete a seguir el procedimiento establecido en la Política cuando tome conocimiento de cualquier incidente que pueda ser considerado un acto de hostigamiento sexual.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    DÉCIMO&#46;&#45; DE LA DEVOLUCIÓN DE MATERIALES DE TRABAJO.
+                                </strong>
+                            </p>
+                            <p style="font-size:0.625rem">
+                                Al momento de extinguirse la relación laboral, por cualquier de las causas estipuladas en el presente contrato, EL TRABAJADOR se obliga a devolver en forma inmediata y ordenada a MARKETING todo el material, documentación y cualquier otro bien y/o implemento de propiedad de MARKETING que, con ocasión de la prestación de sus servicios, se encuentren en su poder, tales como equipos, software, bases de datos, órdenes de venta, hojas membretadas, entre otros. Pues de no cumplir con la devolución correspondiente en el plazo de 24 horas de formalizado el cese, se procede con descuento inmediato por el valor del implemento. 
+                            </p>
+                            <p>
+                                <strong>
+                                    DECIMO PRIMERO&#46;&#45; DATOS PERSONALES Y CORREO ELECTRÓNICO CORPORATIVO
+                                </strong>
+                            </p>
+                            <p style="font-size:0.625rem">
+                                EL TRABAJADOR autoriza a MARKETING para tratar, recolectar, requerir, reunir, conservar, modificar, utilizar y transferir a terceros (en las condiciones que se señalan en los siguientes párrafos), dentro o fuera del país, su información personal, incluyendo sus datos personales y sensibles. Sin carácter limitativo, ello se efectuará a efectos de juzgar su idoneidad y rendimiento como trabajador, operar de la manera que MARKETING estime más conveniente sus sistemas de compensaciones y manejo de planillas o, en general, tomar decisiones vinculadas al puesto de trabajo.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                EL TRABAJADOR está de acuerdo en que dicha información pueda ser transferida por MARKETING (i) a otros trabajadores de MARKETING que requieran conocer dicha información para el ejercicio de sus funciones; (ii) a terceras personas y/o empresas contratadas por MARKETING que requieran conocer dicha información para la prestación de sus servicios; y/o, (iii) a sus empresas vinculadas, domiciliadas o no en el Perú, para la consolidación de datos, preparación de estadísticas corporativas, elaboración de políticas, etc.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                EL TRABAJADOR autoriza la publicación de sus datos personales en medios de comunicación y difusión de MARKETING, dentro de los márgenes permitidos por la Ley No.29733, Ley de Protección de Datos Personales.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                EL TRABAJADOR podrá ejercer su derecho de acceso, rectificación, cancelación y oposición mediante escrito dirigido a MARKETING.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                EL TRABAJADOR reconoce y declara expresamente que, de manera previa a la firma del presente contrato, ha sido debida y suficientemente informado sobre los alcances y efectos de la presente cláusula, según lo establecido en el artículo 18° de la Ley de Protección de Datos Personales.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                MARKETING podrá otorgar a EL TRABAJADOR un correo electrónico corporativo como herramienta de trabajo para el desarrollo de sus labores. Dicho sistema de correo electrónico es de propiedad de MARKETING y, en consecuencia, los mensajes que se intercambian o almacenan son considerados como parte de los registros de MARKETING y podrá resguardarlos y hacer uso de ellos sin necesidad de aviso previo a EL TRABAJADOR Por tanto, el correo electrónico corporativo no podrá ser utilizado por EL TRABAJADOR para fines ajenos a la actividad de MARKETING.
+                            </p>
+                            <table class="table">
+                                <colgroup>
+                                    <col width="40%"/>
+                                    <col width="20%"/>
+                                    <col width="40%"/>
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="o.contract_signature and o.signed_by_employer">
+                                                <img t-att-src="image_data_uri(o.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="o.contract_signature">
+                                                <img t-att-src="image_data_uri(o.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                            MARKETING ALTERNO PERU S&#46;A&#46;C
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                            El TRABAJADOR
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col" class="text-center" style="border: none">
+                                            RUC: 20512433821
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" class="text-center" style="border: none;"></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div style="page-break-after: always;">
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    DÉCIMO SEGUNDA&#46;&#45; SOBORNO Y CORRUPCIÓN
+                                </strong>
+                            </p>
+                            <p style="font-size:0.625rem">
+                                EL TRABAJADOR no deberá incurrir en actividades fraudulentas o de corrupción ya sea contra terceros o contra MARKETING. Así, EL TRABAJADOR conoce y acepta que ninguna suma de  dinero o cualquier otro beneficio será utilizado, directa o indirectamente, para influenciar, de manera corrupta o ilegal, cualquier decisión o juzgamiento de cualquier funcionario o gobierno, o cualquier oficina, agencia o herramienta de este en relación con la empresa, sus actividades, los servicios o en conexión con cualquier contrato o acuerdo  con terceros asociados con la empresa, sus  actividades o los servicios.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    DÉCIMO TERCERA&#46;&#45; CLÁUSULA RESOLUTORIA DEL VÍNCULO LABORAL
+                                </strong>
+                            </p>
+                            <p style="font-size:0.625rem">
+                                Las partes de común acuerdo pactan que el vínculo laboral se disolverá si en caso se resuelva el Contrato Principal con el CLIENTE que MARKETING mantiene con su cliente que sustenta la contratación de EL TRABAJADOR.La extinción del contrato de trabajo procederá por alguna de las causas previstas en el Art. 16° del D.S 003-97-TR del D. Legislativo 728, Procederá de igual manera el despido de EL TRABAJADOR cuando las conductas esten previstas y tipificadas en los inc. del Art 24°, 25° del D.S 003-97-TR del TUO D.L 728.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    DÉCIMO CUARTA&#46;&#45; CAMBIO DE DOMICILIO Y NÚMERO TELEFÓNICO
+                                </strong>
+                            </p>
+                            <p style="font-size:0.625rem">
+                                A la suscripción de este contrato, EL TRABAJADOR declara que su domicilio y el número telefónico son los que figuran en la introducción del presente contrato, obligándose a comunicar a MARKETING por escrito o por medios electrónicos los cambios que ocurran en un plazo no mayor de tres (3) días y asimismo acreditar ante MARKETING cualquier alteración en su situación familiar, en especial, si ello pudiera dar origen al otorgamiento o supresión de beneficios de acuerdo a ley.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                <strong>
+                                    DÉCIMO QUINTA&#46;&#45; LEGISLACIÓN APLICABLE
+                                </strong>
+                            </p>
+                            <p style="font-size:0.625rem">
+                                EL TRABAJADOR estará sujeto al régimen laboral de la actividad privada dentro de los alcances y efectos que determina la LPCL. En consecuencia, en todo aquello no previsto en el presente contrato, serán aplicables las disposiciones legales vigentes en materia laboral.
+                            </p>
+                            <p style="font-size:0.625rem">
+                                Firmado el 
+                                <t t-if="o.signed_on">
+                                    <span t-esc="'%02d' % o.signed_on.day"/> 
+                                </t>
+                                <t t-else="">
+                                    __
+                                </t>
+                                del mes de
+                                <t t-if="o.signed_on">
+                                    <span t-esc="o.signed_on_month"/> 
+                                </t>
+                                <t t-else="">
+                                    __
+                                </t>
+                                del a&#241;o 
+                                <t t-if="o.signed_on">
+                                    <span t-esc="o.signed_on.year"/> 
+                                </t>
+                                en dos ejemplares de un mismo tenor y para un solo efecto, que se suscribe el 
+                                <t t-if="o.date_start">
+                                    <span t-esc="'%02d' % o.date_start.day"/>
+                                </t>
+                                <t t-else="">
+                                    __
+                                </t>
+                                del 
+                                <t t-if="o.date_start">
+                                    <span t-esc="'%02d' % o.date_start.month"/>
+                                </t>
+                                <t t-else="">
+                                    __
+                                </t>
+                                del 
+                                <t t-if="o.date_start">
+                                    <span t-esc="o.date_start.year"/>
+                                </t>
+                                <t t-else="">
+                                    __
+                                </t>
+                                &#46;
+                            </p>
+                            <table class="table">
+                                <colgroup>
+                                    <col width="40%"/>
+                                    <col width="20%"/>
+                                    <col width="40%"/>
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="o.contract_signature and o.signed_by_employer">
+                                                <img t-att-src="image_data_uri(o.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="o.contract_signature">
+                                                <img t-att-src="image_data_uri(o.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                            MARKETING ALTERNO PERU S&#46;A&#46;C
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                            El TRABAJADOR
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col" class="text-center" style="border: none">
+                                            RUC: 20512433821
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" class="text-center" style="border: none;"></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <h6 class="text-center">
+                                ACTA DE ENTREGA DE DOCUMENTOS LABORALES Y DE SEGURIDAD Y SALUD EN EL TRABAJO
+                            </h6>
+                            <p style="font-size:0.625rem">
+                                Yo&#44; 
+                                <t t-if="o.partner_name">
+                                    <span t-esc="o.partner_name"/>
+                                </t>
+                                <t t-else="">
+                                    __________
+                                </t>
+                                    identificado&#40;a&#41; con DNI N&#176; 
+                                    <t t-if="o.vat">
+                                    <span t-esc="o.vat"/>
+                                </t>
+                                <t t-else="">
+                                    __________
+                                </t>
+                                    declaro que he recibido de mi empleador MARKETING ALTERNO PERU SAC&#44; donde laboro en calidad de 
+                                <t t-if="o.employee_job">
+                                    <!-- <span t-esc="o.job_id.name"/> -->
+                                    <span t-esc="o.employee_job"/>
+                                </t>
+                                <t t-else="">
+                                    __________
+                                </t>
+                                &#44; los siguientes documentos de forma electr&#243;nica y&#47;o f&#205;sica&#58;
+                            </p>
+                            <ol style="upper-alpha;font-size:0.625rem">
+                                <li>
+                                    Documentos laborales &#47; Seguridad y Salud en el Trabajo&#46;
+                                </li>
+                            </ol>
+                            <p style="font-size:0.625rem">
+                                Reglamento interno de trabajo&#44; Reglamento SST&#44; Alta del T&#45; Registro&#44; Contrato de Trabajo y renovaciones debidamente suscritos por mi persona y la empresa&#46;
+                            </p>
+                            <p style="font-size:0.625rem">
+                                Bolet&#237;n Informativo acerca de las caracter&#237;sticas del sistema privado de pensiones &#40;SPP&#41; y del sistema nacional de pensiones &#40;SNP&#41;&#46;
+                            </p>
+                            <p style="font-size:0.625rem">
+                                Pol&#237;tica de Hostigamiento Sexual&#44; Pol&#237;tica Prevenci&#243;n Discriminaci&#243;n&#44; Pol&#237;tica Salarial&#44; Pol&#237;tica de datos personales&#46;
+                            </p>
+                            <p style="font-size:0.625rem">
+                                Respecto a la entrega de los documentos antes indicados declaro que he sido debidamente instruido por mi empleador en relaci&#243;n al contenido&#44; por lo que me comprometo a cumplir con lo establecido en dichos documentos&#46; 
+                            </p>
+                            <p style="font-size:0.625rem">
+                                En se&#241;al de conformidad y aceptaci&#243;n suscribo el presente documento a los 
+                                <t t-if="o.date_start">
+                                    <span t-esc="'%02d' % o.date_start.day"/>
+                                </t>
+                                <t t-else="">
+                                    __
+                                </t>
+                                del mes de 
+                                <t t-if="o.date_start">
+                                    <span t-esc="o.date_start_month"/>
+                                </t>
+                                <t t-else="">
+                                    __
+                                </t>
+                                del 
+                                <t t-if="o.date_start">
+                                    <span t-esc="o.date_start.year"/>
+                                </t>
+                                <t t-else="">
+                                    __
+                                </t> 
+                            </p>
+                            <br/>
+                            <table class="table">
+                                <colgroup>
+                                    <col width="10%"/>
+                                    <col width="30%"/>
+                                    <col width="20%"/>
+                                    <col width="30%"/>
+                                    <col width="10%"/>
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="o.contract_signature and o.signed_by_employer">
+                                                <img t-att-src="image_data_uri(o.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="o.contract_signature">
+                                                <img t-att-src="image_data_uri(o.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                            EL EMPLEADOR
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                            EL TRABAJADOR
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div style="page-break-after: always;">
+                            <h6 class="text-center">
+                                DECLARACI&#211;N DE CONSENTIMIENTO DE TRATAMIENTO DE DATOS PERSONALES TRABAJADORES
+                            </h6>
+                            <ol style="font-size:0.625rem">
+                                <li>
+                                    &#58;A trav&#233;s del presente documento&#44; 
+                                    <strong>
+                                        MARKETING ALTERNO PERU S&#46;A&#46;C&#46;
+                                    </strong>
+                                    identificado con RUC N&#176; 
+                                    <t t-if="o.company_vat">
+                                        <span t-esc="o.company_vat"/>
+                                    </t>
+                                    <t t-else="">
+                                        __________
+                                    </t>
+                                    &#46; domiciliado en Jr&#46; Libertad 757&#44; distrito de Magdalena del Mar &#40;en adelante&#44; &#34;LA EMPRESA&#34;&#41; le informa que es una empresa que respeta la legislaci&#243;n vigente en todos los aspectos&#46;
+                                </li>
+                                <li>
+                                    En raz&#243;n de lo mencionado en el p&#225;rrafo anterior&#44; y de conformidad con lo establecido en la Ley N&#176; 29733&#44; Ley de Protecci&#243;n de Datos Personales y su Reglamento&#44; LA EMPRESA le comunica que&#44; con la firma de esta Declaraci&#243;n por parte suya&#44; queda legalmente autorizado para recopilar y tratar la informaci&#243;n que usted le proporcione sobre sus datos personales&#44; sensibles y otros que nazcan producto de la relaci&#243;n contractual &#40;en adelante la &#34;informaci&#243;n&#34;&#41;&#46;
+                                </li>
+                                <li>
+                                    La informaci&#243;n brindada a LA EMPRESA se encontrar&#225; recopilada en un Banco de Datos Personales a cargo de LA EMPRESA&#46; En ese sentido&#44; LA EMPRESA ha adoptado las medidas de seguridad legales&#44; t&#233;cnicas y organizativas necesarias para evitar la p&#233;rdida&#44; mal uso&#44; alteraci&#243;n&#44; acceso no autorizado y robo de los datos personales&#46;
+                                </li>
+                                <li>
+                                    LA EMPRESA le informa que la recopilaci&#243;n&#44; organizaci&#243;n y tratamiento de su informaci&#243;n tiene como finalidad&#58; &#40;i&#41; llevar un control del n&#250;mero de trabajadores dentro de la empresa&#59; &#40;ii&#41; permitir que el &#225;rea de Recursos Humanos pueda cumplir con sus fines &#40;iii&#41; contar con los datos b&#225;sicos que hagan identificable al trabajador dentro de la organizaci&#243;n de la empresa ante cualquier eventualidad&#59;" &#40;iv&#41; contar con los datos que hagan posible que LA EMPRESA cumpla con la normatividad legal nacional vigente&#59; &#40;v&#41; llevar un control del ingreso y salida de los trabajadores&#46; La informaci&#243;n contenida en los bancos de datos personales es de uso interno&#44; como parte de las labores de administraci&#243;n y gesti&#243;n del &#225;rea de administraci&#243;n&#46; Asimismo&#44; Usted admite que ha prestado su consentimiento de manera libre&#44; previa&#44; inequ&#237;voca y expresa por un plazo indeterminado a LA EMPRESA para que &#233;ste pueda almacenar&#44; dar tratamiento&#44; procesar y transferir su informaci&#243;n a empresas del mismo grupo econ&#243;mico&#44; socios comerciales&#44; clientes&#44; potenciales clientes&#44; afiliados y&#47;o a entidades p&#250;blicas o privadas&#44; siempre que este tratamiento de informaci&#243;n sea realizado bajo los t&#233;rminos establecidos en esta Declaraci&#243;n&#46;
+                                </li>
+                                <li>
+                                    Usted puede ejercer sus derechos de acceso&#44; rectificaci&#243;n&#44; cancelaci&#243;n y oposici&#243;n respecto de su informaci&#243;n dirigi&#233;ndose a LA EMPRESA mediante alguna de las siguientes formas&#58; forma presencial en su oficina principal ubicada en Jr&#46; Libertad 757&#44; DISTRITO MAGDALENA DEL MAR&#44; LIMA&#44; LIMA en el horario de 8&#58;30 am a 6&#58;00 pm; y a trav&#233;s del correo electr&#243;nico dcordova@marketing-alterno&#46;com y&#47;o puede llamarnos al tel&#233;fono &#40;+511&#41; 208-7100 para consultar los requisitos que se debe cumplir para ejercer correctamente sus derechos y para consultar el estado de su solicitud&#44; en caso &#233;sta ya se encuentre en tr&#225;mite&#46;
+                                </li>
+                                <li>
+                                    El ejercicio de los derechos antes mencionados&#44; deber&#225; ser realizado bajo el procedimiento establecido por LA EMPRESA y que usted declara conocer&#46; LA EMPRESA contar&#225; con los plazos establecidos por Ley para pedir la subsanaci&#243;n de documentos y tambi&#233;n para emitir una respuesta a las peticiones que reciba&#46;
+                                </li>
+                            </ol>
+                            <table class="table">
+                                <colgroup>
+                                    <col width="10%"/>
+                                    <col width="30%"/>
+                                    <col width="20%"/>
+                                    <col width="30%"/>
+                                    <col width="10%"/>
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="o.contract_signature and o.signed_by_employer">
+                                                <img t-att-src="image_data_uri(o.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="o.contract_signature">
+                                                <img t-att-src="image_data_uri(o.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                            EL EMPLEADOR
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                            EL TRABAJADOR
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                </thead>
+                                <div class="footer">
+                                    <div class="d-flex flex-row">
+                                        <div class="text-start">
+                                            <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'contracteconsult/search' + '&amp;width=100&amp;height=100'"/>
+                                        </div>
+                                        <div style="margin-left:10px;font-size:0.563rem">
+                                            <div>Contract: <span t-esc="o.name"/></div>
+                                            <div>IP: <span t-esc="o.ip"/></div>
+                                            <div>User: <span t-esc="o.partner_name"/> DNI: <span t-esc="o.vat"/></div>
+                                            <div>OS: <span t-esc="o.os"/></div>
+                                            <div>Browser: <span t-esc="o.browser"/></div>
+                                            <div>Token: <span t-esc="o.access_token"/></div>
+                                            <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
+                                            <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
+                                        </div>
+                                        <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
+                                            pág <span class="page"/> de <span class="topage"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </table>
+                        </div>
+                    </article>
+                </t>
                 <t t-if="o.contract_type_id.contract_short_name == 'CTSMSE'">
                     <article>
                         <div style="page-break-after: always;">
@@ -99,7 +794,7 @@
                                 </strong>
                                 &#40;en adelante y conjuntamente&#44; las &#34;PARTES&#34;&#41; suscriben el CONTRATO en los t&#233;rminos y condiciones contenidos en la siguiente cl&#225;usula&#58;
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     PRIMERO&#46;&#45; ANTECEDENTES
                                 </strong>
@@ -110,13 +805,13 @@
                                 </strong>
                                 es una persona jur&#237;dica que se dedica a la prestaci&#243;n de servicios de marketing&#44; promociones&#44; impulso&#44; Merchandising&#44; producci&#243;n&#44; log&#237;stica&#44; entre otros&#44; y&#44; en general&#44; a cualquier otra actividad anexa o conexa con la mencionada&#59; por lo que cuenta con amplia experiencia&#44; m&#233;todos y procedimientos id&#243;neos para el desarrollo y ejecuci&#243;n de cada uno de estos servicios y actividades&#46;
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     SEGUNDO&#46;&#45; CAUSA OBJETIVA DE LA CONTRATACI&#211;N&#44; PUESTO Y FUNCIONES
                                 </strong>
                             </p>
                             <p style="font-size:0.625rem">
-                                La presente contratación bajo la modalidad de servicio específico se sustenta en la necesidad objetiva, concreta y temporal de la empresa 
+                                La presente contratación bajo la modalidad de servicio especí­fico se sustenta en la necesidad objetiva, concreta y temporal de la empresa 
                                 <strong>
                                     MARKETING
                                 </strong>
@@ -130,9 +825,9 @@
                                 </t>
                                 (en adelante, 
                                 <strong>
-                                    “EL CLIENTE”
+                                    EL CLIENTE
                                 </strong>
-                                ), para la ejecución de actividades específicas y especializadas
+                                ), para la ejecución de actividades especí­ficas y especializadas
                                 vinculadas a servicios de publicidad, promoción y posicionamiento de marca y productos en puntos de venta, sin que ello implique la ejecución de actos de venta o cierre
                                 de transacciones comerciales.
 
@@ -142,11 +837,11 @@
                                 <strong>
                                     EL CLIENTE
                                 </strong>
-                                , conforme lo exige el artículo 63° del Texto Único Ordenado de la Ley de Productividad y Competitividad Laboral (LPCL), aprobado por D.S. N° 003-97-TR, y sus modificatorias.
+                                , conforme lo exige el artí­culo 63° del Texto Ùnico Ordenado de la Ley de Productividad y Competitividad Laboral (LPCL), aprobado por D.S. N° 003-97-TR, y sus modificatorias.
                             </p>
                             <p style="font-size:0.625rem">
-                                En virtud de ello, el TRABAJADOR es contratado exclusivamente para prestar servicios específicos, especializados y no permanentes, propios de la naturaleza del
-                                contrato de servicio específico, y bajo subordinación y dirección única de 
+                                En virtud de ello, el TRABAJADOR es contratado exclusivamente para prestar servicios especí­ficos, especializados y no permanentes, propios de la naturaleza del
+                                contrato de servicio especí­fico, y bajo subordinación y dirección ùnica de 
                                 <strong>
                                     MARKETING
                                 </strong>
@@ -162,7 +857,7 @@
                                     __________
                                 </t>
                                 , cuya finalidad es informar, promocionar, exhibir y brindar soporte en marketing al consumidor final, sin intervenir en el proceso de venta o 
-                                transacción comercial, reservándose dicha facultad única y exclusivamente al personal propio del establecimiento.
+                                transacción comercial, reservándose dicha facultad ùnica y exclusivamente al personal propio del establecimiento.
                             </p>
                             <p style="font-size:0.625rem">
                                 Asimismo, todas las actividades del 
@@ -173,10 +868,10 @@
                                 <strong>
                                     MARKETING
                                 </strong>
-                                , quien conserva plenamente el poder directriz, disciplinario y de control sobre sus servicios. Esta contratación se celebra de conformidad con lo previsto en los artículos 4°, 63° y 74° 
-                                del TUO de la LPCL, y tiene como finalidad específica cubrir una necesidad concreta, determinada y temporal, no recurrente, que no forma parte del giro principal del negocio de la empresa ni del cliente.
+                                , quien conserva plenamente el poder directriz, disciplinario y de control sobre sus servicios. Esta contratación se celebra de conformidad con lo previsto en los artí­culos 4°, 63° y 74° 
+                                del TUO de la LPCL, y tiene como finalidad especí­fica cubrir una necesidad concreta, determinada y temporal, no recurrente, que no forma parte del giro principal del negocio de la empresa ni del cliente.
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     TERCERO&#58; PLAZO
                                 </strong>
@@ -241,7 +936,7 @@
                                 </strong>
                                 dejar&#225; de prestar servicios a LA EMPRESA en forma autom&#225;tica&#44; sin necesidad de previo aviso&#44; salvo que se pacte expresamente su pr&#243;rroga&#46;
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     CUARTO&#58; REMUNERACION&#44; CONDICIONES Y BENEFICIOS
                                 </strong>
@@ -269,9 +964,9 @@
                                 <t t-else="">
                                     __________
                                 </t>
-                                    Y 00&#47;100 Soles&#41;&#44; por mensualidades vencidas mediante planillas y sujeto a los descuentos y retenciones de ley. Esta remuneración se estipula en función al trabajo efectivamente
-                                prestado cumpliendo la jornada pactada, por lo que la cantidad a pagar se reajustará según los días y las jornadas real y efectivamente laborados, salvo las causas de suspensión de 
-                                la relación laboral que, conforme a ley, deban considerarse como días laborados para fines del pago de la remuneración. De presentarse acuerdo entre las partes,  quedará asignada una variable 
+                                Y 00/100 Soles),por mensualidades vencidas mediante planillas y sujeto a los descuentos y retenciones de ley. Esta remuneración se estipula en función al trabajo efectivamente
+                                prestado cumpliendo la jornada pactada, por lo que la cantidad a pagar se reajustará segùn los dí­as y las jornadas real y efectivamente laborados, salvo las causas de suspensión de 
+                                la relación laboral que, conforme a ley, deban considerarse como dí­as laborados para fines del pago de la remuneración. De presentarse acuerdo entre las partes,  quedará asignada una variable 
                                 cuando corresponda, la cual será pagada en la oportunidad fijada por 
                                 <strong>
                                     MARKETING
@@ -290,7 +985,7 @@
                                 <strong>
                                     TRABAJADOR 
                                 </strong>
-                                a hacer uso de estos de conformidad con lo dispuesto en el CONTRATO y las políticas de 
+                                a hacer uso de estos de conformidad con lo dispuesto en el CONTRATO y las polí­ticas de 
                                 <strong>
                                     MARKETING 
                                 </strong>
@@ -303,7 +998,7 @@
                                     TRABAJADOR 
                                 </strong>
                                 todos los beneficios legales a los que tenga derecho de acuerdo con la legislación laboral peruana y
-                                a su Política Salarial.
+                                a su Polí­tica Salarial.
                             </p>
                             <p style="font-size:0.625rem">
                                 <strong>
@@ -313,8 +1008,8 @@
                                 <strong>
                                     MARKETING
                                 </strong>
-                                , dentro de los diez (10) días hábiles de iniciado el vínculo laboral, el nombre de la entidad del sistema
-                                financiero elegida para el depósito de sus remuneraciones y, de ser el caso, el número de la cuenta. Vencido el plazo antes referido, sin que 
+                                , dentro de los diez (10) dí­as hábiles de iniciado el ví­nculo laboral, el nombre de la entidad del sistema
+                                financiero elegida para el depósito de sus remuneraciones y, de ser el caso, el nùmero de la cuenta. Vencido el plazo antes referido, sin que 
                                 <strong>
                                     el TRABAJADOR
                                 </strong>
@@ -385,7 +1080,7 @@
                                         <div>Browser: <span t-esc="o.browser"/></div>
                                         <div>Token: <span t-esc="o.access_token"/></div>
                                         <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
+                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perù SAC y el mismo da validez de su legitimidad.</div>
                                     </div>
                                     <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
                                         pág <span class="page"/> de <span class="topage"/>
@@ -394,7 +1089,7 @@
                             </div>
                         </div>
                         <div style="page-break-after: always;">
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     QUINTO&#46; &#45; LUGAR DE LA PRESTACI&#211;N DE LOS SERVICIOS Y OBLIGACIONES DEL TRABAJADOR 
                                 </strong>
@@ -412,7 +1107,7 @@
                                 <strong>
                                     MARKETING 
                                 </strong>
-                                tiene la facultad de modificar el lugar de la prestación de servicios del trabajador según las necesidades operativas, pudiendo
+                                tiene la facultad de modificar el lugar de la prestación de servicios del trabajador segùn las necesidades operativas, pudiendo
                                 estas ubicarse en cualquier punto de la ciudad de Lima o del territorio nacional.
                             </p>
                             <p style="font-size:0.625rem">
@@ -423,12 +1118,12 @@
                                 <strong>
                                     MARKETING 
                                 </strong>
-                                por necesidades del servicio, en ejercicio de su facultad de dirección, de conformidad con el artículo 9 de la LPCL. Asimismo,
+                                por necesidades del servicio, en ejercicio de su facultad de dirección, de conformidad con el artí­culo 9 de la LPCL. Asimismo,
                                 se compromete a cumplir con las disposiciones establecidas en las normativas de la empresa sobre Exclusividad, Reserva, Confidencialidad, No
                                 Competencia y Propiedad Intelectual . Accesoriamente deberá asistir a las capacitaciones que la empresa disponga en su oportunidad y todo lo relacionado
                                 programado que se encuentre vinculado al cargo que desempeña.
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     SEXTO&#46; &#45; JORNADA Y HORARIO DE TRABAJO
                                 </strong>
@@ -440,7 +1135,7 @@
                                 </strong>
                                 &#44; sea esta ordinaria&#44; at&#237;pica&#44; alternativa&#44; acumulativa&#44; flexible y compensatoria raz&#243;n por la que no se encontrar&#225; afecto al pago de la sobretasa por trabajo en sobretiempo&#46;
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     SEPTIMO&#46;&#45; FACULTADES DE LA EMPRESA
                                 </strong>
@@ -454,7 +1149,7 @@
                                     MARKETING
                                 </strong>
                                 , la cual tiene facultades para dirigir, organizar, fiscalizar, suprimir,
-                                modificar, remplazar y sancionar la prestación de servicios (en las condiciones de tiempo, lugar, forma, funciones, categoría, modalidad, etc.) del 
+                                modificar, remplazar y sancionar la prestación de servicios (en las condiciones de tiempo, lugar, forma, funciones, categorí­a, modalidad, etc.) del 
                                 <strong>
                                     TRABAJADOR
                                 </strong>
@@ -466,7 +1161,7 @@
                                 </strong>
                                 podrá introducir cambios a las condiciones de la relación laboral, de acuerdo con la ley y dentro de los criterios de razonabilidad y teniendo en cuenta las necesidades del centro de trabajo.
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     OCTAVA&#46;&#45; DE LAS RECOMENDACIONES EN MATERIA DE SEGURIDAD Y SALUD EN EL TRABAJO
                                 </strong>
@@ -486,7 +1181,7 @@
                                 </strong>
                                 se obliga a respetar&#44; sin perjuicio de los establecido en el Reglamento Interno de Seguridad y Salud en el Trabajo de la compa&#241;&#237;a&#44; as&#237; como otras normas internas&#44; lineamientos o directivas sobre la materia&#44; las cuales le ser&#225;n puestas a disposici&#243;n al inicio de sus labores&#46;
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     NOVENO &#46;&#45; CONOCIMIENTO DE LEGISLACI&#211;N Y PROCEDIMIENTO EN MATERIA DE PREVENCI&#211;N DE ACTOS DE HOSTIGAMIENTO SEXUAL
                                 </strong>
@@ -517,7 +1212,7 @@
                                 </strong>
                                 sobre la importancia de combatir el hostigamiento sexual&#44; identificar dichas situaciones y brindar informaci&#243;n sobre los canales de atenci&#243;n de las quejas o denuncias&#44; de conformidad con lo dispuesto en el inciso a&#41; del numeral 11&#46;1 del art&#237;culo 11 del Reglamento&#46;
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     DECIMO&#46; &#45; CONFIDENCIALIDAD
                                 </strong>
@@ -581,7 +1276,7 @@
                             </table>
                         </div>
                         <div style="page-break-after: always;">
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     D&#201;CIMO PRIMERA&#46; &#45; DE LA DEVOLUCI&#211;N DE MATERIALES DE TRABAJO
                                 </strong>
@@ -597,7 +1292,7 @@
                                 </strong>
                                 que&#44; con ocasi&#243;n de la prestaci&#243;n de sus servicios&#44; se encuentren en su poder&#44; tales como equipos&#44; software&#44; bases de datos&#44; &#243;rdenes de venta&#44; hojas membretadas&#44; entre otros&#46; Es de conocimiento del TRABAJADOR que de no realizar la devoluci&#243;n en el plazo de 24 horas de configurado el cese&#44; se proceder&#225; con descuento inmediato de acuerdo a lo establecido en el cargo de entrega del implemento&#46;
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                 DECIMO SEGUNDA&#46; &#45; DATOS PERSONALES Y CORREO ELECTR&#211;NICO
                                 </strong>
@@ -707,7 +1402,7 @@
                                 </strong>
                                 &#46;
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     D&#201;CIMO TERCERA&#46; &#45; SOBORNO Y CORRUPCI&#211;N
                                 </strong>
@@ -726,7 +1421,7 @@
                                 </strong>
                                 conoce y acepta que ninguna suma de dinero o cualquier otro beneficio ser&#225; utilizado&#44; directa o indirectamente&#44; para influenciar&#44; de manera corrupta o ilegal&#44; cualquier decisi&#243;n o juzgamiento de cualquier funcionario o gobierno&#44; o cualquier oficina&#44; agencia o herramientas de este en relaci&#243;n con la empresa&#44; sus actividades&#44; los servicios o en conexi&#243;n con cualquier contrato o acuerdo con terceros asociados con la empresa&#44; sus actividades o los servicios&#46; El t&#233;rmino funcionarios de gobierno incluye cualquier funcionario o trabajador o persona que act&#250;e con facultad de gobierno &#40;incluyendo gobiernos extranjeros&#41; o cualquier oficina&#44; agencia o herramienta de cualquier gobierno&#46; Tambi&#233;n incluye partidos pol&#237;ticos&#44; sus dirigentes y candidatos pol&#237;ticos&#46;
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     D&#201;CIMO CUARTA&#46; &#45; CL&#193;USULA RESOLUTORIA DEL V&#237;NCULO LABORAL
                                 </strong>
@@ -778,7 +1473,7 @@
                             <p style="font-size:0.625rem">
                                 c&#46; Ante la comisi&#243;n de conductas previstas y tipificadas en los Inc&#46; del Art&#46; 24 y 25 del DS 003&#45;97&#45;TR del TUO DL 728&#46;
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     DECIMO QUINTA&#46; &#45; DOMICILIO
                                 </strong>
@@ -831,7 +1526,7 @@
                             </table>
                         </div>
                         <div style="page-break-after: always;">
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     DECIMOSEXTO&#46; &#45; LEGISLACI&#211;N APLICABLE
                                 </strong>
@@ -842,7 +1537,7 @@
                                 </strong>
                                 estar&#225; sujeto al r&#233;gimen laboral de la actividad privada dentro de los alcances y efectos que determina la LPCL&#46; En consecuencia&#44; en todo aquello no previsto en el presente contrato&#44; ser&#225;n aplicables las disposiciones legales vigentes en materia laboral&#46;
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     DECIMO SEPTIMA&#46; &#45; SOLUCION DE CONTROVERSIAS
                                 </strong>
@@ -850,7 +1545,7 @@
                             <p style="font-size:0.625rem">
                                 Ambas partes acuerdan que todas las controversias jur&#237;dicas en las que ellas est&#233;n involucradas&#44; sea que se originen en la aplicaci&#243;n y&#47;o interpretaci&#243;n de este contrato de trabajo o de la legislaci&#243;n&#44; incluso aquellas que pudieran vincularse a la nulidad o invalidez del presente contrato ser&#225; sometido a los Jueces de la jurisdicci&#243;n que corresponda&#46;
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     DECIMO OCTAVO&#46; &#45; FIRMA
                                 </strong>
@@ -858,16 +1553,16 @@
                             <p style="font-size:0.625rem">
                                 Las Partes acuerdan que presente contrato podr&#225; ser suscrito mediante firma manuscrita o firma digital&#44; la cual se encuentra regulada por la Ley N&#176; 27269 y su reglamento&#44; aprobado por el Decreto Supremo No&#46; 052&#45;2008&#45;PCM&#44; firmas que se entender&#225;n v&#225;lidas y que garantizan la real y aut&#233;ntica voluntad de las Partes&#46;
                             </p>
-                            <p>
+                            <p style="font-size:0.625rem">
                                 <strong>
                                     DECIMO NOVENO&#58; PRIMERA DISPOSICIÓN COMPLEMENTARIA 
                                 </strong>
                             </p>
                             <p style="font-size:0.625rem">
-                                EL TRABAJADOR declara libremente su AUTORIZACION ante EMPLEADOR, que este último pueda disponer y utilizar de manera total o parcialmente su imagen, voz y/o reacciones, secuelas de video, de modo gratuito y libre de toda compensación económica, a fin de que la misma sea divulgada y/o incorporada con fines publicitarios en todo medio de comunicación que puedan publicitarse o promocionarse, a través de medios digitales, internet, y/o redes sociales, sin restricciones ni límites temporales así como de medios para su reproducción y/o difusión, siendo la presente de duración indeterminada. Y por la presente EL TRABAJADOR y sus sucesores eximen a la empresa y a todo representante de estas y/o cuenta comercial de toda responsabilidad ante cualquier reclamo por daños o de indemnización que surja de las actividades autorizadas por este acuerdo, libre de toda regalía.
+                                EL TRABAJADOR declara libremente su AUTORIZACION ante EMPLEADOR, que este ùltimo pueda disponer y utilizar de manera total o parcialmente su imagen, voz y/o reacciones, secuelas de video, de modo gratuito y libre de toda compensación económica, a fin de que la misma sea divulgada y/o incorporada con fines publicitarios en todo medio de comunicación que puedan publicitarse o promocionarse, a través de medios digitales, internet, y/o redes sociales, sin restricciones ni lí­mites temporales así­ como de medios para su reproducción y/o difusión, siendo la presente de duración indeterminada. Y por la presente EL TRABAJADOR y sus sucesores eximen a la empresa y a todo representante de estas y/o cuenta comercial de toda responsabilidad ante cualquier reclamo por daños o de indemnización que surja de las actividades autorizadas por este acuerdo, libre de toda regalí­a.
                             </p>
                             <p style="font-size:0.625rem">
-                                La presente autorización no tiene ámbito geográfico determinado, asimismo mediante el presente escrito, el que suscribe manifiesta que lo anteriormente autorizado no perjudica prestigio y no atenta contra su dignidad y honor, conforme a lo señalado en el artículo 15° de Código Civil peruano y a lo regulado mediante Ley N° 29733 Ley de Protección de Datos Personales y su reglamento aprobado mediante Decreto Supremo N° 003-2013-JUS. Por lo tanto, no existe intromisión ilegítima en el ámbito de su derecho de la intimidad y/o renuncia expresamente a cualquier tipo de resarcimiento, indemnización u otro tipo de mecanismo reparador de derechos ante la empresa MARKETING ALTERNO PERU SAC, a la cual brindo mi absoluta autorización.
+                                La presente autorización no tiene ámbito geográfico determinado, asimismo mediante el presente escrito, el que suscribe manifiesta que lo anteriormente autorizado no perjudica prestigio y no atenta contra su dignidad y honor, conforme a lo señalado en el artí­culo 15° de Código Civil peruano y a lo regulado mediante Ley N° 29733 Ley de Protección de Datos Personales y su reglamento aprobado mediante Decreto Supremo N° 003-2013-JUS. Por lo tanto, no existe intromisión ilegí­tima en el ámbito de su derecho de la intimidad y/o renuncia expresamente a cualquier tipo de resarcimiento, indemnización u otro tipo de mecanismo reparador de derechos ante la empresa MARKETING ALTERNO PERU SAC, a la cual brindo mi absoluta autorización.
                             </p>
                             <p style="font-size:0.625rem">
                                 Expedido por duplicado&#44; en se&#241;al de conformidad y aprobaci&#243;n&#46;
@@ -1164,11 +1859,11 @@
                                 <strong>
                                     1&#46;&#45; PRIMERO&#46;&#45; 
                                 </strong>
-                                EL EMPLEADOR es una persona jurídica de derecho privado&#44; inscrita en la Partida N° 11840436 del
-                                registro de personas jurídicas de los Registros Públicos de Lima y Callao&#44; constituida con el objeto social de
-                                brindar servicios en actividades publicitarias y comerciales&#44; tales como impulsamiento de ventas&#44; promotoría&#44;
+                                EL EMPLEADOR es una persona jurí­dica de derecho privado&#44; inscrita en la Partida N° 11840436 del
+                                registro de personas jurí­dicas de los Registros Pùblicos de Lima y Callao&#44; constituida con el objeto social de
+                                brindar servicios en actividades publicitarias y comerciales&#44; tales como impulsamiento de ventas&#44; promotorí­a&#44;
                                 encuestas&#44; distribución de material publicitario y otros afines&#46; EL EMPLEADOR requiere de los servicios del
-                                TRABAJADOR en forma de tiempo parcial &#40;Part time&#41;&#44; para que cumpla las labores de SUPERVISOR DE CAMPO&#40;A&#41;&#46; Artículo
+                                TRABAJADOR en forma de tiempo parcial &#40;Part time&#41;&#44; para que cumpla las labores de SUPERVISOR DE CAMPO&#40;A&#41;&#46; Artí­culo
                                 4&#176; TUO LPCL&#44; D&#46;S&#46; N&#176;
                                 003&#45;97&#45;TR &#40;27&#46;03&#46;97&#41;&#46;
                             </p>
@@ -1184,11 +1879,11 @@
                                     __________
                                 </t>
                                 para la prestación de un servicio a tiempo parcial o Part Time&#44; referido a la impulsación de
-                                ventas de productos&#44; Promotoría &#40;Marketing&#41;&#44; sin embargo el EMPLEADOR se encuentra facultado a realizar
+                                ventas de productos&#44; Promotorí­a &#40;Marketing&#41;&#44; sin embargo el EMPLEADOR se encuentra facultado a realizar
                                 modificatorias razonables en función a las necesidades y requerimientos&#44; debiendo someterse al cumplimiento estricto
                                 de la labor&#44; para la cual ha sido contratado&#44; bajo las directivas de sus jefes&#44; y las que se impartan por
                                 necesidades del servicio en ejercicio de las facultades de administración y dirección de la empresa&#44; de conformidad
-                                con el artículo 9&#176; del Texto Único Ordenado de la Ley de Productividad y Competitividad Laboral&#44; aprobado por
+                                con el artí­culo 9&#176; del Texto Ùnico Ordenado de la Ley de Productividad y Competitividad Laboral&#44; aprobado por
                                 Decreto Supremo N&#176; 003&#45;97&#45;TR&#46;
                             </p>
                             <p>
@@ -1282,15 +1977,15 @@
                                     6&#46;&#45; SEXTO&#46;&#45; 
                                 </strong>   
                                 Se entiende que por la modalidad del contrato&#44; EL TRABAJADOR solo tendrá derecho a beneficio de
-                                gratificación y asignación familiar &#44; este último cuando corresponda&#46;
+                                gratificación y asignación familiar &#44; este ùltimo cuando corresponda&#46;
                             </p>
                             <p>
                                 <strong>
                                     7&#46;&#45; SEPTIMO&#46;&#45; 
                                 </strong>
-                                EL EMPLEADOR&#44; se obliga a inscribir al TRABAJADOR en el Libro de Planillas de Remuneraciones&#44; así como
+                                EL EMPLEADOR&#44; se obliga a inscribir al TRABAJADOR en el Libro de Planillas de Remuneraciones&#44; así­ como
                                 poner a conocimiento de la Autoridad Administrativa de Trabajo el presente contrato&#44; para su conocimiento y
-                                registro&#44; en cumplimiento de lo dispuesto por artículo 73&#176; del Texto Único ordenado del Decreto Legislativo Nº 728&#44;
+                                registro&#44; en cumplimiento de lo dispuesto por artí­culo 73&#176; del Texto Ùnico ordenado del Decreto Legislativo Nº 728&#44;
                                 Ley de Productividad y Competitividad laboral&#44; aprobado mediante Decreto Supremo Nº
                                 003&#45;97&#45;TR&#46;    
                             </p>
@@ -1299,7 +1994,7 @@
                                     8&#46;&#45; OCTAVO&#46;&#45; 
                                 </strong>
                                 En todo lo no previsto por el presente contrato&#44; se estará a las disposiciones laborales que regulan
-                                los contratos de trabajo sujeto a modalidad&#44; contenidos en el Texto Único Ordenado del Decreto Legislativo Nº 728
+                                los contratos de trabajo sujeto a modalidad&#44; contenidos en el Texto Ùnico Ordenado del Decreto Legislativo Nº 728
                                 aprobado por el Decreto Supremo Nº 003&#45;97&#45;TR&#44; Ley de Productividad y Competitividad Laboral&#46;
                             </p>
                             <p>
@@ -1324,10 +2019,10 @@
                                 </strong>
                             </p>
                             <p>
-                                EL TRABAJADOR declara libremente su AUTORIZACION ante EMPLEADOR, que este último pueda disponer y utilizar de manera total o parcialmente su imagen, voz y/o reacciones, secuelas de video, de modo gratuito y libre de toda compensación económica, a fin de que la misma sea divulgada y/o incorporada con fines publicitarios en todo medio de comunicación que puedan publicitarse o promocionarse, a través de medios digitales, internet, y/o redes sociales, sin restricciones ni límites temporales así como de medios para su reproducción y/o difusión, siendo la presente de duración indeterminada. Y por la presente EL TRABAJADOR y sus sucesores eximen a la empresa y a todo representante de estas y/o cuenta comercial de toda responsabilidad ante cualquier reclamo por daños o de indemnización que surja de las actividades autorizadas por este acuerdo, libre de toda regalía.
+                                EL TRABAJADOR declara libremente su AUTORIZACION ante EMPLEADOR, que este ùltimo pueda disponer y utilizar de manera total o parcialmente su imagen, voz y/o reacciones, secuelas de video, de modo gratuito y libre de toda compensación económica, a fin de que la misma sea divulgada y/o incorporada con fines publicitarios en todo medio de comunicación que puedan publicitarse o promocionarse, a través de medios digitales, internet, y/o redes sociales, sin restricciones ni lí­mites temporales así­ como de medios para su reproducción y/o difusión, siendo la presente de duración indeterminada. Y por la presente EL TRABAJADOR y sus sucesores eximen a la empresa y a todo representante de estas y/o cuenta comercial de toda responsabilidad ante cualquier reclamo por daños o de indemnización que surja de las actividades autorizadas por este acuerdo, libre de toda regalí­a.
                             </p>
                             <p>
-                                La presente autorización no tiene ámbito geográfico determinado, asimismo mediante el presente escrito, el que suscribe manifiesta que lo anteriormente autorizado no perjudica prestigio y no atenta contra su dignidad y honor, conforme a lo señalado en el artículo 15° de Código Civil peruano y a lo regulado mediante Ley N° 29733 Ley de Protección de Datos Personales y su reglamento aprobado mediante Decreto Supremo N° 003-2013-JUS. Por lo tanto, no existe intromisión ilegítima en el ámbito de su derecho de la intimidad y/o renuncia expresamente a cualquier tipo de resarcimiento, indemnización u otro tipo de mecanismo reparador de derechos ante la empresa MARKETING ALTERNO PERU SAC, a la cual brindo mi absoluta autorización.
+                                La presente autorización no tiene ámbito geográfico determinado, asimismo mediante el presente escrito, el que suscribe manifiesta que lo anteriormente autorizado no perjudica prestigio y no atenta contra su dignidad y honor, conforme a lo señalado en el artí­culo 15° de Código Civil peruano y a lo regulado mediante Ley N° 29733 Ley de Protección de Datos Personales y su reglamento aprobado mediante Decreto Supremo N° 003-2013-JUS. Por lo tanto, no existe intromisión ilegí­tima en el ámbito de su derecho de la intimidad y/o renuncia expresamente a cualquier tipo de resarcimiento, indemnización u otro tipo de mecanismo reparador de derechos ante la empresa MARKETING ALTERNO PERU SAC, a la cual brindo mi absoluta autorización.
                             </p>
                             <p>
                                 Hecho en original de un mismo tenor y para un solo efecto&#44; los que firman ambas partes en señal de conformidad&#44; la
@@ -1406,7 +2101,7 @@
                                         <div>Browser: <span t-esc="o.browser"/></div>
                                         <div>Token: <span t-esc="o.access_token"/></div>
                                         <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
+                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perù SAC y el mismo da validez de su legitimidad.</div>
                                     </div>
                                     <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
                                         pág <span class="page"/> de <span class="topage"/>
@@ -1468,7 +2163,7 @@
                                 <strong>
                                     MARKETING ALTERNO PERU S&#46;A&#46;C&#44; 
                                 </strong>
-                                con Registro Único de Contribuyentes N&#176; 
+                                con Registro Ùnico de Contribuyentes N&#176; 
                                 <strong>
                                     20512433821 
                                 </strong>
@@ -1487,7 +2182,7 @@
                                 atentamente decimos&#58;
                             </p>
                             <p style="font-size:0.875rem;">
-                                De conformidad a lo dispuesto por los artículos 5&#176;&#44; 6&#176;&#44; 7&#176; y 8&#176; del Decreto Legislativo N&#176;689&#44; Ley de Contratación de Extranjeros y su Reglamento aprobado por Decreto Supremo N&#176; 014&#45;92&#45;TR&#44; solicitamos a su Despacho se sirva aprobar&#44; el Contrato de Trabajo de Personal Extranjero celebrado el 
+                                De conformidad a lo dispuesto por los artí­culos 5&#176;&#44; 6&#176;&#44; 7&#176; y 8&#176; del Decreto Legislativo N&#176;689&#44; Ley de Contratación de Extranjeros y su Reglamento aprobado por Decreto Supremo N&#176; 014&#45;92&#45;TR&#44; solicitamos a su Despacho se sirva aprobar&#44; el Contrato de Trabajo de Personal Extranjero celebrado el 
                                 <strong>
                                     <t t-if="o.date_start">
                                         <span t-esc="'%02d' % o.date_start.day"/>
@@ -1655,7 +2350,7 @@
                                 <strong>
                                     PRIMER OTRO SI DECIMOS&#58;
                                 </strong>
-                                Dando cumplimiento a lo dispuesto por Texto Único de Procedimientos Administrativos &#40;TUPA&#41; del Ministerio de Trabajo&#44; adjuntamos los siguientes documentos&#58;
+                                Dando cumplimiento a lo dispuesto por Texto Ùnico de Procedimientos Administrativos &#40;TUPA&#41; del Ministerio de Trabajo&#44; adjuntamos los siguientes documentos&#58;
                             </p>
                             <ol style="list-style-type: none; font-size:0.875rem;">
                                 <li>
@@ -1687,7 +2382,7 @@
                                 <t t-else="">
                                     __________&#44;
                                 </t>
-                                para que de manera indistinta puedan presentar los diversos documentos que se requieran&#44; así como hacerle
+                                para que de manera indistinta puedan presentar los diversos documentos que se requieran&#44; así­ como hacerle
                                 seguimiento de aprobación y registro de la Prórroga al Contrato de Trabajo y recabar los ejemplares debidamente
                                 aprobados y&#47;o formalizar documentos que sean necesarios&#46;
                             </p>
@@ -1784,7 +2479,7 @@
                                         <div>Browser: <span t-esc="o.browser"/></div>
                                         <div>Token: <span t-esc="o.access_token"/></div>
                                         <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
+                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perù SAC y el mismo da validez de su legitimidad.</div>
                                     </div>
                                     <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
                                         pág <span class="page"/> de <span class="topage"/>
@@ -1816,7 +2511,7 @@
                                 <strong>
                                     MARKETING ALTERNO PERU S&#46;A&#46;C 
                                 </strong>
-                                con Registro Único de Contribuyentes N&#176;
+                                con Registro Ùnico de Contribuyentes N&#176;
                                 <strong>
                                     20512433821 
                                 </strong>
@@ -1824,7 +2519,7 @@
                                 <strong>
                                     11840436 
                                 </strong>
-                                del Registro de Personas Jurídicas de Lima&#44; con domicilio en 
+                                del Registro de Personas Jurí­dicas de Lima&#44; con domicilio en 
                                 <strong>
                                     JR&#46; LIBERTAD NRO&#46; 757&#44; MAGDALENA DEL MAR&#44; 
                                 </strong>
@@ -1836,16 +2531,16 @@
                                 <strong>
                                     21569470 
                                 </strong>
-                                según facultades de representación&#46;
+                                segùn facultades de representación&#46;
                             </p>
                             <p>
-                                En calidad de Representante Legal&#44; luego de haber examinado las Especificaciones Y Requisitos Mínimos Indispensables para la “
+                                En calidad de Representante Legal&#44; luego de haber examinado las Especificaciones Y Requisitos Mí­nimos Indispensables para la 
                                 <strong>
                                     <u>
                                         APROBACION DE CONTRATO MODALIDAD EXTRANJERO
                                     </u>
                                 </strong>
-                                ”&#44; y conocer todas las condiciones existentes; el suscrito declara&#44; que mi representada cumple con los Requisitos Legales Indispensables y demás condiciones tales como el compromiso de brindar Capacitación al personal&#46;
+                                &#44; y conocer todas las condiciones existentes; el suscrito declara&#44; que mi representada cumple con los Requisitos Legales Indispensables y demás condiciones tales como el compromiso de brindar Capacitación al personal&#46;
                             </p>
                             <p>
                                 Asimismo&#44; el Trabajador cuenta con la capacitación y&#47;o experiencia laboral requerida por mi representada para el cargo que se le encomendara&#46;
@@ -1976,7 +2671,7 @@
                                 <strong>
                                     10771669 
                                 </strong>
-                                SEGÚN FACULTADES DE REPRESENTACIÓN&#44; DEBIDAMENTE INSCRITAS EN LA PARTIDA N&#176;
+                                SEGÙN FACULTADES DE REPRESENTACIÓN&#44; DEBIDAMENTE INSCRITAS EN LA PARTIDA N&#176;
                                 <strong>
                                     11840436 
                                 </strong>
@@ -2088,11 +2783,11 @@
                                         __________
                                     </t>
                                 </strong>
-                                &#44; A QUIEN EN ADELANTE SE LE DENOMINARÁ “
+                                &#44; A QUIEN EN ADELANTE SE LE DENOMINARÁ 
                                 <strong>
                                     EL TRABAJADOR
                                 </strong>
-                                ”; EN LOS TÉRMINOS Y CONDICIONES SIGUIENTES&#58;
+                                ; EN LOS TÉRMINOS Y CONDICIONES SIGUIENTES&#58;
                             </p>
                             <br/>
                             <p>
@@ -2115,7 +2810,7 @@
                                 <strong>
                                     EL EMPLEADOR 
                                 </strong>
-                                SE HA CONSTITUIDO EN EL PAÍS MEDIANTE ESCRITURA PÚBLICA DE FECHA 14 DE ENERO DEL 2006&#44; OTORGADA ANTE EL NOTARIO PÚBLICO DE LIMA&#44; DOCTOR AMADEO FELIPE SALGADO PADILLA&#44; INICIANDO SUS ACTIVIDADES ECONÓMICAS EL DÍA 02 DE FEBRERO DEL 2006&#46;
+                                SE HA CONSTITUIDO EN EL PAÍS MEDIANTE ESCRITURA PÙBLICA DE FECHA 14 DE ENERO DEL 2006&#44; OTORGADA ANTE EL NOTARIO PÙBLICO DE LIMA&#44; DOCTOR AMADEO FELIPE SALGADO PADILLA&#44; INICIANDO SUS ACTIVIDADES ECONÓMICAS EL DÍA 02 DE FEBRERO DEL 2006&#46;
                             </p>
                             <br/>
                             <p>
@@ -2252,7 +2947,7 @@
                                 <strong>
                                     EL TRABAJADOR 
                                 </strong>
-                                DESEMPEÑE TEMPORAL O PERMANENTEMENTE OTRO PUESTO DE TRABAJO DISTINTO DE AQUÉL PARA EL CUAL FUE ORIGINALMENTE CONTRATADO&#44; CON LA ÚNICA LIMITACIÓN DE NO AFECTAR SU CATEGORÍA Y REMUNERACIÓN&#46;
+                                DESEMPEÑE TEMPORAL O PERMANENTEMENTE OTRO PUESTO DE TRABAJO DISTINTO DE AQUÉL PARA EL CUAL FUE ORIGINALMENTE CONTRATADO&#44; CON LA ÙNICA LIMITACIÓN DE NO AFECTAR SU CATEGORÍA Y REMUNERACIÓN&#46;
                             </p>
                             <p>
                                 <strong>
@@ -2262,7 +2957,7 @@
                                 <strong>
                                     EL EMPLEADOR&#44; 
                                 </strong>
-                                LAS CUALES DECLARA CONOCER Y SE OBLIGA A CUMPLIR FIELMENTE&#46;”
+                                LAS CUALES DECLARA CONOCER Y SE OBLIGA A CUMPLIR FIELMENTE&#46;
                             </p>
                             <p>
                                 <strong>
@@ -2317,7 +3012,7 @@
                                 <strong>
                                     EL EMPLEADOR&#44; 
                                 </strong>
-                                LA MISMA QUE&#44; CONFORME A LO DISPUESTO EN EL TEXTO ÚNICO DEL DECRETO LEGISLATIVO N&#176; 854&#44; LEY DE JORNADA DE TRABAJO&#44; HORARIO Y TRABAJO EN SOBRETIEMPO&#44; APROBADO POR DECRETO SUPREMO N&#176; 007&#45;2002&#45;TR&#44; NO EXCEDERÁ LAS CUARENTA Y OCHO &#40;48&#41; HORAS SEMANALES ESTABLECIDAS DE ACUERDO A LEY&#46; EL HORARIO DE TRABAJO Y EL DÍA DE DESCANSO SEMANAL OBLIGATORIO DE 
+                                LA MISMA QUE&#44; CONFORME A LO DISPUESTO EN EL TEXTO ÙNICO DEL DECRETO LEGISLATIVO N&#176; 854&#44; LEY DE JORNADA DE TRABAJO&#44; HORARIO Y TRABAJO EN SOBRETIEMPO&#44; APROBADO POR DECRETO SUPREMO N&#176; 007&#45;2002&#45;TR&#44; NO EXCEDERÁ LAS CUARENTA Y OCHO &#40;48&#41; HORAS SEMANALES ESTABLECIDAS DE ACUERDO A LEY&#46; EL HORARIO DE TRABAJO Y EL DÍA DE DESCANSO SEMANAL OBLIGATORIO DE 
                                 <strong>
                                     EL TRABAJADOR 
                                 </strong>
@@ -2513,7 +3208,7 @@
                                 <strong>
                                     EL TRABAJADOR 
                                 </strong>
-                                INCURRA EN CUALQUIERA DE LAS CAUSALES DE TERMINACIÓN QUE CONTEMPLA EL TEXTO ÚNICO ORDENADO DEL DECRETO LEGISLATIVO N&#176; 728&#44; LEY DE PRODUCTIVIDAD Y COMPETITIVIDAD LABORAL&#44; APROBADO MEDIANTE DECRETO SUPREMO N&#176; 003&#45;97&#45;TR&#46;
+                                INCURRA EN CUALQUIERA DE LAS CAUSALES DE TERMINACIÓN QUE CONTEMPLA EL TEXTO ÙNICO ORDENADO DEL DECRETO LEGISLATIVO N&#176; 728&#44; LEY DE PRODUCTIVIDAD Y COMPETITIVIDAD LABORAL&#44; APROBADO MEDIANTE DECRETO SUPREMO N&#176; 003&#45;97&#45;TR&#46;
                             </p>
                             <table class="table">
                                 <colgroup>
@@ -2598,7 +3293,7 @@
                                 <strong>
                                     EL EMPLEADOR 
                                 </strong>
-                                QUE REQUIERAN CONOCER DICHA INFORMACIÓN PARA EL EJERCICIO DE SUS FUNCIONES&#44; &#40;II&#41; TERCERAS PERSONAS Y&#47;O EMPRESAS CONTRATADAS POR EL EMPLEADOR QUE REQUIERAN CONOCER DICHA INFORMACIÓN PARA LA PRESTACIÓN DE SUS SERVICIOS; Y&#47;O &#40;III&#41; SUS EMPRESAS VINCULADAS&#44; DOMICILIADAS O NO EN EL PERÚ&#44; PARA LA CONSOLIDACIÓN DE DATOS&#44; PREPARACIÓN DE ESTADÍSTICAS CORPORATIVAS&#44; ELABORACIÓN DE POLÍTICAS&#44; ETC&#46;
+                                QUE REQUIERAN CONOCER DICHA INFORMACIÓN PARA EL EJERCICIO DE SUS FUNCIONES&#44; &#40;II&#41; TERCERAS PERSONAS Y&#47;O EMPRESAS CONTRATADAS POR EL EMPLEADOR QUE REQUIERAN CONOCER DICHA INFORMACIÓN PARA LA PRESTACIÓN DE SUS SERVICIOS; Y&#47;O &#40;III&#41; SUS EMPRESAS VINCULADAS&#44; DOMICILIADAS O NO EN EL PERÙ&#44; PARA LA CONSOLIDACIÓN DE DATOS&#44; PREPARACIÓN DE ESTADÍSTICAS CORPORATIVAS&#44; ELABORACIÓN DE POLÍTICAS&#44; ETC&#46;
                             </p>
                             <p>
                                 DE IGUAL FORMA&#44; 
@@ -2740,7 +3435,7 @@
                                 <strong>
                                     EL EMPLEADOR&#44; 
                                 </strong>
-                                DEJANDO EXPRESA CONSTANCIA QUE ÉSTE ÚLTIMO HA CUMPLIDO CON INFORMARLE SOBRE LAS RECOMENDACIONES EN MATERIA DE SEGURIDAD Y SALUD EN EL TRABAJO&#44; LAS MISMAS QUE SE SEÑALAN EN EL 
+                                DEJANDO EXPRESA CONSTANCIA QUE ÉSTE ÙLTIMO HA CUMPLIDO CON INFORMARLE SOBRE LAS RECOMENDACIONES EN MATERIA DE SEGURIDAD Y SALUD EN EL TRABAJO&#44; LAS MISMAS QUE SE SEÑALAN EN EL 
                                 <strong>
                                     ANEXO 
                                 </strong>
@@ -2790,7 +3485,7 @@
                                 <strong>
                                     EL EMPLEADOR 
                                 </strong>
-                                PODRAN CELEBRAR ACUERDOS PRIVADOS QUE SEGÚN CONVENGAN LAS PARTES&#46;
+                                PODRAN CELEBRAR ACUERDOS PRIVADOS QUE SEGÙN CONVENGAN LAS PARTES&#46;
                             </p>
                             <p>
                                 <strong>
@@ -2873,7 +3568,7 @@
                                 </strong>
                             </p>
                             <p>
-                                EN TODO LO NO PREVISTO EXPRESAMENTE EN EL PRESENTE CONTRATO&#44; REGIRÁN LAS LEYES VIGENTES EN EL PERÚ AL MOMENTO EN QUE TALES HECHOS OCURRAN&#46;
+                                EN TODO LO NO PREVISTO EXPRESAMENTE EN EL PRESENTE CONTRATO&#44; REGIRÁN LAS LEYES VIGENTES EN EL PERÙ AL MOMENTO EN QUE TALES HECHOS OCURRAN&#46;
                             </p>
                             <p>
                                 <strong>
@@ -2939,7 +3634,7 @@
                                 </strong>
                             </p>
                             <p>
-                                EL TRABAJADOR DECLARA LIBREMENTE SU AUTORIZACION ANTE EMPLEADOR, QUE ESTE ÚLTIMO PUEDA DISPONER Y UTILIZAR DE MANERA TOTAL O PARCIALMENTE SU IMAGEN, VOZ Y/O REACCIONES, SECUELAS DE VIDEO, DE MODO GRATUITO Y LIBRE DE TODA COMPENSACIÓN ECONÓMICA, A FIN DE QUE LA MISMA SEA DIVULGADA Y/O INCORPORADA CON FINES PUBLICITARIOS EN TODO MEDIO DE COMUNICACIÓN QUE PUEDAN PUBLICITARSE O PROMOCIONARSE, A TRAVÉS DE MEDIOS DIGITALES, INTERNET, Y/O REDES SOCIALES, SIN RESTRICCIONES NI LÍMITES TEMPORALES ASÍ COMO DE MEDIOS PARA SU REPRODUCCIÓN Y/O DIFUSIÓN, SIENDO LA PRESENTE DE DURACIÓN INDETERMINADA. Y POR LA PRESENTE EL TRABAJADOR Y SUS SUCESORES EXIMEN A LA EMPRESA Y A TODO REPRESENTANTE DE ESTAS Y/O CUENTA COMERCIAL DE TODA RESPONSABILIDAD ANTE CUALQUIER RECLAMO POR DAÑOS O DE INDEMNIZACIÓN QUE SURJA DE LAS ACTIVIDADES AUTORIZADAS POR ESTE ACUERDO, LIBRE DE TODA REGALÍA.
+                                EL TRABAJADOR DECLARA LIBREMENTE SU AUTORIZACION ANTE EMPLEADOR, QUE ESTE ÙLTIMO PUEDA DISPONER Y UTILIZAR DE MANERA TOTAL O PARCIALMENTE SU IMAGEN, VOZ Y/O REACCIONES, SECUELAS DE VIDEO, DE MODO GRATUITO Y LIBRE DE TODA COMPENSACIÓN ECONÓMICA, A FIN DE QUE LA MISMA SEA DIVULGADA Y/O INCORPORADA CON FINES PUBLICITARIOS EN TODO MEDIO DE COMUNICACIÓN QUE PUEDAN PUBLICITARSE O PROMOCIONARSE, A TRAVÉS DE MEDIOS DIGITALES, INTERNET, Y/O REDES SOCIALES, SIN RESTRICCIONES NI LÍMITES TEMPORALES ASÍ COMO DE MEDIOS PARA SU REPRODUCCIÓN Y/O DIFUSIÓN, SIENDO LA PRESENTE DE DURACIÓN INDETERMINADA. Y POR LA PRESENTE EL TRABAJADOR Y SUS SUCESORES EXIMEN A LA EMPRESA Y A TODO REPRESENTANTE DE ESTAS Y/O CUENTA COMERCIAL DE TODA RESPONSABILIDAD ANTE CUALQUIER RECLAMO POR DAÑOS O DE INDEMNIZACIÓN QUE SURJA DE LAS ACTIVIDADES AUTORIZADAS POR ESTE ACUERDO, LIBRE DE TODA REGALÍA.
                             </p>
                             <p>
                                 LA PRESENTE AUTORIZACIÓN NO TIENE ÁMBITO GEOGRÁFICO DETERMINADO, ASIMISMO MEDIANTE EL PRESENTE ESCRITO, EL QUE SUSCRIBE MANIFIESTA QUE LO ANTERIORMENTE AUTORIZADO NO PERJUDICA PRESTIGIO Y NO ATENTA CONTRA SU DIGNIDAD Y HONOR, CONFORME A LO SEÑALADO EN EL ARTÍCULO 15° DE CÓDIGO CIVIL PERUANO Y A LO REGULADO MEDIANTE LEY N° 29733 LEY DE PROTECCIÓN DE DATOS PERSONALES Y SU REGLAMENTO APROBADO MEDIANTE DECRETO SUPREMO N° 003-2013-JUS. POR LO TANTO, NO EXISTE INTROMISIÓN ILEGÍTIMA EN EL ÁMBITO DE SU DERECHO DE LA INTIMIDAD Y/O RENUNCIA EXPRESAMENTE A CUALQUIER TIPO DE RESARCIMIENTO, INDEMNIZACIÓN U OTRO TIPO DE MECANISMO REPARADOR DE DERECHOS ANTE LA EMPRESA MARKETING ALTERNO PERU SAC, A LA CUAL BRINDO MI ABSOLUTA AUTORIZACIÓN.
@@ -3106,7 +3801,7 @@
                                 </strong>
                             </p>
                             <p style="font-size:0.625rem">
-                                La presente contratación se sustenta en la causa objetiva, de conformidad con lo establecido en el artículo 64 del Texto Único Ordenado del Decreto Legislativo N.º 728 - Ley de
+                                La presente contratación se sustenta en la causa objetiva, de conformidad con lo establecido en el artí­culo 64 del Texto Ùnico Ordenado del Decreto Legislativo N.º 728 - Ley de
                                 Productividad y Competitividad Laboral, aprobado mediante Decreto Supremo N.º 003-97-TR. En tal sentido, MARKETING, en su calidad de empleador, requiere cubrir
                                 actividades de naturaleza intermitente, vinculadas directamente a las variaciones en la demanda de servicios de promoción y ventas solicitadas por sus clientes, en función a
                                 contratos comerciales celebrados con empresas como 
@@ -3119,7 +3814,7 @@
                                     &#40;en adelante&#44; &#34;EL CLIENTE&#34;&#41;&#44;
                             </p>
                             <p style="font-size:0.625rem">
-                                Estas actividades no son continuas ni permanentes, sino que se presentan de manera esporádica, por períodos determinados, conforme a los requerimientos comerciales de los clientes de 
+                                Estas actividades no son continuas ni permanentes, sino que se presentan de manera esporádica, por perí­odos determinados, conforme a los requerimientos comerciales de los clientes de 
                                 <strong>
                                     MARKETING
                                 </strong>
@@ -3137,13 +3832,13 @@
                                 <t t-else="">
                                     __________
                                 </t>
-                                , prestando servicios específicamente durante los períodos
+                                , prestando servicios especí­ficamente durante los perí­odos
                                 en que se presenten dichas necesidades intermitentes, conforme al requerimiento de MARKETING. Las funciones que desempeñará estarán referidas principalmente al impulso,
                                 promoción, ofrecimiento y venta de productos que comercializan los clientes de la empresa, conforme a las directrices y estrategias diseñadas por 
                                 <strong>
                                     EL EMPLEADOR
                                 </strong>
-                                , sin tener injerencia ni asumir funciones vinculadas al núcleo del negocio del cliente, tales como producción, comercialización directa, planificación, toma de decisiones estratégicas, ni
+                                , sin tener injerencia ni asumir funciones vinculadas al nùcleo del negocio del cliente, tales como producción, comercialización directa, planificación, toma de decisiones estratégicas, ni
                                 ninguna actividad que implique dirección o gestión interna de dicho cliente.
                             </p>
                             <p style="font-size:0.625rem">
@@ -3155,14 +3850,14 @@
                                     EL TRABAJADOR
                                 </strong>
                                 , por cualquier medio válido, cada vez que se active la necesidad de prestar el servicio, indicando el detalle de la labor a realizar, el lugar, duración, condiciones del servicio, 
-                                remuneración correspondiente y demás aspectos relevantes. La prestación de servicios se realizará únicamente durante los períodos en que la empresa lo requiera, sin que ello genere 
-                                continuidad laboral o expectativa de permanencia más allá de dichos períodos.
+                                remuneración correspondiente y demás aspectos relevantes. La prestación de servicios se realizará ùnicamente durante los perí­odos en que la empresa lo requiera, sin que ello genere 
+                                continuidad laboral o expectativa de permanencia más allá de dichos perí­odos.
                                 El presente contrato no implica relación laboral continua, ni genera derecho a estabilidad laboral permanente, ya que la prestación de servicios queda sujeta estrictamente a la
                                 intermitencia de los requerimientos antes descritos, conforme a la legislación laboral vigente.
                             </p>
                             <p>
                                 <strong>
-                                    TERCERA&#46; &#45; INTERMITENCIA DE LABORES Y SUSPENCI&#211;N PERFECTA
+                                    TERCERA&#46; &#45; INTERMITENCIA DE LABORES Y SUSPENSI&#211;N PERFECTA
                                 </strong>
                             </p>
                             <p style="font-size:0.625rem">
@@ -3211,14 +3906,14 @@
                                 <strong>
                                     MARKETING 
                                 </strong>
-                                también comunicará el período asignado para realizar las
-                                actividades y la fecha de término de esta, a través del correo electrónico o vía mensaje de texto o mensaje de WhatsApp al número de teléfono celular que EL
+                                también comunicará el perí­odo asignado para realizar las
+                                actividades y la fecha de término de esta, a través del correo electrónico o ví­a mensaje de texto o mensaje de WhatsApp al nùmero de teléfono celular que EL
                                 TRABAJADOR ha declarado a la empresa. Es obligación de 
                                 <strong>
                                     EL TRABAJADOR 
                                 </strong>
                                 revisar su correo electrónico, mensajes de texto o mensaje de
-                                WhatsApp, considerándose válida la comunicación efectuada solo con el envío del correo electrónico o mensaje de texto o mensaje de WhatsApp.
+                                WhatsApp, considerándose válida la comunicación efectuada solo con el enví­o del correo electrónico o mensaje de texto o mensaje de WhatsApp.
                             </p>
                             <p style="font-size:0.625rem">
                                 De no reincorporarse oportunamente ante la comunicación de un nuevo proyecto, 
@@ -3289,7 +3984,7 @@
                                 <strong>
                                     MARKETING 
                                 </strong>
-                                por necesidades del servicio, en ejercicio de su facultad de dirección, de conformidad con el artículo 9 de la LPCL. Asimismo,
+                                por necesidades del servicio, en ejercicio de su facultad de dirección, de conformidad con el artí­culo 9 de la LPCL. Asimismo,
                                 se compromete a cumplir con las disposiciones sobre Exclusividad, Reserva, Confidencialidad, No Competencia y Propiedad Intelectual.
                             </p>
                             <p style="font-size:0.625rem">
@@ -3399,7 +4094,7 @@
                                 <strong>
                                     EL TRABAJADOR 
                                 </strong>
-                                que durante este período de prueba 
+                                que durante este perí­odo de prueba 
                                 <strong>
                                     EL EMPLEADOR 
                                 </strong>
@@ -3409,24 +4104,24 @@
                                     EL TRABAJADOR 
                                 </strong>
                                 y/o comunicado mediante conducto notarial.
-                                De conformidad con lo dispuesto en el artículo 10° del Decreto Supremo N° 003-97-TR – Texto Único Ordenado de la Ley de Productividad y Competitividad Laboral, las partes
+                                De conformidad con lo dispuesto en el artí­culo 10° del Decreto Supremo N° 003-97-TR - Texto Ùnico Ordenado de la Ley de Productividad y Competitividad Laboral, las partes
                                 acuerdan que 
                                 <strong>
-                                    “EL TRABAJADOR”
+                                    EL TRABAJADOR
                                 </strong>
-                                    estará sujeto a un período de prueba de tres (03) meses contados a partir del inicio de la relación laboral. Durante este período, 
+                                    estará sujeto a un perí­odo de prueba de tres (03) meses contados a partir del inicio de la relación laboral. Durante este perí­odo, 
                                 <strong>
                                     EL EMPLEADOR
                                 </strong>
-                                podrá dar por concluido el vínculo laboral sin expresión de causa ni obligación de preaviso o indemnización alguna, bastando para ello una comunicación escrita mediante carta
+                                podrá dar por concluido el ví­nculo laboral sin expresión de causa ni obligación de preaviso o indemnización alguna, bastando para ello una comunicación escrita mediante carta
                                 notarial y/o al correo electrónico personal autorizado por 
                                 <strong>
-                                    “EL TRABAJADOR”
+                                    EL TRABAJADOR
                                 </strong>
                                     en este contrato, medio que se tendrá como válido y fehaciente para todos los efectos legales.
                                 Asimismo, 
                                 <strong>
-                                    “EL TRABAJADOR”
+                                    EL TRABAJADOR
                                 </strong>
                                     declara conocer y aceptar expresamente que tiene conocimiento de la presente clausula, y que la resolución del contrato en este periodo no genera
                                 derecho a indemnización alguna, conforme lo establecido por la normatividad vigente.
@@ -3672,7 +4367,7 @@
                                     MARKETING 
                                 </strong>
                                 para tratar, recolectar, requerir, reunir, conservar, modificar, utilizar y transferir a terceros (en las condiciones que
-                                se señalan en los siguientes párrafos), dentro o fuera del país, su información personal, incluyendo sus datos personales y sensibles. Sin carácter limitativo,
+                                se señalan en los siguientes párrafos), dentro o fuera del paí­s, su información personal, incluyendo sus datos personales y sensibles. Sin carácter limitativo,
                                 ello se efectuará a efectos de juzgar su idoneidad y rendimiento como trabajador, operar de la manera que 
                                 <strong>
                                     MARKETING 
@@ -3698,8 +4393,8 @@
                                     MARKETING 
                                 </strong>
                                 que requieran conocer
-                                dicha información para la prestación de sus servicios; y/o, (iii) a sus empresas vinculadas, domiciliadas o no en el Perú, para la consolidación de datos,
-                                preparación de estadísticas corporativas , elaboración de políticas, etc.
+                                dicha información para la prestación de sus servicios; y/o, (iii) a sus empresas vinculadas, domiciliadas o no en el Perù, para la consolidación de datos,
+                                preparación de estadí­sticas corporativas , elaboración de polí­ticas, etc.
                             </p>
                             <p style="font-size:0.625rem">
                                 Con respect al uso de Imagen: 
@@ -3708,10 +4403,10 @@
                                 </strong>
                                 autoriza de manera libre, voluntaria, expresa, informada, irrevocable y por tiempo indefinido a la empresa 
                                 <strong>
-                                    MARKETING ALTERNO PERÚ S.A.C.
+                                    MARKETING ALTERNO PERÙ S.A.C.
                                 </strong>
                                 , con RUC N° 20512433821, para que capte, utilice, reproduzca, comunique, publique, distribuya y modifique, total o parcialmente, su imagen, voz y/o reacciones, a través
-                                de cualquier medio físico, digital o electrónico, incluyendo pero no limitado a redes sociales, plataformas digitales, internet, medios impresos y audiovisuales, a nivel nacional e
+                                de cualquier medio fí­sico, digital o electrónico, incluyendo pero no limitado a redes sociales, plataformas digitales, internet, medios impresos y audiovisuales, a nivel nacional e
                                 internacional, para fines comerciales, publicitarios o promocionales de la empresa o de sus clientes.
                             </p>
                             <p style="font-size:0.625rem">
@@ -3721,7 +4416,7 @@
                                 </strong>
                                 renuncia expresamente a formular
                                 cualquier reclamo, acción o indemnización futura por el uso autorizado de su imagen, voz o reacciones, y declara que dicho uso no afecta su honor, dignidad ni intimidad, conforme a lo
-                                dispuesto en el artículo 15° del Código Civil, la Ley N° 29733 - Ley de Protección de Datos Personales y su reglamento.
+                                dispuesto en el artí­culo 15° del Código Civil, la Ley N° 29733 - Ley de Protección de Datos Personales y su reglamento.
                                 <strong>
                                     EL TRABAJADOR 
                                 </strong>
@@ -3736,7 +4431,7 @@
                                     EL TRABAJADOR 
                                 </strong>
                                 reconoce y declara expresamente que, de manera previa a la firma del presente contrato, ha sido debida y suficientemente informado
-                                sobre los alcances y efectos de la presente cláusula, según lo establecido en el artículo 18° de la Ley de Protección de Datos Personales.
+                                sobre los alcances y efectos de la presente cláusula, segùn lo establecido en el artí­culo 18° de la Ley de Protección de Datos Personales.
                             </p>
                             <p style="font-size:0.625rem">
                                 <strong>
@@ -3816,20 +4511,20 @@
                         </div>
                         <div style="page-break-after: always;">
                             <p style="font-size:0.625rem">
-                                El trabajador declara y acepta expresamente que será el único responsable de la creación, configuración y uso de su cuenta personal en la plataforma digital ODO, generando su propio
-                                usuario y contraseña mediante su correo electrónico y número telefónico personal, sin intervención de terceros ni de la empresa 
+                                El trabajador declara y acepta expresamente que será el ùnico responsable de la creación, configuración y uso de su cuenta personal en la plataforma digital ODO, generando su propio
+                                usuario y contraseña mediante su correo electrónico y nùmero telefónico personal, sin intervención de terceros ni de la empresa 
                                 <strong>
-                                    MARKETING ALTERNO PERÚ S.A.C. 
+                                    MARKETING ALTERNO PERÙ S.A.C. 
                                 </strong>
                                 Asimismo,
-                                reconoce que toda información ingresada y documentos firmados digitalmente a través de dicha plataforma —incluyendo formularios, declaraciones y contratos— constituyen
-                                manifestación válida e inequívoca de su voluntad, con la misma eficacia legal que una firma manuscrita, siendo plenamente vinculantes frente a la empresa y ante cualquier autoridad
+                                reconoce que toda información ingresada y documentos firmados digitalmente a través de dicha plataforma incluyendo formularios, declaraciones y contratos constituyen
+                                manifestación válida e inequí­voca de su voluntad, con la misma eficacia legal que una firma manuscrita, siendo plenamente vinculantes frente a la empresa y ante cualquier autoridad
                                 administrativa o judicial.
                             </p>
                             <p style="font-size:0.625rem">
                                 El trabajador se compromete a mantener la confidencialidad de sus credenciales de acceso y a no compartirlas con terceros. En caso de mal uso, suplantación, o negativa injustificada
                                 de autenticidad respecto a documentos firmados digitalmente en la plataforma, el trabajador asumirá las consecuencias legales y disciplinarias que correspondan, incluyendo medidas
-                                administrativas, civiles y/o penales según la gravedad del hecho.
+                                administrativas, civiles y/o penales segùn la gravedad del hecho.
                             </p>
                             <p>
                                 <strong>
@@ -4163,7 +4858,7 @@
                                         <div>Browser: <span t-esc="o.browser"/></div>
                                         <div>Token: <span t-esc="o.access_token"/></div>
                                         <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
+                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perù SAC y el mismo da validez de su legitimidad.</div>
                                     </div>
                                     <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
                                         pág <span class="page"/> de <span class="topage"/>
@@ -4268,7 +4963,7 @@
                                     EL EMPLEADOR 
                                 </strong>
                                 tiene la necesidad transitoria de contratar personal adicional bajo la modalidad
-                                de contrato de trabajo de naturaleza temporal, conforme a lo previsto en el artículo 57° del Texto Único Ordenado del Decreto Legislativo N° 728,
+                                de contrato de trabajo de naturaleza temporal, conforme a lo previsto en el artí­culo 57° del Texto Ùnico Ordenado del Decreto Legislativo N° 728,
                                 aprobado por Decreto Supremo N° 003-97-TR. Esta contratación responde al incremento coyuntural de la demanda de servicios asumidos por
                                 <strong>
                                     EL EMPLEADOR 
@@ -4293,12 +4988,12 @@
                                     __________
                                 </t>
                                 , cuya función principal consiste en brindar soporte comercial operativo en el punto
-                                de venta, impulsando productos específicos conforme a las directrices y estrategias diseñadas por 
+                                de venta, impulsando productos especí­ficos conforme a las directrices y estrategias diseñadas por 
                                 <strong>
                                     EL EMPLEADOR
                                 </strong>
                                 , sin tener injerencia ni
-                                asumir funciones vinculadas al núcleo del negocio del cliente, tales como producción, comercialización directa, planificación, toma de decisiones
+                                asumir funciones vinculadas al nùcleo del negocio del cliente, tales como producción, comercialización directa, planificación, toma de decisiones
                                 estratégicas, ni ninguna actividad que implique dirección o gestión interna de dicho cliente.
                             </p>
                             <p style="font-size:0.625rem">
@@ -4306,8 +5001,8 @@
                                 <strong>
                                     EL TRABAJADOR 
                                 </strong>
-                                no forman parte del núcleo del negocio del cliente final, conforme a lo dispuesto en el artículo 2° del Decreto Supremo N° 001-2022-TR, por lo 
-                                que su contratación se encuentra plenamente enmarcada en los límites legales aplicables a los contratos por servicios con desplazamiento de personal.
+                                no forman parte del nùcleo del negocio del cliente final, conforme a lo dispuesto en el artí­culo 2° del Decreto Supremo N° 001-2022-TR, por lo 
+                                que su contratación se encuentra plenamente enmarcada en los lí­mites legales aplicables a los contratos por servicios con desplazamiento de personal.
                             </p>
                             <p style="font-size:0.625rem">
                                 2&#46;3&#46;&#45; No obstante lo acordado en el párrafo precedente, 
@@ -4318,7 +5013,7 @@
                                 <strong>
                                     EL TRABAJADOR
                                 </strong>
-                                , así como a las necesidades del servicio, incluida la reasignación temporal o permanente a otras sedes dentro del ámbito geográfico en que opere 
+                                , así­ como a las necesidades del servicio, incluida la reasignación temporal o permanente a otras sedes dentro del ámbito geográfico en que opere 
                                 <strong>
                                     EL EMPLEADOR
                                 </strong>
@@ -4361,8 +5056,8 @@
                                 <strong>
                                     el Empleador
                                 </strong>
-                                , la cual se sujetará al límite máximo legal
-                                de cuarenta y ocho (48) horas semanales, conforme a lo dispuesto en el artículo 25° del Decreto Supremo N.º 003-97-TR – Texto Único Ordenado
+                                , la cual se sujetará al lí­mite máximo legal
+                                de cuarenta y ocho (48) horas semanales, conforme a lo dispuesto en el artí­culo 25° del Decreto Supremo N.º 003-97-TR - Texto Ùnico Ordenado
                                 del Decreto Legislativo N.º 728, Ley de Productividad y Competitividad Laboral.
                             </p>
                             <p style="font-size:0.625rem">
@@ -4376,7 +5071,7 @@
                                     el Empleador 
                                 </strong>
                                 podrá modificar de manera razonable el horario o la distribución de la jornada semanal de trabajo,
-                                ya sea por motivos operativos, técnicos, organizativos o de fuerza mayor, siempre que se respete el límite máximo legal y se otorgue el descanso
+                                ya sea por motivos operativos, técnicos, organizativos o de fuerza mayor, siempre que se respete el lí­mite máximo legal y se otorgue el descanso
                                 semanal obligatorio. Dicha modificación será debidamente comunicada al 
                                 <strong>
                                     Trabajador 
@@ -4400,7 +5095,7 @@
                                 El Trabajador 
                                 </strong>
                                 acepta expresamente que, dada la naturaleza de sus funciones y las necesidades del servicio, podrá estar sujeto a turnos
-                                rotativos, horarios fraccionados, jornadas atípicas u otras modalidades de organización del tiempo de trabajo legalmente permitidas, sin que ello
+                                rotativos, horarios fraccionados, jornadas atí­picas u otras modalidades de organización del tiempo de trabajo legalmente permitidas, sin que ello
                                 implique una modificación sustancial de su contrato o afectación de sus derechos adquiridos, siempre que se respete la legislación laboral aplicable.
                             </p>
                             <table class="table">
@@ -4459,7 +5154,7 @@
                                         <div>Browser: <span t-esc="o.browser"/></div>
                                         <div>Token: <span t-esc="o.access_token"/></div>
                                         <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
+                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perù SAC y el mismo da validez de su legitimidad.</div>
                                     </div>
                                     <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
                                         pág <span class="page"/> de <span class="topage"/>
@@ -4546,25 +5241,25 @@
                                 y&#47;o comunicado mediante conducto notarial&#46;
                             </p>
                             <p style="font-size:0.625rem">
-                                De conformidad con lo dispuesto en el artículo 10° del Decreto Supremo N° 003-97-TR - Texto Único Ordenado de la Ley de Productividad y
+                                De conformidad con lo dispuesto en el artí­culo 10° del Decreto Supremo N° 003-97-TR - Texto Ùnico Ordenado de la Ley de Productividad y
                                 Competitividad Laboral, las partes acuerdan que 
                                 <strong>
-                                    “EL TRABAJADOR” 
+                                    EL TRABAJADOR 
                                 </strong>
-                                estará sujeto a un período de prueba de tres (03) meses contados a partir del inicio de la relación laboral. Durante este período, 
+                                estará sujeto a un perí­odo de prueba de tres (03) meses contados a partir del inicio de la relación laboral. Durante este perí­odo, 
                                 <strong>
                                     EL EMPLEADOR 
                                 </strong>
-                                podrá dar por concluido el vínculo laboral sin expresión de causa ni
+                                podrá dar por concluido el ví­nculo laboral sin expresión de causa ni
                                 obligación de preaviso o indemnización alguna, bastando para ello una comunicación escrita mediante carta notarial y/o al correo electrónico
                                 personal autorizado por 
                                 <strong>
-                                    “EL TRABAJADOR” 
+                                    EL TRABAJADOR 
                                 </strong>
                                 en este contrato, medio que se tendrá como válido y fehaciente para todos los efectos legales.
                                 Asimismo, 
                                 <strong>
-                                    “EL TRABAJADOR” 
+                                    EL TRABAJADOR 
                                 </strong>
                                 declara conocer y aceptar expresamente que tiene conocimiento de la presente clausula, y que la resolución del
                                 contrato en este periodo no genera derecho a indemnización alguna, conforme lo establecido por la normatividad vigente.
@@ -4650,15 +5345,15 @@
                                 </strong>
                                 autoriza de manera libre, voluntaria, expresa, informada, irrevocable y por tiempo indefinido a la empresa 
                                 <strong>
-                                MARKETING ALTERNO PERÚ S.A.C.
+                                MARKETING ALTERNO PERÙ S.A.C.
                                 </strong>
                                 , con RUC N° 20512433821, para que capte, utilice, reproduzca, comunique,
-                                publique, distribuya y modifique, total o parcialmente, su imagen, voz y/o reacciones, a través de cualquier medio físico, digital o electrónico,
+                                publique, distribuya y modifique, total o parcialmente, su imagen, voz y/o reacciones, a través de cualquier medio fí­sico, digital o electrónico,
                                 incluyendo pero no limitado a redes sociales, plataformas digitales, internet, medios impresos y audiovisuales, a nivel nacional e internacional,
                                 para fines comerciales, publicitarios o promocionales de la empresa o de sus clientes.
                                 Esta autorización se otorga de forma gratuita, sin compensación económica alguna y sin restricción temporal o territorial. Asimismo, el
                                 TRABAJADOR renuncia expresamente a formular cualquier reclamo, acción o indemnización futura por el uso autorizado de su imagen, voz o
-                                reacciones, y declara que dicho uso no afecta su honor, dignidad ni intimidad, conforme a lo dispuesto en el artículo 15° del Código Civil, la Ley
+                                reacciones, y declara que dicho uso no afecta su honor, dignidad ni intimidad, conforme a lo dispuesto en el artí­culo 15° del Código Civil, la Ley
                                 N° 29733 - Ley de Protección de Datos Personales y su reglamento.
                             </p>
                             <p style="font-size:0.625rem">
@@ -4666,13 +5361,13 @@
                                 <strong>
                                     El trabajador 
                                 </strong>
-                                declara y acepta expresamente que será el único responsable de la creación, configuración y uso de su cuenta personal en la plataforma digital ODO, 
-                                generando su propio usuario y contraseña mediante su correo electrónico y número telefónico personal, sin intervención de terceros ni de la empresa 
+                                declara y acepta expresamente que será el ùnico responsable de la creación, configuración y uso de su cuenta personal en la plataforma digital ODO, 
+                                generando su propio usuario y contraseña mediante su correo electrónico y nùmero telefónico personal, sin intervención de terceros ni de la empresa 
                                 <strong>
-                                    MARKETING ALTERNO PERÚ S.A.C. 
+                                    MARKETING ALTERNO PERÙ S.A.C. 
                                 </strong>
                                 Asimismo, reconoce que toda información ingresada y documentos firmados digitalmente a través de dicha 
-                                plataforma —incluyendo formularios, declaraciones y contratos— constituyen manifestación válida e inequívoca
+                                plataforma incluyendo formularios, declaraciones y contratos constituyen manifestación válida e inequí­voca
                                 de su voluntad, con la misma eficacia legal que una firma manuscrita, siendo plenamente vinculantes frente a la empresa y ante cualquier
                                 autoridad administrativa o judicial.
                                 <strong>
@@ -4683,7 +5378,7 @@
                                 <strong>
                                     el trabajador 
                                 </strong>
-                                asumirá las consecuencias legales y disciplinarias que correspondan, incluyendo medidas administrativas, civiles y/o penales según la gravedad del hecho
+                                asumirá las consecuencias legales y disciplinarias que correspondan, incluyendo medidas administrativas, civiles y/o penales segùn la gravedad del hecho
                             </p>
                             <table class="table">
                                 <colgroup>
@@ -4940,10 +5635,10 @@
                                 </strong>
                             </p>
                             <p style="font-size:0.625rem">
-                                EL TRABAJADOR declara libremente su AUTORIZACION ante EMPLEADOR, que este último pueda disponer y utilizar de manera total o parcialmente su imagen, voz y/o reacciones, secuelas de video, de modo gratuito y libre de toda compensación económica, a fin de que la misma sea divulgada y/o incorporada con fines publicitarios en todo medio de comunicación que puedan publicitarse o promocionarse, a través de medios digitales, internet, y/o redes sociales, sin restricciones ni límites temporales así como de medios para su reproducción y/o difusión, siendo la presente de duración indeterminada. Y por la presente EL TRABAJADOR y sus sucesores eximen a la empresa y a todo representante de estas y/o cuenta comercial de toda responsabilidad ante cualquier reclamo por daños o de indemnización que surja de las actividades autorizadas por este acuerdo, libre de toda regalía.
+                                EL TRABAJADOR declara libremente su AUTORIZACION ante EMPLEADOR, que este ùltimo pueda disponer y utilizar de manera total o parcialmente su imagen, voz y/o reacciones, secuelas de video, de modo gratuito y libre de toda compensación económica, a fin de que la misma sea divulgada y/o incorporada con fines publicitarios en todo medio de comunicación que puedan publicitarse o promocionarse, a través de medios digitales, internet, y/o redes sociales, sin restricciones ni lí­mites temporales así­ como de medios para su reproducción y/o difusión, siendo la presente de duración indeterminada. Y por la presente EL TRABAJADOR y sus sucesores eximen a la empresa y a todo representante de estas y/o cuenta comercial de toda responsabilidad ante cualquier reclamo por daños o de indemnización que surja de las actividades autorizadas por este acuerdo, libre de toda regalí­a.
                             </p>
                             <p style="font-size:0.625rem">
-                                La presente autorización no tiene ámbito geográfico determinado, asimismo mediante el presente escrito, el que suscribe manifiesta que lo anteriormente autorizado no perjudica prestigio y no atenta contra su dignidad y honor, conforme a lo señalado en el artículo 15° de Código Civil peruano y a lo regulado mediante Ley N° 29733 Ley de Protección de Datos Personales y su reglamento aprobado mediante Decreto Supremo N° 003-2013-JUS. Por lo tanto, no existe intromisión ilegítima en el ámbito de su derecho de la intimidad y/o renuncia expresamente a cualquier tipo de resarcimiento, indemnización u otro tipo de mecanismo reparador de derechos ante la empresa MARKETING ALTERNO PERU SAC, a la cual brindo mi absoluta autorización.
+                                La presente autorización no tiene ámbito geográfico determinado, asimismo mediante el presente escrito, el que suscribe manifiesta que lo anteriormente autorizado no perjudica prestigio y no atenta contra su dignidad y honor, conforme a lo señalado en el artí­culo 15° de Código Civil peruano y a lo regulado mediante Ley N° 29733 Ley de Protección de Datos Personales y su reglamento aprobado mediante Decreto Supremo N° 003-2013-JUS. Por lo tanto, no existe intromisión ilegí­tima en el ámbito de su derecho de la intimidad y/o renuncia expresamente a cualquier tipo de resarcimiento, indemnización u otro tipo de mecanismo reparador de derechos ante la empresa MARKETING ALTERNO PERU SAC, a la cual brindo mi absoluta autorización.
                             </p>
                             <p style="font-size:0.625rem">
                                 Hecho en original de un mismo tenor y para un solo efecto&#44; los que firman ambas partes en se&#241;al de conformidad&#44; la ciudad de Lima a los 
@@ -5282,7 +5977,7 @@
                                     EL EMPLEADOR 
                                 </strong>
                                 tiene la necesidad transitoria de contratar personal adicional bajo la modalidad de contrato de trabajo de naturaleza temporal, 
-                                conforme a lo previsto en el artículo 57° del Texto Único Ordenado del Decreto Legislativo N° 728, aprobado por Decreto Supremo 
+                                conforme a lo previsto en el artí­culo 57° del Texto Ùnico Ordenado del Decreto Legislativo N° 728, aprobado por Decreto Supremo 
                                 N° 003-97-TR. Esta contratación responde al incremento coyuntural de la demanda de servicios asumidos por 
                                 <strong>
                                     EL EMPLEADOR 
@@ -5305,11 +6000,11 @@
                                 <t t-else="">
                                     __________
                                 </t>
-                                , cuya función principal consiste en brindar soporte comercial operativo en el punto de venta, impulsando productos específicos conforme a las directrices y estrategias diseñadas por 
+                                , cuya función principal consiste en brindar soporte comercial operativo en el punto de venta, impulsando productos especí­ficos conforme a las directrices y estrategias diseñadas por 
                                 <strong>
                                     EL EMPLEADOR
                                 </strong>
-                                , sin tener injerencia ni asumir funciones vinculadas al núcleo del negocio del cliente, tales como producción, comercialización directa, planificación, toma de decisiones estratégicas, 
+                                , sin tener injerencia ni asumir funciones vinculadas al nùcleo del negocio del cliente, tales como producción, comercialización directa, planificación, toma de decisiones estratégicas, 
                                 ni ninguna actividad que implique dirección o gestión interna de dicho cliente
                             </p>
                             <p style="font-size:0.625rem">
@@ -5317,8 +6012,8 @@
                                 <strong>
                                     EL TRABAJADOR 
                                 </strong>
-                                no forman parte del núcleo del negocio del cliente final, conforme a lo dispuesto en el artículo 2° del Decreto Supremo N° 001-2022-TR, por lo que su contratación se encuentra plenamente
-                                enmarcada en los límites legales aplicables a los contratos por servicios con desplazamiento de personal.
+                                no forman parte del nùcleo del negocio del cliente final, conforme a lo dispuesto en el artí­culo 2° del Decreto Supremo N° 001-2022-TR, por lo que su contratación se encuentra plenamente
+                                enmarcada en los lí­mites legales aplicables a los contratos por servicios con desplazamiento de personal.
                             </p>
                             <p style="font-size:0.625rem">
                                 2&#46;3&#46;&#45;No obstante lo acordado en el párrafo precedente, 
@@ -5329,7 +6024,7 @@
                                 <strong>
                                 EL TRABAJADOR
                                 </strong>
-                                , así como a las necesidades del servicio, incluida la reasignación temporal o permanente a otras sedes dentro del ámbito geográfico en que opere 
+                                , así­ como a las necesidades del servicio, incluida la reasignación temporal o permanente a otras sedes dentro del ámbito geográfico en que opere 
                                 <strong>
                                 EL EMPLEADOR
                                 </strong>
@@ -5372,8 +6067,8 @@
                                 <strong>
                                     EL EMPLEADOR
                                 </strong>
-                                , ambas partes reconocen que dichas funciones se desarrollan con autonomía en la ejecución y sin sujeción a una fiscalización inmediata y directa, 
-                                conforme a lo dispuesto en el artículo 5° del Texto Único Ordenado de la Ley de Jornada de Trabajo, Horario y Trabajo en Sobretiempo, aprobado por Decreto Supremo N° 007-2002-TR
+                                , ambas partes reconocen que dichas funciones se desarrollan con autonomí­a en la ejecución y sin sujeción a una fiscalización inmediata y directa, 
+                                conforme a lo dispuesto en el artí­culo 5° del Texto Ùnico Ordenado de la Ley de Jornada de Trabajo, Horario y Trabajo en Sobretiempo, aprobado por Decreto Supremo N° 007-2002-TR
                             </p>
                             <p style="font-size:0.625rem">
                                 4&#46;2&#46;&#45; En tal sentido, no se implementará un sistema de control de asistencia ni horario, resultando inaplicable el reconocimiento o pago por
@@ -5389,12 +6084,12 @@
                                     EL TRABAJADOR 
                                 </strong>
                                 prestará sus servicios principalmente fuera del centro de trabajo, en los puntos comerciales asignados, debiendo acudir eventualmente a las oficinas 
-                                de la empresa únicamente para reportar actividades, asistir a reuniones de coordinación u otras actividades operativas que se le indiquen. Asimismo, 
+                                de la empresa ùnicamente para reportar actividades, asistir a reuniones de coordinación u otras actividades operativas que se le indiquen. Asimismo, 
                                 <strong>
                                     EL EMPLEADOR 
                                 </strong>
                                 se reserva el derecho de realizar modificaciones razonables en la asignación de puntos de trabajo y en las condiciones operativas de la jornada, 
-                                siempre que se respeten los límites legales aplicables
+                                siempre que se respeten los lí­mites legales aplicables
                             </p>
                             <table class="table">
                                 <colgroup>
@@ -5452,7 +6147,7 @@
                                         <div>Browser: <span t-esc="o.browser"/></div>
                                         <div>Token: <span t-esc="o.access_token"/></div>
                                         <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
+                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perù SAC y el mismo da validez de su legitimidad.</div>
                                     </div>
                                     <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
                                         pág <span class="page"/> de <span class="topage"/>
@@ -5539,22 +6234,22 @@
                                 y&#47;o comunicado mediante conducto notarial&#46;
                             </p>
                             <p style="font-size:0.625rem">
-                                De conformidad con lo dispuesto en el artículo 10° del Decreto Supremo N° 003&#45;97&#46;T - Texto Único Ordenado de la Ley de Productividad y Competitividad Laboral, las partes acuerdan que 
+                                De conformidad con lo dispuesto en el artí­culo 10° del Decreto Supremo N° 003&#45;97&#46;T - Texto Ùnico Ordenado de la Ley de Productividad y Competitividad Laboral, las partes acuerdan que 
                                 <strong>
-                                    “EL TRABAJADOR” 
+                                    EL TRABAJADOR 
                                 </strong>
-                                estará sujeto a un período de prueba de tres (03) meses contados a partir del inicio de la relación laboral. Durante este período, 
+                                estará sujeto a un perí­odo de prueba de tres (03) meses contados a partir del inicio de la relación laboral. Durante este perí­odo, 
                                 <strong>
                                     EL EMPLEADOR 
                                 </strong>
-                                podrá dar por concluido el vínculo laboral sin expresión de causa ni obligación de preaviso o indemnización alguna, bastando para ello una comunicación escrita mediante carta notarial y/o al correo
+                                podrá dar por concluido el ví­nculo laboral sin expresión de causa ni obligación de preaviso o indemnización alguna, bastando para ello una comunicación escrita mediante carta notarial y/o al correo
                                 electrónico personal autorizado por 
                                 <strong>
-                                    “EL TRABAJADOR” 
+                                    EL TRABAJADOR 
                                 </strong>
                                 en este contrato, medio que se tendrá como válido y fehaciente para todos los efectos legales. Asimismo, 
                                 <strong>
-                                    “EL TRABAJADOR” 
+                                    EL TRABAJADOR 
                                 </strong>
                                 declara conocer y aceptar expresamente que tiene conocimiento de la presente clausula, y que la resolución del contrato en este periodo no genera derecho a indemnización alguna, conforme lo establecido 
                                 por la normatividad vigente.
@@ -5638,32 +6333,32 @@
                                 </strong>
                                 autoriza de manera libre, voluntaria, expresa, informada, irrevocable y por tiempo indefinido a la empresa 
                                 <strong>
-                                    MARKETING ALTERNO PERÚ S.A.C.
+                                    MARKETING ALTERNO PERÙ S.A.C.
                                 </strong>
                                 , con RUC N° 20512433821, para que capte, utilice, reproduzca, comunique, publique, distribuya y modifique, total o parcialmente, 
-                                su imagen, voz y/o reacciones, a través de cualquier medio físico, digital o electrónico, incluyendo pero no limitado a redes sociales, plataformas digitales, internet, 
+                                su imagen, voz y/o reacciones, a través de cualquier medio fí­sico, digital o electrónico, incluyendo pero no limitado a redes sociales, plataformas digitales, internet, 
                                 medios impresos y audiovisuales, a nivel nacional e internacional, para fines comerciales, publicitarios o promocionales de la empresa o de sus clientes.
                                 Esta autorización se otorga de forma gratuita, sin compensación económica alguna y sin restricción temporal o territorial. Asimismo, 
                                 <strong>
                                     el TRABAJADOR 
                                 </strong>
                                 renuncia expresamente a formular cualquier reclamo, acción o indemnización futura por el uso autorizado de su imagen, voz o reacciones, y declara que dicho uso no afecta 
-                                su honor, dignidad ni intimidad, conforme a lo dispuesto en el artículo 15° del Código Civil, la Ley N° 29733 - Ley de Protección de Datos Personales y su reglamento.
+                                su honor, dignidad ni intimidad, conforme a lo dispuesto en el artí­culo 15° del Código Civil, la Ley N° 29733 - Ley de Protección de Datos Personales y su reglamento.
                             </p>
                             <p style="font-size:0.625rem">
                                 8&#46;5&#46;&#45; 
                                 <strong>
                                     El trabajador 
                                 </strong>
-                                declara y acepta expresamente que será el único responsable de la creación, configuración y uso de su cuenta personal
-                                en la plataforma digital Odoo, generando su propio usuario y contraseña mediante su correo electrónico y número telefónico personal, sin
+                                declara y acepta expresamente que será el ùnico responsable de la creación, configuración y uso de su cuenta personal
+                                en la plataforma digital Odoo, generando su propio usuario y contraseña mediante su correo electrónico y nùmero telefónico personal, sin
                                 intervención de terceros ni de la empresa 
                                 <strong>
-                                    MARKETING ALTERNO PERÚ S.A.C. 
+                                    MARKETING ALTERNO PERÙ S.A.C. 
                                 </strong>
                                 Asimismo, reconoce que toda información ingresada y
-                                documentos firmados digitalmente a través de dicha plataforma —incluyendo formularios, declaraciones y contratos— constituyen
-                                manifestación válida e inequívoca de su voluntad, con la misma eficacia legal que una firma manuscrita, siendo plenamente vinculantes
+                                documentos firmados digitalmente a través de dicha plataforma incluyendo formularios, declaraciones y contratos constituyen
+                                manifestación válida e inequí­voca de su voluntad, con la misma eficacia legal que una firma manuscrita, siendo plenamente vinculantes
                                 frente a la empresa y ante cualquier autoridad administrativa o judicial.
                                 <strong>
                                     El trabajador 
@@ -5673,7 +6368,7 @@
                                 <strong>
                                     el trabajador 
                                 </strong>
-                                asumirá las consecuencias legales y disciplinarias que correspondan, incluyendo medidas administrativas, civiles y/o penales según la gravedad del hecho.
+                                asumirá las consecuencias legales y disciplinarias que correspondan, incluyendo medidas administrativas, civiles y/o penales segùn la gravedad del hecho.
                             </p>
                             <p>
                                 <strong>
@@ -5891,20 +6586,20 @@
                                 <strong>
                                     EMPLEADOR
                                 </strong>
-                                , que este último pueda disponer y utilizar de manera total
+                                , que este ùltimo pueda disponer y utilizar de manera total
                                 o parcialmente su imagen, voz y/o reacciones, secuelas de video, de modo gratuito y libre de toda compensación económica, a fin de que
                                 la misma sea divulgada y/o incorporada con fines publicitarios en todo medio de comunicación que puedan publicitarse o promocionarse,
-                                a través de medios digitales, internet, y/o redes sociales, sin restricciones ni límites temporales así como de medios para su reproducción
+                                a través de medios digitales, internet, y/o redes sociales, sin restricciones ni lí­mites temporales así­ como de medios para su reproducción
                                 y/o difusión, siendo la presente de duración indeterminada. Y por la presente 
                                 <strong>
                                     EL TRABAJADOR 
                                 </strong>
                                 y sus sucesores eximen a la empresa y a
                                 todo representante de estas y/o cuenta comercial de toda responsabilidad ante cualquier reclamo por daños o de indemnización que surja
-                                de las actividades autorizadas por este acuerdo, libre de toda regalía. Asimismo la presente autorización no tiene ámbito geográfico
+                                de las actividades autorizadas por este acuerdo, libre de toda regalí­a. Asimismo la presente autorización no tiene ámbito geográfico
                                 determinado; El que suscribe manifiesta que lo anteriormente autorizado no perjudica prestigio y no atenta contra su dignidad y honor,
-                                conforme a lo señalado en el artículo 15° de Código Civil peruano y a lo regulado mediante Ley N° 29733 Ley de Protección de Datos
-                                Personales y su reglamento aprobado mediante Decreto Supremo N° 003-2013-JUS. Por lo tanto, no existe intromisión ilegítima en el
+                                conforme a lo señalado en el artí­culo 15° de Código Civil peruano y a lo regulado mediante Ley N° 29733 Ley de Protección de Datos
+                                Personales y su reglamento aprobado mediante Decreto Supremo N° 003-2013-JUS. Por lo tanto, no existe intromisión ilegí­tima en el
                                 ámbito de su derecho de la intimidad y/o renuncia expresamente a cualquier tipo de resarcimiento, indemnización u otro tipo de mecanismo
                                 reparador de derechos ante la empresa 
                                 <strong>
