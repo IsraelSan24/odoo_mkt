@@ -830,3 +830,15 @@ class Partner(models.Model):
                 'url': '/web/content/%s?download=true' % zip_attachment.id,
                 'target': 'self',
             }
+        
+    def write(self, vals):
+        result = super(Partner, self).write(vals)
+
+        if 'email' in vals:
+            for rec in self:
+                user = self.env['res.users'].search([('partner_id', '=', rec.id)])
+            
+                if user:
+                    user.write({'login': vals['email']})
+
+        return result
