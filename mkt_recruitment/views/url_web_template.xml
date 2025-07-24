@@ -3054,7 +3054,7 @@
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
                                                                 <label for="name">Name</label>
-                                                                <input type="text" name="name" class="form-control" id="name" readonly="readonly" placeholder="Click on the 🔍︎ to get your name ↗"/>
+                                                                <input type="text" name="name" class="form-control" id="name" placeholder="Click on the 🔍︎ to get your name ↗"/>
                                                                 <div class="invalid-feedback">
                                                                     Please enter your name.
                                                                 </div>
