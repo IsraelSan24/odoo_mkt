@@ -4853,17 +4853,17 @@
                             <p class="text-center">
                                 <t t-if="o.is_renovation">
                                     <strong>
-                                        RENOVACIÓN DE CONTRATO DE TRABAJO PLAZO FIJO INTERMITENTE SIN MOVILIDAD
+                                        RENOVACIÓN DE CONTRATO DE TRABAJO PLAZO FIJO INTERMITENTE
                                     </strong>
                                 </t>
                                 <t t-else="">
                                     <strong>
-                                        CONTRATO DE TRABAJO PLAZO FIJO INTERMITENTE SIN MOVILIDAD
+                                        CONTRATO DE TRABAJO PLAZO FIJO INTERMITENTE
                                     </strong>
                                 </t>
                             </p>
                             <p style="font-size:0.625rem">
-                                Conste por el presente documento&#44; el contrato de trabajo sujeto a modalidad de intermitente sin movilidad &#40;en adelante&#44; el &#34;CONTRATO&#34;&#41; que&#44; de acuerdo a lo previsto en el art&#237;culo 64&#176; y siguientes de la Ley de Productividad y Competitividad Laboral &#40;en adelante&#44; la &#34;LPCL&#34;&#41;&#44; celebran&#58;
+                                Conste por el presente documento&#44; el contrato de trabajo sujeto a modalidad de intermitente &#40;en adelante&#44; el &#34;CONTRATO&#34;&#41; que&#44; de acuerdo a lo previsto en el art&#237;culo 64&#176; y siguientes de la Ley de Productividad y Competitividad Laboral &#40;en adelante&#44; la &#34;LPCL&#34;&#41;&#44; celebran&#58;
                             </p>
                             <p style="font-size:0.625rem">
                                 <strong>
