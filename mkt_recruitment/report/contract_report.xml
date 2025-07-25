@@ -4154,41 +4154,26 @@
                                 &#44; tendr&#225; la siguiente estructura&#58;
                                 <ol  style="list-style-type: lower-alpha; font-size:0.625rem">
                                     <li>
-                                        Una remuneraci&#243;n b&#225;sica fija cuyo monto ascender&#225; a&#58; S&#47; 
+                                        Una remuneraci&#243;n b&#225;sica fija cuyo monto asciende a&#58; S&#47; 
                                         <t t-if="o.wage">
                                             <span t-esc="o.wage" t-options='{"widget": "float", "precision": 2, "thousands_sep": ",", "decimal_point": "."}'/>
                                         </t>
                                         <t t-else="">
                                             __________
                                         </t>
-                                            &#46; por cada d&#237;a efectivamente trabajado&#46; 
+                                            &#44; la cual ser&#225; pagada mensualmente mediante dep&#243;sito en cuenta bancaria&#44; dentro de los plazos establecidos por ley&#46;
+
                                     </li>
                                     <li>
-                                        Un monto variable que&#44; cuando corresponda&#44; se pagar&#225; de acuerdo con lo previsto en las pol&#237;ticas y oportunidades fijadas por 
-                                        <strong>
-                                            MARKETING
-                                        </strong>
-                                        &#46;
+                                        Un monto variable&#44; que ser&#225; otorgado &#250;nicamente cuando corresponda&#44; conforme a las pol&#237;ticas internas&#44; metas u oportunidades comerciales fijadas por MARKETING ALTERNO PER&#218; S&#46;A&#46;C&#46;&#44; y siempre que dicho esquema de pago haya sido previamente comunicado&#44; aceptado y debidamente registrado entre las partes&#46;
                                     </li>
                                     <li>
-                                        Un monto por movilidad supeditada a la asistencia al centro de trabajo&#46;
+                                        Un concepto de movilidad&#44; el cual no tiene car&#225;cter remunerativo y ser&#225; abonado &#250;nicamente si corresponde por la naturaleza del servicio asignado y siempre que se verifique la asistencia efectiva al centro de trabajo&#44; en la forma&#44; condiciones y montos que establezca expresamente la empresa debidamente formalizada en acuerdo entre las partes&#46; En caso el trabajador preste servicios sin requerir desplazamiento f&#237;sico o el servicio sea remoto o cercano a su domicilio&#44; no se generar&#225; este concepto&#46;
                                     </li>
                                     <li>
-                                        <strong>
-                                            MARKETING
-                                        </strong>
-                                        pagar&#225; debido a la naturaleza de las actividades intermitentes&#44; con car&#225;cter cancelatorio&#44; la parte proporcional de las vacaciones&#44; compensaci&#243;n por tiempo de servicios&#44; 
-                                        gratificaciones legales&#44; descanso semanal y asignaci&#243;n familiar&#44; as&#237; como cualquier otro beneficio de car&#225;cter legal o convencional&#44; y cualquier beneficio legal que pudiera 
-                                        crearse durante la relaci&#243;n labor&#44; conjuntamente con la remuneraci&#243;n b&#225;sica fija&#46; Los beneficios sociales legales anteriormente indicados se calculan y cancelan s&#243;lo por el 
-                                        tiempo efectivamente laborado&#46; 
+                                        Los periodos de inactividad o no asignaci&#243;n efectiva a un servicio&#44; no ser&#225;n considerados como tiempo trabajado ni generar&#225;n devengue de remuneraciones ni beneficios de ninguna &#237;ndole&#46; En tales periodos&#44; no existir&#225; obligaci&#243;n de pago ni obligaci&#243;n de efectuar aportes a EsSalud ni a otras entidades del sistema de seguridad social en salud o pensiones&#44; en tanto el v&#237;nculo se mantiene en suspensi&#243;n temporal y no se configura prestaci&#243;n efectiva de servicios&#46;
                                     </li>
-                                    <li>
-                                        Los periodos de inactividad no se considerar&#225;n como trabajados para ning&#250;n efecto legal&#46; Durante los periodos de inactividad&#44; 
-                                        <strong>
-                                            MARKETING
-                                        </strong>
-                                        dejara de aportar a Essalud&#46; 
-                                    </li>
+
                                 </ol>
                             </p>
                             <p>
@@ -5322,37 +5307,20 @@
                                 &#44; tendr&#225; la siguiente estructura&#58;
                                 <ol  style="list-style-type: lower-alpha; font-size:0.625rem">
                                     <li>
-                                        Una remuneraci&#243;n b&#225;sica fija cuyo monto ascender&#225; a&#58; S&#47; 
+                                        Una remuneraci&#243;n b&#225;sica fija cuyo monto asciende a&#58; S&#47; 
                                         <t t-if="o.wage">
                                             <span t-esc="o.wage" t-options='{"widget": "float", "precision": 2, "thousands_sep": ",", "decimal_point": "."}'/>
                                         </t>
                                         <t t-else="">
                                             __________
                                         </t>
-                                            &#46; por cada d&#237;a efectivamente trabajado&#46; 
+                                            &#44; la cual ser&#225; pagada mensualmente mediante dep&#243;sito en cuenta bancaria&#44; dentro de los plazos establecidos por ley&#46;
                                     </li>
                                     <li>
-                                        Un monto variable que&#44; cuando corresponda&#44; se pagar&#225; de acuerdo con lo previsto en las pol&#237;ticas y oportunidades fijadas por 
-                                        <strong>
-                                            MARKETING
-                                        </strong>
-                                        &#46;
+                                        Un monto variable&#44; que ser&#225; otorgado &#250;nicamente cuando corresponda&#44; conforme a las pol&#237;ticas internas&#44; metas u oportunidades comerciales fijadas por MARKETING ALTERNO PER&#218; S&#46;A&#46;C&#46;&#44; y siempre que dicho esquema de pago haya sido previamente comunicado&#44; aceptado y debidamente registrado entre las partes&#46;
                                     </li>
                                     <li>
-                                        <strong>
-                                            MARKETING
-                                        </strong>
-                                        pagar&#225; debido a la naturaleza de las actividades intermitentes&#44; con car&#225;cter cancelatorio&#44; la parte proporcional de las vacaciones&#44; compensaci&#243;n por tiempo de servicios&#44; 
-                                        gratificaciones legales&#44; descanso semanal y asignaci&#243;n familiar&#44; as&#237; como cualquier otro beneficio de car&#225;cter legal o convencional&#44; y cualquier beneficio legal que pudiera 
-                                        crearse durante la relaci&#243;n labor&#44; conjuntamente con la remuneraci&#243;n b&#225;sica fija&#46; Los beneficios sociales legales anteriormente indicados se calculan y cancelan s&#243;lo por el 
-                                        tiempo efectivamente laborado&#46; 
-                                    </li>
-                                    <li>
-                                        Los periodos de inactividad no se considerar&#225;n como trabajados para ning&#250;n efecto legal&#46; Durante los periodos de inactividad&#44; 
-                                        <strong>
-                                            MARKETING
-                                        </strong>
-                                        dejara de aportar a Essalud&#46; 
+                                        Los periodos de inactividad o no asignaci&#243;n efectiva a un servicio&#44; no ser&#225;n considerados como tiempo trabajado ni generar&#225;n devengue de remuneraciones ni beneficios de ninguna &#237;ndole&#46; En tales periodos&#44; no existir&#225; obligaci&#243;n de pago ni obligaci&#243;n de efectuar aportes a EsSalud ni a otras entidades del sistema de seguridad social en salud o pensiones&#44; en tanto el v&#237;nculo se mantiene en suspensi&#243;n temporal y no se configura prestaci&#243;n efectiva de servicios&#46;
                                     </li>
                                 </ol>
                             </p>
