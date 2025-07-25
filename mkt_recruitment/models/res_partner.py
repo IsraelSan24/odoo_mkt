@@ -577,107 +577,16 @@ class Partner(models.Model):
             existing_document = self.env['recruitment.document'].search([('partner_id', '=', rec.id)], limit=1)
             if existing_document:
                 if existing_document.state == 'signed':
-                    raise UserError(_('This person has already signed its documents.'))
+                    raise UserError(_('This person has already signed its documents (%s).') % existing_document.name)
                 else:
-                    user_id = self.env['res.users'].search([('partner_id', '=', rec.id)], limit=1)
-                    existing_document.write({
-                        'partner_id': rec.id,
-                        'user_id': rec.belong_applicant_id.hr_responsible_contract_id,
-                        'partner_name': rec.name,
-                        'email': rec.personal_email,
-                        'vat': rec.vat,
-                        'street': rec.street,
-                        'district': rec.l10n_pe_district.name,
-                        'province': rec.city_id.name,
-                        'department': rec.state_id.name,
-                        'emergency_contact': rec.emergency_contact,
-                        'emergency_phone': rec.emergency_phone,
-                        'emergency_contact_relationship': rec.emergency_contact_relationship,
-                        'birthday': rec.birthday,
-                        'phone': rec.phone,
-                        'company': user_id.company_id.name,
-                        'company_department': user_id.company_id.state_id.name,
-                        'company_vat': user_id.company_id.vat,
-                        'gender': rec.gender,
-                        'familiar_dni1': rec.familiar_dni1,
-                        'familiar_dni2': rec.familiar_dni2,
-                        'familiar_dni3': rec.familiar_dni3,
-                        'familiar_dni4': rec.familiar_dni4,
-                        'familiar_dni5': rec.familiar_dni5,
-                        'familiar_dni6': rec.familiar_dni6,
-                        'familiar_dni7': rec.familiar_dni7,
-                        'familiar_dni8': rec.familiar_dni8,
-                        'familiar_dni9': rec.familiar_dni9,
-                        'familiar_dni10': rec.familiar_dni10,
-                        'familiar_full_name1': rec.familiar_full_name1,
-                        'familiar_full_name2': rec.familiar_full_name2,
-                        'familiar_full_name3': rec.familiar_full_name3,
-                        'familiar_full_name4': rec.familiar_full_name4,
-                        'familiar_full_name5': rec.familiar_full_name5,
-                        'familiar_full_name6': rec.familiar_full_name6,
-                        'familiar_full_name7': rec.familiar_full_name7,
-                        'familiar_full_name8': rec.familiar_full_name8,
-                        'familiar_full_name9': rec.familiar_full_name9,
-                        'familiar_full_name10': rec.familiar_full_name10,
-                        'familiar_birthday1': rec.familiar_birthday1,
-                        'familiar_birthday2': rec.familiar_birthday2,
-                        'familiar_birthday3': rec.familiar_birthday3,
-                        'familiar_birthday4': rec.familiar_birthday4,
-                        'familiar_birthday5': rec.familiar_birthday5,
-                        'familiar_birthday6': rec.familiar_birthday6,
-                        'familiar_birthday7': rec.familiar_birthday7,
-                        'familiar_birthday8': rec.familiar_birthday8,
-                        'familiar_birthday9': rec.familiar_birthday9,
-                        'familiar_birthday10': rec.familiar_birthday10,
-                        'familiar_relationship1': rec.familiar_relationship1,
-                        'familiar_relationship2': rec.familiar_relationship2,
-                        'familiar_relationship3': rec.familiar_relationship3,
-                        'familiar_relationship4': rec.familiar_relationship4,
-                        'familiar_relationship5': rec.familiar_relationship5,
-                        'familiar_relationship6': rec.familiar_relationship6,
-                        'familiar_relationship7': rec.familiar_relationship7,
-                        'familiar_relationship8': rec.familiar_relationship8,
-                        'familiar_relationship9': rec.familiar_relationship9,
-                        'familiar_relationship10': rec.familiar_relationship10,
-                        'familiar_gender1': rec.familiar_gender1,
-                        'familiar_gender2': rec.familiar_gender2,
-                        'familiar_gender3': rec.familiar_gender3,
-                        'familiar_gender4': rec.familiar_gender4,
-                        'familiar_gender5': rec.familiar_gender5,
-                        'familiar_gender6': rec.familiar_gender6,
-                        'familiar_gender7': rec.familiar_gender7,
-                        'familiar_gender8': rec.familiar_gender8,
-                        'familiar_gender9': rec.familiar_gender9,
-                        'familiar_gender10': rec.familiar_gender10,
-                        'familiar_address1': rec.familiar_address1,
-                        'familiar_address2': rec.familiar_address2,
-                        'familiar_address3': rec.familiar_address3,
-                        'familiar_address4': rec.familiar_address4,
-                        'familiar_address5': rec.familiar_address5,
-                        'familiar_address6': rec.familiar_address6,
-                        'familiar_address7': rec.familiar_address7,
-                        'familiar_address8': rec.familiar_address8,
-                        'familiar_address9': rec.familiar_address9,
-                        'familiar_address10': rec.familiar_address10,
-                        'is_beneficiary1': rec.is_beneficiary1,
-                        'is_beneficiary2': rec.is_beneficiary2,
-                        'is_beneficiary3': rec.is_beneficiary3,
-                        'is_beneficiary4': rec.is_beneficiary4,
-                        'is_beneficiary5': rec.is_beneficiary5,
-                        'is_beneficiary6': rec.is_beneficiary6,
-                        'is_beneficiary7': rec.is_beneficiary7,
-                        'is_beneficiary8': rec.is_beneficiary8,
-                        'is_beneficiary9': rec.is_beneficiary9,
-                        'is_beneficiary10': rec.is_beneficiary10,
-                        'private_pension_system': rec.private_pension_system,
-                        'afp_first_job': rec.afp_first_job,
-                        'coming_from_onp': rec.coming_from_onp,
-                        'coming_from_afp': rec.coming_from_afp,
-                        'national_pension_system': rec.national_pension_system,
-                        'identification_type': rec.l10n_latam_identification_type_id.name,
-                        'job': rec.employee_ids.job_id.name
-                    })
-                    existing_document.send_to_sign()
+                    return {
+                        'effect': {
+                            'fadeout': 'slow',
+                            'message': _('Document %s has already been sent.\n(Archive it to send another)') % existing_document.name,
+                            'type': 'custom_notification_animation',
+                            'level': 'info',
+                        }
+                    }     
             else:
                 user_id = self.env['res.users'].search([('partner_id', '=', rec.id)], limit=1)
                 document = self.env['recruitment.document'].create({
@@ -778,6 +687,13 @@ class Partner(models.Model):
                     'job': rec.employee_ids.job_id.name
                 })
                 document.send_to_sign()
+                return {
+                        'effect': {
+                            'fadeout': 'slow',
+                            'message': _('Document %s sent') % document.name,
+                            'type': 'rainbow_man',
+                        }
+                    }               
 
 
     def attach_applicant_files(self):
