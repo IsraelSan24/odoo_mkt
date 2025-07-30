@@ -147,7 +147,7 @@ class Contract(models.Model):
     def _compute_date_start_month(self):
         for rec in self:
             if rec.date_start:
-                rec.date_start_month = format_date(rec.date_start, format='MMMM', locale='es_PE')
+                rec.date_start_month = format_date(rec.date_start, format='MMMM', locale='es_PE').capitalize()
             else:
                 rec.date_start_month = ''
 
@@ -156,7 +156,7 @@ class Contract(models.Model):
     def _compute_date_end_month(self):
         for rec in self:
             if rec.date_end:
-                rec.date_end_month = format_date(rec.date_end, format='MMMM', locale='es_PE')
+                rec.date_end_month = format_date(rec.date_end, format='MMMM', locale='es_PE').capitalize()
             else:
                 rec.date_end_month = ''
 
@@ -165,7 +165,7 @@ class Contract(models.Model):
     def _compute_signed_on_month(self):
         for rec in self:
             if rec.signed_on:
-                rec.signed_on_month = format_date(rec.signed_on, format='MMMM', locale='es_PE')
+                rec.signed_on_month = format_date(rec.signed_on, format='MMMM', locale='es_PE').capitalize()
             else:
                 rec.signed_on_month = ''
 
@@ -283,13 +283,13 @@ class Contract(models.Model):
                             total_days += days_in_month
                             current_date = end_month + timedelta(days=1)
                 if total_months == 0:
-                    record.contract_months = f'{total_days} días'
+                    record.contract_months = f'{total_days} DÍA(S)'
                 if total_days == 0:
-                    record.contract_months = f'{total_months} meses'
+                    record.contract_months = f'{total_months} MES(ES)'
                 if total_months != 0 and total_days != 0:
-                    record.contract_months = f'{total_months} meses y {total_days} días'
+                    record.contract_months = f'{total_months} MES(ES) y {total_days} DÍA(S)'
             else:
-                record.contract_months = '0 meses y 0 días'
+                record.contract_months = '0 MESES y 0 DÍAS'
 
 
     def _get_report_base_filename(self):
