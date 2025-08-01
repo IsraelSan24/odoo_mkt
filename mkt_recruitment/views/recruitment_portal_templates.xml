@@ -4308,7 +4308,7 @@
                     <t t-if="contract_document.contract_type_id.contract_short_name == 'CTPFI'">
                         <article>
                             <div style="page-break-after: always;">
-                                <p class="text-center">
+                                <p style="text-align: center;">
                                     <t t-if="contract_document.is_renovation">
                                         <strong>
                                             RENOVACIÓN DE CONTRATO DE TRABAJO PLAZO FIJO INTERMITENTE
@@ -4323,7 +4323,7 @@
                                 <p style="font-size:0.625rem; text-align: justify;">
                                     Conste por el presente documento&#44; el contrato de trabajo sujeto a modalidad de intermitente &#40;en adelante&#44; el &#34;CONTRATO&#34;&#41; que&#44; de acuerdo a lo previsto en el art&#237;culo 64&#176; y siguientes de la Ley de Productividad y Competitividad Laboral &#40;en adelante&#44; la &#34;LPCL&#34;&#41;&#44; celebran&#58;
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         MARKETING ALTERNO PERU S&#46;A&#46;C&#46;
                                     </strong>
@@ -4338,9 +4338,9 @@
                                     <t t-else="">
                                         __________,
                                     </t>
-                                        &#40;en adelante&#44; el &#34;
+                                        &#40;en adelante&#44; &#34;
                                     <strong>
-                                        TRABAJADOR
+                                        EL TRABAJADOR
                                     </strong>
                                     &#34;&#41;&#44; identificado con DNI N&#176; 
                                     <t t-if="contract_document.vat">
@@ -4391,13 +4391,13 @@
                                     <t t-else="">
                                         __________,
                                     </t>
-                                        totalmente autorizado por el 
+                                        totalmente autorizado por
                                     <strong>
-                                        TRABAJADOR
+                                        EL TRABAJADOR
                                     </strong>
                                     &#46;
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         MARKETING
                                     </strong>
@@ -4407,22 +4407,29 @@
                                     </strong>
                                         &#40;en adelante y conjuntamente&#44; las &#34; PARTES&#34;&#41; suscriben el CONTRATO en los t&#233;rminos y condiciones contenidos en las siguientes cl&#225;usulas&#58;
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         PRIMERA&#46; &#45; ANTECEDENTES
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
-                                    MARKETING es una persona jur&#237;dica de derecho privado&#44; constituida con el objeto de Tercerizaci&#243;n y Asesoramiento de Marketing Interno y externo&#44; Publicidad e Imagen Institucional en general&#59; as&#237; como tambi&#233;n brindar servicios en actividades publicitarias y comerciales&#44; tales como impulso de ventas&#44; Promotoria&#44; encuestas&#44; distribuci&#243;n de material publicitario y afines&#46; Los servicios descritos se prestan a trav&#233;s de contratos con terceros a quienes se denominar&#225;n CLIENTES&#46; Actualmente prestando servicios especializados PUBLICIDAD Y PROMOTORIA DE PRODUCTOS con determinados clientes&#46;
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    <strong>
+                                        MARKETING
+                                    </strong> 
+                                    es una persona jur&#237;dica de derecho privado&#44; constituida con el objeto de Tercerizaci&#243;n y Asesoramiento de Marketing Interno y externo&#44; Publicidad e Imagen Institucional en general&#59; as&#237; como tambi&#233;n brindar servicios en actividades publicitarias y comerciales&#44; tales como impulso de ventas&#44; Promotoria&#44; encuestas&#44; distribuci&#243;n de material publicitario y afines&#46; Los servicios descritos se prestan a trav&#233;s de contratos con terceros a quienes se denominar&#225;n CLIENTES&#46; Actualmente prestando servicios especializados PUBLICIDAD Y PROMOTORIA DE PRODUCTOS con determinados clientes&#46;
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         SEGUNDA&#46; &#45; CAUSA OBJETIVA DE LA CONTRATACI&#211;N, PUESTO Y FUNCIONES
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     La presente contratación se sustenta en la causa objetiva, de conformidad con lo establecido en el artí­culo 64 del Texto Único Ordenado del Decreto Legislativo N.º 728 - Ley de
-                                    Productividad y Competitividad Laboral, aprobado mediante Decreto Supremo N.º 003-97-TR. En tal sentido, MARKETING, en su calidad de empleador, requiere cubrir
+                                    Productividad y Competitividad Laboral, aprobado mediante Decreto Supremo N.º 003-97-TR. En tal sentido, 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                    , en su calidad de empleador, requiere cubrir
                                     actividades de naturaleza intermitente, vinculadas directamente a las variaciones en la demanda de servicios de promoción y ventas solicitadas por sus clientes, en función a
                                     contratos comerciales celebrados con empresas como 
                                     <t t-if="contract_document.cost_center">
@@ -4433,27 +4440,31 @@
                                     </t>
                                         &#40;en adelante&#44; &#34;EL CLIENTE&#34;&#41;.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Estas actividades no son continuas ni permanentes, sino que se presentan de manera esporádica, por perí­odos determinados, conforme a los requerimientos comerciales de los clientes de 
                                     <strong>
                                         MARKETING
                                     </strong>
                                     , lo cual constituye la causa objetiva que justifica la contratación bajo esta modalidad.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     En virtud del presente contrato, 
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
                                     será contratado para desempeñar el puesto de 
                                     <t t-if="contract_document.employee_job">
-                                        <span t-esc="contract_document.employee_job"/>
+                                        <span t-esc="contract_document.employee_job"/>,
                                     </t>
                                     <t t-else="">
                                         __________
                                     </t>
-                                    , prestando servicios especí­ficamente durante los perí­odos
-                                    en que se presenten dichas necesidades intermitentes, conforme al requerimiento de MARKETING. Las funciones que desempeñará estarán referidas principalmente al impulso,
+                                    prestando servicios especí­ficamente durante los perí­odos
+                                    en que se presenten dichas necesidades intermitentes, conforme al requerimiento de 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                    . Las funciones que desempeñará estarán referidas principalmente al impulso,
                                     promoción, ofrecimiento y venta de productos que comercializan los clientes de la empresa, conforme a las directrices y estrategias diseñadas por 
                                     <strong>
                                         EL EMPLEADOR
@@ -4461,7 +4472,7 @@
                                     , sin tener injerencia ni asumir funciones vinculadas al núcleo del negocio del cliente, tales como producción, comercialización directa, planificación, toma de decisiones estratégicas, ni
                                     ninguna actividad que implique dirección o gestión interna de dicho cliente.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         MARKETING 
                                     </strong>
@@ -4473,33 +4484,33 @@
                                     remuneración correspondiente y demás aspectos relevantes. La prestación de servicios se realizará únicamente durante los perí­odos en que la empresa lo requiera, sin que ello genere 
                                     continuidad laboral o expectativa de permanencia más allá de dichos perí­odos.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     El presente contrato no implica relación laboral continua, ni genera derecho a estabilidad laboral permanente, ya que la prestación de servicios queda sujeta estrictamente a la
                                     intermitencia de los requerimientos antes descritos, conforme a la legislación laboral vigente.
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         TERCERA&#46; &#45; INTERMITENCIA DE LABORES Y SUSPENSI&#211;N PERFECTA
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Las actividades de 
                                     <strong>
                                         MARKETING 
                                     </strong>
-                                    se encuentran ligadas a la ejecución del Contrato Comercial principal con 
+                                    se encuentran ligadas a la ejecución del Contrato Comercial principal con
                                     <strong>
                                         EL CLIENTE
                                     </strong>
                                     , cuya naturaleza son de naturaleza
-                                    permanente pero discontinuo. Debido a ello, existen periodos en los cuales las actividades de 
+                                    permanente pero discontinuo. Debido a ello, existen periodos en los cuales las actividades de
                                     <strong>
                                         MARKETING 
                                     </strong>
                                     deben suspenderse como consecuencia de falta
                                     de requerimientos de los clientes y/o cuando por otro motivo no se pueden realizar dichas actividades.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     En consecuencia, 
                                     <strong>
                                         EL TRABAJADOR 
@@ -4509,7 +4520,7 @@
                                         MARKETING 
                                     </strong>
                                     no puede desarrollar sus actividades, con
-                                    base en lo indicado en el párrafo precedente, su relación laboral quedará suspendida de forma perfecta, no teniendo 
+                                    base en lo indicado en el párrafo precedente, su relación laboral quedará suspendida de forma perfecta, no teniendo
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
@@ -4520,7 +4531,7 @@
                                     </strong>
                                     el deber de otorgar la remuneración y beneficios sociales, bastando una comunicación mediante correo electrónico.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
@@ -4529,15 +4540,18 @@
                                         MARKETING 
                                     </strong>
                                     también comunicará el perí­odo asignado para realizar las
-                                    actividades y la fecha de término de esta, a través del correo electrónico o ví­a mensaje de texto o mensaje de WhatsApp al número de teléfono celular que EL
-                                    TRABAJADOR ha declarado a la empresa. Es obligación de 
+                                    actividades y la fecha de término de esta, a través del correo electrónico o ví­a mensaje de texto o mensaje de WhatsApp al número de teléfono celular que
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                    ha declarado a la empresa. Es obligación de 
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
                                     revisar su correo electrónico, mensajes de texto o mensaje de
                                     WhatsApp, considerándose válida la comunicación efectuada solo con el enví­o del correo electrónico o mensaje de texto o mensaje de WhatsApp.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     De no reincorporarse oportunamente ante la comunicación de un nuevo proyecto, 
                                     <strong>
                                         MARKETING 
@@ -4548,7 +4562,7 @@
                                     </strong>
                                     .
                                 </p>
-                                <table style="margin: 0 auto;" class="table">
+                                <table class="table">
                                     <colgroup>
                                         <col width="10%"/>
                                         <col width="30%"/>
@@ -4593,12 +4607,12 @@
                                 </table>
                             </div>
                             <div style="page-break-after: always;">
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         CUARTA&#46; &#45; LUGAR DE LA PRESTACI&#211;N DE LOS SERVICIOS Y OBLIGACIONES DEL TRABAJADOR
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
@@ -4610,7 +4624,7 @@
                                     por necesidades del servicio, en ejercicio de su facultad de dirección, de conformidad con el artí­culo 9 de la LPCL. Asimismo,
                                     se compromete a cumplir con las disposiciones sobre Exclusividad, Reserva, Confidencialidad, No Competencia y Propiedad Intelectual.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Las partes convienen que 
                                     <strong>
                                         MARKETING 
@@ -4634,7 +4648,7 @@
                                     </strong>
                                     designe.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Las partes acuerdan que, durante el plazo de duración del presente contrato, 
                                     <strong>
                                         EL TRABAJADOR 
@@ -4650,12 +4664,12 @@
                                     </strong>
                                     se encuentre en suspensión de labores.
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         QUINTA&#46; &#45; VIGENCIA DEL CONTRATO
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     La duraci&#243;n del presente contrato ser&#225; determinada en cada caso en concreto&#46; El plazo de duraci&#243;n del presente contrato es de 
                                     <t t-if="contract_document.contract_months">
                                         <span t-esc="contract_document.contract_months"/>,
@@ -4707,12 +4721,12 @@
                                     </t>
                                     fecha en la que concluir&#225; de forma autom&#225;tica&#44; salvo nueva pr&#243;rroga o renovaci&#243;n expresa&#46;
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         SEXTA&#46;&#45; PERIODO DE PRUEBA
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
@@ -4732,7 +4746,7 @@
                                     </strong>
                                     y/o comunicado mediante conducto notarial.
                                 </p>
-                                <p style="font-size:0.625rem">  
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     De conformidad con lo dispuesto en el artí­culo 10° del Decreto Supremo N° 003-97-TR - Texto Único Ordenado de la Ley de Productividad y Competitividad Laboral, las partes
                                     acuerdan que 
                                     <strong>
@@ -4755,12 +4769,12 @@
                                         declara conocer y aceptar expresamente que tiene conocimiento de la presente clausula, y que la resolución del contrato en este periodo no genera
                                     derecho a indemnización alguna, conforme lo establecido por la normatividad vigente.
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         S&#201;PTIMA&#46;&#45; CALIFICACI&#211;N Y JORNADA Y HORARIO DE TRABAJO
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Debido a que la información a la que tiene acceso 
                                     <strong>
                                     EL TRABAJADOR
@@ -4772,31 +4786,31 @@
                                     y sus clientes,
                                     el puesto de 
                                     <t t-if="contract_document.employee_job">
-                                        <span t-esc="contract_document.employee_job"/>
+                                        <span t-esc="contract_document.employee_job"/>.
                                     </t>
                                     <t t-else="">
-                                        __________
+                                        __________.
                                     </t>
-                                    . Asimismo, por la naturaleza de las labores de impulso, promoción y ofrecimiento de los productos de los clientes, las mismas
+                                    Asimismo, por la naturaleza de las labores de impulso, promoción y ofrecimiento de los productos de los clientes, las mismas
                                     que son desarrolladas sin supervisión constante y permanente, 
                                     <strong>
                                     EL TRABAJADOR 
                                     </strong>
                                     es calificado como No Sujeto a Fiscalización Inmediata.
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         OCTAVA&#46;&#45; REMUNERACI&#211;N&#44; CONDICIONES Y BENEFICIOS
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Las partes convienen que el monto de los ingresos de 
                                     <strong>
                                         EL TRABAJADOR
                                     </strong>
                                     &#44; tendr&#225; la siguiente estructura&#58;
                                     <ol  style="list-style-type: lower-alpha; font-size:0.625rem">
-                                        <li>
+                                        <li style="text-align: justify;">
                                             Una remuneraci&#243;n b&#225;sica fija cuyo monto asciende a S&#47; 
                                             <t t-if="contract_document.wage">
                                                 <span t-esc="contract_document.wage" t-options='{"widget": "float", "precision": 2, "thousands_sep": ",", "decimal_point": "."}'/>
@@ -4813,38 +4827,43 @@
                                             SOLES&#41; &#44; la cual ser&#225; pagada mensualmente mediante dep&#243;sito en cuenta bancaria&#44; dentro de los plazos establecidos por ley&#46;
 
                                         </li>
-                                        <li>
-                                            Un monto variable&#44; que ser&#225; otorgado &#250;nicamente cuando corresponda&#44; conforme a las pol&#237;ticas internas&#44; metas u oportunidades comerciales fijadas por MARKETING ALTERNO PER&#218; S&#46;A&#46;C&#46;&#44; y siempre que dicho esquema de pago haya sido previamente comunicado&#44; aceptado y debidamente registrado entre las partes&#46;
+                                        <li style="text-align: justify;">
+                                            Un monto variable&#44; que ser&#225; otorgado &#250;nicamente cuando corresponda&#44; conforme a las pol&#237;ticas internas&#44; metas u oportunidades comerciales fijadas por 
+                                            <strong>
+                                            MARKETING ALTERNO PER&#218; S&#46;A&#46;C&#46;&#44;
+                                            </strong>
+                                            y siempre que dicho esquema de pago haya sido previamente comunicado&#44; aceptado y debidamente registrado entre las partes&#46;
                                         </li>
-                                        <li>
+                                        <li style="text-align: justify;">
                                             Un concepto de movilidad&#44; el cual no tiene car&#225;cter remunerativo y ser&#225; abonado &#250;nicamente si corresponde por la naturaleza del servicio asignado y siempre que se verifique la asistencia efectiva al centro de trabajo&#44; en la forma&#44; condiciones y montos que establezca expresamente la empresa debidamente formalizada en acuerdo entre las partes&#46; En caso el trabajador preste servicios sin requerir desplazamiento f&#237;sico o el servicio sea remoto o cercano a su domicilio&#44; no se generar&#225; este concepto&#46;
                                         </li>
-                                        <li>
+                                        <li style="text-align: justify;">
                                             Los periodos de inactividad o no asignaci&#243;n efectiva a un servicio&#44; no ser&#225;n considerados como tiempo trabajado ni generar&#225;n devengue de remuneraciones ni beneficios de ninguna &#237;ndole&#46; En tales periodos&#44; no existir&#225; obligaci&#243;n de pago ni obligaci&#243;n de efectuar aportes a EsSalud ni a otras entidades del sistema de seguridad social en salud o pensiones&#44; en tanto el v&#237;nculo se mantiene en suspensi&#243;n temporal y no se configura prestaci&#243;n efectiva de servicios&#46;
                                         </li>
 
                                     </ol>
                                 </p>
-                                <p>
+                                <p style="font-size:0.910rem;">
                                     <strong>
                                         NOVENA&#46;&#45; DERECHO DE PREFERENCIA
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Durante la vigencia del presente contrato&#44; las partes acuerdan que 
                                     <strong>
                                         EL TRABAJADOR
                                     </strong>
-                                    tendr&#225; derecho preferencial en una nueva contrataci&#243;n o a la pr&#243;rroga autom&#225;tica del presente contrato si es que se presenta la necesidad de las actividades intermitentes de acuerdo a los requerimientos discontinuos de los clientes de MARKETING que se mencionan en las cl&#225;usulas primera y segunda de este documento&#46;
+                                    tendr&#225; derecho preferencial en una nueva contrataci&#243;n o a la pr&#243;rroga autom&#225;tica del presente contrato si es que se presenta la necesidad de las actividades intermitentes de acuerdo a los requerimientos discontinuos de los clientes de 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                    que se mencionan en las cl&#225;usulas primera y segunda de este documento&#46;
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Dicha preferencia operar&#225; de manera autom&#225;tica&#44; &#250;nicamente cuando se presente la necesidad de ocupaci&#243;n en las actividades intermitentes y siempre que existan los puestos suficientes&#44; sin que sea necesaria la celebraci&#243;n de un nuevo o renovaci&#243;n&#46;
                                 </p>
-                                <p style="font-size:0.625rem">
-                                    <strong>
-                                        El ejercicio
-                                    </strong>
-                                        de dicha preferencia importar&#225; la sujeci&#243;n de las partes a las cl&#225;usulas del presente contrato&#44; salvo que &#233;stas acuerden alguna modificaci&#243;n&#46; Para que opere el derecho de preferencia&#44; 
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    El ejercicio de dicha preferencia importar&#225; la sujeci&#243;n de las partes a las cl&#225;usulas del presente contrato&#44; salvo que &#233;stas acuerden alguna modificaci&#243;n&#46; Para que opere el derecho de preferencia&#44; 
                                     <strong>
                                         MARKETING
                                     </strong>
@@ -4854,7 +4873,7 @@
                                     </strong>
                                         para el reinicio de las actividades intermitentes cuando se requieran de sus servicios&#46; 
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         EL TRABAJADOR
                                     </strong>
@@ -4862,550 +4881,16 @@
                                     <strong>
                                         MARKETING
                                     </strong>
-                                    &#41; en un plazo m&#225;ximo de tres &#40;3&#41; d&#237;as h&#225;biles de recibida la comunicaci&#243;n o de iniciadas las labores&#44; seg&#250;n lo determine MARKETING&#46; En el caso que no se ejerza su derecho de preferencia&#44; se tendr&#225; por resuelto el contrato&#44; pudiendo 
+                                    &#41; en un plazo m&#225;ximo de tres &#40;3&#41; d&#237;as h&#225;biles de recibida la comunicaci&#243;n o de iniciadas las labores&#44; seg&#250;n lo determine 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                    &#46; En el caso que no se ejerza su derecho de preferencia&#44; se tendr&#225; por resuelto el contrato&#44; pudiendo 
                                     <strong>
                                         MARKETING
                                     </strong>
                                         contratar nuevo personal para la cobertura de dichos puestos de trabajo&#46;
                                 </p>
-                                <table style="margin: 0 auto;" class="table">
-                                    <colgroup>
-                                        <col width="10%"/>
-                                        <col width="30%"/>
-                                        <col width="20%"/>
-                                        <col width="30%"/>
-                                        <col width="10%"/>
-                                    </colgroup>
-                                    <thead>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none">
-                                            <t t-if="contract_document.contract_signature and contract_document.signed_by_employer">
-                                                <img t-att-src="image_data_uri(contract_document.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none">
-                                            <t t-if="contract_document.contract_signature">
-                                                <img t-att-src="image_data_uri(contract_document.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                    </tr>
-                                        <tr>
-                                            <th scope="col" style="border: none"></th>
-                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                                EL EMPLEADOR
-                                            </th>
-                                            <th scope="col" style="border: none"></th>
-                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                                EL TRABAJADOR
-                                            </th>
-                                            <th scope="col" style="border: none"></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                            <div style="page-break-after: always;">
-                                <p>
-                                    <strong>
-                                        D&#201;CIMA&#46; &#45; DE LAS RECOMENDACIONES EN MATERIA DE SEGURIDAD Y SALUD EN EL TRABAJO
-                                    </strong>
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    En cumplimiento de lo dispuesto por el literal c&#41; del art&#237;culo 35 de la Ley N&#176; 29783&#44; Ley de Seguridad y Salud en el Trabajo&#44; 
-                                    <strong>
-                                        MARKETING
-                                    </strong>
-                                    &#44; entrega a 
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        una descripci&#243;n de las recomendaciones de seguridad y salud en el trabajo para el puesto que este ocupar&#225; en virtud de la celebraci&#243;n del presente Contrato y que 
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        se obliga a respetar&#44; sin perjuicio de lo establecido en el Reglamento Interno de Seguridad y Salud en el Trabajo de la empresa&#44; as&#237; como otras normas internas&#44; lineamientos o directivas sobre la materia&#44; las cuales le ser&#225;n puestas a disposici&#243;n al inicio de sus labores&#44; el cual consta en el ANEXO C&#46;
-                                </p>
-                                <p>
-                                    <strong>
-                                        D&#201;CIMO PRIMERA&#46; &#45; CONOCIMIENTO DE LEGISLACI&#211;N Y PROCEDIMIENTO EN MATERIA DE PREVENCI&#211;N DE ACTOS DE HOSTIGAMIENTO SEXUAL
-                                    </strong>
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    Mediante la suscripci&#243;n del presente documento&#44; 
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        declara haber sido informado sobre la existencia y alcances  de  la  Ley  No&#46; 27942 &#45; Ley de Prevenci&#243;n y Sanci&#243;n del Hostigamiento Sexual&#45; y su Reglamento aprobado mediante Decreto Supremo No&#46; 014&#45;2019&#45;MIMP &#45; en adelante&#44; el &#34;Reglamento&#34;&#44; comprometi&#233;ndose a cumplir estrictamente las disposiciones y los procedimientos establecidos en la &#34;Pol&#237;tica sobre Prevenci&#243;n y Sanci&#243;n de Actos de Hostigamiento Sexual&#34; &#45; en adelante&#44; la &#34;Pol&#237;tica&#34; implementada por 
-                                    <strong>
-                                        MARKETING
-                                    </strong>
-                                    &#46; 
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        se compromete a seguir el procedimiento establecido en la Pol&#237;tica cuando tome conocimiento de cualquier incidente que pueda ser considerado un acto de hostigamiento sexual&#46;
-                                </p>
-                                <p>
-                                    <strong>
-                                        D&#201;CIMO SEGUNDA&#46; &#45; DE LA DEVOLUCI&#211;N DE MATERIALES DE TRABAJO&#46;
-                                    </strong>
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    Al momento de extinguirse la relaci&#243;n laboral&#44; por cualquier de las causas estipuladas en el presente contrato&#44; 
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        se obliga a devolver en forma inmediata y ordenada a 
-                                    <strong>
-                                        MARKETING
-                                    </strong>
-                                        todo el material&#44; documentaci&#243;n y cualquier otro bien y&#47;o implemento de propiedad de 
-                                    <strong>
-                                        MARKETING
-                                    </strong>
-                                        que&#44; con ocasi&#243;n de la prestaci&#243;n de sus servicios&#44; se encuentren en su poder&#44; tales como equipos&#44; software&#44; bases de datos&#44; &#243;rdenes de venta&#44; hojas membretadas&#44; entre otros&#46; Pues de no cumplir con la devoluci&#243;n correspondiente en el plazo de 24 horas de formalizado el cese&#44; se procede con descuento inmediato por el valor del implemento&#46; 
-                                </p>
-                                <p>
-                                    <strong>
-                                        D&#201;CIMO TERCERA&#46; &#45; DATOS PERSONALES Y CORREO ELECTR&#211;NICO CORPORATIVO
-                                    </strong>
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    <strong>
-                                        EL TRABAJADOR 
-                                    </strong>
-                                    autoriza a 
-                                    <strong>
-                                        MARKETING 
-                                    </strong>
-                                    para tratar, recolectar, requerir, reunir, conservar, modificar, utilizar y transferir a terceros (en las condiciones que
-                                    se señalan en los siguientes párrafos), dentro o fuera del paí­s, su información personal, incluyendo sus datos personales y sensibles. Sin carácter limitativo,
-                                    ello se efectuará a efectos de juzgar su idoneidad y rendimiento como trabajador, operar de la manera que 
-                                    <strong>
-                                        MARKETING 
-                                    </strong>
-                                    estime más conveniente sus
-                                    sistemas de compensaciones y manejo de planillas o, en general, tomar decisiones vinculadas al puesto de trabajo.
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    <strong>
-                                        EL TRABAJADOR 
-                                    </strong>
-                                    está de acuerdo en que dicha información pueda ser transferida por 
-                                    <strong>
-                                        MARKETING 
-                                    </strong>
-                                    (i) a otros trabajadores de 
-                                    <strong>
-                                        MARKETING 
-                                    </strong>
-                                    que requieran
-                                    conocer dicha información para el ejercicio de sus funciones; (ii) a terceras personas y/o empresas contratadas por 
-                                    <strong>
-                                        MARKETING 
-                                    </strong>
-                                    que requieran conocer
-                                    dicha información para la prestación de sus servicios; y/o, (iii) a sus empresas vinculadas, domiciliadas o no en el Perú, para la consolidación de datos,
-                                    preparación de estadí­sticas corporativas , elaboración de polí­ticas, etc.
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    Con respecto al uso de imagen: 
-                                    <strong>
-                                        El TRABAJADOR 
-                                    </strong>
-                                    autoriza de manera libre, voluntaria, expresa, informada, irrevocable y por tiempo indefinido a la empresa 
-                                    <strong>
-                                        MARKETING ALTERNO PERÚ S.A.C.
-                                    </strong>
-                                    , con RUC N° 20512433821, para que capte, utilice, reproduzca, comunique, publique, distribuya y modifique, total o parcialmente, su imagen, voz y/o reacciones, a través
-                                    de cualquier medio fí­sico, digital o electrónico, incluyendo pero no limitado a redes sociales, plataformas digitales, internet, medios impresos y audiovisuales, a nivel nacional e
-                                    internacional, para fines comerciales, publicitarios o promocionales de la empresa o de sus clientes.
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    Esta autorización se otorga de forma gratuita, sin compensación económica alguna y sin restricción temporal o territorial. Asimismo, 
-                                    <strong>
-                                        el TRABAJADOR 
-                                    </strong>
-                                    renuncia expresamente a formular
-                                    cualquier reclamo, acción o indemnización futura por el uso autorizado de su imagen, voz o reacciones, y declara que dicho uso no afecta su honor, dignidad ni intimidad, conforme a lo
-                                    dispuesto en el artí­culo 15° del Código Civil, la Ley N° 29733 – Ley de Protección de Datos Personales y su reglamento.
-                                    <strong>
-                                        EL TRABAJADOR 
-                                    </strong>
-                                    podrá ejercer su derecho de acceso ,
-                                    rectificación, cancelación y oposición mediante escrito dirigido a 
-                                    <strong>
-                                        MARKETING.
-                                    </strong>
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    <strong>
-                                        EL TRABAJADOR 
-                                    </strong>
-                                    reconoce y declara expresamente que, de manera previa a la firma del presente contrato, ha sido debida y suficientemente informado
-                                    sobre los alcances y efectos de la presente cláusula, según lo establecido en el artí­culo 18° de la Ley de Protección de Datos Personales.
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    <strong>
-                                        MARKETING 
-                                    </strong>
-                                    podrá otorgar a 
-                                    <strong>
-                                    EL TRABAJADOR 
-                                    </strong>
-                                    un correo electrónico corporativo como herramienta de trabajo para el desarrollo de sus labores. Dicho sistema
-                                    de correo electrónico es de propiedad de 
-                                    <strong>
-                                    MARKETING 
-                                    </strong>
-                                    y, en consecuencia, los mensajes que se intercambian o almacenan son considerados como parte
-                                    de los registros de 
-                                    <strong>
-                                    MARKETING 
-                                    </strong>
-                                    y podrá resguardarlos y hacer uso de ellos sin necesidad de aviso previo a 
-                                    <strong>
-                                    EL TRABAJADOR 
-                                    </strong>
-                                    . Por tanto, el correo
-                                    electrónico corporativo no podrá ser utilizado por 
-                                    <strong>
-                                    EL TRABAJADOR 
-                                    </strong>
-                                    para fines ajenos a la actividad de 
-                                    <strong>
-                                    MARKETING.
-                                    </strong>
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    El trabajador declara y acepta expresamente que será el único responsable de la creación, configuración y uso de su cuenta personal en la plataforma digital ODOO, generando su propio
-                                    usuario y contraseña mediante su correo electrónico y número telefónico personal, sin intervención de terceros ni de la empresa 
-                                    <strong>
-                                        MARKETING ALTERNO PERÚ S.A.C. 
-                                    </strong>
-                                    Asimismo,
-                                    reconoce que toda información ingresada y documentos firmados digitalmente a través de dicha plataforma — incluyendo formularios, declaraciones y contratos — constituyen
-                                    manifestación válida e inequí­voca de su voluntad, con la misma eficacia legal que una firma manuscrita, siendo plenamente vinculantes frente a la empresa y ante cualquier autoridad
-                                    administrativa o judicial.
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    El trabajador se compromete a mantener la confidencialidad de sus credenciales de acceso y a no compartirlas con terceros. En caso de mal uso, suplantación, o negativa injustificada
-                                    de autenticidad respecto a documentos firmados digitalmente en la plataforma, el trabajador asumirá las consecuencias legales y disciplinarias que correspondan, incluyendo medidas
-                                    administrativas, civiles y/o penales según la gravedad del hecho.
-                                </p>
-                                <table style="margin: 0 auto;" class="table">
-                                    <colgroup>
-                                        <col width="10%"/>
-                                        <col width="30%"/>
-                                        <col width="20%"/>
-                                        <col width="30%"/>
-                                        <col width="10%"/>
-                                    </colgroup>
-                                    <thead>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none">
-                                            <t t-if="contract_document.contract_signature and contract_document.signed_by_employer">
-                                                <img t-att-src="image_data_uri(contract_document.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none">
-                                            <t t-if="contract_document.contract_signature">
-                                                <img t-att-src="image_data_uri(contract_document.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                    </tr>
-                                        <tr>
-                                            <th scope="col" style="border: none"></th>
-                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                                EL EMPLEADOR
-                                            </th>
-                                            <th scope="col" style="border: none"></th>
-                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                                EL TRABAJADOR
-                                            </th>
-                                            <th scope="col" style="border: none"></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                            <div style="page-break-after: always;">
-                                <p>
-                                    <strong>
-                                        D&#201;CIMO CUARTA&#46;&#45; SOBORNO Y CORRUPCI&#211;N
-                                    </strong>
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        no deber&#225; incurrir en actividades fraudulentas o de corrupci&#243;n ya sea contra terceros o contra 
-                                    <strong>
-                                        MARKETING
-                                    </strong>
-                                    &#46; As&#237;&#44; 
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        conoce y acepta que ninguna suma de  dinero o cualquier otro beneficio ser&#225; utilizado&#44; directa o indirectamente&#44; para influenciar&#44; de manera corrupta o ilegal&#44; cualquier decisi&#243;n o juzgamiento de cualquier funcionario o gobierno&#44; o cualquier oficina&#44; agencia o herramienta de este en relaci&#243;n con la empresa&#44; sus actividades&#44; los servicios o en conexi&#243;n con cualquier contrato o acuerdo  con terceros asociados con la empresa&#44; sus  actividades o los servicios&#46;
-                                </p>
-                                <p>
-                                    <strong>
-                                        D&#201;CIMO QUINTA&#46;&#45; CL&#193;USULA RESOLUTORIA DEL V&#205;NCULO LABORAL
-                                    </strong>
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    Las partes de com&#250;n acuerdo pactan que el v&#237;nculo laboral se disolver&#225; si en caso se resuelva el Contrato Principal con el CLIENTE que 
-                                    <strong>
-                                        MARKETING
-                                    </strong>
-                                        mantiene con su cliente que sustenta la contrataci&#243;n de 
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                    &#46;
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    La extinci&#243;n del contrato de trabajo proceder&#225; por alguna de las causas previstas en el Art&#46; 16&#176; del D&#46;S 003&#45;97&#45;TR del D&#46; Legislativo 728&#44; Proceder&#225; de igual manera el despido de 
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        cuando las conductas esten previstas y tipificadas en los inc&#46; del Art 24&#176;&#44; 25&#176; del D&#46;S 003&#45;97&#45;TR del TUO D&#46;L 728&#46;
-                                </p>
-                                <p>
-                                    <strong>
-                                        D&#201;CIMO SEXTA&#46;&#45; CAMBIO DE DOMICILIO Y N&#218;MERO TELEF&#211;NICO
-                                    </strong>
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    A la suscripci&#243;n de este contrato&#44; 
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        declara que su domicilio y el n&#250;mero telef&#243;nico son los que figuran en la introducci&#243;n del presente contrato&#44; oblig&#225;ndose a comunicar a 
-                                    <strong>
-                                        MARKETING
-                                    </strong>
-                                        por escrito o por medios electr&#243;nicos los cambios que ocurran en un plazo no mayor de tres &#40;3&#41; d&#237;as y asimismo acreditar ante 
-                                    <strong>
-                                        MARKETING
-                                    </strong>
-                                        cualquier alteraci&#243;n en su situaci&#243;n familiar&#44; en especial&#44; si ello pudiera dar origen al otorgamiento o supresi&#243;n de beneficios de acuerdo a ley&#46;
-                                </p>
-                                <p>
-                                    <strong>
-                                        D&#201;CIMO S&#201;PTIMA&#46;&#45; LEGISLACI&#211;N APLICABLE
-                                    </strong>
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        estar&#225; sujeto al r&#233;gimen laboral de la actividad privada dentro de los alcances y efectos que determina la LPCL&#46; En consecuencia&#44; en todo aquello no previsto en el presente contrato&#44; ser&#225;n aplicables las disposiciones legales vigentes en materia laboral&#46;
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    Firmado el 
-                                    <t t-if="contract_document.signed_on">
-                                        <span t-esc="'%02d' % contract_document.signed_on.day"/>
-                                    </t>
-                                    <t t-else="">
-                                        __
-                                    </t>
-                                    de
-                                    <t t-if="contract_document.signed_on">
-                                        <span t-esc="contract_document.signed_on_month"/>
-                                    </t>
-                                    <t t-else="">
-                                        __
-                                    </t>
-                                    del
-                                    <t t-if="contract_document.signed_on">
-                                        <span t-esc="contract_document.signed_on.year"/>
-                                    </t>
-                                    <t t-else="">
-                                        __
-                                    </t>
-                                    &#44; en dos ejemplares de un mismo tenor y para un solo efecto&#44; que se suscribe el 
-                                    <t t-if="contract_document.date_start">
-                                        <span t-esc="'%02d' % contract_document.date_start.day"/>
-                                    </t>
-                                    <t t-else="">
-                                        __
-                                    </t>
-                                    de 
-                                    <t t-if="contract_document.date_start">
-                                        <span t-esc="contract_document.date_start_month"/>
-                                    </t>
-                                    <t t-else="">
-                                        __
-                                    </t>
-                                    del 
-                                    <t t-if="contract_document.date_start">
-                                        <span t-esc="contract_document.date_start.year"/>
-                                    </t>
-                                    <t t-else="">
-                                        __
-                                    </t>
-                                        &#46;
-                                </p>
-                                <p>
-                                    <u>
-                                        <strong>
-                                            ACTA DE ENTREGA DE DOCUMENTOS LABORALES Y DE SEGURIDAD Y SALUD EN EL TRABAJO
-                                        </strong>
-                                    </u>
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    Yo&#44; 
-                                    <t t-if="contract_document.partner_name">
-                                        <span t-esc="contract_document.partner_name"/>
-                                    </t>
-                                    <t t-else="">
-                                        __________
-                                    </t>
-                                        identificado&#40;a&#41; con DNI N&#176; 
-                                    <t t-if="contract_document.vat">
-                                        <span t-esc="contract_document.vat"/>
-                                    </t>
-                                    <t t-else="">
-                                        __________
-                                    </t>
-                                        declaro que he recibido de mi empleador 
-                                    <strong>
-                                        MARKETING ALTERNO PERU SAC
-                                    </strong>
-                                    &#44; donde laboro en calidad de 
-                                    <t t-if="contract_document.employee_job">
-                                        <!-- <span t-esc="contract_document.job_id.name"/> -->
-                                        <span t-esc="contract_document.employee_job"/>,
-                                    </t>
-                                    <t t-else="">
-                                        __________,
-                                    </t>
-                                    los siguientes documentos de forma electr&#243;nica y&#47;o f&#237;sica&#58; a&#41; Documentos laborales / Seguridad y Salud en el Trabajo,
-                                    b&#41; Reglamento Interno de trabajo, c&#41; Reglamento SST, d&#41; Alta del T-Registro, e&#41; Copia de Contrato de Trabajo y renovaciones debidamente suscritos por mi persona y la empresa,
-                                    f&#41; Boletín Informativo acerca de las características del sistema privado de pensiones (SPP) y del sistema nacional de pensiones (SNP),
-                                    g&#41; Política de Hostigamiento Sexual, h&#41; Política Prevención Y Discriminación, i&#41;  Política Salarial, j&#41; Política de datos personales.
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    Respecto a la entrega de los documentos antes indicados declaro que he sido debidamente instruido por mi empleador en relaci&#243;n al contenido&#44; por lo que me comprometo a cumplir con lo establecido en dichos documentos&#46; 
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    En se&#241;al de conformidad y aceptaci&#243;n suscribo el presente documento a los 
-                                    <t t-if="contract_document.date_start">
-                                        <span t-esc="'%02d' % contract_document.date_start.day"/>
-                                    </t>
-                                    <t t-else="">
-                                        __
-                                    </t>
-                                    de 
-                                    <t t-if="contract_document.date_start">
-                                        <span t-esc="contract_document.date_start_month"/>
-                                    </t>
-                                    <t t-else="">
-                                        __
-                                    </t>
-                                    del 
-                                    <t t-if="contract_document.date_start">
-                                        <span t-esc="contract_document.date_start.year"/>.
-                                    </t>
-                                    <t t-else="">
-                                        __.
-                                    </t>
-                                </p>
-                                <table style="margin: 0 auto;" class="table">
-                                    <colgroup>
-                                        <col width="10%"/>
-                                        <col width="30%"/>
-                                        <col width="20%"/>
-                                        <col width="30%"/>
-                                        <col width="10%"/>
-                                    </colgroup>
-                                    <thead>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none">
-                                            <t t-if="contract_document.contract_signature and contract_document.signed_by_employer">
-                                                <img t-att-src="image_data_uri(contract_document.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none">
-                                            <t t-if="contract_document.contract_signature">
-                                                <img t-att-src="image_data_uri(contract_document.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                    </tr>
-                                        <tr>
-                                            <th scope="col" style="border: none"></th>
-                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                                EL EMPLEADOR
-                                            </th>
-                                            <th scope="col" style="border: none"></th>
-                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                                EL TRABAJADOR
-                                            </th>
-                                            <th scope="col" style="border: none"></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                            <div style="page-break-after: always;">
-                                <p>
-                                    <u>
-                                        <strong>
-                                            DECLARACI&#211;N DE CONSENTIMIENTO DE TRATAMIENTO DE DATOS PERSONALES TRABAJADORES
-                                        </strong>
-                                    </u>
-                                </p>
-                                <ol style="font-size:0.625rem">
-                                    <li>
-                                        A trav&#233;s del presente documento&#44; 
-                                        <strong>
-                                            MARKETING ALTERNO PERU S&#46;A&#46;C&#46;
-                                        </strong>
-                                        identificado con RUC N&#176; 20512433821, domiciliado en JR&#46; LIBERTAD 757&#44; MAGDALENA DEL MAR &#40;en adelante&#44; &#34;LA EMPRESA&#34;&#41; le informa que es una empresa que respeta la legislaci&#243;n vigente en todos los aspectos&#46;
-                                    </li>
-                                    <li>
-                                        En raz&#243;n de lo mencionado en el p&#225;rrafo anterior&#44; y de conformidad con lo establecido en la Ley N&#176; 29733&#44; Ley de Protecci&#243;n de Datos Personales y su Reglamento&#44; LA EMPRESA le comunica que&#44; con la firma de esta Declaraci&#243;n por parte suya&#44; queda legalmente autorizado para recopilar y tratar la informaci&#243;n que usted le proporcione sobre sus datos personales&#44; sensibles y otros que nazcan producto de la relaci&#243;n contractual &#40;en adelante la &#34;informaci&#243;n&#34;&#41;&#46;
-                                    </li>
-                                    <li>
-                                        La informaci&#243;n brindada a LA EMPRESA se encontrar&#225; recopilada en un Banco de Datos Personales a cargo de LA EMPRESA&#46; En ese sentido&#44; LA EMPRESA ha adoptado las medidas de seguridad legales&#44; t&#233;cnicas y organizativas necesarias para evitar la p&#233;rdida&#44; mal uso&#44; alteraci&#243;n&#44; acceso no autorizado y robo de los datos personales&#46;
-                                    </li>
-                                    <li>
-                                        LA EMPRESA le informa que la recopilaci&#243;n&#44; organizaci&#243;n y tratamiento de su informaci&#243;n tiene como finalidad&#58; &#40;i&#41; llevar un control del n&#250;mero de trabajadores dentro de la empresa; &#40;ii&#41; permitir que el &#225;rea de Recursos Humanos pueda cumplir con sus fines &#40;iii&#41; contar con los datos b&#225;sicos que hagan identificable al trabajador dentro de la organizaci&#243;n de la empresa ante cualquier eventualidad; &#40;iv&#41; contar con los datos que hagan posible que LA EMPRESA cumpla con la normatividad legal nacional vigente; &#40;v&#41; llevar un control del ingreso y salida de los trabajadores&#46;
-                                        La informaci&#243;n contenida en los bancos de datos personales es de uso interno&#44; como parte de las labores de administraci&#243;n y gesti&#243;n del &#225;rea de administraci&#243;n&#46; Asimismo&#44; Usted admite que ha prestado su consentimiento de manera libre&#44; previa&#44; inequ&#237;voca y expresa por un plazo indeterminado a LA EMPRESA para que &#233;ste pueda almacenar&#44; dar tratamiento&#44; procesar y transferir su informaci&#243;n a empresas del mismo grupo econ&#243;mico&#44; socios comerciales&#44; clientes&#44; potenciales clientes&#44; afiliados y&#47;o a entidades p&#250;blicas o privadas&#44; siempre que este tratamiento de informaci&#243;n sea realizado bajo los t&#233;rminos establecidos en esta Declaraci&#243;n&#46;
-                                    </li>
-                                    <li>
-                                        Usted puede ejercer sus derechos de acceso&#44; rectificaci&#243;n&#44; cancelaci&#243;n y oposici&#243;n respecto de su informaci&#243;n dirigi&#233;ndose a LA EMPRESA mediante alguna de las siguientes formas&#58; forma presencial en su oficina principal ubicada en Jr&#46; Libertad 757&#44; DISTRITO MAGDALENA DEL MAR&#44; LIMA&#44; LIMA en el horario de 8&#58;30 am a 6&#58;00 pm; y a trav&#233;s del correo electr&#243;nico dcordova@marketing-alterno&#46;com y&#47;o puede llamarnos al tel&#233;fono &#40;+511&#41; 208&#45;7100 para consultar los requisitos que se debe cumplir para ejercer correctamente sus derechos y para consultar el estado de su solicitud&#44; en caso &#233;sta ya se encuentre en tr&#225;mite&#46;
-                                    </li>
-                                    <li>
-                                        El ejercicio de los derechos antes mencionados&#44; deber&#225; ser realizado bajo el procedimiento establecido por LA EMPRESA y que usted declara conocer&#46; LA EMPRESA contar&#225; con los plazos establecidos por Ley para pedir la subsanaci&#243;n de documentos y tambi&#233;n para emitir una respuesta a las peticiones que reciba&#46;
-                                    </li>
-                                </ol>
                                 <table class="table">
                                     <colgroup>
                                         <col width="10%"/>
@@ -5450,12 +4935,564 @@
                                     </thead>
                                 </table>
                             </div>
+                            <div style="page-break-after: always;">
+                                <p style="font-size:0.905rem;">
+                                    <strong>
+                                        D&#201;CIMA&#46; &#45; DE LAS RECOMENDACIONES EN MATERIA DE SEGURIDAD Y SALUD EN EL TRABAJO
+                                    </strong>
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    En cumplimiento de lo dispuesto por el literal c&#41; del art&#237;culo 35 de la Ley N&#176; 29783&#44; Ley de Seguridad y Salud en el Trabajo&#44; 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                    &#44; entrega a 
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        una descripci&#243;n de las recomendaciones de seguridad y salud en el trabajo para el puesto que este ocupar&#225; en virtud de la celebraci&#243;n del presente Contrato y que 
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        se obliga a respetar&#44; sin perjuicio de lo establecido en el Reglamento Interno de Seguridad y Salud en el Trabajo de la empresa&#44; as&#237; como otras normas internas&#44; lineamientos o directivas sobre la materia&#44; las cuales le ser&#225;n puestas a disposici&#243;n al inicio de sus labores&#44; el cual consta en el ANEXO C&#46;
+                                </p>
+                                <p style="font-size:0.905rem;">
+                                    <strong>
+                                        D&#201;CIMO PRIMERA&#46; &#45; CONOCIMIENTO DE LEGISLACI&#211;N Y PROCEDIMIENTO EN MATERIA DE PREVENCI&#211;N DE ACTOS DE HOSTIGAMIENTO SEXUAL
+                                    </strong>
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    Mediante la suscripci&#243;n del presente documento&#44; 
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        declara haber sido informado sobre la existencia y alcances  de  la  Ley  No&#46; 27942 &#45; Ley de Prevenci&#243;n y Sanci&#243;n del Hostigamiento Sexual&#45; y su Reglamento aprobado mediante Decreto Supremo No&#46; 014&#45;2019&#45;MIMP &#45; en adelante&#44; el &#34;Reglamento&#34;&#44; comprometi&#233;ndose a cumplir estrictamente las disposiciones y los procedimientos establecidos en la &#34;Pol&#237;tica sobre Prevenci&#243;n y Sanci&#243;n de Actos de Hostigamiento Sexual&#34; &#45; en adelante&#44; la &#34;Pol&#237;tica&#34; implementada por 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                    &#46; 
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        se compromete a seguir el procedimiento establecido en la Pol&#237;tica cuando tome conocimiento de cualquier incidente que pueda ser considerado un acto de hostigamiento sexual&#46;
+                                </p>
+                                <p style="font-size:0.905rem;">
+                                    <strong>
+                                        D&#201;CIMO SEGUNDA&#46; &#45; DE LA DEVOLUCI&#211;N DE MATERIALES DE TRABAJO&#46;
+                                    </strong>
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    Al momento de extinguirse la relaci&#243;n laboral&#44; por cualquier de las causas estipuladas en el presente contrato&#44; 
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        se obliga a devolver en forma inmediata y ordenada a 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                        todo el material&#44; documentaci&#243;n y cualquier otro bien y&#47;o implemento de propiedad de 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                        que&#44; con ocasi&#243;n de la prestaci&#243;n de sus servicios&#44; se encuentren en su poder&#44; tales como equipos&#44; software&#44; bases de datos&#44; &#243;rdenes de venta&#44; hojas membretadas&#44; entre otros&#46; Pues de no cumplir con la devoluci&#243;n correspondiente en el plazo de 24 horas de formalizado el cese&#44; se procede con descuento inmediato por el valor del implemento&#46; 
+                                </p>
+                                <p style="font-size:0.905rem;">
+                                    <strong>
+                                        D&#201;CIMO TERCERA&#46; &#45; DATOS PERSONALES Y CORREO ELECTR&#211;NICO CORPORATIVO
+                                    </strong>
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    <strong>
+                                        EL TRABAJADOR 
+                                    </strong>
+                                    autoriza a 
+                                    <strong>
+                                        MARKETING 
+                                    </strong>
+                                    para tratar, recolectar, requerir, reunir, conservar, modificar, utilizar y transferir a terceros (en las condiciones que
+                                    se señalan en los siguientes párrafos), dentro o fuera del paí­s, su información personal, incluyendo sus datos personales y sensibles. Sin carácter limitativo,
+                                    ello se efectuará a efectos de juzgar su idoneidad y rendimiento como trabajador, operar de la manera que 
+                                    <strong>
+                                        MARKETING 
+                                    </strong>
+                                    estime más conveniente sus
+                                    sistemas de compensaciones y manejo de planillas o, en general, tomar decisiones vinculadas al puesto de trabajo.
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    <strong>
+                                        EL TRABAJADOR 
+                                    </strong>
+                                    está de acuerdo en que dicha información pueda ser transferida por 
+                                    <strong>
+                                        MARKETING 
+                                    </strong>
+                                    (i) a otros trabajadores de 
+                                    <strong>
+                                        MARKETING 
+                                    </strong>
+                                    que requieran
+                                    conocer dicha información para el ejercicio de sus funciones; (ii) a terceras personas y/o empresas contratadas por 
+                                    <strong>
+                                        MARKETING 
+                                    </strong>
+                                    que requieran conocer
+                                    dicha información para la prestación de sus servicios; y/o, (iii) a sus empresas vinculadas, domiciliadas o no en el Perú, para la consolidación de datos,
+                                    preparación de estadí­sticas corporativas , elaboración de polí­ticas, etc.
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    Con respecto al uso de imagen: 
+                                    <strong>
+                                        El TRABAJADOR 
+                                    </strong>
+                                    autoriza de manera libre, voluntaria, expresa, informada, irrevocable y por tiempo indefinido a la empresa 
+                                    <strong>
+                                        MARKETING ALTERNO PERÚ S.A.C.
+                                    </strong>
+                                    , con RUC N° 20512433821, para que capte, utilice, reproduzca, comunique, publique, distribuya y modifique, total o parcialmente, su imagen, voz y/o reacciones, a través
+                                    de cualquier medio fí­sico, digital o electrónico, incluyendo pero no limitado a redes sociales, plataformas digitales, internet, medios impresos y audiovisuales, a nivel nacional e
+                                    internacional, para fines comerciales, publicitarios o promocionales de la empresa o de sus clientes.
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    Esta autorización se otorga de forma gratuita, sin compensación económica alguna y sin restricción temporal o territorial. Asimismo, 
+                                    <strong>
+                                        el TRABAJADOR 
+                                    </strong>
+                                    renuncia expresamente a formular
+                                    cualquier reclamo, acción o indemnización futura por el uso autorizado de su imagen, voz o reacciones, y declara que dicho uso no afecta su honor, dignidad ni intimidad, conforme a lo
+                                    dispuesto en el artí­culo 15° del Código Civil, la Ley N° 29733 – Ley de Protección de Datos Personales y su reglamento.
+                                    <strong>
+                                        EL TRABAJADOR 
+                                    </strong>
+                                    podrá ejercer su derecho de acceso ,
+                                    rectificación, cancelación y oposición mediante escrito dirigido a 
+                                    <strong>
+                                        MARKETING.
+                                    </strong>
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    <strong>
+                                        EL TRABAJADOR 
+                                    </strong>
+                                    reconoce y declara expresamente que, de manera previa a la firma del presente contrato, ha sido debida y suficientemente informado
+                                    sobre los alcances y efectos de la presente cláusula, según lo establecido en el artí­culo 18° de la Ley de Protección de Datos Personales.
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    <strong>
+                                        MARKETING 
+                                    </strong>
+                                    podrá otorgar a 
+                                    <strong>
+                                    EL TRABAJADOR 
+                                    </strong>
+                                    un correo electrónico corporativo como herramienta de trabajo para el desarrollo de sus labores. Dicho sistema
+                                    de correo electrónico es de propiedad de 
+                                    <strong>
+                                    MARKETING 
+                                    </strong>
+                                    y, en consecuencia, los mensajes que se intercambian o almacenan son considerados como parte
+                                    de los registros de 
+                                    <strong>
+                                    MARKETING 
+                                    </strong>
+                                    y podrá resguardarlos y hacer uso de ellos sin necesidad de aviso previo a 
+                                    <strong>
+                                    EL TRABAJADOR 
+                                    </strong>
+                                    . Por tanto, el correo
+                                    electrónico corporativo no podrá ser utilizado por 
+                                    <strong>
+                                    EL TRABAJADOR 
+                                    </strong>
+                                    para fines ajenos a la actividad de 
+                                    <strong>
+                                    MARKETING.
+                                    </strong>
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    El trabajador declara y acepta expresamente que será el único responsable de la creación, configuración y uso de su cuenta personal en la plataforma digital ODOO, generando su propio
+                                    usuario y contraseña mediante su correo electrónico y número telefónico personal, sin intervención de terceros ni de la empresa 
+                                    <strong>
+                                        MARKETING ALTERNO PERÚ S.A.C. 
+                                    </strong>
+                                    Asimismo,
+                                    reconoce que toda información ingresada y documentos firmados digitalmente a través de dicha plataforma — incluyendo formularios, declaraciones y contratos — constituyen
+                                    manifestación válida e inequí­voca de su voluntad, con la misma eficacia legal que una firma manuscrita, siendo plenamente vinculantes frente a la empresa y ante cualquier autoridad
+                                    administrativa o judicial.
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    El trabajador se compromete a mantener la confidencialidad de sus credenciales de acceso y a no compartirlas con terceros. En caso de mal uso, suplantación, o negativa injustificada
+                                    de autenticidad respecto a documentos firmados digitalmente en la plataforma, el trabajador asumirá las consecuencias legales y disciplinarias que correspondan, incluyendo medidas
+                                    administrativas, civiles y/o penales según la gravedad del hecho.
+                                </p>
+                                <table class="table">
+                                    <colgroup>
+                                        <col width="10%"/>
+                                        <col width="30%"/>
+                                        <col width="20%"/>
+                                        <col width="30%"/>
+                                        <col width="10%"/>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature and contract_document.signed_by_employer">
+                                                <img t-att-src="image_data_uri(contract_document.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature">
+                                                <img t-att-src="image_data_uri(contract_document.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                        <tr>
+                                            <th scope="col" style="border: none"></th>
+                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                                EL EMPLEADOR
+                                            </th>
+                                            <th scope="col" style="border: none"></th>
+                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                                EL TRABAJADOR
+                                            </th>
+                                            <th scope="col" style="border: none"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div style="page-break-after: always;">
+                                <p style="font-size:0.905rem;">
+                                    <strong>
+                                        D&#201;CIMO CUARTA&#46;&#45; SOBORNO Y CORRUPCI&#211;N
+                                    </strong>
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        no deber&#225; incurrir en actividades fraudulentas o de corrupci&#243;n ya sea contra terceros o contra 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                    &#46; As&#237;&#44; 
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        conoce y acepta que ninguna suma de  dinero o cualquier otro beneficio ser&#225; utilizado&#44; directa o indirectamente&#44; para influenciar&#44; de manera corrupta o ilegal&#44; cualquier decisi&#243;n o juzgamiento de cualquier funcionario o gobierno&#44; o cualquier oficina&#44; agencia o herramienta de este en relaci&#243;n con la empresa&#44; sus actividades&#44; los servicios o en conexi&#243;n con cualquier contrato o acuerdo  con terceros asociados con la empresa&#44; sus  actividades o los servicios&#46;
+                                </p>
+                                <p style="font-size:0.905rem;">
+                                    <strong>
+                                        D&#201;CIMO QUINTA&#46;&#45; CL&#193;USULA RESOLUTORIA DEL V&#205;NCULO LABORAL
+                                    </strong>
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    Las partes de com&#250;n acuerdo pactan que el v&#237;nculo laboral se disolver&#225; si en caso se resuelva el Contrato Principal con el CLIENTE que 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                        mantiene con su cliente que sustenta la contrataci&#243;n de 
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                    &#46;
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    La extinci&#243;n del contrato de trabajo proceder&#225; por alguna de las causas previstas en el Art&#46; 16&#176; del D&#46;S 003&#45;97&#45;TR del D&#46; Legislativo 728&#44; Proceder&#225; de igual manera el despido de 
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        cuando las conductas esten previstas y tipificadas en los inc&#46; del Art 24&#176;&#44; 25&#176; del D&#46;S 003&#45;97&#45;TR del TUO D&#46;L 728&#46;
+                                </p>
+                                <p style="font-size:0.905rem;">
+                                    <strong>
+                                        D&#201;CIMO SEXTA&#46;&#45; CAMBIO DE DOMICILIO Y N&#218;MERO TELEF&#211;NICO
+                                    </strong>
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    A la suscripci&#243;n de este contrato&#44; 
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        declara que su domicilio y el n&#250;mero telef&#243;nico son los que figuran en la introducci&#243;n del presente contrato&#44; oblig&#225;ndose a comunicar a 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                        por escrito o por medios electr&#243;nicos los cambios que ocurran en un plazo no mayor de tres &#40;3&#41; d&#237;as y asimismo acreditar ante 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                        cualquier alteraci&#243;n en su situaci&#243;n familiar&#44; en especial&#44; si ello pudiera dar origen al otorgamiento o supresi&#243;n de beneficios de acuerdo a ley&#46;
+                                </p>
+                                <p style="font-size:0.905rem;">
+                                    <strong>
+                                        D&#201;CIMO S&#201;PTIMA&#46;&#45; LEGISLACI&#211;N APLICABLE
+                                    </strong>
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        estar&#225; sujeto al r&#233;gimen laboral de la actividad privada dentro de los alcances y efectos que determina la LPCL&#46; En consecuencia&#44; en todo aquello no previsto en el presente contrato&#44; ser&#225;n aplicables las disposiciones legales vigentes en materia laboral&#46;
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    Firmado el 
+                                    <t t-if="contract_document.signed_on">
+                                        <span t-esc="'%02d' % contract_document.signed_on.day"/>
+                                    </t>
+                                    <t t-else="">
+                                        __
+                                    </t>
+                                    de
+                                    <t t-if="contract_document.signed_on">
+                                        <span t-esc="contract_document.signed_on_month"/>
+                                    </t>
+                                    <t t-else="">
+                                        __
+                                    </t>
+                                    del
+                                    <t t-if="contract_document.signed_on">
+                                        <span t-esc="contract_document.signed_on.year"/>
+                                    </t>
+                                    <t t-else="">
+                                        __
+                                    </t>
+                                    &#44; en dos ejemplares de un mismo tenor y para un solo efecto&#44; que se suscribe el 
+                                    <t t-if="contract_document.date_start">
+                                        <span t-esc="'%02d' % contract_document.date_start.day"/>
+                                    </t>
+                                    <t t-else="">
+                                        __
+                                    </t>
+                                    de 
+                                    <t t-if="contract_document.date_start">
+                                        <span t-esc="contract_document.date_start_month"/>
+                                    </t>
+                                    <t t-else="">
+                                        __
+                                    </t>
+                                    del 
+                                    <t t-if="contract_document.date_start">
+                                        <span t-esc="contract_document.date_start.year"/>
+                                    </t>
+                                    <t t-else="">
+                                        __
+                                    </t>
+                                        &#46;
+                                </p>
+                                <table class="table">
+                                    <colgroup>
+                                        <col width="10%"/>
+                                        <col width="30%"/>
+                                        <col width="20%"/>
+                                        <col width="30%"/>
+                                        <col width="10%"/>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature and contract_document.signed_by_employer">
+                                                <img t-att-src="image_data_uri(contract_document.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature">
+                                                <img t-att-src="image_data_uri(contract_document.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                        <tr>
+                                            <th scope="col" style="border: none"></th>
+                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                                EL EMPLEADOR
+                                            </th>
+                                            <th scope="col" style="border: none"></th>
+                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                                EL TRABAJADOR
+                                            </th>
+                                            <th scope="col" style="border: none"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div style="page-break-after: always;"/>
+                                <p style="text-align: center; font-size:0.905rem;">
+                                    <u>
+                                        <strong>
+                                            ACTA DE ENTREGA DE DOCUMENTOS LABORALES Y DE SEGURIDAD Y SALUD EN EL TRABAJO
+                                        </strong>
+                                    </u>
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    Yo&#44; 
+                                    <t t-if="contract_document.partner_name">
+                                        <span t-esc="contract_document.partner_name"/>
+                                    </t>
+                                    <t t-else="">
+                                        __________
+                                    </t>
+                                        identificado&#40;a&#41; con DNI N&#176; 
+                                    <t t-if="contract_document.vat">
+                                        <span t-esc="contract_document.vat"/>
+                                    </t>
+                                    <t t-else="">
+                                        __________
+                                    </t>
+                                        declaro que he recibido de mi empleador 
+                                    <strong>
+                                        MARKETING ALTERNO PERU SAC
+                                    </strong>
+                                    &#44; donde laboro en calidad de 
+                                    <t t-if="contract_document.employee_job">
+                                        <!-- <span t-esc="contract_document.job_id.name"/> -->
+                                        <span t-esc="contract_document.employee_job"/>,
+                                    </t>
+                                    <t t-else="">
+                                        __________,
+                                    </t>
+                                    los siguientes documentos de forma electr&#243;nica y&#47;o f&#237;sica&#58; a&#41; Documentos laborales / Seguridad y Salud en el Trabajo,
+                                    b&#41; Reglamento Interno de trabajo, c&#41; Reglamento SST, d&#41; Alta del T-Registro, e&#41; Copia de Contrato de Trabajo y renovaciones debidamente suscritos por mi persona y la empresa,
+                                    f&#41; Boletín Informativo acerca de las características del sistema privado de pensiones (SPP) y del sistema nacional de pensiones (SNP),
+                                    g&#41; Política de Hostigamiento Sexual, h&#41; Política Prevención Y Discriminación, i&#41;  Política Salarial, j&#41; Política de datos personales.
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    Respecto a la entrega de los documentos antes indicados declaro que he sido debidamente instruido por mi empleador en relaci&#243;n al contenido&#44; por lo que me comprometo a cumplir con lo establecido en dichos documentos&#46; 
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    En se&#241;al de conformidad y aceptaci&#243;n suscribo el presente documento a los 
+                                    <t t-if="contract_document.date_start">
+                                        <span t-esc="'%02d' % contract_document.date_start.day"/>
+                                    </t>
+                                    <t t-else="">
+                                        __
+                                    </t>
+                                    del mes de 
+                                    <t t-if="contract_document.date_start">
+                                        <span t-esc="contract_document.date_start_month"/>
+                                    </t>
+                                    <t t-else="">
+                                        __
+                                    </t>
+                                    del 
+                                    <t t-if="contract_document.date_start">
+                                        <span t-esc="contract_document.date_start.year"/>.
+                                    </t>
+                                    <t t-else="">
+                                        __.
+                                    </t>
+                                </p>
+                                <table class="table">
+                                    <colgroup>
+                                        <col width="10%"/>
+                                        <col width="30%"/>
+                                        <col width="10%"/>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature">
+                                                <img t-att-src="image_data_uri(contract_document.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                            EL TRABAJADOR
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div style="page-break-after: always;">
+                                <p style="text-align: center; font-size:0.905rem;">
+                                    <u>
+                                        <strong>
+                                            DECLARACI&#211;N DE CONSENTIMIENTO DE TRATAMIENTO DE DATOS PERSONALES TRABAJADORES
+                                        </strong>
+                                    </u>
+                                </p>
+                                <ol style="font-size:0.625rem; text-align: justify;">
+                                    <li>
+                                        A trav&#233;s del presente documento&#44; 
+                                        <strong>
+                                            MARKETING ALTERNO PERU S&#46;A&#46;C&#46;
+                                        </strong>
+                                        identificado con RUC N&#176; 20512433821, domiciliado en JR&#46; LIBERTAD 757&#44; MAGDALENA DEL MAR &#40;en adelante&#44; &#34;LA EMPRESA&#34;&#41; le informa que es una empresa que respeta la legislaci&#243;n vigente en todos los aspectos&#46;
+                                    </li>
+                                    <li>
+                                        En raz&#243;n de lo mencionado en el p&#225;rrafo anterior&#44; y de conformidad con lo establecido en la Ley N&#176; 29733&#44; Ley de Protecci&#243;n de Datos Personales y su Reglamento&#44; LA EMPRESA le comunica que&#44; con la firma de esta Declaraci&#243;n por parte suya&#44; queda legalmente autorizado para recopilar y tratar la informaci&#243;n que usted le proporcione sobre sus datos personales&#44; sensibles y otros que nazcan producto de la relaci&#243;n contractual &#40;en adelante la &#34;informaci&#243;n&#34;&#41;&#46;
+                                    </li>
+                                    <li>
+                                        La informaci&#243;n brindada a LA EMPRESA se encontrar&#225; recopilada en un Banco de Datos Personales a cargo de LA EMPRESA&#46; En ese sentido&#44; LA EMPRESA ha adoptado las medidas de seguridad legales&#44; t&#233;cnicas y organizativas necesarias para evitar la p&#233;rdida&#44; mal uso&#44; alteraci&#243;n&#44; acceso no autorizado y robo de los datos personales&#46;
+                                    </li>
+                                    <li>
+                                        LA EMPRESA le informa que la recopilaci&#243;n&#44; organizaci&#243;n y tratamiento de su informaci&#243;n tiene como finalidad&#58; &#40;i&#41; llevar un control del n&#250;mero de trabajadores dentro de la empresa; &#40;ii&#41; permitir que el &#225;rea de Recursos Humanos pueda cumplir con sus fines &#40;iii&#41; contar con los datos b&#225;sicos que hagan identificable al trabajador dentro de la organizaci&#243;n de la empresa ante cualquier eventualidad; &#40;iv&#41; contar con los datos que hagan posible que LA EMPRESA cumpla con la normatividad legal nacional vigente; &#40;v&#41; llevar un control del ingreso y salida de los trabajadores&#46;
+                                        La informaci&#243;n contenida en los bancos de datos personales es de uso interno&#44; como parte de las labores de administraci&#243;n y gesti&#243;n del &#225;rea de administraci&#243;n&#46; Asimismo&#44; Usted admite que ha prestado su consentimiento de manera libre&#44; previa&#44; inequ&#237;voca y expresa por un plazo indeterminado a LA EMPRESA para que &#233;ste pueda almacenar&#44; dar tratamiento&#44; procesar y transferir su informaci&#243;n a empresas del mismo grupo econ&#243;mico&#44; socios comerciales&#44; clientes&#44; potenciales clientes&#44; afiliados y&#47;o a entidades p&#250;blicas o privadas&#44; siempre que este tratamiento de informaci&#243;n sea realizado bajo los t&#233;rminos establecidos en esta Declaraci&#243;n&#46;
+                                    </li>
+                                    <li>
+                                        Usted puede ejercer sus derechos de acceso&#44; rectificaci&#243;n&#44; cancelaci&#243;n y oposici&#243;n respecto de su informaci&#243;n dirigi&#233;ndose a LA EMPRESA mediante alguna de las siguientes formas&#58; forma presencial en su oficina principal ubicada en Jr&#46; Libertad 757&#44; DISTRITO MAGDALENA DEL MAR&#44; LIMA&#44; LIMA en el horario de 8&#58;30 am a 6&#58;00 pm; y a trav&#233;s del correo electr&#243;nico dcordova@marketing-alterno&#46;com y&#47;o puede llamarnos al tel&#233;fono &#40;+511&#41; 208&#45;7100 para consultar los requisitos que se debe cumplir para ejercer correctamente sus derechos y para consultar el estado de su solicitud&#44; en caso &#233;sta ya se encuentre en tr&#225;mite&#46;
+                                    </li>
+                                    <li>
+                                        El ejercicio de los derechos antes mencionados&#44; deber&#225; ser realizado bajo el procedimiento establecido por LA EMPRESA y que usted declara conocer&#46; LA EMPRESA contar&#225; con los plazos establecidos por Ley para pedir la subsanaci&#243;n de documentos y tambi&#233;n para emitir una respuesta a las peticiones que reciba&#46;
+                                    </li>
+                                </ol>
+                                <table class="table">
+                                    <colgroup>
+                                        <col width="10%"/>
+                                        <col width="30%"/>
+                                        <col width="10%"/>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature">
+                                                <img t-att-src="image_data_uri(contract_document.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                            EL TRABAJADOR
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </article>
                     </t>
                     <t t-if="contract_document.contract_type_id.contract_short_name == 'CTPFISM'">
                         <article>
                             <div style="page-break-after: always;">
-                                <p class="text-center">
+                                <p style="text-align: center;">
                                     <t t-if="contract_document.is_renovation">
                                         <strong>
                                             RENOVACIÓN DE CONTRATO DE TRABAJO PLAZO FIJO INTERMITENTE
@@ -5467,10 +5504,10 @@
                                         </strong>
                                     </t>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Conste por el presente documento&#44; el contrato de trabajo sujeto a modalidad de intermitente &#40;en adelante&#44; el &#34;CONTRATO&#34;&#41; que&#44; de acuerdo a lo previsto en el art&#237;culo 64&#176; y siguientes de la Ley de Productividad y Competitividad Laboral &#40;en adelante&#44; la &#34;LPCL&#34;&#41;&#44; celebran&#58;
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         MARKETING ALTERNO PERU S&#46;A&#46;C&#46;
                                     </strong>
@@ -5485,11 +5522,11 @@
                                     <t t-else="">
                                         __________,
                                     </t>
-                                        &#40;en adelante&#44; el &#34;
+                                        &#40;en adelante&#44; &#34;
                                     <strong>
-                                        TRABAJADOR
+                                        EL TRABAJADOR
                                     </strong>
-                                    &#34;&#41;&#44; identificado con D&#46;N&#46;I&#46; N&#176; 
+                                    &#34;&#41;&#44; identificado con DNI N&#176; 
                                     <t t-if="contract_document.vat">
                                         <span t-esc="contract_document.vat"/>,
                                     </t>
@@ -5538,13 +5575,13 @@
                                     <t t-else="">
                                         __________,
                                     </t>
-                                        totalmente autorizado por el 
+                                        totalmente autorizado por
                                     <strong>
-                                        TRABAJADOR
+                                        EL TRABAJADOR
                                     </strong>
                                     &#46;
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         MARKETING
                                     </strong>
@@ -5554,22 +5591,29 @@
                                     </strong>
                                         &#40;en adelante y conjuntamente&#44; las &#34; PARTES&#34;&#41; suscriben el CONTRATO en los t&#233;rminos y condiciones contenidos en las siguientes cl&#225;usulas&#58;
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         PRIMERA&#46; &#45; ANTECEDENTES
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
-                                    MARKETING es una persona jur&#237;dica de derecho privado&#44; constituida con el objeto de Tercerizaci&#243;n y Asesoramiento de Marketing Interno y externo&#44; Publicidad e Imagen Institucional en general&#59; as&#237; como tambi&#233;n brindar servicios en actividades publicitarias y comerciales&#44; tales como impulso de ventas&#44; Promotoria&#44; encuestas&#44; distribuci&#243;n de material publicitario y afines&#46; Los servicios descritos se prestan a trav&#233;s de contratos con terceros a quienes se denominar&#225;n CLIENTES&#46; Actualmente prestando servicios especializados PUBLICIDAD Y PROMOTORIA DE PRODUCTOS con determinados clientes&#46;
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    <strong>
+                                        MARKETING
+                                    </strong> 
+                                    es una persona jur&#237;dica de derecho privado&#44; constituida con el objeto de Tercerizaci&#243;n y Asesoramiento de Marketing Interno y externo&#44; Publicidad e Imagen Institucional en general&#59; as&#237; como tambi&#233;n brindar servicios en actividades publicitarias y comerciales&#44; tales como impulso de ventas&#44; Promotoria&#44; encuestas&#44; distribuci&#243;n de material publicitario y afines&#46; Los servicios descritos se prestan a trav&#233;s de contratos con terceros a quienes se denominar&#225;n CLIENTES&#46; Actualmente prestando servicios especializados PUBLICIDAD Y PROMOTORIA DE PRODUCTOS con determinados clientes&#46;
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         SEGUNDA&#46; &#45; CAUSA OBJETIVA DE LA CONTRATACI&#211;N, PUESTO Y FUNCIONES
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     La presente contratación se sustenta en la causa objetiva, de conformidad con lo establecido en el artí­culo 64 del Texto Único Ordenado del Decreto Legislativo N.º 728 - Ley de
-                                    Productividad y Competitividad Laboral, aprobado mediante Decreto Supremo N.º 003-97-TR. En tal sentido, MARKETING, en su calidad de empleador, requiere cubrir
+                                    Productividad y Competitividad Laboral, aprobado mediante Decreto Supremo N.º 003-97-TR. En tal sentido, 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                    , en su calidad de empleador, requiere cubrir
                                     actividades de naturaleza intermitente, vinculadas directamente a las variaciones en la demanda de servicios de promoción y ventas solicitadas por sus clientes, en función a
                                     contratos comerciales celebrados con empresas como 
                                     <t t-if="contract_document.cost_center">
@@ -5580,27 +5624,31 @@
                                     </t>
                                         &#40;en adelante&#44; &#34;EL CLIENTE&#34;&#41;.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Estas actividades no son continuas ni permanentes, sino que se presentan de manera esporádica, por perí­odos determinados, conforme a los requerimientos comerciales de los clientes de 
                                     <strong>
                                         MARKETING
                                     </strong>
                                     , lo cual constituye la causa objetiva que justifica la contratación bajo esta modalidad.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     En virtud del presente contrato, 
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
                                     será contratado para desempeñar el puesto de 
                                     <t t-if="contract_document.employee_job">
-                                        <span t-esc="contract_document.employee_job"/>
+                                        <span t-esc="contract_document.employee_job"/>,
                                     </t>
                                     <t t-else="">
                                         __________
                                     </t>
-                                    , prestando servicios especí­ficamente durante los perí­odos
-                                    en que se presenten dichas necesidades intermitentes, conforme al requerimiento de MARKETING. Las funciones que desempeñará estarán referidas principalmente al impulso,
+                                    prestando servicios especí­ficamente durante los perí­odos
+                                    en que se presenten dichas necesidades intermitentes, conforme al requerimiento de 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                    . Las funciones que desempeñará estarán referidas principalmente al impulso,
                                     promoción, ofrecimiento y venta de productos que comercializan los clientes de la empresa, conforme a las directrices y estrategias diseñadas por 
                                     <strong>
                                         EL EMPLEADOR
@@ -5608,7 +5656,7 @@
                                     , sin tener injerencia ni asumir funciones vinculadas al núcleo del negocio del cliente, tales como producción, comercialización directa, planificación, toma de decisiones estratégicas, ni
                                     ninguna actividad que implique dirección o gestión interna de dicho cliente.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         MARKETING 
                                     </strong>
@@ -5620,33 +5668,33 @@
                                     remuneración correspondiente y demás aspectos relevantes. La prestación de servicios se realizará únicamente durante los perí­odos en que la empresa lo requiera, sin que ello genere 
                                     continuidad laboral o expectativa de permanencia más allá de dichos perí­odos.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     El presente contrato no implica relación laboral continua, ni genera derecho a estabilidad laboral permanente, ya que la prestación de servicios queda sujeta estrictamente a la
                                     intermitencia de los requerimientos antes descritos, conforme a la legislación laboral vigente.
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         TERCERA&#46; &#45; INTERMITENCIA DE LABORES Y SUSPENSI&#211;N PERFECTA
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Las actividades de 
                                     <strong>
                                         MARKETING 
                                     </strong>
-                                    se encuentran ligadas a la ejecución del Contrato Comercial principal con 
+                                    se encuentran ligadas a la ejecución del Contrato Comercial principal con
                                     <strong>
                                         EL CLIENTE
                                     </strong>
                                     , cuya naturaleza son de naturaleza
-                                    permanente pero discontinuo. Debido a ello, existen periodos en los cuales las actividades de 
+                                    permanente pero discontinuo. Debido a ello, existen periodos en los cuales las actividades de
                                     <strong>
                                         MARKETING 
                                     </strong>
                                     deben suspenderse como consecuencia de falta
                                     de requerimientos de los clientes y/o cuando por otro motivo no se pueden realizar dichas actividades.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     En consecuencia, 
                                     <strong>
                                         EL TRABAJADOR 
@@ -5656,7 +5704,7 @@
                                         MARKETING 
                                     </strong>
                                     no puede desarrollar sus actividades, con
-                                    base en lo indicado en el párrafo precedente, su relación laboral quedará suspendida de forma perfecta, no teniendo 
+                                    base en lo indicado en el párrafo precedente, su relación laboral quedará suspendida de forma perfecta, no teniendo
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
@@ -5667,7 +5715,7 @@
                                     </strong>
                                     el deber de otorgar la remuneración y beneficios sociales, bastando una comunicación mediante correo electrónico.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
@@ -5676,15 +5724,18 @@
                                         MARKETING 
                                     </strong>
                                     también comunicará el perí­odo asignado para realizar las
-                                    actividades y la fecha de término de esta, a través del correo electrónico o ví­a mensaje de texto o mensaje de WhatsApp al número de teléfono celular que EL
-                                    TRABAJADOR ha declarado a la empresa. Es obligación de 
+                                    actividades y la fecha de término de esta, a través del correo electrónico o ví­a mensaje de texto o mensaje de WhatsApp al número de teléfono celular que
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                    ha declarado a la empresa. Es obligación de 
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
                                     revisar su correo electrónico, mensajes de texto o mensaje de
                                     WhatsApp, considerándose válida la comunicación efectuada solo con el enví­o del correo electrónico o mensaje de texto o mensaje de WhatsApp.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     De no reincorporarse oportunamente ante la comunicación de un nuevo proyecto, 
                                     <strong>
                                         MARKETING 
@@ -5740,12 +5791,12 @@
                                 </table>
                             </div>
                             <div style="page-break-after: always;">
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         CUARTA&#46; &#45; LUGAR DE LA PRESTACI&#211;N DE LOS SERVICIOS Y OBLIGACIONES DEL TRABAJADOR
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
@@ -5757,7 +5808,7 @@
                                     por necesidades del servicio, en ejercicio de su facultad de dirección, de conformidad con el artí­culo 9 de la LPCL. Asimismo,
                                     se compromete a cumplir con las disposiciones sobre Exclusividad, Reserva, Confidencialidad, No Competencia y Propiedad Intelectual.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Las partes convienen que 
                                     <strong>
                                         MARKETING 
@@ -5781,7 +5832,7 @@
                                     </strong>
                                     designe.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Las partes acuerdan que, durante el plazo de duración del presente contrato, 
                                     <strong>
                                         EL TRABAJADOR 
@@ -5797,12 +5848,12 @@
                                     </strong>
                                     se encuentre en suspensión de labores.
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         QUINTA&#46; &#45; VIGENCIA DEL CONTRATO
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     La duraci&#243;n del presente contrato ser&#225; determinada en cada caso en concreto&#46; El plazo de duraci&#243;n del presente contrato es de 
                                     <t t-if="contract_document.contract_months">
                                         <span t-esc="contract_document.contract_months"/>,
@@ -5812,17 +5863,19 @@
                                     </t>
                                     dando inicio el 
                                     <t t-if="contract_document.date_start">
-                                        <span t-esc="'%02d' % contract_document.date_start.day"/>/
+                                        <span t-esc="'%02d' % contract_document.date_start.day"/>
                                     </t>
                                     <t t-else="">
-                                        __________/
+                                        __________
                                     </t>
+                                    de
                                     <t t-if="contract_document.date_start">
-                                        <span t-esc="'%02d' % contract_document.date_start.month"/>/
+                                        <span t-esc="contract_document.date_start_month"/>
                                     </t>
                                     <t t-else="">
-                                        __________/
+                                        __________
                                     </t>
+                                    del
                                     <t t-if="contract_document.date_start">
                                         <span t-esc="contract_document.date_start.year"/>
                                     </t>
@@ -5831,17 +5884,19 @@
                                     </t>
                                     al 
                                     <t t-if="contract_document.date_end">
-                                        <span t-esc="'%02d' % contract_document.date_end.day"/>/
+                                        <span t-esc="'%02d' % contract_document.date_end.day"/>
                                     </t>
                                     <t t-else="">
-                                        __________/
+                                        __________
                                     </t>
+                                    de
                                     <t t-if="contract_document.date_end">
-                                        <span t-esc="'%02d' % contract_document.date_end.month"/>/
+                                        <span t-esc="contract_document.date_end_month"/>
                                     </t>
                                     <t t-else="">
-                                        __________/
+                                        __________
                                     </t>
+                                    del
                                     <t t-if="contract_document.date_end">
                                         <span t-esc="contract_document.date_end.year"/>,
                                     </t>
@@ -5850,12 +5905,12 @@
                                     </t>
                                     fecha en la que concluir&#225; de forma autom&#225;tica&#44; salvo nueva pr&#243;rroga o renovaci&#243;n expresa&#46;
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         SEXTA&#46;&#45; PERIODO DE PRUEBA
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
@@ -5875,7 +5930,7 @@
                                     </strong>
                                     y/o comunicado mediante conducto notarial.
                                 </p>
-                                <p style="font-size:0.625rem">  
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     De conformidad con lo dispuesto en el artí­culo 10° del Decreto Supremo N° 003-97-TR - Texto Único Ordenado de la Ley de Productividad y Competitividad Laboral, las partes
                                     acuerdan que 
                                     <strong>
@@ -5898,12 +5953,12 @@
                                         declara conocer y aceptar expresamente que tiene conocimiento de la presente clausula, y que la resolución del contrato en este periodo no genera
                                     derecho a indemnización alguna, conforme lo establecido por la normatividad vigente.
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         S&#201;PTIMA&#46;&#45; CALIFICACI&#211;N Y JORNADA Y HORARIO DE TRABAJO
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Debido a que la información a la que tiene acceso 
                                     <strong>
                                     EL TRABAJADOR
@@ -5915,31 +5970,31 @@
                                     y sus clientes,
                                     el puesto de 
                                     <t t-if="contract_document.employee_job">
-                                        <span t-esc="contract_document.employee_job"/>
+                                        <span t-esc="contract_document.employee_job"/>.
                                     </t>
                                     <t t-else="">
-                                        __________
+                                        __________.
                                     </t>
-                                    . Asimismo, por la naturaleza de las labores de impulso, promoción y ofrecimiento de los productos de los clientes, las mismas
+                                    Asimismo, por la naturaleza de las labores de impulso, promoción y ofrecimiento de los productos de los clientes, las mismas
                                     que son desarrolladas sin supervisión constante y permanente, 
                                     <strong>
                                     EL TRABAJADOR 
                                     </strong>
                                     es calificado como No Sujeto a Fiscalización Inmediata.
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         OCTAVA&#46;&#45; REMUNERACI&#211;N&#44; CONDICIONES Y BENEFICIOS
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Las partes convienen que el monto de los ingresos de 
                                     <strong>
                                         EL TRABAJADOR
                                     </strong>
                                     &#44; tendr&#225; la siguiente estructura&#58;
                                     <ol  style="list-style-type: lower-alpha; font-size:0.625rem">
-                                        <li>
+                                        <li style="text-align: justify;">
                                             Una remuneraci&#243;n b&#225;sica fija cuyo monto asciende a S&#47; 
                                             <t t-if="contract_document.wage">
                                                 <span t-esc="contract_document.wage" t-options='{"widget": "float", "precision": 2, "thousands_sep": ",", "decimal_point": "."}'/>
@@ -5956,35 +6011,40 @@
                                             SOLES&#41; &#44; la cual ser&#225; pagada mensualmente mediante dep&#243;sito en cuenta bancaria&#44; dentro de los plazos establecidos por ley&#46;
 
                                         </li>
-                                        <li>
-                                            Un monto variable&#44; que ser&#225; otorgado &#250;nicamente cuando corresponda&#44; conforme a las pol&#237;ticas internas&#44; metas u oportunidades comerciales fijadas por MARKETING ALTERNO PER&#218; S&#46;A&#46;C&#46;&#44; y siempre que dicho esquema de pago haya sido previamente comunicado&#44; aceptado y debidamente registrado entre las partes&#46;
+                                        <li style="text-align: justify;">
+                                            Un monto variable&#44; que ser&#225; otorgado &#250;nicamente cuando corresponda&#44; conforme a las pol&#237;ticas internas&#44; metas u oportunidades comerciales fijadas por 
+                                            <strong>
+                                            MARKETING ALTERNO PER&#218; S&#46;A&#46;C&#46;&#44;
+                                            </strong>
+                                            y siempre que dicho esquema de pago haya sido previamente comunicado&#44; aceptado y debidamente registrado entre las partes&#46;
                                         </li>
-                                        <li>
+                                        <li style="text-align: justify;">
                                             Los periodos de inactividad o no asignaci&#243;n efectiva a un servicio&#44; no ser&#225;n considerados como tiempo trabajado ni generar&#225;n devengue de remuneraciones ni beneficios de ninguna &#237;ndole&#46; En tales periodos&#44; no existir&#225; obligaci&#243;n de pago ni obligaci&#243;n de efectuar aportes a EsSalud ni a otras entidades del sistema de seguridad social en salud o pensiones&#44; en tanto el v&#237;nculo se mantiene en suspensi&#243;n temporal y no se configura prestaci&#243;n efectiva de servicios&#46;
                                         </li>
 
                                     </ol>
                                 </p>
-                                <p>
+                                <p style="font-size:0.910rem;">
                                     <strong>
                                         NOVENA&#46;&#45; DERECHO DE PREFERENCIA
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Durante la vigencia del presente contrato&#44; las partes acuerdan que 
                                     <strong>
                                         EL TRABAJADOR
                                     </strong>
-                                    tendr&#225; derecho preferencial en una nueva contrataci&#243;n o a la pr&#243;rroga autom&#225;tica del presente contrato si es que se presenta la necesidad de las actividades intermitentes de acuerdo a los requerimientos discontinuos de los clientes de MARKETING que se mencionan en las cl&#225;usulas primera y segunda de este documento&#46;
+                                    tendr&#225; derecho preferencial en una nueva contrataci&#243;n o a la pr&#243;rroga autom&#225;tica del presente contrato si es que se presenta la necesidad de las actividades intermitentes de acuerdo a los requerimientos discontinuos de los clientes de 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                    que se mencionan en las cl&#225;usulas primera y segunda de este documento&#46;
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Dicha preferencia operar&#225; de manera autom&#225;tica&#44; &#250;nicamente cuando se presente la necesidad de ocupaci&#243;n en las actividades intermitentes y siempre que existan los puestos suficientes&#44; sin que sea necesaria la celebraci&#243;n de un nuevo o renovaci&#243;n&#46;
                                 </p>
-                                <p style="font-size:0.625rem">
-                                    <strong>
-                                        El ejercicio
-                                    </strong>
-                                        de dicha preferencia importar&#225; la sujeci&#243;n de las partes a las cl&#225;usulas del presente contrato&#44; salvo que &#233;stas acuerden alguna modificaci&#243;n&#46; Para que opere el derecho de preferencia&#44; 
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    El ejercicio de dicha preferencia importar&#225; la sujeci&#243;n de las partes a las cl&#225;usulas del presente contrato&#44; salvo que &#233;stas acuerden alguna modificaci&#243;n&#46; Para que opere el derecho de preferencia&#44; 
                                     <strong>
                                         MARKETING
                                     </strong>
@@ -5993,6 +6053,24 @@
                                         EL TRABAJADOR
                                     </strong>
                                         para el reinicio de las actividades intermitentes cuando se requieran de sus servicios&#46; 
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        deber&#225; ejercer su derecho de preferencia &#40;incorpor&#225;ndose a 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                    &#41; en un plazo m&#225;ximo de tres &#40;3&#41; d&#237;as h&#225;biles de recibida la comunicaci&#243;n o de iniciadas las labores&#44; seg&#250;n lo determine 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                    &#46; En el caso que no se ejerza su derecho de preferencia&#44; se tendr&#225; por resuelto el contrato&#44; pudiendo 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                        contratar nuevo personal para la cobertura de dichos puestos de trabajo&#46;
                                 </p>
                                 <table class="table">
                                     <colgroup>
@@ -6039,26 +6117,12 @@
                                 </table>
                             </div>
                             <div style="page-break-after: always;">
-                                <p style="font-size:0.625rem">
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        deber&#225; ejercer su derecho de preferencia &#40;incorpor&#225;ndose a 
-                                    <strong>
-                                        MARKETING
-                                    </strong>
-                                    &#41; en un plazo m&#225;ximo de tres &#40;3&#41; d&#237;as h&#225;biles de recibida la comunicaci&#243;n o de iniciadas las labores&#44; seg&#250;n lo determine MARKETING&#46; En el caso que no se ejerza su derecho de preferencia&#44; se tendr&#225; por resuelto el contrato&#44; pudiendo 
-                                    <strong>
-                                        MARKETING
-                                    </strong>
-                                        contratar nuevo personal para la cobertura de dichos puestos de trabajo&#46;
-                                </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         D&#201;CIMA&#46; &#45; DE LAS RECOMENDACIONES EN MATERIA DE SEGURIDAD Y SALUD EN EL TRABAJO
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     En cumplimiento de lo dispuesto por el literal c&#41; del art&#237;culo 35 de la Ley N&#176; 29783&#44; Ley de Seguridad y Salud en el Trabajo&#44; 
                                     <strong>
                                         MARKETING
@@ -6073,12 +6137,12 @@
                                     </strong>
                                         se obliga a respetar&#44; sin perjuicio de lo establecido en el Reglamento Interno de Seguridad y Salud en el Trabajo de la empresa&#44; as&#237; como otras normas internas&#44; lineamientos o directivas sobre la materia&#44; las cuales le ser&#225;n puestas a disposici&#243;n al inicio de sus labores&#44; el cual consta en el ANEXO C&#46;
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         D&#201;CIMO PRIMERA&#46; &#45; CONOCIMIENTO DE LEGISLACI&#211;N Y PROCEDIMIENTO EN MATERIA DE PREVENCI&#211;N DE ACTOS DE HOSTIGAMIENTO SEXUAL
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Mediante la suscripci&#243;n del presente documento&#44; 
                                     <strong>
                                         EL TRABAJADOR
@@ -6093,12 +6157,12 @@
                                     </strong>
                                         se compromete a seguir el procedimiento establecido en la Pol&#237;tica cuando tome conocimiento de cualquier incidente que pueda ser considerado un acto de hostigamiento sexual&#46;
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         D&#201;CIMO SEGUNDA&#46; &#45; DE LA DEVOLUCI&#211;N DE MATERIALES DE TRABAJO&#46;
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Al momento de extinguirse la relaci&#243;n laboral&#44; por cualquier de las causas estipuladas en el presente contrato&#44; 
                                     <strong>
                                         EL TRABAJADOR
@@ -6113,12 +6177,12 @@
                                     </strong>
                                         que&#44; con ocasi&#243;n de la prestaci&#243;n de sus servicios&#44; se encuentren en su poder&#44; tales como equipos&#44; software&#44; bases de datos&#44; &#243;rdenes de venta&#44; hojas membretadas&#44; entre otros&#46; Pues de no cumplir con la devoluci&#243;n correspondiente en el plazo de 24 horas de formalizado el cese&#44; se procede con descuento inmediato por el valor del implemento&#46; 
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         D&#201;CIMO TERCERA&#46; &#45; DATOS PERSONALES Y CORREO ELECTR&#211;NICO CORPORATIVO
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
@@ -6135,7 +6199,7 @@
                                     estime más conveniente sus
                                     sistemas de compensaciones y manejo de planillas o, en general, tomar decisiones vinculadas al puesto de trabajo.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
@@ -6156,7 +6220,7 @@
                                     dicha información para la prestación de sus servicios; y/o, (iii) a sus empresas vinculadas, domiciliadas o no en el Perú, para la consolidación de datos,
                                     preparación de estadí­sticas corporativas , elaboración de polí­ticas, etc.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Con respecto al uso de imagen: 
                                     <strong>
                                         El TRABAJADOR 
@@ -6169,7 +6233,7 @@
                                     de cualquier medio fí­sico, digital o electrónico, incluyendo pero no limitado a redes sociales, plataformas digitales, internet, medios impresos y audiovisuales, a nivel nacional e
                                     internacional, para fines comerciales, publicitarios o promocionales de la empresa o de sus clientes.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Esta autorización se otorga de forma gratuita, sin compensación económica alguna y sin restricción temporal o territorial. Asimismo, 
                                     <strong>
                                         el TRABAJADOR 
@@ -6186,14 +6250,14 @@
                                         MARKETING.
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         EL TRABAJADOR 
                                     </strong>
                                     reconoce y declara expresamente que, de manera previa a la firma del presente contrato, ha sido debida y suficientemente informado
                                     sobre los alcances y efectos de la presente cláusula, según lo establecido en el artí­culo 18° de la Ley de Protección de Datos Personales.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         MARKETING 
                                     </strong>
@@ -6225,6 +6289,22 @@
                                     MARKETING.
                                     </strong>
                                 </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    El trabajador declara y acepta expresamente que será el único responsable de la creación, configuración y uso de su cuenta personal en la plataforma digital ODOO, generando su propio
+                                    usuario y contraseña mediante su correo electrónico y número telefónico personal, sin intervención de terceros ni de la empresa 
+                                    <strong>
+                                        MARKETING ALTERNO PERÚ S.A.C. 
+                                    </strong>
+                                    Asimismo,
+                                    reconoce que toda información ingresada y documentos firmados digitalmente a través de dicha plataforma — incluyendo formularios, declaraciones y contratos — constituyen
+                                    manifestación válida e inequí­voca de su voluntad, con la misma eficacia legal que una firma manuscrita, siendo plenamente vinculantes frente a la empresa y ante cualquier autoridad
+                                    administrativa o judicial.
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    El trabajador se compromete a mantener la confidencialidad de sus credenciales de acceso y a no compartirlas con terceros. En caso de mal uso, suplantación, o negativa injustificada
+                                    de autenticidad respecto a documentos firmados digitalmente en la plataforma, el trabajador asumirá las consecuencias legales y disciplinarias que correspondan, incluyendo medidas
+                                    administrativas, civiles y/o penales según la gravedad del hecho.
+                                </p>
                                 <table class="table">
                                     <colgroup>
                                         <col width="10%"/>
@@ -6270,28 +6350,12 @@
                                 </table>
                             </div>
                             <div style="page-break-after: always;">
-                                <p style="font-size:0.625rem">
-                                    El trabajador declara y acepta expresamente que será el único responsable de la creación, configuración y uso de su cuenta personal en la plataforma digital ODOO, generando su propio
-                                    usuario y contraseña mediante su correo electrónico y número telefónico personal, sin intervención de terceros ni de la empresa 
-                                    <strong>
-                                        MARKETING ALTERNO PERÚ S.A.C. 
-                                    </strong>
-                                    Asimismo,
-                                    reconoce que toda información ingresada y documentos firmados digitalmente a través de dicha plataforma — incluyendo formularios, declaraciones y contratos — constituyen
-                                    manifestación válida e inequí­voca de su voluntad, con la misma eficacia legal que una firma manuscrita, siendo plenamente vinculantes frente a la empresa y ante cualquier autoridad
-                                    administrativa o judicial.
-                                </p>
-                                <p style="font-size:0.625rem">
-                                    El trabajador se compromete a mantener la confidencialidad de sus credenciales de acceso y a no compartirlas con terceros. En caso de mal uso, suplantación, o negativa injustificada
-                                    de autenticidad respecto a documentos firmados digitalmente en la plataforma, el trabajador asumirá las consecuencias legales y disciplinarias que correspondan, incluyendo medidas
-                                    administrativas, civiles y/o penales según la gravedad del hecho.
-                                </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         D&#201;CIMO CUARTA&#46;&#45; SOBORNO Y CORRUPCI&#211;N
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         EL TRABAJADOR
                                     </strong>
@@ -6305,12 +6369,12 @@
                                     </strong>
                                         conoce y acepta que ninguna suma de  dinero o cualquier otro beneficio ser&#225; utilizado&#44; directa o indirectamente&#44; para influenciar&#44; de manera corrupta o ilegal&#44; cualquier decisi&#243;n o juzgamiento de cualquier funcionario o gobierno&#44; o cualquier oficina&#44; agencia o herramienta de este en relaci&#243;n con la empresa&#44; sus actividades&#44; los servicios o en conexi&#243;n con cualquier contrato o acuerdo  con terceros asociados con la empresa&#44; sus  actividades o los servicios&#46;
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         D&#201;CIMO QUINTA&#46;&#45; CL&#193;USULA RESOLUTORIA DEL V&#205;NCULO LABORAL
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Las partes de com&#250;n acuerdo pactan que el v&#237;nculo laboral se disolver&#225; si en caso se resuelva el Contrato Principal con el CLIENTE que 
                                     <strong>
                                         MARKETING
@@ -6321,19 +6385,19 @@
                                     </strong>
                                     &#46;
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     La extinci&#243;n del contrato de trabajo proceder&#225; por alguna de las causas previstas en el Art&#46; 16&#176; del D&#46;S 003&#45;97&#45;TR del D&#46; Legislativo 728&#44; Proceder&#225; de igual manera el despido de 
                                     <strong>
                                         EL TRABAJADOR
                                     </strong>
                                         cuando las conductas esten previstas y tipificadas en los inc&#46; del Art 24&#176;&#44; 25&#176; del D&#46;S 003&#45;97&#45;TR del TUO D&#46;L 728&#46;
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         D&#201;CIMO SEXTA&#46;&#45; CAMBIO DE DOMICILIO Y N&#218;MERO TELEF&#211;NICO
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     A la suscripci&#243;n de este contrato&#44; 
                                     <strong>
                                         EL TRABAJADOR
@@ -6348,18 +6412,18 @@
                                     </strong>
                                         cualquier alteraci&#243;n en su situaci&#243;n familiar&#44; en especial&#44; si ello pudiera dar origen al otorgamiento o supresi&#243;n de beneficios de acuerdo a ley&#46;
                                 </p>
-                                <p>
+                                <p style="font-size:0.905rem;">
                                     <strong>
                                         D&#201;CIMO S&#201;PTIMA&#46;&#45; LEGISLACI&#211;N APLICABLE
                                     </strong>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     <strong>
                                         EL TRABAJADOR
                                     </strong>
                                         estar&#225; sujeto al r&#233;gimen laboral de la actividad privada dentro de los alcances y efectos que determina la LPCL&#46; En consecuencia&#44; en todo aquello no previsto en el presente contrato&#44; ser&#225;n aplicables las disposiciones legales vigentes en materia laboral&#46;
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Firmado el 
                                     <t t-if="contract_document.signed_on">
                                         <span t-esc="'%02d' % contract_document.signed_on.day"/>
@@ -6367,14 +6431,14 @@
                                     <t t-else="">
                                         __
                                     </t>
-                                    &#47;
+                                    de
                                     <t t-if="contract_document.signed_on">
-                                        <span t-esc="'%02d' % contract_document.signed_on.month"/>
+                                        <span t-esc="contract_document.signed_on_month"/>
                                     </t>
                                     <t t-else="">
                                         __
                                     </t>
-                                    &#47;
+                                    del
                                     <t t-if="contract_document.signed_on">
                                         <span t-esc="contract_document.signed_on.year"/>
                                     </t>
@@ -6388,7 +6452,7 @@
                                     <t t-else="">
                                         __
                                     </t>
-                                    del mes de 
+                                    de 
                                     <t t-if="contract_document.date_start">
                                         <span t-esc="contract_document.date_start_month"/>
                                     </t>
@@ -6404,14 +6468,58 @@
                                     </t>
                                         &#46;
                                 </p>
-                                <p>
+                                <table class="table">
+                                    <colgroup>
+                                        <col width="10%"/>
+                                        <col width="30%"/>
+                                        <col width="20%"/>
+                                        <col width="30%"/>
+                                        <col width="10%"/>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature and contract_document.signed_by_employer">
+                                                <img t-att-src="image_data_uri(contract_document.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature">
+                                                <img t-att-src="image_data_uri(contract_document.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                        <tr>
+                                            <th scope="col" style="border: none"></th>
+                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                                EL EMPLEADOR
+                                            </th>
+                                            <th scope="col" style="border: none"></th>
+                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                                EL TRABAJADOR
+                                            </th>
+                                            <th scope="col" style="border: none"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div style="page-break-after: always;"/>
+                                <p style="text-align: center; font-size:0.905rem;">
                                     <u>
                                         <strong>
                                             ACTA DE ENTREGA DE DOCUMENTOS LABORALES Y DE SEGURIDAD Y SALUD EN EL TRABAJO
                                         </strong>
                                     </u>
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Yo&#44; 
                                     <t t-if="contract_document.partner_name">
                                         <span t-esc="contract_document.partner_name"/>
@@ -6443,10 +6551,10 @@
                                     f&#41; Boletín Informativo acerca de las características del sistema privado de pensiones (SPP) y del sistema nacional de pensiones (SNP),
                                     g&#41; Política de Hostigamiento Sexual, h&#41; Política Prevención Y Discriminación, i&#41;  Política Salarial, j&#41; Política de datos personales.
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     Respecto a la entrega de los documentos antes indicados declaro que he sido debidamente instruido por mi empleador en relaci&#243;n al contenido&#44; por lo que me comprometo a cumplir con lo establecido en dichos documentos&#46; 
                                 </p>
-                                <p style="font-size:0.625rem">
+                                <p style="font-size:0.625rem; text-align: justify;">
                                     En se&#241;al de conformidad y aceptaci&#243;n suscribo el presente documento a los 
                                     <t t-if="contract_document.date_start">
                                         <span t-esc="'%02d' % contract_document.date_start.day"/>
@@ -6463,31 +6571,20 @@
                                     </t>
                                     del 
                                     <t t-if="contract_document.date_start">
-                                        <span t-esc="contract_document.date_start.year"/>
+                                        <span t-esc="contract_document.date_start.year"/>.
                                     </t>
                                     <t t-else="">
-                                        __
+                                        __.
                                     </t>
                                 </p>
                                 <table class="table">
                                     <colgroup>
                                         <col width="10%"/>
                                         <col width="30%"/>
-                                        <col width="20%"/>
-                                        <col width="30%"/>
                                         <col width="10%"/>
                                     </colgroup>
                                     <thead>
                                     <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none">
-                                            <t t-if="contract_document.contract_signature and contract_document.signed_by_employer">
-                                                <img t-att-src="image_data_uri(contract_document.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                        </th>
                                         <th scope="col" style="border: none"></th>
                                         <th scope="col" style="border: none">
                                             <t t-if="contract_document.contract_signature">
@@ -6499,29 +6596,25 @@
                                         </th>
                                         <th scope="col" style="border: none"></th>
                                     </tr>
-                                        <tr>
-                                            <th scope="col" style="border: none"></th>
-                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                                EL EMPLEADOR
-                                            </th>
-                                            <th scope="col" style="border: none"></th>
-                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                                EL TRABAJADOR
-                                            </th>
-                                            <th scope="col" style="border: none"></th>
-                                        </tr>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                            EL TRABAJADOR
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
                                     </thead>
                                 </table>
                             </div>
                             <div style="page-break-after: always;">
-                                <p>
+                                <p style="text-align: center; font-size:0.905rem;">
                                     <u>
                                         <strong>
                                             DECLARACI&#211;N DE CONSENTIMIENTO DE TRATAMIENTO DE DATOS PERSONALES TRABAJADORES
                                         </strong>
                                     </u>
                                 </p>
-                                <ol style="font-size:0.625rem">
+                                <ol style="font-size:0.625rem; text-align: justify;">
                                     <li>
                                         A trav&#233;s del presente documento&#44; 
                                         <strong>
@@ -6550,21 +6643,10 @@
                                     <colgroup>
                                         <col width="10%"/>
                                         <col width="30%"/>
-                                        <col width="20%"/>
-                                        <col width="30%"/>
                                         <col width="10%"/>
                                     </colgroup>
                                     <thead>
                                     <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none">
-                                            <t t-if="contract_document.contract_signature and contract_document.signed_by_employer">
-                                                <img t-att-src="image_data_uri(contract_document.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                        </th>
                                         <th scope="col" style="border: none"></th>
                                         <th scope="col" style="border: none">
                                             <t t-if="contract_document.contract_signature">
@@ -6576,17 +6658,13 @@
                                         </th>
                                         <th scope="col" style="border: none"></th>
                                     </tr>
-                                        <tr>
-                                            <th scope="col" style="border: none"></th>
-                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                                EL EMPLEADOR
-                                            </th>
-                                            <th scope="col" style="border: none"></th>
-                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                                EL TRABAJADOR
-                                            </th>
-                                            <th scope="col" style="border: none"></th>
-                                        </tr>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                            EL TRABAJADOR
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
                                     </thead>
                                 </table>
                             </div>
