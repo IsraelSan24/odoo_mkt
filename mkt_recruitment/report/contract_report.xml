@@ -4185,7 +4185,7 @@
                                 &#44; tendr&#225; la siguiente estructura&#58;
                                 <ol  style="list-style-type: lower-alpha; font-size:0.625rem">
                                     <li style="text-align: justify;">
-                                        Una remuneraci&#243;n b&#225;sica fija cuyo monto asciende a S&#47; 
+                                        Una remuneraci&#243;n b&#225;sica fija cuyo monto asciende a S&#47;
                                         <t t-if="o.wage">
                                             <span t-esc="o.wage" t-options='{"widget": "float", "precision": 2, "thousands_sep": ",", "decimal_point": "."}'/>
                                         </t>
@@ -5389,7 +5389,7 @@
                                 &#44; tendr&#225; la siguiente estructura&#58;
                                 <ol  style="list-style-type: lower-alpha; font-size:0.625rem">
                                     <li style="text-align: justify;">
-                                        Una remuneraci&#243;n b&#225;sica fija cuyo monto asciende a S&#47; 
+                                        Una remuneraci&#243;n b&#225;sica fija cuyo monto asciende a S&#47;
                                         <t t-if="o.wage">
                                             <span t-esc="o.wage" t-options='{"widget": "float", "precision": 2, "thousands_sep": ",", "decimal_point": "."}'/>
                                         </t>
