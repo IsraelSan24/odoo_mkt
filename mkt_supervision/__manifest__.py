@@ -10,6 +10,7 @@
         'security/supervision_security.xml',
         'security/ir.model.access.csv',
         'reports/hr_attendance_wizard.xml',
+        'reports/hr_attendance_tracking_wizard.xml',
         'views/stock_request_view.xml',
         'views/stock_request_line_view.xml',
         "views/stock_picking_views.xml",

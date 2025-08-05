@@ -19,3 +19,9 @@ access_stock_request_user,access.stock.request.user,model_stock_request,group_st
 access_stock_request_line_user,access.stock.request.line.user,model_stock_request_line,group_stock_request_user,1,1,1,1
 access_stock_request_warehouse,access.stock.request.warehouse,model_stock_request,group_stock_request_warehouse,1,0,0,0
 access_stock_request_line_warehouse,access.stock.request.line.warehouse,model_stock_request_line,group_stock_request_warehouse,1,0,0,0
+
+access_hr_leave_type_supervision_supervisor,access.hr.leave.type.supervision.supervisor,mkt_supervision.model_hr_leave_type,mkt_supervision.group_supervision_supervisor,1,0,1,0
+access_attendance_tracking_report_supervision_supervisor,access.attendance.tracking.report.supervision.supervisor,mkt_supervision.model_attendance_tracking_report,mkt_supervision.group_supervision_supervisor,1,0,1,0
+
+access_hr_leave_type_supervision_admin,access.hr.leave.type.supervision.admin,mkt_supervision.model_hr_leave_type,mkt_supervision.group_supervision_admin,1,1,1,1
+access_attendance_tracking_report_supervision_admin,access.attendance.tracking.report.supervision.admin,mkt_supervision.model_attendance_tracking_report,mkt_supervision.group_supervision_admin,1,1,1,1
