@@ -13,6 +13,7 @@
         'views/stock_request_view.xml',
         'views/stock_request_line_view.xml',
         "views/stock_picking_views.xml",
+        "views/hr_employee_view.xml",
         'views/menu.xml',
     ],
     'installable': True,
