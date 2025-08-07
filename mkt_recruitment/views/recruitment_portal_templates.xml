@@ -4843,6 +4843,51 @@
 
                                     </ol>
                                 </p>
+                                <table class="table">
+                                    <colgroup>
+                                        <col width="10%"/>
+                                        <col width="30%"/>
+                                        <col width="20%"/>
+                                        <col width="30%"/>
+                                        <col width="10%"/>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature and contract_document.signed_by_employer">
+                                                <img t-att-src="image_data_uri(contract_document.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature">
+                                                <img t-att-src="image_data_uri(contract_document.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                        <tr>
+                                            <th scope="col" style="border: none"></th>
+                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                                EL EMPLEADOR
+                                            </th>
+                                            <th scope="col" style="border: none"></th>
+                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                                EL TRABAJADOR
+                                            </th>
+                                            <th scope="col" style="border: none"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div style="page-break-after: always;">
                                 <p style="font-size:0.910rem;">
                                     <strong>
                                         NOVENA&#46;&#45; DERECHO DE PREFERENCIA
@@ -4891,51 +4936,7 @@
                                     </strong>
                                         contratar nuevo personal para la cobertura de dichos puestos de trabajo&#46;
                                 </p>
-                                <table class="table">
-                                    <colgroup>
-                                        <col width="10%"/>
-                                        <col width="30%"/>
-                                        <col width="20%"/>
-                                        <col width="30%"/>
-                                        <col width="10%"/>
-                                    </colgroup>
-                                    <thead>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none">
-                                            <t t-if="contract_document.contract_signature and contract_document.signed_by_employer">
-                                                <img t-att-src="image_data_uri(contract_document.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none">
-                                            <t t-if="contract_document.contract_signature">
-                                                <img t-att-src="image_data_uri(contract_document.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                    </tr>
-                                        <tr>
-                                            <th scope="col" style="border: none"></th>
-                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                                EL EMPLEADOR
-                                            </th>
-                                            <th scope="col" style="border: none"></th>
-                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                                EL TRABAJADOR
-                                            </th>
-                                            <th scope="col" style="border: none"></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                            <div style="page-break-after: always;">
+                            
                                 <p style="font-size:0.905rem;">
                                     <strong>
                                         D&#201;CIMA&#46; &#45; DE LAS RECOMENDACIONES EN MATERIA DE SEGURIDAD Y SALUD EN EL TRABAJO
@@ -4996,6 +4997,51 @@
                                     </strong>
                                         que&#44; con ocasi&#243;n de la prestaci&#243;n de sus servicios&#44; se encuentren en su poder&#44; tales como equipos&#44; software&#44; bases de datos&#44; &#243;rdenes de venta&#44; hojas membretadas&#44; entre otros&#46; Pues de no cumplir con la devoluci&#243;n correspondiente en el plazo de 24 horas de formalizado el cese&#44; se procede con descuento inmediato por el valor del implemento&#46; 
                                 </p>
+                                <table class="table">
+                                    <colgroup>
+                                        <col width="10%"/>
+                                        <col width="30%"/>
+                                        <col width="20%"/>
+                                        <col width="30%"/>
+                                        <col width="10%"/>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature and contract_document.signed_by_employer">
+                                                <img t-att-src="image_data_uri(contract_document.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature">
+                                                <img t-att-src="image_data_uri(contract_document.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                        <tr>
+                                            <th scope="col" style="border: none"></th>
+                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                                EL EMPLEADOR
+                                            </th>
+                                            <th scope="col" style="border: none"></th>
+                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                                EL TRABAJADOR
+                                            </th>
+                                            <th scope="col" style="border: none"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div style="page-break-after: always;">
                                 <p style="font-size:0.905rem;">
                                     <strong>
                                         D&#201;CIMO TERCERA&#46; &#45; DATOS PERSONALES Y CORREO ELECTR&#211;NICO CORPORATIVO
@@ -5124,6 +5170,25 @@
                                     de autenticidad respecto a documentos firmados digitalmente en la plataforma, el trabajador asumirá las consecuencias legales y disciplinarias que correspondan, incluyendo medidas
                                     administrativas, civiles y/o penales según la gravedad del hecho.
                                 </p>
+                                <p style="font-size:0.905rem;">
+                                    <strong>
+                                        D&#201;CIMO CUARTA&#46;&#45; SOBORNO Y CORRUPCI&#211;N
+                                    </strong>
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        no deber&#225; incurrir en actividades fraudulentas o de corrupci&#243;n ya sea contra terceros o contra 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                    &#46; As&#237;&#44; 
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        conoce y acepta que ninguna suma de  dinero o cualquier otro beneficio ser&#225; utilizado&#44; directa o indirectamente&#44; para influenciar&#44; de manera corrupta o ilegal&#44; cualquier decisi&#243;n o juzgamiento de cualquier funcionario o gobierno&#44; o cualquier oficina&#44; agencia o herramienta de este en relaci&#243;n con la empresa&#44; sus actividades&#44; los servicios o en conexi&#243;n con cualquier contrato o acuerdo  con terceros asociados con la empresa&#44; sus  actividades o los servicios&#46;
+                                </p>
                                 <table class="table">
                                     <colgroup>
                                         <col width="10%"/>
@@ -5169,25 +5234,6 @@
                                 </table>
                             </div>
                             <div style="page-break-after: always;">
-                                <p style="font-size:0.905rem;">
-                                    <strong>
-                                        D&#201;CIMO CUARTA&#46;&#45; SOBORNO Y CORRUPCI&#211;N
-                                    </strong>
-                                </p>
-                                <p style="font-size:0.625rem; text-align: justify;">
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        no deber&#225; incurrir en actividades fraudulentas o de corrupci&#243;n ya sea contra terceros o contra 
-                                    <strong>
-                                        MARKETING
-                                    </strong>
-                                    &#46; As&#237;&#44; 
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        conoce y acepta que ninguna suma de  dinero o cualquier otro beneficio ser&#225; utilizado&#44; directa o indirectamente&#44; para influenciar&#44; de manera corrupta o ilegal&#44; cualquier decisi&#243;n o juzgamiento de cualquier funcionario o gobierno&#44; o cualquier oficina&#44; agencia o herramienta de este en relaci&#243;n con la empresa&#44; sus actividades&#44; los servicios o en conexi&#243;n con cualquier contrato o acuerdo  con terceros asociados con la empresa&#44; sus  actividades o los servicios&#46;
-                                </p>
                                 <p style="font-size:0.905rem;">
                                     <strong>
                                         D&#201;CIMO QUINTA&#46;&#45; CL&#193;USULA RESOLUTORIA DEL V&#205;NCULO LABORAL
@@ -5330,7 +5376,8 @@
                                         </tr>
                                     </thead>
                                 </table>
-                                <div style="page-break-after: always;"/>
+                            </div>
+                            <div style="page-break-after: always;">
                                 <p style="text-align: center; font-size:0.905rem;">
                                     <u>
                                         <strong>
@@ -5398,9 +5445,9 @@
                                 </p>
                                 <table class="table">
                                     <colgroup>
-                                        <col width="10%"/>
+                                        <col width="35%"/>
                                         <col width="30%"/>
-                                        <col width="10%"/>
+                                        <col width="35%"/>
                                     </colgroup>
                                     <thead>
                                     <tr>
@@ -5460,9 +5507,9 @@
                                 </ol>
                                 <table class="table">
                                     <colgroup>
-                                        <col width="10%"/>
+                                        <col width="35%"/>
                                         <col width="30%"/>
-                                        <col width="10%"/>
+                                        <col width="35%"/>
                                     </colgroup>
                                     <thead>
                                     <tr>
@@ -5995,7 +6042,7 @@
                                     &#44; tendr&#225; la siguiente estructura&#58;
                                     <ol  style="list-style-type: lower-alpha; font-size:0.625rem">
                                         <li style="text-align: justify;">
-                                            Una remuneraci&#243;n b&#225;sica fija cuyo monto asciende a S&#47; 
+                                            Una remuneraci&#243;n b&#225;sica fija cuyo monto asciende a S&#47;
                                             <t t-if="contract_document.wage">
                                                 <span t-esc="contract_document.wage" t-options='{"widget": "float", "precision": 2, "thousands_sep": ",", "decimal_point": "."}'/>
                                             </t>
@@ -6024,6 +6071,51 @@
 
                                     </ol>
                                 </p>
+                                <table class="table">
+                                    <colgroup>
+                                        <col width="10%"/>
+                                        <col width="30%"/>
+                                        <col width="20%"/>
+                                        <col width="30%"/>
+                                        <col width="10%"/>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature and contract_document.signed_by_employer">
+                                                <img t-att-src="image_data_uri(contract_document.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature">
+                                                <img t-att-src="image_data_uri(contract_document.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                        <tr>
+                                            <th scope="col" style="border: none"></th>
+                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                                EL EMPLEADOR
+                                            </th>
+                                            <th scope="col" style="border: none"></th>
+                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                                EL TRABAJADOR
+                                            </th>
+                                            <th scope="col" style="border: none"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div style="page-break-after: always;">
                                 <p style="font-size:0.910rem;">
                                     <strong>
                                         NOVENA&#46;&#45; DERECHO DE PREFERENCIA
@@ -6072,51 +6164,7 @@
                                     </strong>
                                         contratar nuevo personal para la cobertura de dichos puestos de trabajo&#46;
                                 </p>
-                                <table class="table">
-                                    <colgroup>
-                                        <col width="10%"/>
-                                        <col width="30%"/>
-                                        <col width="20%"/>
-                                        <col width="30%"/>
-                                        <col width="10%"/>
-                                    </colgroup>
-                                    <thead>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none">
-                                            <t t-if="contract_document.contract_signature and contract_document.signed_by_employer">
-                                                <img t-att-src="image_data_uri(contract_document.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none">
-                                            <t t-if="contract_document.contract_signature">
-                                                <img t-att-src="image_data_uri(contract_document.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                    </tr>
-                                        <tr>
-                                            <th scope="col" style="border: none"></th>
-                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                                EL EMPLEADOR
-                                            </th>
-                                            <th scope="col" style="border: none"></th>
-                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                                EL TRABAJADOR
-                                            </th>
-                                            <th scope="col" style="border: none"></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                            <div style="page-break-after: always;">
+                            
                                 <p style="font-size:0.905rem;">
                                     <strong>
                                         D&#201;CIMA&#46; &#45; DE LAS RECOMENDACIONES EN MATERIA DE SEGURIDAD Y SALUD EN EL TRABAJO
@@ -6177,6 +6225,51 @@
                                     </strong>
                                         que&#44; con ocasi&#243;n de la prestaci&#243;n de sus servicios&#44; se encuentren en su poder&#44; tales como equipos&#44; software&#44; bases de datos&#44; &#243;rdenes de venta&#44; hojas membretadas&#44; entre otros&#46; Pues de no cumplir con la devoluci&#243;n correspondiente en el plazo de 24 horas de formalizado el cese&#44; se procede con descuento inmediato por el valor del implemento&#46; 
                                 </p>
+                                <table class="table">
+                                    <colgroup>
+                                        <col width="10%"/>
+                                        <col width="30%"/>
+                                        <col width="20%"/>
+                                        <col width="30%"/>
+                                        <col width="10%"/>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature and contract_document.signed_by_employer">
+                                                <img t-att-src="image_data_uri(contract_document.employer_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                        <th scope="col" style="border: none">
+                                            <t t-if="contract_document.contract_signature">
+                                                <img t-att-src="image_data_uri(contract_document.contract_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                        </th>
+                                        <th scope="col" style="border: none"></th>
+                                    </tr>
+                                        <tr>
+                                            <th scope="col" style="border: none"></th>
+                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                                EL EMPLEADOR
+                                            </th>
+                                            <th scope="col" style="border: none"></th>
+                                            <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                                EL TRABAJADOR
+                                            </th>
+                                            <th scope="col" style="border: none"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div style="page-break-after: always;">
                                 <p style="font-size:0.905rem;">
                                     <strong>
                                         D&#201;CIMO TERCERA&#46; &#45; DATOS PERSONALES Y CORREO ELECTR&#211;NICO CORPORATIVO
@@ -6305,6 +6398,25 @@
                                     de autenticidad respecto a documentos firmados digitalmente en la plataforma, el trabajador asumirá las consecuencias legales y disciplinarias que correspondan, incluyendo medidas
                                     administrativas, civiles y/o penales según la gravedad del hecho.
                                 </p>
+                                <p style="font-size:0.905rem;">
+                                    <strong>
+                                        D&#201;CIMO CUARTA&#46;&#45; SOBORNO Y CORRUPCI&#211;N
+                                    </strong>
+                                </p>
+                                <p style="font-size:0.625rem; text-align: justify;">
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        no deber&#225; incurrir en actividades fraudulentas o de corrupci&#243;n ya sea contra terceros o contra 
+                                    <strong>
+                                        MARKETING
+                                    </strong>
+                                    &#46; As&#237;&#44; 
+                                    <strong>
+                                        EL TRABAJADOR
+                                    </strong>
+                                        conoce y acepta que ninguna suma de  dinero o cualquier otro beneficio ser&#225; utilizado&#44; directa o indirectamente&#44; para influenciar&#44; de manera corrupta o ilegal&#44; cualquier decisi&#243;n o juzgamiento de cualquier funcionario o gobierno&#44; o cualquier oficina&#44; agencia o herramienta de este en relaci&#243;n con la empresa&#44; sus actividades&#44; los servicios o en conexi&#243;n con cualquier contrato o acuerdo  con terceros asociados con la empresa&#44; sus  actividades o los servicios&#46;
+                                </p>
                                 <table class="table">
                                     <colgroup>
                                         <col width="10%"/>
@@ -6350,25 +6462,6 @@
                                 </table>
                             </div>
                             <div style="page-break-after: always;">
-                                <p style="font-size:0.905rem;">
-                                    <strong>
-                                        D&#201;CIMO CUARTA&#46;&#45; SOBORNO Y CORRUPCI&#211;N
-                                    </strong>
-                                </p>
-                                <p style="font-size:0.625rem; text-align: justify;">
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        no deber&#225; incurrir en actividades fraudulentas o de corrupci&#243;n ya sea contra terceros o contra 
-                                    <strong>
-                                        MARKETING
-                                    </strong>
-                                    &#46; As&#237;&#44; 
-                                    <strong>
-                                        EL TRABAJADOR
-                                    </strong>
-                                        conoce y acepta que ninguna suma de  dinero o cualquier otro beneficio ser&#225; utilizado&#44; directa o indirectamente&#44; para influenciar&#44; de manera corrupta o ilegal&#44; cualquier decisi&#243;n o juzgamiento de cualquier funcionario o gobierno&#44; o cualquier oficina&#44; agencia o herramienta de este en relaci&#243;n con la empresa&#44; sus actividades&#44; los servicios o en conexi&#243;n con cualquier contrato o acuerdo  con terceros asociados con la empresa&#44; sus  actividades o los servicios&#46;
-                                </p>
                                 <p style="font-size:0.905rem;">
                                     <strong>
                                         D&#201;CIMO QUINTA&#46;&#45; CL&#193;USULA RESOLUTORIA DEL V&#205;NCULO LABORAL
@@ -6511,7 +6604,8 @@
                                         </tr>
                                     </thead>
                                 </table>
-                                <div style="page-break-after: always;"/>
+                            </div>
+                            <div style="page-break-after: always;">
                                 <p style="text-align: center; font-size:0.905rem;">
                                     <u>
                                         <strong>
@@ -6579,9 +6673,9 @@
                                 </p>
                                 <table class="table">
                                     <colgroup>
-                                        <col width="10%"/>
+                                        <col width="35%"/>
                                         <col width="30%"/>
-                                        <col width="10%"/>
+                                        <col width="35%"/>
                                     </colgroup>
                                     <thead>
                                     <tr>
@@ -6641,9 +6735,9 @@
                                 </ol>
                                 <table class="table">
                                     <colgroup>
-                                        <col width="10%"/>
+                                        <col width="35%"/>
                                         <col width="30%"/>
-                                        <col width="10%"/>
+                                        <col width="35%"/>
                                     </colgroup>
                                     <thead>
                                     <tr>
