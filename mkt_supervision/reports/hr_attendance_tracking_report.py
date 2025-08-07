@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 from odoo import models, fields, _
 from odoo.tools import date_utils
+from odoo.exceptions import ValidationError
 
 class AttendanceTrackingReport(models.TransientModel):
     _name = 'attendance.tracking.report'
@@ -30,6 +31,19 @@ class AttendanceTrackingReport(models.TransientModel):
         )
         return dic
 
+    def _get_my_subordinates(self):
+        my_employee = self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1)
+        if not my_employee:
+            raise ValidationError("No hay un empleado vinculado al usuario actual.")
+        
+        subordinates = my_employee
+        to_check = my_employee
+        while to_check:
+            children = self.env['hr.employee'].search([('parent_id', 'in', to_check.ids)])
+            to_check = children - subordinates
+            subordinates |= to_check
+
+        return (subordinates - my_employee).ids
 
     def _get_datas_report_xlsx(self, workbook):
         """
@@ -132,16 +146,17 @@ class AttendanceTrackingReport(models.TransientModel):
             ws.write(2, inicio_tot + idx, txt, header_vertical)
 
         # --- Pre-carga de datos desde la BD ---
+        subordinates = self._get_my_subordinates()
         # 1) Empleados activos
-        employees = self._get_query_employees()
+        employees = self._get_query_employees(subordinates)
 
         # 2) Asistencias: agrupados por empleado y fecha
-        attends = self._get_query_attendance(first_day, last_day)
+        attends = self._get_query_attendance(first_day, last_day, subordinates)
         # Convertimos a set de tuplas para búsqueda rápida:
         attend_set = set((r[0], r[1]) for r in attends)
 
         # 3) Ausencias: licencias validadas que cubran cada día
-        leaves_raw = self._get_query_leaves(first_day, last_day)
+        leaves_raw = self._get_query_leaves(first_day, last_day, subordinates)
         # leaves_raw: lista de dict {emp_id, inicio, fin, sigla}
 
         # Construimos un diccionario:
@@ -248,7 +263,8 @@ class AttendanceTrackingReport(models.TransientModel):
 
             row += 1
     
-    def _get_query_employees(self):
+
+    def _get_query_employees(self, subordinates):
         '''
         Empleados: obtenemos los empleados activos con su DNI y nombre.
 
@@ -259,13 +275,13 @@ class AttendanceTrackingReport(models.TransientModel):
             FROM hr_employee he
             JOIN res_users ru ON ru.id = he.user_id
             JOIN res_partner rp ON rp.id = ru.partner_id
-            WHERE he.active = True
+            WHERE he.active = True AND he.id = ANY(%s)
             ORDER BY rp.name
         """
-        self.env.cr.execute(query_emp)
+        self.env.cr.execute(query_emp, (subordinates,))
         return self.env.cr.dictfetchall()
         
-    def _get_query_attendance(self, first_day, last_day):
+    def _get_query_attendance(self, first_day, last_day, subordinates):
         '''
         Asistencia: obtenemos los registros de asistencia
         para el rango de fechas especificado.
@@ -281,15 +297,16 @@ class AttendanceTrackingReport(models.TransientModel):
                 FROM hr_attendance at
                 WHERE (at.check_in AT TIME ZONE 'UTC' AT TIME ZONE 'America/Lima')::date BETWEEN %s AND %s
                   AND at.check_in IS NOT NULL
+                  AND at.employee_id = ANY(%s)
                 GROUP BY at.employee_id, (at.check_in AT TIME ZONE 'UTC' AT TIME ZONE 'America/Lima')::date
             )
             SELECT emp_id, fecha FROM attendance_data
         """
 
-        self.env.cr.execute(query_att, (first_day, last_day))
+        self.env.cr.execute(query_att, (first_day, last_day, subordinates,))
         return self.env.cr.fetchall()
         
-    def _get_query_leaves(self, first_day, last_day):
+    def _get_query_leaves(self, first_day, last_day, subordinates):
         ''' 
         Licencias: obtenemos las licencias validadas
         que cubren el rango de fechas especificado.
@@ -307,7 +324,8 @@ class AttendanceTrackingReport(models.TransientModel):
             WHERE hl.state = 'validate'
               AND (hl.date_from AT TIME ZONE 'UTC' AT TIME ZONE 'America/Lima')::date <= %s
               AND (hl.date_to   AT TIME ZONE 'UTC' AT TIME ZONE 'America/Lima')::date >= %s
+              AND hl.employee_id = ANY(%s)
         """
         # Elegimos de tal forma que si hay un rango que cruce el mes, quede registrado
-        self.env.cr.execute(query_leave, (last_day, first_day))
+        self.env.cr.execute(query_leave, (last_day, first_day, subordinates,))
         return self.env.cr.dictfetchall()
