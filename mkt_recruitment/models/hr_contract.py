@@ -29,13 +29,21 @@ class Contract(models.Model):
 
     name = fields.Char(copy=False, default=lambda self: _('New'), required=True, string="Name")
 
+    state = fields.Selection([
+        ('draft', 'New'),
+        ('signed', 'Signed'),
+        ('open', 'Running'),
+        ('close', 'Expired'),
+        ('cancel', 'Cancelled')
+    ], string='Status', group_expand='_expand_states', copy=False,
+       tracking=True, help='Status of the contract', default='draft')
     contract_signature = fields.Image(copy=False, string='Signature', attachment=True, tracking=True)
     signed_by = fields.Char(string='Signed by', copy=False,tracking=True)
     signed_on = fields.Datetime(string='Signed On', copy=False,tracking=True)
     wage_in_text = fields.Char(compute='_compute_result', string='Wage in text', tracking=True)
     contract_months = fields.Char(string='Duration of the contract', tracking=True)
     residual_contract_days = fields.Char(string='Residual contract days')
-    signature_state = fields.Selection(selection=signature_states, string='Employee signature status', copy=False)
+    signature_state = fields.Selection(selection=signature_states, default='to_sign', string='Signature state', copy=False)
     signature_employer_state = fields.Selection(selection=signature_states, string='Signature employer state', default='to_sign', copy=False)
     is_renovation = fields.Boolean(default=False, string='Renovation', tracking=True)
     signed_by_employer = fields.Boolean(default=False, string='Signed by employer', copy=False, tracking=True)
@@ -139,7 +147,7 @@ class Contract(models.Model):
     def _compute_date_start_month(self):
         for rec in self:
             if rec.date_start:
-                rec.date_start_month = format_date(rec.date_start, format='MMMM', locale='es_PE')
+                rec.date_start_month = format_date(rec.date_start, format='MMMM', locale='es_PE').capitalize()
             else:
                 rec.date_start_month = ''
 
@@ -148,7 +156,7 @@ class Contract(models.Model):
     def _compute_date_end_month(self):
         for rec in self:
             if rec.date_end:
-                rec.date_end_month = format_date(rec.date_end, format='MMMM', locale='es_PE')
+                rec.date_end_month = format_date(rec.date_end, format='MMMM', locale='es_PE').capitalize()
             else:
                 rec.date_end_month = ''
 
@@ -157,7 +165,7 @@ class Contract(models.Model):
     def _compute_signed_on_month(self):
         for rec in self:
             if rec.signed_on:
-                rec.signed_on_month = format_date(rec.signed_on, format='MMMM', locale='es_PE')
+                rec.signed_on_month = format_date(rec.signed_on, format='MMMM', locale='es_PE').capitalize()
             else:
                 rec.signed_on_month = ''
 
@@ -218,7 +226,7 @@ class Contract(models.Model):
     @api.model
     def update_state(self):
         contracts_to_close = self.search([
-            ('state', '=', 'open'),
+            ('state', 'in', ['open', 'signed']),
             '|',
             ('date_end', '<=', fields.Date.to_string(date.today())),
             ('visa_expire', '<=', fields.Date.to_string(date.today())),
@@ -275,13 +283,13 @@ class Contract(models.Model):
                             total_days += days_in_month
                             current_date = end_month + timedelta(days=1)
                 if total_months == 0:
-                    record.contract_months = f'{total_days} días'
+                    record.contract_months = f'{total_days} DÍA(S)'
                 if total_days == 0:
-                    record.contract_months = f'{total_months} meses'
+                    record.contract_months = f'{total_months} MES(ES)'
                 if total_months != 0 and total_days != 0:
-                    record.contract_months = f'{total_months} meses y {total_days} días'
+                    record.contract_months = f'{total_months} MES(ES) y {total_days} DÍA(S)'
             else:
-                record.contract_months = '0 meses y 0 días'
+                record.contract_months = '0 MESES y 0 DÍAS'
 
 
     def _get_report_base_filename(self):
@@ -313,48 +321,36 @@ class Contract(models.Model):
         }
 
     def button_signature_employer_state(self):
+        fecha_referencia = date(2025, 4, 22)
         for rec in self:
-            if rec.state == 'cancel':
-                rec.signature_employer_state = 'cancel'
-                rec.signature_state = 'cancel'
-            else:
-                if rec.contract_signature and isinstance(rec.contract_signature, bytes):
-                    rec.signature_state = 'signed'
-                else:
-                    rec.signature_state = 'to_sign'
-                if rec.employer_signature and isinstance(rec.employer_signature, bytes):
-                    rec.signature_employer_state = 'signed'
-                else:
-                    rec.signature_employer_state = 'to_sign'
-                if rec.state in ['draft', 'open']:
-                    if rec.signature_state == 'signed' and rec.signature_employer_state == 'signed':
-                       rec.state = 'open'
-                    elif rec.signature_employer_state != 'signed':
-                        rec.state = 'draft'
+            if rec.state == 'draft' and isinstance(rec.contract_signature, bytes) and not isinstance(rec.employer_signature, bytes) and rec.date_start < fecha_referencia and rec.date_end > fecha_referencia:
+                rec.state = 'signed'
 
 
     def button_employer_signature(self):
-        self.signature_employer_state = 'signed'
-        if self.state == 'draft':
-            self.state = 'open'
-        self.signed_by_employer = True
-        self.employer_signature = self.employer_signature_id.signature
-        pdf_content = self.env.ref('mkt_recruitment.report_contract_action').sudo()._render_qweb_pdf([self.id])[0]
-        pdf_data = base64.b64encode(pdf_content)
-        self.employer_signed_on = fields.Datetime.now()
-        attach = {
-            'name': self.name,
-            'datas': pdf_data,
-            'store_fname': self.name,
-            'res_model': self._name,
-            'res_id': self.id,
-            'type': 'binary',
-        }
-        self.message_post(
-            body = _('Contract signed'),
-            attachment_ids=[self.env['ir.attachment'].create(attach).id],
-            message_type='comment',
-        )
+        for rec in self:
+            if rec.signature_employer_state == 'to_sign':
+                rec.signature_employer_state = 'signed'
+                if rec.state == 'signed':
+                    rec.state = 'open'
+                rec.signed_by_employer = True
+                rec.employer_signature = rec.employer_signature_id.signature
+                pdf_content = rec.env.ref('mkt_recruitment.report_contract_action').sudo()._render_qweb_pdf([rec.id])[0]
+                pdf_data = base64.b64encode(pdf_content)
+                rec.employer_signed_on = fields.Datetime.now()
+                attach = {
+                    'name': rec.name,
+                    'datas': pdf_data,
+                    'store_fname': rec.name,
+                    'res_model': rec._name,
+                    'res_id': rec.id,
+                    'type': 'binary',
+                }
+                rec.message_post(
+                    body = _('Contract signed'),
+                    attachment_ids=[rec.env['ir.attachment'].create(attach).id],
+                    message_type='comment',
+                )
 
 
     def get_tag_education_level(self):

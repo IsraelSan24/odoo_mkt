@@ -1,6 +1,9 @@
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, Command
+from datetime import timedelta
 from odoo.exceptions import UserError
 from odoo.addons.mkt_recruitment.models.apiperu import apiperu_dni
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class Applicant(models.Model):
@@ -12,6 +15,7 @@ class Applicant(models.Model):
     has_documents = fields.Boolean(default=False, compute='_compute_auto_employee_and_documents', string='Document created from stage', store=True)
     hr_responsible_contract_id = fields.Many2one(comodel_name='res.users', string='Approved by')
     applicant_partner_id = fields.Many2one(comodel_name='applicant.partner', string='Applicant partner')
+    is_reinstatement = fields.Boolean(default=False, string='Is reinstatement', store=True)
 
 
     def write(self, vals):
@@ -68,6 +72,7 @@ class Applicant(models.Model):
         self.create_employee_by_stage()
         self.update_data_partner()
         self.access_portal_partner()
+        self.contact_merge_stage()
 
 
     def update_data_partner(self):
@@ -77,27 +82,69 @@ class Applicant(models.Model):
                 applicant_partner.update_partner()
 
 
+    def contact_merge_stage(self):
+        if self.stage_id.contact_merge:
+            contact = self.env['res.partner'].search([('vat', '=', self.vat)], order='create_date asc')
+            if contact and len(contact) == 2:
+                # Asignar como destino el más reciente
+                partner_ids_sorted = [contact[0].id, contact[1].id]
+                dst_partner = contact[1]  # Más reciente
+
+                context = dict(self.env.context)
+                context.update({
+                    'active_model': 'res.partner',
+                    'active_ids': partner_ids_sorted,
+                })
+
+                contact_merge = self.env['base.partner.merge.automatic.wizard'].with_context(context).create({
+                    'partner_ids': [Command.set(partner_ids_sorted)],
+                    'dst_partner_id': dst_partner.id,
+                    'state': 'selection',
+                })
+                contact_merge.action_merge()
+
+
     def access_portal_partner(self):
         if self.stage_id.access_portal:
             contact = self.env['res.partner'].search([('vat','=',self.vat)], order='create_date desc')
             portal_wizar_vals = {}
             if contact and len(contact) == 1:
                 self.hr_responsible_contract_id = self.env.user.id
-                try:
-                    portal_wizard_user_vals = {
-                        'wizard_id': self.env['portal.wizard'].create(portal_wizar_vals).id,
-                        'partner_id': contact.id,
-                        'email': contact.email,
-                        'user_id': contact.user_id,
-                    }
-                    portal_wizard_user = self.env['portal.wizard.user'].create(portal_wizard_user_vals)
-                    portal_wizard_user.action_grant_access()
-                except:
-                    pass
-            if len(contact) > 1:
+                # try:
+                #     portal_wizard_user_vals = {
+                #         'wizard_id': self.env['portal.wizard'].create(portal_wizar_vals).id,
+                #         'partner_id': contact.id,
+                #         'email': contact.email,
+                #         'user_id': contact.user_id,
+                #     }
+                #     portal_wizard_user = self.env['portal.wizard.user'].create(portal_wizard_user_vals)
+                #     portal_wizard_user.action_grant_access()
+                # except:
+                #     pass
+                portal_wizard_user_vals = {
+                    'wizard_id': self.env['portal.wizard'].create(portal_wizar_vals).id,
+                    'partner_id': contact.id,
+                    'email': contact.email,
+                    'user_id': contact.user_id,
+                }
+                portal_wizard_user = self.env['portal.wizard.user'].create(portal_wizard_user_vals)
+                user = self.env['res.users'].with_context(active_test=False).search([('partner_id', '=', self.partner_id.id)], limit=1)
+                if self.is_reinstatement == False:
+                    if not user:
+                        portal_wizard_user.action_grant_access()
+                    else:
+                        portal_wizard_user.action_invite_again()
+                else:
+                    if user.active == False:
+                        user.toggle_active()
+                    if user:
+                        user.login = self.email_from
+            elif len(contact) > 1:
                 raise UserError(_('More than one contact has been found with the same DNI, please solve the problem to continue with the process.'))
-            if len(contact) < 1:
+            elif len(contact) < 1:
                 raise UserError(_('No contacts were found with the same DNI, please solve the problem to continue with the process.'))
+            else:
+                raise UserError(_('The contact for this application is not found.'))
 
 
     def create_employee_by_stage(self):
@@ -149,4 +196,8 @@ class Applicant(models.Model):
             vals['email_from'] = vals['email_from'].lower()
         if vals.get('vat'):
             vals['vat'] = vals['vat'].strip()
+            time_range = fields.Datetime.today() - timedelta(days=10)
+            reinstatement = self.env['hr.applicant'].search([('vat', '=', vals['vat']),('stage_id.sequence', 'in', [4,5]),('create_date', '<', time_range)], limit=1)
+            if reinstatement:
+                vals['is_reinstatement'] = True
         return super(Applicant, self).create(vals)

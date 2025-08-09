@@ -12,6 +12,7 @@
             </xpath>
             <field name="job_ids" position="after">
                 <field name="employee_stage"/>
+                <field name="contact_merge"/>
             </field>
         </field>
     </record>

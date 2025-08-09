@@ -250,6 +250,8 @@ class DocumentalRequirements(models.Model):
 
     show_payments_tab = fields.Boolean(compute="_compute_show_payments_tab")
 
+    bank_accounting_account = fields.Char(copy=False, string="bank accounting account", store=True)
+
     computed_payment_date = fields.Date(
         string="Fecha de Pago",
         compute="_compute_payment_fields",
@@ -262,17 +264,20 @@ class DocumentalRequirements(models.Model):
     )
 
 
-    @api.constrains('in_bank')
-    def _update_payments_in_bank(self):
+    @api.depends('requirement_payment_ids.in_bank')
+    def _compute_in_bank(self):
+        """Computa el valor de 'in_bank' basado en los pagos relacionados sin generar loops."""
         for record in self:
-            record.requirement_payment_ids.write({'in_bank': record.in_bank})
+            record.in_bank = any(record.requirement_payment_ids.mapped('in_bank'))
 
-
-    @api.constrains('requirement_payment_ids')
-    def _check_payments_in_bank(self):
+    @api.onchange('in_bank')
+    def _onchange_in_bank(self):
+        """Actualiza los payments cuando el estado cambia manualmente en la interfaz."""
         for record in self:
-            if any(record.requirement_payment_ids.mapped('in_bank')):
-                record.write({'in_bank': True})
+            if record.in_bank:
+                record.requirement_payment_ids.write({'in_bank': True})
+            else:
+                record.requirement_payment_ids.write({'in_bank': False})
 
 
     @api.depends('payment_date', 'requirement_payment_ids.payment_date',
@@ -311,6 +316,11 @@ class DocumentalRequirements(models.Model):
         for rec in self:
             # amount_total = rec.amount_soles if rec.amount_soles > 0 else rec.amount_uss
             rec.pending_to_pay = rec.total_vendor - rec.total_paid
+
+
+    def update_all_bank_accounting_accounts(self):
+        records = self.env['requirement.payment'].search([])
+        records.onchange_payment_bank()
 
 
     @api.depends('amount_uss',
@@ -423,7 +433,7 @@ class DocumentalRequirements(models.Model):
     #         self.repeated = False
 
 
-    @api.onchange('paid_to')
+    @api.onchange('paid_to', 'bank', 'dni_or_ruc')
     def onchange_dni(self):
         for rec in self:
             if rec.paid_to:
@@ -465,6 +475,22 @@ class DocumentalRequirements(models.Model):
                             rec.accounting_account = ''
                 else:
                     rec.accounting_account = ''
+
+            if rec.bank and rec.amount_currency_type:
+                bank_name = (rec.bank.name or '').lower()
+                currency = (rec.amount_currency_type or '').lower()
+                if "bcp" in bank_name and currency == 'soles':
+                    rec.bank_accounting_account = '104101'
+                elif "bcp" in bank_name and currency == 'dolares':
+                    rec.bank_accounting_account = '104105'
+                elif "bbva" in bank_name and currency == 'soles':
+                    rec.bank_accounting_account = '104103'
+                elif "bbva" in bank_name and currency == 'dolares':
+                    rec.bank_accounting_account = '104102'
+                else:
+                    rec.bank_accounting_account = ''
+            else:
+                rec.bank_accounting_account = ''
 
 
     @api.onchange('amount_currency_type')
@@ -533,10 +559,8 @@ class DocumentalRequirements(models.Model):
     @api.depends('amount_uss', 'amount_soles', 'total_vendor', 'to_pay_supplier', 'settlement_ids')
     def _compute_balance(self):
         for rec in self:
-            requirement_amount = rec.amount_soles if rec.amount_soles != 0 else rec.amount_uss
-            settlement_amount = sum(rec.settlement_ids.mapped('settle_amount'))
             if rec.unify:
-                rec.balance = round(settlement_amount - requirement_amount, 2)
+                rec.balance = 0
             else:
                 rec.balance = round(rec.total_vendor - rec.to_pay_supplier, 2)
 
@@ -580,7 +604,12 @@ class DocumentalRequirements(models.Model):
         for rec in self:
             requirement_amount = sum(rec.requirement_detail_ids.mapped('required_amount'))
             not_return_lines = rec.settlement_ids.filtered(lambda line: not line.document_type_id.is_return)
-            settlement_amount = round(sum( not_return_lines.mapped('settle_amount') ), 2)
+            settlement_amount = round(
+                sum(
+                    line.alternative_amount if line.differentiated_payment else line.settle_amount_sum
+                    for line in not_return_lines
+                ), 2
+            )
             if rec.amount_currency_type == 'soles':
                 rec.amount_soles = settlement_amount if rec.unify else requirement_amount
                 rec.amount_uss = False
@@ -673,12 +702,14 @@ class DocumentalRequirements(models.Model):
 
 
     def compute_detraction_to_pay(self):
+        self._compute_amount_soles_uss()
         self._compute_detraction_to_pay()
         self._compute_settlement_vendor()
 
 
     def compute_settlement_total_lines(self):
         self._compute_settlement_total_lines()
+        self._onchange_repeated_settlement_document()
 
 
     def download_attach_files(self):
@@ -1014,6 +1045,38 @@ class DocumentalRequirements(models.Model):
                     raise ValidationError(_('''Your requirement exceeds the %s of the budget max amount.\n
                                             - If you need to do this Requirement, please contact the budget responsible.
                                             ''') % ( rec.budget_id.max_amount ))
+                
+
+    def _notify_executive_pending_signature(self):
+        executive_partner = self.budget_id.executive_id.partner_id
+        email = executive_partner.email
+
+        if email:
+            subject = f'Requisito pendiente de firma: {self.name}'
+            base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+            record_url = f"{base_url}/web#id={self.id}&model=documental.requirements&view_type=form"
+
+            body = f'''
+                <p>Estimado/a {executive_partner.name},</p>
+                <p>Se encuentra pendiente de su firma el documento <b>{self.name}</b>.</p>
+                <p>
+                    Puede revisarlo directamente en el sistema desde el siguiente enlace:<br/>
+                    <a href="{record_url}" target="_blank">{self.name}</a>
+                </p>
+            '''
+
+            mail_values = {
+                'subject': subject,
+                'body_html': body,
+                'email_to': email,
+                'email_from': self.env.user.login or 'no-reply@example.com',
+            }
+            self.env['mail.mail'].create(mail_values).send()
+
+            # Log
+            _logger.info(
+                f"[REQUISITO FIRMA] Notificación enviada a {email} para el requisito '{self.name}' (ID: {self.id})"
+            )
 
 
     def button_petitioner_signature(self):
@@ -1048,9 +1111,11 @@ class DocumentalRequirements(models.Model):
             'petitioner_signature': signature_generator(user_name),
             'petitioner_signed_on': fields.Datetime.now(),
             # 'requirement_state': 'external_control' if (self.budget_id.sudo().partner_brand_id.for_province == True) or (self.env.user.sudo().employee_id.sudo().group_ids.sudo()) else 'executive',
-            'requirement_state': 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False)) else 'executive',
+            'requirement_state': 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False)) or (self.employee_id.sudo().group_ids.sudo().employee_supervise_ids.sudo()) else 'executive',
             'is_petitioner_signed': True,
         })
+        if self.requirement_state == 'executive' and self.env.user != self.budget_id.executive_id:
+            self._notify_executive_pending_signature()
         self.blacklist_validation()
         self.create_requirement_detail()
         self._compute_settlement_vendor()
@@ -1063,6 +1128,7 @@ class DocumentalRequirements(models.Model):
 
     def button_requirement_external_control_confirm(self):
         for rec in self.sudo():
+            self._notify_executive_pending_signature()
             rec.write({
                 'requirement_state': 'executive',
             })
@@ -1187,6 +1253,8 @@ class DocumentalRequirements(models.Model):
             'settlement_petitioner_signed_on': fields.Datetime.now(),
             'settlement_state': 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False) or (self.employee_id.sudo().group_ids.sudo().employee_supervise_ids.sudo())) else 'executive'
         })
+        if self.settlement_state == 'executive' and self.env.user != self.budget_id.executive_id:
+            self._notify_executive_pending_signature()
         self.blacklist_validation()
         self.create_settlement_line()
         self._compute_settlement_vendor()
@@ -1197,6 +1265,7 @@ class DocumentalRequirements(models.Model):
 
     def button_settlement_external_control_confirm(self):
         for rec in self.sudo():
+            self._notify_executive_pending_signature()
             if rec.unify:
                 rec.requirement_state = 'executive'
             else:
@@ -1618,11 +1687,13 @@ class DocumentalRequirements(models.Model):
 
     @api.depends("divided_payment")
     def _compute_show_payments_tab(self):
+        user = self.env.user
+        has_access = (
+            user.has_group("mkt_documental_managment.documental_requirement_administration") or
+            user.has_group("mkt_documental_managment.documental_requirement_accounting")
+        )
         for record in self:
-            record.show_payments_tab = (
-                record.divided_payment or 
-                self.env.user.has_group("mkt_documental_managment.documental_requirement_administration")
-            )
+            record.show_payments_tab = record.divided_payment or has_access
 
 
     @api.model
@@ -1655,7 +1726,7 @@ class RequirementDetail(models.Model):
     document = fields.Char(string="Document")
     document_file = fields.Binary(string="File")
     document_filename = fields.Char(string="Filename", compute="compute_filename", store=True)
-    mobility_id = fields.Many2one(comodel_name='documental.mobility.expediture', domain="[('used','=',False)]", string='Mobility')
+    mobility_id = fields.Many2one(comodel_name='documental.mobility.expediture', domain="[('used','=',False), ('state','!=','draft')]", string='Mobility')
     currency_id = fields.Many2one(related='requirement_id.currency_id')
     required_amount = fields.Float(digits=(10,3), string='Required amount')
     required_igv = fields.Float(digits=(10,3), string='Required IGV')
@@ -1674,6 +1745,15 @@ class RequirementDetail(models.Model):
     repeated = fields.Boolean(compute='_compute_repeated', default=False, string='Repeated')
     # Campos invisibles controlados
     is_justification = fields.Boolean(string="Is justification?", compute="compute_hide_fields", store=False)
+
+
+    @api.onchange('mobility_id')
+    def _onchange_mobility_id(self):
+        if self.mobility_id:
+            # Generar el PDF
+            report = self.env.ref('mkt_documental_managment.report_documental_mobility_expediture')
+            pdf_content, _ = report._render_qweb_pdf(self.mobility_id.id)
+            self.document_file = base64.b64encode(pdf_content)
 
 
     @api.onchange('document_type')

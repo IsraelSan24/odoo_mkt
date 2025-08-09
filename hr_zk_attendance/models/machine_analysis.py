@@ -28,6 +28,32 @@ class HrEmployee(models.Model):
 
     device_id = fields.Char(string='Biometric Device ID')
 
+    @api.model
+    def create(self, vals):
+        if not vals.get('device_id') and vals.get('identification_id'):
+            vals['device_id'] = vals['identification_id']
+        return super().create(vals)
+
+    def write(self, vals):
+        if 'device_id' not in vals and 'identification_id' in vals:
+            for rec in self:
+                if not rec.device_id:
+                    vals['device_id'] = vals['identification_id']
+        return super().write(vals)
+    
+    def sync_device_ids(self):
+        for employee in self:
+            # Asignar identification_id al device_id si no está asignado
+            if not employee.device_id and employee.identification_id:
+                employee.device_id = employee.identification_id
+
+            # Actualizar los registros de hr.attendance relacionados
+            attendances = self.env['hr.attendance'].search([('employee_id', '=', employee.id)])
+            for att in attendances:
+                att.device_id = employee.device_id
+
+        return True
+
 
 class ZkMachine(models.Model):
     _name = 'zk.machine.attendance'

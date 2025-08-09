@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_departure_reason_number_tree" model="ir.ui.view">
+        <field name="name">hr.departure.reason.number.tree</field>
+        <field name="model">hr.departure.reason</field>
+        <field name="inherit_id" ref="hr.hr_departure_reason_view_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="motive_number"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

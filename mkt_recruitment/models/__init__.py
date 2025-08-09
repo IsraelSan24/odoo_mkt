@@ -9,11 +9,14 @@ from . import contract_mass
 from . import hr_job
 from . import hr_contract_type
 from . import employer_signature
-from . import applicant_contract
 from . import hr_employee
+from . import applicant_contract
 from . import applicant_partner
 from . import res_country
 from . import recruiter_team
 from . import res_users
 from . import summary_employees
 from . import imports
+from . import massive_contract_end
+from . import hr_departure_reason
+from . import hr_contract_history

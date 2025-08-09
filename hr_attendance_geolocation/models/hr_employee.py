@@ -32,10 +32,3 @@ class HrEmployee(models.Model):
                     }
                 )
         return res
-
-class HrEmployeePublic(models.Model):
-    _inherit = "hr.employee.public"
-
-    is_supervize_province = fields.Boolean(default=False, copy=False, string='Province to supervize')
-    cost_center_id = fields.Many2one(comodel_name='cost.center', string='Cost center')
-    is_back_office = fields.Boolean(default=False, string='Back Office')

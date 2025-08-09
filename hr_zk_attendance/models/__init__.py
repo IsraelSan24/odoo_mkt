@@ -19,7 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###################################################################################
-from . import zk_machine
 from . import machine_analysis
+from . import zk_machine
 from . import zklib
 

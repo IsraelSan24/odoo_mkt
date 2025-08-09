@@ -81,6 +81,7 @@ class ApplicantPartner(models.Model):
     children = fields.Integer(string='Children')
     emergency_contact = fields.Char(string='Emergency contact')
     emergency_phone = fields.Char(string='Emergency phone')
+    emergency_contact_relationship = fields.Selection(selection=relationship)
     age = fields.Integer(string='Age')
     nationality_id = fields.Many2one(comodel_name='res.country', default=get_default_country, string='Nationality')
     demonym = fields.Char(related='nationality_id.demonym', string='Demonym')
@@ -93,11 +94,71 @@ class ApplicantPartner(models.Model):
     street = fields.Char(string='Street')
     reference_location = fields.Char(string='Reference location')
     
+    
     education_level = fields.Selection(selection=education_levels, string='Level')
     education_start_date = fields.Date(string='Start Date')
     education_end_date = fields.Date(string='End Date')
     institution = fields.Char(string='Institution')
     profession = fields.Char(string='Profession')
+
+    # Campos para hijos
+    child_dni1 = fields.Char(string='DNI del hijo 1')
+    child_dni2 = fields.Char(string='DNI del hijo 2')
+    child_dni3 = fields.Char(string='DNI del hijo 3')
+    child_dni4 = fields.Char(string='DNI del hijo 4')
+    child_dni5 = fields.Char(string='DNI del hijo 5')
+    child_dni6 = fields.Char(string='DNI del hijo 6')
+
+    child_full_name1 = fields.Char(string='Nombre completo del hijo 1')
+    child_full_name2 = fields.Char(string='Nombre completo del hijo 2')
+    child_full_name3 = fields.Char(string='Nombre completo del hijo 3')
+    child_full_name4 = fields.Char(string='Nombre completo del hijo 4')
+    child_full_name5 = fields.Char(string='Nombre completo del hijo 5')
+    child_full_name6 = fields.Char(string='Nombre completo del hijo 6')
+
+    child_birthday1 = fields.Date(string='Fecha de nacimiento del hijo 1')
+    child_birthday2 = fields.Date(string='Fecha de nacimiento del hijo 2')
+    child_birthday3 = fields.Date(string='Fecha de nacimiento del hijo 3')
+    child_birthday4 = fields.Date(string='Fecha de nacimiento del hijo 4')
+    child_birthday5 = fields.Date(string='Fecha de nacimiento del hijo 5')
+    child_birthday6 = fields.Date(string='Fecha de nacimiento del hijo 6')
+
+    child_gender1 = fields.Selection(selection=genders, string='Género del hijo 1')
+    child_gender2 = fields.Selection(selection=genders, string='Género del hijo 2')
+    child_gender3 = fields.Selection(selection=genders, string='Género del hijo 3')
+    child_gender4 = fields.Selection(selection=genders, string='Género del hijo 4')
+    child_gender5 = fields.Selection(selection=genders, string='Género del hijo 5')
+    child_gender6 = fields.Selection(selection=genders, string='Género del hijo 6')
+
+    child_relationship1 = fields.Selection(selection=relationship, string='Relación del hijo 1')
+    child_relationship2 = fields.Selection(selection=relationship, string='Relación del hijo 2')
+    child_relationship3 = fields.Selection(selection=relationship, string='Relación del hijo 3')
+    child_relationship4 = fields.Selection(selection=relationship, string='Relación del hijo 4')
+    child_relationship5 = fields.Selection(selection=relationship, string='Relación del hijo 5')
+    child_relationship6 = fields.Selection(selection=relationship, string='Relación del hijo 6')
+
+    child_address1 = fields.Char(string='Dirección del hijo 1')
+    child_address2 = fields.Char(string='Dirección del hijo 2')
+    child_address3 = fields.Char(string='Dirección del hijo 3')
+    child_address4 = fields.Char(string='Dirección del hijo 4')
+    child_address5 = fields.Char(string='Dirección del hijo 5')
+    child_address6 = fields.Char(string='Dirección del hijo 6')
+
+    child_dnifile1 = fields.Binary(string='DNI hijo 1 (Frente)')
+    child_dnifile2 = fields.Binary(string='DNI hijo 2 (Frente)')
+    child_dnifile3 = fields.Binary(string='DNI hijo 3 (Frente)')
+    child_dnifile4 = fields.Binary(string='DNI hijo 4 (Frente)')
+    child_dnifile5 = fields.Binary(string='DNI hijo 5 (Frente)')
+    child_dnifile6 = fields.Binary(string='DNI hijo 6 (Frente)')
+
+    child_dnifile1_back = fields.Binary(string='DNI hijo 1 (Reverso)')
+    child_dnifile2_back = fields.Binary(string='DNI hijo 2 (Reverso)')
+    child_dnifile3_back = fields.Binary(string='DNI hijo 3 (Reverso)')
+    child_dnifile4_back = fields.Binary(string='DNI hijo 4 (Reverso)')
+    child_dnifile5_back = fields.Binary(string='DNI hijo 5 (Reverso)')
+    child_dnifile6_back = fields.Binary(string='DNI hijo 6 (Reverso)')
+
+    #fin de hijos
 
     familiar_dni1 = fields.Char()
     familiar_dni2 = fields.Char()
@@ -107,6 +168,8 @@ class ApplicantPartner(models.Model):
     familiar_dni6 = fields.Char()
     familiar_dni7 = fields.Char()
     familiar_dni8 = fields.Char()
+    familiar_dni9 = fields.Char()
+    familiar_dni10 = fields.Char()
 
     familiar_address1 = fields.Char()
     familiar_address2 = fields.Char()
@@ -116,6 +179,8 @@ class ApplicantPartner(models.Model):
     familiar_address6 = fields.Char()
     familiar_address7 = fields.Char()
     familiar_address8 = fields.Char()
+    familiar_address9 = fields.Char()
+    familiar_address10 = fields.Char()
 
     familiar_birthday1 = fields.Date()
     familiar_birthday2 = fields.Date()
@@ -125,6 +190,8 @@ class ApplicantPartner(models.Model):
     familiar_birthday6 = fields.Date()
     familiar_birthday7 = fields.Date()
     familiar_birthday8 = fields.Date()
+    familiar_birthday9 = fields.Date()
+    familiar_birthday10 = fields.Date()
 
     familiar_full_name1 = fields.Char()
     familiar_full_name2 = fields.Char()
@@ -134,6 +201,8 @@ class ApplicantPartner(models.Model):
     familiar_full_name6 = fields.Char()
     familiar_full_name7 = fields.Char()
     familiar_full_name8 = fields.Char()
+    familiar_full_name9 = fields.Char()
+    familiar_full_name10 = fields.Char()
 
     familiar_gender1 = fields.Selection(selection=genders)
     familiar_gender2 = fields.Selection(selection=genders)
@@ -143,6 +212,8 @@ class ApplicantPartner(models.Model):
     familiar_gender6 = fields.Selection(selection=genders)
     familiar_gender7 = fields.Selection(selection=genders)
     familiar_gender8 = fields.Selection(selection=genders)
+    familiar_gender9 = fields.Selection(selection=genders)
+    familiar_gender10 = fields.Selection(selection=genders)
 
     familiar_relationship1 = fields.Selection(selection=relationship)
     familiar_relationship2 = fields.Selection(selection=relationship)
@@ -152,6 +223,8 @@ class ApplicantPartner(models.Model):
     familiar_relationship6 = fields.Selection(selection=relationship)
     familiar_relationship7 = fields.Selection(selection=relationship)
     familiar_relationship8 = fields.Selection(selection=relationship)
+    familiar_relationship9 = fields.Selection(selection=relationship)
+    familiar_relationship10 = fields.Selection(selection=relationship)
 
     is_beneficiary1 = fields.Boolean(default=True, string='Is Beneficiary?')
     is_beneficiary2 = fields.Boolean(default=True, string='Is Beneficiary?')
@@ -161,10 +234,13 @@ class ApplicantPartner(models.Model):
     is_beneficiary6 = fields.Boolean(default=True, string='Is Beneficiary?')
     is_beneficiary7 = fields.Boolean(default=True, string='Is Beneficiary?')
     is_beneficiary8 = fields.Boolean(default=True, string='Is Beneficiary?')
+    is_beneficiary9 = fields.Boolean(default=True, string='Is Beneficiary?')
+    is_beneficiary10 = fields.Boolean(default=True, string='Is Beneficiary?')
 
     private_pension_system = fields.Boolean(default=False, string='Private pension system')
     afp_first_job = fields.Boolean(default=False, string='(AFP) First job')
     coming_from_onp = fields.Boolean(default=False, string='Coming from ONP')
+    coming_from_afp = fields.Boolean(default=False, string='Coming from AFP')
     national_pension_system = fields.Boolean(default=False, string='National pension system')
 
     state = fields.Selection(selection=states, default='draft', string='State', tracking=True)
@@ -193,6 +269,7 @@ class ApplicantPartner(models.Model):
                         'children': rec.children,
                         'emergency_contact': rec.emergency_contact,
                         'emergency_phone': rec.emergency_phone,
+                        'emergency_contact_relationship': rec.emergency_contact_relationship,
                         'age': rec.age,
                         'country_id': rec.country_id.id,
                         'state_id': rec.state_id.id,
@@ -201,6 +278,42 @@ class ApplicantPartner(models.Model):
                         'zip': rec.zip,
                         'street': rec.street,
                         'reference_location': rec.reference_location,
+                        'child_dni1': rec.child_dni1,
+                        'child_dni2': rec.child_dni2,
+                        'child_dni3': rec.child_dni3,
+                        'child_dni4': rec.child_dni4,
+                        'child_dni5': rec.child_dni5,
+                        'child_dni6': rec.child_dni6,
+                        'child_full_name1': rec.child_full_name1,
+                        'child_full_name2': rec.child_full_name2,
+                        'child_full_name3': rec.child_full_name3,
+                        'child_full_name4': rec.child_full_name4,
+                        'child_full_name5': rec.child_full_name5,
+                        'child_full_name6': rec.child_full_name6,
+                        'child_birthday1': rec.child_birthday1,
+                        'child_birthday2': rec.child_birthday2,
+                        'child_birthday3': rec.child_birthday3,
+                        'child_birthday4': rec.child_birthday4,
+                        'child_birthday5': rec.child_birthday5,
+                        'child_birthday6': rec.child_birthday6,
+                        'child_gender1': rec.child_gender1,
+                        'child_gender2': rec.child_gender2,
+                        'child_gender3': rec.child_gender3,
+                        'child_gender4': rec.child_gender4,
+                        'child_gender5': rec.child_gender5,
+                        'child_gender6': rec.child_gender6,
+                        'child_relationship1': rec.child_relationship1,
+                        'child_relationship2': rec.child_relationship2,
+                        'child_relationship3': rec.child_relationship3,
+                        'child_relationship4': rec.child_relationship4,
+                        'child_relationship5': rec.child_relationship5,
+                        'child_relationship6': rec.child_relationship6,
+                        'child_address1': rec.child_address1,
+                        'child_address2': rec.child_address2,
+                        'child_address3': rec.child_address3,
+                        'child_address4': rec.child_address4,
+                        'child_address5': rec.child_address5,
+                        'child_address6': rec.child_address6,
                         'familiar_dni1': rec.familiar_dni1,
                         'familiar_dni2': rec.familiar_dni2,
                         'familiar_dni3': rec.familiar_dni3,
@@ -209,6 +322,8 @@ class ApplicantPartner(models.Model):
                         'familiar_dni6': rec.familiar_dni6,
                         'familiar_dni7': rec.familiar_dni7,
                         'familiar_dni8': rec.familiar_dni8,
+                        'familiar_dni9': rec.familiar_dni9,
+                        'familiar_dni10': rec.familiar_dni10,
                         'familiar_address1': rec.familiar_address1,
                         'familiar_address2': rec.familiar_address2,
                         'familiar_address3': rec.familiar_address3,
@@ -217,6 +332,8 @@ class ApplicantPartner(models.Model):
                         'familiar_address6': rec.familiar_address6,
                         'familiar_address7': rec.familiar_address7,
                         'familiar_address8': rec.familiar_address8,
+                        'familiar_address9': rec.familiar_address9,
+                        'familiar_address10': rec.familiar_address10,
                         'familiar_birthday1': rec.familiar_birthday1,
                         'familiar_birthday2': rec.familiar_birthday2,
                         'familiar_birthday3': rec.familiar_birthday3,
@@ -225,6 +342,8 @@ class ApplicantPartner(models.Model):
                         'familiar_birthday6': rec.familiar_birthday6,
                         'familiar_birthday7': rec.familiar_birthday7,
                         'familiar_birthday8': rec.familiar_birthday8,
+                        'familiar_birthday9': rec.familiar_birthday9,
+                        'familiar_birthday10': rec.familiar_birthday10,
                         'familiar_full_name1': rec.familiar_full_name1,
                         'familiar_full_name2': rec.familiar_full_name2,
                         'familiar_full_name3': rec.familiar_full_name3,
@@ -233,6 +352,8 @@ class ApplicantPartner(models.Model):
                         'familiar_full_name6': rec.familiar_full_name6,
                         'familiar_full_name7': rec.familiar_full_name7,
                         'familiar_full_name8': rec.familiar_full_name8,
+                        'familiar_full_name9': rec.familiar_full_name9,
+                        'familiar_full_name10': rec.familiar_full_name10,
                         'familiar_gender1': rec.familiar_gender1,
                         'familiar_gender2': rec.familiar_gender2,
                         'familiar_gender3': rec.familiar_gender3,
@@ -241,6 +362,8 @@ class ApplicantPartner(models.Model):
                         'familiar_gender6': rec.familiar_gender6,
                         'familiar_gender7': rec.familiar_gender7,
                         'familiar_gender8': rec.familiar_gender8,
+                        'familiar_gender9': rec.familiar_gender9,
+                        'familiar_gender10': rec.familiar_gender10,
                         'familiar_relationship1': rec.familiar_relationship1,
                         'familiar_relationship2': rec.familiar_relationship2,
                         'familiar_relationship3': rec.familiar_relationship3,
@@ -249,6 +372,8 @@ class ApplicantPartner(models.Model):
                         'familiar_relationship6': rec.familiar_relationship6,
                         'familiar_relationship7': rec.familiar_relationship7,
                         'familiar_relationship8': rec.familiar_relationship8,
+                        'familiar_relationship9': rec.familiar_relationship9,
+                        'familiar_relationship10': rec.familiar_relationship10,
                         'is_beneficiary1': rec.is_beneficiary1,
                         'is_beneficiary2': rec.is_beneficiary2,
                         'is_beneficiary3': rec.is_beneficiary3,
@@ -257,9 +382,12 @@ class ApplicantPartner(models.Model):
                         'is_beneficiary6': rec.is_beneficiary6,
                         'is_beneficiary7': rec.is_beneficiary7,
                         'is_beneficiary8': rec.is_beneficiary8,
+                        'is_beneficiary9': rec.is_beneficiary9,
+                        'is_beneficiary10': rec.is_beneficiary10,
                         'private_pension_system': rec.private_pension_system,
                         'afp_first_job': rec.afp_first_job,
                         'coming_from_onp': rec.coming_from_onp,
+                        'coming_from_afp': rec.coming_from_afp,
                         'national_pension_system': rec.national_pension_system,
                         'education_level': rec.education_level,
                         'education_start_date': rec.education_start_date,

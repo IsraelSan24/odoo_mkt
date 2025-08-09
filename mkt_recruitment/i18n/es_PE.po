@@ -16,6 +16,16 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: mkt_recruitment
+#: code:addons/mkt_recruitment/models/applicant_partner.py:0
+#, python-format
+msgid ""
+" A contact with the same DNI has not been found in the system.\n"
+"Until a match is found, the information cannot be uploaded."
+msgstr ""
+"No se ha encontrado en el sistema un contacto con el mismo DNI.\n"
+"Hasta que no se encuentre una coincidencia, no se podrá cargar la información"
+
+#. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.contract_document_portal_content
 msgid ""
 "\"\n"
@@ -1561,6 +1571,13 @@ msgstr ""
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 msgid ""
+"<i class=\"fa fa-graduation-cap fa-3x mb-2 spin-animation\" role=\"img\" "
+"aria-label=\"Educación\"/>"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+msgid ""
 "<i class=\"fa fa-map-marker fa-3x mb-2 spin-animation\" role=\"img\" aria-"
 "label=\"Ubicación\"/>"
 msgstr ""
@@ -1577,173 +1594,6 @@ msgid ""
 "<i class=\"fa fa-user fa-3x mb-2 spin-animation\" role=\"img\" aria-"
 "label=\"Persona\"/>"
 msgstr ""
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
-msgid "<option value=\"\">City...</option>"
-msgstr ""
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
-#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
-msgid "<option value=\"\">Countries...</option>"
-msgstr "<option value=\"\">Países...</option>"
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
-msgid "<option value=\"\">Country...</option>"
-msgstr ""
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
-#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
-msgid "<option value=\"\">Department...</option>"
-msgstr "<option value=\"\">Departamento...</option>"
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
-#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
-msgid "<option value=\"\">District...</option>"
-msgstr "<option value=\"\">Distrito...</option>"
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
-msgid "<option value=\"\">Gender</option>"
-msgstr ""
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
-#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
-msgid "<option value=\"\">Identification...</option>"
-msgstr "<option value=\"\">Identificación...</option>"
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
-msgid "<option value=\"\">Marital status...</option>"
-msgstr ""
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
-#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
-msgid "<option value=\"\">Nationality...</option>"
-msgstr "<option value=\"\">Nacionalidad...</option>"
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
-#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
-msgid "<option value=\"\">Province...</option>"
-msgstr "<option value=\"\">Provincia...</option>"
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
-msgid "<option value=\"\">Relationship</option>"
-msgstr ""
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
-msgid "<option value=\"\">Select Gender</option>"
-msgstr ""
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
-msgid "<option value=\"\">select...</option>"
-msgstr ""
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
-#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
-msgid ""
-"<select class=\"form-control\" name=\"gender\" id=\"gender\" required=\"True\">\n"
-"                                                                    <option value=\"\">Select an option</option>\n"
-"                                                                    <option value=\"male\">Male</option>\n"
-"                                                                    <option value=\"female\">Female</option>\n"
-"                                                                </select>"
-msgstr ""
-"<select class=\"form-control\" name=\"gender\" id=\"gender\" required=\"True\">\n"
-"                                                                    <option value=\"\">Seleccione una opción</option>\n"
-"                                                                    <option value=\"male\">Masculino</option>\n"
-"                                                                    <option value=\"female\">Femenino</option>\n"
-"                                                                </select>"
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
-#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
-msgid ""
-"<select id=\"education_level\" name=\"education_level\" class=\"form-control\" required=\"True\">\n"
-"                                                                    <option value=\"\">Select...</option>\n"
-"                                                                    <option value=\"wo_formal_education\">WITHOUT FORMAL EDUCATION</option>\n"
-"                                                                    <option value=\"incomplete_special_education\">INCOMPLETE SPECIAL EDUCATION</option>\n"
-"                                                                    <option value=\"complete_special_education\">COMPLETE SPECIAL EDUCATION</option>\n"
-"                                                                    <option value=\"incomplete_primary_education\">INCOMPLETE PRIMARY EDUCATION</option>\n"
-"                                                                    <option value=\"complete_primary_education\">COMPLETE PRIMARY EDUCATION</option>\n"
-"                                                                    <option value=\"incomplete_seconday_education\">INCOMPLETE SECONDARY EDUCATION</option>\n"
-"                                                                    <option value=\"complete_secondary_education\">COMPLETE SECONDARY EDUCATION</option>\n"
-"                                                                    <option value=\"incomplete_technical_education\">INCOMPLETE TECHNICAL EDUCATION</option>\n"
-"                                                                    <option value=\"complete_technical_education\">COMPLETE TECHNICAL EDUCATION</option>\n"
-"                                                                    <option value=\"incomplete_higher_education\">INCOMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>\n"
-"                                                                    <option value=\"complete_higher_education\">COMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>\n"
-"                                                                    <option value=\"incomplete_universitary_education\">INCOMPLETE UNIVERSITARY EDUCATION</option>\n"
-"                                                                    <option value=\"complete_universitary_education\">COMPLETE UNIVERSITARY EDUCATION</option>\n"
-"                                                                    <option value=\"bachelor_degree\">BACHELOR DEGREE</option>\n"
-"                                                                    <option value=\"titled\">TITLED</option>\n"
-"                                                                    <option value=\"incomplete_masters_studies\">INCOMPLETE STUDIES OF MASTER</option>\n"
-"                                                                    <option value=\"complete_masters_studies\">COMPLETE STUDIES OF MASTER</option>\n"
-"                                                                    <option value=\"master_degree\">MASTER DEGREE</option>\n"
-"                                                                    <option value=\"complete_doctoral_studies\">COMPLETE DOCTORAL STUDIES</option>\n"
-"                                                                    <option value=\"incomplete_doctoral_studies\">INCOMPLETE DOCTORAL STUDIES</option>\n"
-"                                                                    <option value=\"doctoral_degree\">DOCTORAL DEGREE</option>\n"
-"                                                                </select>"
-msgstr ""
-"<select name=\"education_level\" class=\"form-control\" required=\"True\">\n"
-"                                                                    <option value=\"\">Select...</option>\n"
-"                                                                    <option value=\"wo_formal_education\">SIN EDUCACIÓN FORMAL</option>\n"
-"                                                                    <option value=\"incomplete_special_education\">EDUCACIÓN ESPECIAL INCOMPLETA</option>\n"
-"                                                                    <option value=\"complete_special_education\">EDUCACIÓN ESPECIAL COMPLETA</option>\n"
-"                                                                    <option value=\"incomplete_primary_education\">EDUCACIÓN PRIMARIA INCOMPLETA</option>\n"
-"                                                                    <option value=\"complete_primary_education\">EDUCACIÓN PRIMARIA COMPLETA</option>\n"
-"\n"
-"                                                                    <option value=\"incomplete_seconday_education\">EDUCACIÓN SECUNDARIA INCOMPLETA</option>\n"
-"                                                                    <option value=\"complete_secondary_education\">EDUCACIÓN SECUNDARIA COMPLETA</option>\n"
-"                                                                    <option value=\"incomplete_technical_education\">EDUCACIÓN TÉCNICA INCOMPLETA</option>\n"
-"                                                                    <option value=\"complete_technical_education\">EDUCACIÓN TÉCNICA COMPLETA</option>\n"
-"\n"
-"                                                                    <option value=\"incomplete_higher_education\">EDUCACIÓN SUPERIOR (INSTITUTO SUPERIOR, ETC) INCOMPLETA</option>\n"
-"                                                                    <option value=\"complete_higher_education\">EDUCACIÓN SUPERIOR (INSTITUTO SUPERIOR, ETC) COMPLETA</option>\n"
-"                                                                    <option value=\"incomplete_universitary_education\">EDUCACIÓN UNIVERSITARIA INCOMPLETA</option>\n"
-"                                                                    <option value=\"complete_universitary_education\">EDUCACIÓN UNIVERSITARIA COMPLETA</option>\n"
-"                                                                    <option value=\"bachelor_degree\">GRADO DE BACHILLER</option>\n"
-"\n"
-"                                                                    <option value=\"titled\">TITULADO</option>\n"
-"                                                                    <option value=\"incomplete_masters_studies\">ESTUDIOS DE MAESTRIA INCOMPLETA</option>\n"
-"                                                                    <option value=\"complete_masters_studies\">ESTUDIOS DE MAESTRÍA COMPLETA</option>\n"
-"                                                                    <option value=\"master_degree\">GRADO DE MAESTRÍA</option>\n"
-"                                                                    <option value=\"complete_doctoral_studies\">ESTUDIOS DE DOCTORADO COMPLETO</option>\n"
-"                                                                    <option value=\"incomplete_doctoral_studies\">ESTUDIOS DE DOCTORADO INCOMPLETO</option>\n"
-"                                                                    <option value=\"doctoral_degree\">GRADO DE DOCTOR</option>\n"
-"                                                                </select>"
-
-#. module: mkt_recruitment
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
-#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
-msgid ""
-"<select name=\"marital\" class=\"form-control\" id=\"marital\" required=\"True\">\n"
-"                                                                    <option value=\"\">Select an option</option>\n"
-"                                                                    <option value=\"Soltero/a\">Single</option>\n"
-"                                                                    <option value=\"Casado/a\">Married</option>\n"
-"                                                                    <option value=\"Conviviente\">Cohabitant</option>\n"
-"                                                                    <option value=\"Viudo/a\">Widowed</option>\n"
-"                                                                    <option value=\"Divorciado/a\">Divorced</option>\n"
-"                                                                </select>"
-msgstr ""
-"<select name=\"marital\" class=\"form-control\" id=\"marital\" required=\"True\">\n"
-"                                                                    <option value=\"\">Seleccione una opción</option>\n"
-"                                                                    <option value=\"Soltero/a\">Soltero(a)</option>\n"
-"                                                                    <option value=\"Casado/a\">Casado(a)</option>\n"
-"                                                                    <option value=\"Conviviente\">Conviviente</option>\n"
-"                                                                    <option value=\"Viudo/a\">Viudo(a)</option>\n"
-"                                                                    <option value=\"Divorciado/a\">Divorciado(a)</option>\n"
-"                                                                </select>"
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
@@ -1785,6 +1635,11 @@ msgstr ""
 "                                    </small>"
 
 #. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.hr_kanban_name_view_applicant
+msgid "<span class=\"bg-warning\">Reingreso</span>"
+msgstr ""
+
+#. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_layout_tooltip
 msgid ""
 "<span class=\"close-icon\">×</span>\n"
@@ -1806,8 +1661,6 @@ msgid ""
 "<span class=\"d-none d-md-inline\">Recruitment Document #</span>\n"
 "                            <span class=\"d-block d-md-none\">Ref.</span>"
 msgstr ""
-"<span class=\"d-none d-md-inline\">Documento de Reclutamiento #</span>\n"
-"                            <span class=\"d-block d-md-none\">Ref.</span>"
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_recruitment_document_form
@@ -7443,81 +7296,6 @@ msgid ""
 "                </table>\n"
 "            "
 msgstr ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\"center\">\n"
-"                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: white; color: #454748; border-collapse:separate;\">\n"
-"                <tbody>\n"
-"                    <!-- HEADER -->\n"
-"                    <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                                <tr><td valign=\"middle\">\n"
-"                                    <span style=\"font-size: 20px; font-weight: bold;\">\n"
-"                                        <t t-out=\"object.employee_id.name or ''\">Marc Demo</t>\n"
-"                                    </span>\n"
-"                                </td><td valign=\"middle\" align=\"right\">\n"
-"                                    <img t-attf-src=\"/logo.png?company={{ user.company_id.id }}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt=\"user.company_id.name\"/>\n"
-"                                </td></tr>\n"
-"                                <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
-"                                <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
-"                                </td></tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                    <!-- CONTENT -->\n"
-"                    <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                                <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
-"                                    <div>\n"
-"                                        Estimado/a <t t-out=\"object.employee_id.name or ''\">Marc Demo</t>,<br/><br/>\n"
-"                                        \n"
-"                                        Si este correo llegó a tu bandeja es porque tu contrato de Marketing Alterno fue cancelado!<br/><br/>\n"
-"                                        Gracias,\n"
-"                                        <t t-if=\"user.signature\">\n"
-"                                            <br/>\n"
-"                                            <t t-out=\"user.signature or ''\">--<br/>Mitchell Admin</t>\n"
-"                                        </t>\n"
-"                                    </div>\n"
-"                                </td></tr>\n"
-"                                <tr><td style=\"text-align:center;\">\n"
-"                                <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
-"                                </td></tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                    <!-- FOOTER -->\n"
-"                    <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                                <tr><td valign=\"middle\" align=\"left\">\n"
-"                                    <t t-out=\"user.company_id.name or ''\">YourCompany</t>\n"
-"                                </td></tr>\n"
-"                                <tr><td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
-"                                    <t t-out=\"user.company_id.phone or ''\">+1 650-123-4567</t>\n"
-"\n"
-"                                    <t t-if=\"user.company_id.email\">\n"
-"                                        | <a t-att-href=\"'mailto:%s' % user.company_id.email\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.email or ''\">info@yourcompany.com</a>\n"
-"                                    </t>\n"
-"                                    <t t-if=\"user.company_id.website\">\n"
-"                                        | <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.website or ''\">http://www.example.com</a>\n"
-"                                    </t>\n"
-"                                </td></tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                </tbody>\n"
-"                </table>\n"
-"                </td></tr>\n"
-"                <!-- POWERED BY -->\n"
-"                <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
-"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
-"                    <tr><td style=\"text-align: center; font-size: 13px;\">\n"
-"                        Tecnología de <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none;color: #875A7B;\" target=\"_blank\">Marketing Alterno</a>\n"
-"                    </td></tr>\n"
-"                    </table>\n"
-"                </td></tr>\n"
-"                </table>\n"
-"            "
 
 #. module: mkt_recruitment
 #: model:mail.template,body_html:mkt_recruitment.mail_contract_signed
@@ -7598,81 +7376,6 @@ msgid ""
 "                </table>\n"
 "            "
 msgstr ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\"center\">\n"
-"                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: white; color: #454748; border-collapse:separate;\">\n"
-"                <tbody>\n"
-"                    <!-- HEADER -->\n"
-"                    <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                                <tr><td valign=\"middle\">\n"
-"                                    <span style=\"font-size: 20px; font-weight: bold;\">\n"
-"                                        <t t-out=\"object.employee_id.name or ''\">Marc Demo</t>\n"
-"                                    </span>\n"
-"                                </td><td valign=\"middle\" align=\"right\">\n"
-"                                    <img t-attf-src=\"/logo.png?company={{ user.company_id.id }}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt=\"user.company_id.name\"/>\n"
-"                                </td></tr>\n"
-"                                <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
-"                                <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
-"                                </td></tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                    <!-- CONTENT -->\n"
-"                    <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                                <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
-"                                    <div>\n"
-"                                        Estimado/a <t t-out=\"object.employee_id.name or ''\">Marc Demo</t>,<br/><br/>\n"
-"                                        Si este correo llegó a tu bandeja es porque acabas de firmar tu contracto con Marketing Alterno!<br/>\n"
-"                                        Si no lo esperabas, puedes ignorar este correo.<br/><br/>\n"
-"                                        Gracias,\n"
-"                                        <t t-if=\"user.signature\">\n"
-"                                            <br/>\n"
-"                                            <t t-out=\"user.signature or ''\">--<br/>Mitchell Admin</t>\n"
-"                                        </t>\n"
-"                                    </div>\n"
-"                                </td></tr>\n"
-"                                <tr><td style=\"text-align:center;\">\n"
-"                                <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
-"                                </td></tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                    <!-- FOOTER -->\n"
-"                    <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                                <tr><td valign=\"middle\" align=\"left\">\n"
-"                                    <t t-out=\"user.company_id.name or ''\">YourCompany</t>\n"
-"                                </td></tr>\n"
-"                                <tr><td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
-"                                    <t t-out=\"user.company_id.phone or ''\">+1 650-123-4567</t>\n"
-"\n"
-"                                    <t t-if=\"user.company_id.email\">\n"
-"                                        | <a t-att-href=\"'mailto:%s' % user.company_id.email\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.email or ''\">info@yourcompany.com</a>\n"
-"                                    </t>\n"
-"                                    <t t-if=\"user.company_id.website\">\n"
-"                                        | <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.website or ''\">http://www.example.com</a>\n"
-"                                    </t>\n"
-"                                </td></tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                </tbody>\n"
-"                </table>\n"
-"                </td></tr>\n"
-"                <!-- POWERED BY -->\n"
-"                <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
-"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
-"                    <tr><td style=\"text-align: center; font-size: 13px;\">\n"
-"                        Tecnología de <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none;color: #875A7B;\" target=\"_blank\">Marketing Alterno</a>\n"
-"                    </td></tr>\n"
-"                    </table>\n"
-"                </td></tr>\n"
-"                </table>\n"
-"            "
 
 #. module: mkt_recruitment
 #: model:mail.template,body_html:mkt_recruitment.mail_applicant_partner_filled
@@ -7754,82 +7457,6 @@ msgid ""
 "                </table>\n"
 "            "
 msgstr ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\"center\">\n"
-"                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: white; color: #454748; border-collapse:separate;\">\n"
-"                <tbody>\n"
-"                    <!-- HEADER -->\n"
-"                    <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                                <tr><td valign=\"middle\">\n"
-"                                    <span style=\"font-size: 20px; font-weight: bold;\">\n"
-"                                        <t t-out=\"object.name or ''\">Marc Demo</t>\n"
-"                                    </span>\n"
-"                                </td><td valign=\"middle\" align=\"right\">\n"
-"                                    <img t-attf-src=\"/logo.png?company={{ user.company_id.id }}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt=\"user.company_id.name\"/>\n"
-"                                </td></tr>\n"
-"                                <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
-"                                <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
-"                                </td></tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                    <!-- CONTENT -->\n"
-"                    <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                                <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
-"                                    <div>\n"
-"                                        Estimado/a <t t-out=\"object.name or ''\">Marc Demo</t>,<br/><br/>\n"
-"                                        \n"
-"                                        Si este correo llegó a tu bandeja es porque completaste muy bien el formulario de informacón personal para Marketing Alterno!<br/>\n"
-"                                        Si no lo esperabas, puedes ignorar este correo.<br/><br/>\n"
-"                                        Gracias,\n"
-"                                        <t t-if=\"user.signature\">\n"
-"                                            <br/>\n"
-"                                            <t t-out=\"user.signature or ''\">--<br/>Mitchell Admin</t>\n"
-"                                        </t>\n"
-"                                    </div>\n"
-"                                </td></tr>\n"
-"                                <tr><td style=\"text-align:center;\">\n"
-"                                <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
-"                                </td></tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                    <!-- FOOTER -->\n"
-"                    <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                                <tr><td valign=\"middle\" align=\"left\">\n"
-"                                    <t t-out=\"user.company_id.name or ''\">YourCompany</t>\n"
-"                                </td></tr>\n"
-"                                <tr><td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
-"                                    <t t-out=\"user.company_id.phone or ''\">+1 650-123-4567</t>\n"
-"\n"
-"                                    <t t-if=\"user.company_id.email\">\n"
-"                                        | <a t-att-href=\"'mailto:%s' % user.company_id.email\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.email or ''\">info@yourcompany.com</a>\n"
-"                                    </t>\n"
-"                                    <t t-if=\"user.company_id.website\">\n"
-"                                        | <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.website or ''\">http://www.example.com</a>\n"
-"                                    </t>\n"
-"                                </td></tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                </tbody>\n"
-"                </table>\n"
-"                </td></tr>\n"
-"                <!-- POWERED BY -->\n"
-"                <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
-"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
-"                    <tr><td style=\"text-align: center; font-size: 13px;\">\n"
-"                        Tecnología de <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none;color: #875A7B;\" target=\"_blank\">Marketing Alterno</a>\n"
-"                    </td></tr>\n"
-"                    </table>\n"
-"                </td></tr>\n"
-"                </table>\n"
-"            "
 
 #. module: mkt_recruitment
 #: model:mail.template,body_html:mkt_recruitment.mail_recruitment_document_signed
@@ -7910,81 +7537,6 @@ msgid ""
 "                </table>\n"
 "            "
 msgstr ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\"center\">\n"
-"                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: white; color: #454748; border-collapse:separate;\">\n"
-"                <tbody>\n"
-"                    <!-- HEADER -->\n"
-"                    <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                                <tr><td valign=\"middle\">\n"
-"                                    <span style=\"font-size: 20px; font-weight: bold;\">\n"
-"                                        <t t-out=\"object.partner_id.name or ''\">Marc Demo</t>\n"
-"                                    </span>\n"
-"                                </td><td valign=\"middle\" align=\"right\">\n"
-"                                    <img t-attf-src=\"/logo.png?company={{ user.company_id.id }}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt=\"user.company_id.name\"/>\n"
-"                                </td></tr>\n"
-"                                <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
-"                                <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
-"                                </td></tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                    <!-- CONTENT -->\n"
-"                    <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                                <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
-"                                    <div>\n"
-"                                        Estimado/a <t t-out=\"object.partner_id.name or ''\">Marc Demo</t>,<br/><br/>\n"
-"                                        Considera este correo como una prueba de haber firmado satisfactoriamente tus fichas de Marketing Alterno.<br/>\n"
-"                                        Si no lo esperabas, puedes ignorar este correo.<br/><br/>\n"
-"                                        Gracias,\n"
-"                                        <t t-if=\"user.signature\">\n"
-"                                            <br/>\n"
-"                                            <t t-out=\"user.signature or ''\">--<br/>Mitchell Admin</t>\n"
-"                                        </t>\n"
-"                                    </div>\n"
-"                                </td></tr>\n"
-"                                <tr><td style=\"text-align:center;\">\n"
-"                                <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
-"                                </td></tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                    <!-- FOOTER -->\n"
-"                    <tr>\n"
-"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
-"                            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                                <tr><td valign=\"middle\" align=\"left\">\n"
-"                                    <t t-out=\"user.company_id.name or ''\">YourCompany</t>\n"
-"                                </td></tr>\n"
-"                                <tr><td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
-"                                    <t t-out=\"user.company_id.phone or ''\">+1 650-123-4567</t>\n"
-"\n"
-"                                    <t t-if=\"user.company_id.email\">\n"
-"                                        | <a t-att-href=\"'mailto:%s' % user.company_id.email\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.email or ''\">info@yourcompany.com</a>\n"
-"                                    </t>\n"
-"                                    <t t-if=\"user.company_id.website\">\n"
-"                                        | <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none; color: #454748;\" t-out=\"user.company_id.website or ''\">http://www.example.com</a>\n"
-"                                    </t>\n"
-"                                </td></tr>\n"
-"                            </table>\n"
-"                        </td>\n"
-"                    </tr>\n"
-"                </tbody>\n"
-"                </table>\n"
-"                </td></tr>\n"
-"                <!-- POWERED BY -->\n"
-"                <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
-"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
-"                    <tr><td style=\"text-align: center; font-size: 13px;\">\n"
-"                        Tecnología de <a t-att-href=\"'%s' % user.company_id.website\" style=\"text-decoration:none;color: #875A7B;\" target=\"_blank\">Marketing Alterno</a>\n"
-"                    </td></tr>\n"
-"                    </table>\n"
-"                </td></tr>\n"
-"                </table>\n"
-"            "
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.contract_document_portal_content
@@ -8181,16 +7733,6 @@ msgid ""
 "CON SOMETER DICHA PRÓRROGA A LA APROBACIÓN DE LA AUTORIDAD ADMINISTRATIVA DE"
 " TRABAJO."
 msgstr ""
-
-#. module: mkt_recruitment
-#: code:addons/mkt_recruitment/models/applicant_partner.py:0
-#, python-format
-msgid ""
-"A contact was not found in the system with the same ID and the same email address.\n"
-"Until a match is found, the information cannot be uploaded."
-msgstr ""
-"No se encontró un contacto en el sistema con el mismo DNI y el mismo correo.\n"
-"Mientras que no se encuentre una coincidencia no se podrá subir la información."
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.contract_document_portal_content
@@ -8449,6 +7991,11 @@ msgid "AUTORIZACION NOTIFICACION POR MEDIOS ELECTRONICOS Y/O DIGITALES"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_hr_recruitment_stage__access_portal
+msgid "Access Portal"
+msgstr "Acceso Portal"
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_contract__access_warning
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__access_warning
 msgid "Access warning"
@@ -8513,6 +8060,11 @@ msgstr "Estado de la actividad"
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__activity_type_icon
 msgid "Activity Type Icon"
 msgstr "Ícono de tipo de actvidad"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_res_partner_reference_location_form
+msgid "Actualizar informacion"
+msgstr ""
 
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner_family__address
@@ -8748,7 +8300,12 @@ msgstr "Datos de aplicante"
 #. module: mkt_recruitment
 #: model:ir.model,name:mkt_recruitment.model_applicant_partner
 msgid "Application partner"
-msgstr "Datos de aplicante"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_new_hr_departure_wizard_form
+msgid "Apply"
+msgstr "Cesar"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_contract__hr_responsible_contract_id
@@ -8899,6 +8456,9 @@ msgstr ""
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__bachelor_degree
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "BACHELOR DEGREE"
 msgstr "GRADO DE BACHILLER"
 
@@ -8909,6 +8469,7 @@ msgstr ""
 
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_employee__is_back_office
+#: model:ir.model.fields,field_description:mkt_recruitment.field_hr_employee_public__is_back_office
 msgid "Back Office"
 msgstr ""
 
@@ -8933,6 +8494,11 @@ msgstr "Proviene de postulación"
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.default_website_descriptions
 msgid "Beneficios"
 msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_hr_employee_public__device_id
+msgid "Biometric Device ID"
+msgstr "Dispositivo Biométrico"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__birthday
@@ -8968,6 +8534,7 @@ msgid "Brand Groups"
 msgstr "Departamentos/Marcas"
 
 #. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship10__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship1__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship2__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship3__hermano
@@ -8976,6 +8543,8 @@ msgstr "Departamentos/Marcas"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship6__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship7__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship8__hermano
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship9__hermano
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship10__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship1__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship2__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship3__hermano
@@ -8984,6 +8553,8 @@ msgstr "Departamentos/Marcas"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship6__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship7__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship8__hermano
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship9__hermano
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship10__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship1__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship2__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship3__hermano
@@ -8992,6 +8563,7 @@ msgstr "Departamentos/Marcas"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship6__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship7__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship8__hermano
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship9__hermano
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner_family__relationship__hermano
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 msgid "Brother"
@@ -9063,41 +8635,65 @@ msgstr ""
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__complete_doctoral_studies
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "COMPLETE DOCTORAL STUDIES"
 msgstr "ESTUDIOS DE DOCTORADO COMPLETO"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__complete_higher_education
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "COMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)"
 msgstr "EDUCACIÓN SUPERIOR (INSTITUTO SUPERIOR, ETC) COMPLETA"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__complete_primary_education
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "COMPLETE PRIMARY EDUCATION"
 msgstr "EDUCACIÓN PRIMARIA COMPLETA"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__complete_secondary_education
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "COMPLETE SECONDARY EDUCATION"
 msgstr "EDUCACIÓN SECUNDARIA COMPLETA"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__complete_special_education
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "COMPLETE SPECIAL EDUCATION"
 msgstr "EDUCACIÓN ESPECIAL COMPLETA"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__complete_masters_studies
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "COMPLETE STUDIES OF MASTER"
 msgstr "ESTUDIOS DE MAESTRÍA COMPLETA"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__complete_technical_education
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "COMPLETE TECHNICAL EDUCATION"
 msgstr "EDUCACIÓN TÉCNICA COMPLETA"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__complete_universitary_education
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "COMPLETE UNIVERSITARY EDUCATION"
 msgstr "EDUCACIÓN UNIVERSITARIA COMPLETA"
 
@@ -9273,8 +8869,11 @@ msgid "Campaign"
 msgstr "Campaña"
 
 #. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__hr_contract__signature_employer_state__cancel
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__hr_contract__signature_state__cancel
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_merge_employee_wizard_form
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_recruitment_document_form
 #: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Cancel"
@@ -9282,6 +8881,7 @@ msgstr "Cancelar"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_contract__state__cancel
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__hr_contract__state__cancel
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__state__cancelled
 msgid "Cancelled"
 msgstr "Cancelado"
@@ -9297,6 +8897,11 @@ msgstr ""
 #: model_terms:website.page,arch_db:mkt_recruitment.url_recomendations_booklet
 msgid ""
 "Cartilla de Recomendaciones en Materia de Seguridad y Salud en el Trabajo"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.employee_verification_wizard_view
+msgid "Cerrar"
 msgstr ""
 
 #. module: mkt_recruitment
@@ -9372,7 +8977,12 @@ msgstr "Datos de los Hijos"
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__city_id
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 msgid "City"
-msgstr "Ciudad"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+msgid "City..."
+msgstr ""
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
@@ -9395,7 +9005,9 @@ msgid "Close"
 msgstr "Cerrado"
 
 #. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Cohabitant"
 msgstr "Conviviente"
 
@@ -9489,6 +9101,7 @@ msgid ""
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship10__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship1__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship2__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship3__conviviente
@@ -9497,6 +9110,8 @@ msgstr ""
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship6__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship7__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship8__conviviente
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship9__conviviente
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship10__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship1__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship2__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship3__conviviente
@@ -9505,6 +9120,8 @@ msgstr ""
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship6__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship7__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship8__conviviente
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship9__conviviente
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship10__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship1__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship2__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship3__conviviente
@@ -9513,6 +9130,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship6__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship7__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship8__conviviente
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship9__conviviente
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner_family__relationship__conviviente
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 msgid "Concubine"
@@ -9660,7 +9278,12 @@ msgstr "Contacto"
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
 #: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Contact Information"
-msgstr "Información de Contacto"
+msgstr "Información de contacto"
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_imports__file_contacts
+msgid "Contacts"
+msgstr "Cotactos"
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.thankyou_ir_ui_view
@@ -9720,6 +9343,11 @@ msgstr "Fecha de fin de contrato"
 #: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__date_start
 msgid "Contract date start"
 msgstr "Fecha de inicio de contrato"
+
+#. module: mkt_recruitment
+#: model:ir.ui.menu,name:mkt_recruitment.contract_end_menu
+msgid "Contract ends"
+msgstr "Ceses masivos"
 
 #. module: mkt_recruitment
 #: model:ir.actions.report,name:mkt_recruitment.report_contract_action
@@ -9794,6 +9422,11 @@ msgid "Copia de contrato de trabajo."
 msgstr ""
 
 #. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_hr_contract_wage_tree
+msgid "Corregir una unica ves"
+msgstr ""
+
+#. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.report_recruitmentdocument_document
 msgid "Correo Electronico:"
 msgstr ""
@@ -9806,10 +9439,18 @@ msgstr ""
 
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_contract__cost_center_id
+#: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__cost_center_id
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_contract__cost_center
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_employee__cost_center_id
+#: model:ir.model.fields,field_description:mkt_recruitment.field_hr_employee_public__cost_center_id
 msgid "Cost center"
 msgstr "Centro de costo"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
+msgid "Countries..."
+msgstr ""
 
 #. module: mkt_recruitment
 #: model:ir.model,name:mkt_recruitment.model_res_country
@@ -9822,6 +9463,11 @@ msgstr "Centro de costo"
 #: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Country"
 msgstr "País"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+msgid "Country..."
+msgstr "País..."
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
@@ -9847,7 +9493,11 @@ msgstr "Crear renovaciones"
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__create_uid
 #: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__create_uid
+#: model:ir.model.fields,field_description:mkt_recruitment.field_employee_verification_wizard__create_uid
 #: model:ir.model.fields,field_description:mkt_recruitment.field_employer_signature__create_uid
+#: model:ir.model.fields,field_description:mkt_recruitment.field_imports__create_uid
+#: model:ir.model.fields,field_description:mkt_recruitment.field_massive_contract_end__create_uid
+#: model:ir.model.fields,field_description:mkt_recruitment.field_merge_employee_wizard__create_uid
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruiter_team__create_uid
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__create_uid
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner_family__create_uid
@@ -9855,9 +9505,18 @@ msgid "Created by"
 msgstr "Creado por"
 
 #. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__renew_contracts_ids
+msgid "Created contracts"
+msgstr "Contratos creados"
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__create_date
 #: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__create_date
+#: model:ir.model.fields,field_description:mkt_recruitment.field_employee_verification_wizard__create_date
 #: model:ir.model.fields,field_description:mkt_recruitment.field_employer_signature__create_date
+#: model:ir.model.fields,field_description:mkt_recruitment.field_imports__create_date
+#: model:ir.model.fields,field_description:mkt_recruitment.field_massive_contract_end__create_date
+#: model:ir.model.fields,field_description:mkt_recruitment.field_merge_employee_wizard__create_date
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruiter_team__create_date
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__create_date
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner_family__create_date
@@ -9912,6 +9571,8 @@ msgstr ""
 
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__current_dni_filename
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile10_back_filename
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile10_filename
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile1_back_filename
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile1_filename
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile2_back_filename
@@ -9928,7 +9589,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile7_filename
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile8_back_filename
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile8_filename
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile9_back_filename
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile9_filename
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__current_dni_filename
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile10_back_filename
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile10_filename
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile1_back_filename
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile1_filename
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile2_back_filename
@@ -9945,6 +9610,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile7_filename
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile8_back_filename
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile8_filename
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile9_back_filename
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile9_filename
 msgid "Current DNI filename(Front)"
 msgstr ""
 
@@ -10158,11 +9825,15 @@ msgstr "N° DNI:"
 #: code:addons/mkt_recruitment/models/res_partner.py:0
 #: code:addons/mkt_recruitment/models/res_partner.py:0
 #: code:addons/mkt_recruitment/models/res_partner.py:0
+#: code:addons/mkt_recruitment/models/res_partner.py:0
+#: code:addons/mkt_recruitment/models/res_partner.py:0
 #, python-format
 msgid "DNI(Back)-"
 msgstr "DNI(Posterior)"
 
 #. module: mkt_recruitment
+#: code:addons/mkt_recruitment/models/res_partner.py:0
+#: code:addons/mkt_recruitment/models/res_partner.py:0
 #: code:addons/mkt_recruitment/models/res_partner.py:0
 #: code:addons/mkt_recruitment/models/res_partner.py:0
 #: code:addons/mkt_recruitment/models/res_partner.py:0
@@ -10198,6 +9869,9 @@ msgstr ""
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__doctoral_degree
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "DOCTORAL DEGREE"
 msgstr "GRADO DE DOCTOR"
 
@@ -10285,6 +9959,7 @@ msgid "Date start"
 msgstr "Fecha de inicio"
 
 #. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship10__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship1__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship2__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship3__hija
@@ -10293,6 +9968,8 @@ msgstr "Fecha de inicio"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship6__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship7__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship8__hija
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship9__hija
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship10__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship1__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship2__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship3__hija
@@ -10301,6 +9978,8 @@ msgstr "Fecha de inicio"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship6__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship7__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship8__hija
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship9__hija
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship10__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship1__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship2__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship3__hija
@@ -10309,6 +9988,7 @@ msgstr "Fecha de inicio"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship6__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship7__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship8__hija
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship9__hija
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner_family__relationship__hija
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 msgid "Daughter"
@@ -10560,6 +10240,27 @@ msgid "Department"
 msgstr "Departamento"
 
 #. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
+msgid "Department..."
+msgstr "Departamento..."
+
+#. module: mkt_recruitment
+#: model:ir.model,name:mkt_recruitment.model_hr_departure_reason
+msgid "Departure Reason"
+msgstr "Motivo de salida"
+
+#. module: mkt_recruitment
+#: model:ir.model,name:mkt_recruitment.model_hr_departure_wizard
+msgid "Departure Wizard"
+msgstr "Asistente de salida"
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_merge_employee_wizard__destination_id
+msgid "Destiny record"
+msgstr "Empleado final"
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_contract__device
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__device
 msgid "Device"
@@ -10643,7 +10344,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_contract__display_name
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__display_name
 #: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__display_name
+#: model:ir.model.fields,field_description:mkt_recruitment.field_employee_verification_wizard__display_name
 #: model:ir.model.fields,field_description:mkt_recruitment.field_employer_signature__display_name
+#: model:ir.model.fields,field_description:mkt_recruitment.field_imports__display_name
+#: model:ir.model.fields,field_description:mkt_recruitment.field_massive_contract_end__display_name
+#: model:ir.model.fields,field_description:mkt_recruitment.field_merge_employee_wizard__display_name
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruiter_team__display_name
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__display_name
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner_family__display_name
@@ -10661,6 +10366,13 @@ msgstr "Mostrar Nombre"
 #: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "District"
 msgstr "Distrito"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
+msgid "District..."
+msgstr ""
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
@@ -10687,7 +10399,9 @@ msgstr ""
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__marital__divorciado/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__marital__divorciado/a
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Divorced"
 msgstr "Divorciado"
 
@@ -10755,6 +10469,11 @@ msgid "Download"
 msgstr "Descargar"
 
 #. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_res_partner_document_tree
+msgid "Download documents"
+msgstr "Descargar documentos"
+
+#. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__state__draft
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__contract_mass__state__draft
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__state__draft
@@ -10788,6 +10507,7 @@ msgstr "Duración del contrato"
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 #: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "E-mail address"
 msgstr "Dirección de correo electrónico"
@@ -11098,6 +10818,7 @@ msgstr "Educación"
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 #: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Education Level"
 msgstr "Nivel de estudios"
@@ -11243,12 +10964,31 @@ msgid ""
 msgstr ""
 
 #. module: mkt_recruitment
+#: code:addons/mkt_recruitment/models/massive_contract_end.py:0
+#, python-format
+msgid "El la fila del DNI %s no se encuentra la fecha o el motivo."
+msgstr ""
+
+#. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.recruitment_document_portal_content
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.report_recruitmentdocument_document
 msgid ""
 "El monto de la deuda corresponde a: S°. .......... "
 "(.............................. Con 00°100 soles), aplicando descuento UNICO"
 " en el mes de"
+msgstr ""
+
+#. module: mkt_recruitment
+#: code:addons/mkt_recruitment/models/massive_contract_end.py:0
+#, python-format
+msgid "El número de DNI de alguna fila se encuentra vacio."
+msgstr ""
+
+#. module: mkt_recruitment
+#: code:addons/mkt_recruitment/models/massive_contract_end.py:0
+#, python-format
+msgid ""
+"El número de motivo de salida del DNI %s no esta registrado en el sistema."
 msgstr ""
 
 #. module: mkt_recruitment
@@ -11409,6 +11149,7 @@ msgstr "Celular de emergencia"
 #: model:ir.model,name:mkt_recruitment.model_hr_employee
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_contract__employee_id
 #: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__employee_ids
+#: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__renew_employee_ids
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_hr_employee_vat_search
 msgid "Employee"
 msgstr "Empleado"
@@ -11417,6 +11158,11 @@ msgstr "Empleado"
 #: model:ir.ui.menu,name:mkt_recruitment.employee_contract_submenu
 msgid "Employee Contracts"
 msgstr "Contrato de empleados"
+
+#. module: mkt_recruitment
+#: model:ir.actions.act_window,name:mkt_recruitment.employee_verification_wizard_action
+msgid "Employee Verification"
+msgstr "Verificación de empleados"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_applicant__is_autoemployee
@@ -11434,6 +11180,17 @@ msgid "Employee stage"
 msgstr "Empleado creado"
 
 #. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_massive_contract_end_form
+msgid "Employee termination"
+msgstr "Cesar Empleados"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.employee_verification_wizard_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_massive_contract_end_form
+msgid "Employee verification"
+msgstr "Verificar Empleados"
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,help:mkt_recruitment.field_applicant_contract__wage
 msgid "Employee's monthly gross wage."
 msgstr "Sueldo bruto mensual"
@@ -11444,6 +11201,18 @@ msgid "Employees"
 msgstr "Empleados"
 
 #. module: mkt_recruitment
+#: code:addons/mkt_recruitment/models/massive_contract_end.py:0
+#, python-format
+msgid "Employees end"
+msgstr "Empleados por cesar"
+
+#. module: mkt_recruitment
+#: code:addons/mkt_recruitment/models/massive_contract_end.py:0
+#, python-format
+msgid "Employees end. Processed file available."
+msgstr "Empleados por cesar. Archivos procesados disponibles"
+
+#. module: mkt_recruitment
 #: model:ir.actions.act_window,name:mkt_recruitment.view_employer_signature_action
 #: model:ir.model,name:mkt_recruitment.model_employer_signature
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_contract__employer_signature_id
@@ -11451,6 +11220,11 @@ msgstr "Empleados"
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_hr_contract_portal_form
 msgid "Employer signature"
 msgstr "Firma del empleador"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_hr_contract_wage_tree
+msgid "Employer's massive signature"
+msgstr "Firma masiva del empleador"
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
@@ -11795,6 +11569,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_contract__date_end
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__education_end_date
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 #: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "End Date"
 msgstr "Fecha de Fin"
@@ -11829,6 +11604,17 @@ msgid "Equipo"
 msgstr ""
 
 #. module: mkt_recruitment
+#: code:addons/mkt_recruitment/models/res_partner.py:0
+#, python-format
+msgid "Error al generar los reportes: %s"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_massive_contract_end__error_message
+msgid "Errores de verificación"
+msgstr ""
+
+#. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.recruitment_document_portal_content
 msgid ""
 "Es importante precisar que la condición de domiciliado en el país entrará a "
@@ -11858,6 +11644,12 @@ msgstr ""
 msgid ""
 "Es obligatorio respetar las siguientes señales de advertencia, información y"
 " prohibición, debiendo estar en estado permanente alerta."
+msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_hr_employee__is_validated
+#: model:ir.model.fields,field_description:mkt_recruitment.field_hr_employee_public__is_validated
+msgid "Esta validado?"
 msgstr ""
 
 #. module: mkt_recruitment
@@ -11895,6 +11687,7 @@ msgstr ""
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_contract__state__close
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__hr_contract__state__close
 msgid "Expired"
 msgstr "Vencido"
 
@@ -11964,6 +11757,14 @@ msgid "Familiar Address1"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_address10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_address10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_address10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_address10
+msgid "Familiar Address10"
+msgstr ""
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_address2
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_address2
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_address2
@@ -12020,11 +11821,27 @@ msgid "Familiar Address8"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_address9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_address9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_address9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_address9
+msgid "Familiar Address9"
+msgstr ""
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_birthday1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_birthday1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_birthday1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_birthday1
 msgid "Familiar Birthday1"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_birthday10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_birthday10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_birthday10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_birthday10
+msgid "Familiar Birthday10"
 msgstr ""
 
 #. module: mkt_recruitment
@@ -12084,11 +11901,27 @@ msgid "Familiar Birthday8"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_birthday9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_birthday9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_birthday9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_birthday9
+msgid "Familiar Birthday9"
+msgstr ""
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_dni1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_dni1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dni1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dni1
 msgid "Familiar Dni1"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_dni10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_dni10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dni10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dni10
+msgid "Familiar Dni10"
 msgstr ""
 
 #. module: mkt_recruitment
@@ -12148,6 +11981,14 @@ msgid "Familiar Dni8"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_dni9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_dni9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dni9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dni9
+msgid "Familiar Dni9"
+msgstr ""
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile1
 msgid "Familiar Dnifile1"
@@ -12157,6 +11998,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile1_back
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile1_back
 msgid "Familiar Dnifile1 Back"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile10
+msgid "Familiar Dnifile10"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile10_back
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile10_back
+msgid "Familiar Dnifile10 Back"
 msgstr ""
 
 #. module: mkt_recruitment
@@ -12244,11 +12097,31 @@ msgid "Familiar Dnifile8 Back"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile9
+msgid "Familiar Dnifile9"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_dnifile9_back
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_dnifile9_back
+msgid "Familiar Dnifile9 Back"
+msgstr ""
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_full_name1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_full_name1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_full_name1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_full_name1
 msgid "Familiar Full Name1"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_full_name10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_full_name10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_full_name10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_full_name10
+msgid "Familiar Full Name10"
 msgstr ""
 
 #. module: mkt_recruitment
@@ -12308,11 +12181,27 @@ msgid "Familiar Full Name8"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_full_name9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_full_name9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_full_name9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_full_name9
+msgid "Familiar Full Name9"
+msgstr ""
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_gender1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_gender1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_gender1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_gender1
 msgid "Familiar Gender1"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_gender10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_gender10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_gender10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_gender10
+msgid "Familiar Gender10"
 msgstr ""
 
 #. module: mkt_recruitment
@@ -12372,11 +12261,27 @@ msgid "Familiar Gender8"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_gender9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_gender9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_gender9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_gender9
+msgid "Familiar Gender9"
+msgstr ""
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_relationship1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_relationship1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_relationship1
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_relationship1
 msgid "Familiar Relationship1"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_relationship10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_relationship10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_relationship10
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_relationship10
+msgid "Familiar Relationship10"
 msgstr ""
 
 #. module: mkt_recruitment
@@ -12436,6 +12341,14 @@ msgid "Familiar Relationship8"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__familiar_relationship9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__familiar_relationship9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__familiar_relationship9
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__familiar_relationship9
+msgid "Familiar Relationship9"
+msgstr ""
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__family_ids
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__family_ids
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_res_partner_reference_location_form
@@ -12443,6 +12356,7 @@ msgid "Family"
 msgstr "Familia"
 
 #. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship10__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship1__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship2__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship3__padre
@@ -12451,6 +12365,8 @@ msgstr "Familia"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship6__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship7__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship8__padre
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship9__padre
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship10__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship1__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship2__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship3__padre
@@ -12459,6 +12375,8 @@ msgstr "Familia"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship6__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship7__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship8__padre
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship9__padre
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship10__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship1__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship2__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship3__padre
@@ -12467,6 +12385,7 @@ msgstr "Familia"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship6__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship7__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship8__padre
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship9__padre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner_family__relationship__padre
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 msgid "Father"
@@ -12490,6 +12409,7 @@ msgid "Fecha:"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender10__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender1__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender2__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender3__female
@@ -12498,7 +12418,9 @@ msgstr ""
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender6__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender7__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender8__female
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender9__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__gender__female
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender10__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender1__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender2__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender3__female
@@ -12507,7 +12429,9 @@ msgstr ""
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender6__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender7__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender8__female
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender9__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__gender__female
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender10__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender1__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender2__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender3__female
@@ -12516,9 +12440,12 @@ msgstr ""
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender6__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender7__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender8__female
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender9__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__gender__female
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner_family__gender__female
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Female"
 msgstr "Femenino"
 
@@ -12848,7 +12775,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_contract__id
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__id
 #: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__id
+#: model:ir.model.fields,field_description:mkt_recruitment.field_employee_verification_wizard__id
 #: model:ir.model.fields,field_description:mkt_recruitment.field_employer_signature__id
+#: model:ir.model.fields,field_description:mkt_recruitment.field_imports__id
+#: model:ir.model.fields,field_description:mkt_recruitment.field_massive_contract_end__id
+#: model:ir.model.fields,field_description:mkt_recruitment.field_merge_employee_wizard__id
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruiter_team__id
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__id
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner_family__id
@@ -12884,41 +12815,65 @@ msgstr ""
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__incomplete_doctoral_studies
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "INCOMPLETE DOCTORAL STUDIES"
 msgstr "ESTUDIOS DE DOCTORADO INCOMPLETO"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__incomplete_higher_education
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "INCOMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)"
 msgstr "EDUCACIÓN SUPERIOR (INSTITUTO SUPERIOR, ETC) INCOMPLETA"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__incomplete_primary_education
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "INCOMPLETE PRIMARY EDUCATION"
 msgstr "EDUCACIÓN PRIMARIA INCOMPLETA"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__incomplete_seconday_education
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "INCOMPLETE SECONDARY EDUCATION"
 msgstr "EDUCACIÓN SECUNDARIA INCOMPLETA"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__incomplete_special_education
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "INCOMPLETE SPECIAL EDUCATION"
 msgstr "EDUCACIÓN ESPECIAL INCOMPLETA"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__incomplete_masters_studies
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "INCOMPLETE STUDIES OF MASTER"
 msgstr "ESTUDIOS DE MAESTRIA INCOMPLETA"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__incomplete_technical_education
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "INCOMPLETE TECHNICAL EDUCATION"
 msgstr "EDUCACIÓN TÉCNICA INCOMPLETA"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__incomplete_universitary_education
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "INCOMPLETE UNIVERSITARY EDUCATION"
 msgstr "EDUCACIÓN UNIVERSITARIA INCOMPLETA"
 
@@ -12986,6 +12941,12 @@ msgid "Identification Type:"
 msgstr "Tipo de identificación"
 
 #. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
+msgid "Identification..."
+msgstr ""
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,help:mkt_recruitment.field_contract_mass__message_needaction
 #: model:ir.model.fields,help:mkt_recruitment.field_contract_mass__message_unread
 #: model:ir.model.fields,help:mkt_recruitment.field_hr_contract__message_needaction
@@ -13012,8 +12973,6 @@ msgid ""
 "If checked, this stage is used to convert the record from applicant to "
 "employee"
 msgstr ""
-"Si lo marcaron, esta etapa se utilizara para convertir el registro de "
-"solicitante a empleado "
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
@@ -13022,8 +12981,6 @@ msgid ""
 "If you choose 'Private Pension System', you will be able to choose if it is "
 "your first job or if you come from the ONP."
 msgstr ""
-"Si usted escoge 'Sistema privado de pensiones', podrá elegir si se trata de "
-"su primer empleo o si procede de la ONP."
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.url_sexual_harassment_complaint_ir_ui_view
@@ -13074,6 +13031,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__institution
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__institution
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 #: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Institution"
 msgstr "Institución"
@@ -13127,6 +13085,7 @@ msgstr ""
 
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__is_beneficiary1
+#: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__is_beneficiary10
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__is_beneficiary2
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__is_beneficiary3
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__is_beneficiary4
@@ -13134,7 +13093,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__is_beneficiary6
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__is_beneficiary7
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__is_beneficiary8
+#: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__is_beneficiary9
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__is_beneficiary1
+#: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__is_beneficiary10
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__is_beneficiary2
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__is_beneficiary3
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__is_beneficiary4
@@ -13142,7 +13103,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__is_beneficiary6
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__is_beneficiary7
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__is_beneficiary8
+#: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__is_beneficiary9
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__is_beneficiary1
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__is_beneficiary10
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__is_beneficiary2
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__is_beneficiary3
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__is_beneficiary4
@@ -13150,7 +13113,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__is_beneficiary6
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__is_beneficiary7
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__is_beneficiary8
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__is_beneficiary9
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__is_beneficiary1
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__is_beneficiary10
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__is_beneficiary2
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__is_beneficiary3
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__is_beneficiary4
@@ -13158,6 +13123,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__is_beneficiary6
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__is_beneficiary7
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__is_beneficiary8
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__is_beneficiary9
 msgid "Is Beneficiary?"
 msgstr ""
 
@@ -13178,6 +13144,22 @@ msgstr "Es un seguidor"
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__is_validate
 msgid "Is Validate"
 msgstr "Validado"
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_hr_employee__is_duplicated
+#: model:ir.model.fields,field_description:mkt_recruitment.field_hr_employee_public__is_duplicated
+msgid "Is duplicated?"
+msgstr "Duplicado"
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_hr_applicant__is_reinstatement
+msgid "Is reinstatement"
+msgstr "Reingreso"
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_massive_contract_end__reviewed
+msgid "Is reviewed?"
+msgstr ""
 
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__job_id
@@ -13759,7 +13741,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_contract____last_update
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner____last_update
 #: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass____last_update
+#: model:ir.model.fields,field_description:mkt_recruitment.field_employee_verification_wizard____last_update
 #: model:ir.model.fields,field_description:mkt_recruitment.field_employer_signature____last_update
+#: model:ir.model.fields,field_description:mkt_recruitment.field_imports____last_update
+#: model:ir.model.fields,field_description:mkt_recruitment.field_massive_contract_end____last_update
+#: model:ir.model.fields,field_description:mkt_recruitment.field_merge_employee_wizard____last_update
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruiter_team____last_update
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document____last_update
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner_family____last_update
@@ -13770,7 +13756,11 @@ msgstr ""
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__write_uid
 #: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__write_uid
+#: model:ir.model.fields,field_description:mkt_recruitment.field_employee_verification_wizard__write_uid
 #: model:ir.model.fields,field_description:mkt_recruitment.field_employer_signature__write_uid
+#: model:ir.model.fields,field_description:mkt_recruitment.field_imports__write_uid
+#: model:ir.model.fields,field_description:mkt_recruitment.field_massive_contract_end__write_uid
+#: model:ir.model.fields,field_description:mkt_recruitment.field_merge_employee_wizard__write_uid
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruiter_team__write_uid
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__write_uid
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner_family__write_uid
@@ -13780,7 +13770,11 @@ msgstr ""
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_applicant_partner__write_date
 #: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__write_date
+#: model:ir.model.fields,field_description:mkt_recruitment.field_employee_verification_wizard__write_date
 #: model:ir.model.fields,field_description:mkt_recruitment.field_employer_signature__write_date
+#: model:ir.model.fields,field_description:mkt_recruitment.field_imports__write_date
+#: model:ir.model.fields,field_description:mkt_recruitment.field_massive_contract_end__write_date
+#: model:ir.model.fields,field_description:mkt_recruitment.field_merge_employee_wizard__write_date
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruiter_team__write_date
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__write_date
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner_family__write_date
@@ -14032,6 +14026,9 @@ msgstr ""
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__master_degree
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "MASTER DEGREE"
 msgstr "GRADO DE MAESTRIA"
 
@@ -14044,6 +14041,11 @@ msgid ""
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__spreadsheet__mkt_spreadsheet
+msgid "MKT Spreadsheet"
+msgstr "Planilla de MKT"
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__message_main_attachment_id
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_contract__message_main_attachment_id
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__message_main_attachment_id
@@ -14051,6 +14053,7 @@ msgid "Main Attachment"
 msgstr "Adjuntos principales"
 
 #. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender10__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender1__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender2__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender3__male
@@ -14059,7 +14062,9 @@ msgstr "Adjuntos principales"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender6__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender7__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender8__male
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_gender9__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__gender__male
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender10__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender1__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender2__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender3__male
@@ -14068,7 +14073,9 @@ msgstr "Adjuntos principales"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender6__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender7__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender8__male
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_gender9__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__gender__male
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender10__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender1__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender2__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender3__male
@@ -14077,17 +14084,26 @@ msgstr "Adjuntos principales"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender6__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender7__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender8__male
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_gender9__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__gender__male
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner_family__gender__male
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Male"
 msgstr "Masculino"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__contract_mass__job_mode__manual
-#: model:ir.model.fields.selection,name:mkt_recruitment.selection__contract_mass__wage_mode__manual
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__contract_mass__mode_mode__manual
 msgid "Manual"
 msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__mode_mode
+#: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__province_id
+msgid "Manual or automatic"
+msgstr "Manual o automático"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_contract__marital
@@ -14119,6 +14135,11 @@ msgid "Marital status"
 msgstr "Estado civil"
 
 #. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+msgid "Marital status..."
+msgstr ""
+
+#. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.recruitment_document_portal_content
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.report_recruitmentdocument_document
 msgid ""
@@ -14138,7 +14159,9 @@ msgstr ""
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__marital__casado/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__marital__casado/a
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Married"
 msgstr "Casado"
 
@@ -14146,12 +14169,22 @@ msgstr "Casado"
 #: model:ir.actions.act_window,name:mkt_recruitment.view_contract_mass_action
 #: model:ir.model,name:mkt_recruitment.model_contract_mass
 msgid "Massive Contract"
-msgstr "Contratos masivos"
+msgstr "Contratos Masivos"
+
+#. module: mkt_recruitment
+#: model:ir.actions.act_window,name:mkt_recruitment.view_massive_contract_end_action
+msgid "Massive Contract End"
+msgstr "Ceses Masivos"
 
 #. module: mkt_recruitment
 #: model:ir.ui.menu,name:mkt_recruitment.contract_mass_submenu
 msgid "Massive contract"
-msgstr "Contratos masivos"
+msgstr "Contratos Masivos"
+
+#. module: mkt_recruitment
+#: model:ir.ui.menu,name:mkt_recruitment.massive_contract_end_menu
+msgid "Massive contract end"
+msgstr "Ceses Masivos"
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.recruitment_document_portal_content
@@ -14254,6 +14287,36 @@ msgid "Medium"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_merge_employee_wizard_form
+msgid "Merge"
+msgstr "Fusionar"
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_merge_employee_wizard__source_id
+msgid "Merge Record"
+msgstr "Fusionar Empleados"
+
+#. module: mkt_recruitment
+#: model:ir.model,name:mkt_recruitment.model_merge_employee_wizard
+msgid "Merge partner records"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_merge_employee_wizard_form
+msgid "Merge record"
+msgstr "Fusionar Empleados"
+
+#. module: mkt_recruitment
+#: model:ir.actions.server,name:mkt_recruitment.action_merge_wizard_from_list
+msgid "Merge records"
+msgstr "Fusionar registros"
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_employee_verification_wizard__message
+msgid "Message"
+msgstr "Mensaje"
+
+#. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__message_has_error
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_contract__message_has_error
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__message_has_error
@@ -14273,6 +14336,17 @@ msgid "Months to renew"
 msgstr "Meses a renovar"
 
 #. module: mkt_recruitment
+#: code:addons/mkt_recruitment/models/hr_applicant.py:0
+#, python-format
+msgid ""
+"More than one contact has been found with the same DNI, please solve the "
+"problem to continue with the process."
+msgstr ""
+"Se ha encontrado más de un contacto con el mismo DNI, por favor resuelva el "
+"problema para continuar con el proceso."
+
+#. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship10__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship1__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship2__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship3__madre
@@ -14281,6 +14355,8 @@ msgstr "Meses a renovar"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship6__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship7__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship8__madre
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship9__madre
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship10__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship1__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship2__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship3__madre
@@ -14289,6 +14365,8 @@ msgstr "Meses a renovar"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship6__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship7__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship8__madre
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship9__madre
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship10__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship1__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship2__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship3__madre
@@ -14297,10 +14375,16 @@ msgstr "Meses a renovar"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship6__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship7__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship8__madre
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship9__madre
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner_family__relationship__madre
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 msgid "Mother"
 msgstr "Madre"
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_hr_departure_reason__motive_number
+msgid "Motive number"
+msgstr "Nùmero de motivo"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_contract_mass__my_activity_date_deadline
@@ -14354,15 +14438,21 @@ msgstr ""
 #: model:ir.model.fields,field_description:mkt_recruitment.field_employer_signature__name
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_contract__name
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_contract__partner_name
+#: model:ir.model.fields,field_description:mkt_recruitment.field_imports__name
+#: model:ir.model.fields,field_description:mkt_recruitment.field_massive_contract_end__name
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__name
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__partner_name
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner_family__name
 #: model:ir.model.fields,field_description:mkt_recruitment.field_summary_employees__name
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 #: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Name"
 msgstr "Nombre"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+msgid "Nombre y apellidos"
+msgstr ""
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
@@ -14415,6 +14505,12 @@ msgstr "Nacionalidad"
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
 #: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
+msgid "Nationality..."
+msgstr "Nacionalidad..."
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Nationality:"
 msgstr "Nacionalidad"
 
@@ -14436,6 +14532,7 @@ msgstr "Nacionalidad"
 #: code:addons/mkt_recruitment/models/t_record.py:0
 #: code:addons/mkt_recruitment/models/t_record.py:0
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_contract__state__draft
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__hr_contract__state__draft
 #, python-format
 msgid "New"
 msgstr "Nuevo"
@@ -14477,6 +14574,23 @@ msgstr "Resumen de la siguiente actividad"
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__activity_type_id
 msgid "Next Activity Type"
 msgstr "Tipo de la siguiente actividad"
+
+#. module: mkt_recruitment
+#: code:addons/mkt_recruitment/models/hr_applicant.py:0
+#, python-format
+msgid ""
+"No contacts were found with the same DNI, please solve the problem to "
+"continue with the process."
+msgstr ""
+"No se han encontrado contactos con el mismo DNI, por favor resuelva el problema para "
+"continuar con el proceso."
+
+#. module: mkt_recruitment
+#: code:addons/mkt_recruitment/models/massive_contract_end.py:0
+#: code:addons/mkt_recruitment/models/massive_contract_end.py:0
+#, python-format
+msgid "No hay un archivo adjunto."
+msgstr ""
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.contract_document_portal_content
@@ -14528,6 +14642,12 @@ msgid ""
 "                                    EL EMPLEADOR\n"
 "                                </strong>\n"
 "                                notificara al TRABAJADOR para formalizar toda decision ante incumplimiento con lo señalado en la presente clausula."
+msgstr ""
+
+#. module: mkt_recruitment
+#: code:addons/mkt_recruitment/models/res_partner.py:0
+#, python-format
+msgid "No se encontraron archivos permitidos ni reportes para descargar."
 msgstr ""
 
 #. module: mkt_recruitment
@@ -14658,6 +14778,16 @@ msgstr "Número de mensajes con error de envío"
 #: model:ir.model.fields,help:mkt_recruitment.field_recruitment_document__message_unread_counter
 msgid "Number of unread messages"
 msgstr "Número de mensajes sin leer"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+msgid "N° Cell Phone"
+msgstr "N° Celular"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+msgid "N° Children"
+msgstr "N° Hijos"
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
@@ -14987,6 +15117,11 @@ msgid "Person responsible for validating the employee's contracts."
 msgstr ""
 
 #. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+msgid "Personal Education"
+msgstr "Educación Personal"
+
+#. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.detail_vat
 msgid "Personal Evolution"
 msgstr ""
@@ -15018,7 +15153,6 @@ msgstr "Dirección"
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_contract__phone
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__phone
 #: model:ir.model.fields,field_description:mkt_recruitment.field_summary_employees__phone
-#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 msgid "Phone"
 msgstr "Teléfono"
 
@@ -15422,6 +15556,11 @@ msgid "Procedimiento Preventivo Interno de Queja por Hostigamiento Sexual"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_massive_contract_end__file_result
+msgid "Processed Employees"
+msgstr "Empleados Procesados"
+
+#. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.contract_document_portal_content
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.report_o
 msgid "Profesión u Ocupación"
@@ -15434,6 +15573,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__profession
 #: model:ir.model.fields,field_description:mkt_recruitment.field_summary_employees__profession
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 #: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Profession"
 msgstr "Profesión"
@@ -15487,6 +15627,17 @@ msgid "Province"
 msgstr "Provincia"
 
 #. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_hr_employee_public__is_supervize_province
+msgid "Province to supervize"
+msgstr "Provincia a supervisar"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
+msgid "Province..."
+msgstr "Provincia..."
+
+#. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
 #: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Province:"
@@ -15501,6 +15652,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.report_recruitmentdocument_document
 msgid "Provincia:"
 msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model,name:mkt_recruitment.model_hr_employee_public
+msgid "Public Employee"
+msgstr "Empleado público"
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.contract_document_portal_content
@@ -15861,6 +16017,11 @@ msgid "RENOVACIÓN DE TRABAJO DE PERSONAL EXTRANJERO A"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__spreadsheet__rh
+msgid "RH"
+msgstr ""
+
+#. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.recruitment_document_portal_content
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.report_recruitmentdocument_document
 msgid "RUC (*):"
@@ -16002,6 +16163,11 @@ msgid ""
 msgstr ""
 
 #. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_hr_applicat_vat_form
+msgid "Reinstatement"
+msgstr "Reingreso"
+
+#. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.url_sexual_harassment_complaint_ir_ui_view
 #: model_terms:website.page,arch_db:mkt_recruitment.url_sexual_harassment_complaint
 msgid ""
@@ -16097,6 +16263,7 @@ msgstr ""
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_contract__state__open
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__hr_contract__state__open
 msgid "Running"
 msgstr "En Proceso"
 
@@ -16129,6 +16296,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.report_o
 msgid "SOLICITUD DE APROBACIÓN DE CONTRATO"
 msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__spreadsheet__sp_spreadsheet
+msgid "SP Spreadsheet"
+msgstr "Planilla de SP"
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.recruitment_document_portal_content
@@ -16168,12 +16340,34 @@ msgstr "Buscar empleos por nombre o referencia"
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_contract__access_token
 #: model:ir.model.fields,field_description:mkt_recruitment.field_recruitment_document__access_token
 msgid "Security Token"
-msgstr "Token de seguridad"
+msgstr "Token de Seguridad"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+msgid "Select Education Level"
+msgstr "Seleccione el nivel educativoProvincia a supervisar"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+msgid "Select Gender"
+msgstr ""
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
+msgid "Select an option"
+msgstr ""
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_partner_document
 msgid "Select file"
 msgstr "Seleccionar archivo"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
+msgid "Select..."
+msgstr "Selecciona..."
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
@@ -16185,6 +16379,16 @@ msgstr "Enviar"
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_contract__is_sended
 msgid "Send contract"
 msgstr "Contrato enviado"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_contract_mass_form
+msgid "Send contracts"
+msgstr "Envias contratos"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_res_partner_reference_location_form
+msgid "Send documents"
+msgstr "Enviar declaraciones juradas"
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.view_recruitment_document_form
@@ -16324,6 +16528,11 @@ msgid "Signature by default"
 msgstr "Firma por defecto"
 
 #. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_hr_contract__signature_employer_state
+msgid "Signature employer state"
+msgstr "Estado de firma del empleador"
+
+#. module: mkt_recruitment
 #: code:addons/mkt_recruitment/controllers/portal.py:0
 #: code:addons/mkt_recruitment/controllers/portal.py:0
 #, python-format
@@ -16336,7 +16545,9 @@ msgid "Signature state"
 msgstr "Estado de firma"
 
 #. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__hr_contract__signature_employer_state__signed
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__hr_contract__signature_state__signed
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__hr_contract__state__signed
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__state__signed
 msgid "Signed"
 msgstr "Firmado"
@@ -16374,7 +16585,9 @@ msgstr "Empleador firmó en"
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__marital__soltero/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__marital__soltero/a
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "Single"
 msgstr "Soltero"
 
@@ -16391,6 +16604,7 @@ msgid "Sistema Privado de Pensiones"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship10__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship1__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship2__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship3__hermana
@@ -16399,6 +16613,8 @@ msgstr ""
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship6__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship7__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship8__hermana
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship9__hermana
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship10__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship1__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship2__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship3__hermana
@@ -16407,6 +16623,8 @@ msgstr ""
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship6__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship7__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship8__hermana
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship9__hermana
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship10__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship1__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship2__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship3__hermana
@@ -16415,6 +16633,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship6__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship7__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship8__hermana
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship9__hermana
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner_family__relationship__hermana
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 msgid "Sister"
@@ -16439,6 +16658,7 @@ msgid ""
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship10__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship1__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship2__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship3__hijo
@@ -16447,6 +16667,8 @@ msgstr ""
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship6__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship7__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship8__hijo
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship9__hijo
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship10__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship1__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship2__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship3__hijo
@@ -16455,6 +16677,8 @@ msgstr ""
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship6__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship7__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship8__hijo
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship9__hijo
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship10__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship1__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship2__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship3__hijo
@@ -16463,6 +16687,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship6__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship7__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship8__hijo
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship9__hijo
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner_family__relationship__hijo
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 msgid "Son"
@@ -16487,6 +16712,7 @@ msgid "Source"
 msgstr "Fuente"
 
 #. module: mkt_recruitment
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship10__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship1__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship2__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship3__esposo/a
@@ -16495,6 +16721,8 @@ msgstr "Fuente"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship6__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship7__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship8__esposo/a
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__familiar_relationship9__esposo/a
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship10__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship1__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship2__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship3__esposo/a
@@ -16503,6 +16731,8 @@ msgstr "Fuente"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship6__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship7__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship8__esposo/a
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__recruitment_document__familiar_relationship9__esposo/a
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship10__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship1__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship2__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship3__esposo/a
@@ -16511,6 +16741,7 @@ msgstr "Fuente"
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship6__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship7__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship8__esposo/a
+#: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner__familiar_relationship9__esposo/a
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__res_partner_family__relationship__esposo/a
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 msgid "Spouse"
@@ -16522,8 +16753,6 @@ msgid ""
 "Spouse or Children (In the absence of a spouse, the Concubine can be "
 "appointed - Art 326°; Civil Code)"
 msgstr ""
-"Cónyuge o hijos (A falta de cónyuge, puede nombrarse concubina - Art 326°; "
-"Código Civil)"
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
@@ -17095,7 +17324,15 @@ msgid ""
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_massive_contract_end__employee_ids
+msgid "Verified employees"
+msgstr "Verificar empleados"
+
+#. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__education_level__wo_formal_education
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
 msgid "WITHOUT FORMAL EDUCATION"
 msgstr "SIN EDUCACIÓN FORMAL"
 
@@ -17138,7 +17375,13 @@ msgstr "Historial de comunicaciones del sitio web"
 #. module: mkt_recruitment
 #: model:ir.model.fields,field_description:mkt_recruitment.field_hr_job__website_description
 msgid "Website description"
-msgstr "Descripción del Sitio Web"
+msgstr "Descripción del sitio web"
+
+#. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.applicantpartner_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_recruitment.applicantpartner
+msgid "Widowed"
+msgstr "Viudo/a"
 
 #. module: mkt_recruitment
 #: model:ir.model.fields.selection,name:mkt_recruitment.selection__applicant_partner__marital__viudo/a
@@ -17146,6 +17389,11 @@ msgstr "Descripción del Sitio Web"
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
 msgid "Widower"
 msgstr "Viudo/a"
+
+#. module: mkt_recruitment
+#: model:ir.model,name:mkt_recruitment.model_employee_verification_wizard
+msgid "Wizard to display duplicate or missing employees"
+msgstr "Asistente para visualizar los empleados duplicados o ausentes"
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.contract_document_portal_content
@@ -17213,6 +17461,13 @@ msgstr ""
 #, python-format
 msgid "You must define a Contact Name for this applicant."
 msgstr "Debe definir un Nombre de contacto para este candidato."
+
+
+#. module: mkt_recruitment
+#: code:addons/mkt_recruitment/wizard/merge_employee_wizard.py:0
+#, python-format
+msgid "You must select exactly 2 records in order to merge them."
+msgstr "Debe seleccionar exactamente 2 registros para poder fusionarlos."
 
 #. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.thankyou_ir_ui_view
@@ -17728,6 +17983,16 @@ msgid "identificado(a) con DNI N°"
 msgstr ""
 
 #. module: mkt_recruitment
+#: model:ir.model,name:mkt_recruitment.model_imports
+msgid "imports"
+msgstr "Importaciones"
+
+#. module: mkt_recruitment
+#: model:ir.model,name:mkt_recruitment.model_massive_contract_end
+msgid "massive.contract.end"
+msgstr ""
+
+#. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.contract_document_portal_content
 msgid ""
 "nuevos soles) mensuales en contraprestacion por los servicios prestados por \n"
@@ -17887,12 +18152,23 @@ msgid ""
 msgstr ""
 
 #. module: mkt_recruitment
+#: model_terms:ir.ui.view,arch_db:mkt_recruitment.portal_my_details_form_attribute
+msgid "select..."
+msgstr "selecciona..."
+
+#. module: mkt_recruitment
 #: model_terms:ir.ui.view,arch_db:mkt_recruitment.url_sexual_harassment_complaint_ir_ui_view
 #: model_terms:website.page,arch_db:mkt_recruitment.url_sexual_harassment_complaint
 msgid ""
 "siempre y cuando el presunto hostigador sea un trabajador de la \n"
 "                                        empresa."
 msgstr ""
+
+#. module: mkt_recruitment
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_partner__spreadsheet
+#: model:ir.model.fields,field_description:mkt_recruitment.field_res_users__spreadsheet
+msgid "spreadsheet"
+msgstr "Planilla"
 
 #. module: mkt_recruitment
 #: model:res.groups,name:mkt_recruitment.group_user_hr

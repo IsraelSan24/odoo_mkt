@@ -1,12 +1,15 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from datetime import timedelta
+from odoo.fields import Datetime
+import babel.dates
 
 states = [
         ('draft', 'Draft'),
         ('pending', 'Pending'),
         ('confirmed', 'Confirmed'),
-        ('cancelled', 'Cancelled')
+        ('cancelled', 'Cancelled'),
+        ('finished', 'Finished')
     ]
 
 
@@ -56,24 +59,24 @@ class SpaceBooking(models.Model):
 
 
     def _default_full_name(self):
-        for record in self:
-            if record.first_name and record.last_name:
-                record.full_name = f"{record.first_name or ''} {record.last_name or ''}".strip()
-            else:
-                record.full_name = record.user_id.partner_id.name
+        first_name = self.env.user.partner_id.name.split()[0] if self.env.user.partner_id.name else ''
+        last_name = " ".join(self.env.user.partner_id.name.split()[1:]) if self.env.user.partner_id.name else ''
+        return f"{first_name} {last_name}".strip() if first_name or last_name else ''
 
-    @api.depends('room_name')
+
+    @api.depends('full_name', 'room_name')
     def _compute_name(self):
-         for record in self:
-             if record.room_name:
-                 record.name = "Reservation room '%s'" % record.room_name
-             else:
-                 record.name = "Reservation"
+        for record in self:
+            full_name = record.full_name or ""
+            room_name = record.room_name or ""
+            record.name = f"{full_name} - {room_name}"
     
+
     @api.depends('room_id.item_ids')
     def _compute_item_ids(self):
         for rec in self:
             rec.item_ids = rec.room_id.item_ids
+
 
     @api.depends('start_datetime', 'duration')
     def _compute_end_datetime(self):
@@ -84,19 +87,25 @@ class SpaceBooking(models.Model):
                 record.end_datetime = False
 
 
-    @api.constrains('start_datetime', 'duration', 'room_id', 'quantity')
+    @api.constrains('start_datetime', 'duration', 'room_id')
     def _check_availability(self):
         for record in self:
+            if not record.start_datetime or not record.duration:
+                continue
+
+            end_dt = record.start_datetime + timedelta(hours=record.duration)
+
             conflicts = self.search([
                 ('room_id', '=', record.room_id.id),
-                ('start_datetime', '<', record.start_datetime + timedelta(hours=record.duration)),
-                ('start_datetime', '>=', record.start_datetime),
                 ('id', '!=', record.id),
-                ('state', '!=', 'cancelled')
+                ('state', 'not in', ('cancelled', 'finished')),
+                ('start_datetime', '<', end_dt),
+                ('end_datetime', '>', record.start_datetime),
             ])
-            if conflicts:
-                raise ValidationError('The room is already reserved in this time frame.')
 
+            if conflicts:
+                raise ValidationError('La sala ya está reservada en el rango de tiempo seleccionado.')
+    
 
     @api.model
     def create(self, vals):
@@ -108,12 +117,14 @@ class SpaceBooking(models.Model):
         for record in self:
             record.state = 'pending'
             record._notify_receptionist('Requested')
+            record._check_availability()
 
 
     def action_confirm(self):
         for record in self:
             record.state = 'confirmed'
             record._notify_user_and_superuser('Confirmed')
+            record._check_availability()
 
 
     def action_cancel(self):
@@ -128,42 +139,73 @@ class SpaceBooking(models.Model):
             ('groups_id', 'in', [self.env.ref('base.group_system').id])
         ])
         users = [user] + list(system_users)
-        
-        # Obtener los nombres de los ítems relacionados con la reserva
+
+        # Formato de fecha/hora por zona horaria del usuario actual (quien realiza la acción)
+        tz = self.env.user.tz or 'UTC'
+        local_dt = Datetime.context_timestamp(self, self.start_datetime)
+        formatted_dt = babel.dates.format_datetime(local_dt, "d 'de' MMMM 'de' y 'a las' HH:mm", locale='es', tzinfo=tz)
+
+        # Nombres de ítems
         item_names = ', '.join(self.item_ids.mapped('name'))
 
-        if users:
-            notification_ids = [(0, 0, {
-                'res_partner_id': user.partner_id.id,
-                'notification_type': 'inbox'
-            }) for user in users]
-            self.env['mail.message'].create({
-                'message_type': 'notification',
-                'body': f'A room has been {action.lower()}: {self.room_name} with the item(s): {item_names}',
-                'subject': f'Reservation {action}',
-                'partner_ids': [(4, user.partner_id.id) for user in users],
-                'model': self._name,
-                'res_id': self.id,
-                'notification_ids': notification_ids,
-                'author_id': self.env.user.partner_id.id
-            })
+        subject = f'Reserva {action}'
+        body = f'''
+            <p>Tu reserva ha sido <b>{action.lower()}</b> para {self.room_name} el {formatted_dt}.</p>
+            <p>Ítems: {item_names}</p>
+        '''
+
+        # Enviar a los usuarios que tengan un login válido tipo email
+        email_users = [u for u in users if u.login and '@' in u.login]
+
+        if email_users:
+            email_to = ','.join([u.login for u in email_users])
+            mail_values = {
+                'subject': subject,
+                'body_html': body,
+                'email_to': email_to,
+                'email_from': self.env.user.login or 'no-reply@example.com',
+            }
+            self.env['mail.mail'].create(mail_values).send()
 
 
     def _notify_receptionist(self, action):
         receptionist_group = self.env.ref('mkt_roomreserves.group_receptionist')
         receptionists = self.env['res.users'].search([('groups_id', 'in', [receptionist_group.id])])
-        if receptionists:
-            notification_ids = [(0, 0, {
-                'res_partner_id': user.partner_id.id,
-                'notification_type': 'inbox'
-            }) for user in receptionists]
-            self.env['mail.message'].create({
-                'message_type': 'notification',
-                'body': f'A reservation request has been {action.lower()} for room: {self.room_name}.',
-                'subject': f'Room Reservation {action}',
-                'partner_ids': [(4, user.partner_id.id) for user in receptionists],
-                'model': self._name,
-                'res_id': self.id,
-                'notification_ids': notification_ids,
-                'author_id': self.env.user.partner_id.id
-            })
+
+        # Formato de fecha/hora por zona horaria del usuario actual
+        tz = self.env.user.tz or 'UTC'
+        local_dt = Datetime.context_timestamp(self, self.start_datetime)
+        formatted_dt = babel.dates.format_datetime(local_dt, "d 'de' MMMM 'de' y 'a las' HH:mm", locale='es', tzinfo=tz)
+
+        subject = f'Reserva de Sala {action}'
+        body = f'''
+            <p>Una solicitud de reserva ha sido <b>{action.lower()}</b> para la sala {self.room_name} el {formatted_dt}, realizada por {self.full_name}.</p>
+        '''
+
+        # Filtrar recepcionistas con login válido tipo email
+        email_receptionists = [r for r in receptionists if r.login and '@' in r.login]
+
+        if email_receptionists:
+            email_to = ','.join([r.login for r in email_receptionists])
+            mail_values = {
+                'subject': subject,
+                'body_html': body,
+                'email_to': email_to,
+                'email_from': self.env.user.login or 'no-reply@example.com',
+            }
+            self.env['mail.mail'].create(mail_values).send()
+
+    @api.model
+    def _cron_auto_finish_reservations(self):
+        """ Cambia automáticamente a 'finished' las reservas que hayan terminado hace más de un día """
+        today = fields.Datetime.now()
+        one_day_ago = today - timedelta(days=1)
+
+        bookings_to_finish = self.search([
+            ('end_datetime', '<=', one_day_ago),
+            ('state', '=', 'confirmed')
+        ])
+
+        for booking in bookings_to_finish:
+            booking.state = 'finished'
+            booking._notify_user_and_superuser('Finished')

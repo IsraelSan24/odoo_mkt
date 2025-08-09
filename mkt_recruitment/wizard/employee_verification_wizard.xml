@@ -1,0 +1,26 @@
+<odoo>
+    <record id="employee_verification_wizard_view" model="ir.ui.view">
+        <field name="name">employee.verification.wizard.form</field>
+        <field name="model">employee.verification.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Employee verification">
+                <sheet>
+                    <group>
+                        <field name="message" nolabel="1" readonly="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Cerrar" class="oe_highlight" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="employee_verification_wizard_action" model="ir.actions.act_window">
+        <field name="name">Employee Verification</field>
+        <field name="res_model">employee.verification.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="employee_verification_wizard_view"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -10,6 +10,7 @@ class StockSummaryOut(models.Model):
     reference = fields.Char(string="Reference")
     product = fields.Char(string="Product")
     product_id = fields.Many2one(comodel_name='product.product', string="product_id")
+    product_default_code = fields.Char(string="Product Default Code", related="product_id.default_code")
     location = fields.Char(string="Source Locatio")
     location_id = fields.Many2one(comodel_name='stock.location', string="location_id")
     location_dest = fields.Char(string="Destination Location")
@@ -45,6 +46,7 @@ class StockSummaryOut(models.Model):
                 sm.date_done AS date_done,
                 sm.reference AS reference,
                 pt.name AS product,
+                pp.default_code AS product_default_code,
                 sm.product_id AS product_id,
                 sl.name AS location,
                 sm.location_id AS location_id,

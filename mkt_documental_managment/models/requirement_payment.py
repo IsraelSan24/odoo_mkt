@@ -10,7 +10,9 @@ class RequirementPayment(models.Model):
     date_requested = fields.Date(string='Date requested', tracking=True)
     check_or_operation = fields.Selection(selection=[('check','Check'),('operation','Operation')], default='operation', string='Check/Operation', tracking=True)
     payment_bank_id = fields.Many2one(comodel_name="res.bank", string="Bank", domain="[('id','in',current_partner_bank_ids)]", default=lambda self: self._default_payment_bank_id(), tracking=True)
+    bank_accounting_account = fields.Char(string='Bank accounting account')
     operation_number = fields.Char(string='Operation number', tracking=True)
+    check_number = fields.Char(string='Check number', tracking=True)
     payment_date = fields.Date(string='Payment date', tracking=True)
     requirement_payroll_id = fields.Many2one(comodel_name='requirement.payroll', string='Payroll', tracking=True)
     amount = fields.Float(string='Amount', tracking=True)
@@ -25,16 +27,56 @@ class RequirementPayment(models.Model):
         compute='_compute_bank'
     )
 
+
+    @api.constrains('in_bank')
+    def _update_documental_requirement_in_bank(self):
+        """Si cualquier RP tiene in_bank=True, marcar DR como True.
+           Si todos los RP son False, marcar DR como False."""
+        for record in self:
+            if record.requirement_id:
+                new_value = any(record.requirement_id.requirement_payment_ids.mapped('in_bank'))
+                if record.requirement_id.in_bank != new_value:  # Solo escribir si es necesario
+                    record.requirement_id.sudo().write({'in_bank': new_value})
+                
+
     @api.depends('check_or_operation')
     def _compute_bank(self):
         bank_ids = self.env['res.partner'].browse(1).bank_ids.mapped('bank_id').ids
         self.current_partner_bank_ids = bank_ids
 
+
     def _default_payment_bank_id(self):
         bank = self.env['res.bank'].browse(4)
         if bank.exists():
+            if self.requirement_id.amount_currency_type:
+                currency = self.requirement_id.amount_currency_type.lower()
+                if  currency == 'soles':
+                    self.bank_accounting_account = '104103'
+                elif currency == 'dolares':
+                    self.bank_accounting_account = '104102'
             return bank.id
         return False
+
+
+    @api.onchange('payment_bank_id')
+    def onchange_payment_bank(self):
+        for rec in self:
+            if rec.payment_bank_id and rec.requirement_id.amount_currency_type:
+                bank_name = (rec.payment_bank_id.name or '').lower()
+                currency = (rec.requirement_id.amount_currency_type or '').lower()
+                if "bcp" in bank_name and currency == 'soles':
+                    rec.bank_accounting_account = '104101'
+                elif "bcp" in bank_name and currency == 'dolares':
+                    rec.bank_accounting_account = '104105'
+                elif "bbva" in bank_name and currency == 'soles':
+                    rec.bank_accounting_account = '104103'
+                elif "bbva" in bank_name and currency == 'dolares':
+                    rec.bank_accounting_account = '104102'
+                else:
+                    rec.bank_accounting_account = ''
+            else:
+                rec.bank_accounting_account = ''
+
 
     @api.depends("requirement_id.requirement_state")
     def _compute_is_amount_editable(self):

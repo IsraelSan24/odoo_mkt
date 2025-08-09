@@ -67,6 +67,7 @@ class Partner(models.Model):
     birthday = fields.Date(string='Date of Birth')
     emergency_contact = fields.Char(string='Emergency contact')
     emergency_phone = fields.Char(string='Emergency phone')
+    emergency_contact_relationship = fields.Selection(selection=relationship)
     marital = fields.Selection(selection=[
         ('Soltero/a', 'Single'),
         ('Casado/a', 'Married'),
@@ -81,6 +82,7 @@ class Partner(models.Model):
     private_pension_system = fields.Boolean(default=False, string='Private pension system')
     afp_first_job = fields.Boolean(default=False, string='(AFP) First job')
     coming_from_onp = fields.Boolean(deafault=False, string='Coming from ONP')
+    coming_from_afp = fields.Boolean(default=False, string='Coming from AFP')
     national_pension_system = fields.Boolean(default=False, string='National pension system')
 
     education_level = fields.Selection(selection=education_levels, string='Education level')
@@ -102,6 +104,8 @@ class Partner(models.Model):
     familiar_dni6 = fields.Char()
     familiar_dni7 = fields.Char()
     familiar_dni8 = fields.Char()
+    familiar_dni9 = fields.Char()
+    familiar_dni10 = fields.Char()
 
     familiar_full_name1 = fields.Char()
     familiar_full_name2 = fields.Char()
@@ -111,6 +115,8 @@ class Partner(models.Model):
     familiar_full_name6 = fields.Char()
     familiar_full_name7 = fields.Char()
     familiar_full_name8 = fields.Char()
+    familiar_full_name9 = fields.Char()
+    familiar_full_name10 = fields.Char()
 
     familiar_birthday1 = fields.Date()
     familiar_birthday2 = fields.Date()
@@ -120,6 +126,8 @@ class Partner(models.Model):
     familiar_birthday6 = fields.Date()
     familiar_birthday7 = fields.Date()
     familiar_birthday8 = fields.Date()
+    familiar_birthday9 = fields.Date()
+    familiar_birthday10 = fields.Date()
 
     familiar_relationship1 = fields.Selection(selection=relationship)
     familiar_relationship2 = fields.Selection(selection=relationship)
@@ -129,6 +137,8 @@ class Partner(models.Model):
     familiar_relationship6 = fields.Selection(selection=relationship)
     familiar_relationship7 = fields.Selection(selection=relationship)
     familiar_relationship8 = fields.Selection(selection=relationship)
+    familiar_relationship9 = fields.Selection(selection=relationship)
+    familiar_relationship10 = fields.Selection(selection=relationship)
 
     familiar_gender1 = fields.Selection(selection=genders)
     familiar_gender2 = fields.Selection(selection=genders)
@@ -138,6 +148,8 @@ class Partner(models.Model):
     familiar_gender6 = fields.Selection(selection=genders)
     familiar_gender7 = fields.Selection(selection=genders)
     familiar_gender8 = fields.Selection(selection=genders)
+    familiar_gender9 = fields.Selection(selection=genders)
+    familiar_gender10 = fields.Selection(selection=genders)
 
     familiar_address1 = fields.Char()
     familiar_address2 = fields.Char()
@@ -147,6 +159,8 @@ class Partner(models.Model):
     familiar_address6 = fields.Char()
     familiar_address7 = fields.Char()
     familiar_address8 = fields.Char()
+    familiar_address9 = fields.Char()
+    familiar_address10 = fields.Char()
     
     familiar_dnifile1 = fields.Binary()
     familiar_dnifile2 = fields.Binary()
@@ -156,6 +170,8 @@ class Partner(models.Model):
     familiar_dnifile6 = fields.Binary()
     familiar_dnifile7 = fields.Binary()
     familiar_dnifile8 = fields.Binary()
+    familiar_dnifile9 = fields.Binary()
+    familiar_dnifile10 = fields.Binary()
 
     familiar_dnifile1_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
     familiar_dnifile2_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
@@ -165,6 +181,8 @@ class Partner(models.Model):
     familiar_dnifile6_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
     familiar_dnifile7_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
     familiar_dnifile8_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
+    familiar_dnifile9_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
+    familiar_dnifile10_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
 
     familiar_dnifile1_back = fields.Binary()
     familiar_dnifile2_back = fields.Binary()
@@ -174,6 +192,8 @@ class Partner(models.Model):
     familiar_dnifile6_back = fields.Binary()
     familiar_dnifile7_back = fields.Binary()
     familiar_dnifile8_back = fields.Binary()
+    familiar_dnifile9_back = fields.Binary()
+    familiar_dnifile10_back = fields.Binary()
 
     familiar_dnifile1_back_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
     familiar_dnifile2_back_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
@@ -183,6 +203,8 @@ class Partner(models.Model):
     familiar_dnifile6_back_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
     familiar_dnifile7_back_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
     familiar_dnifile8_back_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
+    familiar_dnifile9_back_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
+    familiar_dnifile10_back_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
 
     is_beneficiary1 = fields.Boolean(default=True, string='Is Beneficiary?')
     is_beneficiary2 = fields.Boolean(default=True, string='Is Beneficiary?')
@@ -192,6 +214,8 @@ class Partner(models.Model):
     is_beneficiary6 = fields.Boolean(default=True, string='Is Beneficiary?')
     is_beneficiary7 = fields.Boolean(default=True, string='Is Beneficiary?')
     is_beneficiary8 = fields.Boolean(default=True, string='Is Beneficiary?')
+    is_beneficiary9 = fields.Boolean(default=True, string='Is Beneficiary?')
+    is_beneficiary10 = fields.Boolean(default=True, string='Is Beneficiary?')
 
     current_dni = fields.Binary(string='Current DNI(Front)')
     current_dni_filename = fields.Char(compute='compute_document_filename', string='Current DNI filename(Front)', store=True)
@@ -235,6 +259,154 @@ class Partner(models.Model):
 
     is_validate = fields.Boolean(default=False, string='Is Validate')
 
+    # Campos para hijos
+    child_dni1 = fields.Char(string='DNI del hijo 1')
+    child_dni2 = fields.Char(string='DNI del hijo 2')
+    child_dni3 = fields.Char(string='DNI del hijo 3')
+    child_dni4 = fields.Char(string='DNI del hijo 4')
+    child_dni5 = fields.Char(string='DNI del hijo 5')
+    child_dni6 = fields.Char(string='DNI del hijo 6')
+
+    child_full_name1 = fields.Char(string='Nombre completo del hijo 1')
+    child_full_name2 = fields.Char(string='Nombre completo del hijo 2')
+    child_full_name3 = fields.Char(string='Nombre completo del hijo 3')
+    child_full_name4 = fields.Char(string='Nombre completo del hijo 4')
+    child_full_name5 = fields.Char(string='Nombre completo del hijo 5')
+    child_full_name6 = fields.Char(string='Nombre completo del hijo 6')
+
+    child_birthday1 = fields.Date(string='Fecha de nacimiento del hijo 1')
+    child_birthday2 = fields.Date(string='Fecha de nacimiento del hijo 2')
+    child_birthday3 = fields.Date(string='Fecha de nacimiento del hijo 3')
+    child_birthday4 = fields.Date(string='Fecha de nacimiento del hijo 4')
+    child_birthday5 = fields.Date(string='Fecha de nacimiento del hijo 5')
+    child_birthday6 = fields.Date(string='Fecha de nacimiento del hijo 6')
+
+    child_gender1 = fields.Selection(selection=genders, string='Género del hijo 1')
+    child_gender2 = fields.Selection(selection=genders, string='Género del hijo 2')
+    child_gender3 = fields.Selection(selection=genders, string='Género del hijo 3')
+    child_gender4 = fields.Selection(selection=genders, string='Género del hijo 4')
+    child_gender5 = fields.Selection(selection=genders, string='Género del hijo 5')
+    child_gender6 = fields.Selection(selection=genders, string='Género del hijo 6')
+
+    child_relationship1 = fields.Selection(selection=relationship, string='Relación del hijo 1')
+    child_relationship2 = fields.Selection(selection=relationship, string='Relación del hijo 2')
+    child_relationship3 = fields.Selection(selection=relationship, string='Relación del hijo 3')
+    child_relationship4 = fields.Selection(selection=relationship, string='Relación del hijo 4')
+    child_relationship5 = fields.Selection(selection=relationship, string='Relación del hijo 5')
+    child_relationship6 = fields.Selection(selection=relationship, string='Relación del hijo 6')
+
+    child_address1 = fields.Char(string='Dirección del hijo 1')
+    child_address2 = fields.Char(string='Dirección del hijo 2')
+    child_address3 = fields.Char(string='Dirección del hijo 3')
+    child_address4 = fields.Char(string='Dirección del hijo 4')
+    child_address5 = fields.Char(string='Dirección del hijo 5')
+    child_address6 = fields.Char(string='Dirección del hijo 6')
+
+    child_dnifile1 = fields.Binary(string='DNI hijo 1 (Frente)')
+    child_dnifile2 = fields.Binary(string='DNI hijo 2 (Frente)')
+    child_dnifile3 = fields.Binary(string='DNI hijo 3 (Frente)')
+    child_dnifile4 = fields.Binary(string='DNI hijo 4 (Frente)')
+    child_dnifile5 = fields.Binary(string='DNI hijo 5 (Frente)')
+    child_dnifile6 = fields.Binary(string='DNI hijo 6 (Frente)')
+
+    child_dnifile1_filename = fields.Char(compute='compute_child_document_filename', string='Filename DNI hijo 1 (Frente)', store=True)
+    child_dnifile2_filename = fields.Char(compute='compute_child_document_filename', string='Filename DNI hijo 2 (Frente)', store=True)
+    child_dnifile3_filename = fields.Char(compute='compute_child_document_filename', string='Filename DNI hijo 3 (Frente)', store=True)
+    child_dnifile4_filename = fields.Char(compute='compute_child_document_filename', string='Filename DNI hijo 4 (Frente)', store=True)
+    child_dnifile5_filename = fields.Char(compute='compute_child_document_filename', string='Filename DNI hijo 5 (Frente)', store=True)
+    child_dnifile6_filename = fields.Char(compute='compute_child_document_filename', string='Filename DNI hijo 6 (Frente)', store=True)
+
+    child_dnifile1_back = fields.Binary(string='DNI hijo 1 (Reverso)')
+    child_dnifile2_back = fields.Binary(string='DNI hijo 2 (Reverso)')
+    child_dnifile3_back = fields.Binary(string='DNI hijo 3 (Reverso)')
+    child_dnifile4_back = fields.Binary(string='DNI hijo 4 (Reverso)')
+    child_dnifile5_back = fields.Binary(string='DNI hijo 5 (Reverso)')
+    child_dnifile6_back = fields.Binary(string='DNI hijo 6 (Reverso)')
+
+    child_dnifile1_back_filename = fields.Char(compute='compute_child_document_filename', string='Filename DNI hijo 1 (Reverso)', store=True)
+    child_dnifile2_back_filename = fields.Char(compute='compute_child_document_filename', string='Filename DNI hijo 2 (Reverso)', store=True)
+    child_dnifile3_back_filename = fields.Char(compute='compute_child_document_filename', string='Filename DNI hijo 3 (Reverso)', store=True)
+    child_dnifile4_back_filename = fields.Char(compute='compute_child_document_filename', string='Filename DNI hijo 4 (Reverso)', store=True)
+    child_dnifile5_back_filename = fields.Char(compute='compute_child_document_filename', string='Filename DNI hijo 5 (Reverso)', store=True)
+    child_dnifile6_back_filename = fields.Char(compute='compute_child_document_filename', string='Filename DNI hijo 6 (Reverso)', store=True)
+
+    children_to_display = fields.Integer(compute='_compute_children_to_display', store=False)
+
+    @api.depends('children')
+    def _compute_children_to_display(self):
+        for record in self:
+            # Limitar a un máximo de 6 hijos
+            if record.children and record.children > 0:
+                record.children_to_display = min(record.children, 6)
+            else:
+                record.children_to_display = 0
+
+    @api.depends('child_dni1', 'child_dni2', 'child_dni3', 'child_dni4', 'child_dni5', 'child_dni6',
+                'child_dnifile1', 'child_dnifile2', 'child_dnifile3', 'child_dnifile4', 'child_dnifile5', 'child_dnifile6',
+                'child_dnifile1_back', 'child_dnifile2_back', 'child_dnifile3_back', 'child_dnifile4_back', 'child_dnifile5_back', 'child_dnifile6_back')
+    def compute_child_document_filename(self):
+        for rec in self:
+            # Generar nombres de archivo para los DNI de los hijos (frente)
+            if rec.child_dni1 and rec.child_dnifile1:
+                rec.child_dnifile1_filename = _('DNI(Frente)-Hijo-') + rec.child_dni1
+            if rec.child_dni2 and rec.child_dnifile2:
+                rec.child_dnifile2_filename = _('DNI(Frente)-Hijo-') + rec.child_dni2
+            if rec.child_dni3 and rec.child_dnifile3:
+                rec.child_dnifile3_filename = _('DNI(Frente)-Hijo-') + rec.child_dni3
+            if rec.child_dni4 and rec.child_dnifile4:
+                rec.child_dnifile4_filename = _('DNI(Frente)-Hijo-') + rec.child_dni4
+            if rec.child_dni5 and rec.child_dnifile5:
+                rec.child_dnifile5_filename = _('DNI(Frente)-Hijo-') + rec.child_dni5
+            if rec.child_dni6 and rec.child_dnifile6:
+                rec.child_dnifile6_filename = _('DNI(Frente)-Hijo-') + rec.child_dni6
+                
+            # Generar nombres de archivo para los DNI de los hijos (reverso)
+            if rec.child_dni1 and rec.child_dnifile1_back:
+                rec.child_dnifile1_back_filename = _('DNI(Reverso)-Hijo-') + rec.child_dni1
+            if rec.child_dni2 and rec.child_dnifile2_back:
+                rec.child_dnifile2_back_filename = _('DNI(Reverso)-Hijo-') + rec.child_dni2
+            if rec.child_dni3 and rec.child_dnifile3_back:
+                rec.child_dnifile3_back_filename = _('DNI(Reverso)-Hijo-') + rec.child_dni3
+            if rec.child_dni4 and rec.child_dnifile4_back:
+                rec.child_dnifile4_back_filename = _('DNI(Reverso)-Hijo-') + rec.child_dni4
+            if rec.child_dni5 and rec.child_dnifile5_back:
+                rec.child_dnifile5_back_filename = _('DNI(Reverso)-Hijo-') + rec.child_dni5
+            if rec.child_dni6 and rec.child_dnifile6_back:
+                rec.child_dnifile6_back_filename = _('DNI(Reverso)-Hijo-') + rec.child_dni6
+
+    @api.onchange('children')
+    def _onchange_children(self):
+        if self.children and self.children > 0:
+            count = min(self.children, 6)
+            for i in range(1, count + 1):
+                gender_field = f'child_gender{i}'
+                relationship_field = f'child_relationship{i}'
+
+                # Limpiar el valor por defecto primero
+                if hasattr(self, relationship_field):
+                    setattr(self, relationship_field, False)
+
+                # Asignar valor solo si el género está definido
+                if hasattr(self, gender_field):
+                    gender = getattr(self, gender_field)
+                    if gender == 'female':
+                        setattr(self, relationship_field, 'Hija')
+                    elif gender == 'male':
+                        setattr(self, relationship_field, 'Hijo')
+
+    @api.onchange('child_gender1', 'child_gender2', 'child_gender3', 
+                'child_gender4', 'child_gender5', 'child_gender6')
+    def _onchange_children_gender(self):
+        # Actualizar la relación basado en el género
+        for i in range(1, 7):
+            gender_field = f'child_gender{i}'
+            relationship_field = f'child_relationship{i}'
+            
+            if hasattr(self, gender_field) and getattr(self, gender_field):
+                if getattr(self, gender_field) == 'female':
+                    setattr(self, relationship_field, 'Hija')
+                else:
+                    setattr(self, relationship_field, 'Hijo')
 
     @api.onchange('current_dni_back')
     def onchange_current_dni_back(self):
@@ -309,8 +481,8 @@ class Partner(models.Model):
 
 
     @api.depends('vat','current_dni','current_dni_back','services_receipt','certijoven','t_record','electronic_fine','certificate_of_vaccination','health_card','contributions_report',
-                 'familiar_dnifile1','familiar_dnifile2','familiar_dnifile3','familiar_dnifile4','familiar_dnifile5','familiar_dnifile6','familiar_dnifile7','familiar_dnifile8',
-                 'familiar_dnifile1_back','familiar_dnifile2_back','familiar_dnifile3_back','familiar_dnifile4_back','familiar_dnifile5_back','familiar_dnifile6_back','familiar_dnifile7_back','familiar_dnifile8_back')
+                 'familiar_dnifile1','familiar_dnifile2','familiar_dnifile3','familiar_dnifile4','familiar_dnifile5','familiar_dnifile6','familiar_dnifile7','familiar_dnifile8','familiar_dnifile9','familiar_dnifile10', 
+                 'familiar_dnifile1_back','familiar_dnifile2_back','familiar_dnifile3_back','familiar_dnifile4_back','familiar_dnifile5_back','familiar_dnifile6_back','familiar_dnifile7_back','familiar_dnifile8_back','familiar_dnifile9_back','familiar_dnifile10_back')
     def compute_document_filename(self):
         for rec in self:
             if rec.vat and rec.current_dni:
@@ -372,6 +544,16 @@ class Partner(models.Model):
             if rec.familiar_dni8 and rec.familiar_dnifile8_back:
                 rec.familiar_dnifile8_back_filename = _('DNI(Back)-') + rec.familiar_dni8
 
+            if rec.familiar_dni9 and rec.familiar_dnifile9:
+                rec.familiar_dnifile9_filename = _('DNI(Front)-') + rec.familiar_dni9
+            if rec.familiar_dni9 and rec.familiar_dnifile9_back:
+                rec.familiar_dnifile9_back_filename = _('DNI(Back)-') + rec.familiar_dni9
+
+            if rec.familiar_dni10 and rec.familiar_dnifile10:
+                rec.familiar_dnifile10_filename = _('DNI(Front)-') + rec.familiar_dni10
+            if rec.familiar_dni10 and rec.familiar_dnifile10_back:
+                rec.familiar_dnifile10_back_filename = _('DNI(Back)-') + rec.familiar_dni10
+
 
     @api.onchange('birthday')
     def _onchange_age(self):
@@ -395,98 +577,21 @@ class Partner(models.Model):
             existing_document = self.env['recruitment.document'].search([('partner_id', '=', rec.id)], limit=1)
             if existing_document:
                 if existing_document.state == 'signed':
-                    raise UserError(_('This person has already signed its documents.'))
+                    raise UserError(_('This person has already signed its documents (%s).') % existing_document.name)
                 else:
-                    user_id = self.env['res.users'].search([('partner_id', '=', rec.id)], limit=1)
-                    existing_document.write({
-                        'partner_id': rec.id,
-                        'user_id': rec.belong_applicant_id.hr_responsible_contract_id,
-
-                        'partner_name': rec.name,
-                        'email': rec.personal_email,
-                        'vat': rec.vat,
-                        'street': rec.street,
-                        'district': rec.l10n_pe_district.name,
-                        'province': rec.city_id.name,
-                        'department': rec.state_id.name,
-                        'emergency_contact': rec.emergency_contact,
-                        'emergency_phone': rec.emergency_phone,
-                        'birthday': rec.birthday,
-                        'phone': rec.phone,
-                        'company': user_id.company_id.name,
-                        'company_department': user_id.company_id.state_id.name,
-                        'company_vat': user_id.company_id.vat,
-                        'gender': rec.gender,
-                        'familiar_dni1': rec.familiar_dni1,
-                        'familiar_dni2': rec.familiar_dni2,
-                        'familiar_dni3': rec.familiar_dni3,
-                        'familiar_dni4': rec.familiar_dni4,
-                        'familiar_dni5': rec.familiar_dni5,
-                        'familiar_dni6': rec.familiar_dni6,
-                        'familiar_dni7': rec.familiar_dni7,
-                        'familiar_dni8': rec.familiar_dni8,
-                        'familiar_full_name1': rec.familiar_full_name1,
-                        'familiar_full_name2': rec.familiar_full_name2,
-                        'familiar_full_name3': rec.familiar_full_name3,
-                        'familiar_full_name4': rec.familiar_full_name4,
-                        'familiar_full_name5': rec.familiar_full_name5,
-                        'familiar_full_name6': rec.familiar_full_name6,
-                        'familiar_full_name7': rec.familiar_full_name7,
-                        'familiar_full_name8': rec.familiar_full_name8,
-                        'familiar_birthday1': rec.familiar_birthday1,
-                        'familiar_birthday2': rec.familiar_birthday2,
-                        'familiar_birthday3': rec.familiar_birthday3,
-                        'familiar_birthday4': rec.familiar_birthday4,
-                        'familiar_birthday5': rec.familiar_birthday5,
-                        'familiar_birthday6': rec.familiar_birthday6,
-                        'familiar_birthday7': rec.familiar_birthday7,
-                        'familiar_birthday8': rec.familiar_birthday8,
-                        'familiar_relationship1': rec.familiar_relationship1,
-                        'familiar_relationship2': rec.familiar_relationship2,
-                        'familiar_relationship3': rec.familiar_relationship3,
-                        'familiar_relationship4': rec.familiar_relationship4,
-                        'familiar_relationship5': rec.familiar_relationship5,
-                        'familiar_relationship6': rec.familiar_relationship6,
-                        'familiar_relationship7': rec.familiar_relationship7,
-                        'familiar_relationship8': rec.familiar_relationship8,
-                        'familiar_gender1': rec.familiar_gender1,
-                        'familiar_gender2': rec.familiar_gender2,
-                        'familiar_gender3': rec.familiar_gender3,
-                        'familiar_gender4': rec.familiar_gender4,
-                        'familiar_gender5': rec.familiar_gender5,
-                        'familiar_gender6': rec.familiar_gender6,
-                        'familiar_gender7': rec.familiar_gender7,
-                        'familiar_gender8': rec.familiar_gender8,
-                        'familiar_address1': rec.familiar_address1,
-                        'familiar_address2': rec.familiar_address2,
-                        'familiar_address3': rec.familiar_address3,
-                        'familiar_address4': rec.familiar_address4,
-                        'familiar_address5': rec.familiar_address5,
-                        'familiar_address6': rec.familiar_address6,
-                        'familiar_address7': rec.familiar_address7,
-                        'familiar_address8': rec.familiar_address8,
-                        'is_beneficiary1': rec.is_beneficiary1,
-                        'is_beneficiary2': rec.is_beneficiary2,
-                        'is_beneficiary3': rec.is_beneficiary3,
-                        'is_beneficiary4': rec.is_beneficiary4,
-                        'is_beneficiary5': rec.is_beneficiary5,
-                        'is_beneficiary6': rec.is_beneficiary6,
-                        'is_beneficiary7': rec.is_beneficiary7,
-                        'is_beneficiary8': rec.is_beneficiary8,
-                        'private_pension_system': rec.private_pension_system,
-                        'afp_first_job': rec.afp_first_job,
-                        'coming_from_onp': rec.coming_from_onp,
-                        'national_pension_system': rec.national_pension_system,
-                        'identification_type': rec.l10n_latam_identification_type_id.name,
-                        'job': rec.employee_ids.job_id.name
-                    })
-                    existing_document.send_to_sign()
+                    return {
+                        'effect': {
+                            'fadeout': 'slow',
+                            'message': _('Document %s has already been sent.\n(Archive it to send another)') % existing_document.name,
+                            'type': 'custom_notification_animation',
+                            'level': 'info',
+                        }
+                    }     
             else:
                 user_id = self.env['res.users'].search([('partner_id', '=', rec.id)], limit=1)
                 document = self.env['recruitment.document'].create({
                     'partner_id': rec.id,
                     'user_id': rec.belong_applicant_id.hr_responsible_contract_id.id,
-
                     'partner_name': rec.name,
                     'email': rec.personal_email,
                     'vat': rec.vat,
@@ -496,6 +601,7 @@ class Partner(models.Model):
                     'department': rec.state_id.name,
                     'emergency_contact': rec.emergency_contact,
                     'emergency_phone': rec.emergency_phone,
+                    'emergency_contact_relationship': rec.emergency_contact_relationship,
                     'birthday': rec.birthday,
                     'phone': rec.phone,
                     'company': user_id.company_id.name,
@@ -510,6 +616,8 @@ class Partner(models.Model):
                     'familiar_dni6': rec.familiar_dni6,
                     'familiar_dni7': rec.familiar_dni7,
                     'familiar_dni8': rec.familiar_dni8,
+                    'familiar_dni9': rec.familiar_dni9,
+                    'familiar_dni10': rec.familiar_dni10,
                     'familiar_full_name1': rec.familiar_full_name1,
                     'familiar_full_name2': rec.familiar_full_name2,
                     'familiar_full_name3': rec.familiar_full_name3,
@@ -518,6 +626,8 @@ class Partner(models.Model):
                     'familiar_full_name6': rec.familiar_full_name6,
                     'familiar_full_name7': rec.familiar_full_name7,
                     'familiar_full_name8': rec.familiar_full_name8,
+                    'familiar_full_name9': rec.familiar_full_name9,
+                    'familiar_full_name10': rec.familiar_full_name10,
                     'familiar_birthday1': rec.familiar_birthday1,
                     'familiar_birthday2': rec.familiar_birthday2,
                     'familiar_birthday3': rec.familiar_birthday3,
@@ -526,6 +636,8 @@ class Partner(models.Model):
                     'familiar_birthday6': rec.familiar_birthday6,
                     'familiar_birthday7': rec.familiar_birthday7,
                     'familiar_birthday8': rec.familiar_birthday8,
+                    'familiar_birthday9': rec.familiar_birthday9,
+                    'familiar_birthday10': rec.familiar_birthday10,
                     'familiar_relationship1': rec.familiar_relationship1,
                     'familiar_relationship2': rec.familiar_relationship2,
                     'familiar_relationship3': rec.familiar_relationship3,
@@ -534,6 +646,8 @@ class Partner(models.Model):
                     'familiar_relationship6': rec.familiar_relationship6,
                     'familiar_relationship7': rec.familiar_relationship7,
                     'familiar_relationship8': rec.familiar_relationship8,
+                    'familiar_relationship9': rec.familiar_relationship9,
+                    'familiar_relationship10': rec.familiar_relationship10,
                     'familiar_gender1': rec.familiar_gender1,
                     'familiar_gender2': rec.familiar_gender2,
                     'familiar_gender3': rec.familiar_gender3,
@@ -542,6 +656,8 @@ class Partner(models.Model):
                     'familiar_gender6': rec.familiar_gender6,
                     'familiar_gender7': rec.familiar_gender7,
                     'familiar_gender8': rec.familiar_gender8,
+                    'familiar_gender9': rec.familiar_gender9,
+                    'familiar_gender10': rec.familiar_gender10,
                     'familiar_address1': rec.familiar_address1,
                     'familiar_address2': rec.familiar_address2,
                     'familiar_address3': rec.familiar_address3,
@@ -550,6 +666,8 @@ class Partner(models.Model):
                     'familiar_address6': rec.familiar_address6,
                     'familiar_address7': rec.familiar_address7,
                     'familiar_address8': rec.familiar_address8,
+                    'familiar_address9': rec.familiar_address9,
+                    'familiar_address10': rec.familiar_address10,
                     'is_beneficiary1': rec.is_beneficiary1,
                     'is_beneficiary2': rec.is_beneficiary2,
                     'is_beneficiary3': rec.is_beneficiary3,
@@ -558,14 +676,24 @@ class Partner(models.Model):
                     'is_beneficiary6': rec.is_beneficiary6,
                     'is_beneficiary7': rec.is_beneficiary7,
                     'is_beneficiary8': rec.is_beneficiary8,
+                    'is_beneficiary9': rec.is_beneficiary9,
+                    'is_beneficiary10': rec.is_beneficiary10,
                     'private_pension_system': rec.private_pension_system,
                     'afp_first_job': rec.afp_first_job,
                     'coming_from_onp': rec.coming_from_onp,
+                    'coming_from_afp': rec.coming_from_afp,
                     'national_pension_system': rec.national_pension_system,
                     'identification_type': rec.l10n_latam_identification_type_id.name,
                     'job': rec.employee_ids.job_id.name
                 })
                 document.send_to_sign()
+                return {
+                        'effect': {
+                            'fadeout': 'slow',
+                            'message': _('Document %s sent') % document.name,
+                            'type': 'rainbow_man',
+                        }
+                    }               
 
 
     def attach_applicant_files(self):
@@ -579,11 +707,11 @@ class Partner(models.Model):
                     'health_card', 'contributions_report'
                 ]
             ] + [
-                getattr(self, f'familiar_dnifile{i}_filename') for i in range(1, 9)
-                if getattr(self, f'familiar_relationship{i}') == 'Hijo' or 'Hija'
+                getattr(self, f'child_dnifile{i}_filename') for i in range(1, 7)
+                if getattr(self, f'child_relationship{i}') == 'Hijo' or 'Hija'
             ] + [
-                getattr(self, f'familiar_dnifile{i}_back_filename') for i in range(1, 9)
-                if getattr(self, f'familiar_relationship{i}') == 'Hijo' or 'Hija'
+                getattr(self, f'child_dnifile{i}_back_filename') for i in range(1, 7)
+                if getattr(self, f'child_relationship{i}') == 'Hijo' or 'Hija'
             ])
         ])
         attachments_to_unlink.unlink()
@@ -604,14 +732,14 @@ class Partner(models.Model):
                 }
                 attachment = self.env['ir.attachment'].create(attach)
                 attachments.append(attachment.id)
-        for index in range(1, 9):
-            relationship_field = f'familiar_relationship{index}'
-            familiar_dni = f'familiar_dni{index}'
-            familiar_dnifile = f'familiar_dnifile{index}'
-            familiar_dnifile_back = f'familiar_dnifile{index}_back'
+        for index in range(1, 7):
+            relationship_field = f'child_relationship{index}'
+            child_dni = f'child_dni{index}'
+            child_dnifile = f'child_dnifile{index}'
+            child_dnifile_back = f'child_dnifile{index}_back'
 
-            if getattr(self, relationship_field) in ('Hijo','Hija') and getattr(self, familiar_dni) and getattr(self, familiar_dnifile):
-                field = familiar_dnifile
+            if getattr(self, relationship_field) in ('Hijo','Hija') and getattr(self, child_dni) and getattr(self, child_dnifile):
+                field = child_dnifile
                 attach = {
                     'name': getattr(self, f'{field}_filename'),
                     'datas': getattr(self, field),
@@ -622,8 +750,8 @@ class Partner(models.Model):
                 }
                 attachment = self.env['ir.attachment'].create(attach)
                 attachments.append(attachment.id)
-            if getattr(self, relationship_field) in ('Hijo','Hija') and getattr(self, familiar_dni) and getattr(self, familiar_dnifile_back):
-                field = familiar_dnifile_back
+            if getattr(self, relationship_field) in ('Hijo','Hija') and getattr(self, child_dni) and getattr(self, child_dnifile_back):
+                field = child_dnifile_back
                 attach = {
                     'name': getattr(self, f'{field}_filename'),
                     'datas': getattr(self, field),

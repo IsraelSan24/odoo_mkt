@@ -16,7 +16,7 @@ class ApplicantPartner(http.Controller):
         districts = request.env['l10n_pe.res.city.district'].sudo().search([])
         nationalities = request.env['res.country'].sudo().search([('demonym','!=',False)])
         identifications = request.env['l10n_latam.identification.type'].sudo().search([
-            ('name', 'in', ('DNI', 'PTP', 'Pasaporte', 'Cédula Extranjera'))
+            ('name', 'in', ('DNI', 'PTP', 'Pasaporte', 'Cédula Extranjera', 'Carnet de Extranjeria'))
         ])
         values = {
             'countries': countries,
@@ -31,9 +31,10 @@ class ApplicantPartner(http.Controller):
 
     @http.route('/applicantpartner/requested', type='http', auth='public', website=True)
     def applicantpartner_requested(self, **post):
-        if  not post['education_start_date']:
+        # Asegura que los campos opcionales estén definidos o sean None
+        if not post.get('education_start_date'):
             post['education_start_date'] = None
-        if  not post['education_end_date']:
+        if not post.get('education_end_date'):
             post['education_end_date'] = None
 
         dni = post.get('dni')
@@ -55,6 +56,7 @@ class RecruitmentPortal(portal.CustomerPortal):
         "emergency_phone",
         "reference_location",
         "emergency_contact",
+        "emergency_contact_relationship",
         "l10n_pe_district",
         "vat",
         "gender",
@@ -73,33 +75,33 @@ class RecruitmentPortal(portal.CustomerPortal):
         "is_validate",
         "familiar_dni1",
         "familiar_dni2","familiar_dni3","familiar_dni4",
-        "familiar_dni5","familiar_dni6","familiar_dni7","familiar_dni8",
+        "familiar_dni5","familiar_dni6","familiar_dni7","familiar_dni8","familiar_dni9","familiar_dni10",
         "familiar_full_name1",
         "familiar_full_name2","familiar_full_name3",
         "familiar_full_name4","familiar_full_name5","familiar_full_name6",
-        "familiar_full_name7","familiar_full_name8",
+        "familiar_full_name7","familiar_full_name8","familiar_full_name9","familiar_full_name10",
         "familiar_birthday1",
         "familiar_birthday2","familiar_birthday3",
         "familiar_birthday4","familiar_birthday5","familiar_birthday6",
-        "familiar_birthday7","familiar_birthday8",
+        "familiar_birthday7","familiar_birthday8","familiar_birthday9","familiar_birthday10",
         "familiar_relationship1",
         "familiar_relationship2",
         "familiar_relationship3","familiar_relationship4",
         "familiar_relationship5","familiar_relationship6",
-        "familiar_relationship7","familiar_relationship8",
+        "familiar_relationship7","familiar_relationship8","familiar_relationship9","familiar_relationship10",
         "familiar_gender1",
         "familiar_gender2","familiar_gender3",
         "familiar_gender4","familiar_gender5","familiar_gender6",
-        "familiar_gender7","familiar_gender8",
+        "familiar_gender7","familiar_gender8","familiar_gender9","familiar_gender10",
         "familiar_address1",
         "familiar_address2","familiar_address3",
         "familiar_address4","familiar_address5","familiar_address6",
-        "familiar_address7","familiar_address8",
+        "familiar_address7","familiar_address8","familiar_address9","familiar_address10",
         "familiar_dnifile1","familiar_dnifile2","familiar_dnifile3",
         "familiar_dnifile4","familiar_dnifile5","familiar_dnifile6",
-        "familiar_dnifile7","familiar_dnifile8",
+        "familiar_dnifile7","familiar_dnifile8","familiar_dnifile9","familiar_dnifile10",
         "private_pension_system","national_pension_system",
-        "afp_first_job","coming_from_onp",
+        "afp_first_job","coming_from_onp","coming_from_afp",
         "current_dni","services_receipt","certijoven",
     ]
 
@@ -124,7 +126,6 @@ class RecruitmentPortal(portal.CustomerPortal):
         return [
             ('employee_id','=',employee.id),
             ('employee_id','!=',False),
-            ('state','in',('draft','open')),
             ('is_sended','=',True),
         ]
 
@@ -153,6 +154,7 @@ class RecruitmentPortal(portal.CustomerPortal):
         }
 
 
+
     @http.route(['/my/account'], type='http', auth='user', website=True)
     def account(self, redirect=None, **post):
         values = self._prepare_portal_layout_values()
@@ -161,84 +163,103 @@ class RecruitmentPortal(portal.CustomerPortal):
             'error': {},
             'error_message': [],
         })
+
         if post and request.httprequest.method == 'POST':
-            post['private_pension_system'] = post.get('private_pension_system', False)
-            post['national_pension_system'] = post.get('national_pension_system', False)
-            post['coming_from_onp'] = post.get('coming_from_onp', False)
-            post['afp_first_job'] = post.get('afp_first_job', False)
-            error, error_message = self.details_form_validate(post)
+            # 🟢 Evitar errores con checkboxes (que no se mandan si no están marcados)
+            for field in [
+                'private_pension_system', 'national_pension_system',
+                'coming_from_onp', 'coming_from_afp', 'afp_first_job'
+            ]:
+                post[field] = post.get(field, False)
+
+            # 🔍 Obtener campos válidos desde el modelo res.partner
+            partner_fields = request.env['res.partner'].sudo().fields_get()
+            valid_keys = list(partner_fields.keys())
+
+            # 🟡 Filtramos post para evitar errores por campos inexistentes
+            safe_post = {k: v for k, v in post.items() if k in valid_keys}
+
+            # 🟢 Convertir a int los IDs si existen
+            for field in ['country_id', 'state_id']:
+                if field in safe_post:
+                    try:
+                        safe_post[field] = int(safe_post[field])
+                    except Exception:
+                        safe_post[field] = False
+
+            # 🟢 Ajuste si usas "zipcode"
+            if 'zipcode' in safe_post:
+                safe_post['zip'] = safe_post.pop('zipcode')
+
+            # 🟢 Validación opcional solo para campos reales
+            error, error_message = {}, []
+            for field_name in self.MANDATORY_BILLING_FIELDS:
+                if field_name in valid_keys and not post.get(field_name):
+                    error[field_name] = 'missing'
+
             values.update({'error': error, 'error_message': error_message})
             values.update(post)
+
             if not error:
-                values = {key: post[key] for key in self.MANDATORY_BILLING_FIELDS}
-                values.update({key: post[key] for key in self.OPTIONAL_BILLING_FIELDS if key in post})
-                for field in set(['country_id', 'state_id']) & set(values.keys()):
-                    try:
-                        values[field] = int(values[field])
-                    except:
-                        values[field] = False
-                values.update({'zip': values.pop('zipcode', '')})
-                values['is_validate'] = True
-                partner.sudo().write(values)
+                safe_post['is_validate'] = True
+                partner.sudo().write(safe_post)
                 partner.sudo()._onchange_age()
-                if redirect:
-                    return request.redirect(redirect)
-                return request.redirect('/my/documents')
-        countries = request.env['res.country'].sudo().search([])
-        states = request.env['res.country.state'].sudo().search([])
-        districts = request.env['l10n_pe.res.city.district'].sudo().search([])
-        cities = request.env['res.city'].sudo().search([])
-        genders = partner.gender
-        education_levels = partner.education_level
-        maritals = partner.marital
-        familiar_relationship1s = partner.familiar_relationship1
-        familiar_relationship2s = partner.familiar_relationship2
-        familiar_relationship3s = partner.familiar_relationship3
-        familiar_relationship4s = partner.familiar_relationship4
-        familiar_relationship5s = partner.familiar_relationship5
-        familiar_relationship6s = partner.familiar_relationship6
-        familiar_relationship7s = partner.familiar_relationship7
-        familiar_relationship8s = partner.familiar_relationship8
-        familiar_gender1s = partner.familiar_gender1
-        familiar_gender2s = partner.familiar_gender2
-        familiar_gender3s = partner.familiar_gender3
-        familiar_gender4s = partner.familiar_gender4
-        familiar_gender5s = partner.familiar_gender5
-        familiar_gender6s = partner.familiar_gender6
-        familiar_gender7s = partner.familiar_gender7
-        familiar_gender8s = partner.familiar_gender8
+
+                return request.redirect(redirect or '/my/documents')
+
+        # 🔁 Datos auxiliares para renderizar la página
         values.update({
             'partner': partner,
-            'countries': countries,
-            'districts': districts,
-            'states': states,
-            'cities': cities,
-            'genders': genders,
-            'education_levels': education_levels,
-            'maritals': maritals,
-            'familiar_relationship1s': familiar_relationship1s,
-            'familiar_relationship2s': familiar_relationship2s,
-            'familiar_relationship3s': familiar_relationship3s,
-            'familiar_relationship4s': familiar_relationship4s,
-            'familiar_relationship5s': familiar_relationship5s,
-            'familiar_relationship6s': familiar_relationship6s,
-            'familiar_relationship7s': familiar_relationship7s,
-            'familiar_relationship8s': familiar_relationship8s,
-            'familiar_gender1s': familiar_gender1s,
-            'familiar_gender2s': familiar_gender2s,
-            'familiar_gender3s': familiar_gender3s,
-            'familiar_gender4s': familiar_gender4s,
-            'familiar_gender5s': familiar_gender5s,
-            'familiar_gender6s': familiar_gender6s,
-            'familiar_gender7s': familiar_gender7s,
-            'familiar_gender8s': familiar_gender8s,
+            'countries': request.env['res.country'].sudo().search([]),
+            'districts': request.env['l10n_pe.res.city.district'].sudo().search([]),
+            'states': request.env['res.country.state'].sudo().search([]),
+            'cities': request.env['res.city'].sudo().search([]),
+            'genders': partner.gender,
+            'education_levels': partner.education_level,
+            'emergency_contact_relationships': partner.emergency_contact_relationship,
+            'maritals': partner.marital,
+            'child_relationship1s': partner.child_relationship1,
+            'child_relationship2s': partner.child_relationship2,
+            'child_relationship3s': partner.child_relationship3,
+            'child_relationship4s': partner.child_relationship4,
+            'child_relationship5s': partner.child_relationship5,
+            'child_relationship6s': partner.child_relationship6,
+            'child_gender1s': partner.child_gender1,
+            'child_gender2s': partner.child_gender2,
+            'child_gender3s': partner.child_gender3,
+            'child_gender4s': partner.child_gender4,
+            'child_gender5s': partner.child_gender5,
+            'child_gender6s': partner.child_gender6,
+            'familiar_relationship1s': partner.familiar_relationship1,
+            'familiar_relationship2s': partner.familiar_relationship2,
+            'familiar_relationship3s': partner.familiar_relationship3,
+            'familiar_relationship4s': partner.familiar_relationship4,
+            'familiar_relationship5s': partner.familiar_relationship5,
+            'familiar_relationship6s': partner.familiar_relationship6,
+            'familiar_relationship7s': partner.familiar_relationship7,
+            'familiar_relationship8s': partner.familiar_relationship8,
+            'familiar_relationship9s': partner.familiar_relationship9,
+            'familiar_relationship10s': partner.familiar_relationship10,
+            'familiar_gender1s': partner.familiar_gender1,
+            'familiar_gender2s': partner.familiar_gender2,
+            'familiar_gender3s': partner.familiar_gender3,
+            'familiar_gender4s': partner.familiar_gender4,
+            'familiar_gender5s': partner.familiar_gender5,
+            'familiar_gender6s': partner.familiar_gender6,
+            'familiar_gender7s': partner.familiar_gender7,
+            'familiar_gender8s': partner.familiar_gender8,
+            'familiar_gender9s': partner.familiar_gender9,
+            'familiar_gender10s': partner.familiar_gender10,
             'has_check_vat': hasattr(request.env['res.partner'], 'check_vat'),
             'redirect': redirect,
             'page_name': 'my_details',
         })
+
         response = request.render("portal.portal_my_details", values)
         response.headers['X-Frame-Options'] = 'DENY'
         return response
+
+
 
 
     @http.route(['/my/applicant_documents'], type='http', auth='user', website=True)
@@ -247,38 +268,58 @@ class RecruitmentPortal(portal.CustomerPortal):
         partner = request.env.user.partner_id
         if post and request.httprequest.method == 'POST':
             update_values = {}
-            if 'familiar_dnifile1' in post and post['familiar_dnifile1']:
-                familiar_dnifile1_content = post['familiar_dnifile1'].read()
-                familiar_dnifile1_base64 = base64.b64encode(familiar_dnifile1_content)
-                update_values['familiar_dnifile1'] = familiar_dnifile1_base64
-            if 'familiar_dnifile2' in post and post['familiar_dnifile2']:
-                familiar_dnifile2_content = post['familiar_dnifile2'].read()
-                familiar_dnifile2_base64 = base64.b64encode(familiar_dnifile2_content)
-                update_values['familiar_dnifile2'] = familiar_dnifile2_base64
-            if 'familiar_dnifile3' in post and post['familiar_dnifile3']:
-                familiar_dnifile3_content = post['familiar_dnifile3'].read()
-                familiar_dnifile3_base64 = base64.b64encode(familiar_dnifile3_content)
-                update_values['familiar_dnifile3'] = familiar_dnifile3_base64
-            if 'familiar_dnifile4' in post and post['familiar_dnifile4']:
-                familiar_dnifile4_content = post['familiar_dnifile4'].read()
-                familiar_dnifile4_base64 = base64.b64encode(familiar_dnifile4_content)
-                update_values['familiar_dnifile4'] = familiar_dnifile4_base64
-            if 'familiar_dnifile1_back' in post and post['familiar_dnifile1_back']:
-                familiar_dnifile1_back_content = post['familiar_dnifile1_back'].read()
-                familiar_dnifile1_back_base64 = base64.b64encode(familiar_dnifile1_back_content)
-                update_values['familiar_dnifile1_back'] = familiar_dnifile1_back_base64
-            if 'familiar_dnifile2_back' in post and post['familiar_dnifile2_back']:
-                familiar_dnifile2_back_content = post['familiar_dnifile2_back'].read()
-                familiar_dnifile2_back_base64 = base64.b64encode(familiar_dnifile2_back_content)
-                update_values['familiar_dnifile2_back'] = familiar_dnifile2_back_base64
-            if 'familiar_dnifile3_back' in post and post['familiar_dnifile3_back']:
-                familiar_dnifile3_back_content = post['familiar_dnifile3_back'].read()
-                familiar_dnifile3_back_base64 = base64.b64encode(familiar_dnifile3_back_content)
-                update_values['familiar_dnifile3_back'] = familiar_dnifile3_back_base64
-            if 'familiar_dnifile4_back' in post and post['familiar_dnifile4_back']:
-                familiar_dnifile4_back_content = post['familiar_dnifile4_back'].read()
-                familiar_dnifile4_back_base64 = base64.b64encode(familiar_dnifile4_back_content)
-                update_values['familiar_dnifile4_back'] = familiar_dnifile4_back_base64
+            # Modificado: Reemplazar familiar_dnifile por child_dnifile para los hijos
+            if 'child_dnifile1' in post and post['child_dnifile1']:
+                child_dnifile1_content = post['child_dnifile1'].read()
+                child_dnifile1_base64 = base64.b64encode(child_dnifile1_content)
+                update_values['child_dnifile1'] = child_dnifile1_base64
+            if 'child_dnifile2' in post and post['child_dnifile2']:
+                child_dnifile2_content = post['child_dnifile2'].read()
+                child_dnifile2_base64 = base64.b64encode(child_dnifile2_content)
+                update_values['child_dnifile2'] = child_dnifile2_base64
+            if 'child_dnifile3' in post and post['child_dnifile3']:
+                child_dnifile3_content = post['child_dnifile3'].read()
+                child_dnifile3_base64 = base64.b64encode(child_dnifile3_content)
+                update_values['child_dnifile3'] = child_dnifile3_base64
+            if 'child_dnifile4' in post and post['child_dnifile4']:
+                child_dnifile4_content = post['child_dnifile4'].read()
+                child_dnifile4_base64 = base64.b64encode(child_dnifile4_content)
+                update_values['child_dnifile4'] = child_dnifile4_base64
+            if 'child_dnifile5' in post and post['child_dnifile5']:
+                child_dnifile5_content = post['child_dnifile5'].read()
+                child_dnifile5_base64 = base64.b64encode(child_dnifile5_content)
+                update_values['child_dnifile5'] = child_dnifile5_base64
+            if 'child_dnifile6' in post and post['child_dnifile6']:
+                child_dnifile6_content = post['child_dnifile6'].read()
+                child_dnifile6_base64 = base64.b64encode(child_dnifile6_content)
+                update_values['child_dnifile6'] = child_dnifile6_base64
+                
+            # Modificado: Reemplazar familiar_dnifile_back por child_dnifile_back para los hijos
+            if 'child_dnifile1_back' in post and post['child_dnifile1_back']:
+                child_dnifile1_back_content = post['child_dnifile1_back'].read()
+                child_dnifile1_back_base64 = base64.b64encode(child_dnifile1_back_content)
+                update_values['child_dnifile1_back'] = child_dnifile1_back_base64
+            if 'child_dnifile2_back' in post and post['child_dnifile2_back']:
+                child_dnifile2_back_content = post['child_dnifile2_back'].read()
+                child_dnifile2_back_base64 = base64.b64encode(child_dnifile2_back_content)
+                update_values['child_dnifile2_back'] = child_dnifile2_back_base64
+            if 'child_dnifile3_back' in post and post['child_dnifile3_back']:
+                child_dnifile3_back_content = post['child_dnifile3_back'].read()
+                child_dnifile3_back_base64 = base64.b64encode(child_dnifile3_back_content)
+                update_values['child_dnifile3_back'] = child_dnifile3_back_base64
+            if 'child_dnifile4_back' in post and post['child_dnifile4_back']:
+                child_dnifile4_back_content = post['child_dnifile4_back'].read()
+                child_dnifile4_back_base64 = base64.b64encode(child_dnifile4_back_content)
+                update_values['child_dnifile4_back'] = child_dnifile4_back_base64
+            if 'child_dnifile5_back' in post and post['child_dnifile5_back']:
+                child_dnifile5_back_content = post['child_dnifile5_back'].read()
+                child_dnifile5_back_base64 = base64.b64encode(child_dnifile5_back_content)
+                update_values['child_dnifile5_back'] = child_dnifile5_back_base64
+            if 'child_dnifile6_back' in post and post['child_dnifile6_back']:
+                child_dnifile6_back_content = post['child_dnifile6_back'].read()
+                child_dnifile6_back_base64 = base64.b64encode(child_dnifile6_back_content)
+                update_values['child_dnifile6_back'] = child_dnifile6_back_base64
+
             if 'current_dni' in post and post['current_dni']:
                 current_dni_content = post['current_dni'].read()
                 current_dni_base64 = base64.b64encode(current_dni_content)
@@ -330,14 +371,39 @@ class RecruitmentPortal(portal.CustomerPortal):
             'familiar_full_name2': partner.familiar_full_name2,
             'familiar_full_name3': partner.familiar_full_name3,
             'familiar_full_name4': partner.familiar_full_name4,
+            'familiar_full_name5': partner.familiar_full_name5,
+            'familiar_full_name6': partner.familiar_full_name6,
             'familiar_dni1': partner.familiar_dni1,
             'familiar_dni2': partner.familiar_dni2,
             'familiar_dni3': partner.familiar_dni3,
             'familiar_dni4': partner.familiar_dni4,
+            'familiar_dni5': partner.familiar_dni5,
+            'familiar_dni6': partner.familiar_dni6,
             'familiar_relationship1': partner.familiar_relationship1,
             'familiar_relationship2': partner.familiar_relationship2,
             'familiar_relationship3': partner.familiar_relationship3,
             'familiar_relationship4': partner.familiar_relationship4,
+            'familiar_relationship5': partner.familiar_relationship5,
+            'familiar_relationship6': partner.familiar_relationship6,
+            # hijos
+            'child_full_name1': partner.child_full_name1,
+            'child_full_name2': partner.child_full_name2,
+            'child_full_name3': partner.child_full_name3,
+            'child_full_name4': partner.child_full_name4,
+            'child_full_name5': partner.child_full_name5,
+            'child_full_name6': partner.child_full_name6,
+            'child_dni1': partner.child_dni1,
+            'child_dni2': partner.child_dni2,
+            'child_dni3': partner.child_dni3,
+            'child_dni4': partner.child_dni4,
+            'child_dni5': partner.child_dni5,
+            'child_dni6': partner.child_dni6,
+            'child_relationship1': partner.child_relationship1,
+            'child_relationship2': partner.child_relationship2,
+            'child_relationship3': partner.child_relationship3,
+            'child_relationship4': partner.child_relationship4,
+            'child_relationship5': partner.child_relationship5,
+            'child_relationship6': partner.child_relationship6,
         }        
         values.update({
             'res_partner': res_partner_values,
@@ -356,12 +422,12 @@ class RecruitmentPortal(portal.CustomerPortal):
     def portal_my_contracts(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
         values = self._prepare_portal_layout_values()
         partner = request.env.user.partner_id
-        ContractDocument = request.env['hr.contract'].sudo()        
+        ContractDocument = request.env['hr.contract'].sudo()
         domain = self._prepare_contracts_domain(partner)
         searchbar_sortings = self._get_contract_searchbar_sortings()
         if not sortby:
             sortby = 'date'
-        sort_contract = searchbar_sortings[sortby]['contract']        
+        sort_contract = searchbar_sortings[sortby]['contract']
         if date_begin and date_end:
             domain += [('create_date','>',date_begin),('create_date','<=',date_end)]
         contract_count = ContractDocument.search_count(domain)
@@ -426,7 +492,7 @@ class RecruitmentPortal(portal.CustomerPortal):
                 'contract_signature': signature,
                 'signature_state': 'signed',
             })
-            contract_sudo.with_context(from_signed_function=True).write({'state': 'open'})
+            contract_sudo.with_context(from_signed_function=True).write({'state': 'signed'})
             contract_sudo.send_email_to_employee_signed()
             request.env.cr.commit()
         except (TypeError, binascii.Error) as e:

@@ -7,3 +7,4 @@ class RecruitmentStage(models.Model):
                                     string='Employee stage')
     update_data = fields.Boolean(string='Update Data')
     access_portal = fields.Boolean(string='Access Portal')
+    contact_merge = fields.Boolean(string='Contact Merge')

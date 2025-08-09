@@ -1,12 +1,13 @@
 from odoo import _, api, fields, models
 from datetime import datetime
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from odoo.addons.mkt_documental_managment.models.api_dni import apiperu_dni
 from odoo.addons.mkt_documental_managment.models.api_ruc import apiperu_ruc
 from odoo.addons.mkt_documental_managment.models.cpe_consult import apiperu_cpe
 from dateutil.relativedelta import relativedelta
 import io
 import PyPDF2
+from PyPDF2.utils import PdfReadError
 import base64
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
@@ -31,7 +32,8 @@ payment_types = [
 
 document_currencies = [
         ('soles', 'Soles'),
-        ('dolares', 'Dolares')
+        ('dolares', 'Dolares'),
+        ('euros', 'Euros')
     ]
 
 def get_default_tax(self):
@@ -53,7 +55,7 @@ class Settlement(models.Model):
     partner = fields.Char(string='Partner')
     paid_to = fields.Many2one(related='requirement_id.paid_to', store=True)
     document_type_id = fields.Many2one(comodel_name='settlement.line.type', string='Document type', domain="[('visible_in_liquidation', '=', True)]", default=lambda self: self._default_document_type(), store=True)
-    mobility_id = fields.Many2one(comodel_name='documental.mobility.expediture', domain="[('used','=',False)]", string='Mobility')
+    mobility_id = fields.Many2one(comodel_name='documental.mobility.expediture', domain="[('used','=',False), ('state','!=','draft')]", string='Mobility')
     document = fields.Char(string='Document')
     movement_number = fields.Char(string='Movement number')
     document_file = fields.Binary(string='File')
@@ -75,11 +77,12 @@ class Settlement(models.Model):
     tax_id = fields.Many2one(comodel_name='tax.taxes', default=get_default_tax, domain="[('tax_type','=','igv')]", string='Tax')
     igv_included = fields.Boolean(default=True, string='Included IGV?')
 
-    income_tax = fields.Boolean(default=False, string='Income tax')
-    income_tax_id = fields.Many2one(comodel_name='tax.taxes', domain="[('tax_type','=','income_tax')]", string='Income tax')
+    income_tax = fields.Boolean(default=False, string='Income tax', tracking=True)
+    income_tax_id = fields.Many2one(comodel_name='tax.taxes', domain="[('tax_type','=','income_tax')]", string='Income tax', tracking=True)
 
     state = fields.Selection(related='requirement_id.settlement_state', string='State', store=True)
     cpe_state = fields.Selection(selection=cpe_states, default='to_validate', string='CPE STATES')
+    cpe_company_state = fields.Char(string='CPE Company State', default='to_validate')
     line_ids = fields.One2many('settlement.line', 'settlement_id', string='Settlement line')
 
     journal_ids = fields.One2many('settlement.journal', 'settlement_id', string='Journal items')
@@ -102,6 +105,7 @@ class Settlement(models.Model):
     detraction_document = fields.Char(string='Detraction document')
     detraction_date = fields.Date(string='Detraction date')
     accountable_month_id = fields.Many2one(comodel_name='months', domain="[('open_month','=',True)]", string='Accountable month')
+    accountable_year_id = fields.Many2one(comodel_name='years', domain="[('open_year','=',True)]", string='Accountable Year')
     accounting_account = fields.Char(copy=False, string="accounting account", store=True)
 
     differentiated_payment = fields.Boolean(default=False, string='Differentiated payment')
@@ -110,7 +114,39 @@ class Settlement(models.Model):
     wrong_why = fields.Char(copy=False, string="Why?", store=True)
     settle_amount_wrong = fields.Monetary(string="Settle Amount")
     alternative_amount = fields.Float(string="Alternative Amount")
+    alternative_igv = fields.Float(string='Alternative IGV', digits=(10,3), default=0.00)
     document_currency = fields.Selection(selection=document_currencies, string='Document Currency')
+    settle_igv_sum = fields.Float(compute='_compute_settle_igv_sum', store=True)
+    settle_amount_sum = fields.Float(compute='_compute_settle_amount_sum', store=True)
+    vendor_sum = fields.Float(compute='_compute_vendor_sum', store=True)
+    cost_center_id = fields.Many2one('cost.center', string='CC Number', related='requirement_id.cost_center_id', store=True, readonly=True, copy=False)
+
+
+    @api.onchange('mobility_id')
+    def _onchange_mobility_id(self):
+        if self.mobility_id:
+            # Generar el PDF
+            report = self.env.ref('mkt_documental_managment.report_documental_mobility_expediture')
+            pdf_content, _ = report._render_qweb_pdf(self.mobility_id.id)
+            self.document_file = base64.b64encode(pdf_content)
+
+
+    @api.depends('document_type_id', 'settle_igv')
+    def _compute_settle_igv_sum(self):
+        for rec in self:
+            rec.settle_igv_sum = -rec.settle_igv if rec.document_type_id.id == 3 else rec.settle_igv
+
+
+    @api.depends('document_type_id', 'settle_amount')
+    def _compute_settle_amount_sum(self):
+        for rec in self:
+            rec.settle_amount_sum = -rec.settle_amount if rec.document_type_id.id == 3 else rec.settle_amount
+
+
+    @api.depends('document_type_id', 'vendor')
+    def _compute_vendor_sum(self):
+        for rec in self:
+            rec.vendor_sum = -rec.vendor if rec.document_type_id.id == 3 else rec.vendor
 
 
     @api.onchange('wrong_payment')
@@ -168,11 +204,18 @@ class Settlement(models.Model):
                 rec.accounting_account = '633028' if rec.paid_to.province_id.name == 'Lima' else '633029'
             elif rec.document_type_id.id == 22:
                 rec.accounting_account = '141301' if rec.paid_to.province_id.name == 'Lima' else '141303'
-            elif rec.document_type_id.id == 2:
+            elif rec.document_type_id.id in [7, 24, 26]:
+                rec.accounting_account = '141301' if rec.paid_to.province_id.name == 'Lima' else '141303'
+            elif rec.document_type_id.id in [2, 5]:
                 rec.accounting_account = '633060'
             elif rec.document_type_id.id == 16:
-                rec.accounting_account = '633051' if rec.paid_to.province_id.name == 'Lima' else '633052'
-            elif rec.document_type_id.id in [7, 8, 12, 24, 25, 26, 32, 33]:
+                if "IMPUESTO PREDIAL" in (rec.partner or ""):
+                    rec.accounting_account = '643201'
+                elif "COPIA LITERAL" in (rec.requirement_id.concept or ""):
+                    rec.accounting_account = '644305'
+                else:
+                    rec.accounting_account = '633051' if rec.paid_to.province_id.name == 'Lima' else '633052'
+            elif rec.document_type_id.id in [8, 12, 25, 32, 33]:
                 if len(rec.requirement_id.dni_or_ruc or '') == 8:
                     rec.accounting_account = '143101' if rec.paid_to.province_id.name == 'Lima' else '141303'
                 elif len(rec.requirement_id.dni_or_ruc or '') == 11:
@@ -182,14 +225,15 @@ class Settlement(models.Model):
             else:
                 rec.accounting_account = ''
 
-
-    @api.onchange('accountable_month_id')
+    @api.onchange('accountable_month_id', 'accountable_year_id')
     def _onchange_accountable_month(self):
-        if self.subdiary and self.accountable_month_id:
-            voucher_number_before = self.env['settlement'].search([
-                ('accountable_month_id','=',self.accountable_month_id.id),
-                ('subdiary','=',self.subdiary),
-            ], limit=1, order='voucher_number desc').voucher_number
+        if self.subdiary and self.accountable_month_id and self.accountable_year_id:
+            domain = [
+                ('accountable_month_id', '=', self.accountable_month_id.id),
+                ('accountable_year_id', '=', self.accountable_year_id.id),
+                ('subdiary', '=', self.subdiary),
+            ]
+            voucher_number_before = self.env['settlement'].search(domain, limit=1, order='voucher_number desc').voucher_number
             if voucher_number_before:
                 new_number = str(int(voucher_number_before[2:6]) + 1).zfill(4)
                 self.voucher_number = voucher_number_before[:2] + new_number
@@ -217,55 +261,99 @@ class Settlement(models.Model):
 
     def download_files(self):
         combined_pdf_writer = PyPDF2.PdfFileWriter()
+        failed = []
+
         for rec in self:
             attachments = self.env['ir.attachment'].search([
-                ('res_model','=',rec._name),
-                ('res_id','=',rec.id),
+                ('res_model', '=', rec._name),
+                ('res_id', '=', rec.id),
             ])
+            processed_any = False
+
             for attachment in attachments:
                 if attachment.name.lower().endswith('.pdf') or attachment.mimetype == 'application/pdf':
                     try:
                         pdf_data = io.BytesIO(base64.b64decode(attachment.datas))
                         pdf_reader = PyPDF2.PdfFileReader(pdf_data)
-                        
-                        output_pdf = io.BytesIO()
+                        if pdf_reader.isEncrypted:
+                            raise ValidationError(
+                                _('El documento %s está encriptado y no puede procesarse.') % attachment.name
+                            )
+
+                        # crea un PDF con watermark
+                        temp_output = io.BytesIO()
                         pdf_writer = PyPDF2.PdfFileWriter()
+
                         for page_num in range(pdf_reader.numPages):
                             page = pdf_reader.getPage(page_num)
+                            watermark = self._create_watermark_page(
+                                rec.subdiary,
+                                rec.voucher_number,
+                                getattr(rec, 'cost_center_id', False)
+                            )
+                            try:
+                                page.merge_page(watermark)
+                            except AttributeError:
+                                page.mergePage(watermark)
                             pdf_writer.addPage(page)
-                            page.mergePage(self._create_watermark_page(rec.subdiary, rec.voucher_number))
-                        pdf_writer.write(output_pdf)
-                        output_pdf.seek(0)
-                        pdf_reader = PyPDF2.PdfFileReader(output_pdf)
-                        for page_num in range(pdf_reader.numPages):
-                            page = pdf_reader.getPage(page_num)
-                            combined_pdf_writer.addPage(page)
-                    except:
-                        raise ValidationError(
-                            _( 'The document %s on the requirement %s is not available. Please convert to PDF/A.' ) % ( attachment.name, rec.name )
-                        )
+
+                        pdf_writer.write(temp_output)
+                        temp_output.seek(0)
+
+                        # lo añadimos al combinado
+                        marked_reader = PyPDF2.PdfFileReader(temp_output)
+                        for pn in range(marked_reader.numPages):
+                            combined_pdf_writer.addPage(marked_reader.getPage(pn))
+
+                        processed_any = True
+
+                    except Exception as e:
+                        _logger.error("Error procesando PDF %s: %s", attachment.name, e)
+                        failed.append(attachment.name)
+
+            if not processed_any and attachments:
+                failed.extend([att.name for att in attachments if att.name.lower().endswith('.pdf')])
+
+        if combined_pdf_writer.getNumPages() == 0:
+            raise ValidationError(_(
+                'No se encontraron documentos PDF válidos para descargar.\n'
+                'Archivos fallidos: %s'
+            ) % ', '.join(failed))
+
         output_pdf = io.BytesIO()
         combined_pdf_writer.write(output_pdf)
         output_pdf.seek(0)
-        combined_pdf_attachment = self.env['ir.attachment'].create({
+
+        attachment_vals = {
             'name': 'Invoices',
             'datas': base64.b64encode(output_pdf.read()),
             'type': 'binary',
             'mimetype': 'application/pdf',
-        })
+        }
+        combined_attachment = self.env['ir.attachment'].create(attachment_vals)
+
         return {
             'type': 'ir.actions.act_url',
-            'url': '/web/content/%s?download=true' % combined_pdf_attachment.id,
+            'url': '/web/content/%s?download=true' % combined_attachment.id,
             'target': 'new',
         }
 
+    def _create_watermark_page(self, subdiary, voucher_number, cost_center_id=None):
+        """
+        subdiary: cadena o número
+        voucher_number: cadena
+        cost_center_id: registro de cost.center o False
+        """
+        code = ''
+        if cost_center_id and getattr(cost_center_id, 'code', False):
+            code = cost_center_id.code
 
-    def _create_watermark_page(self, subdiary, voucher_number):
         packet = io.BytesIO()
         can = canvas.Canvas(packet, pagesize=letter)
         can.setFontSize(12)
         can.setFillColor('Green')
-        can.drawString(10, 5, '%s | %s' % (subdiary, voucher_number) )
+        can.drawString(10, 5, '%s | %s' % (subdiary or '', voucher_number or ''))
+        can.drawString(500, 5, 'CC: %s' % code)
         can.save()
         packet.seek(0)
         return PyPDF2.PdfFileReader(packet).getPage(0)
@@ -300,16 +388,32 @@ class Settlement(models.Model):
         attachments = []
         for rec in self:
             if rec.document_file:
-                attach = {
-                    'name': rec.document_filename,
-                    'datas': rec.document_file,
-                    'store_fname': rec.document_filename,
-                    'res_model': rec._name,
-                    'res_id': rec.id,
-                    'type': 'binary',
-                }
-                attachment = self.env['ir.attachment'].create(attach)
-                attachments.append(attachment.id)
+                existing_attachments = self.env['ir.attachment'].search([
+                    ('res_model', '=', rec._name),
+                    ('res_id', '=', rec.id),
+                ], limit=1)
+
+                if existing_attachments:
+                    # Reemplazar contenido del archivo existente
+                    existing_attachments.write({
+                        'name': rec.document_filename,
+                        'datas': rec.document_file,
+                        'store_fname': rec.document_filename,
+                    })
+                    attachments.append(existing_attachments.id)
+                else:
+                    # Crear nuevo adjunto si no existe
+                    attach = {
+                        'name': rec.document_filename,
+                        'datas': rec.document_file,
+                        'store_fname': rec.document_filename,
+                        'res_model': rec._name,
+                        'res_id': rec.id,
+                        'type': 'binary',
+                    }
+                    attachment = self.env['ir.attachment'].create(attach)
+                    attachments.append(attachment.id)
+        return attachments
 
 
     # def cpe_validation(self):
@@ -328,7 +432,14 @@ class Settlement(models.Model):
     def validation_voucher(self):
         for rec in self:
             if rec.document_type_id.short_name == 'FT':
-                cpe_data = apiperu_cpe(rec.dni_ruc, '01', (rec.document.split('-')[0]).upper(), rec.document.split('-')[1].lstrip('0'), rec.date.strftime("%Y-%m-%d"), rec.settle_amount)
+                cpe_data = apiperu_cpe(
+                    rec.dni_ruc, 
+                    '01', 
+                    (rec.document.split('-')[0]).upper(), 
+                    rec.document.split('-')[1].lstrip('0'), 
+                    rec.date.strftime("%Y-%m-%d"), 
+                    rec.settle_amount
+                )
                 if cpe_data and cpe_data.get('data'):
                     cpe_data_detail = cpe_data['data']
                     if cpe_data_detail and 'comprobante_estado_codigo' in cpe_data_detail:
@@ -336,10 +447,17 @@ class Settlement(models.Model):
                             rec.cpe_state = 'accepted'
                         else:
                             rec.cpe_state = 'non_existent'
+
+                        # Asignar el estado de la empresa como texto
+                        if 'empresa_estado_descripcion' in cpe_data_detail:
+                            rec.cpe_company_state = cpe_data_detail['empresa_estado_descripcion']
+                            _logger.info("Empresa estado: %s", cpe_data_detail.get('empresa_estado_descripcion'))  # <- aquí sí es seguro
                     else:
                         rec.cpe_state = 'failed'
+                        rec.cpe_company_state = 'Desconocido'
                 else:
                     rec.cpe_state = 'failed'
+                    rec.cpe_company_state = 'Desconocido'
 
 
     @api.onchange('exchange_type_date')
@@ -624,7 +742,7 @@ class Settlement(models.Model):
     #             rec.vendor = 0
 
 
-    @api.depends('currency_id', 'requirement_id', 'service_type_id', 'settle_amount', 'alternative_amount', 'differentiated_payment', 'date')
+    @api.depends('currency_id', 'requirement_id', 'service_type_id', 'settle_amount', 'alternative_amount', 'differentiated_payment', 'date', 'settle_amount_sum')
     def _compute_amounts(self):
         for rec in self:
             sale_change_type = self.env['change.type'].search([('date', '=', rec.date)]).mapped('sell')
@@ -632,17 +750,17 @@ class Settlement(models.Model):
             if sale_change_type and rec.currency_id.name == 'USD':
                 change_type = sale_change_type[0]
             
-            effective_amount = rec.alternative_amount if rec.alternative_amount and rec.differentiated_payment else rec.settle_amount
+            effective_amount = rec.alternative_amount if rec.alternative_amount and rec.differentiated_payment else rec.settle_amount_sum
 
-            if effective_amount * change_type > rec.service_type_id.amount_from:
+            if rec.settle_amount_sum * change_type > rec.service_type_id.amount_from:
                 if rec.service_type_id.detraction:
-                    rec.vendor = effective_amount - round((rec.settle_amount * rec.service_type_id.percentage) / 100, 0)
-                    rec.detraction = round((rec.settle_amount * rec.service_type_id.percentage) / 100, 0)
+                    rec.vendor = effective_amount - round((effective_amount * rec.service_type_id.percentage) / 100, 0)
+                    rec.detraction = round((effective_amount * rec.service_type_id.percentage) / 100, 0)
                     rec.retention = 0.00
                 elif rec.service_type_id.retention:
-                    rec.vendor = effective_amount - round((rec.settle_amount* rec.service_type_id.percentage) / 100, 2)
+                    rec.vendor = effective_amount - round((effective_amount* rec.service_type_id.percentage) / 100, 2)
                     rec.detraction = 0.00
-                    rec.retention = round((rec.settle_amount * rec.service_type_id.percentage) / 100, 2)
+                    rec.retention = round((effective_amount * rec.service_type_id.percentage) / 100, 2)
                 else:
                     rec.vendor = effective_amount
                     rec.detraction = 0.00
