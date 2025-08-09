@@ -106,17 +106,18 @@ class SettlementReport(models.Model):
         ws.set_column('M:M', 50)
         ws.set_column('N:N', 20)
         ws.set_column('O:O', 20)
-        ws.set_column('P:P', 15)
-        ws.set_column('Q:Q', 20)
-        ws.set_column('R:R', 15)
-        ws.set_column('S:S', 50)
-        ws.set_column('T:T', 15)
-        ws.set_column('U:U', 20)
+        ws.set_column('P:P', 20)
+        ws.set_column('Q:Q', 15)
+        ws.set_column('R:R', 20)
+        ws.set_column('S:S', 15)
+        ws.set_column('T:T', 50)
+        ws.set_column('U:U', 15)
+        ws.set_column('V:V', 20)
 
         headers = [
             _('Date of Issue'), _('Type of Document Issued'), _('Document'), _('Type of Issuing Doc.'), _('Issuing Doc.'), _('Surnames and Names, Denomination or Company Name of the Issuer'),
             _('Description'), _('Currency of Transaction'), _('Gross Income'), _('Income Tax'), _('Net Income'), _('Area'),
-            _('Supervisor'), _('Province'), _('Status Request'), _('RQ Number'), _('Budget'), _('Cost Center'), _('Client'),
+            _('Supervisor'), _('Province'), _('Status Request'), _('Settlement State'), _('RQ Number'), _('Budget'), _('Cost Center'), _('Client'),
             _('Payment Date'), _('Operation Number')
         ]
 
@@ -142,12 +143,13 @@ class SettlementReport(models.Model):
             ws.write(row, 12, line.get('requester', ''), cell_format)
             ws.write(row, 13, line.get('province', ''), cell_format)
             ws.write(row, 14, self.change_state_name(line['requirement_state']), cell_format)
-            ws.write(row, 15, line.get('rq_number', ''), cell_format)
-            ws.write(row, 16, line.get('budget', ''), cell_format)
-            ws.write(row, 17, line.get('cost_center', ''), cell_format)
-            ws.write(row, 18, line.get('client', ''), cell_format)
-            ws.write(row, 19, line.get('payment_date', ''), date_format)
-            ws.write(row, 20, line.get('operation_number', ''), cell_format)
+            ws.write(row, 15, self.change_state_name(line['settlement_state']), cell_format)
+            ws.write(row, 16, line.get('rq_number', ''), cell_format)
+            ws.write(row, 17, line.get('budget', ''), cell_format)
+            ws.write(row, 18, line.get('cost_center', ''), cell_format)
+            ws.write(row, 19, line.get('client', ''), cell_format)
+            ws.write(row, 20, line.get('payment_date', ''), date_format)
+            ws.write(row, 21, line.get('operation_number', ''), cell_format)
 
         ws.freeze_panes(1, 0)
 
@@ -158,6 +160,7 @@ class SettlementReport(models.Model):
                 dt.short_name AS code,
                 s.document,
                 r.requirement_state AS requirement_state,
+                r.settlement_state AS settlement_state,
                 s.dni_ruc,
                 s.partner,
                 s.reason,
