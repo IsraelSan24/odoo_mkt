@@ -5,14 +5,28 @@
     'description': 'Módulo para supervisar',
     'category': 'Human Resources',
     'author': 'Israel Santana',
-    'depends': ['base', 'hr_attendance', 'report_xlsx', 'stock', 'hr_attendance_geolocation', 'hr','mkt_recruitment'],
+    'depends': [
+        'base', 
+        'hr_attendance', 
+        'report_xlsx', 
+        'stock', 
+        'hr_attendance_geolocation', 
+        'hr',
+        'mkt_recruitment'
+    ],
     'data': [
-        'security/supervision_security.xml',
+        'security/ir_module_category.xml',
+        'security/res_groups.xml',
+        'security/ir_rule.xml',
         'security/ir.model.access.csv',
+
         'reports/hr_attendance_wizard.xml',
+        'reports/hr_attendance_tracking_wizard.xml',
+
         'views/stock_request_view.xml',
         'views/stock_request_line_view.xml',
         "views/stock_picking_views.xml",
+        "views/hr_employee_view.xml",
         'views/menu.xml',
     ],
     'installable': True,
