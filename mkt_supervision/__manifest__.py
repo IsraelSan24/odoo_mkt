@@ -12,6 +12,7 @@
         'stock', 
         'hr_attendance_geolocation', 
         'hr',
+        'hr_holidays',  
         'mkt_recruitment'
     ],
     'data': [
