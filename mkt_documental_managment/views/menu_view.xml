@@ -33,7 +33,7 @@
             <!-- <menuitem id="cash_report_submenu" name="Cash report" action="view_cash_report_action"
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control_read,mkt_documental_managment.documental_requirement_admin" sequence="41"/> -->
             <menuitem id="settlement_report_submenu" name="Fee Receipt Report" action="view_settlement_report_action"
-                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_accounting" sequence="42"/>
+                parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_admin" sequence="42"/>
             <menuitem id="pending_settlement_submenu" name="Pending settlements" action="action_pending_settlement_view"
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_intern_control_read" sequence="43"/>
             <menuitem id="expenses_report_submenu" name="Expenses report" action="view_expenses_report_action"

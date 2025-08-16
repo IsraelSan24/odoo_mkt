@@ -23,6 +23,10 @@
         'mkt_cost_center',
         'mkt_res_province',
     ],
+    'external_dependencies': {
+        'python': ['Pillow', 'img2pdf'],
+        'bin': ['soffice'],  # LibreOffice
+    },
     'data':[
         'security/security.xml',
         'security/ir_rule.xml',
