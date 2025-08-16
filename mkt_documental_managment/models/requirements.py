@@ -757,7 +757,7 @@ class DocumentalRequirements(models.Model):
         combined_pdf_writer.write(output_pdf)
         output_pdf.seek(0)
         combined_pdf_attachment = self.env['ir.attachment'].create({
-            'name': 'Combined PDF.pdf',
+            'name': 'Voucher - %s.pdf' % rec.name,
             'datas': base64.b64encode(output_pdf.read()),
             'type': 'binary',
             'mimetype': 'application/pdf',
@@ -1179,27 +1179,27 @@ class DocumentalRequirements(models.Model):
     def button_administration_signature(self):
         alias_name = self.env.user.partner_id.alias_name
         user_name = alias_name if alias_name else self.env.user.name
-        
+
         for req in self:
             if req.divided_payment:
                 payment_records = req.requirement_payment_ids
 
                 if not payment_records:
                     raise ValidationError(_('You cannot sign without any payment records.'))
-                
+
                 total_paid = sum(req.requirement_payment_ids.mapped('amount') or [0])
-                
                 if total_paid != req.to_pay_supplier:
                     raise ValidationError(_('The payment parts must sum the total amount of the requirement.'))
-                
+
                 if any(payment.amount <= 0 for payment in req.requirement_payment_ids):
                     raise ValidationError(_('Payments cannot be negative or zero.'))
-                
-        # Validación: Todos los payments deben tener operation_number completado
+
+        # Todos los payments deben tener operation_number
         missing_operations = self.requirement_payment_ids.filtered(lambda p: not p.operation_number)
         if missing_operations:
             raise ValidationError(_('All payments must have an operation number before signing.'))
 
+        # Firma y cambio de estado
         self.write({
             'administration_signature': signature_generator(user_name),
             'is_administration_signed': True,
@@ -1208,6 +1208,51 @@ class DocumentalRequirements(models.Model):
             'user_administration_signed_id': self.env.user.id,
             'start_time': fields.Datetime.now(),
         })
+
+        # === Upsert de adjuntos con los mismos document_file de los payments ===
+        Attachment = self.env['ir.attachment']
+        for req in self:
+            updated = created = 0
+            for pay in req.requirement_payment_ids:
+                if not pay.document_file:
+                    continue
+
+                # Nombre estable del adjunto
+                if hasattr(pay, '_final_fname'):
+                    fname = pay._final_fname()  # e.g. "payment_{id}.pdf" o "Voucher - ... .pdf"
+                else:
+                    fname = pay.document_filename or f"payment_{pay.id}.pdf"
+
+                domain = [
+                    ('res_model', '=', 'documental.requirements'),
+                    ('res_id', '=', req.id),
+                    ('name', '=', fname),
+                ]
+                existing = Attachment.search(domain, limit=1)
+
+                if existing:
+                    existing.write({
+                        'datas': pay.document_file,
+                        'mimetype': 'application/pdf',
+                    })
+                    updated += 1
+                else:
+                    Attachment.create({
+                        'name': fname,
+                        'datas': pay.document_file,
+                        'mimetype': 'application/pdf',
+                        'type': 'binary',
+                        'res_model': 'documental.requirements',
+                        'res_id': req.id,
+                    })
+                    created += 1
+
+            # Mensaje único para no “spamear” el chatter
+            if updated or created:
+                req.message_post(
+                    body=_("Se actualizaron adjuntos de pagos: %s actualizados, %s creados.")
+                        % (updated, created)
+                )
 
 
     # * Settlement signature actions
@@ -1348,23 +1393,24 @@ class DocumentalRequirements(models.Model):
     def settlement_administration_sign(self):
         alias_name = self.env.user.partner_id.alias_name
         user_name = alias_name if alias_name else self.env.user.name
+
         for req in self:
             if req.divided_payment:
                 payment_records = req.requirement_payment_ids
-
                 if not payment_records:
                     raise ValidationError(_('You cannot sign without any payment records.'))
-                
+
                 total_paid = sum(req.requirement_payment_ids.mapped('amount') or [0])
-                
                 if total_paid != req.to_pay_supplier:
                     raise ValidationError(_('The payment parts must sum the total amount of the requirement.'))
-                
+
                 if any(payment.amount <= 0 for payment in req.requirement_payment_ids):
                     raise ValidationError(_('Payments cannot be negative or zero.'))
+
         if not self.unify:
             if not self.administration_signature:
-                raise ValidationError( _( 'Before to sign the settlement, be sure to sign the requirement.' ) )
+                raise ValidationError(_('Before to sign the settlement, be sure to sign the requirement.'))
+
         if self.balance > 0:
             return {
                 'name': 'Administration validation',
@@ -1376,13 +1422,67 @@ class DocumentalRequirements(models.Model):
                 'target': 'new',
             }
         else:
+            # Firmar liquidación y cerrar
             self.write({
                 'settlement_administration_user_id': self.env.user.id,
                 'settlement_administration_signature': signature_generator(user_name),
                 'settlement_administration_signed_on': fields.Datetime.now(),
                 'settlement_state': 'settled',
             })
+
+            # === Upsert de adjuntos desde cada payment al chatter del requerimiento ===
+            # === Upsert de adjuntos desde cada payment al chatter del requerimiento ===
+            Attachment = self.env['ir.attachment']
+            for req in self:
+                updated = created = 0
+                for pay in req.requirement_payment_ids:
+                    if not pay.document_file:
+                        continue
+
+                    # Nombre estable del adjunto
+                    fname = pay._final_fname() if hasattr(pay, '_final_fname') and callable(pay._final_fname) \
+                            else (pay.document_filename or f"payment_{pay.id}.pdf")
+
+                    # Asegurar PDF
+                    data_b64 = pay.document_file
+                    if not pay._is_pdf_b64(data_b64):
+                        if hasattr(pay, '_convert_to_pdf'):
+                            data_b64 = pay._convert_to_pdf(data_b64, pay.document_filename or fname)
+                        else:
+                            # si no hay conversor, no lo subas como PDF corrupto
+                            raise ValidationError(_("A payment file is not PDF and cannot be converted: %s") % fname)
+
+                    domain = [
+                        ('res_model', '=', 'documental.requirements'),
+                        ('res_id', '=', req.id),
+                        ('name', '=', fname),
+                    ]
+                    existing = Attachment.search(domain, limit=1)
+
+                    vals_att = {
+                        'name': fname,
+                        'datas': data_b64,
+                        'mimetype': 'application/pdf',
+                        'type': 'binary',
+                        'res_model': 'documental.requirements',
+                        'res_id': req.id,
+                    }
+
+                    if existing:
+                        existing.write({'datas': data_b64, 'mimetype': 'application/pdf'})
+                        updated += 1
+                    else:
+                        Attachment.create(vals_att)
+                        created += 1
+
+                if updated or created:
+                    req.message_post(
+                        body=_("Payment attachments on settlement: %s updated, %s created.") % (updated, created)
+                    )
+
+            # Continuar flujo existente
             self.button_send_to_budget()
+            # sin return explícito (como tu versión original)
 
 
     def unlink_attached_files(self):
@@ -1694,6 +1794,81 @@ class DocumentalRequirements(models.Model):
         )
         for record in self:
             record.show_payments_tab = record.divided_payment or has_access
+
+    
+    def action_sync_payment_docs(self):
+        """
+        Convierte a PDF y exporta todos los document_file de requirement_payment_ids
+        al chatter del requerimiento (ir.attachment). Reemplaza si existe, crea si falta.
+        """
+        Attachment = self.env['ir.attachment']
+
+        for req in self:
+            updated = created = converted = skipped = 0
+
+            for pay in req.requirement_payment_ids:
+                data_b64 = pay.document_file
+                if not data_b64:
+                    skipped += 1
+                    continue
+
+                # Nombre estable del adjunto (usa helper del hijo si está)
+                if hasattr(pay, '_final_fname') and callable(pay._final_fname):
+                    fname = pay._final_fname()
+                else:
+                    # fallback consistente
+                    fname = (pay.document_filename or f"payment_{pay.id}.pdf")
+                    if not fname.lower().endswith('.pdf'):
+                        fname = f"{os.path.splitext(fname)[0]}.pdf"
+
+                # Asegurar PDF: si no lo es, convertir usando el helper del hijo
+                if hasattr(pay, '_is_pdf_b64') and not pay._is_pdf_b64(data_b64):
+                    if hasattr(pay, '_convert_to_pdf'):
+                        data_b64 = pay._convert_to_pdf(data_b64, pay.document_filename or fname)
+                        converted += 1
+                        # Actualizar el payment sin disparar su write-postproc
+                        pay.with_context(skip_postproc=True).write({
+                            'document_file': data_b64,
+                            'document_filename': fname,
+                        })
+                    else:
+                        raise ValidationError(_("A payment file is not PDF and cannot be converted: %s") % fname)
+                else:
+                    # Normalizar nombre en el payment (sin recursión)
+                    if pay.document_filename != fname:
+                        pay.with_context(skip_postproc=True).write({'document_filename': fname})
+
+                # Upsert en ir.attachment del requerimiento
+                existing = Attachment.search([
+                    ('res_model', '=', 'documental.requirements'),
+                    ('res_id', '=', req.id),
+                    ('name', '=', fname),
+                ], limit=1)
+
+                vals_att = {
+                    'name': fname,
+                    'datas': data_b64,
+                    'mimetype': 'application/pdf',
+                    'type': 'binary',
+                    'res_model': 'documental.requirements',
+                    'res_id': req.id,
+                }
+
+                if existing:
+                    existing.write({'datas': data_b64, 'mimetype': 'application/pdf'})
+                    updated += 1
+                else:
+                    Attachment.create(vals_att)
+                    created += 1
+
+            # Mensaje resumen por requerimiento
+            req.message_post(
+                body=_("Payment documents synchronized: %(conv)s converted, %(upd)s updated, %(cre)s created, %(skp)s skipped.") % {
+                    'conv': converted, 'upd': updated, 'cre': created, 'skp': skipped
+                }
+            )
+
+        return True            
 
 
     @api.model
