@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="identifiers_wizard_form_view" model="ir.ui.view">
+        <field name="name">contract.mass.identifiers.wizard.form</field>
+        <field name="model">contract.mass.identifiers.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Paste identifiers" class="o_form_small">
+                <sheet>
+                    <group>
+                        <field name="identifiers_input" widget="text" />
+                    </group>
+                    <footer>
+                        <button string="Apply" type="object" name="action_apply" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
+
+
