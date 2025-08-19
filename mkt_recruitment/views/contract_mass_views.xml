@@ -73,7 +73,7 @@
                                     type="object" 
                                     string="Search Employees by IDs" 
                                     class="btn-primary"
-                                    attrs="{'readonly':[('state','!=','draft')], 'invisible': ['|', ('mode','!=','new_employee'), ('contracts_ids','!=', False)]}"/>
+                                    attrs="{'readonly':[('state','!=','draft')], 'invisible': [('mode','!=','new_employee')]}"/>
                         </group>
                         <group>
                             <field name="validate_cost_center_id" 
