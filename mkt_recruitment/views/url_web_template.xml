@@ -3038,14 +3038,13 @@
                                                                 </select>
                                                             </div>
                                                             <div class="form-group col-md-6">
-                                                                <label for="dni">Document number <span>*</span></label>
+                                                                <label for="dni">Document number</label>
                                                                 <div class="input-group">
                                                                     <input type="text" name="dni" class="form-control" id="dni" required="True"/>
                                                                     <button type="button" class="btn btn-secondary custom-button ml-1" onclick="consultarDNI()">
                                                                         <i class="fa fa-search"></i>
                                                                     </button>
                                                                 </div>
-                                                                <small class="form-text text-muted">*After filling the field, then click on the 🔍︎ icon</small>
                                                                 <div class="invalid-feedback">
                                                                     Please enter your DNI.
                                                                 </div>
@@ -3054,7 +3053,7 @@
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
                                                                 <label for="name">Name</label>
-                                                                <input type="text" name="name" class="form-control" id="name" placeholder="Click on the 🔍︎ to get your name ↗"/>
+                                                                <input type="text" name="name" class="form-control" id="name"/>
                                                                 <div class="invalid-feedback">
                                                                     Please enter your name.
                                                                 </div>
@@ -3298,7 +3297,6 @@
                                                     <p class="text-center font-weight-bold text-body">You may add up to 6 children as dependents.</p>
                                                     <div class="form-group">
                                                         <label for="children">Number of children</label>
-                                                        <!-- <input type="number" name="children" class="form-control" id="children" min="0" max="6" value="0"/> -->
                                                         <input type="number" name="children" class="form-control" id="children" min="0" max="6" value="0"/>
                                                             <div class="invalid-feedback">
                                                                 Please, the number of Sons.
@@ -3312,7 +3310,6 @@
                                                     <p class="text-center font-weight-bold text-body">Spouse or children (In the absence of spouse, concubine may be named - Art 326°; Civil Code).</p>
                                                     <div class="form-group">
                                                         <label for="familyMembers">Number of family members</label>
-                                                        <input type="number" class="form-control" id="familyMembers" oninput="validateInputfamily()" min="0" max="6" value="0"/>
                                                         <button type="button" class="btn btn-outline-primary mb-3" id="copyChildrenToBeneficiaries">
                                                             Copiar hijos como beneficiarios
                                                         </button>
