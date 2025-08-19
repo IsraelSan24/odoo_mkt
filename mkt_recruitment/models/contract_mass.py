@@ -32,13 +32,14 @@ class ContractMass(models.Model):
     _inherit = ['mail.thread','mail.activity.mixin']
     _order = 'id desc'
 
+    active = fields.Boolean(default=True)
     name = fields.Char(copy=False, required=True, default=lambda self: _('New'), string='Name')
     employee_ids = fields.Many2many(comodel_name="hr.employee", relation="contract_mass_employee_rel", string="Employee", domain="[('contract_id', '=', False)]")
     contracts_ids = fields.One2many(comodel_name='hr.contract', inverse_name='massive_new_contracts_id', string='Created new contracts')
     renew_employee_ids = fields.Many2many(comodel_name="hr.employee", relation="contract_mass_renew_employee_rel", string="Employee", domain="[('contract_id', '!=', False),('contract_id.state','=','open')]")
     renew_contracts_ids = fields.One2many(comodel_name='hr.contract', inverse_name='massive_renew_contracts_id', string='Created renewed contracts')
     contract_type_id = fields.Many2one(comodel_name="hr.contract.type", string="Contract Type")
-    mode = fields.Selection(selection=contract_modes, required=True, default='renovation', string='New or Renewed')
+    mode = fields.Selection(selection=contract_modes, required=True, default='new_employee', string='New or Renewed')
     # wage_mode = fields.Selection(selection=wage_modes, default='manual', string='Wage mode')
     mode_mode = fields.Selection(selection=mode_modes, default='auto', string='Manual or automatic')
     wage = fields.Float(string='Wage', default=False)
@@ -62,12 +63,22 @@ class ContractMass(models.Model):
                                         help="Identifiers that were not found in the system.")
                                         
 
-    # Solo debe aparecer ste boton en el ultimo etado que ensi es el segundo
     def button_update_contracts(self):
-        for rec in self.renew_contracts_ids:
-            rec.write_data()
+        self.ensure_one()
+        if self.mode == 'renovation':
+            for rec in self.renew_contracts_ids:
+                rec.write_data()
+        elif self.mode == 'new_employee':
+            new_values = {
+                key: value for key, value in {
+                'date_start': self.date_start,
+                'date_end': self.date_end,
+                'wage': self.wage,
+                'contract_type_id': self.contract_type_id.id,
+                }.items() if value
+            }
+            self.contracts_ids.write(new_values)
 
-    # Solo debe aparecer ste boton en el ultimo etado que ensi es el segundo
     def button_send_contracts(self):
         if self.mode == 'renovation':
             for rec in self.renew_contracts_ids:
@@ -236,7 +247,7 @@ class ContractMass(models.Model):
 
         return (id_list, missing, found_values, found_ids)
 
-    @api.onchange('employee_ids', 'validate_cost_center_id')
+    @api.onchange('employee_ids', 'validate_cost_center_id', 'employees_with_other_cc')
     def process_identifiers(self):
         """Busca employees por identificadores y reemplaza employee_ids."""
         self.ensure_one()
@@ -247,32 +258,22 @@ class ContractMass(models.Model):
             if not id_list:
                 self.employee_ids = False
                 return {
-                'type': 'ir.actions.client',
-                'tag': 'display_notification',
-                'params': {
-                    'title': _('Nothing to import'),
-                    'message': _('Please paste valid identifiers into the text box.'),
-                    'type': 'warning',
-                    'sticky': False,
-                    }
+                    "type_message": "danger",
+                    "message": _("No identifiers provided or all identifiers are invalid.")
                 }
 
-            # Reemplazamos la lista Many2many: (6, 0, ids)
-            # self.write({'employee_ids': [(6, 0, found_ids)]})
-            self.employee_ids = [(6, 0, found_ids)]
-            # self.employees_with_other_cc = [(6, 0, found_ids)]
-
-            # Notificación al usuario
-            message = _("%d identifier(s) processed. %d employee(s) found.") % (len(id_list), len(found_ids))
             if missing:
                 self.identifiers_not_found = "\n".join(missing)
-                message += " " + _("Not found: %s") % (", ".join(missing[:10]) + ("..." if len(missing) > 10 else ""))
+
+            # Reemplazamos la lista Many2many: (6, 0, ids)
+            self.employee_ids = [(6, 0, found_ids)] # carga para el usuario también
 
             #####################
             # Validar centros de costo si se seleccionó uno
+            emp_with_validate_cc = []
+            emp_without_validate_cc = []
+
             if self.validate_cost_center_id:
-                emp_with_validate_cc = []
-                emp_without_validate_cc = []
                 
                 for emp in self.employee_ids:
                     if self.validate_cost_center_id.id == emp.cost_center_id.id:
@@ -285,18 +286,59 @@ class ContractMass(models.Model):
             else:
                 self.employees_with_other_cc = [(6, 0, [])]
 
+                
             #####################
 
+            # Notificación al usuario desde el wizard
+            return self._message_notif(id_list, missing, found_values, emp_with_validate_cc, emp_without_validate_cc)
+
+    def _message_notif(self, id_list, missing, found_values, emp_with_validate_cc, emp_without_validate_cc):
+        """Genera un mensaje de notificación para el usuario dependiendo de las combinaciones."""
+        if not id_list:
             return {
-                'type': 'ir.actions.client',
-                'tag': 'display_notification',
-                'params': {
-                    'title': _('Import finished'),
-                    'message': message,
-                    'type': 'success' if found_ids else 'warning',
-                    'sticky': False,
-                }
+                    "type_message": "danger",
+                    "message": _("No identifiers provided or all identifiers are invalid.")
+                }  
+
+        elif not found_values:
+            return {
+                "type_message": "danger",
+                "message": _("No employees found for the provided identifiers.")
             }
+        else:
+            if len(found_values) == len(id_list):
+                if not emp_without_validate_cc:
+                    return {
+                        "type_message": "success",
+                        "message": _("All identifiers found and all employees have the same cost center.")
+                    }
+                elif not emp_with_validate_cc:
+                    return {
+                        "type_message": "danger",
+                        "message": _("All identifiers found but no employees have the selected cost center. Check errors page ⚠.")
+                    }
+                else:
+                    return {
+                        "type_message": "warning",
+                        "message": _("All identifiers found but %s have different cost centers. Employees with the selected cost center: %s. Check errors page ⚠.") % (len(emp_without_validate_cc), len(emp_with_validate_cc))
+                    }
+            else:
+                if not emp_without_validate_cc:
+                    return {
+                        "type_message": "warning",
+                        "message": _("Some identifiers not found: %s.\nAll employees have the same cost center: %s. Check errors page ⚠.") % ( len(missing), len(emp_with_validate_cc))
+                    }
+                elif not emp_with_validate_cc:
+                    return {
+                        "type_message": "danger",
+                        "message": _("Some identifiers not found: %s.\nNo employees have the selected cost center: %s. Check errors page ⚠.") % ( len(missing), len(emp_without_validate_cc))
+                    }
+                else:
+                    return {
+                        "type_message": "warning",
+                        "message": _("Some identifiers not found: %s.\nEmployees with other cost center: %s. Check errors page ⚠.") % (len(missing), len(emp_without_validate_cc))
+                    }
+
 
     # def button_validate_cost_center(self):
     #     """Valida el centro de costo seleccionado."""
@@ -390,7 +432,7 @@ class ContractMass(models.Model):
 
         elif self.mode == 'renovation':
             new_fields = ['validate_cost_center_id', 'contract_type_id', 'wage', 'date_start', 'date_end', 'employee_ids', 'contracts_ids', 
-                          'employees_with_other_cc', 'identifiers_not_found', 'identifiers_input', 'identifiers_not_found']
+                          'employees_with_other_cc', 'identifiers_input', 'identifiers_not_found']
             for field in new_fields:
                 self[field] = False
 
@@ -400,3 +442,15 @@ class ContractMass(models.Model):
         for rec in self:
             if rec.wage <= 0.0 and rec.mode == 'new_employee':
                 raise ValidationError(_("The wage must be greater than 0."))
+    
+    def toggle_active(self):
+        '''Propaga el archivado desde el contrato masivo a los contratos individuales'''
+        res = super(ContractMass, self).toggle_active()
+        for rec in self:
+            all_related_contracts = self.env['hr.contract'].with_context(active_test=False).search([
+                '|', ('massive_new_contracts_id', '=', rec.id), ('massive_renew_contracts_id', '=', rec.id)
+            ])
+            if all_related_contracts:
+                all_related_contracts.write({'active': rec.active})
+
+        return res

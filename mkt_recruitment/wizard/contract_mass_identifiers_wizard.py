@@ -27,10 +27,16 @@ class IdentifiersWizard(models.TransientModel):
 
         # Llamar a la lógica que procesa los identificadores. 
         if hasattr(main_rec, 'process_identifiers'):
-            main_rec.process_identifiers()
+            result = main_rec.process_identifiers()
 
-        # # cerrar modal
-        # self.identifiers_input = ''  # Limpiar el campo de entrada
-        return {'type': 'ir.actions.act_window_close'}
-    
-    
+            return {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'title': _('Import finished'),
+                        'message': result['message'],
+                        'type': result['type_message'],
+                        'sticky': True,
+                        'next': {'type': 'ir.actions.act_window_close'} ,
+                    }
+                }
