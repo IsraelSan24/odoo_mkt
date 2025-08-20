@@ -97,10 +97,11 @@
                         <page string="Employees" attrs="{'invisible':[('mode','!=','new_employee')]}">
                             <field string="Employees Found with Given Cost Center" name="employee_ids" 
                                 attrs="{'readonly':[('state','!=','draft')], 'invisible':[('mode','!=','new_employee')]}"
-                                options="{'color_field': 'color', 'no_edit': True}"
+                                options="{'color_field': 'color', 'no_edit': True, 'no_create': True}"
                                 nolabel="1">
                                 <tree editable="bottom">  
                                     <field name="name"  readonly="1"/>
+                                    <field name="identification_id" readonly="1"/>
                                     <field name="department_id" readonly="1"/>
                                     <field name="cost_center_id"/>
                                     <field name="job_id" domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"/>
@@ -123,10 +124,11 @@
                                     <field name="company_id" invisible="1"/>
                                     <field name="date_start"/>
                                     <field name="date_end"/>
+                                    <field name="wage"/>
                                     <field name="is_sended" widget="boolean_toggle"/>
                                     <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'close'" decoration-success="state == 'open'"/>
                                     <field name="signature_state" widget="badge" decoration-info="state == 'to_sign'" decoration-warning="state == 'cancel'" decoration-success="state == 'signed'"/>
-                                    <field name="signature_employer_state" widget="badge" decoration-info="state == 'to_sign'" decoration-warning="state == 'cancel'" decoration-success="state == 'signed'"/>
+                                    <!-- <field name="signature_employer_state" widget="badge" decoration-info="state == 'to_sign'" decoration-warning="state == 'cancel'" decoration-success="state == 'signed'"/> -->
                                     <field name="resource_calendar_id" optional="hide"/>
                                     <field name="structure_type_id" optional="hide"/>
                                 </tree>
@@ -137,11 +139,26 @@
                         <page string="Errors ⚠" attrs="{'invisible':[('mode','!=','new_employee')]}">
                             <group>
                                 <group>
-                                    <field string="Employees with Different CC" name="employees_with_other_cc" 
+                                    <field string="Employees with Different CC (No Previous Contracts)" name="employees_with_other_cc" 
                                         attrs="{'readonly':[('state','!=','draft')], 'invisible':[('mode','!=','new_employee')]}"
                                         options="{'color_field': 'color', 'no_create': True, 'no_edit': True}">
                                         <tree editable="bottom">  
                                             <field name="name" readonly='1'/>
+                                            <field name="identification_id" readonly="1"/>
+                                            <field name="department_id" readonly='1'/>
+                                            <field name="cost_center_id"/>
+                                            <field name="job_id" domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"/>
+                                            <field name="company_id" invisible="1"/>
+                                            <field name="parent_id" readonly='1'/>
+                                        </tree>
+                                    </field>
+                                    <field string="Employees with Previous Contracts" name="employees_with_previous_contracts" 
+                                        attrs="{'readonly':[('state','!=','draft')], 'invisible':[('employees_with_previous_contracts', '=', False)]}"
+                                        options="{'color_field': 'color', 'no_create': True, 'no_edit': True}"
+                                        readonly="1">
+                                        <tree editable="bottom">  
+                                            <field name="name" readonly='1'/>
+                                            <field name="identification_id" readonly="1"/>
                                             <field name="department_id" readonly='1'/>
                                             <field name="cost_center_id"/>
                                             <field name="job_id" domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"/>
@@ -151,7 +168,7 @@
                                     </field>
                                 </group>
                                 <group>
-                                    <field string="Employees not Found" 
+                                    <field string="Employees not Found: IDs of employees not found in the system or archived employees." 
                                            name="identifiers_not_found" 
                                            attrs="{'invisible': [('identifiers_not_found', '=', False)]}"
                                            options="{'limit': 10}"/>
