@@ -34,7 +34,7 @@ class ContractMass(models.Model):
 
     active = fields.Boolean(default=True)
     name = fields.Char(copy=False, required=True, default=lambda self: _('New'), string='Name')
-    employee_ids = fields.Many2many(comodel_name="hr.employee", relation="contract_mass_employee_rel", string="Employee", domain="[('contract_id', '=', False)]")
+    employee_ids = fields.Many2many(comodel_name="hr.employee", relation="contract_mass_employee_rel", string="Employee", domain="['&', ('contract_id', '=', False), ('active', '=', True)]")
     contracts_ids = fields.One2many(comodel_name='hr.contract', inverse_name='massive_new_contracts_id', string='Created new contracts')
     renew_employee_ids = fields.Many2many(comodel_name="hr.employee", relation="contract_mass_renew_employee_rel", string="Employee", domain="[('contract_id', '!=', False),('contract_id.state','=','open')]")
     renew_contracts_ids = fields.One2many(comodel_name='hr.contract', inverse_name='massive_renew_contracts_id', string='Created renewed contracts')
@@ -55,7 +55,8 @@ class ContractMass(models.Model):
     province_id = fields.Boolean(default=True, required=True, string='Is Lima?')
     # validate_cost_center = fields.Selection(selection=lambda self: self._get_cost_center(), string="Cost center to validate")
     validate_cost_center_id = fields.Many2one(comodel_name='cost.center', string="Cost center to validate")
-    employees_with_other_cc = fields.Many2many(comodel_name='hr.employee', string="Employees with other cost center", store=True, readonly=True)
+    employees_with_other_cc = fields.Many2many(comodel_name='hr.employee', relation='employees_with_other_cc_rel', string="Employees with other cost center", store=True, readonly=True)
+    employees_with_previous_contracts = fields.Many2many(comodel_name='hr.employee', relation='employees_with_previous_contracts_rel', string="Employees with previous contracts", store=True, readonly=True)
     # campo de texto donde el usuario pega los DNIs / VATs
     identifiers_input = fields.Text(string="Identifiers (one per line or comma separated)",
                                     help="Paste one identifier per line or separate them by commas/semicolons.")
@@ -218,7 +219,8 @@ class ContractMass(models.Model):
         found_emps = hr_employee.browse()
 
         # Buscar en cada campo y unir resultados
-        employees = hr_employee.search([('identification_id', 'in', id_list)])
+        # employees = self.employee_ids.search([('identification_id', 'in', id_list)])
+        employees = hr_employee.search([('identification_id', 'in', id_list), ('active', '=', True), ('contract_id', '=', False)])
         found_emps |= employees # Eliminamos duplicados
         found_ids = found_emps.ids # ids de empleados encontrados
 
@@ -257,13 +259,19 @@ class ContractMass(models.Model):
             
             if not id_list:
                 self.employee_ids = False
+                self.identifiers_not_found = False
+                self.employees_with_previous_contracts = False
                 return {
                     "type_message": "danger",
                     "message": _("No identifiers provided or all identifiers are invalid.")
                 }
-
+            
             if missing:
-                self.identifiers_not_found = "\n".join(missing)
+                self.employees_with_previous_contracts = self.env['hr.employee'].search([('identification_id', 'in', missing), ('active', '=', True)])  
+                self.identifiers_not_found = "\n".join(sorted(list(set(missing) - set(self.employees_with_previous_contracts.mapped('identification_id')))))
+            else:
+                self.identifiers_not_found = False
+                self.employees_with_previous_contracts = False
 
             # Reemplazamos la lista Many2many: (6, 0, ids)
             self.employee_ids = [(6, 0, found_ids)] # carga para el usuario también
@@ -320,90 +328,24 @@ class ContractMass(models.Model):
                 else:
                     return {
                         "type_message": "warning",
-                        "message": _("All identifiers found but %s have different cost centers. Employees with the selected cost center: %s. Check errors page ⚠.") % (len(emp_without_validate_cc), len(emp_with_validate_cc))
+                        "message": _("All identifiers found but %s have different cost centers. Check errors page ⚠.") % len(emp_without_validate_cc)
                     }
             else:
                 if not emp_without_validate_cc:
                     return {
                         "type_message": "warning",
-                        "message": _("Some identifiers not found: %s.\nAll employees have the same cost center: %s. Check errors page ⚠.") % ( len(missing), len(emp_with_validate_cc))
+                        "message": _("Some identifiers not found: %s.\nAll found employees have the same cost center. Check errors page ⚠.") % len(missing)
                     }
                 elif not emp_with_validate_cc:
                     return {
                         "type_message": "danger",
-                        "message": _("Some identifiers not found: %s.\nNo employees have the selected cost center: %s. Check errors page ⚠.") % ( len(missing), len(emp_without_validate_cc))
+                        "message": _("Some identifiers not found: %s.\nAll found employees don't have the selected cost center. Check errors page ⚠.") % len(missing)
                     }
                 else:
                     return {
                         "type_message": "warning",
                         "message": _("Some identifiers not found: %s.\nEmployees with other cost center: %s. Check errors page ⚠.") % (len(missing), len(emp_without_validate_cc))
                     }
-
-
-    # def button_validate_cost_center(self):
-    #     """Valida el centro de costo seleccionado."""
-    #     if not self.validate_cost_center_id:
-    #         raise UserError(_("Please select a cost center to validate."))
-        
-    #     emp_cost_centers_id = self.employee_ids.mapped('cost_center_id')
-    #     emp_cost_centers = [cost_center_id if cost_center_id else "Sin CC" for cost_center_id in emp_cost_centers_id.mapped('id')]
-
-    #     unique_emp_cost_centers = list(set(emp_cost_centers))
-
-    #     # All employees have a defined cost center
-    #     if emp_cost_centers:
-            
-    #         if len(unique_emp_cost_centers) == 1:
-    #             if unique_emp_cost_centers[0] == self.validate_cost_center_id.id:
-    #                 return {
-    #                 'type': 'ir.actions.client',
-    #                 'tag': 'display_notification',
-    #                 'params': {
-    #                     'title': _('Cost Center Validation'),
-    #                     'message': _("All employees have the same cost center: _%s_.") % self.validate_cost_center_id.id,
-    #                     'type': 'success',
-    #                     'sticky': True,
-    #                     }
-    #                 }
-                
-    #             return {
-    #             'type': 'ir.actions.client',
-    #             'tag': 'display_notification',
-    #             'params': {
-    #                 'title': _('Cost Center Validation'),
-    #                 'message': _("All employees have a different cost center: _%s_") % unique_emp_cost_centers[0],
-    #                 'type': 'warning',
-    #                 'sticky': True,
-    #                 }
-    #             }
-
-    #         elif len(unique_emp_cost_centers) > 1:
-    #             other_cost_centers = [cc for cc in unique_emp_cost_centers if cc != self.validate_cost_center_id.id]
-
-    #             self.employees_with_other_cc = self.employee_ids.browse(other_cost_centers)
-    #             return {
-    #                 'type': 'ir.actions.client',
-    #                 'tag': 'display_notification',
-    #                 'params': {
-    #                     'title': _('Cost Center Validation'),
-    #                     'message': _("Employees have different cost centers: _%s_") % ", ".join(str(cc) for cc in other_cost_centers),
-    #                     'type': 'warning',
-    #                     'sticky': True,
-    #                     'tag': 'reload'
-    #                 }
-    #             }
-
-    #     else:
-    #         return {
-    #         'type': 'ir.actions.client',
-    #         'tag': 'display_notification',
-    #         'params': {
-    #             'title': _('Cost Center Validation'),
-    #             'message': f"No employees with any cost center found.",
-    #             'type': 'warning',
-    #             'sticky': False,
-    #             }
-    #         }
 
     def action_open_identifiers_wizard(self):
         self.ensure_one()
@@ -432,7 +374,7 @@ class ContractMass(models.Model):
 
         elif self.mode == 'renovation':
             new_fields = ['validate_cost_center_id', 'contract_type_id', 'wage', 'date_start', 'date_end', 'employee_ids', 'contracts_ids', 
-                          'employees_with_other_cc', 'identifiers_input', 'identifiers_not_found']
+                          'employees_with_other_cc', 'identifiers_input', 'identifiers_not_found', 'employees_with_previous_contracts']
             for field in new_fields:
                 self[field] = False
 
