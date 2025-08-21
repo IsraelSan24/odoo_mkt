@@ -95,9 +95,16 @@ class StockSummaryReport(models.TransientModel):
 
 
     def _get_query(self):
-        self.stock_location_ids = [(6,0,self.env.user.stock_location_ids.ids)]
-        where = "WHERE sl.id IN {}"
-        query= """
+        # 1) Toma las ubicaciones del usuario y sincroniza el M2M del wizard
+        user_loc_ids = self.env.user.stock_location_ids.ids
+        if not user_loc_ids:
+            raise UserError(_("Configura al menos una ubicación de stock en tu usuario."))
+
+        # Actualiza el M2M del wizard (si es compute/write-on-change está bien)
+        self.stock_location_ids = [(6, 0, user_loc_ids)]
+
+        # 2) Query parametrizado: NUNCA formatees el IN a mano
+        query = """
             SELECT
                 sq.id AS id,
                 pp.id AS pp_id,
@@ -129,15 +136,19 @@ class StockSummaryReport(models.TransientModel):
                 sq.quantity AS report_stock,
                 spl.expiration_date AS expiration_date
             FROM stock_quant AS sq
-            INNER JOIN product_product AS pp ON pp.id=sq.product_id
+            INNER JOIN product_product AS pp ON pp.id = sq.product_id
             INNER JOIN product_template AS pt ON pt.id = pp.product_tmpl_id
             INNER JOIN product_category AS pc ON pc.id = pt.categ_id
             INNER JOIN stock_location AS sl ON sl.id = sq.location_id
             LEFT JOIN stock_production_lot AS spl ON spl.id = sq.lot_id
-            {}
-            GROUP BY sq.id, pt.name, spl.name, pc.name, pt.detailed_type, sl.name, sq.quantity, pp.id, sl.id, spl.expiration_date
+            WHERE sl.id IN %s
+            GROUP BY
+                sq.id, pt.name, spl.name, pc.name, pt.detailed_type, sl.name,
+                sq.quantity, pp.id, sl.id, spl.expiration_date
             ORDER BY pt.name
-        """.format(where.format(tuple(self.stock_location_ids.ids)))
-        self._cr.execute(query)
+        """
+
+        # 3) Ejecuta con parámetro: tuple(...) para que psycopg2 arme IN (...) correctamente
+        self._cr.execute(query, (tuple(user_loc_ids),))
         res_query = self._cr.dictfetchall()
         return res_query
