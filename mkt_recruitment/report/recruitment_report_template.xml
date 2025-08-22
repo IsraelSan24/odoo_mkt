@@ -223,15 +223,15 @@
                                     <p>
                                         Estando plenamente conforme con el contenido de todas las cláusulas precedentes, suscribo el presente documento en señal de conformidad, a los &#40;
                                         <strong>
-                                            <span t-esc="'%02d' % o.signed_on.day"/>
+                                            <span t-esc="('%02d' % o.signed_on.day) if o.signed_on else ''"/>
                                         </strong>
                                         &#41; días de 
                                         <strong>
-                                            <span t-esc="o.signed_on_month"/>
+                                            <span t-esc="('%02d' % o.signed_on_month) if o.signed_on else ''"/>
                                         </strong>
                                         del 
                                         <strong>
-                                            <span t-esc="o.signed_on.year"/>
+                                            <span t-esc="('%02d' % o.signed_on.year) if o.signed_on else ''"/>
                                         </strong>
                                         .
                                     </p>
@@ -252,7 +252,12 @@
                                 </div>
                                 <div class="text-center">
                                     <strong>
-                                        <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%; margin-top: 50px"/>
+                                        <t t-if="o.applicant_signature">
+                                            <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%; margin-top: 50px"/>
+                                        </t>
+                                        <t t-else="">
+                                            <div style="min-height: 100px;"></div>
+                                        </t>
                                     </strong>
                                 </div>
                             </div>
