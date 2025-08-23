@@ -227,11 +227,11 @@
                                         </strong>
                                         &#41; días de 
                                         <strong>
-                                            <span t-esc="('%02d' % o.signed_on_month) if o.signed_on else ''"/>
+                                            <span t-esc="(o.signed_on_month) if o.signed_on else ''"/>
                                         </strong>
                                         del 
                                         <strong>
-                                            <span t-esc="('%02d' % o.signed_on.year) if o.signed_on else ''"/>
+                                            <span t-esc="(o.signed_on.year) if o.signed_on else ''"/>
                                         </strong>
                                         .
                                     </p>
