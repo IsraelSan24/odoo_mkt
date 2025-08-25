@@ -20,7 +20,6 @@
                         <script type="text/javascript" src="/mkt_photocheck/static/src/js/cropper.js"></script> 
                         <script type="text/javascript" src="/mkt_photocheck/static/src/js/jquery.js"></script>
                         <script type="text/javascript" src="/mkt_photocheck/static/src/js/index.js"></script>
-                        <script type="text/javascript" src="/mkt_photocheck/static/src/js/updatedata.js"></script>
                         <link rel="stylesheet" type="text/css" href="/mkt_photocheck/static/src/css/form.css"/>
                         <div id="wrap">
                             <div class="oe_structure">
@@ -85,9 +84,11 @@
                                                                     </t>
                                                                 </select>
                                                             </div>
+                                                            
+                                                            <!-- CAMBIO: Primero seleccionar marca -->
                                                             <div class="input-group mb-2">
                                                                 <select name="photocheck_brand_group_id" id="photocheck_brand_group_id" class="form-control form-control-lg bg-light fs-6" required="True">
-                                                                    <option value="">Brand...</option>
+                                                                    <option value="">Select Brand...</option>
                                                                     <t t-foreach="brands or []" t-as="brand">
                                                                         <option t-att-value="brand.id" required="True">
                                                                             <t t-esc="brand.name"/>
@@ -95,23 +96,30 @@
                                                                     </t>
                                                                 </select>
                                                             </div>
+                                                            
+                                                            <!-- CAMBIO: Después seleccionar ciudad filtrada por marca -->
                                                             <div class="input-group mb-2">
-                                                                <select name="photocheck_supervisor_id" id="photocheck_supervisor_id" class="form-control form-control-lg bg-light fs-6" required="True">
-                                                                    <option value="">Supervisor...</option>
-                                                                    <t t-foreach="supervisors or []" t-as="supervisor">
-                                                                        <option t-att-value="supervisor.id" t-att-data-brand_group_ids="supervisor.brand_group_ids.ids" required="True">
-                                                                            <t t-esc="supervisor.name"/>
+                                                                <select name="city_id" id="city_id" class="form-control form-control-lg bg-light fs-6" required="True" disabled="True">
+                                                                    <option value="">Select City...</option>
+                                                                    <t t-foreach="citys or []" t-as="city">
+                                                                        <option t-att-value="city.id" id="city_name" required="True" style="display: none;">
+                                                                            <t t-esc="city.name"/>
                                                                         </option>
                                                                     </t>
                                                                 </select>
-                                                                
                                                             </div>
+                                                            
+                                                            <!-- CAMBIO: Finalmente supervisor filtrado por marca y ciudad -->
                                                             <div class="input-group mb-2">
-                                                                <select name="city_id" id="city_id" class="form-control form-control-lg bg-light fs-6" required="True">
-                                                                    <option value="">City...</option>
-                                                                    <t t-foreach="citys or []" t-as="city">
-                                                                        <option t-att-value="city.id" id="city_name" required="True">
-                                                                            <t t-esc="city.name"/>
+                                                                <select name="photocheck_supervisor_id" id="photocheck_supervisor_id" class="form-control form-control-lg bg-light fs-6" required="True" disabled="True">
+                                                                    <option value="">Select Supervisor...</option>
+                                                                    <t t-foreach="supervisors or []" t-as="supervisor">
+                                                                        <option t-att-value="supervisor.id" 
+                                                                                t-att-data-brand_group_ids="supervisor.brand_group_ids.ids" 
+                                                                                t-att-data-city_ids="supervisor.city_ids.ids"
+                                                                                required="True"
+                                                                                style="display: none;">
+                                                                            <t t-esc="supervisor.name"/>
                                                                         </option>
                                                                     </t>
                                                                 </select>
@@ -128,6 +136,8 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        
                         <div class="modal" id="Modal1">
                             <div class="modal-content">
                                 <div class="modal-header" id="existingModalLabel">

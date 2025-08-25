@@ -9,6 +9,8 @@
                 <field name="name"/>
                 <field name="user_id"/>
                 <field name="brand_group_ids" widget="many2many_tags"/>
+                <!-- resien añadido ciudad -->
+                <field name="city_ids" widget="many2many_tags"/>
             </tree>
         </field>
     </record>
@@ -23,6 +25,8 @@
                         <field name="name"/>
                         <field name="user_id"/>
                         <field name="brand_group_ids" widget="many2many_tags"/>
+                        <!-- resien añadido ciudad -->
+                        <field name="city_ids" widget="many2many_tags"/>
                     </group>
                 </sheet>
             </form>
