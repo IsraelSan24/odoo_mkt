@@ -1156,13 +1156,13 @@
                                 <table style="width:100%;">
                                     <tr>
                                         <!-- Columna izquierda: título -->
-                                        <td style="text-align:right; width:72%;">
-                                            <h3 style="margin:0; font-size:12px; font-weight:bold;">
+                                        <td style="text-align:right; width:75%;">
+                                            <h3 style="margin:0; font-size:15px; font-weight:bold;">
                                                 ANEXO I.- NORMATIVAS &amp; COMPROMISO LABORAL
                                             </h3>
                                         </td>
                                         <!-- Columna derecha: logo -->
-                                        <td style="text-align:right; width:28%;">
+                                        <td style="text-align:right; width:25%;">
                                             <img t-attf-src="/logo.png?company={{ user.company_id.id }}"
                                                  style="padding: 0px; margin: 0px; height: auto; width: 100px;" 
                                                  t-att-alt="user.company_id.name"/>
