@@ -38,7 +38,7 @@ class Photocheck(models.Model):
     user_id = fields.Many2one(comodel_name='res.users', default=lambda self: self.env.user, string='User')
     brand_counter = fields.Integer(compute='compute_brand_counter', string='Brand Counter')
     brand_ids = fields.Many2many(comodel_name='res.partner.brand', string='Brand', compute='compute_brands')
-    photocheck_brand_group_id = fields.Many2one(comodel_name='photocheck.brand.group', string='Brand Group')
+    photocheck_brand_group_id = fields.Many2one(comodel_name='photocheck.brand.group', string='Brand Group', domain=lambda self: self._get_brand_group_domain())
     dni = fields.Char(required=True, string='DNI')
     job_id = fields.Many2one(comodel_name='photocheck.job', string='Job')
     city_id = fields.Many2one(comodel_name='photocheck.city', string='City')
@@ -52,6 +52,19 @@ class Photocheck(models.Model):
 
     # generar 2 registros mas para cada estado
     email_status_change_send_on = fields.Datetime('Status Change Email Sent On')
+
+    @api.model
+    def _get_brand_group_domain(self):
+        user = self.env.user
+        # Admin ve todos los grupos
+        if user.has_group("mkt_photocheck.photocheck_admin"):
+            return []
+        # Responsables: solo los grupos donde está vinculado
+        group_ids = self.env["photocheck.brand.group.responsible"].search([
+            ("user_id", "=", user.id)
+        ]).mapped("brand_group_id.id")
+        return [("id", "in", group_ids)] if group_ids else [("id", "=", False)]
+
 
     def get_photocheck_url(self):
         """
@@ -189,7 +202,7 @@ class Photocheck(models.Model):
             )
         )
 
- 
+
     def send_email_done(self):
         self.ensure_one()
         template = self.env.ref('mkt_photocheck.mail_template_photocheck_done')
@@ -207,7 +220,50 @@ class Photocheck(models.Model):
                 self.email_status_change_send_on
             )
         )
-       
+
+
+    @api.model
+    def search(self, args, offset=0, limit=None, order=None, count=False):
+        user = self.env.user
+
+        # Caso 1: Admin -> ve todo
+        if user.has_group('mkt_photocheck.photocheck_admin'):
+            return super().search(args, offset=offset, limit=limit, order=order, count=count)
+
+        # Dominio base: siempre puede ver sus propios registros
+        base_domain = [
+            '|', '|',
+            ('create_uid', '=', user.id),
+            ('photocheck_supervisor_id.user_id', '=', user.id),
+            ('user_id', '=', user.id)
+        ]
+
+        # --- responsabilidades de grupo ---
+        resp_lines = self.env['photocheck.brand.group.responsible'].search([('user_id', '=', user.id)])
+        subdomains = []
+        for line in resp_lines:
+            if line.city_ids:
+                subdomains.append([
+                    '&',
+                    ('photocheck_brand_group_id', '=', line.brand_group_id.id),
+                    ('city_id', 'in', line.city_ids.ids)
+                ])
+            else:
+                subdomains.append([('photocheck_brand_group_id', '=', line.brand_group_id.id)])
+
+        # --- combinar ---
+        if subdomains:
+            if len(subdomains) == 1:
+                extra_domain = subdomains[0]
+            else:
+                # OR correcto entre subdominios
+                extra_domain = ['|'] * (len(subdomains) - 1) + sum(subdomains, [])
+            full_domain = ['|'] + base_domain + extra_domain
+        else:
+            full_domain = base_domain
+
+        return super().search(args + full_domain, offset=offset, limit=limit, order=order, count=count)
+
 
     @api.model
     def create(self, vals):

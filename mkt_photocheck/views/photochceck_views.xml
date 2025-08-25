@@ -124,12 +124,18 @@
                                     <h3><field name="job_id"/></h3>
                                     <h3><field name="dni"/></h3>
                                     <h3 class="text-danger"><field name="photocheck_brand_group_id"/></h3>
-                                    <h3><field name="state" widget="badge"
-                                        decoration-info="state == 'draft'" 
-                                        decoration-warning="state == 'to_do'"
-                                        decoration-success="state == 'done'"
-                                        decoration-danger="state == 'refused'"/>
-                                    </h3>         
+                                    <div class="d-flex justify-content-between">
+                                    
+                                        <h3><field name="state" widget="badge"
+                                            decoration-info="state == 'draft'" 
+                                            decoration-warning="state == 'to_do'"
+                                            decoration-success="state == 'done'"
+                                            decoration-danger="state == 'refused'"/>
+                                        </h3>
+                                        <h3 class="bg-dark text-white rounded px-2 py-1 d-inline-block">
+                                            <field name="city_id"/>
+                                        </h3>       
+                                    </div>
                                 </strong>
                             </div>
                         </div>
@@ -161,12 +167,9 @@
                 <separator/>
                 <filter name="inactive" string="Archived" domain="[('active','=',False)]" help="Show inactive requirements"/>
                 <searchpanel>
-                    <field name="photocheck_brand_group_id" string="Brands" enable_counters="1"/>
+                    <field name="photocheck_brand_group_id" groupby="photocheck_brand_group_id"/>
                     <field name="city_id" string="City" select="multi" enable_counters="1" icon="fa-map-marker"/>
                 </searchpanel> 
-                <!-- <searchpanel>
-                    <field name="city_id" string="City" select="multi" enable_counters="1" icon="fa-map-marker"/>
-                </searchpanel> -->
             </search>
         </field>
     </record>
