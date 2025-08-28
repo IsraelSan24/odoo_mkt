@@ -437,7 +437,7 @@
                             <p style="font-weight: bold; margin-bottom: 2px;">
                                 Puesto: 
                                 <strong>
-                                    <span t-esc="o.job if o.job else '______________'"/>
+                                    <span t-esc="o.partner_id.belong_applicant_id.job_id.name or ''"/>
                                 </strong>
                             </p>
                             <p style="font-weight: bold; margin-bottom: 2px;">
@@ -561,7 +561,7 @@
                                 </t>
                                 de 
                                 <t t-if="o.applicant_signature">
-                                    <span t-esc="o.signed_on.month"/>
+                                    <span t-esc="o.signed_on_month"/>
                                 </t>
                                 <t t-else="">
                                     <t t-esc="mes_actual"/>
@@ -624,17 +624,17 @@
                             </h5>
                             <br/>
                             <p style="margin-bottom: 10px;">
-                                Por medio del presente documento, Yo 
+                                Por medio del presente documento, yo,  
                                 <strong>
                                     <span t-esc="o.partner_name if o.partner_name else '______________'"/> 
                                 </strong>
-                                    identificado &#40;a&#41; con DNI 
+                                    , identificado &#40;a&#41; con DNI Nº
                                 <strong>
                                     <span t-esc="o.vat if o.vat else '______________'"/>
                                 </strong>
                                 , cargo 
                                 <strong>
-                                    <span t-esc="o.job if o.job else '______________'"/>
+                                    <span t-esc="o.partner_id.belong_applicant_id.job_id.name or ''"/>
                                 </strong>
                                 , declaro bajo juramento lo siguiente:
                             </p>
@@ -848,14 +848,14 @@
                                 . Provincia&#58; 
                                 <span t-esc="o.province if o.province else '______________'"/> 
                                 . Departamento&#58;
-                                <span t-esc="o.department if o.department else '______________'"/> 
+                                <span t-esc="o.department if o.department else '______________'"/>. 
                             </p>
                             <p style="margin:0px 0 1px;">
                                 Correo Electrónico&#58; 
                                 <span t-esc="o.email if o.email else '______________'"/> 
-                                Teléfono de casa&#58; ________________________, 
-                                Celular&#58; 
-                                <span t-esc="o.phone if o.phone else '______________'"/> 
+                                . Teléfono de casa&#58; ______________, 
+                                . Celular&#58; 
+                                <span t-esc="o.phone if o.phone else '______________'"/>.
                             </p>
                             <!-- <br/> -->
                             <p style="margin:10px 0 0px;">
@@ -1474,7 +1474,7 @@
 
                     <div id="income_retention_document" style="padding:2rem 0.75rem 0rem;">
                         <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
-                            <h2 class="text-center" style="font-weight: bold">
+                            <h2 class="text-center" style="font-weight: bold; color:#000">
                                 Declaración Jurada
                             </h2>
                             <br/>
