@@ -3,6 +3,14 @@
 
     <template id="report_recruitmentdocument_document">
         <t t-if="not o " t-set="o" t-value="doc"/>
+        <t t-set="mes_actual" t-value="
+            datetime.datetime.now().strftime('%m')
+            .replace('01','enero').replace('02','febrero')
+            .replace('03','marzo').replace('04','abril')
+            .replace('05','mayo').replace('06','junio')
+            .replace('07','julio').replace('08','agosto')
+            .replace('09','septiembre').replace('10','octubre')
+            .replace('11','noviembre').replace('12','diciembre')"/>
 
         <t t-call="web.external_layout">
             <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
@@ -10,1159 +18,1062 @@
             <div class="o_report_layout_standard">
                 <div class="page">
                     
-                    <div style="page-break-after: always;">
-                        <div id="worker_info_document" style="padding:0.75rem;">
-                            <div style="width: 100%;text-align: justify; height: auto; font-size:0.590rem">
-                                <h5 class="text-center" style="font-weight: bold"><u>DECLARACIÓN JURADA SOBRE DATOS Y&#47;O INFORMACION DEL TRABAJADOR</u></h5>
-                                <p style="margin: 5px 0;">
-                                    En virtud del principio de presunción de veracidad declaro bajo juramento que los datos consignados en el presente documento son veraces, completos y conforme a la realidad asumiendo la responsabilidad penal en caso de resultar falsos, de acuerdo al código penal vigente.
-                                </p>
-                                <br/>
-                                <strong style="margin: 5px 0;">
-                                    <p>
+                    <div id="worker_info_document" style="padding:0.1rem 0.75rem 0rem;">
+                        <div style="width: 100%;text-align: justify; height: auto; font-size:0.590rem; line-height: 1.4;" >
+                            <h5 class="text-center" style="font-weight: bold"><u>DECLARACIÓN JURADA SOBRE DATOS Y&#47;O INFORMACION DEL TRABAJADOR</u></h5>
+                            <p style="margin: 2px 0 10px;">
+                                En virtud del principio de presunción de veracidad declaro bajo juramento que los datos consignados en el presente documento son veraces, completos y conforme a la realidad asumiendo la responsabilidad penal en caso de resultar falsos, de acuerdo al código penal vigente.
+                            </p>
+                            <p style="margin: 0">
+                                <strong >
                                         APELLIDOS Y NOMBRES: 
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.partner_name"/>,
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
+                                        <span t-esc="o.partner_name if o.partner_name else '______________'"/>. 
                                         CORREO ELECTRONICO (AUTORIZACION DE ENVIO DE BOLETAS): 
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.email"/>,
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
+                                        <span t-esc="o.email if o.email else '______________'"/>. 
                                         D.N.I. N&#176;: 
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.vat"/>,
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
+                                        <span t-esc="o.vat if o.vat else '______________'"/>. 
                                         DOMICILIO (Av. Jr. Calle Psje./ Intr. Mz. Lote.Zona. Km / Urb.): 
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.street"/>,
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                        Distrito 
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.district"/>,
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                        Provincia 
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.province"/>,
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                        Departamento 
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.department"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </p>
+                                        <span t-esc="o.street if o.street else '______________'"/>. 
+                                        Distrito: 
+                                        <span t-esc="o.district if o.district else '______________'"/>. 
+                                        Provincia: 
+                                        <span t-esc="o.province if o.province else '______________'"/>. 
+                                        Departamento: 
+                                        <span t-esc="o.department if o.department else '______________'"/>.
                                 </strong>
+                            </p>
+                            <p style="margin: 0px 0 10px;">
                                 <strong>
-                                    <p style="margin: 5px 0;">
-                                        Nombre &amp; Teléfono Celular y&#47;o fijo de Familiar directo: 
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.emergency_contact"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
+                                    Nombre &amp; Teléfono Celular y&#47;o fijo de Familiar directo: 
+                                    <span t-esc="o.emergency_contact if o.emergency_contact else '______________'"/>
                                         - 
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.emergency_phone"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </p>
+                                    <span t-esc="o.emergency_phone if o.emergency_phone else '______________'"/>.
                                 </strong>
-                                <ul>
-                                    <li style="font-weight: bold">
-                                        <u>
-                                            RECEPCION DE DOCUMENTOS DE LA EMPRESA
-                                        </u>
-                                    </li>
-                                </ul>   
+                            </p>
+                            <p style="font-weight: bold; margin:0px 0 5px; font-size:0.600rem;">
+                                <u>
+                                    RECEPCIÓN DE DOCUMENTOS DE LA EMPRESA
+                                </u>
+                            </p>
+                            <p style="margin-bottom: 5px;">
+                                Por la presente dejo CONSTANCIA, que la empresa ha cumplido entregando la documentación dentro de los plazos establecidos de acuerdo a ley, correspondiente a &#40;copia&#41;: Contrato de trabajo - Copia de T Registro - Reglamento Interno de Trabajo, Política, Recomendaciones y Reglamento de Salud &amp; Seguridad en trabajo &#40;Ley 29783&#41;, Política Alcohol, Drogas y sustancias controladas, Política Prevención Hostigamiento Sexual, Política de Protección de Datos Personales, Política de prevención contra la discriminación, previamente a iniciar vínculo laboral con la empresa, encontrándome conforme con c/u de las clausulas luego de haber leído y revisado detenidamente, y haber recibido las recomendaciones de los lineamientos internos de la empresa mediante inducción realizada por personal especializado de RRHH.
+                            </p>
+                            <p style="margin-bottom: 10px;">
+                                Por la presente otorga mi consentimiento libre, previo, informado, expreso e inequívoco para que mi empleador incluya mis datos personales sensibles o no, consignados en el presente documento, en sus sistemas y base de datos, así pueda dar tratamiento a mi información. Asimismo, teniendo conocimiento que mi empleador asegura la confidencialidad de mis datos, revisando toda la información referida a protocolo y seguridad de información, nos garantiza que todo dato y&#47;o información personal será tratada tal cual lo establece la normativa, respetando el cumplimiento de la legislación peruana sobre protección de datos de carácter personal &#40;Ley No. 29733&#41;. Las partes declaran conocer los alcances de la Ley de Protección de Datos Personales y su Reglamento y acuerdan que sólo se empleará para: i&#41; Realizar las gestiones necesarias conexas a la suscripción del contrato de trabajo; ii&#41; enviar información y&#47;o propuestas laborales; iii&#41; realizar encuestas; iv&#41; mantener un registro del personal; v&#41; atender reclamos o consultas. En caso "LOS TRABAJADORES" quisieran ejercer cualquiera de los derechos previstos en la Ley de Protección de Datos Personales, podrá gratuitamente enviar una comunicación al correo electrónico dcordova@marketing-alterno.com
+                            </p>
+                            <p style="font-weight: bold; margin-bottom:5px; font-size:0.600rem;">
+                                <u>
+                                    RESPONSABILIDAD DEL TRABAJADOR
+                                </u>
+                            </p>
+                            <p style="font-weight: bold; margin-bottom:3px;">
+                                HE SIDO DEBIDAMENTE INFORMADO:
+                            </p>
+                            <ol style="list-style: lower-alpha; margin-top: 0;">
+                                <li>
+                                    Que dentro del vínculo laboral debo demostrar un amplio respeto a la normatividad interna de la empresa, y personal jerárquico cumpliendo siempre con el mayor grado de compromiso y responsabilidad mis labores, asimismo todo vínculo laboral es directo con la empresa, y no con la cuenta asignada, por lo tanto todo permiso, comunicación y&#47;o autorización deberá ser solicitado directamente a personal del empleador.
+                                </li>
+                                <li>
+                                    Que estaré sujeto a los lineamientos que establezca cada SUPERVISOR de cuenta a modo de <strong>“COMPROMISO &amp; RESPONSABILIDAD”</strong> dependiendo la cuenta asignada, así como también las modificaciones según necesidad de la cuenta &#40;Cambios en PDV, Horarios, etc.&#41; respetando siempre la jornada legal máxima establecida por ley, queda establecido también que toda conducta negativa será acreedora de sanciones disciplinarias y&#47;o dctos según la naturaleza de mis conductas. &#40;Tardanzas, Inasistencias, Ausencia en reuniones semanales, etc.&#41;.
+                                </li>
+                                <li>
+                                    Que toda presentación de documentos frente a la empresa, tales como DNI, Recibos, Documentos, DNI &#40;Hijos&#41; Exámenes Médicos, deben constar en un “cargo de entrega” acreditando que como trabajador he cumplido con realizar la entrega de los documentos necesarios.
+                                </li>
+                                <li>
+                                    Que dentro de los procesos que se aplicaran, queda establecido el procedimiento de emisión de BOLETAS DE TRABAJO &#40;Boletas de Pago, CTS, Quinta Categoría, Utilidades, etc.&#41; de manera virtual para facilitar la entrega a los colaboradores de la empresa directamente al correo electrónico del trabajador &#40;brindado directamente por el Trabajador, siendo su responsabilidad de consignar correo erróneo y no recibir la documentación&#41;, cumpliendo con los procedimientos de registro y emisión, por tales motivos el correo electrónico brindado en la introducción de la presente es el correcto para recibir las BOLETAS.
+                                </li>
+                                <li>
+                                    Que la empresa trabaja directamente con la entidad financiera BBVA Continental, en caso que el trabajador tenga cuenta de haberes en una entidad distinta, tengo conocimiento que los procesos de pago a cuenta INTERBANCARIA &#40;Otros Bancos&#41; tardaran en procesar &#40;01 a 02 días&#41; de acuerdo al sistema de cada entidad financiera, a pesar que la empresa cumplirá a tiempo con los abonos.
+                                </li>
+                                <li>
+                                    Que la presentación de denuncias policiales por perdida y&#47;o robo de implementos, equipos, laptops, etc., no exoneran al personal de la responsabilidad que tiene frente a los implementos debiendo cumplir con la devolución para no estar sujeto a descuentos. Asimismo, toda asignación y devolución de implementos deberá constar en un CARGO y&#47;o acta de entrega y&#47;o devolución, para dejar constancia que todo proceso ha sido debidamente cerrado.
+                                </li>
+                                <li>
+                                    Que, una vez finalizado el vínculo laboral entre las partes, para que mi EMPLEADOR pueda proceder con el proceso de LIQUIDACION DE BENEFICIOS SOCIALES correspondiente de acuerdo a ley, no deberá existir ningún pendiente de entrega y&#47;o devolución de equipos o implementos frente a mi EMPLEADOR, de no cumplir con lo mencionada la LIQUIDACION quedara retenida hasta dar cumplimiento con toda devolución, en todo caso se procederá con la ejecución de descuentos.
+                                </li>
+                                <li>
+                                    Que, de realizar ABANDONO DE TRABAJO, la empresa se verá forzada a formalizar el termino de contrato por conducto notarial procediendo con la notificación material al domicilio que se consigne en mi contrato de trabajo, razón por la cual se procederá descontando de mi liquidación de beneficios sociales el valor del costo por dicho trámite notarial según los costos que se encuentren establecidos en la NOTARIA, lo señalado es de mi conocimiento y se autoriza por la presente al área de Planillas para que se proceda como lo ordena la presente clausula &#40;Concepto de Descuento administrativo por conducta de ABANDONO&#41;.
+                                </li>
+                                <li>
+                                    Me comprometo como TRABAJADOR, que todos los datos especificados en la introducción del presente documento son correctos, por lo que se consideran válidas las comunicaciones y notificaciones dirigidas. Cualquier modificación realizada se notificara y&#47;o comunicará al EMPLEADOR por medio escrito para realizar actualización de información en base de datos.
+                                </li>
                                 <p style="margin: 5px 0;">
-                                    Por la presente dejo CONSTANCIA, que la empresa ha cumplido entregando la documentación dentro de los plazos establecidos de acuerdo a ley, correspondiente a &#40;copia&#41;: Contrato de trabajo - Copia de T Registro - Reglamento Interno de Trabajo, Política, Recomendaciones y Reglamento de Salud &amp; Seguridad en trabajo &#40;Ley 29783&#41;, Política Alcohol, Drogas y sustancias controladas, Política Prevención Hostigamiento Sexual, Política de Protección de Datos Personales, Política de prevención contra la discriminación, previamente a iniciar vínculo laboral con la empresa, encontrándome conforme con c/u de las clausulas luego de haber leído y revisado detenidamente, y haber recibido las recomendaciones de los lineamientos internos de la empresa mediante inducción realizada por personal especializado de RRHH.
+                                    Siendo cada una de las clausulas señaladas de mi conocimiento y que toda la documentación quedara en poder de la empresa; En señal de conformidad con cada una y las políticas de la empresa establecidas en la presente, firmo la presente comprometiéndome a dar cumplimiento al acuerdo celebrado entre las partes. 
                                 </p>
-                                <p style="margin: 5px 0;">
-                                    Por la presente otorga mi consentimiento libre, previo, informado, expreso e inequívoco para que mi empleador incluya mis datos personales sensibles o no, consignados en el presente documento, en sus sistemas y base de datos, así pueda dar tratamiento a mi información. Asimismo, teniendo conocimiento que mi empleador asegura la confidencialidad de mis datos, revisando toda la información referida a protocolo y seguridad de información, nos garantiza que todo dato y&#47;o información personal será tratada tal cual lo establece la normativa, respetando el cumplimiento de la legislación peruana sobre protección de datos de carácter personal &#40;Ley No. 29733&#41;. Las partes declaran conocer los alcances de la Ley de Protección de Datos Personales y su Reglamento y acuerdan que sólo se empleará para: i&#41; Realizar las gestiones necesarias conexas a la suscripción del contrato de trabajo; ii&#41; enviar información y&#47;o propuestas laborales; iii&#41; realizar encuestas; iv&#41; mantener un registro del personal; v&#41; atender reclamos o consultas. En caso "LOS TRABAJADORES" quisieran ejercer cualquiera de los derechos previstos en la Ley de Protección de Datos Personales, podrá gratuitamente enviar una comunicación al correo electrónico dcordova@marketing-alterno.com
-                                </p>
-                                <ul>
-                                    <li style="font-weight: bold">
-                                        <u>
-                                            RESPONSABILIDAD DEL TRABAJADOR
-                                        </u>
-                                    </li>
-                                </ul>
-                                <p style="font-weight: bold">
-                                    HE SIDO DEBIDAMENTE INFORMADO:
-                                </p>
-                                <ol style="list-style: lower-alpha">
-                                    <li>
-                                        Que dentro del vínculo laboral debo demostrar un amplio respeto a la normatividad interna de la empresa, y personal jerárquico cumpliendo siempre con el mayor grado de compromiso y responsabilidad mis labores, asimismo todo vínculo laboral es directo con la empresa, y no con la cuenta asignada, por lo tanto todo permiso, comunicación y&#47;o autorización deberá ser solicitado directamente a personal del empleador.
-                                    </li>
-                                    <li>
-                                        Que estaré sujeto a los lineamientos que establezca cada SUPERVISOR de cuenta a modo de <strong>“COMPROMISO &amp; RESPONSABILIDAD”</strong> dependiendo la cuenta asignada, así como también las modificaciones según necesidad de la cuenta &#40;Cambios en PDV, Horarios, etc.&#41; respetando siempre la jornada legal máxima establecida por ley, queda establecido también que toda conducta negativa será acreedora de sanciones disciplinarias y&#47;o dctos según la naturaleza de mis conductas. &#40;Tardanzas, Inasistencias, Ausencia en reuniones semanales, etc.&#41;.
-                                    </li>
-                                    <li>
-                                        Que toda presentación de documentos frente a la empresa, tales como DNI, Recibos, Documentos, DNI &#40;Hijos&#41; Exámenes Médicos, deben constar en un “cargo de entrega” acreditando que como trabajador he cumplido con realizar la entrega de los documentos necesarios.
-                                    </li>
-                                    <li>
-                                        Que dentro de los procesos que se aplicaran, queda establecido el procedimiento de emisión de BOLETAS DE TRABAJO &#40;Boletas de Pago, CTS, Quinta Categoría, Utilidades, etc.&#41; de manera virtual para facilitar la entrega a los colaboradores de la empresa directamente al correo electrónico del trabajador &#40;brindado directamente por el Trabajador, siendo su responsabilidad de consignar correo erróneo y no recibir la documentación&#41;, cumpliendo con los procedimientos de registro y emisión, por tales motivos el correo electrónico brindado en la introducción de la presente es el correcto para recibir las BOLETAS.
-                                    </li>
-                                    <li>
-                                        Que la empresa trabaja directamente con la entidad financiera BBVA Continental, en caso que el trabajador tenga cuenta de haberes en una entidad distinta, tengo conocimiento que los procesos de pago a cuenta INTERBANCARIA &#40;Otros Bancos&#41; tardaran en procesar &#40;01 a 02 días&#41; de acuerdo al sistema de cada entidad financiera, a pesar que la empresa cumplirá a tiempo con los abonos.
-                                    </li>
-                                    <li>
-                                        Que la presentación de denuncias policiales por perdida y&#47;o robo de implementos, equipos, laptops, etc., no exoneran al personal de la responsabilidad que tiene frente a los implementos debiendo cumplir con la devolución para no estar sujeto a descuentos. Asimismo, toda asignación y devolución de implementos deberá constar en un CARGO y&#47;o acta de entrega y&#47;o devolución, para dejar constancia que todo proceso ha sido debidamente cerrado.
-                                    </li>
-                                    <li>
-                                        Que, una vez finalizado el vínculo laboral entre las partes, para que mi EMPLEADOR pueda proceder con el proceso de LIQUIDACION DE BENEFICIOS SOCIALES correspondiente de acuerdo a ley, no deberá existir ningún pendiente de entrega y&#47;o devolución de equipos o implementos frente a mi EMPLEADOR, de no cumplir con lo mencionada la LIQUIDACION quedara retenida hasta dar cumplimiento con toda devolución, en todo caso se procederá con la ejecución de descuentos.
-                                    </li>
-                                    <li>
-                                        Que, de realizar ABANDONO DE TRABAJO, la empresa se verá forzada a formalizar el termino de contrato por conducto notarial procediendo con la notificación material al domicilio que se consigne en mi contrato de trabajo, razón por la cual se procederá descontando de mi liquidación de beneficios sociales el valor del costo por dicho trámite notarial según los costos que se encuentren establecidos en la NOTARIA, lo señalado es de mi conocimiento y se autoriza por la presente al área de Planillas para que se proceda como lo ordena la presente clausula &#40;Concepto de Descuento administrativo por conducta de ABANDONO&#41;.
-                                    </li>
-                                    <li>
-                                        Me comprometo como TRABAJADOR, que todos los datos especificados en la introducción del presente documento son correctos, por lo que se consideran válidas las comunicaciones y notificaciones dirigidas. Cualquier modificación realizada se notificara y&#47;o comunicará al EMPLEADOR por medio escrito para realizar actualización de información en base de datos.
-                                    </li>
-                                    <p style="margin: 5px 0;">
-                                        Siendo cada una de las clausulas señaladas de mi conocimiento y que toda la documentación quedara en poder de la empresa; En señal de conformidad con cada una y las políticas de la empresa establecidas en la presente, firmo la presente comprometiéndome a dar cumplimiento al acuerdo celebrado entre las partes. 
-                                    </p>
-                                    <p style="margin: 5px 0;">
-                                        NOMBRES &amp; APELLIDOS DEL COLABORADOR: 
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.partner_name"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </p>
-                                    <div>
-                                        <div class="row">
-                                            <div class="col" style="width: 40%;">
-                                            </div>
-                                            <div class="col" style="width: 20%;">
-                                                <t t-if="o.applicant_signature">
-                                                    <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                                </t>
-                                                <t t-else="">
-                                                    <div style="min-height: 100px;"></div>
-                                                </t>
-                                                <div style="border-top: 1px solid; font-weight: bold" class="text-center">
-                                                    FIRMA DEL TRABAJADOR
-                                                </div>
-                                            </div>
-                                            <div class="col" style="width: 40%;">
+
+                                <!-- <div>
+                                    <div class="row" style="width:100%; margin-top:15px; text-align:center;">
+                                        <div class="col" style="width: 40%;">
+                                        </div>
+                                        <div class="col" style="width: 20%;">
+                                            <t t-if="o.applicant_signature">
+                                                <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <div style="min-height: 100px;"></div>
+                                            </t>
+                                            <div style="border-top: 1px solid; font-weight: bold" class="text-center">
+                                                FIRMA DEL TRABAJADOR
                                             </div>
                                         </div>
+                                        <div class="col" style="width: 40%;">
+                                        </div>
                                     </div>
-                                </ol>
-                            </div>
-                        </div>   
-                    </div>
-
-                    <div style="page-break-after: always;">
-                        <div id="electronic_notification_document" class="mt-5" style="padding:2rem;">
-                            <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
-                                <h6 class="text-center" style="font-weight: bold;">
-                                    AUTORIZACION
-                                </h6>
-                                <br/>
-                                <ol style="list-style: lower-alpha">
-                                    <p>
-                                        Por medio del presente documento quien suscribe 
-                                        <strong>
-                                            <span t-esc="o.partner_name"/>
-                                        </strong>
-                                        identificado con DNI No. 
-                                        <strong>
-                                            <span t-esc="o.vat"/>
-                                        </strong>
-                                        , mi correo electrónico personal
-                                        <strong>
-                                            <span t-esc="o.email"/>
-                                        </strong>
-                                            otorgo mi autorización y consentimiento a MARKETING ALTERNO PERU SAC, en adelante LA EMPRESA; para lo señalado a continuación:
-                                    </p>
-                                    <li>
-                                        Que, me comprometo voluntariamente a cumplir con los lineamientos del uso de firma digital especializada, con respecto a toda la documentacion que corresponda a mi empleador MARKETING ALTERNO PERU SAC, Asimismo  señalo expresamente que mi persona será la única persona y/o titular de la creación del USUARIO &amp; CONTRASEÑA DE LA PLATAFORMA (Documentos digitales) sin intervención de terceros por parte de mi empleador.
-                                    </li>
-                                    <li>
-                                        Que, tengo conocimiento que una vez generado mi USUARIO / CONTRASEÑA, me encargare de completar y brindar toda mi información a través de las fichas, documentos, declaraciones que correspondan al empleador, las cuales serán firmadas de manera digital por mi persona (firma especializada) autorizando expresamente que dicha firma especializada será válida como demostración de mi voluntad ante empleador.
-                                    </li>
-                                    <li>
-                                        Asimismo señalo que, la firma ológrafa y el sellado manual de las boletas de pago, asimismo en los contratos de trabajo (todo documento de índole laboral) serán reemplazados por la firma digitalizada del representante legal de LA EMPRESA u otros medios de similar naturaleza que resulten técnicamente idóneos para dejar constancia de su emisión.
-                                    </li>
-                                    <li>
-                                        Que por medio del presente documento otorgo mi autorización y consentimiento a LA EMPRESA para que esta le realice la entrega y/o envío de mis boletas de pago de remuneraciones y de otros documentos laborales (Memorándum, sanciones disciplinarias, certificaciones y/o toda comunicación formal y/o contratos de trabajo), a través del empleo de una cuenta de correo electrónico, siendo este medio, el único canal de entrega. Para tal efecto, autorizo el envío de las boletas de pago de manera virtual y demás documentos que sean necesarios dentro del vínculo laboral, dentro del plazo de ley, a la cuenta de correo electrónico proporcionada en la parte introductoria del presente documento, por lo que en mi calidad de trabajador asumo mi entera responsabilidad por su recepción desde el momento en que LA EMPRESA me realice dicho envío de las boletas de pago por el medio electrónico mencionado; y de los demás documentos laborales que en su caso corresponda.
-                                    </li>
-                                    <li>
-                                        Que, en el supuesto indicado en ítem precedente, en mi calidad de trabajador de LA EMPRESA me obligo a informar a LA EMPRESA cualquier cambio en mi cuenta de correo electrónico hasta el día 20 de cada mes; en su defecto el cambio operará al mes siguiente quedando LA EMPRESA exonerada de toda responsabilidad relacionada con la entrega de mi boleta de pago, así como en los casos que, habiéndoseme enviado la referida boleta de pago a mi cuenta de correo electrónico, esta no llegara a su destinatario por motivos no imputables a LA EMPRESA.
-                                    </li>
-                                    <li>
-                                        Lo acordado en el presente Convenio respecto a la firma digitalizada del representante legal de LA EMPRESA y respecto a la entrega de las boletas de pago de remuneraciones a través de una cuenta de correo electrónico, será también aplicable a los certificados de renta de quinta categoría, certificados de CTS, Memorándum´, Protocolos, Reglamentos, normativas de la empresa, contratos laborales, entre otros documentos laborales cuya emisión corresponda a LA EMPRESA. Por lo que todos estos documentos tendrán la firma digitalizada del representante legal de LA EMPRESA, siendo aceptados también toda firma digital del TRABAJADOR, serán también entregados mediante correo el electrónico corporativo o el que brinde a LA EMPRESA según corresponda, no siendo necesario que la documentación sea notificada por conducto notarial por tratarse de acuerdo privado debidamente autorizado entre las partes.
-                                    </li>
-                                    <li>
-                                        En caso se presentase cualquier controversia que se derive de la ejecución y/o interpretación, o relacionada a la validez y/o eficacia o cualquier otra que surja del presente; acepto solucionarla mediante trato directo y conforme a las reglas de la buena fe. 
-                                    </li>
-                                    <p>
-                                        Estando plenamente conforme con el contenido de todas las cláusulas precedentes, suscribo el presente documento en señal de conformidad, a los &#40;
-                                        <strong>
-                                            <span t-esc="('%02d' % o.signed_on.day) if o.signed_on else ''"/>
-                                        </strong>
-                                        &#41; días de 
-                                        <strong>
-                                            <span t-esc="(o.signed_on_month) if o.signed_on else ''"/>
-                                        </strong>
-                                        del 
-                                        <strong>
-                                            <span t-esc="(o.signed_on.year) if o.signed_on else ''"/>
-                                        </strong>
-                                        .
-                                    </p>
-                                </ol>
-                                <div class="text-center">
-                                    <div>
-                                        Nombres y apellidos del trabajador: 
-                                        <strong>
-                                            <span t-esc="o.partner_name"/>
-                                        </strong>
-                                    </div>
-                                    <div>
-                                        DNI N&#176;: 
-                                        <strong>
-                                            <span t-esc="o.vat"/>
-                                        </strong>
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <strong>
+                                </div> -->
+                            </ol>
+                            <p style="margin: 5px 0;">
+                                NOMBRES &amp; APELLIDOS DEL COLABORADOR: 
+                                <span t-esc="o.partner_name if o.partner_name else '______________'"/>.
+                            </p>
+                            <!-- Centrado con tabla -->
+                            <table style="width:100%; margin-top:5px; text-align:center; border-collapse:collapse;">
+                                <tr>
+                                    <td style="vertical-align:bottom; text-align:center;">
                                         <t t-if="o.applicant_signature">
-                                            <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%; margin-top: 50px"/>
+                                            <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height:5.5rem; max-width:100%; display:block; margin:0 auto;"/>
                                         </t>
                                         <t t-else="">
                                             <div style="min-height: 100px;"></div>
                                         </t>
-                                    </strong>
-                                </div>
-                            </div>
+                                        <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
+                                            FIRMA DEL TRABAJADOR
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
+                        <div style="page-break-after: always;"/>   
                     </div>
-
-                    <div style="page-break-after: always;">
-                        <div id="life_law_statement_document" class="mt-5" style="padding:1.25rem;">
-                            <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
-                                <h5 class="text-center" style="font-weight: bold;">
-                                    <u>
-                                        CARGO DECLARACIÓN VIDA LEY
-                                    </u>
-                                </h5>
+                
+                    <div id="electronic_notification_document" style="padding:3rem 0.75rem 0rem;">
+                        <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
+                            <h5 class="text-center" style="font-weight: bold;">
+                                AUTORIZACIÓN NOTIFICACIÓN POR MEDIOS ELECTRÓNICOS Y/O DIGITALES
+                            </h5>
+                            <br/>
+                            <p style="margin-bottom: 5px">
+                                Por medio del presente documento quien suscribe 
+                                <strong>
+                                    <span t-esc="o.partner_name if o.partner_name else '______________'"/> 
+                                </strong>
+                                identificado con DNI No. 
+                                <strong>
+                                    <span t-esc="o.vat if o.vat else '______________'"/> 
+                                </strong>
+                                , mi correo electrónico personal
+                                <strong>
+                                    <span t-esc="o.email if o.email else '______________'"/> 
+                                </strong>
+                                    otorgo mi autorización y consentimiento a MARKETING ALTERNO PERU SAC, en adelante LA EMPRESA; para lo señalado a continuación:
+                            </p>
+                            <ol style="list-style: lower-alpha">
+                                <li style="margin-bottom: 5px;">
+                                    Que, me comprometo voluntariamente a cumplir con los lineamientos del uso de firma digital especializada, con respecto a toda la documentacion que corresponda a mi empleador MARKETING ALTERNO PERU SAC, Asimismo  señalo expresamente que mi persona será la única persona y/o titular de la creación del USUARIO &amp; CONTRASEÑA DE LA PLATAFORMA (Documentos digitales) sin intervención de terceros por parte de mi empleador.
+                                </li>
+                                <li style="margin-bottom: 5px;">
+                                    Que, tengo conocimiento que una vez generado mi USUARIO / CONTRASEÑA, me encargare de completar y brindar toda mi información a través de las fichas, documentos, declaraciones que correspondan al empleador, las cuales serán firmadas de manera digital por mi persona (firma especializada) autorizando expresamente que dicha firma especializada será válida como demostración de mi voluntad ante empleador.
+                                </li>
+                                <li style="margin-bottom: 5px;">
+                                    Asimismo señalo que, la firma ológrafa y el sellado manual de las boletas de pago, asimismo en los contratos de trabajo (todo documento de índole laboral) serán reemplazados por la firma digitalizada del representante legal de LA EMPRESA u otros medios de similar naturaleza que resulten técnicamente idóneos para dejar constancia de su emisión.
+                                </li>
+                                <li style="margin-bottom: 5px;">
+                                    Que por medio del presente documento otorgo mi autorización y consentimiento a LA EMPRESA para que esta le realice la entrega y/o envío de mis boletas de pago de remuneraciones y de otros documentos laborales (Memorándum, sanciones disciplinarias, certificaciones y/o toda comunicación formal y/o contratos de trabajo), a través del empleo de una cuenta de correo electrónico, siendo este medio, el único canal de entrega. Para tal efecto, autorizo el envío de las boletas de pago de manera virtual y demás documentos que sean necesarios dentro del vínculo laboral, dentro del plazo de ley, a la cuenta de correo electrónico proporcionada en la parte introductoria del presente documento, por lo que en mi calidad de trabajador asumo mi entera responsabilidad por su recepción desde el momento en que LA EMPRESA me realice dicho envío de las boletas de pago por el medio electrónico mencionado; y de los demás documentos laborales que en su caso corresponda.
+                                </li>
+                                <li style="margin-bottom: 5px;">
+                                    Que, en el supuesto indicado en ítem precedente, en mi calidad de trabajador de LA EMPRESA me obligo a informar a LA EMPRESA cualquier cambio en mi cuenta de correo electrónico hasta el día 20 de cada mes; en su defecto el cambio operará al mes siguiente quedando LA EMPRESA exonerada de toda responsabilidad relacionada con la entrega de mi boleta de pago, así como en los casos que, habiéndoseme enviado la referida boleta de pago a mi cuenta de correo electrónico, esta no llegara a su destinatario por motivos no imputables a LA EMPRESA.
+                                </li>
+                                <li style="margin-bottom: 5px;">
+                                    Lo acordado en el presente Convenio respecto a la firma digitalizada del representante legal de LA EMPRESA y respecto a la entrega de las boletas de pago de remuneraciones a través de una cuenta de correo electrónico, será también aplicable a los certificados de renta de quinta categoría, certificados de CTS, Memorándum´, Protocolos, Reglamentos, normativas de la empresa, contratos laborales, entre otros documentos laborales cuya emisión corresponda a LA EMPRESA. Por lo que todos estos documentos tendrán la firma digitalizada del representante legal de LA EMPRESA, siendo aceptados también toda firma digital del TRABAJADOR, serán también entregados mediante correo el electrónico corporativo o el que brinde a LA EMPRESA según corresponda, no siendo necesario que la documentación sea notificada por conducto notarial por tratarse de acuerdo privado debidamente autorizado entre las partes.
+                                </li>
+                                <li style="margin-bottom: 5px;">
+                                    En caso se presentase cualquier controversia que se derive de la ejecución y/o interpretación, o relacionada a la validez y/o eficacia o cualquier otra que surja del presente; acepto solucionarla mediante trato directo y conforme a las reglas de la buena fe. 
+                                </li>
                                 <p>
-                                    Por medio del presente documento dejo constancia de:
-                                </p>
-                                <br/>
-                                <p>
-                                    Haber recibido por parte de mi empleador
-                                    <strong>
-                                        "MARKETING ALTERNO PERU SAC"
-                                    </strong>
-                                    ,Declaración Jurada de Beneficiarios "Seguro de Vida Ley - Decreto Legislativo N&#176; 688" y me comprometo a devolverlo debidamente legalizado dentro del plazo de 48 horas, pues de no realizarlo asumo directamente mi responsabilidad.
-                                </p>
-                                <br/>
-                                <p>
-                                    Siendo de mi conocimiento que EL EMPLEADOR, por la presente da cumplimiento a lo requerido por ley con respecto al "Seguro Vida Ley", cumpliéndose con la entrega documental para que mi persona pueda formalizarlo mediante LEGALIZACION notarial.
-                                </p>
-                                <br/>
-                                <p>
-                                    Cabe resaltar que la empresa cumple informándole sobre la responsabilidad del TRABAJADOR de proceder con legalización ante Notario Público de la Declaración Jurada Vida Ley, y posteriormente deberá entregarlo debidamente legalizado a vuestro empleador para continuar con el trámite correspondiente ante la aseguradora del caso &#40;La Legalización del documento por parte del Trabajador beneficiará única y exclusivamente al colaborador y vuestros beneficios legales&#41;.
-                                </p>
-                                <br/>
-                                <p>
-                                    Por otro lado, en absoluta transparencia y en señal del cumplimiento del Decreto de Urgencia N&#176; 044-2019, relativas al Seguro Vida Ley &#40;D.S N&#176; 009-2020-TR&#41; el cual cubrirá a todo colaborador &#40;trabajador&#41; ante diferentes riesgos como la muerte natural, muerte accidental e invalidez total y permanente por accidente.
-                                </p>
-                                <p style="margin-top: 0;">
-                                    Marketing Alterno Peru SAC, en búsqueda de facilitar dicha formalización de la declaración jurada a beneficio de los trabajadores, asegurando a los beneficiarios con dicha formalidad requerida por la aseguradora,razón por la cual mediante autorización expresa del trabajador a través de la presente, la empresa procederá gestionando legalización notarial de la declaración jurada, aplicando posteriormente descuento por el costo que la notaria establezca por derecho de legalización, monto de s&#47;. 15.00 &#40;quince con 00&#47;100 soles&#41;, lo cual será descontado de su primera remuneración mensual, pudiendo ser verificado en su boleta de trabajo &#40;descuento administrativo&#41;. Dicha acción podrá ser realizada siempre y cuando el colaborador no registre "multa electoral".
-                                    </p>
-                                <br/>
-                                <table class="table table-bordered">
-                                    <colgroup>
-                                        <col width="50%"/>
-                                        <col width="15%"/>
-                                        <col width="35%"/>
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" style="font-weight: bold">NOMBRES Y APELLIDOS DEL TRABAJADOR</th>
-                                            <th scope="col" style="font-weight: bold">N&#176;DNI</th>
-                                            <th scope="col" style="font-weight: bold">FIRMA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <strong>
-                                                    <t t-if="o.applicant_signature">
-                                                        <span t-esc="o.partner_name"/>
-                                                    </t>
-                                                    <t t-else="">
-                                                        ______________
-                                                    </t>
-                                                </strong>
-                                            </td>
-                                            <td>
-                                                <strong>
-                                                    <t t-if="o.applicant_signature">
-                                                        <span t-esc="o.vat"/>
-                                                    </t>
-                                                    <t t-else="">
-                                                        ______________
-                                                    </t>
-                                                </strong>
-                                            </td>
-                                            <td>
-                                                <t t-if="o.applicant_signature">
-                                                    <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                                </t>
-                                                <t t-else="">
-                                                    <div style="min-height: 100px;"></div>
-                                                </t>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <br/>
-                                <!-- <div class="footer"> -->
-                                <div>
-                                    <div class="row">
-                                        <div class="col-6 text-center">
-                                            <div style="min-height: 100px;">
-                                            </div>
-                                        </div>
-                                        <div class="col-4 text-center">
-                                            <div style="min-height: 100px;">
-                                            </div>
-                                            <div style="border-top: 1px solid ; font-weight: bold" class="text-center">
-                                                EDUARDO GUSTAVO MEDINA ORMEÑO GERENTE GENERAL
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="page-break-after: always;">
-                        <div id="health_safety_document" class="mt-5" style="padding:3.75rem;">
-                            <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
-                                <t t-if="o.applicant_signature">
-                                    <img t-if="o.env.user.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.env.user.company_id.logo)" style="width: 13.75rem; min-height: 2.75rem; max-height: 4.313rem;"/>
-                                </t>
-                                <t t-else="">
-                                    <div style="min-height: 100px;"></div>
-                                </t>
-                                <br/>              
-                                <h5 class="text-center" style="font-weight: bold;">
-                                    RECEPCION DE REGLAMENTOS:
-                                </h5>
-                                <table class="table table-bordered">
-                                    <colgroup>
-                                        <col width="30%"/>
-                                        <col width="60%"/>
-                                        <col width="10%"/>
-                                    </colgroup>
-                                </table>
-                                <thead>
-                                    <tr>
-                                        <th scope="col">
-                                        </th>
-                                        <th scope="col">
-                                            <ul style="text-align: left; font-weight: bold;">
-                                                <li>
-                                                    REGLAMENTO INTERNO DE TRABAJO
-                                                </li>
-                                                <li>
-                                                    REGLAMENTO INTERNO DE SEGURIDAD Y SALUD EN EL TRABAJO
-                                                </li>
-                                            </ul>
-                                        </th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <br/>
-                                <ol style="list-style: lower-alpha inside">
-                                    <li>
-                                        Declaro haber recibido un ejemplar de ambos reglamentos, los cuales me comprometo a leer, revisar, consultar, y cumplir con todas cada una de las disposiciones internas de la empresa.
-                                    </li>
-                                    <li>
-                                        Declaro haber recibido inducción del personal encargado, y haber asistido al curso SST, recibiendo una clara explicación del Reglamento Interno de SST.
-                                    </li>
-                                    <li>
-                                        Declaro que trabajaré en forma segura cumpliendo la Política y las disposiciones del Sistema de Gestión de Seguridad y Salud en el Trabajo de la empresa (Plan de Prevención, Control Covid 19 Marketing Alterno Perú SAC).
-                                    </li>
-                                    <li>
-                                        Declaro que me regiré por las normas y procedimientos específicos de SST, adecuado a mi desempeño laboral a una conducta segura e higiénica y de respeto hacia mis compañeros de trabajo, supervisores, jefes y otros que se encuentren en los entornos laborales.
-                                    </li>
-                                    <li>
-                                        Declaro que buscaré y apoyaré la mejora continua del desempeño de la SST.
-                                    </li>
-                                    <li>
-                                        Declaro saber y entender que cualquier incumplimiento de las normas y procedimientos de SST aquí establecidas me someten a las sanciones indicadas en el Reglamento Interno de SST, las cuales conozco y acato en su totalidad.
-                                    </li>
-                                </ol>
-                                <br/>
-                                <p style="font-weight: bold">
-                                    Nombres y Apellidos: 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.partner_name"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                </p>
-                                <p style="font-weight: bold">
-                                    DNI: 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.vat"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong> 
-                                    Correo Electronico: 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.email"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                </p>
-                                <p style="font-weight: bold">
-                                    Puesto: 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.job"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                </p>
-                                <p style="font-weight: bold">
-                                    Lugar:
-                                    <strong>
-                                        Jr. Libertad Nro. 757 - Urbanización Orbea, Magdalena del Mar. Lima, Perú
-                                    </strong>
-                                </p>
-                                <p style="font-weight: bold"> 
-                                    Fecha de Entrega: 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on.day"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                            / 
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on.month"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                            / 
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on.year"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                </p>
-                                <br/>
-                                <!-- <div class="footer"> -->
-                                <div>
-                                    <div class="row">
-                                        <div class="col-4">
-                                        </div>
-                                        <div class="col-4 text-center">
-                                            <t t-if="o.applicant_signature">
-                                                <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                            <div style="border-top: 2px solid; font-weight: bold" class="text-center">
-                                                Firma Trabajador:
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div style="min-height: 100px;">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="page-break-after: always;">
-                        <div id="home_address_statement_document" class="mt-5" style="padding:1.25rem;">
-                            <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
-                                <div style="min-height: 50px;">
-                                </div>
-                                <h6 class="text-center" style="font-weight: bold;">
-                                    DECLARACI&#211;N JURADA SOBRE DIRECCI&#211;N&#45;DOMICILIARIA &#40;ACTUAL&#41;
-                                </h6>
-                                <p>
-                                    Declaro bajo juramento que los datos consignados en el presente documento son veraces, completos y conforme a la realidad asumiendo la responsabilidad penal en caso de resultar falsos, de acuerdo ala Ley N&#176; 27444 y el código penal vigente.
-                                </p>
-                                <br/>
-                                <p style="font-weight: bold;">
-                                    APELLIDOS Y NOMBRES: 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.partner_name"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>,
-                                    D.N.I.N&#176;: 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.vat"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                </p>
-                                <br/>
-                                <p style="font-weight: bold;">
-                                    DIRECCION DOMICILIARIA: 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.province"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    , 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.district"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    , 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.street"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                </p>
-                                <br/>
-                                <p style="font-weight: bold; float: right">
-                                    Lima, 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on.day"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    de
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on_month"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    del 2023
-                                </p>
-                                <br/>
-                                <!-- <div class="footer"> -->
-                                <div>
-                                    <div class="row">
-                                        <div class="col-3">
-                                        </div>
-                                        <div class="col-5 text-center">
-                                            <t t-if="o.applicant_signature">
-                                                <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                            <div style="border-top: 2px solid; font-weight: bold" class="text-center">
-                                                Firma
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="min-height: 100px;">
-                                </div>
-                                <p>
-                                    &#42;El &#40;a&#41; firmante se responsabiliza por la veracidad de los datos consignados en el presente docuemnto &#40;Nota.- El trabajador esta obligado a informar al área de Recursos Humanos sobre cualquier cambio en la dirección de su domicilio en un plazo de 24 horas&#41;.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="page-break-after: always;">
-                        <div id="health_affidavit_document" class="mt-5" style="padding:1.25rem;">
-                            <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
-                                <p class="text-center" style="font-weight: bold;">
-                                    DECLARACIÓN JURADA DE SALUD
-                                </p>
-                                <br/>
-                                <p>
-                                    Por medio del presente documento, Yo 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.partner_name"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    identificado &#40;a&#41; con DNI 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.vat"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    ,
-                                    cargo 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.job"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                        ,
-                                    </strong>
-                                    declaro bajo juramento lo siguiente:
-                                </p>
-                                <br/>
-                                <ol>
-                                    <li>
-                                        No soy mayor de 60 años ni padezco enfermedad o condición alguna que podría incluirme en la relación de trabajador "vulnerable" tales como: diabetes, obesidad mórbida, hipertensión, sintomatología respiratoria, tratamiento oncológico, hipertiroidismo, insuficiencia renal, epilepsia, problemas neurológicos u otros problemas evaluados por un médico que podrían poner en alto riesgo mi vida al contraer el Covid19.
-                                    </li>
-                                    <li>
-                                        Qué de tener síntomas como fiebre, sensación de fiebre, dolor de garganta, malestar general del cuerpo, tos, comunicaré a mi empleador permaneciendo en cuarentena domiciliaria.
-                                    </li>
-                                    <li>
-                                        Que, si sobreviniese algún tipo de enfermedad o condicíon que podría poner en alto riesgo mi vida al contraer el Covid19, tales como enfermedades o condiciones mencionadas en el primer párrafo del presente, me comprometo a permanecer en cuarentena domiciliaria y a:
-                                    </li>
-                                        <ol type="a">
-                                            <li>
-                                                Comunicar inmediatamente a mi empleador sobre mi diagnóstico o condición.
-                                            </li>
-                                            <li>
-                                                Presentar certificado y&#47;o informe médico debidamente suscrito por el profesional médico especialista
-                                            </li>
-                                        </ol>
-                                    <li>
-                                        Comunicar inmediatamente a mi empleador si he tenido contacto en los últimos 14 días con alguna persona quehaya contraído el Covid19.
-                                    </li>
-                                    <li>
-                                        Además, me comprometo a mantener el cumplimiento de las recomendaciones establecidas en el "Protocolo de Prevención Covid19" entregado por mi empleador y diversos lineamientos, normativas y protocolos anexos, así como llevar adecuadamente el aislamiento domiciliario según lo dispuesto a causa del Estado de Emergencia Nacional, a fin de salvaguardar mi salud y la de mis compañeros. Caso contrario, se tomará como un acto de grave indisciplina siendo debidamente sancionado de acuerdo a ley de productividad y competitividad laboral.
-                                    </li>
-                                    <li>
-                                        La información brindada en la presente Declaración Jurada es verdadera, en consecuencia, asumo la responsabilidad civil, administrativa y&#47;o penal que pudiera devenir de la comprobación de su falsedad, incumplimiento o inexactitud sin prejuicio de la misma será considerada como quebrantamiento de la buena fe laboral y en consecuencia falta grave por mi empleador, razón por la cual ratifico la información que se consigna en la presente Declaración jurada, así como de los documentos que se presenten posteriormente a requerimiento de la empresa.
-                                    </li>
-                                </ol>
-                                <p>
-                                    La empresa MARKETING ALTERNO PERU S.A.C. garantiza que los datos personales serán tratados de forma estrictamente confidencial y respetando las medidas de seguridad dispuestas en la Ley N&#176;29733, Ley de Protección de Datos Personales y su Reglamento, aprobado por Decreto Supremo No.003-2013-JUS.
-                                </p>
-                                <p style="font-weight: bold; float: right">
-                                    Lima, 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on.day"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    de
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on_month"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    del 2023
-                                </p>
-                                <br/>
-                                <!-- <div class="footer"> -->
-                                <div>
-                                    <div class="row">
-                                        <div class="col-1">
-                                        </div>
-                                        <div class="col-5 text-center">
-                                            <t t-if="o.applicant_signature">
-                                                <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                            <div style="border-top-style: dotted; font-weight: bold" class="text-center">
-                                                Firma del Trabajador
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="page-break-after: always;">
-                        <div id="pension_format_document" class="mt-5" style="padding:1.25rem;">
-                            <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
-                            <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem">
-                                <h6>
-                                    FORMATO DE ELECCIÓN DEL SISTEMA PENSIONARIO
-                                </h6>
-                                <p style="border-top:2px solid;margin:5px 0;">
-                                    DATOS DEL TRABAJADOR
-                                </p>
-                                <p style="margin:5px 0;">
-                                    Nombres Y Apellidos &#40;&#42;&#41;&#58; 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.partner_name"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                </p>
-                                <p style="margin:5px 0;">
-                                    Tipo de documento&#58; 
-                                    <table class="table" style="border: none;">
-                                        <colgroup>
-                                            <col width="25%"/>
-                                            <col width="25%"/>
-                                            <col width="25%"/>
-                                            <col width="25%"/>
-                                        </colgroup>
-                                        <thead>
-                                            <tr>
-                                                <td style="border-top: none;">
-                                                    DNI 
-                                                    <t t-if="o.identification_type == 'DNI'">
-                                                        <div class="custom-checkbox">X</div>
-                                                    </t>
-                                                    <t t-else="">
-                                                        <div class="custom-checkbox"></div>
-                                                    </t>
-                                                </td>
-                                                <td style="border-top: none;">
-                                                    CE 
-                                                    <t t-if="o.identification_type == 'Cédula Extranjera'">
-                                                        <div class="custom-checkbox">X</div>
-                                                    </t>
-                                                    <t t-else="">
-                                                        <div class="custom-checkbox"></div>
-                                                    </t>
-                                                </td>
-                                                <td style="border-top: none;">
-                                                    Pasaporte 
-                                                    <t t-if="o.identification_type == 'Pasaporte'">
-                                                        <div class="custom-checkbox">X</div>
-                                                    </t>
-                                                    <t t-else="">
-                                                        <div class="custom-checkbox"></div>
-                                                    </t>
-                                                </td>
-                                                <td style="border-top: none;">
-                                                    Otro 
-                                                    <t t-if="o.identification_type not in ('DNI','Pasaporte','Cédula Extranjera','Carnet de Extranjeria')">
-                                                        <div class="custom-checkbox">X</div>
-                                                    </t>
-                                                    <t t-else="">   
-                                                        <div class="custom-checkbox"></div>
-                                                    </t>
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </p>
-                                <p style="margin:5px 0;">
-                                    Número de documento &#40;&#42;&#41;&#58; 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.vat"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                </p>
-                                <table class="table" style="border: none;">
-                                    <colgroup>
-                                        <col width="20%"/>
-                                        <col width="20%"/>
-                                        <col width="20%"/>
-                                        <col width="40%"/>
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <td style="border-top: none;">
-                                                Sexo:
-                                            </td>
-                                            <td style="border-top: none;">
-                                                M&#58; 
-                                                <t t-if="o.gender == 'male'">
-                                                    <div class="custom-checkbox">X</div>
-                                                </t>
-                                                <t t-else="">
-                                                    <div class="custom-checkbox"></div>
-                                                </t>
-                                            </td>
-                                            <td style="border-top: none;">
-                                                F&#58; 
-                                                <t t-if="o.gender == 'female'">
-                                                    <div class="custom-checkbox">X</div>
-                                                </t>
-                                                <t t-else="">
-                                                    <div class="custom-checkbox"></div>
-                                                </t>
-                                            </td>
-                                            <td style="border-top: none;">
-                                                / Fecha de nacimiento&#58; 
-                                                <t t-if="o.applicant_signature">
-                                                    <span t-esc="o.birthday"/>
-                                                </t>
-                                                <t t-else="">
-                                                    ______________
-                                                </t>
-                                            </td>
-                                        </tr>
-                                    </thead>
-                                </table>
-                                <p style="margin:5px 0;">
-                                    Domicilio&#58; 
-                                    <t t-if="o.applicant_signature">
-                                        <span t-esc="o.street"/>,
-                                    </t>
-                                    <t t-else="">
-                                        ______________
-                                    </t>
-                                        Distrito&#58; 
-                                    <t t-if="o.applicant_signature">
-                                        <span t-esc="o.district"/>,
-                                    </t>
-                                    <t t-else="">
-                                        ______________
-                                    </t>
-                                        Provincia&#58; 
-                                    <t t-if="o.applicant_signature">
-                                        <span t-esc="o.province"/>,
-                                    </t>
-                                    <t t-else="">
-                                        ______________
-                                    </t>
-                                        Departamento&#58;
-                                    <t t-if="o.applicant_signature">
-                                        <span t-esc="o.department"/>,
-                                    </t>
-                                    <t t-else="">
-                                        ______________
-                                    </t>
-                                </p>
-                                <p style="margin:5px 0;">
-                                    Correo Electrónico&#58; 
-                                    <t t-if="o.applicant_signature">
-                                        <span t-esc="o.email"/>,
-                                    </t>
-                                    <t t-else="">
-                                        ______________
-                                    </t>
-                                    Teléfono de casa&#58; ________________________, 
-                                    Celular&#58; 
-                                    <t t-if="o.applicant_signature">
-                                        <span t-esc="o.phone"/>
-                                    </t>
-                                    <t t-else="">
-                                        ______________
-                                    </t>
-                                </p>
-                                <!-- <br/> -->
-                                <p>
-                                    DATOS DE LA EMPRESA EMPLEADORA
-                                </p>
-                                <p style="margin:5px 0;">
-                                    &#40;si no conoces esta informaci&#243;n&#44; tu empleador la completar&#225; por ti&#41;
-                                </p>
-                                <p style="margin:5px 0;">
-                                    Nombre o Raz&#243;n social &#40;&#42;&#41;&#58; 
-                                    <t t-if="o.applicant_signature">
-                                        <span t-esc="o.company"/>
-                                    </t>
-                                    <t t-else="">
-                                        ______________
-                                    </t>
-                                </p>
-                                <p style="margin:5px 0;">
-                                    Departamento &#40;&#42;&#41;&#58;
-                                    <t t-if="o.applicant_signature">
-                                        <span t-esc="o.company_department"/>
-                                    </t>
-                                    <t t-else="">
-                                        ______________
-                                    </t>
-                                </p>
-                                <p style="margin:5px 0;">
-                                    RUC &#40;&#42;&#41;&#58;
-                                    <t t-if="o.applicant_signature">
-                                        <span t-esc="o.company_vat"/>
-                                    </t>
-                                    <t t-else="">
-                                        ______________
-                                    </t>
-                                </p>
-                                <p>
-                                    DATOS DEL VINCULO LABORAL
-                                </p>
-                                <p>
-                                    Fecha de inicio de relación laboral &#40;&#42;&#42;&#41;&#58; 
+                                    Estando plenamente conforme con el contenido de todas las cláusulas precedentes, suscribo el presente documento en señal de conformidad, a los &#40;
+                                    
                                     <t t-if="o.applicant_signature">
                                         <span t-esc="o.signed_on.day"/>
                                     </t>
                                     <t t-else="">
-                                        ______________
+                                        <t t-esc="datetime.datetime.now().strftime('%d' )"/>
                                     </t>
-                                        / 
+                                    &#41; días de 
                                     <t t-if="o.applicant_signature">
-                                        <span t-esc="o.signed_on.month"/>
+                                        <span t-esc="o.signed_on_month"/>
                                     </t>
                                     <t t-else="">
-                                        ______________
+                                        <t t-esc="mes_actual"/>
                                     </t>
-                                        / 
+                                    del 
                                     <t t-if="o.applicant_signature">
                                         <span t-esc="o.signed_on.year"/>
                                     </t>
                                     <t t-else="">
-                                        ______________
+                                        <t t-esc="datetime.datetime.now().strftime('%Y')"/>
                                     </t>
-                                    &#32;&#32;&#32;&#32;&#32;Elección del sistema pensionario &#40;&#42;&#41;&#58;
+                                    .
                                 </p>
-                                <table class="table" style="border: none;">
-                                    <colgroup>
-                                        <col width="10%"/>
-                                        <col width="10%"/>
-                                        <col width="70%"/>
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <td style="border-top: none;">
-                                                <t t-if="o.private_pension_system == true">
-                                                    <div class="custom-checkbox">X</div>
-                                                </t>
-                                                <t t-else="">
-                                                    <div class="custom-checkbox"></div>
-                                                </t>
-                                            </td>
-                                            <td colspan="2" style="border-top: none;">
-                                                Sistema Privado de Pensiones 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="border-top: none;"></td>
-                                            <td style="border-top: none;">
-                                                <t t-if="o.afp_first_job == true">
-                                                    <div class="custom-checkbox">X</div>
-                                                </t>
-                                                <t t-else="">
-                                                    <div class="custom-checkbox"></div>
-                                                </t>
-                                            </td>
-                                            <td style="border-top: none;">
-                                                &#40;AFP&#41; Primer empleo
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="border-top: none;"></td>
-                                            <td style="border-top: none;">
-                                                <t t-if="o.coming_from_onp == true">
-                                                    <div class="custom-checkbox">
-                                                        X
-                                                    </div>
-                                                </t>
-                                                <t t-else="">
-                                                    <div class="custom-checkbox"></div>
-                                                </t>
-                                            </td>
-                                            <td style="border-top: none;">
-                                                Proveniente de la ONP
-                                            </td>
-                                        </tr>
-                                        <br/>
-                                        <tr>
-                                            <td style="border-top: none;">
-                                                <t t-if="o.national_pension_system == true">
-                                                    <div class="custom-checkbox">
-                                                        X
-                                                    </div>
-                                                </t>
-                                                <t t-else="">
-                                                    <div class="custom-checkbox">
-                                                    </div>
-                                                </t>
-                                            </td>
-                                            <td colspan="2" style="border-top: none;">
-                                                Sistema Nacional de Pensiones &#40;ONP&#41;
-                                            </td>
-                                        </tr>
-                                    </thead>
-                                </table>
-                                <p style="margin: 5px 0;">
-                                    Yo&#44; 
+                                
+                            </ol>
+                            <br/>
+                            <div class="text-center">
+                                <div>
+                                    Nombres y apellidos del trabajador: 
                                     <strong>
+                                        <span t-esc="o.partner_name if o.partner_name else '____________'"/>
+                                    </strong>
+                                </div>
+                                <div>
+                                    DNI N&#176;: 
+                                    <strong>
+                                        <span t-esc="o.vat if o.vat else '____________'"/>
+                                    </strong>
+                                </div>
+                            </div>
+                            <table style="width:100%; margin-top:40; text-align:center; border-collapse:collapse;">
+                                <tr>
+                                    <td style="vertical-align:bottom; padding-top:20px; text-align:center;">
                                         <t t-if="o.applicant_signature">
-                                            <span t-esc="o.partner_name"/>
+                                            <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height:80px; max-width:100%; display:block; margin:0 auto;"/>
                                         </t>
                                         <t t-else="">
-                                            ______________
+                                            <div style="min-height: 100px;"></div>
                                         </t>
-                                    </strong>
-                                    con documento de identidad N&#176;
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.vat"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    ,
-                                    mediante este documento autorizo el envío mensual de mi Estado de Cuenta por correo electr&#243;nico&#44; de acuerdo con el art&#237;culo 103&#176; de la Resoluci&#243;n 080&#45;98&#45;SAFP&#44; desde la fecha de suscripci&#243;n del presente&#46;
-                                </p>
-                                <p style="margin: 5px 0;">
-                                    Importante&#58; Si el trabajador no hubiese manifestado su voluntad de afiliarse a un sistema pensionario&#44; el artículo 16&#176; de la Ley N&#176;28991 establece que el empleador lo deber&#225; afiliar a la AFP ganadora de la licitaci&#243;n&#46;
-                                </p>
-                                <!-- <br/> -->
-                                <p style="margin: 5px 0;">
-                                    De acuerdo con las medidas de simplificaci&#243;n y eficiencia administrativa&#44; aceptas de manera expresa el env&#237;o de notificaciones e informaci&#243;n por correo electr&#243;nico a la direcci&#243;n de correo electr&#243;nico que constar&#225; en tu contrato de afiliaci&#243;n o que posteriormente actualices a trav&#233;s de nuestros canales correspondientes&#46; Las notificaciones por correo electr&#243;nico e informaci&#243;n que te enviemos corresponden al tr&#225;mite de car&#225;cter pensionario y no pensionario que realices con AFP&#46;
-                                </p>
-                                <p>
-                                    <strong>
-                                        Ciudad de 
+                                        <div style="border-top:1px solid #000; width:200px; margin:5px auto 0 auto; text-align:center; font-weight:bold;">
+                                            FIRMA DEL TRABAJADOR
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        <!-- <div class="text-center">
+                                <strong>
                                     <t t-if="o.applicant_signature">
-                                        <span t-esc="o.province"/>
+                                        <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%; margin-top: 50px"/>
                                     </t>
                                     <t t-else="">
-                                        ______________
+                                        <div style="min-height: 100px;"></div>
                                     </t>
-                                    </strong> 
-                                    &#44;
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on.day"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    de 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on_month"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    del 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on.year"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                </p>
-                                <!-- <div class="footer"> -->
-                                <div>
-                                    <div class="row">
-                                        <div class="col-1">
-                                        </div>
-                                        <div class="col-5 text-center">
+                                </strong>
+                            </div> -->
+                        </div>
+                        <div style="page-break-after: always;"/>    
+                    </div>
+                    
+                    <div id="life_law_statement_document" style="padding:3rem 0.75rem 0rem;">
+                        <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
+                            <h5 class="text-center" style="font-weight: bold;">
+                                CARGO DECLARACIÓN VIDA LEY
+                            </h5>
+                            <br/>
+                            <p style="margin-bottom: 5px;">
+                                Por medio del presente documento dejo constancia de:
+                            </p>
+                            <p style="margin-bottom: 10px;">
+                                Haber recibido por parte de mi empleador
+                                <strong>
+                                    "MARKETING ALTERNO PERU SAC"
+                                </strong>
+                                , Declaración Jurada de Beneficiarios "Seguro de Vida Ley - Decreto Legislativo N&#176; 688" y me comprometo a devolverlo debidamente legalizado dentro del plazo de 48 horas, pues de no realizarlo asumo directamente mi responsabilidad.
+                            </p >
+                            <p style="margin-bottom: 10px;">
+                                Siendo de mi conocimiento que EL EMPLEADOR, por la presente da cumplimiento a lo requerido por ley con respecto al "Seguro Vida Ley", cumpliéndose con la entrega documental para que mi persona pueda formalizarlo mediante LEGALIZACION notarial.
+                            </p>
+                            <p style="margin-bottom: 10px;">
+                                Cabe resaltar que la empresa cumple informándole sobre la responsabilidad del TRABAJADOR de proceder con legalización ante Notario Público de la Declaración Jurada Vida Ley, y posteriormente deberá entregarlo debidamente legalizado a vuestro empleador para continuar con el trámite correspondiente ante la aseguradora del caso &#40;La Legalización del documento por parte del Trabajador beneficiará única y exclusivamente al colaborador y vuestros beneficios legales&#41;.
+                            </p>
+                            <p style="margin-bottom: 10px;">
+                                Por otro lado, en absoluta transparencia y en señal del cumplimiento del Decreto de Urgencia N&#176; 044-2019, relativas al Seguro Vida Ley &#40;D.S N&#176; 009-2020-TR&#41; el cual cubrirá a todo colaborador &#40;trabajador&#41; ante diferentes riesgos como la muerte natural, muerte accidental e invalidez total y permanente por accidente.
+                            </p>
+                            <p style="margin-bottom: 10px;">
+                                Marketing Alterno Peru SAC, en búsqueda de facilitar dicha formalización de la declaración jurada a beneficio de los trabajadores, asegurando a los beneficiarios con dicha formalidad requerida por la aseguradora,razón por la cual mediante autorización expresa del trabajador a través de la presente, la empresa procederá gestionando legalización notarial de la declaración jurada, aplicando posteriormente descuento por el costo que la notaria establezca por derecho de legalización, monto de s&#47;. 15.00 &#40;quince con 00&#47;100 soles&#41;, lo cual será descontado de su primera remuneración mensual, pudiendo ser verificado en su boleta de trabajo &#40;descuento administrativo&#41;. Dicha acción podrá ser realizada siempre y cuando el colaborador no registre "multa electoral".
+                            </p>
+                            <table class="table table-bordered" style="margin-top:20px;">
+                                <colgroup>
+                                    <col width="50%"/>
+                                    <col width="15%"/>
+                                    <col width="35%"/>
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="font-weight: bold">NOMBRES Y APELLIDOS DEL TRABAJADOR</th>
+                                        <th scope="col" style="font-weight: bold">N&#176;DNI</th>
+                                        <th scope="col" style="font-weight: bold">FIRMA</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span t-esc="o.partner_name if o.partner_name else '______________'"/>
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <span t-esc="o.vat if o.vat else '______________'"/>
+                                            </strong>
+                                        </td>
+                                        <td>
                                             <t t-if="o.applicant_signature">
                                                 <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%;"/>
                                             </t>
                                             <t t-else="">
                                                 <div style="min-height: 100px;"></div>
                                             </t>
-                                            <div style="border-top-style: dotted; font-weight: bold" class="text-center">
-                                                Firma del Trabajador&#40;&#42;&#41;
-                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <!-- <div class="footer"> -->
+                            <div>
+                                <div class="row">
+                                    <div class="col-6 text-center">
+                                        <div style="min-height: 100px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <div style="min-height: 100px;">
+                                        </div>
+                                        <div style="border-top: 1px solid ; font-weight: bold" class="text-center">
+                                            EDUARDO GUSTAVO MEDINA ORMEÑO GERENTE GENERAL
                                         </div>
                                     </div>
                                 </div>
-                                <p>
-                                    &#40;&#42;&#41;&#58; Datos obligatorios
-                                </p>
-                                <p>
-                                    &#40;&#42;&#42;&#41;&#58; La diferencia entre la fecha de inicio laboral y la fecha de firma no deben exceder los 20 dias calendario
-                                </p>
                             </div>
                         </div>
+                        <div style="page-break-after: always;"/>
                     </div>
 
-                    <div id="labor_commitment_document" style="padding:1.25rem;margin-top:70px;">
+                    <div id="health_safety_document" style="padding:2rem 0.75rem 0rem;">
+                        <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
+                            <t t-if="o.applicant_signature">
+                                <img t-if="o.env.user.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.env.user.company_id.logo)" style="width: 13.75rem; min-height: 2.75rem; max-height: 4.313rem;"/>
+                            </t>
+                            <t t-else="">
+                                <div style="min-height: 100px;"></div>
+                            </t>
+                            <br/>              
+                            <h5 class="text-center" style="font-weight: bold;">
+                                RECEPCIÓN DE REGLAMENTOS
+                            </h5>
+                            <table class="table table-bordered">
+                                <colgroup>
+                                    <col width="30%"/>
+                                    <col width="60%"/>
+                                    <col width="10%"/>
+                                </colgroup>
+                            </table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                    </th>
+                                    <th scope="col">
+                                        <ul style="text-align: left; font-weight: bold;">
+                                            <li>
+                                                REGLAMENTO INTERNO DE TRABAJO
+                                            </li>
+                                            <li>
+                                                REGLAMENTO INTERNO DE SEGURIDAD Y SALUD EN EL TRABAJO
+                                            </li>
+                                            <!-- <li>
+                                                POLÍTICA DE SEGURIDAD Y SALUD EN EL TRABAJO
+                                            </li>
+                                            <li>
+                                                RECOMENDACIONES DE SEGURIDAD Y SALUD EN EL TRABAJO
+                                            </li>
+                                            <li>
+                                                POLÍTICA DE PREVENCIÓN DE HOSTIGAMIENTO LABORAL
+                                            </li>
+                                            <li>
+                                                POLÍTICA DE PROTECCIÓN DE DATOS PERSONALES
+                                            </li>
+                                            <li>
+                                                POLÍTICA REMUNERATIVA - SALARIAL
+                                            </li> -->
+                                        </ul>
+                                    </th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <ol style="list-style: lower-alpha ">
+                                <li>
+                                    Declaro haber recibido un ejemplar de ambos reglamentos, los cuales me comprometo a leer, revisar, consultar, y cumplir con todas cada una de las disposiciones internas de la empresa.
+                                </li>
+                                <li>
+                                    Declaro haber recibido inducción del personal encargado, y haber asistido al curso SST, recibiendo una clara explicación del Reglamento Interno de SST.
+                                </li>
+                                <li>
+                                    Declaro que trabajaré en forma segura cumpliendo la Política y las disposiciones del Sistema de Gestión de Seguridad y Salud en el Trabajo de la empresa (Plan de Prevención, Control Covid 19 Marketing Alterno Perú SAC).
+                                </li>
+                                <li>
+                                    Declaro que me regiré por las normas y procedimientos específicos de SST, adecuado a mi desempeño laboral a una conducta segura e higiénica y de respeto hacia mis compañeros de trabajo, supervisores, jefes y otros que se encuentren en los entornos laborales.
+                                </li>
+                                <li>
+                                    Declaro que buscaré y apoyaré la mejora continua del desempeño de la SST.
+                                </li>
+                                <li>
+                                    Declaro saber y entender que cualquier incumplimiento de las normas y procedimientos de SST aquí establecidas me someten a las sanciones indicadas en el Reglamento Interno de SST, las cuales conozco y acato en su totalidad.
+                                </li>
+                            </ol>
+                            <br/>
+                            <p style="font-weight: bold; margin-bottom: 2px;">
+                                Nombres y Apellidos: 
+                                <strong>
+                                    <span t-esc="o.partner_name if o.partner_name else '______________'"/>
+                                </strong>
+                            </p>
+                            <p style="font-weight: bold; margin-bottom: 2px;">
+                                DNI: 
+                                <strong>
+                                    <span t-esc="o.vat if o.vat else '______________'"/>
+                                </strong> 
+                            </p>
+                            <p style="font-weight: bold; margin-bottom: 2px;">
+                                Correo Electronico: 
+                                <strong>
+                                    <span t-esc="o.email if o.email else '______________'"/>
+                                </strong>
+                            </p>
+                            <p style="font-weight: bold; margin-bottom: 2px;">
+                                Puesto: 
+                                <strong>
+                                    <span t-esc="o.job if o.job else '______________'"/>
+                                </strong>
+                            </p>
+                            <p style="font-weight: bold; margin-bottom: 2px;">
+                                Lugar:
+                                <strong>
+                                    Jr. Libertad Nro. 757 - Urbanización Orbea, Magdalena del Mar. Lima, Perú
+                                </strong>
+                            </p>
+                            <p style="font-weight: bold; margin-bottom: 5px;"> 
+                                Fecha de Entrega: 
+                                <strong>
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.signed_on.day"/>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-esc="datetime.datetime.now().strftime('%d' )"/>
+                                    </t>
+                                    / 
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.signed_on.month"/>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-esc="datetime.datetime.now().strftime('%m')"/>
+                                    </t>
+                                    / 
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.signed_on.year"/>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-esc="datetime.datetime.now().strftime('%Y')"/>
+                                    </t>
+                                </strong>
+                            </p>
+                            <br/>
+                            <!-- <div class="footer"> -->
+                            <!-- <div>
+                                <div class="row">
+                                    <div class="col-4">
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <t t-if="o.applicant_signature">
+                                            <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <div style="min-height: 100px;"></div>
+                                        </t>
+                                        <div style="border-top: 2px solid; font-weight: bold" class="text-center">
+                                            Firma Trabajador:
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div style="min-height: 100px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <table style="width:100%; margin-top:40; text-align:center; border-collapse:collapse;">
+                                <tr>
+                                    <td style="vertical-align:bottom; padding-top:20px; text-align:center;">
+                                        <t t-if="o.applicant_signature">
+                                            <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height:80px; max-width:100%; display:block; margin:0 auto;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <div style="min-height: 100px;"></div>
+                                        </t>
+                                        <div style="border-top:1px solid #000; width:200px; margin:5px auto 0 auto; text-align:center; font-weight:bold;">
+                                            FIRMA DEL TRABAJADOR
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="page-break-after: always;"/>
+                    </div>
+
+                    <div id="home_address_statement_document" style="padding:3rem 0.75rem 0rem;">
+                        <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
+
+                            <h5 class="text-center" style="font-weight: bold;">
+                                DECLARACI&#211;N JURADA SOBRE DIRECCI&#211;N&#45;DOMICILIARIA &#40;ACTUAL&#41;
+                            </h5>
+                            <br/>
+                            <p >
+                                Declaro bajo juramento que los datos consignados en el presente documento son veraces, completos y conforme a la realidad asumiendo la responsabilidad penal en caso de resultar falsos, de acuerdo ala Ley N&#176; 27444 y el código penal vigente.
+                            </p>
+                            <br/>
+                            <p style="font-weight: bold; margin-bottom: 1px;">
+                                APELLIDOS Y NOMBRES: 
+                                <strong>
+                                    <span t-esc="o.partner_name if o.partner_name else '______________'"/>
+                                </strong>
+                            </p>
+                            <p style="font-weight: bold; margin-bottom: 1px;">
+                                D.N.I. N&#176;: 
+                                <strong>
+                                    <span t-esc="o.vat if o.vat else '______________'"/>
+                                </strong>
+                            </p>
+                            <p style="font-weight: bold; margin-bottom: 1px;">
+                                DIRECCION DOMICILIARIA: 
+                                <strong>
+                                    <span t-esc="o.street if o.street else '______________'"/>
+                                </strong>
+                                , 
+                                <strong>
+                                    <span t-esc="o.district if o.district else '______________'"/>
+                                </strong>
+                                , 
+                                <strong>
+                                    <span t-esc="o.province if o.province else '______________'"/>
+                                </strong>
+                            </p>
+                            <br/>
+                            <p style="float: right;">
+                                Lima,
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on.day"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-esc="datetime.datetime.now().strftime('%d' )"/>
+                                </t>
+                                de 
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on.month"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-esc="mes_actual"/>
+                                </t>
+                                del 
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on.year"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-esc="datetime.datetime.now().strftime('%Y')"/>
+                                </t>
+                            </p>
+                            <br/>
+                            
+                            <!-- <div>
+                                <div class="row">
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-5 text-center">
+                                        <t t-if="o.applicant_signature">
+                                            <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <div style="min-height: 100px;"></div>
+                                        </t>
+                                        <div style="border-top: 2px solid; font-weight: bold" class="text-center">
+                                            Firma
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <table style="width:100%; margin-top:40; text-align:center; border-collapse:collapse;">
+                                <tr>
+                                    <td style="vertical-align:bottom; padding-top:20px; text-align:center;">
+                                        <t t-if="o.applicant_signature">
+                                            <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height:80px; max-width:100%; display:block; margin:0 auto;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <div style="min-height: 100px;"></div>
+                                        </t>
+                                        <div style="border-top:1px solid #000; width:200px; margin:5px auto 0 auto; text-align:center; font-weight:bold;">
+                                            FIRMA DEL TRABAJADOR
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div style="min-height: 100px;">
+                            </div>
+                            <p>
+                                *El (la) firmante se responsabiliza por la veracidad de los datos consignados en el presente docuemnto &#40;Nota.- El trabajador esta obligado a informar al área de Recursos Humanos sobre cualquier cambio en la dirección de su domicilio en un plazo de 24 horas&#41;.
+                            </p>
+                        </div>
+                        <div style="page-break-after: always;"/>
+                    </div>
+
+                    <div id="health_affidavit_document" style="padding:3rem 0.75rem 0rem;">
+                        <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
+                            <h5 class="text-center" style="font-weight: bold;">
+                                DECLARACIÓN JURADA DE SALUD
+                            </h5>
+                            <br/>
+                            <p style="margin-bottom: 10px;">
+                                Por medio del presente documento, Yo 
+                                <strong>
+                                    <span t-esc="o.partner_name if o.partner_name else '______________'"/> 
+                                </strong>
+                                    identificado &#40;a&#41; con DNI 
+                                <strong>
+                                    <span t-esc="o.vat if o.vat else '______________'"/>
+                                </strong>
+                                , cargo 
+                                <strong>
+                                    <span t-esc="o.job if o.job else '______________'"/>
+                                </strong>
+                                , declaro bajo juramento lo siguiente:
+                            </p>
+                            <ol style="margin-top: 0;">
+                                <li style="margin-bottom: 3px;">
+                                    No soy mayor de 60 años ni padezco enfermedad o condición alguna que podría incluirme en la relación de trabajador "vulnerable" tales como: diabetes, obesidad mórbida, hipertensión, sintomatología respiratoria, tratamiento oncológico, hipertiroidismo, insuficiencia renal, epilepsia, problemas neurológicos u otros problemas evaluados por un médico que podrían poner en alto riesgo mi vida al contraer el Covid19.
+                                </li>
+                                <li style="margin-bottom: 3px;">
+                                    Qué de tener síntomas como fiebre, sensación de fiebre, dolor de garganta, malestar general del cuerpo, tos, comunicaré a mi empleador permaneciendo en cuarentena domiciliaria.
+                                </li>
+                                <li style="margin-bottom: 3px;">
+                                    Que, si sobreviniese algún tipo de enfermedad o condicíon que podría poner en alto riesgo mi vida al contraer el Covid19, tales como enfermedades o condiciones mencionadas en el primer párrafo del presente, me comprometo a permanecer en cuarentena domiciliaria y a:
+                                </li>
+                                    <ol type="a">
+                                        <li>
+                                            Comunicar inmediatamente a mi empleador sobre mi diagnóstico o condición.
+                                        </li>
+                                        <li>
+                                            Presentar certificado y&#47;o informe médico debidamente suscrito por el profesional médico especialista
+                                        </li>
+                                    </ol>
+                                <li style="margin-bottom: 3px;">
+                                    Comunicar inmediatamente a mi empleador si he tenido contacto en los últimos 14 días con alguna persona quehaya contraído el Covid19.
+                                </li>
+                                <li style="margin-bottom: 3px;">
+                                    Además, me comprometo a mantener el cumplimiento de las recomendaciones establecidas en el "Protocolo de Prevención Covid19" entregado por mi empleador y diversos lineamientos, normativas y protocolos anexos, así como llevar adecuadamente el aislamiento domiciliario según lo dispuesto a causa del Estado de Emergencia Nacional, a fin de salvaguardar mi salud y la de mis compañeros. Caso contrario, se tomará como un acto de grave indisciplina siendo debidamente sancionado de acuerdo a ley de productividad y competitividad laboral.
+                                </li>
+                                <li>
+                                    La información brindada en la presente Declaración Jurada es verdadera, en consecuencia, asumo la responsabilidad civil, administrativa y&#47;o penal que pudiera devenir de la comprobación de su falsedad, incumplimiento o inexactitud sin prejuicio de la misma será considerada como quebrantamiento de la buena fe laboral y en consecuencia falta grave por mi empleador, razón por la cual ratifico la información que se consigna en la presente Declaración jurada, así como de los documentos que se presenten posteriormente a requerimiento de la empresa.
+                                </li>
+                            </ol>
+                            <p>
+                                La empresa MARKETING ALTERNO PERU S.A.C. garantiza que los datos personales serán tratados de forma estrictamente confidencial y respetando las medidas de seguridad dispuestas en la Ley N&#176;29733, Ley de Protección de Datos Personales y su Reglamento, aprobado por Decreto Supremo No.003-2013-JUS.
+                            </p>
+                            <br/>
+                            <p style="float: right;">
+                                Lima,
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on.day"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-esc="datetime.datetime.now().strftime('%d' )"/>
+                                </t>
+                                de 
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on_month"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-esc="mes_actual"/>
+                                </t>
+                                del 
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on.year"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-esc="datetime.datetime.now().strftime('%Y')"/>
+                                </t>
+                            </p>
+                            <br/>
+
+                            <table style="width:100%; margin-top:40; text-align:center; border-collapse:collapse;">
+                                <tr>
+                                    <td style="vertical-align:bottom; padding-top:20px; text-align:center;">
+                                        <t t-if="o.applicant_signature">
+                                            <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height:80px; max-width:100%; display:block; margin:0 auto;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <div style="min-height: 100px;"></div>
+                                        </t>
+                                        <div style="border-top:1px solid #000; width:200px; margin:5px auto 0 auto; text-align:center; font-weight:bold;">
+                                            FIRMA DEL TRABAJADOR
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- <div>
+                                <div class="row">
+                                    <div class="col-1">
+                                    </div>
+                                    <div class="col-5 text-center">
+                                        <t t-if="o.applicant_signature">
+                                            <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <div style="min-height: 100px;"></div>
+                                        </t>
+                                        <div style="border-top-style: dotted; font-weight: bold" class="text-center">
+                                            Firma del Trabajador
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div style="page-break-after: always;"/>
+                    </div>
+
+                    <div id="pension_format_document" style="padding:2rem 0.75rem 0rem;">
+                        <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
+                        <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem">
+                            <h6>
+                                FORMATO DE ELECCIÓN DEL SISTEMA PENSIONARIO
+                            </h6>
+                            <p style="border-top:2px solid;margin:5px 0;">
+                                <b>DATOS DEL TRABAJADOR:</b>
+                            </p>
+                            <p style="margin:5px 0 1px;">
+                                Nombres Y Apellidos &#40;&#42;&#41;&#58; 
+                                <strong>
+                                    <span t-esc="o.partner_name if o.partner_name else '______________'"/> 
+                                </strong>
+                            </p>
+                            <p style="margin:1px 0;">
+                                Tipo de documento:  
+                                <table class="table" style="border: none;">
+                                    <colgroup>
+                                        <col width="25%"/>
+                                        <col width="25%"/>
+                                        <col width="25%"/>
+                                        <col width="25%"/>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <td style="border-top: none;">
+                                                DNI 
+                                                <t t-if="o.identification_type == 'DNI'">
+                                                    <div class="custom-checkbox">X</div>
+                                                </t>
+                                                <t t-else="">
+                                                    <div class="custom-checkbox"></div>
+                                                </t>
+                                            </td>
+                                            <td style="border-top: none;">
+                                                CE 
+                                                <t t-if="o.identification_type == 'Cédula Extranjera'">
+                                                    <div class="custom-checkbox">X</div>
+                                                </t>
+                                                <t t-else="">
+                                                    <div class="custom-checkbox"></div>
+                                                </t>
+                                            </td>
+                                            <td style="border-top: none;">
+                                                Pasaporte 
+                                                <t t-if="o.identification_type == 'Pasaporte'">
+                                                    <div class="custom-checkbox">X</div>
+                                                </t>
+                                                <t t-else="">
+                                                    <div class="custom-checkbox"></div>
+                                                </t>
+                                            </td>
+                                            <td style="border-top: none;">
+                                                Otro 
+                                                <t t-if="o.identification_type not in ('DNI','Pasaporte','Cédula Extranjera','Carnet de Extranjeria')">
+                                                    <div class="custom-checkbox">X</div>
+                                                </t>
+                                                <t t-else="">   
+                                                    <div class="custom-checkbox"></div>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </p>
+                            <p style="margin:5px 0;">
+                                Número de documento &#40;&#42;&#41;&#58; 
+                                <strong>
+                                    <span t-esc="o.vat if o.vat else '______________'"/> 
+                                </strong>
+                            </p>
+                            <table class="table" style="border: none;">
+                                <colgroup>
+                                    <col width="20%"/>
+                                    <col width="20%"/>
+                                    <col width="20%"/>
+                                    <col width="40%"/>
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <td style="border-top: none;">
+                                            Sexo:
+                                        </td>
+                                        <td style="border-top: none;">
+                                            M&#58; 
+                                            <t t-if="o.gender == 'male'">
+                                                <div class="custom-checkbox">X</div>
+                                            </t>
+                                            <t t-else="">
+                                                <div class="custom-checkbox"></div>
+                                            </t>
+                                        </td>
+                                        <td style="border-top: none;">
+                                            F&#58; 
+                                            <t t-if="o.gender == 'female'">
+                                                <div class="custom-checkbox">X</div>
+                                            </t>
+                                            <t t-else="">
+                                                <div class="custom-checkbox"></div>
+                                            </t>
+                                        </td>
+                                        <td style="border-top: none;">
+                                            / Fecha de nacimiento&#58; 
+                                            <span t-esc="o.birthday if o.birthday else '______________'"/> 
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <p style="margin:5px 0 1px;">
+                                Domicilio&#58; 
+                                <span t-esc="o.street if o.street else '______________'"/> 
+                                . Distrito&#58; 
+                                <span t-esc="o.district if o.district else '______________'"/> 
+                                . Provincia&#58; 
+                                <span t-esc="o.province if o.province else '______________'"/> 
+                                . Departamento&#58;
+                                <span t-esc="o.department if o.department else '______________'"/> 
+                            </p>
+                            <p style="margin:0px 0 1px;">
+                                Correo Electrónico&#58; 
+                                <span t-esc="o.email if o.email else '______________'"/> 
+                                Teléfono de casa&#58; ________________________, 
+                                Celular&#58; 
+                                <span t-esc="o.phone if o.phone else '______________'"/> 
+                            </p>
+                            <!-- <br/> -->
+                            <p style="margin:10px 0 0px;">
+                                <b>DATOS DE LA EMPRESA EMPLEADORA:</b>
+                            </p>
+                            <p style="margin:0px 0 5px;">
+                                &#40;si no conoces esta informaci&#243;n&#44; tu empleador la completar&#225; por ti&#41;
+                            </p>
+                            <p style="margin-bottom:1px;">
+                                Nombre o Raz&#243;n social &#40;&#42;&#41;&#58; 
+                                <span t-esc="o.company if o.company else '______________'"/> 
+                            </p>
+                            <p style="margin-bottom:1px;">
+                                Departamento &#40;&#42;&#41;&#58;
+                                <span t-esc="o.company_department if o.company_department else '______________'"/> 
+                            </p>
+                            <p style="margin-bottom:1px;">
+                                RUC &#40;&#42;&#41;&#58;
+                                <span t-esc="o.company_vat if o.company_vat else '______________'"/> 
+                            </p>
+                            <p style="margin:10px 0 1px;">
+                                <b>DATOS DEL VINCULO LABORAL:</b>
+                            </p>
+                            <p style="margin:5px 0 1px;">
+                                Fecha de inicio de relación laboral &#40;&#42;&#42;&#41;&#58; 
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on.day"/>
+                                </t>
+                                <t t-else="">
+                                    ______________
+                                </t>
+                                    / 
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on.month"/>
+                                </t>
+                                <t t-else="">
+                                    ______________
+                                </t>
+                                    / 
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on.year"/>
+                                </t>
+                                <t t-else="">
+                                    ______________
+                                </t>
+                                . Elección del sistema pensionario &#40;&#42;&#41;&#58;
+                            </p>
+                            <table class="table" style="border: none;">
+                                <colgroup>
+                                    <col width="10%"/>
+                                    <col width="10%"/>
+                                    <col width="70%"/>
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <td style="border-top: none;">
+                                            <t t-if="o.private_pension_system == true">
+                                                <div class="custom-checkbox">X</div>
+                                            </t>
+                                            <t t-else="">
+                                                <div class="custom-checkbox"></div>
+                                            </t>
+                                        </td>
+                                        <td colspan="2" style="border-top: none;">
+                                            Sistema Privado de Pensiones 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-top: none;"></td>
+                                        <td style="border-top: none;">
+                                            <t t-if="o.afp_first_job == true">
+                                                <div class="custom-checkbox">X</div>
+                                            </t>
+                                            <t t-else="">
+                                                <div class="custom-checkbox"></div>
+                                            </t>
+                                        </td>
+                                        <td style="border-top: none;">
+                                            &#40;AFP&#41; Primer empleo
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-top: none;"></td>
+                                        <td style="border-top: none;">
+                                            <t t-if="o.coming_from_onp == true">
+                                                <div class="custom-checkbox">
+                                                    X
+                                                </div>
+                                            </t>
+                                            <t t-else="">
+                                                <div class="custom-checkbox"></div>
+                                            </t>
+                                        </td>
+                                        <td style="border-top: none;">
+                                            Proveniente de la ONP
+                                        </td>
+                                    </tr>
+                                    <br/>
+                                    <tr>
+                                        <td style="border-top: none;">
+                                            <t t-if="o.national_pension_system == true">
+                                                <div class="custom-checkbox">
+                                                    X
+                                                </div>
+                                            </t>
+                                            <t t-else="">
+                                                <div class="custom-checkbox">
+                                                </div>
+                                            </t>
+                                        </td>
+                                        <td colspan="2" style="border-top: none;">
+                                            Sistema Nacional de Pensiones &#40;ONP&#41;
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <p style="margin: 5px 0;">
+                                Yo&#44; 
+                                <strong>
+                                    <span t-esc="o.partner_name if o.partner_name else '______________'"/> 
+                                </strong>
+                                con documento de identidad N&#176;
+                                <strong>
+                                    <span t-esc="o.vat if o.vat else '______________'"/> 
+                                </strong>
+                                ,
+                                mediante este documento autorizo el envío mensual de mi Estado de Cuenta por correo electr&#243;nico&#44; de acuerdo con el art&#237;culo 103&#176; de la Resoluci&#243;n 080&#45;98&#45;SAFP&#44; desde la fecha de suscripci&#243;n del presente&#46;
+                            </p>
+                            <p style="margin: 5px 0;">
+                                Importante&#58; Si el trabajador no hubiese manifestado su voluntad de afiliarse a un sistema pensionario&#44; el artículo 16&#176; de la Ley N&#176;28991 establece que el empleador lo deber&#225; afiliar a la AFP ganadora de la licitaci&#243;n&#46;
+                            </p>
+                            <!-- <br/> -->
+                            <p style="margin: 5px 0;">
+                                De acuerdo con las medidas de simplificaci&#243;n y eficiencia administrativa&#44; aceptas de manera expresa el env&#237;o de notificaciones e informaci&#243;n por correo electr&#243;nico a la direcci&#243;n de correo electr&#243;nico que constar&#225; en tu contrato de afiliaci&#243;n o que posteriormente actualices a trav&#233;s de nuestros canales correspondientes&#46; Las notificaciones por correo electr&#243;nico e informaci&#243;n que te enviemos corresponden al tr&#225;mite de car&#225;cter pensionario y no pensionario que realices con AFP&#46;
+                            </p>
+                            <br/>
+                            <div style="text-align: right;">
+                                <p>
+                                    Ciudad de 
+                                    <span t-esc="o.province if o.province else '______________'"/> 
+                                    &#44; 
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.signed_on.day"/>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-esc="datetime.datetime.now().strftime('%d' )"/>
+                                    </t>
+                                    de 
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.signed_on_month"/>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-esc="mes_actual"/>
+                                    </t>
+                                    del 
+                                    <t t-if="o.applicant_signature">
+                                        <span t-esc="o.signed_on.year"/>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-esc="datetime.datetime.now().strftime('%Y')"/>
+                                    </t>
+                                </p>
+                            </div>
+                            <table style="width:100%; margin-top:10; text-align:center; border-collapse:collapse;">
+                                <tr>
+                                    <td style="vertical-align:bottom; padding-top:10px; text-align:center;">
+                                        <t t-if="o.applicant_signature">
+                                            <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height:80px; max-width:100%; display:block; margin:0 auto;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <div style="min-height: 80px;"></div>
+                                        </t>
+                                        <div style="border-top:1px solid #000; width:200px; margin:5px auto 0 auto; text-align:center; font-weight:bold;">
+                                            FIRMA DEL TRABAJADOR &#40;&#42;&#41;
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- <div>
+                                <div class="row">
+                                    <div class="col-1">
+                                    </div>
+                                    <div class="col-5 text-center">
+                                        <t t-if="o.applicant_signature">
+                                            <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <div style="min-height: 100px;"></div>
+                                        </t>
+                                        <div style="border-top-style: dotted; font-weight: bold" class="text-center">
+                                            Firma del Trabajador&#40;&#42;&#41;
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <p style="margin:5px 0 0px; font-size:0.520rem;">
+                                &#40;&#42;&#41;&#58; Datos obligatorios
+                            </p>
+                            <p style="margin:0px; font-size:0.520rem;">
+                                &#40;&#42;&#42;&#41;&#58; La diferencia entre la fecha de inicio laboral y la fecha de firma no deben exceder los 20 dias calendario
+                            </p>
+                        </div>
+                        <div style="page-break-after: always;"/>
+                    </div>
+
+                    <div id="labor_commitment_document" style="padding:1.25rem;">
                         <t t-if="o.partner_id.belong_applicant_id.job_id.department_id and o.partner_id.belong_applicant_id.job_id.department_id.id == 75">
-                            <div style="page-break-after: always;">
                             <div style="width: 100%; text-align: justify; height: auto; font-size:0.590rem; padding-top:20px; line-height: 1.3;">
                                 <table style="width:100%;">
                                     <tr>
                                         <!-- Columna izquierda: título -->
-                                        <td style="text-align:right; width:72%;">
-                                            <h3 style="margin:0; font-size:12px; font-weight:bold;">
+                                        <td style="text-align:right; width:75%;">
+                                            <h3 style="margin:0; font-size:15px; font-weight:bold;">
                                                 ANEXO I.- NORMATIVAS &amp; COMPROMISO LABORAL
                                             </h3>
                                         </td>
                                         <!-- Columna derecha: logo -->
-                                        <td style="text-align:right; width:28%;">
+                                        <td style="text-align:right; width:25%;">
                                             <img t-attf-src="/logo.png?company={{ user.company_id.id }}"
                                                  style="padding: 0px; margin: 0px; height: auto; width: 100px;" 
                                                  t-att-alt="user.company_id.name"/>
@@ -1321,10 +1232,9 @@
                                         </td>
                                     </tr>
                                 </table>
-                            </div>                  
-                            </div>
+                            </div> 
+                            <div style="page-break-after: always;"/>                 
 
-                            <div style="page-break-after: always;">
                             <div style="width: 100%; text-align: justify; height: auto; font-size:0.590rem; padding-top:20px; line-height: 1.3;">    
 
                                 <table style="width:100%;">
@@ -1457,9 +1367,8 @@
                                 </table>
 
                             </div>
-                            </div>
+                            <div style="page-break-after: always;"/>
                                 
-                            <div style="page-break-after: always;">
                             <div style="width: 100%; text-align: justify; height: auto; font-size:0.590rem; padding-top:20px; line-height: 1.3;">
                                 <table style="width:100%;">
                                     <tr>
@@ -1559,310 +1468,119 @@
                                 </table>
                                 
                             </div>
-                            </div>
+                            <div style="page-break-after: always;"/>
                         </t>
                     </div>
 
-                    <div style="page-break-after: always;">
-                        <div id="payroll_discount_document" style="padding:1.25rem;margin-top:70px;">
-                            <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
-                                <h3 class="text-center">
-                                    ANEXO II
-                                </h3>
-                                <h3 class="text-center">
-                                    DECLARACION JURADA
-                                </h3>
-                                <h3 class="text-center">
-                                    AUTORIZACION DE DESCUENTO EN PLANILLA
-                                </h3>
-                                <br/>
-                                <p>
-                                    YO 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.partner_name"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    Identificado con DNI N&#176; 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.vat"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    , domiciliado &#40;a&#41; en 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.province"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    , 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.street"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    , 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.street"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    en señal de cumplimiento de lineamientos de la empresa MARKETING ALTERNO PERU S.A.C, respetándose la transparencia en la información brindada, y teniéndose conocimiento que dentro de la gestión a realizarse por parte del EMPLEADOR de formalización  del SEGURO VIDA LEY, lo cual será debidamente legalizado &#40;Declaración Jurada&#41; por la vía notarial para que pueda seguir su curso ante la aseguradora pertinente, se toma conocimiento que de encontrarse y&#47;o detectarse multa electoral &#40;No Sufragio&#41; lo cual será debidamente verificado en instancia notarial &#40;https:&#176;&#176;multas.jne.gob.pe&#176;login&#41; lo cual podría generar retraso en el procedimiento, pues ante la existencia de "multa electoral" no se podrá continuar con el procedimiento hasta que la persona regularice dicho proceso.
-                                </p>
-                                <br/>
-                                <p>
-                                    Por la presente y previo acuerdo entre las partes, El TRABAJADOR teniendo conocimiento de la multa que se encuentre registrada en el portal de JNE deberá ser cancelada a la brevedad, evitando generar retrasos con el trámite correspondiente razón por la cual, AUTORIZA de manera expresa por la presente que la empresa puede realizar dicho pago que se encuentre pendiente en portal JNE y de manera automática LA EMPRESA (EMPLEADOR) aplicara descuento por el monto establecido de su remuneración del mes en curso, lo cual se verá reflejado en la boleta de remuneraciones del trabajador.
-                                </p>
-                                <br/>
-                                <p>
-                                    Ante lo señalado entre las partes, renuncian a cualquier acción o excepción, que se pudiera pretender para invalidar los términos del presente compromiso, invocándose dolor, error, violencia o remuneraciones otra causal.
-                                </p>
-                                <br/>
-                                <p>
-                                    El monto de la deuda corresponde a: S&#176;. .......... &#40;.............................. Con 00&#176;100 soles&#41;, aplicando descuento UNICO en el mes de 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on_month"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    año 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on.year"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                </p>
-                                <br/>
-                                <p>
-                                    El Trabajador se compromete y AUTORIZA de manera expresa &#40;  &#41;
-                                </p>
-                                <ul>
-                                    <li>
-                                        Autorizando al EMPLEADOR a realizar el pago de la multa que registre JNE por parte del TRABAJADOR por incumplimiento con mis obligaciones electorales &#40;deber ciudadano&#41; y tengo conocimiento que dicho monto será descontado de mi remuneración mensual por parte de la empresa del mes en curso en 01 sola cuota, viéndose reflejado en la boleta de pago.
-                                    </li>
-                                </ul>
-                                <br/>
-                                <p>
-                                    En señal de conformidad con la presente y la elección correspondientes, formalizo acuerdo en Lima, a los 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on.day"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    días del mes de 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on_month"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    del 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.signed_on.year"/>
-                                        </t>
-                                        <t t-else="">
-                                            ______________
-                                        </t>
-                                    </strong>
-                                    .
-                                </p>
-                                <br/>
-                                <!-- <div class="footer"> -->
-                                <div>
-                                    <div class="row">
-                                        <div class="col-6 text-center">
-                                            <t t-if="o.applicant_signature">
-                                                <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                            <div style="border-top-style: dotted;" class="text-center">
-                                                Firma
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br/>
-                                <p>
-                                    Nombres Completos: 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.partner_name"/>
-                                        </t>
-                                        <t t-else="">
-                                            <div style="min-height: 100px;"></div>
-                                        </t>
-                                    </strong>
-                                </p>
-                                <br/>
-                                <p>
-                                    Identificación N&#176; 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.vat"/>
-                                        </t>
-                                        <t t-else="">
-                                            <div style="min-height: 100px;"></div>
-                                        </t>
-                                    </strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="income_retention_document" style="padding:2rem 0.75rem 0rem;">
+                        <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
+                            <h2 class="text-center" style="font-weight: bold">
+                                Declaración Jurada
+                            </h2>
+                            <br/>
+                            <h5 class="text-center" style="font-weight: bold">
+                                Resolución de Superintendencia N&#176;350-2017 SUNAT
+                            </h5>
+                            <p style="margin:10 px 0 10px">
+                                Yo, 
+                                <strong>
+                                    <span t-esc="o.partner_name if o.partner_name else '______________'"/> 
+                                </strong>
+                                identificado(a) con D.N.I.&#47;CEN&#176; 
+                                <strong>
+                                    <span t-esc="o.vat if o.vat else '______________'"/> 
+                                </strong>
+                                , con domicilio actual en 
+                                <strong>
+                                    <span t-esc="o.street if o.street else '______________'"/> 
+                                </strong>
+                                , 
+                                <strong>
+                                    <span t-esc="o.province if o.province else '______________'"/> 
+                                </strong>
+                                , 
+                                <strong>
+                                    <span t-esc="o.department if o.department else '______________'"/> 
+                                </strong>
+                                , declaro bajo juramento que teniendo conocimiento de la Resolución de Superintendencia N&#176; 350-2017 SUNAT en la cual establece la forma en que los trabajadores deberán acreditar ante su nuevo empleador sus remuneraciones y retenciones cuando cambien de empleador en el transcurso del año generarán el "Reporte de Rentas y Retenciones" y la Declaración Jurada.
+                            </p>
+                            <p style="margin-bottom:10px">
+                                Efectúo la presente declaración asumiendo responsabilidad que al generar el Reporte de Rentas y Retenciones no se encuentra la información de la remuneración percibida y retención efectuada firmando la misma en señal de conformidad.
+                            </p>
+                            <p >
+                                Asimismo, declaro ante vuestra representada y me comprometo a realizar la entrega de la documentación correspondiente en el plazo máximo de siete (07) dias hábiles y de no cumplir con dicha documentación estaré asumiendo responsabilidad absoluta por la sanción que entidades superiores pudieran presentar ante la EMPRESA.
+                            </p>
+                            <br/>
+                            <p style="float: right;">
+                                Lima,
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on.day"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-esc="datetime.datetime.now().strftime('%d' )"/>
+                                </t>
+                                de 
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on_month"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-esc="mes_actual"/>
+                                </t>
+                                del 
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on.year"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-esc="datetime.datetime.now().strftime('%Y')"/>
+                                </t>
+                            </p>
+                            <br/>
+                            <div style="min-height: 100px;"></div>
 
-                    <div style="page-break-after: always;">
-                        <div id="income_retention_document" class="mt-5" style="padding:2.5rem;">
-                            <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
-                                <h2 class="text-center" style="font-weight: bold">
-                                    Declaración Jurada
-                                </h2>
-                                <br/>
-                                <h6 class="text-center" style="font-weight: bold">
-                                    Resolución de Superintendencia N&#176;350-2017 SUNAT
-                                </h6>
-                                <p>
-                                    Yo, 
-                                    <strong>
+                            <table style="width:100%; margin-top:10; text-align:center; border-collapse:collapse;">
+                                <tr>
+                                    <td style="vertical-align:bottom; padding-top:10px; text-align:center;">
                                         <t t-if="o.applicant_signature">
-                                            <span t-esc="o.partner_name"/>
+                                            <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height:80px; max-width:100%; display:block; margin:0 auto;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <div style="min-height: 80px;"></div>
+                                        </t>
+                                        <div style="border-top:1px solid #000; width:200px; margin:5px auto 0 auto; text-align:center; font-weight:bold;">
+                                            FIRMA DEL TRABAJADOR
+                                        </div>
+                                        <div style="width:200px; margin:1px auto 0 auto; text-align:center; font-weight:bold;">
+                                            DNI N° <span t-esc="o.vat if o.vat else '______________'"/> 
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- <div>
+                                <div class="row">
+                                    <div class="col-5"></div>
+                                    <div class="col-4 text-center; padding-right: 40%">
+                                        <t t-if="o.applicant_signature">
+                                            <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%;"/>
                                         </t>
                                         <t t-else="">
                                             <div style="min-height: 100px;"></div>
                                         </t>
-                                    </strong>
-                                    identificado(a) con D.N.I.&#47;CEN&#176; 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.vat"/>
-                                        </t>
-                                        <t t-else="">
-                                            <div style="min-height: 100px;"></div>
-                                        </t>
-                                    </strong>
-                                    , con domicilio actual en 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.province"/>
-                                        </t>
-                                        <t t-else="">
-                                            <div style="min-height: 100px;"></div>
-                                        </t>
-                                    </strong>
-                                    , 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.street"/>
-                                        </t>
-                                        <t t-else="">
-                                            <div style="min-height: 100px;"></div>
-                                        </t>
-                                    </strong>
-                                    , 
-                                    <strong>
-                                        <t t-if="o.applicant_signature">
-                                            <span t-esc="o.street"/>
-                                        </t>
-                                        <t t-else="">
-                                            <div style="min-height: 100px;"></div>
-                                        </t>
-                                    </strong>
-                                    , declaro bajo juramento que teniendo conocimiento de la Resolución de Superintendencia N&#176; 350-2017 SUNAT en la cual establece la forma en que los trabajadores deberán acreditar ante su nuevo empleador sus remuneraciones y retenciones cuando cambien de empleador en el transcurso del año generarán el "Reporte de Rentas y Retenciones" y la Declaración Jurada.
-                                </p>
-                                <br/>
-                                <p>
-                                    Efectúo la presente declaración asumiendo responsabilidad que al generar el Reporte de Rentas y Retenciones no se encuentra la información de la remuneración percibida y retención efectuada firmando la misma en señal de conformidad.
-                                </p>
-                                <br/>
-                                <p>
-                                    Asimismo, declaro ante vuestra representada y me comprometo a realizar la entrega de la documentación correspondiente en el plazo máximo de siete (07) dias hábiles y de no cumplir con dicha documentación estaré asumiendo responsabilidad absoluta por la sanción que entidades superiores pudieran presentar ante la EMPRESA.
-                                </p>
-                                <br/>
-                                    <p style="float: right;">
-                                        Lima,
+                                        <div style="border-top: 1px solid" class="text-center">
+                                            Firma
+                                        </div>
+                                        <div>
+                                            DNI N&#176; 
                                         <strong>
-                                            <t t-if="o.applicant_signature">
-                                                <span t-esc="o.signed_on.day"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                            de 
-                                            <t t-if="o.applicant_signature">
-                                                <span t-esc="o.signed_on_month"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                            del 
-                                            <t t-if="o.applicant_signature">
-                                                <span t-esc="o.signed_on.year"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                            .
+                                        <span t-esc="o.vat if o.vat else '______________'"/> 
                                         </strong>
-                                    </p>
-                                <br/>
-                                <div style="min-height: 100px;"></div>
-                                <!-- <div class="footer"> -->
-                                <div>
-                                    <div class="row">
-                                        <div class="col-5"></div>
-                                        <div class="col-4 text-center; padding-right: 40%">
-                                            <t t-if="o.applicant_signature">
-                                                <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height: 6rem; max-width: 100%;"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                            <div style="border-top: 1px solid" class="text-center">
-                                                Firma
-                                            </div>
-                                            <div>
-                                                DNI N&#176; 
-                                                <strong>
-                                                    <t t-if="o.applicant_signature">
-                                                        <span t-esc="o.vat"/>
-                                                    </t>
-                                                    <t t-else="">
-                                                        <div style="min-height: 100px;"></div>
-                                                    </t>
-                                                </strong>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
+                        <div style="page-break-after: always;">
+                    </div>
                     </div>
                 </div>
             </div>
