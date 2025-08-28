@@ -9424,7 +9424,7 @@
                                 <p style="font-weight: bold; margin-bottom: 2px;">
                                     Puesto: 
                                     <strong>
-                                        <span t-esc="o.job if o.job else '______________'"/>
+                                        <span t-esc="o.partner_id.belong_applicant_id.job_id.name or ''"/>
                                     </strong>
                                 </p>
                                 <p style="font-weight: bold; margin-bottom: 2px;">
@@ -9619,7 +9619,7 @@
                                     </strong>
                                     , cargo 
                                     <strong>
-                                        <span t-esc="o.job if o.job else '______________'"/>
+                                        <span t-esc="o.partner_id.belong_applicant_id.job_id.name or ''"/>
                                     </strong>
                                     , declaro bajo juramento lo siguiente:
                                 </p>
