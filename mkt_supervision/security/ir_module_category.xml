@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="module_mkt_supervision" model="ir.module.category">
+        <field name="name">Supervision</field>
+    </record>
+
+    <record id="module_category_stock_request" model="ir.module.category">
+        <field name="name">Stock Request</field>
+        <field name="parent_id" ref="mkt_supervision.module_mkt_supervision" />
+        <field name="sequence">10</field>
+    </record>
+
+</odoo>

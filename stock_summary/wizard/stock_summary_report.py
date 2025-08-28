@@ -1,4 +1,5 @@
 from odoo import models, fields, _
+from odoo.exceptions import UserError
 import io as io
 from io import BytesIO
 from PIL import Image
@@ -54,13 +55,14 @@ class StockSummaryReport(models.TransientModel):
 
         ws.set_column('A:A', 50)
         ws.set_column('B:B', 13)
-        ws.set_column('C:C', 16)
-        ws.set_column('D:D', 10)
-        ws.set_column('E:E', 20)
-        ws.set_column('F:F', 15)
-        ws.set_column('G:G', 13)
-        ws.set_column('H:H', 11)
-        ws.set_column('I:I', 22)
+        ws.set_column('C:C', 14.71)
+        ws.set_column('D:D', 16)
+        ws.set_column('E:E', 10)
+        ws.set_column('F:F', 20)
+        ws.set_column('G:G', 15)
+        ws.set_column('H:H', 13)
+        ws.set_column('I:I', 11)
+        ws.set_column('J:J', 22)
 
         ws.set_row(1,30)
 
@@ -68,40 +70,47 @@ class StockSummaryReport(models.TransientModel):
         ws.merge_range('B2:E2', _('Locations: ') + locations, stl3)
 
         ws.write("A4:A4", _('PRODUCT'), stl1)
-        ws.write("B4:B4", _('SERIE N°'), stl1)
-        ws.write("C4:C4", _('CATEGORY'), stl1)
-        ws.write("D4:D4", _('TYPE'), stl1)
-        ws.write("E4:E4", _('UBICATION'), stl1)
-        ws.write("F4:F4", _('ENTRIES'), stl1)
-        ws.write("G4:G4", _('DEPARTURES'), stl1)
-        ws.write("H4:H4", _('STOCK'), stl1)
-        ws.write("I4:I4", _('EXPIRATION DATE'), stl1)
-        ws.autofilter('A4:I4')
+        ws.write("B4:B4", _('REFERENCE'), stl1)
+        ws.write("C4:C4", _('SERIE N°'), stl1)
+        ws.write("D4:D4", _('CATEGORY'), stl1)
+        ws.write("E4:E4", _('TYPE'), stl1)
+        ws.write("F4:F4", _('UBICATION'), stl1)
+        ws.write("G4:G4", _('ENTRIES'), stl1)
+        ws.write("H4:H4", _('DEPARTURES'), stl1)
+        ws.write("I4:I4", _('STOCK'), stl1)
+        ws.write("J4:J4", _('EXPIRATION DATE'), stl1)
+        ws.autofilter('A4:J4')
 
         records = self._get_query()
         row = 4
         for line in records:
             product_name = self.env['product.product'].search([('id','=',line['pp_id'])]).mapped('product_tmpl_id').name
             ws.write(row, 0, product_name, stl2)
-            ws.write(row, 1, line['report_lot'], stl2)
-            ws.write(row, 2, line['report_category'], stl2)
-            ws.write(row, 3, line['report_product_type'], stl2)
-            ws.write(row, 4, line['report_location'], stl2)
-            ws.write(row, 5, line['report_incoming_qty'], stl2)
-            ws.write(row, 6, line['report_outgoing_qty'], stl2)
-            ws.write(row, 7, line['report_stock'], stl2)
-            ws.write(row, 8, line['expiration_date'], stl4)
+            ws.write(row, 1, line['report_code'], stl2)
+            ws.write(row, 2, line['report_lot'], stl2)
+            ws.write(row, 3, line['report_category'], stl2)
+            ws.write(row, 4, line['report_product_type'], stl2)
+            ws.write(row, 5, line['report_location'], stl2)
+            ws.write(row, 6, line['report_incoming_qty'], stl2)
+            ws.write(row, 7, line['report_outgoing_qty'], stl2)
+            ws.write(row, 8, line['report_stock'], stl2)
+            ws.write(row, 9, line['expiration_date'], stl4)
             row += 1
 
 
     def _get_query(self):
-        self.stock_location_ids = [(6,0,self.env.user.stock_location_ids.ids)]
-        where = "WHERE sl.id IN {}"
-        query= """
+        user_loc_ids = self.env.user.stock_location_ids.ids
+        if not user_loc_ids:
+            raise UserError(_("Configura al menos una ubicación de stock en tu usuario."))
+
+        self.stock_location_ids = [(6, 0, user_loc_ids)]
+
+        query = """
             SELECT
                 sq.id AS id,
                 pp.id AS pp_id,
                 pt.name AS report_product,
+                pt.default_code AS report_code,
                 spl.name AS report_lot,
                 pc.name AS report_category,
                 pt.detailed_type AS report_product_type,
@@ -129,15 +138,14 @@ class StockSummaryReport(models.TransientModel):
                 sq.quantity AS report_stock,
                 spl.expiration_date AS expiration_date
             FROM stock_quant AS sq
-            INNER JOIN product_product AS pp ON pp.id=sq.product_id
+            INNER JOIN product_product AS pp ON pp.id = sq.product_id
             INNER JOIN product_template AS pt ON pt.id = pp.product_tmpl_id
             INNER JOIN product_category AS pc ON pc.id = pt.categ_id
             INNER JOIN stock_location AS sl ON sl.id = sq.location_id
             LEFT JOIN stock_production_lot AS spl ON spl.id = sq.lot_id
-            {}
-            GROUP BY sq.id, pt.name, spl.name, pc.name, pt.detailed_type, sl.name, sq.quantity, pp.id, sl.id, spl.expiration_date
+            WHERE sl.id IN %s
             ORDER BY pt.name
-        """.format(where.format(tuple(self.stock_location_ids.ids)))
-        self._cr.execute(query)
-        res_query = self._cr.dictfetchall()
+        """
+        self._cr.execute(query, (tuple(user_loc_ids),))
+        return self._cr.dictfetchall()
         return res_query

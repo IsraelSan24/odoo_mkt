@@ -29,6 +29,9 @@ class Contract(models.Model):
 
     name = fields.Char(copy=False, default=lambda self: _('New'), required=True, string="Name")
 
+    massive_new_contracts_id = fields.Many2one(comodel_name='contract.mass', string='Massive new contracts', ondelete='cascade')
+    massive_renew_contracts_id = fields.Many2one(comodel_name='contract.mass', string='Massive renewed contracts', ondelete='cascade') 
+
     state = fields.Selection([
         ('draft', 'New'),
         ('signed', 'Signed'),

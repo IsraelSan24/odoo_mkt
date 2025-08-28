@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0-20230919\n"
+"Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-29 15:00+0000\n"
-"PO-Revision-Date: 2024-08-29 15:00+0000\n"
+"POT-Creation-Date: 2025-08-25 17:26+0000\n"
+"PO-Revision-Date: 2025-08-25 17:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -30,20 +30,26 @@ msgstr "<i class=\"fa fa-arrow-left\"/> Volver al formulario"
 #. module: mkt_photocheck
 #: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
 #: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
-msgid "<option value=\"\">Brand...</option>"
-msgstr "<option value=\"\">Marca...</option>"
-
-#. module: mkt_photocheck
-#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
-#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
 msgid "<option value=\"\">Jobs...</option>"
 msgstr "<option value=\"\">Cargo...</option>"
 
 #. module: mkt_photocheck
 #: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
 #: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
-msgid "<option value=\"\">Supervisor...</option>"
-msgstr ""
+msgid "<option value=\"\">Select Brand...</option>"
+msgstr "<option value=\"\">Marca...</option>"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "<option value=\"\">Select City...</option>"
+msgstr "<option value=\"\">Ciudad...</option>"
+
+#. module: mkt_photocheck
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
+#: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
+msgid "<option value=\"\">Select Supervisor...</option>"
+msgstr "<option value=\"\">Supervisor...</option>"
 
 #. module: mkt_photocheck
 #: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
@@ -603,6 +609,11 @@ msgid "Admin"
 msgstr "Administrador"
 
 #. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group_responsible__city_ids
+msgid "Allowed Cities"
+msgstr "Ciudades permitidas"
+
+#. module: mkt_photocheck
 #: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
 msgid "Archived"
 msgstr "Archivado"
@@ -637,6 +648,7 @@ msgstr "Marca Contador"
 
 #. module: mkt_photocheck
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__photocheck_brand_group_id
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group_responsible__brand_group_id
 msgid "Brand Group"
 msgstr "Grupo de marcas"
 
@@ -644,11 +656,6 @@ msgstr "Grupo de marcas"
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__brand_group_ids
 msgid "Brand Groups"
 msgstr "Grupos de marcas"
-
-#. module: mkt_photocheck
-#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
-msgid "Brands"
-msgstr "Marcas"
 
 #. module: mkt_photocheck
 #: model:ir.actions.act_window,name:mkt_photocheck.view_photocheck_brand_group_action
@@ -671,6 +678,18 @@ msgstr ""
 #: model_terms:website.page,arch_db:mkt_photocheck.request_photocheck
 msgid "Cancel"
 msgstr "Cancelar"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__city_ids
+msgid "Cities"
+msgstr "Ciudades"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__city_id
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_city__name
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_search
+msgid "City"
+msgstr "Ciudad"
 
 #. module: mkt_photocheck
 #: model_terms:ir.ui.view,arch_db:mkt_photocheck.request_photocheck_ir_ui_view
@@ -708,6 +727,8 @@ msgstr "Confirmación"
 #. module: mkt_photocheck
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__create_uid
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__create_uid
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group_responsible__create_uid
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_city__create_uid
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job__create_uid
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__create_uid
 msgid "Created by"
@@ -716,6 +737,8 @@ msgstr "Creado por"
 #. module: mkt_photocheck
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__create_date
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__create_date
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group_responsible__create_date
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_city__create_date
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job__create_date
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__create_date
 msgid "Created on"
@@ -743,6 +766,8 @@ msgstr "Diseñador"
 #. module: mkt_photocheck
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__display_name
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__display_name
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group_responsible__display_name
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_city__display_name
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job__display_name
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__display_name
 msgid "Display Name"
@@ -809,6 +834,8 @@ msgstr "Tiene un mensaje"
 #. module: mkt_photocheck
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__id
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__id
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group_responsible__id
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_city__id
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job__id
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__id
 msgid "ID"
@@ -837,6 +864,11 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: mkt_photocheck
+#: model:ir.model.fields,help:mkt_photocheck.field_photocheck_brand_group_responsible__city_ids
+msgid "If empty, this responsible can see all cities."
+msgstr "Si está vacío, este responsable puede ver todas las ciudades."
+
+#. module: mkt_photocheck
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__initial_name
 msgid "Initial Name"
 msgstr "Nombre inicial"
@@ -861,6 +893,8 @@ msgstr "Cargo"
 #. module: mkt_photocheck
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck____last_update
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group____last_update
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group_responsible____last_update
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_city____last_update
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job____last_update
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor____last_update
 msgid "Last Modified on"
@@ -875,6 +909,8 @@ msgstr "Apellido"
 #. module: mkt_photocheck
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__write_uid
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__write_uid
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group_responsible__write_uid
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_city__write_uid
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job__write_uid
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__write_uid
 msgid "Last Updated by"
@@ -883,6 +919,8 @@ msgstr ""
 #. module: mkt_photocheck
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__write_date
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__write_date
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group_responsible__write_date
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_city__write_date
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_job__write_date
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_supervisor__write_date
 msgid "Last Updated on"
@@ -1017,6 +1055,12 @@ msgid "Photocheck Brand Group"
 msgstr "Grupo de marcas Fotocheck"
 
 #. module: mkt_photocheck
+#: model:ir.model,name:mkt_photocheck.model_photocheck_city
+#: model:ir.ui.menu,name:mkt_photocheck.photocheck_city
+msgid "Photocheck City"
+msgstr "Fotocheck Ciudad"
+
+#. module: mkt_photocheck
 #: model:mail.template,name:mkt_photocheck.mail_template_photocheck_done
 msgid "Photocheck Done"
 msgstr "Fotocheck Realizado"
@@ -1046,6 +1090,11 @@ msgid "Photocheck Supervisor"
 msgstr "Fotocheck Supervisor"
 
 #. module: mkt_photocheck
+#: model:ir.actions.act_window,name:mkt_photocheck.view_photocheck_city_action
+msgid "Photocheck city"
+msgstr "Fotocheck Ciudad"
+
+#. module: mkt_photocheck
 #: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_form
 msgid "Ready"
 msgstr "Listo"
@@ -1073,7 +1122,7 @@ msgid "Request Sent!"
 msgstr "Solicitud enviada!"
 
 #. module: mkt_photocheck
-#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__responsible_id
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group_responsible__user_id
 msgid "Responsible"
 msgstr "Responsable"
 
@@ -1081,6 +1130,17 @@ msgstr "Responsable"
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__activity_user_id
 msgid "Responsible User"
 msgstr "Usuario responsable"
+
+#. module: mkt_photocheck
+#: model:ir.model,name:mkt_photocheck.model_photocheck_brand_group_responsible
+msgid "Responsible per Brand Group with Cities"
+msgstr "Responsable por grupo de marcas con ciudades"
+
+#. module: mkt_photocheck
+#: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck_brand_group__responsible_lines
+#: model_terms:ir.ui.view,arch_db:mkt_photocheck.view_photocheck_brand_group_form
+msgid "Responsibles"
+msgstr "Responsables"
 
 #. module: mkt_photocheck
 #: model:ir.model.fields,field_description:mkt_photocheck.field_photocheck__message_has_sms_error

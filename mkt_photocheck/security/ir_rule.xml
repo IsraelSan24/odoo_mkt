@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- Regla actualizada para User y Boss - ahora usa el modelo de acceso a ciudades -->
     <record id="photocheck_show_myrecord_rule" model="ir.rule">
         <field name="name">My own Photocheck</field>
         <field name="model_id" ref="mkt_photocheck.model_photocheck"/>
         <field name="domain_force">
-            [
-                '|','|',
+            ['|','|',
                 ('create_uid', '=', user.id),
-                ('photocheck_brand_group_id.responsible_id', '=', user.id),
-                ('photocheck_supervisor_id.user_id', '=', user.id)
+                ('photocheck_supervisor_id.user_id', '=', user.id),
+                ('user_id', '=', user.id)
             ]
         </field>
-        <field name="groups" eval="[(4, ref('mkt_photocheck.photocheck_user')), (4, ref('mkt_photocheck.photocheck_boss'))]"/>
+        <field name="groups" eval="[(4, ref('mkt_photocheck.photocheck_user'))]"/>
     </record>
 
+    <!-- Regla: Responsables (no se limita aquí, se filtra en search) -->
+    <record id="photocheck_rule_boss" model="ir.rule">
+        <field name="name">Photocheck - Boss Group Access</field>
+        <field name="model_id" ref="mkt_photocheck.model_photocheck"/>
+        <field name="groups" eval="[(4, ref('mkt_photocheck.photocheck_boss'))]"/>
+        <field name="domain_force">
+            [('photocheck_brand_group_id.responsible_lines.user_id', '=', user.id)]
+        </field>
+    </record>
+
+
+    <!-- Regla para Admin - ve todos los registros -->
     <record id="photocheck_show_allrecord_rule" model="ir.rule">
         <field name="name">All Photocheck</field>
         <field name="model_id" ref="mkt_photocheck.model_photocheck"/>
@@ -24,6 +36,7 @@
         <field name="groups" eval="[(4,ref('mkt_photocheck.photocheck_admin'))]"/>
     </record>
 
+    <!-- Regla para Designer - ve todos excepto drafts -->
     <record id="photocheck_show_somerecord_rule" model="ir.rule">
         <field name="name">Some Photocheck</field>
         <field name="model_id" ref="mkt_photocheck.model_photocheck"/>

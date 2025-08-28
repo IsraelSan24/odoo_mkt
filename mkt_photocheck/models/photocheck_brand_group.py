@@ -1,4 +1,4 @@
-from odoo import _, fields, models
+from odoo import _, fields, models, api
 
 class PhotocheckBrandGroup(models.Model):
     _name = 'photocheck.brand.group'
@@ -6,4 +6,9 @@ class PhotocheckBrandGroup(models.Model):
     
     name = fields.Char(string='Name')
     brand_ids = fields.Many2many(comodel_name='res.partner.brand', string="Brand")
-    responsible_id = fields.Many2one(comodel_name='res.users', string='Responsible')
+    
+    responsible_lines = fields.One2many(
+        "photocheck.brand.group.responsible",
+        "brand_group_id",
+        string="Responsibles"
+    )

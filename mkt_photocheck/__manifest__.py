@@ -35,11 +35,11 @@
         'views/menu_views.xml',
         
     ],
-    'assets': {
-        'web.assets_frontend': [
-            'mkt_photocheck/static/src/js/brand_supervisor.js',
-        ],
-    },
+    # 'assets': {
+    #     'web.assets_frontend': [
+    #         # 'mkt_photocheck/static/src/js/brand_supervisor.js',
+    #     ],
+    # },
     'installable': True,
     'auto_install': False,
     'application': True,
