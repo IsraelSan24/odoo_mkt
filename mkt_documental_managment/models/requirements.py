@@ -1264,6 +1264,7 @@ class DocumentalRequirements(models.Model):
 
     def settlement_petitioner_sign(self):
         for req in self:
+            # === Validaciones de pagos divididos ===
             if req.divided_payment:
                 payment_records = req.requirement_payment_ids
 
@@ -1277,35 +1278,69 @@ class DocumentalRequirements(models.Model):
                 
                 if any(payment.amount <= 0 for payment in req.requirement_payment_ids):
                     raise ValidationError(_('Payments cannot be negative or zero.'))
-        if self.balance < 0:
-            raise ValidationError(_('The is negative, please correct it to sign.'))
-        alias_name = self.env.user.partner_id.alias_name
-        user_name = alias_name if alias_name else self.env.user.name
-        if self.unify:
-            self.settlement_attach_files()
-            self.requirement_state = 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False) or (self.employee_id.sudo().group_ids.sudo().employee_supervise_ids.sudo())) else 'executive'
-        else:
-            self.settlement_attach_files()
-            if not self.petitioner_signature:
-                raise ValidationError(_( 'Before to sign the settlement, be sure to sign the requirement.' ))
-        if self.settlement_ids:
-            self.document_format_validation()
-        else:
-            raise ValidationError( _('Please, make sure to write at least one line in the settlement line') )
-        self.write({
-            'settlement_petitioner_user_id': self.env.user.id,
-            'settlement_petitioner_signature': signature_generator(user_name),
-            'settlement_petitioner_signed_on': fields.Datetime.now(),
-            'settlement_state': 'external_control' if ((self.budget_id.sudo().partner_brand_id.for_province == True) and (self.create_uid.partner_id.is_province == True)) or ((self.budget_id.sudo().partner_brand_id.for_capital == True) and (self.create_uid.partner_id.is_province == False) or (self.employee_id.sudo().group_ids.sudo().employee_supervise_ids.sudo())) else 'executive'
-        })
-        if self.settlement_state == 'executive' and self.env.user != self.budget_id.executive_id:
-            self._notify_executive_pending_signature()
-        self.blacklist_validation()
-        self.create_settlement_line()
-        self._compute_settlement_vendor()
-        self._compute_total_retention()
-        self._compute_total_detraction()
-        self.mobility_use_validation()
+
+            if self.balance < 0:
+                raise ValidationError(_('The balance is negative, please correct it to sign.'))
+
+            # === Generación de firma ===
+            alias_name = self.env.user.partner_id.alias_name
+            user_name = alias_name if alias_name else self.env.user.name
+
+            # === Validación settlement ===
+            if req.settlement_ids:
+                for settlement in req.settlement_ids:
+                    # Ejecutamos la validación CPE de cada settlement
+                    settlement.validation_voucher()
+
+                    # Si el settlement quedó en failed => ValidationError
+                    if settlement.cpe_state == 'failed':
+                        raise ValidationError(_(
+                            f"El comprobante {settlement.document} no es válido o no existe en SUNAT. "
+                            f"Por favor revisa antes de continuar."
+                        ))
+
+                req.document_format_validation()
+            else:
+                raise ValidationError(_('Please, make sure to write at least one line in the settlement line'))
+
+            # === Proceso de firma normal ===
+            if self.unify:
+                self.settlement_attach_files()
+                req.requirement_state = (
+                    'external_control'
+                    if ((req.budget_id.sudo().partner_brand_id.for_province and req.create_uid.partner_id.is_province)
+                        or (req.budget_id.sudo().partner_brand_id.for_capital and not req.create_uid.partner_id.is_province)
+                        or (req.employee_id.sudo().group_ids.sudo().employee_supervise_ids.sudo()))
+                    else 'executive'
+                )
+            else:
+                self.settlement_attach_files()
+                if not req.petitioner_signature:
+                    raise ValidationError(_('Before to sign the settlement, be sure to sign the requirement.'))
+
+            req.write({
+                'settlement_petitioner_user_id': self.env.user.id,
+                'settlement_petitioner_signature': signature_generator(user_name),
+                'settlement_petitioner_signed_on': fields.Datetime.now(),
+                'settlement_state': (
+                    'external_control'
+                    if ((req.budget_id.sudo().partner_brand_id.for_province and req.create_uid.partner_id.is_province)
+                        or (req.budget_id.sudo().partner_brand_id.for_capital and not req.create_uid.partner_id.is_province)
+                        or (req.employee_id.sudo().group_ids.sudo().employee_supervise_ids.sudo()))
+                    else 'executive'
+                )
+            })
+
+            if req.settlement_state == 'executive' and self.env.user != req.budget_id.executive_id:
+                req._notify_executive_pending_signature()
+
+            # === Validaciones adicionales ===
+            req.blacklist_validation()
+            req.create_settlement_line()
+            req._compute_settlement_vendor()
+            req._compute_total_retention()
+            req._compute_total_detraction()
+            req.mobility_use_validation()
 
 
     def button_settlement_external_control_confirm(self):
@@ -1640,19 +1675,42 @@ class DocumentalRequirements(models.Model):
 
 
     def settlement_attach_files(self):
+        self.ensure_one()
+        Attachment = self.env['ir.attachment'].sudo()
         attachments = []
+
         for settlement in self.settlement_ids:
-            if settlement.document_file:
-                attach = {
-                    'name': settlement.document_filename,
-                    'datas': settlement.document_file,
-                    'store_fname': settlement.document_filename,
-                    'res_model': self._name,
-                    'res_id': self.id,
-                    'type': 'binary',
-                }
-                attachment = self.env['ir.attachment'].create(attach)
-                attachments.append(attachment.id)
+            if not settlement.document_file:
+                continue
+
+            fname = settlement.document_filename or f"settlement_{settlement.id}.bin"
+            mimetype = mimetypes.guess_type(fname)[0] or 'application/octet-stream'
+
+            vals = {
+                'name': fname,
+                'datas': settlement.document_file,   # base64
+                'datas_fname': fname,
+                'mimetype': mimetype,
+                'res_model': self._name,
+                'res_id': self.id,
+                'type': 'binary',
+            }
+
+            # 1) Reemplazar si ya existe un adjunto con ese nombre para este registro
+            existing = Attachment.search([
+                ('res_model', '=', self._name),
+                ('res_id', '=', self.id),
+                ('name', '=', fname),
+            ], limit=1)
+
+            if existing:
+                existing.write(vals)
+                attachments.append(existing.id)
+            else:
+                att = Attachment.create(vals)
+                attachments.append(att.id)
+
+        return attachments
 
 
     def schedule_check_end_date(self):
