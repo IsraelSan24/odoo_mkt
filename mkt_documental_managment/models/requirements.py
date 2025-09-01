@@ -7,6 +7,7 @@ from odoo.addons.mkt_documental_managment.models.signature import signature_gene
 from odoo.addons.mkt_documental_managment.models.number_to_string import number_to_string
 import io
 import PyPDF2
+import mimetypes
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 import base64
