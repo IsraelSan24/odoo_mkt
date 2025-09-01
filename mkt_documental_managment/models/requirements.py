@@ -1685,19 +1685,24 @@ class DocumentalRequirements(models.Model):
                 continue
 
             fname = settlement.document_filename or f"settlement_{settlement.id}.bin"
-            mimetype = mimetypes.guess_type(fname)[0] or 'application/octet-stream'
+
+            # mimetype opcional: si no existe mimetypes o falla, usamos octet-stream
+            try:
+                import mimetypes
+                mimetype = mimetypes.guess_type(fname)[0] or 'application/octet-stream'
+            except Exception:
+                mimetype = 'application/octet-stream'
 
             vals = {
-                'name': fname,
+                'name': fname,                   # usa name como nombre de archivo
                 'datas': settlement.document_file,   # base64
-                'datas_fname': fname,
                 'mimetype': mimetype,
                 'res_model': self._name,
                 'res_id': self.id,
                 'type': 'binary',
             }
 
-            # 1) Reemplazar si ya existe un adjunto con ese nombre para este registro
+            # Buscar uno existente para este registro y con el mismo nombre
             existing = Attachment.search([
                 ('res_model', '=', self._name),
                 ('res_id', '=', self.id),
@@ -1705,7 +1710,7 @@ class DocumentalRequirements(models.Model):
             ], limit=1)
 
             if existing:
-                existing.write(vals)
+                existing.write(vals)         # reemplaza contenido/metadata
                 attachments.append(existing.id)
             else:
                 att = Attachment.create(vals)
