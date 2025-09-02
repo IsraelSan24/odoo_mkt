@@ -23,6 +23,8 @@
                         groups="mkt_documental_managment.documental_requirement_admin"/>
                     <button string="Sync Payment Docs" name="action_sync_payment_docs" type="object" class="oe_highlight"
                         groups="mkt_documental_managment.documental_requirement_admin"/>
+                    <button string="Admin Signature" name="action_sign_administration_massive" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_administration"/>
                 </header>
                 <field name="is_refund" invisible="True"/>
                 <field name="timer_state" readonly="True" optional="hide"/>
