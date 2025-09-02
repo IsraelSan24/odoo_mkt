@@ -29,6 +29,7 @@
         'wizard/hr_departure_wizard.xml',
         'wizard/employee_verification_wizard.xml',
         'wizard/contract_mass_identifiers_wizard.xml',
+        'wizard/contracts_download_wizard.xml',
 
         'data/ir_sequence.xml',
         'data/config_data.xml',

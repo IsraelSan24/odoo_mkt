@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_contract_zip_wizard_form" model="ir.ui.view">
+        <field name="name">contract.zip.wizard.form</field>
+        <field name="model">contract.zip.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Download Contracts ZIP">
+                <group>
+                    <p>Click "Download" to get all contracts in a ZIP file.</p>
+                </group>
+                <footer>
+                    <button string="Download" type="object" name="action_generate_zip_from_combined" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
+
+
