@@ -1935,6 +1935,186 @@ class DocumentalRequirements(models.Model):
         return True            
 
 
+    def action_sign_administration_massive(self):
+        """
+        Botón desde árbol y formulario.
+        Solo procede con:
+        - settlement_state = 'administration'
+        - tiene al menos un payment en requirement_payment_ids
+        """
+        self.ensure_one() if len(self) == 1 else None
+        mass_mode = self.env.context.get('mass_sync') or len(self) > 1
+
+        alias_name = self.env.user.partner_id.alias_name
+        user_name = alias_name if alias_name else self.env.user.name
+
+        pending_msgs = []   # [(rq_name, reason), ...]
+        processed = 0
+
+        # === Filtrar por estado 'administration' ===
+        valid_reqs = self.filtered(lambda r: r.settlement_state == 'administration')
+        skipped_reqs = self - valid_reqs
+        for req in skipped_reqs:
+            pending_msgs.append((req.name, _('Not in administration state')))
+
+        # Iteramos solo sobre los válidos
+        for req in valid_reqs:
+            try:
+                # === Debe tener al menos un pago (siempre, no solo cuando divided_payment) ===
+                if not req.requirement_payment_ids:
+                    if mass_mode:
+                        pending_msgs.append((req.name, _('No payment records')))
+                        continue
+                    else:
+                        raise ValidationError(_('You cannot sign without any payment records.'))
+
+                # === Validaciones para pagos divididos ===
+                if req.divided_payment:
+                    payment_records = req.requirement_payment_ids
+                    total_paid = sum(payment_records.mapped('amount') or [0])
+                    if total_paid != req.to_pay_supplier:
+                        raise ValidationError(_('The payment parts must sum the total amount of the requirement.'))
+                    if any(p.amount <= 0 for p in payment_records):
+                        raise ValidationError(_('Payments cannot be negative or zero.'))
+
+                # === Firma previa del requerimiento (si no unify) ===
+                if not req.unify and not req.administration_signature:
+                    if mass_mode:
+                        pending_msgs.append((req.name, _('Missing requirement signature')))
+                        continue
+                    else:
+                        raise ValidationError(_('Before to sign the settlement, be sure to sign the requirement.'))
+
+                # === Caso de balance > 0 ===
+                if req.balance > 0:
+                    if mass_mode:
+                        pending_msgs.append((req.name, _('Balance greater than zero')))
+                        continue
+                    else:
+                        return {
+                            'name': 'Administration validation',
+                            'view_mode': 'form',
+                            'view_id': self.env.ref(
+                                'mkt_documental_managment.view_return_requirement_confirmation_wiz_form'
+                            ).id,
+                            'view_type': 'form',
+                            'res_model': 'return.requirement.confirmation',
+                            'type': 'ir.actions.act_window',
+                            'target': 'new',
+                        }
+
+                # === Firmar liquidación y cerrar ===
+                req.write({
+                    'settlement_administration_user_id': self.env.user.id,
+                    'settlement_administration_signature': signature_generator(user_name),
+                    'settlement_administration_signed_on': fields.Datetime.now(),
+                    'settlement_state': 'settled',
+                })
+
+                # === Upsert de adjuntos desde cada payment al chatter ===
+                Attachment = self.env['ir.attachment']
+                updated = created = 0
+                for pay in req.requirement_payment_ids:
+                    if not pay.document_file:
+                        continue
+
+                    fname = pay._final_fname() if hasattr(pay, '_final_fname') and callable(pay._final_fname) \
+                            else (pay.document_filename or f"payment_{pay.id}.pdf")
+
+                    data_b64 = pay.document_file
+                    if not getattr(pay, '_is_pdf_b64', None) or not pay._is_pdf_b64(data_b64):
+                        if hasattr(pay, '_convert_to_pdf'):
+                            data_b64 = pay._convert_to_pdf(data_b64, pay.document_filename or fname)
+                        else:
+                            raise ValidationError(_("A payment file is not PDF and cannot be converted: %s") % fname)
+
+                    domain = [
+                        ('res_model', '=', 'documental.requirements'),
+                        ('res_id', '=', req.id),
+                        ('name', '=', fname),
+                    ]
+                    existing = Attachment.search(domain, limit=1)
+
+                    vals_att = {
+                        'name': fname,
+                        'datas': data_b64,
+                        'mimetype': 'application/pdf',
+                        'type': 'binary',
+                        'res_model': 'documental.requirements',
+                        'res_id': req.id,
+                    }
+
+                    if existing:
+                        existing.write({'datas': data_b64, 'mimetype': 'application/pdf'})
+                        updated += 1
+                    else:
+                        Attachment.create(vals_att)
+                        created += 1
+
+                if updated or created:
+                    req.message_post(
+                        body=_("Payment attachments on settlement: %s updated, %s created.") % (updated, created)
+                    )
+
+                # Flujo posterior
+                req.button_send_to_budget()
+                processed += 1
+
+            except ValidationError as ve:
+                if mass_mode:
+                    pending_msgs.append((req.name, str(ve)))
+                    continue
+                else:
+                    raise
+
+        # === Respuestas ===
+        if mass_mode:
+            if pending_msgs:
+                rows = ''.join(
+                    f"<tr><td style='padding:4px 8px'>{name}</td><td style='padding:4px 8px'>{reason}</td></tr>"
+                    for name, reason in pending_msgs
+                )
+                note = _(
+                    "<p><b>Processed:</b> %s</p>"
+                    "<p><b>Pending / Skipped:</b> %s</p>"
+                    "<table style='border-collapse:collapse; width:100%%' border='1'>"
+                    "<thead><tr><th style='text-align:left;padding:4px 8px'>Requirement</th>"
+                    "<th style='text-align:left;padding:4px 8px'>Reason</th></tr></thead>"
+                    "<tbody>%s</tbody></table>"
+                ) % (processed, len(pending_msgs), rows)
+
+                wiz = self.env['mkt.mass.validation.result.wiz'].create({'note': note})
+                return {
+                    'type': 'ir.actions.act_window',
+                    'res_model': 'mkt.mass.validation.result.wiz',
+                    'view_mode': 'form',
+                    'target': 'new',
+                    'res_id': wiz.id,
+                }
+            else:
+                return {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'title': _('Sync completed'),
+                        'message': _('Processed: %s | Pending: 0') % processed,
+                        'sticky': False,
+                        'type': 'success',
+                    }
+                }
+        else:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('Settlement signed'),
+                    'message': _('Documents synced and settlement signed.'),
+                    'sticky': False,
+                    'type': 'success',
+                }
+            }
+        
+
     @api.model
     def create(self, vals):
         if vals.get('name', _('New')) == _('New'):
