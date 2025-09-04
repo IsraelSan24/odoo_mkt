@@ -149,6 +149,9 @@ class DocumentalMobilityExpediture(models.Model):
         alias_name = self.env.user.partner_id.alias_name
         user_name = alias_name if alias_name else self.env.user.name
         self.write({
+            'executive_signature': signature_generator(user_name),
+            'is_executive_signed': True,
+            'executive_signed_on': fields.Datetime.now(),
             'state': 'done',
         })
 
