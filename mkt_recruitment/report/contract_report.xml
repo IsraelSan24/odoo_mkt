@@ -4,7 +4,7 @@
     <template id="report_o">
         <t t-call="web.external_layout">
             <t t-set="o" t-value="o.with_context(lang=o.employee_id.lang)"/>
-            <html>
+            <div class="page">
                 <t t-if="o.contract_type_id.contract_short_name == 'CTPFBMSE'">
                     <article>
                         <div style="page-break-after: always">
@@ -94,7 +94,7 @@
                                 Totalmente autorizado por el TRABAJADOR. MARKETING y EL TRABAJADOR (en adelante y conjuntamente, las " PARTES") suscriben el CONTRATO en los términos y condiciones contenidos en las siguientes cláusulas:
                                 a quien en adelante se le denominará EL TRABAJADOR; en los términos y condiciones siguientes:
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 2px">
                                 <strong>
                                     1&#46;&#45; ANTECEDENTES
                                 </strong>
@@ -135,7 +135,7 @@
                                 </strong>
                                 No obstante lo acordado en el párrafo precedente, EL EMPLEADOR esta facultado a efectuar cualquier modificación razonable, a la relación laboral, en función a la capacidad y aptitud de EL TRABAJADOR y a las necesidades y requerimiento de la misma. EL TRABAJADOR podrá ser asignado por EL EMPLEADOR a otra sede local donde sean requeridos sus servicios dentro del termino de su vigencia, comprometiéndose a respetar los términos del mismo y no pudiendo invocar por ello hostilidades en el o los puntos que se le asigne.
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 2px">
                                 <strong>
                                     TERCERA&#46;&#45; 
                                 </strong>
@@ -143,7 +143,7 @@
                             <p style="font-size:0.625rem">
                                 Las actividades de MARKETING se encuentran ligadas a la ejecución del Contrato Comercial principal con EL CLIENTE. Debido a ello, existen periodos en los cuales las actividades de promoción de productos por ciertos días de la semana deben suspenderse como consecuencia de falta de requerimientos de los clientes y/o cuando por otro motivo no se pueden realizar dichas actividades.
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 2px">
                                 <strong>
                                     CUARTA&#46;&#45; LUGAR DE LA PRESTACIÓN DE LOS SERVICIOS, JORNADA LABORAL Y OBLIGACIONES DEL TRABAJADOR
                                 </strong>
@@ -160,7 +160,7 @@
                             <p style="font-size:0.625rem">
                                 Las partes acuerdan que, durante el plazo de duración del presente contrato, EL TRABAJADOR no podrá realizar servicios similares a los que son objeto del presente contrato a personas, empresas y/o instituciones que realicen la misma actividad económica o sean competencia de MARKETING salvo en los supuestos en que EL TRABAJADOR se encuentre en suspensión de labores.
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 2px">
                                 <strong>
                                     QUINTA&#46;&#45; VIGENCIA DEL CONTRATO
                                 </strong>
@@ -238,24 +238,18 @@
                                     </tr>
                                     <tr>
                                         <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            MARKETING ALTERNO PERU S&#46;A&#46;C
+                                            <p style="margin-bottom: 2px">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                            <p>RUC: 20512433821</p>
                                         </th>
                                         <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            El TRABAJADOR
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align:top">
+                                            <p>El TRABAJADOR</p>
                                         </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" class="text-center" style="border: none">
-                                            RUC: 20512433821
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none;"></th>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; margin-bottom: 2px">
                             <p style="font-size:0.625rem"> 
                                 <strong>
                                     SÉXTA&#46;&#45; CALIFICACIÓN DE TRABAJO
@@ -264,7 +258,7 @@
                             <p style="font-size:0.625rem">
                                 Debido a que la información a la que tiene acceso EL TRABAJADOR tiene naturaleza confidencial y reservada para MARKETING y sus clientes, el puesto de PROMOTOR. Asimismo, por la naturaleza de las labores de impulso, promoción y ofrecimiento de los productos de los clientes, las mismas que son desarrolladas fuera del centro laboral, sin supervisión constante y permanente, EL TRABAJADOR es calificado como No Sujeto a Fiscalización Inmediata.
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 2px">
                                 <strong>
                                     SEPTIMA.- REMUNERACIÓN, CONDICIONES Y BENEFICIOS  
                                 </strong>
@@ -275,7 +269,7 @@
                                 será liquidada en forma quincenal Los demás beneficios laborales que le correspondan a EL TRABAJADOR, se otorgarán en las oportunidades necesarias de cumplir con los plazos requeridos y establecidos en las leyes correspondientes. 
                                 Cabe resaltar que la programación de labores será previa coordinación comercial.
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 2px">
                                 <strong>
                                     OCTAVA&#46;&#45; DE LAS RECOMENDACIONES EN MATERIA DE SEGURIDAD Y SALUD EN EL TRABAJO
                                 </strong>
@@ -283,7 +277,7 @@
                             <p style="font-size:0.625rem">
                                 En cumplimiento de lo dispuesto por el literal c) del artículo 35 de la Ley N° 29783, Ley de Seguridad y Salud en el Trabajo, MARKETING, entrega a EL TRABAJADOR una descripción de las recomendaciones de seguridad y salud en el trabajo para el puesto que este ocupará en virtud de la celebración del presente Contrato y que EL TRABAJADOR se obliga a respetar, sin perjuicio de lo establecido en el Reglamento Interno de Seguridad y Salud en el Trabajo de la empresa, así como otras normas internas, lineamientos o directivas sobre la materia, las cuales le serán puestas a disposición al inicio de sus labores, el cual consta en el ANEXO C.
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 2px">
                                 <strong>
                                     NOVENA&#46;&#45; CONOCIMIENTO DE LEGISLACIÓN Y PROCEDIMIENTO EN MATERIA DE PREVENCIÓN DE ACTOS DE HOSTIGAMIENTO SEXUAL
                                 </strong>
@@ -291,7 +285,7 @@
                             <p style="font-size:0.625rem">
                                 Mediante la suscripción del presente documento, EL TRABAJADOR declara haber sido informado sobre la existencia y alcances  de  la  Ley  No. 27942 - Ley de Prevención y Sanción del Hostigamiento Sexual- y su Reglamento aprobado mediante Decreto Supremo No. 014-2019-MIMP - en adelante, el "Reglamento", comprometiéndose a cumplir estrictamente las disposiciones y los procedimientos establecidos en la "Política sobre Prevención y Sanción de Actos de Hostigamiento Sexual" - en adelante, la "Política" implementada por MARKETING. EL TRABAJADOR se compromete a seguir el procedimiento establecido en la Política cuando tome conocimiento de cualquier incidente que pueda ser considerado un acto de hostigamiento sexual.
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 2px">
                                 <strong>
                                     DÉCIMO&#46;&#45; DE LA DEVOLUCIÓN DE MATERIALES DE TRABAJO.
                                 </strong>
@@ -299,7 +293,7 @@
                             <p style="font-size:0.625rem">
                                 Al momento de extinguirse la relación laboral, por cualquier de las causas estipuladas en el presente contrato, EL TRABAJADOR se obliga a devolver en forma inmediata y ordenada a MARKETING todo el material, documentación y cualquier otro bien y/o implemento de propiedad de MARKETING que, con ocasión de la prestación de sus servicios, se encuentren en su poder, tales como equipos, software, bases de datos, órdenes de venta, hojas membretadas, entre otros. Pues de no cumplir con la devolución correspondiente en el plazo de 24 horas de formalizado el cese, se procede con descuento inmediato por el valor del implemento. 
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     DECIMO PRIMERO&#46;&#45; DATOS PERSONALES Y CORREO ELECTRÓNICO CORPORATIVO
                                 </strong>
@@ -350,19 +344,13 @@
                                     </tr>
                                     <tr>
                                         <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            MARKETING ALTERNO PERU S&#46;A&#46;C
+                                            <p style="margin-bottom: 2px">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                            <p>RUC: 20512433821</p>
                                         </th>
                                         <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            El TRABAJADOR
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align:top">
+                                            <p>El TRABAJADOR</p>
                                         </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" class="text-center" style="border: none">
-                                            RUC: 20512433821
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none;"></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -470,19 +458,13 @@
                                     </tr>
                                     <tr>
                                         <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            MARKETING ALTERNO PERU S&#46;A&#46;C
+                                            <p style="margin-bottom: 2px">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                            <p>RUC: 20512433821</p>
                                         </th>
                                         <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            El TRABAJADOR
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align:top">
+                                            <p>El TRABAJADOR</p>
                                         </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" class="text-center" style="border: none">
-                                            RUC: 20512433821
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none;"></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -669,26 +651,6 @@
                                         <th scope="col" style="border: none"></th>
                                     </tr>
                                 </thead>
-                                <div class="footer">
-                                    <div class="d-flex flex-row">
-                                        <div class="text-start">
-                                            <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'contracteconsult/search' + '&amp;width=100&amp;height=100'"/>
-                                        </div>
-                                        <div style="margin-left:10px;font-size:0.563rem">
-                                            <div>Contract: <span t-esc="o.name"/></div>
-                                            <div>IP: <span t-esc="o.ip"/></div>
-                                            <div>User: <span t-esc="o.partner_name"/> DNI: <span t-esc="o.vat"/></div>
-                                            <div>OS: <span t-esc="o.os"/></div>
-                                            <div>Browser: <span t-esc="o.browser"/></div>
-                                            <div>Token: <span t-esc="o.access_token"/></div>
-                                            <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                                            <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
-                                        </div>
-                                        <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
-                                            pág <span class="page"/> de <span class="topage"/>
-                                        </div>
-                                    </div>
-                                </div>
                             </table>
                         </div>
                     </article>
@@ -1060,26 +1022,7 @@
                                     </tr>
                                 </thead>
                             </table>
-                            <div class="footer">
-                                <div class="d-flex flex-row">
-                                    <div class="text-start">
-                                        <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'contracteconsult/search' + '&amp;width=100&amp;height=100'"/>
-                                    </div>
-                                    <div style="margin-left:10px;font-size:0.563rem">
-                                        <div>Contract: <span t-esc="o.name"/></div>
-                                        <div>IP: <span t-esc="o.ip"/></div>
-                                        <div>User: <span t-esc="o.partner_name"/> DNI: <span t-esc="o.vat"/></div>
-                                        <div>OS: <span t-esc="o.os"/></div>
-                                        <div>Browser: <span t-esc="o.browser"/></div>
-                                        <div>Token: <span t-esc="o.access_token"/></div>
-                                        <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
-                                    </div>
-                                    <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
-                                        pág <span class="page"/> de <span class="topage"/>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div style="page-break-after: always;">
                             <p style="font-size:0.625rem">
@@ -1770,8 +1713,8 @@
                 </t>
                 <t t-if="o.contract_type_id.contract_short_name == 'CTTP'">
                     <article>
-                        <div style="font-size:0.625rem; padding: 1.5rem;margin-top:-70px;">
-                            <h6 class="text-center">
+                        <div style="font-size:0.625rem; padding: 3rem 1.5rem 1.5rem; margin-top:-70px; line-height: 1.4;">
+                            <h6 class="text-center" style="margin-bottom: 16px">
                                 <strong>
                                     <u>
                                         <t t-if="o.is_renovation">
@@ -1841,7 +1784,7 @@
                                 </t>
                                 a quien en adelante se le denominará EL TRABAJADOR; en los términos y condiciones siguientes:
                             </p>
-                            <p>
+                            <p style="margin-bottom: 8px">
                                 <strong>
                                     1&#46;&#45; PRIMERO&#46;&#45; 
                                 </strong>
@@ -1853,7 +1796,7 @@
                                 4&#176; TUO LPCL&#44; D&#46;S&#46; N&#176;
                                 003&#45;97&#45;TR &#40;27&#46;03&#46;97&#41;&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 8px">
                                 <strong>
                                     2&#46;&#45; SEGUNDO&#46;&#45; 
                                 </strong>
@@ -1872,7 +1815,7 @@
                                 con el artí­culo 9&#176; del Texto Único Ordenado de la Ley de Productividad y Competitividad Laboral&#44; aprobado por
                                 Decreto Supremo N&#176; 003&#45;97&#45;TR&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 8px">
                                 <strong>
                                     3&#46;&#45; TERCERO&#46;&#45; 
                                 </strong>
@@ -1890,7 +1833,7 @@
                                 trabajadores del centro de trabajo contratado a tiempo parcial&#46; Las ausencias injustificadas por parte de EL
                                 TRABAJADOR implica la pérdida de la remuneración proporcional a la duración de dicha ausencia &#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 8px">
                                 <strong>
                                     4&#46; CUARTO&#46;&#45; &#46;&#45; 
                                 </strong>
@@ -1900,7 +1843,7 @@
                                 EMPLEADOR podrá efectuar modificaciones razonables en la jornada de trabajo de acuerdo a sus necesidades operativas
                                 respetando el máximo legal de horas establecidas&#44; la misma que será comunicado oportunamente a EL TRABAJADOR &#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 8px">
                                 <strong>
                                     5&#46;&#45; QUINTO&#46;&#45; 
                                 </strong>
@@ -1958,14 +1901,14 @@
                                 termino del presente contrato&#44; operando su extinción en la fecha de su vencimiento conforme a la presente clausula&#44;
                                 oportunidad en la cual se abonara al TRABAJADOR los beneficios sociales que pudieran corresponder de acuerdo a ley &#46;
                             </p>
-                            <p> 
+                            <p style="margin-bottom: 8px"> 
                                 <strong>
                                     6&#46;&#45; SEXTO&#46;&#45; 
                                 </strong>   
                                 Se entiende que por la modalidad del contrato&#44; EL TRABAJADOR solo tendrá derecho a beneficio de
                                 gratificación y asignación familiar &#44; este último cuando corresponda&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 8px">
                                 <strong>
                                     7&#46;&#45; SEPTIMO&#46;&#45; 
                                 </strong>
@@ -1975,7 +1918,7 @@
                                 Ley de Productividad y Competitividad laboral&#44; aprobado mediante Decreto Supremo Nº
                                 003&#45;97&#45;TR&#46;    
                             </p>
-                            <p>
+                            <p style="margin-bottom: 8px">
                                 <strong>
                                     8&#46;&#45; OCTAVO&#46;&#45; 
                                 </strong>
@@ -1983,7 +1926,7 @@
                                 los contratos de trabajo sujeto a modalidad&#44; contenidos en el Texto Único Ordenado del Decreto Legislativo Nº 728
                                 aprobado por el Decreto Supremo Nº 003&#45;97&#45;TR&#44; Ley de Productividad y Competitividad Laboral&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 8px">
                                 <strong>
                                     9&#46;&#45; NOVENO&#46;&#45; 
                                 </strong>
@@ -1991,7 +1934,7 @@
                                 jurisdicción de los jueces de Lima &#44; para resolver cualquier controversia que el incumplimiento del presente
                                 contrato pudiera originar&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 8px">
                                 <strong>
                                     10&#46;&#45; DECIMO&#46;&#45; 
                                 </strong>
@@ -1999,15 +1942,15 @@
                                 TRABAJADOR van a ser desplazados y realizara sus labores en la localidad de la provincia de LIMA&#44; Departamento de
                                 LIMA &#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     11&#46;&#45; DECIMO PRIMERO&#46;&#45; PRIMERA DISPOSICIÓN COMPLEMENTARIA
                                 </strong>
                             </p>
-                            <p>
+                            <p style="margin-bottom: 8px">
                                 EL TRABAJADOR declara libremente su AUTORIZACION ante EMPLEADOR, que este último pueda disponer y utilizar de manera total o parcialmente su imagen, voz y/o reacciones, secuelas de video, de modo gratuito y libre de toda compensación económica, a fin de que la misma sea divulgada y/o incorporada con fines publicitarios en todo medio de comunicación que puedan publicitarse o promocionarse, a través de medios digitales, internet, y/o redes sociales, sin restricciones ni lí­mites temporales así­ como de medios para su reproducción y/o difusión, siendo la presente de duración indeterminada. Y por la presente EL TRABAJADOR y sus sucesores eximen a la empresa y a todo representante de estas y/o cuenta comercial de toda responsabilidad ante cualquier reclamo por daños o de indemnización que surja de las actividades autorizadas por este acuerdo, libre de toda regalí­a.
                             </p>
-                            <p>
+                            <p style="margin-bottom: 8px">
                                 La presente autorización no tiene ámbito geográfico determinado, asimismo mediante el presente escrito, el que suscribe manifiesta que lo anteriormente autorizado no perjudica prestigio y no atenta contra su dignidad y honor, conforme a lo señalado en el artí­culo 15° de Código Civil peruano y a lo regulado mediante Ley N° 29733 Ley de Protección de Datos Personales y su reglamento aprobado mediante Decreto Supremo N° 003-2013-JUS. Por lo tanto, no existe intromisión ilegí­tima en el ámbito de su derecho de la intimidad y/o renuncia expresamente a cualquier tipo de resarcimiento, indemnización u otro tipo de mecanismo reparador de derechos ante la empresa MARKETING ALTERNO PERU SAC, a la cual brindo mi absoluta autorización.
                             </p>
                             <p>
@@ -2063,37 +2006,17 @@
                                     </tr>
                                     <tr>
                                         <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            MARKETING ALTERNO PERU S&#46;A&#46;C
-                                            <br/>
-                                            <span style="margin-top: 5px; display: block;">RUC: 20512433821</span>
+                                            <p style="margin-bottom: 1px">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                            <p>RUC: 20512433821</p>
                                         </th>
                                         <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            <span style="margin-top: -38px; display: block;">El TRABAJADOR</span>
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align:top">
+                                            <p>El TRABAJADOR</p>
                                         </th>
                                     </tr>
                                 </thead>
                             </table>
-                            <div class="footer">
-                                <div class="d-flex flex-row">
-                                    <div class="text-start">
-                                        <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'contracteconsult/search' + '&amp;width=100&amp;height=100'"/>
-                                    </div>
-                                    <div style="margin-left:10px;font-size:0.563rem">
-                                        <div>Contract: <span t-esc="o.name"/></div>
-                                        <div>IP: <span t-esc="o.ip"/></div>
-                                        <div>User: <span t-esc="o.partner_name"/> DNI: <span t-esc="o.vat"/></div>
-                                        <div>OS: <span t-esc="o.os"/></div>
-                                        <div>Browser: <span t-esc="o.browser"/></div>
-                                        <div>Token: <span t-esc="o.access_token"/></div>
-                                        <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
-                                    </div>
-                                    <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
-                                        pág <span class="page"/> de <span class="topage"/>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </article>
                 </t>
@@ -2305,26 +2228,14 @@
                                         </th>
                                     </tr>
                                     <tr>
-                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align: top">
                                             El TRABAJADOR
                                         </th>
                                         <th scope="col" style="border: none"></th>
                                         <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            EDUARDO GUSTAVO MEDINA ORMEÑO
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" class="text-center" style="border: none;"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none">
-                                            MARKETING ALTERNO PERU S&#46;A&#46;C
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none;">
-                                            EL EMPLEADOR
+                                            <p style="margin-bottom: 0">EDUARDO GUSTAVO MEDINA ORMEÑO</p>
+                                            <p style="margin-bottom: 0">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                            <p>EL EMPLEADOR</p>
                                         </th>
                                     </tr>
                                 </thead>
@@ -2428,50 +2339,19 @@
                                         </th>
                                     </tr>
                                     <tr>
-                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align: top">
                                             El TRABAJADOR
                                         </th>
                                         <th scope="col" style="border: none"></th>
                                         <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            EDUARDO GUSTAVO MEDINA ORMEÑO
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" class="text-center" style="border: none;"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none">
-                                            MARKETING ALTERNO PERU S&#46;A&#46;C
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none;">
-                                            EL EMPLEADOR
+                                            <p style="margin-bottom: 0">EDUARDO GUSTAVO MEDINA ORMEÑO</p>
+                                            <p style="margin-bottom: 0">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                            <p>EL EMPLEADOR</p>
                                         </th>
                                     </tr>
                                 </thead>
                             </table>
-                            <div class="footer">
-                                <div class="d-flex flex-row">
-                                    <div class="text-start">
-                                        <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'contracteconsult/search' + '&amp;width=100&amp;height=100'"/>
-                                    </div>
-                                    <div style="margin-left:10px;font-size:0.563rem">
-                                        <div>Contract: <span t-esc="o.name"/></div>
-                                        <div>IP: <span t-esc="o.ip"/></div>
-                                        <div>User: <span t-esc="o.partner_name"/> DNI: <span t-esc="o.vat"/></div>
-                                        <div>OS: <span t-esc="o.os"/></div>
-                                        <div>Browser: <span t-esc="o.browser"/></div>
-                                        <div>Token: <span t-esc="o.access_token"/></div>
-                                        <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
-                                    </div>
-                                    <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
-                                        pág <span class="page"/> de <span class="topage"/>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div style="page-break-after: always;">
                             <h6 class="text-center">
@@ -2591,26 +2471,14 @@
                                         </th>
                                     </tr>
                                     <tr>
-                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align: top">
                                             El TRABAJADOR
                                         </th>
                                         <th scope="col" style="border: none"></th>
                                         <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            EDUARDO GUSTAVO MEDINA ORMEÑO
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" class="text-center" style="border: none;"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none">
-                                            MARKETING ALTERNO PERU S&#46;A&#46;C
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none;">
-                                            EL EMPLEADOR
+                                            <p style="margin-bottom: 0">EDUARDO GUSTAVO MEDINA ORMEÑO</p>
+                                            <p style="margin-bottom: 0">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                            <p>EL EMPLEADOR</p>
                                         </th>
                                     </tr>
                                 </thead>
@@ -2856,33 +2724,21 @@
                                         </th>
                                     </tr>
                                     <tr>
-                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align: top">
                                             El TRABAJADOR
                                         </th>
                                         <th scope="col" style="border: none"></th>
                                         <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            EDUARDO GUSTAVO MEDINA ORMEÑO
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" class="text-center" style="border: none;"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none">
-                                            MARKETING ALTERNO PERU S&#46;A&#46;C
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none;">
-                                            EL EMPLEADOR
+                                            <p style="margin-bottom: 0">EDUARDO GUSTAVO MEDINA ORMEÑO</p>
+                                            <p style="margin-bottom: 0">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                            <p>EL EMPLEADOR</p>
                                         </th>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
                         <div style="page-break-after: always;">
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         TERCERO&#58; 
@@ -2945,7 +2801,7 @@
                                 </strong>
                                 LAS CUALES DECLARA CONOCER Y SE OBLIGA A CUMPLIR FIELMENTE&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         CUARTO&#58; 
@@ -2963,7 +2819,7 @@
                                 </strong>
                                 CUYA DIRECCIÓN DE LA EMPRESA SE ENCUENTRA EN JR&#46; LIBERTAD NRO&#46; 757&#44; MAGDALENA DEL MAR&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         QUINTO&#58; 
@@ -2981,7 +2837,7 @@
                                 </strong>
                                 ACEPTA QUE EL CARGO A SER DESEMPEÑADO CORRESPONDE A ASESOR DE VENTA&#44; LA CUAL SE MENCIONA EN LA CLÁUSULA TERCERA&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         SEXTO&#58; 
@@ -3034,26 +2890,14 @@
                                         </th>
                                     </tr>
                                     <tr>
-                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align: top">
                                             El TRABAJADOR
                                         </th>
                                         <th scope="col" style="border: none"></th>
                                         <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            EDUARDO GUSTAVO MEDINA ORMEÑO
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" class="text-center" style="border: none;"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none">
-                                            MARKETING ALTERNO PERU S&#46;A&#46;C
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none;">
-                                            EL EMPLEADOR
+                                            <p style="margin-bottom: 0">EDUARDO GUSTAVO MEDINA ORMEÑO</p>
+                                            <p style="margin-bottom: 0">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                            <p>EL EMPLEADOR</p>
                                         </th>
                                     </tr>
                                 </thead>
@@ -3072,10 +2916,10 @@
                                 </strong>
                                 EN USO DE SUS FACULTADES DIRECTRICES&#44; SE ENCUENTRA FACULTADO PARA EFECTUAR MODIFICACIONES RAZONABLES EN LA JORNADA&#44; HORARIO Y TURNOS DE TRABAJO&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
-                                        SÉTIMO&#58; 
+                                        SÉPTIMO&#58; 
                                     </u>
                                 </strong>
                                 DE LA REMUNERACIÓN MENSUAL
@@ -3111,7 +2955,7 @@
                                 </strong>
                                 TENDRÁ DERECHO AL PAGO DE LOS DEMÁS BENEFICIOS ESTABLECIDOS EN LA LEGISLACIÓN LABORAL VIGENTE&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         OCTAVO&#58; 
@@ -3125,7 +2969,7 @@
                                 </strong>
                                 SE ENCUENTRA SUJETO AL RÉGIMEN LABORAL DE LA ACTIVIDAD PRIVADA Y LE SON APLICABLES LOS DERECHOS Y BENEFICIOS PREVISTOS EN EL MISMO&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         NOVENO&#58; 
@@ -3159,7 +3003,7 @@
                             <p>
                                 A SU VEZ&#44; EL PRESENTE CONTRATO PODRÁ SER PRORROGADO CONFORME A LEY&#44; SIEMPRE QUE LAS PARTES ASÍ LO ESTABLEZCAN DE MUTUO ACUERDO Y TODA VEZ QUE CUMPLAN CON SOMETER DICHA PRÓRROGA A LA APROBACIÓN DE LA AUTORIDAD ADMINISTRATIVA DE TRABAJO&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         DÉCIMO&#58; 
@@ -3223,33 +3067,21 @@
                                         </th>
                                     </tr>
                                     <tr>
-                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align: top">
                                             EL TRABAJADOR
                                         </th>
                                         <th scope="col" style="border: none"></th>
                                         <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            EDUARDO GUSTAVO MEDINA ORMEÑO
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" class="text-center" style="border: none;"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none">
-                                            MARKETING ALTERNO PERU S&#46;A&#46;C
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none;">
-                                            EL EMPLEADOR
+                                            <p style="margin-bottom: 0">EDUARDO GUSTAVO MEDINA ORMEÑO</p>
+                                            <p style="margin-bottom: 0">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                            <p>EL EMPLEADOR</p>
                                         </th>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
                         <div style="page-break-after: always;">
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         DÉCIMO PRIMERO&#58; 
@@ -3291,7 +3123,7 @@
                             <ol>
                                 <li>
                                     &#45; CONOCER&#44; ACTUALIZAR Y RECTIFICAR SUS DATOS PERSONALES FRENTE AL 
-                                    <p>
+                                    <p style="margin-bottom: 1px">
                                         EMPLEADOR&#46; 
                                     </p>
                                     ESTE DERECHO SE PODRÁ EJERCER&#44; ENTRE OTROS FRENTE A DATOS PARCIALES&#44; INEXACTOS&#44; INCOMPLETOS&#44; FRACCIONADOS&#44; QUE INDUZCAN A ERROR &#44; O AQUELLOS CUYO YO TRATAMIENTO ESTÉ EXPRESAMENTE PROHIBIDO O NO HAYA SIDO AUTORIZADO&#46;
@@ -3351,33 +3183,21 @@
                                         </th>
                                     </tr>
                                     <tr>
-                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align: top">
                                             EL TRABAJADOR
                                         </th>
                                         <th scope="col" style="border: none"></th>
                                         <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            EDUARDO GUSTAVO MEDINA ORMEÑO
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" class="text-center" style="border: none;"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none">
-                                            MARKETING ALTERNO PERU S&#46;A&#46;C
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none;">
-                                            EL EMPLEADOR
+                                            <p style="margin-bottom: 0">EDUARDO GUSTAVO MEDINA ORMEÑO</p>
+                                            <p style="margin-bottom: 0">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                            <p>EL EMPLEADOR</p>
                                         </th>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
                         <div style="page-break-after: always;">
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         DÉCIMOSEGUNDO&#58; 
@@ -3405,7 +3225,7 @@
                                     EL EMPLEADOR&#46;
                                 </strong>
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         DÉCIMO TERCERO&#58; 
@@ -3427,7 +3247,7 @@
                                 </strong>
                                 RESPECTIVO&#44; DOCUMENTO QUE FORMA PARTE INTEGRANTE DEL PRESENTE CONTRATO&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         DÉCIMO CUARTO&#58; 
@@ -3441,7 +3261,7 @@
                                     EL EMPLEADOR&#46;
                                 </strong>
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         DÉCIMO QUINTO&#58; 
@@ -3455,7 +3275,7 @@
                                     EL TRABAJADOR&#46;
                                 </strong>
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         DÉCIMO SEXTO&#58;
@@ -3473,10 +3293,10 @@
                                 </strong>
                                 PODRAN CELEBRAR ACUERDOS PRIVADOS QUE SEGÚN CONVENGAN LAS PARTES&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
-                                        DÉCIMO SÉTIMO&#58; 
+                                        DÉCIMO SÉPTIMO&#58; 
                                     </u>
                                     DE LA TRIBUTACIÓN
                                 </strong>
@@ -3524,31 +3344,19 @@
                                         </th>
                                         <th scope="col" style="border: none"></th>
                                         <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            EDUARDO GUSTAVO MEDINA ORMEÑO
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" class="text-center" style="border: none;"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none">
-                                            MARKETING ALTERNO PERU S&#46;A&#46;C
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none;">
-                                            EL EMPLEADOR
+                                            <p style="margin-bottom: 0">EDUARDO GUSTAVO MEDINA ORMEÑO</p>
+                                            <p style="margin-bottom: 0">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                            <p>EL EMPLEADOR</p>
                                         </th>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
                         <div>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
-                                        DÉCIMOOCTAVO&#58; 
+                                        DÉCIMO OCTAVO&#58; 
                                     </u>
                                     DE LA SUPLETORIEDAD DE LA LEY PERUANA
                                 </strong>
@@ -3556,7 +3364,7 @@
                             <p>
                                 EN TODO LO NO PREVISTO EXPRESAMENTE EN EL PRESENTE CONTRATO&#44; REGIRÁN LAS LEYES VIGENTES EN EL PERÚ AL MOMENTO EN QUE TALES HECHOS OCURRAN&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         DÉCIMO NOVENO&#58; 
@@ -3568,7 +3376,7 @@
                                 LAS PARTES RENUNCIAN AL FUERO JUDICIAL O ADMINISTRATIVO DE SUS DOMICILIOS O CENTROS DE TRABAJO Y SE SOMETEN A LA
                                 JURISDICCIÓN DE LOS JUECES Y AUTORIDADES ADMINISTRATIVAS DE LIMA&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         VIGÉSIMO&#58; 
@@ -3611,7 +3419,7 @@
                                 </t>
                                 &#44; EN TRES EJEMPLARES DE IDÉNTICO TENOR&#44; PARA CONSTANCIA DE LAS PARTES Y DE LA AUTORIDAD ADMINISTRATIVA DE TRABAJO&#44; A CUYA APROBACIÓN SERÁ SOMETIDO&#46;
                             </p>    
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     <u>
                                         VIGÉSIMO PRIMERO&#58; 
@@ -3652,26 +3460,14 @@
                                         </th>
                                     </tr>
                                     <tr>
-                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
+                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align: top">
                                             El TRABAJADOR
                                         </th>
                                         <th scope="col" style="border: none"></th>
                                         <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none;">
-                                            EDUARDO GUSTAVO MEDINA ORMEÑO
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" class="text-center" style="border: none;"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none">
-                                            MARKETING ALTERNO PERU S&#46;A&#46;C
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border: none;">
-                                            EL EMPLEADOR
+                                            <p style="margin-bottom: 0">EDUARDO GUSTAVO MEDINA ORMEÑO</p>
+                                            <p style="margin-bottom: 0">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                            <p>EL EMPLEADOR</p>
                                         </th>
                                     </tr>
                                 </thead>
@@ -3681,7 +3477,7 @@
                 </t>
                 <t t-if="o.contract_type_id.contract_short_name == 'CTPFI'">
                     <article>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; margin-top: -20px">
                             <p style="text-align: center;">
                                 <t t-if="o.is_renovation">
                                     <strong>
@@ -3980,7 +3776,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p style="font-size:0.905rem;">
                                 <strong>
                                     CUARTA&#46; &#45; LUGAR DE LA PRESTACI&#211;N DE LOS SERVICIOS Y OBLIGACIONES DEL TRABAJADOR
@@ -4261,7 +4057,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p style="font-size:0.910rem;">
                                 <strong>
                                     NOVENA&#46;&#45; DERECHO DE PREFERENCIA
@@ -4414,7 +4210,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p style="font-size:0.905rem;">
                                 <strong>
                                     D&#201;CIMO TERCERA&#46; &#45; DATOS PERSONALES Y CORREO ELECTR&#211;NICO CORPORATIVO
@@ -4606,7 +4402,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p style="font-size:0.905rem;">
                                 <strong>
                                     D&#201;CIMO QUINTA&#46;&#45; CL&#193;USULA RESOLUTORIA DEL V&#205;NCULO LABORAL
@@ -4750,7 +4546,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p style="text-align: center; font-size:0.905rem;">
                                 <u>
                                     <strong>
@@ -4845,7 +4641,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p style="text-align: center; font-size:0.905rem;">
                                 <u>
                                     <strong>
@@ -4906,32 +4702,13 @@
                                 </tr>
                                 </thead>
                             </table>
-                            <div class="footer">
-                                <div class="d-flex flex-row">
-                                    <div class="text-start">
-                                        <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'contracteconsult/search' + '&amp;width=100&amp;height=100'"/>
-                                    </div>
-                                    <div style="margin-left:10px;font-size:0.563rem">
-                                        <div>Contract: <span t-esc="o.name"/></div>
-                                        <div>IP: <span t-esc="o.ip"/></div>
-                                        <div>User: <span t-esc="o.partner_name"/> DNI: <span t-esc="o.vat"/></div>
-                                        <div>OS: <span t-esc="o.os"/></div>
-                                        <div>Browser: <span t-esc="o.browser"/></div>
-                                        <div>Token: <span t-esc="o.access_token"/></div>
-                                        <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
-                                    </div>
-                                    <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
-                                        pág <span class="page"/> de <span class="topage"/>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </article>
                 </t>
                 <t t-if="o.contract_type_id.contract_short_name == 'CTPFISM'">
                     <article>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; margin-top: -20px">
                             <p style="text-align: center;">
                                 <t t-if="o.is_renovation">
                                     <strong>
@@ -5230,7 +5007,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p style="font-size:0.905rem;">
                                 <strong>
                                     CUARTA&#46; &#45; LUGAR DE LA PRESTACI&#211;N DE LOS SERVICIOS Y OBLIGACIONES DEL TRABAJADOR
@@ -5508,7 +5285,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p style="font-size:0.910rem;">
                                 <strong>
                                     NOVENA&#46;&#45; DERECHO DE PREFERENCIA
@@ -5661,7 +5438,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p style="font-size:0.905rem;">
                                 <strong>
                                     D&#201;CIMO TERCERA&#46; &#45; DATOS PERSONALES Y CORREO ELECTR&#211;NICO CORPORATIVO
@@ -5853,7 +5630,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p style="font-size:0.905rem;">
                                 <strong>
                                     D&#201;CIMO QUINTA&#46;&#45; CL&#193;USULA RESOLUTORIA DEL V&#205;NCULO LABORAL
@@ -5997,7 +5774,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p style="text-align: center; font-size:0.905rem;">
                                 <u>
                                     <strong>
@@ -6092,7 +5869,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p style="text-align: center; font-size:0.905rem;">
                                 <u>
                                     <strong>
@@ -6153,26 +5930,7 @@
                                 </tr>
                                 </thead>
                             </table>
-                            <div class="footer">
-                                <div class="d-flex flex-row">
-                                    <div class="text-start">
-                                        <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'contracteconsult/search' + '&amp;width=100&amp;height=100'"/>
-                                    </div>
-                                    <div style="margin-left:10px;font-size:0.563rem">
-                                        <div>Contract: <span t-esc="o.name"/></div>
-                                        <div>IP: <span t-esc="o.ip"/></div>
-                                        <div>User: <span t-esc="o.partner_name"/> DNI: <span t-esc="o.vat"/></div>
-                                        <div>OS: <span t-esc="o.os"/></div>
-                                        <div>Browser: <span t-esc="o.browser"/></div>
-                                        <div>Token: <span t-esc="o.access_token"/></div>
-                                        <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
-                                    </div>
-                                    <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
-                                        pág <span class="page"/> de <span class="topage"/>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </article>
                 </t>
@@ -6278,7 +6036,7 @@
                                 </strong>
                                 en virtud de contratos de servicios celebrados con terceros, por lo que resulta objetivamente justificada.
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 5px">
                                 2&#46;1&#46;&#45; En razón de la causa objetiva antes señalada, 
                                 <strong>
                                     EL EMPLEADOR 
@@ -6304,7 +6062,7 @@
                                 asumir funciones vinculadas al núcleo del negocio del cliente, tales como producción, comercialización directa, planificación, toma de decisiones
                                 estratégicas, ni ninguna actividad que implique dirección o gestión interna de dicho cliente.
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem;  margin-bottom: 5px">
                                 2&#46;2&#46;&#45; Se deja constancia expresa que las actividades realizadas por 
                                 <strong>
                                     EL TRABAJADOR 
@@ -6332,7 +6090,7 @@
                                     TERCERO&#58; PRESTACION DE SERVICIOS 
                                 </strong>
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem;  margin-bottom: 5px">
                                 3&#46;1&#46;&#45; Queda entendido que la prestacion de servicios debera ser efectuada de manera personal&#44; no pudiendo 
                                 <strong>
                                     EL TRABAJADOR
@@ -6355,7 +6113,7 @@
                                     CUARTA&#58; JORNADA LABORAL
                                 </strong>
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 5px">
                                 4&#46;1&#46;&#45; 
                                 <strong>
                                     El Trabajador 
@@ -6368,7 +6126,7 @@
                                 de cuarenta y ocho (48) horas semanales, conforme a lo dispuesto en el artí­culo 25° del Decreto Supremo N.º 003-97-TR - Texto Único Ordenado
                                 del Decreto Legislativo N.º 728, Ley de Productividad y Competitividad Laboral.
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 5px">
                                 4&#46;2&#46;&#45; El horario de trabajo será determinado por 
                                 <strong>
                                     el Empleador 
@@ -6386,7 +6144,7 @@
                                 </strong>
                                 con una anticipación razonable, salvo casos de urgencia debidamente justificados.
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 5px">
                                 4&#46;3&#46;&#45; El tiempo destinado al refrigerio no será considerado parte de la jornada efectiva de trabajo, salvo pacto en contrario por escrito. 
                                 <strong>
                                 El Trabajador
@@ -6449,28 +6207,9 @@
                                     </tr>
                                 </thead>
                             </table>
-                            <div class="footer">
-                                <div class="d-flex flex-row">
-                                    <div class="text-start">
-                                        <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'contracteconsult/search' + '&amp;width=100&amp;height=100'"/>
-                                    </div>
-                                    <div style="margin-left:10px;font-size:0.563rem">
-                                        <div>Contract: <span t-esc="o.name"/></div>
-                                        <div>IP: <span t-esc="o.ip"/></div>
-                                        <div>User: <span t-esc="o.partner_name"/> DNI: <span t-esc="o.vat"/></div>
-                                        <div>OS: <span t-esc="o.os"/></div>
-                                        <div>Browser: <span t-esc="o.browser"/></div>
-                                        <div>Token: <span t-esc="o.access_token"/></div>
-                                        <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
-                                    </div>
-                                    <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
-                                        pág <span class="page"/> de <span class="topage"/>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p>
                                 <strong>
                                     QUINTO&#58; PLAZO 
@@ -6733,7 +6472,7 @@
                             </table>
                             <br/>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p>
                                 <strong>
                                     NOVENO&#46;&#45; OBLIGACIONES DEL EMPLEADOR&#46;
@@ -6936,7 +6675,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <p>
                                 <strong>
                                     DECIMO SEXTA&#58; SEGUNDA DISPOSICION COMPLEMENTARIA
@@ -6973,7 +6712,7 @@
                                 &#46;
                             </p>
                             <br/>
-                            <h6 class="text-center">
+                            <h6 class="text-center" style="padding-top: 40px">
                                 ACTA DE ENTREGA DE DOCUMENTOS LABORALES Y DE SEGURIDAD Y SALUD EN EL TRABAJO&#46;
                             </h6>
                             <p style="font-size:0.625rem">
@@ -7068,7 +6807,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div style="page-break-after: always;">
+                        <div style="page-break-after: always; padding-top: 20px">
                             <h6 class="text-center">
                                 DECLARACI&#211;N DE CONSENTIMIENTO DE TRATAMIENTO DE DATOS PERSONALES TRABAJADORES
                             </h6>
@@ -7093,7 +6832,7 @@
                                     El ejercicio de los derechos antes mencionados&#44; deber&#225; ser realizado bajo el procedimiento establecido por LA EMPRESA y que usted declara conocer&#46; LA EMPRESA contar&#225; con los plazos establecidos por Ley para pedir la subsanaci&#243;n de documentos y tambi&#233;n para emitir una respuesta a las peticiones que reciba&#46;
                                 </li>
                             </ol>
-                            <h6 class="text-center">
+                            <h6 class="text-center" style="margin-top: 40px">
                                 CARTILLA DE RECOMENDACIONES EN MATERIA DE SEGURIDAD Y SALUD EN EL TRABAJO
                             </h6>
                             <p class="text-center">
@@ -7292,7 +7031,7 @@
                                 </strong>
                                 en virtud de contratos de servicios celebrados con terceros, por lo que resulta objetivamente justificada.
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 8px">
                                 2&#46;1&#46;&#45; En razón de la causa objetiva antes señalada, 
                                 <strong>
                                     EL EMPLEADOR 
@@ -7315,7 +7054,7 @@
                                 , sin tener injerencia ni asumir funciones vinculadas al núcleo del negocio del cliente, tales como producción, comercialización directa, planificación, toma de decisiones estratégicas, 
                                 ni ninguna actividad que implique dirección o gestión interna de dicho cliente
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 8px">
                                 2&#46;2&#46;&#45; Se deja constancia expresa que las actividades realizadas por 
                                 <strong>
                                     EL TRABAJADOR 
@@ -7343,7 +7082,7 @@
                                     TERCERO&#58; PRESTACION DE SERVICIOS 
                                 </strong>
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 8px">
                                 3&#46;1&#46;&#45; Queda entendido que la prestacion de servicios debera ser efectuada de manera personal&#44; no pudiendo 
                                 <strong>
                                     EL TRABAJADOR
@@ -7366,7 +7105,7 @@
                                     CUARTA&#58; JORNADA LABORAL &#40;NO SUJETA A FISCALIZACION INMEDIATA&#41;&#46;
                                 </strong>
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 8px">
                                 4&#46;1&#46;&#45; En atención a la naturaleza de las funciones asignadas al 
                                 <strong>
                                     TRABAJADOR
@@ -7378,7 +7117,7 @@
                                 , ambas partes reconocen que dichas funciones se desarrollan con autonomí­a en la ejecución y sin sujeción a una fiscalización inmediata y directa, 
                                 conforme a lo dispuesto en el artí­culo 5° del Texto Único Ordenado de la Ley de Jornada de Trabajo, Horario y Trabajo en Sobretiempo, aprobado por Decreto Supremo N° 007-2002-TR
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 8px">
                                 4&#46;2&#46;&#45; En tal sentido, no se implementará un sistema de control de asistencia ni horario, resultando inaplicable el reconocimiento o pago por
                                 trabajo en sobretiempo, salvo que exista una autorización expresa, previa y por escrito por parte de 
                                 <strong>
@@ -7442,29 +7181,9 @@
                                     </tr>
                                 </thead>
                             </table>
-                            <div class="footer">
-                                <div class="d-flex flex-row">
-                                    <div class="text-start">
-                                        <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'contracteconsult/search' + '&amp;width=100&amp;height=100'"/>
-                                    </div>
-                                    <div style="margin-left:10px;font-size:0.563rem">
-                                        <div>Contract: <span t-esc="o.name"/></div>
-                                        <div>IP: <span t-esc="o.ip"/></div>
-                                        <div>User: <span t-esc="o.partner_name"/> DNI: <span t-esc="o.vat"/></div>
-                                        <div>OS: <span t-esc="o.os"/></div>
-                                        <div>Browser: <span t-esc="o.browser"/></div>
-                                        <div>Token: <span t-esc="o.access_token"/></div>
-                                        <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                                        <div>Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
-                                    </div>
-                                    <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
-                                        pág <span class="page"/> de <span class="topage"/>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div style="page-break-after: always;">
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     QUINTO&#58; PLAZO 
                                 </strong>
@@ -7517,7 +7236,7 @@
                                 </t>
                                 &#44; fecha en la que concluir&#225; de forma autom&#225;tica&#44; salvo nueva pr&#243;rroga o renovaci&#243;n expresa&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     SEXTO&#58; PERIODO DE PRUEBA
                                 </strong>
@@ -7562,7 +7281,7 @@
                                 declara conocer y aceptar expresamente que tiene conocimiento de la presente clausula, y que la resolución del contrato en este periodo no genera derecho a indemnización alguna, conforme lo establecido 
                                 por la normatividad vigente.
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     SEPTIMO&#46;&#45; REMUNERACION&#46;
                                 </strong>
@@ -7604,12 +7323,12 @@
                                 </strong>
                                 &#44; previstas en la legislacion laboral y normas internas de la empresa&#46;
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     OCTAVO&#46;&#45; OBLIGACIONES DEL TRABAJADOR&#46;
                                 </strong>
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 8px">
                                 8&#46;1&#46;&#45; 
                                 <strong>
                                     EL TRABAJADOR
@@ -7620,13 +7339,13 @@
                                 </strong>
                                 &#44; lo que se obliga a realizar fielmente sus labores obligandose asi mismo a poner el mayor cuidado&#44; eficiencia en el desempe&#241;o laboral&#46;
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 8px">
                                 8&#46;2&#46;&#45; 
                                 <strong>
                                     EL TRABAJADOR
                                 </strong> Cumplira sus labores y servicios a LA EMPRESA dentro de jornada laboral&#44; horario&#44; normas laborales y de seguridad aplicadas en el centro de trabajo&#46;
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 8px">
                                 8&#46;3&#46;&#45; 
                                 <strong>
                                     EL TRABAJADOR
@@ -7634,7 +7353,7 @@
                                 estara sujeto al cuidado y devolucion de los equipos&#44; bienes&#44; activos de la empresa que hayan sido asignados para la realizacion de sus labores&#44; siendo responsable del valor economico 
                                 de su da&#241;o y&#47;o perdida&#44; robo al cual se le realizara un descuento considerable que pueda cubrir el total del valor del equipo de no devolverlo a las 24 horas del cese&#46;
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 8px">
                                 8&#46;4&#46;&#45; Con respecto al uso de Imagen: 
                                 <strong>
                                     El TRABAJADOR 
@@ -7678,12 +7397,12 @@
                                 </strong>
                                 asumirá las consecuencias legales y disciplinarias que correspondan, incluyendo medidas administrativas, civiles y/o penales según la gravedad del hecho.
                             </p>
-                            <p>
+                            <p style="margin-bottom: 2px">
                                 <strong>
                                     NOVENO&#46;&#45; OBLIGACIONES DEL EMPLEADOR&#46;
                                 </strong>
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 8px">
                                 9&#46;1&#46;&#45; 
                                 <strong>
                                     EL EMPLEADOR
@@ -7694,7 +7413,7 @@
                                 </strong>
                                 &#44; toda la informacion necesaria con respecto al horario de trabajo&#44; normas laborales y de seguridad aplicable en el centro de trabajo asi como toda la informaicon para el correcto cumplimiento de sus labores&#46;
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 8px">
                                 9&#46;2&#46;&#45; 
                                 <strong>
                                     EL EMPLEADOR
@@ -7705,7 +7424,7 @@
                                 </strong>
                                 &#46;
                             </p>
-                            <p style="font-size:0.625rem">
+                            <p style="font-size:0.625rem; margin-bottom: 8px">
                                 9&#46;3&#46;&#45; 
                                 <strong>
                                     EL EMPLEADOR
@@ -8203,7 +7922,27 @@
                 <t t-if="not o.contract_type_id">
                     <p>There are not contract type selected.</p>
                 </t>
-            </html>
+            </div>
+            <div class="footer">
+                <div class="d-flex flex-row">
+                    <div class="text-start">
+                        <img t-att-src="'/report/barcode/?type=QR&amp;value=' + base_url + 'contracteconsult/search' + '&amp;width=100&amp;height=100'"/>
+                    </div>
+                    <div style="margin-left:10px;font-size:0.563rem">
+                        <div>Contract: <span t-esc="o.name"/></div>
+                        <div>IP: <span t-esc="o.ip"/></div>
+                        <div>User: <span t-esc="o.partner_name"/> DNI: <span t-esc="o.vat"/></div>
+                        <div>OS: <span t-esc="o.os"/> Browser <span t-esc="o.browser"/></div>
+                        <div>Email: <span t-esc="o.email"/></div>
+                        <div>Token: <span t-esc="o.access_token"/></div>
+                        <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
+                        <div style="white-space: nowrap;">Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
+                    </div>
+                    <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
+                        pág <span class="page"/> de <span class="topage"/>
+                    </div>
+                </div>
+            </div>
         </t>
     </template>
 
