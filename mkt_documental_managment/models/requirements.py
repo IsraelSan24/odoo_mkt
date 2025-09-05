@@ -1264,19 +1264,19 @@ class DocumentalRequirements(models.Model):
 
 
     def settlement_petitioner_sign(self):
+        warnings = []  # Acumular mensajes no bloqueantes de CPE
+
         for req in self:
-            # === Validaciones de pagos divididos ===
+            # === Validaciones de pagos divididos (bloqueantes) ===
             if req.divided_payment:
                 payment_records = req.requirement_payment_ids
-
                 if not payment_records:
                     raise ValidationError(_('You cannot sign without any payment records.'))
-                
+
                 total_paid = sum(req.requirement_payment_ids.mapped('amount') or [0])
-                
                 if total_paid != req.to_pay_supplier:
                     raise ValidationError(_('The payment parts must sum the total amount of the requirement.'))
-                
+
                 if any(payment.amount <= 0 for payment in req.requirement_payment_ids):
                     raise ValidationError(_('Payments cannot be negative or zero.'))
 
@@ -1293,12 +1293,14 @@ class DocumentalRequirements(models.Model):
                     # Ejecutamos la validación CPE de cada settlement
                     settlement.validation_voucher()
 
-                    # Si el settlement quedó en failed => ValidationError
+                    # Si el settlement quedó en failed => AVISO (no bloquea)
                     if settlement.cpe_state == 'failed':
-                        raise ValidationError(_(
-                            f"El comprobante {settlement.document} no es válido o no existe en SUNAT. "
-                            f"Por favor revisa antes de continuar."
-                        ))
+                        msg = _("El comprobante %s no es válido o no existe en SUNAT. Por favor revisa antes de continuar.") % (settlement.document or '')
+                        # Guardar aviso con contexto del requerimiento
+                        warnings.append("[%s] %s" % (req.name or '', msg))
+                        # Dejar constancia en chatter y log
+                        settlement.message_post(body=msg, message_type='comment', subtype_xmlid='mail.mt_note')
+                        _logger.warning("CPE failed en settlement %s del req %s", settlement.id, req.name)
 
                 req.document_format_validation()
             else:
@@ -1342,6 +1344,25 @@ class DocumentalRequirements(models.Model):
             req._compute_total_retention()
             req._compute_total_detraction()
             req.mobility_use_validation()
+
+        # === Notificación final única si hubo avisos ===
+        if warnings:
+            preview = '\n'.join(warnings[:20])
+            if len(warnings) > 20:
+                preview += _("\n… y %s avisos más.") % (len(warnings) - 20)
+
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('Aviso SUNAT (CPE)'),
+                    'message': preview,
+                    'type': 'warning',   # info | warning | danger | success
+                    'sticky': False,
+                }
+            }
+
+        return True
 
 
     def button_settlement_external_control_confirm(self):
