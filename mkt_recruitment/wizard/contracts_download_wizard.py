@@ -110,7 +110,7 @@ class ContractZipWizard(models.TransientModel):
                 if idx < len(contracts):
                     contract = contracts[idx]
                     safe_name = contract.name or str(contract.id)
-                    fname = f"{contract.employee_id.identification_id}_{safe_name}.pdf"
+                    fname = f"{contract.vat}_{safe_name}.pdf"
                     zf.writestr(fname, pdf_bytes)
         
         buffer.seek(0)
