@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_contract_zip_wizard_form" model="ir.ui.view">
-        <field name="name">contract.zip.wizard.form</field>
-        <field name="model">contract.zip.wizard</field>
-        <field name="arch" type="xml">
-            <form string="Download Contracts ZIP">
-                <group>
-                    <p>Click "Download" to get all contracts in a ZIP file.</p>
-                </group>
-                <footer>
-                    <button string="Download" type="object" name="action_generate_zip_from_combined" class="btn-primary"/>
-                    <button string="Cancel" class="btn-secondary" special="cancel"/>
-                </footer>
-            </form>
+
+    <record id="action_download_contracts_zip_server" model="ir.actions.server">
+        <field name="name">Download Contracts ZIP</field>
+        <field name="model_id" ref="model_contract_zip_wizard"/>
+        <field name="state">code</field>
+        <field name="code">
+# Crear instancia del wizard y ejecutar el método directamente
+wizard = env['contract.zip.wizard'].create({})
+action = wizard.action_generate_zip_contracts()
+# Retornar la acción de descarga
+if action:
+    action = action
         </field>
+        <field name="binding_model_id" ref="mkt_recruitment.model_hr_contract"/>
+        <field name="binding_view_types">list</field>
     </record>
 </odoo>
 
