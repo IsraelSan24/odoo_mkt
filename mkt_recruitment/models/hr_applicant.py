@@ -156,6 +156,7 @@ class Applicant(models.Model):
                     address_id = applicant.partner_id.address_get(['contact'])['contact']
                     contact_name = applicant.partner_id.display_name
                 else:
+                    # Creates a partner if applicant is not associated to a partner
                     if not applicant.partner_name:
                         raise UserError(_('You must define a Contact Name for this applicant.'))
                     new_partner_id = self.env['res.partner'].create({
@@ -164,7 +165,8 @@ class Applicant(models.Model):
                         'name': applicant.partner_name,
                         'email': applicant.email_from,
                         'phone': applicant.partner_phone,
-                        'mobile': applicant.partner_mobile
+                        'mobile': applicant.partner_mobile,
+                        'vat': applicant.vat or False
                     })
                     applicant.partner_id = new_partner_id
                     address_id = new_partner_id.address_get(['contact'])['contact']
@@ -180,6 +182,7 @@ class Applicant(models.Model):
                         'work_phone': applicant.department_id.company_id.phone,
                         'applicant_id': applicant.ids,
                         'image_1920': applicant.photo,
+                        'identification_id': applicant.partner_id.vat or False
                     }
                     self.env['hr.employee'].create(values)
                     applicant.is_autoemployee = True
