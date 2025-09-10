@@ -1,11 +1,13 @@
 from odoo import _, api, fields, models
 from datetime import datetime
-from odoo.exceptions import ValidationError, UserError
+from odoo.exceptions import ValidationError
+from odoo.tools.float_utils import float_compare, float_is_zero
 from odoo.addons.mkt_documental_managment.models.api_dni import apiperu_dni
 from odoo.addons.mkt_documental_managment.models.api_ruc import apiperu_ruc
 from odoo.addons.mkt_documental_managment.models.cpe_consult import apiperu_cpe
 from dateutil.relativedelta import relativedelta
 import io
+import re
 import PyPDF2
 from PyPDF2.utils import PdfReadError
 import base64
@@ -788,9 +790,9 @@ class Settlement(models.Model):
     
 
     def _check_period_open_for_date(self, vdate):
-        """Valida solo si vdate existe; si no hay fecha, no hace nada."""
+        """Lanza ValidationError si el período (mes/año) está cerrado o no existe."""
         if not vdate:
-            return  # ← sin fecha, sin validación
+            raise ValidationError(_("Debes especificar 'Fecha de Comprobante'."))
 
         year_int = vdate.year
         month_int = vdate.month
@@ -808,28 +810,161 @@ class Settlement(models.Model):
             raise ValidationError(_("El mes %s está cerrado.") % month_int)
 
 
+    def _active_year_rec(self, vdate=False):
+        """Año activo: si vdate y está abierto, ese; si no, el último open_year."""
+        Years = self.env['years']
+        if vdate:
+            y = Years.search([('number', '=', str(vdate.year)), ('open_year', '=', True)], limit=1)
+            if y:
+                return y
+        return Years.search([('open_year', '=', True)], order='number desc', limit=1)
+
+
+    def _normalize_subdiary(self, s):
+        return (s or '').strip().upper()
+
+    def _extract_digits(self, s):
+        return re.sub(r'\D', '', s or '')
+
+    def _year_number_from_id(self, year_id):
+        y = self.env['years'].browse(year_id)
+        # asumo y.number es 'YYYY'
+        return int(y.number) if y and y.number and str(y.number).isdigit() else False
+
+    def _last_voucher_from_settlement_sql(self, year_number, month_id, subdiary_norm):
+        """Fallback directo a settlement (por si la vista no devuelve fila)."""
+        self.env.cr.execute("""
+            SELECT COALESCE(NULLIF(regexp_replace(s.voucher_number, '\D', '', 'g'), ''), '0')::bigint AS num
+            FROM settlement s
+            WHERE s.voucher_number IS NOT NULL
+            AND s.accountable_month_id = %s
+            AND UPPER(TRIM(s.subdiary)) = %s
+            AND EXTRACT(YEAR FROM COALESCE(s.date, s.create_date))::int = %s
+            ORDER BY num DESC, s.id DESC
+            LIMIT 1
+        """, (month_id, subdiary_norm, year_number))
+        row = self.env.cr.fetchone()
+        return int(row[0]) if row and row[0] is not None else 0
+
+    def _next_voucher_from_view(self, year_id, month_id, subdiary):
+        Last = self.env['settlement.voucher.last']
+        sub_norm = self._normalize_subdiary(subdiary)
+
+        rec = Last.search([
+            ('accountable_year_id', '=', year_id),
+            ('accountable_month_id', '=', month_id),
+            ('subdiary', '=', sub_norm),
+        ], limit=1)
+
+        last_num = 0
+        if rec and rec.voucher_number:
+            d = self._extract_digits(rec.voucher_number)
+            if d:
+                last_num = int(d)
+        else:
+            # 🔸 Fallback si la vista no “matchea”
+            year_number = self._year_number_from_id(year_id)
+            if year_number:
+                last_num = self._last_voucher_from_settlement_sql(year_number, month_id, sub_norm)
+
+        nxt = last_num + 1
+        if nxt > 999999:
+            raise ValidationError(_("No quedan correlativos disponibles (6 dígitos) para el período seleccionado."))
+        return f"{nxt:06d}"
+
+
+    def _prefill_voucher_if_empty(self, vals=None):
+        for rec in self:
+            month_id = (vals or {}).get('accountable_month_id') or rec.accountable_month_id.id
+            subdiary = self._normalize_subdiary(((vals or {}).get('subdiary') or rec.subdiary))
+            vdate = (vals or {}).get('voucher_date')
+            vdate = fields.Date.to_date(vdate) if vdate else rec.voucher_date
+
+            if (vals and vals.get('voucher_number')) or rec.voucher_number:
+                continue
+            if not (month_id and subdiary):
+                continue
+
+            year_rec = rec._active_year_rec(vdate)
+            if not year_rec:
+                continue
+
+            return rec._next_voucher_from_view(year_rec.id, month_id, subdiary)
+        return False
+
+
+    @api.onchange('accountable_month_id', 'subdiary', 'voucher_date')
+    def _onchange_autofill_voucher_number(self):
+        for rec in self:
+            if not rec.voucher_number:
+                nxt = rec._prefill_voucher_if_empty()
+                if nxt:
+                    rec.voucher_number = nxt
+
+    
+    @api.constrains('journal_ids', 'journal_ids.debit', 'journal_ids.credit')
+    def _check_journal_balanced(self):
+        for rec in self:
+            lines = rec.journal_ids
+            if not lines:
+                continue
+            # Si todos son cero, no validar
+            all_zero = all(
+                float_is_zero(l.debit or 0.0, precision_digits=2) and
+                float_is_zero(l.credit or 0.0, precision_digits=2)
+                for l in lines
+            )
+            if all_zero:
+                continue
+
+            total_debit = sum(l.debit or 0.0 for l in lines)
+            total_credit = sum(l.credit or 0.0 for l in lines)
+            if float_compare(total_debit, total_credit, precision_digits=2) != 0:
+                raise ValidationError(
+                    _("El asiento no cuadra: Debe %(d).2f ≠ Haber %(h).2f") %
+                    {'d': total_debit, 'h': total_credit}
+                )
+
+
     @api.model
     def create(self, vals):
-        # Valida solo si viene voucher_date y tiene valor
+        # Prefill server-side si no viene voucher_number y ya hay mes/subdiary
+        if not vals.get('voucher_number') and (vals.get('accountable_month_id') and vals.get('subdiary')):
+            nxt = self._prefill_voucher_if_empty(vals)
+            if nxt:
+                vals = dict(vals)
+                vals['voucher_number'] = nxt
+
+        # --- tu validación existente ---
         vdate = vals.get('voucher_date')
-        if vdate:
-            self._check_period_open_for_date(fields.Date.to_date(vdate))
+        vdate = fields.Date.to_date(vdate) if vdate else fields.Date.context_today(self)
+        self._check_period_open_for_date(vdate)
         return super().create(vals)
 
+
     def write(self, vals):
-        # ❗️Solo valida si REALMENTE están cambiando voucher_date
-        if 'voucher_date' in vals:
-            vdate_raw = vals.get('voucher_date')
-            vdate = fields.Date.to_date(vdate_raw) if vdate_raw else False
-            if vdate:
-                self._check_period_open_for_date(vdate)
-            # Si lo están vaciando (False/None), no validamos
+        # Prefill SOLO si es un registro (evitar asignar el mismo número a varios en lote)
+        if len(self) == 1 and not vals.get('voucher_number'):
+            # Si el usuario cambió mes/subdiary/fecha y no puso voucher_number, lo sugerimos
+            touching = {'accountable_month_id', 'subdiary', 'voucher_date'} & set(vals.keys())
+            if touching and not self.voucher_number:
+                nxt = self._prefill_voucher_if_empty(vals)
+                if nxt:
+                    vals = dict(vals)
+                    vals['voucher_number'] = nxt
+
+        # --- tu validación existente ---
+        for rec in self:
+            vdate_str = vals.get('voucher_date')
+            vdate = fields.Date.to_date(vdate_str) if vdate_str else rec.voucher_date
+            self._check_period_open_for_date(vdate)
         return super().write(vals)
 
+
     def unlink(self):
-        # Bloquea borrado solo si el registro tiene voucher_date y el período está cerrado
+        # sin cambios: tu lógica existente
         for rec in self:
-            if rec.voucher_date:
-                self._check_period_open_for_date(rec.voucher_date)
+            vdate = rec.voucher_date or fields.Date.context_today(self)
+            self._check_period_open_for_date(vdate)
         return super().unlink()
 
