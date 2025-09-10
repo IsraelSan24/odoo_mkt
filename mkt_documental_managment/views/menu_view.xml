@@ -50,7 +50,7 @@
                 groups="mkt_documental_managment.documental_requirement_admin" sequence="3"/>
             <menuitem id="bank_report_submenu" name="Bank report" action="view_bank_report_action"
                 parent="accounting_menu" groups="mkt_documental_managment.documental_requirement_accounting" sequence="4"/>
-            <!-- <menuitem id="settlement_voucher_last_submenu" name="Last settlement voucher" action="action_settlement_voucher_last" parent="accounting_menu" sequence="5"/> -->
+            <menuitem id="settlement_voucher_last_submenu" name="Last settlement voucher" action="action_settlement_voucher_last" parent="accounting_menu" sequence="5"/>
         <menuitem id="utilities_menu" name="Utilities" parent="doc_mng_root" sequence="7" groups="mkt_documental_managment.budget_control_user,mkt_documental_managment.budget_control_administrator"/>
             <menuitem id="budget_submenu" name="Budget" action="action_view_budget" parent="utilities_menu" sequence="61"/>
             <menuitem id="dni_consult_submenu" name="Consult DNI" action="view_dni_consult_action" parent="utilities_menu" sequence="62"/>
