@@ -788,9 +788,9 @@ class Settlement(models.Model):
     
 
     def _check_period_open_for_date(self, vdate):
-        """Lanza ValidationError si el período (mes/año) está cerrado o no existe."""
+        """Valida solo si vdate existe; si no hay fecha, no hace nada."""
         if not vdate:
-            raise ValidationError(_("Debes especificar 'Fecha de Comprobante'."))
+            return  # ← sin fecha, sin validación
 
         year_int = vdate.year
         month_int = vdate.month
@@ -810,23 +810,27 @@ class Settlement(models.Model):
 
     @api.model
     def create(self, vals):
+        # Valida solo si viene voucher_date en vals y tiene valor
         vdate = vals.get('voucher_date')
-        vdate = fields.Date.to_date(vdate) if vdate else fields.Date.context_today(self)
-        self._check_period_open_for_date(vdate)
+        if vdate:
+            self._check_period_open_for_date(fields.Date.to_date(vdate))
         return super().create(vals)
 
 
     def write(self, vals):
+        # Si están cambiando voucher_date, valida con la nueva; si no, valida la existente (si hay)
+        changing = 'voucher_date' in vals
         for rec in self:
-            vdate_str = vals.get('voucher_date')
-            vdate = fields.Date.to_date(vdate_str) if vdate_str else rec.voucher_date
-            self._check_period_open_for_date(vdate)
+            vdate = fields.Date.to_date(vals['voucher_date']) if changing else rec.voucher_date
+            if vdate:
+                self._check_period_open_for_date(vdate)
         return super().write(vals)
 
 
     def unlink(self):
+        # Solo bloquea borrado si el registro tiene voucher_date y el período está cerrado
         for rec in self:
-            vdate = rec.voucher_date or fields.Date.context_today(self)
-            self._check_period_open_for_date(vdate)
+            if rec.voucher_date:
+                self._check_period_open_for_date(rec.voucher_date)
         return super().unlink()
 
