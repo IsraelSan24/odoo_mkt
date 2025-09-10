@@ -810,25 +810,24 @@ class Settlement(models.Model):
 
     @api.model
     def create(self, vals):
-        # Valida solo si viene voucher_date en vals y tiene valor
+        # Valida solo si viene voucher_date y tiene valor
         vdate = vals.get('voucher_date')
         if vdate:
             self._check_period_open_for_date(fields.Date.to_date(vdate))
         return super().create(vals)
 
-
     def write(self, vals):
-        # Si están cambiando voucher_date, valida con la nueva; si no, valida la existente (si hay)
-        changing = 'voucher_date' in vals
-        for rec in self:
-            vdate = fields.Date.to_date(vals['voucher_date']) if changing else rec.voucher_date
+        # ❗️Solo valida si REALMENTE están cambiando voucher_date
+        if 'voucher_date' in vals:
+            vdate_raw = vals.get('voucher_date')
+            vdate = fields.Date.to_date(vdate_raw) if vdate_raw else False
             if vdate:
                 self._check_period_open_for_date(vdate)
+            # Si lo están vaciando (False/None), no validamos
         return super().write(vals)
 
-
     def unlink(self):
-        # Solo bloquea borrado si el registro tiene voucher_date y el período está cerrado
+        # Bloquea borrado solo si el registro tiene voucher_date y el período está cerrado
         for rec in self:
             if rec.voucher_date:
                 self._check_period_open_for_date(rec.voucher_date)
