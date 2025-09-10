@@ -76,7 +76,7 @@
         'views/user_groups_views.xml',
         'views/hr_employee_views.xml',
         'views/res_bank_views.xml',
-        # 'views/settlement_voucher_last_views.xml',
+        'views/settlement_voucher_last_views.xml',
         'views/announcement_views.xml',
 
         'report/documental_requirement_report.xml',

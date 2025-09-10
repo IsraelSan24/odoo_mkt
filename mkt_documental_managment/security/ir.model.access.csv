@@ -68,6 +68,7 @@ access_requirement_payment,access.requirement.payment,model_requirement_payment,
 access_settlement_update,access.settlement.update,model_settlement_update,,1,1,1,0
 access_groups_categorys,access.groups.categorys,model_groups_categorys,,1,1,1,0
 access_user_groups,access.user.groups,model_user_groups,,1,1,1,0
+access_settlement_voucher_last,access.settlement.voucher.last,model_settlement_voucher_last,,1,1,1,1
 access_internal_announcement_user,Internal Announcement - Read Only,model_internal_announcement,mkt_documental_managment.documental_requirement_user,1,0,0,0
 access_internal_announcement_admin,Internal Announcement - Admin,model_internal_announcement,mkt_documental_managment.documental_requirement_admin,1,1,1,1
 access_internal_announcement_accounting,Internal Announcement - Accounting,model_internal_announcement,mkt_documental_managment.documental_settlement_accounting,1,1,1,1
