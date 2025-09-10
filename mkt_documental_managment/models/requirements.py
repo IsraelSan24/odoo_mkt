@@ -434,7 +434,7 @@ class DocumentalRequirements(models.Model):
     #         self.repeated = False
 
 
-    @api.onchange('paid_to', 'bank', 'dni_or_ruc')
+    @api.onchange('paid_to', 'bank', 'dni_or_ruc', 'requirement_payment_ids')
     def onchange_dni(self):
         for rec in self:
             if rec.paid_to:
