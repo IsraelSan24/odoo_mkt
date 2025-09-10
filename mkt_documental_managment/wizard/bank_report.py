@@ -327,7 +327,7 @@ class BankReport(models.TransientModel):
                 dr.dni_or_ruc AS ruc,
                 dr.accounting_account AS accounting_account,
                 dr.bank_accounting_account AS bank_accounting_account,
-                s.date AS date_line,
+                s.date AS date_line,  -- solo se muestra; ya no filtra
                 rp.name AS supplier,
                 rpr.name AS province,
                 dr.concept AS concept,
@@ -409,27 +409,21 @@ class BankReport(models.TransientModel):
 
             WHERE
                 (
-                    -- Cualquier fecha de pago dentro del rango
-                    (rp_pay.payment_dates IS NOT NULL
-                    AND EXISTS (
+                    -- Cualquier fecha de pago dentro del rango (detalle)
+                    (rp_pay.payment_dates IS NOT NULL AND EXISTS (
                         SELECT 1
                         FROM unnest(rp_pay.payment_dates) AS pd
                         WHERE pd BETWEEN %s AND %s
-                    )
-                    )
+                    ))
                     OR
-                    -- O la fecha de pago del requerimiento (si no hubo pagos)
+                    -- O la fecha de pago del requerimiento (cabecera) si no hubo pagos o para considerar su propia fecha
                     (dr.payment_date IS NOT NULL AND dr.payment_date BETWEEN %s AND %s)
-                    OR
-                    -- O la fecha de la liquidación
-                    (s.date IS NOT NULL AND s.date BETWEEN %s AND %s)
                 )
             ORDER BY dr.name DESC;
         """
         params = (
-            self.date_from, self.date_to,   # para payment_dates (ANY)
-            self.date_from, self.date_to,   # para dr.payment_date
-            self.date_from, self.date_to,   # para s.date
+            self.date_from, self.date_to,  # para rp_pay.payment_dates
+            self.date_from, self.date_to,  # para dr.payment_date
         )
         self._cr.execute(query, params)
         return self._cr.dictfetchall()

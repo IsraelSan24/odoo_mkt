@@ -769,3 +769,64 @@ class Settlement(models.Model):
                 rec.vendor = effective_amount
                 rec.detraction = 0.00
                 rec.retention = 0.00
+
+
+    def _find_year_record(self, year_int):
+        """Busca el año en 'years' por number o name (ambos como YYYY)."""
+        Years = self.env['years']
+        rec = Years.search([('number', '=', str(year_int))], limit=1)
+        if not rec:
+            rec = Years.search([('name', '=', str(year_int))], limit=1)
+        return rec
+    
+
+    def _find_month_record(self, month_int):
+        """Busca el mes en 'months' por number (1..12)."""
+        Months = self.env['months']
+        rec = Months.search([('number', '=', int(month_int))], limit=1)
+        return rec
+    
+
+    def _check_period_open_for_date(self, vdate):
+        """Lanza ValidationError si el período (mes/año) está cerrado o no existe."""
+        if not vdate:
+            raise ValidationError(_("Debes especificar 'Fecha de Comprobante'."))
+
+        year_int = vdate.year
+        month_int = vdate.month
+
+        year_rec = self._find_year_record(year_int)
+        if not year_rec:
+            raise ValidationError(_("No existe configuración de 'años' para el año %s.") % year_int)
+        if not getattr(year_rec, 'open_year', False):
+            raise ValidationError(_("El año %s está cerrado.") % year_int)
+
+        month_rec = self._find_month_record(month_int)
+        if not month_rec:
+            raise ValidationError(_("No existe configuración de 'meses' para el mes %s.") % month_int)
+        if not getattr(month_rec, 'open_month', False):
+            raise ValidationError(_("El mes %s está cerrado.") % month_int)
+
+
+    @api.model
+    def create(self, vals):
+        vdate = vals.get('voucher_date')
+        vdate = fields.Date.to_date(vdate) if vdate else fields.Date.context_today(self)
+        self._check_period_open_for_date(vdate)
+        return super().create(vals)
+
+
+    def write(self, vals):
+        for rec in self:
+            vdate_str = vals.get('voucher_date')
+            vdate = fields.Date.to_date(vdate_str) if vdate_str else rec.voucher_date
+            self._check_period_open_for_date(vdate)
+        return super().write(vals)
+
+
+    def unlink(self):
+        for rec in self:
+            vdate = rec.voucher_date or fields.Date.context_today(self)
+            self._check_period_open_for_date(vdate)
+        return super().unlink()
+
