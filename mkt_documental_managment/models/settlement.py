@@ -928,24 +928,21 @@ class Settlement(models.Model):
 
     @api.model
     def create(self, vals):
-        # Prefill server-side si no viene voucher_number y ya hay mes/subdiary
-        if not vals.get('voucher_number') and (vals.get('accountable_month_id') and vals.get('subdiary')):
+        if not vals.get('voucher_number') and vals.get('accountable_month_id') and vals.get('subdiary'):
             nxt = self._prefill_voucher_if_empty(vals)
             if nxt:
                 vals = dict(vals)
                 vals['voucher_number'] = nxt
 
-        # --- tu validación existente ---
         vdate = vals.get('voucher_date')
-        vdate = fields.Date.to_date(vdate) if vdate else fields.Date.context_today(self)
-        self._check_period_open_for_date(vdate)
+        if vdate:
+            self._check_period_open_for_date(fields.Date.to_date(vdate))
+
         return super().create(vals)
 
 
     def write(self, vals):
-        # Prefill SOLO si es un registro (evitar asignar el mismo número a varios en lote)
         if len(self) == 1 and not vals.get('voucher_number'):
-            # Si el usuario cambió mes/subdiary/fecha y no puso voucher_number, lo sugerimos
             touching = {'accountable_month_id', 'subdiary', 'voucher_date'} & set(vals.keys())
             if touching and not self.voucher_number:
                 nxt = self._prefill_voucher_if_empty(vals)
@@ -953,18 +950,18 @@ class Settlement(models.Model):
                     vals = dict(vals)
                     vals['voucher_number'] = nxt
 
-        # --- tu validación existente ---
-        for rec in self:
-            vdate_str = vals.get('voucher_date')
-            vdate = fields.Date.to_date(vdate_str) if vdate_str else rec.voucher_date
-            self._check_period_open_for_date(vdate)
+        if 'voucher_date' in vals:
+            vdate_raw = vals.get('voucher_date')
+            vdate = fields.Date.to_date(vdate_raw) if vdate_raw else False
+            if vdate:
+                self._check_period_open_for_date(vdate)
+
         return super().write(vals)
 
 
     def unlink(self):
-        # sin cambios: tu lógica existente
         for rec in self:
-            vdate = rec.voucher_date or fields.Date.context_today(self)
-            self._check_period_open_for_date(vdate)
+            if rec.voucher_date:
+                self._check_period_open_for_date(rec.voucher_date)
         return super().unlink()
 
