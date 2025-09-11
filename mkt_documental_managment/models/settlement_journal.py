@@ -53,11 +53,14 @@ class SettlementJournal(models.Model):
         for rec in self:
             if not rec.settlement_id:
                 continue
+            # Todas las demás líneas (incluye nuevas y existentes)
             others = rec.settlement_id.journal_ids - rec
             if not others:
                 continue
-            first = others.sorted('id')[:1]
+            # Toma la primera sin ordenar (evita comparar NewId)
+            first = others[:1]
             if first:
+                first = first[0]
                 if not rec.cost_center_id:
                     rec.cost_center_id = first.cost_center_id
                 if not rec.annex_code:
