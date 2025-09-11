@@ -485,23 +485,29 @@ class Settlement(models.Model):
 
     def update_journals(self):
         self.fill_main_gloss()
-        account_invoices_soles = self.env['account.account'].search([('code','=','421201')])
-        account_invoice_dolares = self.env['account.account'].search([('code','=','421202')])
+        Acc = self.env['account.account']
+        acc_421201 = Acc.search([('code', '=', '421201')], limit=1)
+        acc_421202 = Acc.search([('code', '=', '421202')], limit=1)
+        acc_421203 = Acc.search([('code', '=', '421203')], limit=1)
+        acc_401111 = Acc.search([('code', '=', '401111')], limit=1)
+
         for rec in self:
-            account_id = account_invoices_soles.id if rec.document_currency == 'soles' else account_invoice_dolares.id
-            if not account_id:
-                account_id = account_invoices_soles.id if rec.currency == 'soles' else account_invoice_dolares.id
+            # Cuenta de total según moneda del documento, con fallback a moneda del registro
+            account_total_id = (acc_421201.id if rec.document_currency == 'soles' else acc_421202.id) or \
+                            (acc_421201.id if rec.currency == 'soles' else acc_421202.id)
+
             values_total_amount = {
                 'name': 'Total amount',
-                'account_id': account_invoices_soles.id if rec.document_currency == 'soles' else account_invoice_dolares.id,
+                'account_id': account_total_id,
                 'debit': 0.00,
                 'credit': rec.settle_amount,
                 'annex_code': rec.dni_ruc,
                 'document_number': rec.document,
-            }          
+            }
+
             values_detraction_credit = {
                 'name': _('Detraction'),
-                'account_id': self.env['account.account'].search([('code','=','421203')]).id,
+                'account_id': acc_421203.id,
                 'debit': 0.00,
                 'credit': rec.detraction,
                 'rate_type': rec.tax_id.name,
@@ -513,40 +519,47 @@ class Settlement(models.Model):
                 'reference_document_number': rec.document,
                 'reference_document_date': rec.date,
             }
+
             values_igv = {
                 'name': 'IGV',
-                'account_id': rec.env['account.account'].search([('code','=','401111')]).id,
+                'account_id': acc_401111.id,
                 'debit': rec.settle_igv,
                 'credit': 0.00,
                 'annex_code': False,
                 'document_number': rec.document,
             }
+
             values_detraction_debit = {
                 'name': _('Detraction'),
-                'account_id':account_invoices_soles.id if rec.currency == 'soles' else account_invoice_dolares.id,
+                'account_id': acc_421201.id if rec.currency == 'soles' else acc_421202.id,
                 'debit': rec.detraction,
                 'credit': 0.00,
                 'annex_code': rec.dni_ruc,
                 'document_number': rec.document,
             }
+
             values_base_amount = {
                 'name': _('Amount Base'),
-                'account_id': False,
+                'account_id': False,  # si aún no definiste la cuenta base
                 'cost_center_id': rec.requirement_id.cost_center_id.id,
-                # 'debit': rec.settle_amount if rec.settle_igv == 0 else rec.settle_amount / 1.18,
                 'debit': rec.settle_amount if rec.settle_igv == 0 else rec.settle_amount - rec.settle_igv,
                 'credit': 0.00,
                 'annex_code': rec.dni_ruc,
                 'document_number': rec.document,
             }
-            rec.journal_ids = [(5,0,0)]
-            rec.journal_ids = [(0,0,values_base_amount)]
-            rec.journal_ids = [(0,0,values_total_amount)]
+
+            # 🔹 Un solo write con todos los comandos
+            commands = [(5, 0, 0),                        # limpiar
+                        (0, 0, values_base_amount),
+                        (0, 0, values_total_amount)]
+
             if rec.detraction:
-                rec.journal_ids = [(0,0,values_detraction_credit)]
-                rec.journal_ids = [(0,0,values_detraction_debit)]
+                commands.append((0, 0, values_detraction_credit))
+                commands.append((0, 0, values_detraction_debit))
             if rec.settle_igv > 0:
-                rec.journal_ids = [(0,0,values_igv)]
+                commands.append((0, 0, values_igv))
+
+            rec.write({'journal_ids': commands})
 
 
     # def compute_detraction_retention(self):
