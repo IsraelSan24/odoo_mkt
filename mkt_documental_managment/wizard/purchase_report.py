@@ -337,15 +337,27 @@ class AccountPurchaseReport(models.Model):
                 LEFT JOIN cost_center AS cc ON cc.id=sj.cost_center_id
                 LEFT JOIN settlement_line_type AS slt ON slt.id=s.document_type_id
                 LEFT JOIN tax_taxes AS tt ON tt.id=s.tax_id
-            WHERE dr.settlement_state IN ('external_control','executive','responsible','intern_control','administration','to_settle','settled','refused') AND s.document_type_id IN %s AND LPAD(EXTRACT(MONTH FROM s.voucher_date)::text, 2, '0') IN %s AND EXTRACT(YEAR FROM s.voucher_date)::text IN %s
+            WHERE
+                dr.settlement_state IN ('external_control','executive','responsible','intern_control','administration','to_settle','settled','refused')
+                AND s.document_type_id IN %s
+                AND s.voucher_date IS NOT NULL
+                AND EXTRACT(MONTH FROM s.voucher_date)::int IN %s
+                AND EXTRACT(YEAR  FROM s.voucher_date)::int IN %s            
             ORDER BY requirement_id DESC
         """
-        document_type_ids = tuple(self.document_type_ids.ids)
-        selected_months = tuple(self.month_ids.mapped('number')) if self.month_ids else ()
-        selected_years = tuple(self.year_ids.mapped('number')) if self.year_ids else ()
+        document_type_ids = tuple(self.document_type_ids.ids or [])
         if len(document_type_ids) == 1:
-            document_type_ids = ( document_type_ids[0], )
+            document_type_ids = (document_type_ids[0],)
 
-        self._cr.execute(query, (document_type_ids,selected_months,selected_years))
-        res_query = self._cr.dictfetchall()
-        return res_query
+        # ⚠️ Asegura enteros
+        selected_months = tuple(int(m.number) for m in (self.month_ids or []))
+        if len(selected_months) == 1:
+            selected_months = (selected_months[0],)
+
+        selected_years = tuple(int(str(y.number)) for y in (self.year_ids or []))
+        if len(selected_years) == 1:
+            selected_years = (selected_years[0],)
+
+        self._cr.execute(query, (document_type_ids, selected_months, selected_years))
+        return self._cr.dictfetchall()
+
