@@ -1449,7 +1449,14 @@
                                     registro de personas jurÃ­dicas de los Registros PÃºblicos de Lima y Callao&#44; constituida con el objeto social de
                                     brindar servicios en actividades publicitarias y comerciales&#44; tales como impulsamiento de ventas&#44; promotorÃ­a&#44;
                                     encuestas&#44; distribuciÃ³n de material publicitario y otros afines&#46; EL EMPLEADOR requiere de los servicios del
-                                    TRABAJADOR en forma de tiempo parcial &#40;Part time&#41;&#44; para que cumpla las labores de SUPERVISOR DE CAMPO&#40;A&#41;&#46; ArtÃ­culo
+                                    TRABAJADOR en forma de tiempo parcial &#40;Part time&#41;&#44; para que cumpla las labores de 
+                                    <t t-if="o.job_id">
+                                        <span t-esc="o.job_id.name"/> 
+                                    </t>
+                                    <t t-else="">
+                                        __________
+                                    </t>    
+                                    &#46; ArtÃ­culo
                                     4&#176; TUO LPCL&#44; D&#46;S&#46; N&#176;
                                     003&#45;97&#45;TR &#40;27&#46;03&#46;97&#41;&#46;
                                 </p>
