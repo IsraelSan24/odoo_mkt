@@ -42,3 +42,4 @@ from . import res_users
 from . import res_bank
 from . import announcement
 from . import settlement_voucher_last
+from . import requirement_province_acl
