@@ -1450,8 +1450,8 @@
                                     brindar servicios en actividades publicitarias y comerciales&#44; tales como impulsamiento de ventas&#44; promotorÃ­a&#44;
                                     encuestas&#44; distribuciÃ³n de material publicitario y otros afines&#46; EL EMPLEADOR requiere de los servicios del
                                     TRABAJADOR en forma de tiempo parcial &#40;Part time&#41;&#44; para que cumpla las labores de 
-                                    <t t-if="o.job_id">
-                                        <span t-esc="o.job_id.name"/> 
+                                    <t t-if="contract_document.job_id">
+                                        <span t-esc="contract_document.job_id.name"/> 
                                     </t>
                                     <t t-else="">
                                         __________
