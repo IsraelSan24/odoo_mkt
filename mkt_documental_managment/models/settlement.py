@@ -189,7 +189,7 @@ class Settlement(models.Model):
             else:
                 rec.mobility_id = False
 
-    @api.onchange('paid_to', 'document_type_id', 'requirement_id.dni_or_ruc')
+    @api.onchange('paid_to', 'document_type_id')
     def compute_accounting_account(self):
         for rec in self:
             if not rec.document_type_id:
