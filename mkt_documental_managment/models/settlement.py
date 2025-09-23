@@ -915,7 +915,7 @@ class Settlement(models.Model):
                     rec.voucher_number = nxt
 
     
-    @api.constrains('journal_ids', 'journal_ids.debit', 'journal_ids.credit')
+    @api.constrains('journal_ids')
     def _check_journal_balanced(self):
         for rec in self:
             lines = rec.journal_ids
