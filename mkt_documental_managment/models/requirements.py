@@ -2136,6 +2136,63 @@ class DocumentalRequirements(models.Model):
             }
         
 
+    def action_deduplicate_settlement_attachments(self):
+        """Deduplica adjuntos binarios en TODOS los settlements vinculados (via settlement_ids).
+        Mantiene el más reciente por (create_date, id) DENTRO de cada settlement."""
+        Att = self.env['ir.attachment'].sudo()
+        total_removed = 0
+        lines = []
+
+        # Trae todos los settlements involucrados
+        settlements = self.mapped('settlement_ids')
+        if not settlements:
+            self.message_post(body=_("No hay settlements vinculados para procesar."))
+            return True
+
+        # Procesa por settlement (sin mezclar adjuntos entre settlements distintos)
+        for st in settlements:
+            # Si quieres excluir binarios de campos attachment=True, agrega ('res_field','=', False)
+            atts = Att.search([
+                ('res_model', '=', 'settlement'),
+                ('res_id', '=', st.id),
+                ('type', '=', 'binary'),
+                # ('res_field', '=', False),  # <- descomenta si quieres solo los “sueltos”
+            ])
+
+            # Agrupa por checksum; si falta, agrupa por (nombre, file_size)
+            buckets = {}
+            for a in atts:
+                key = ('cs:' + a.checksum) if a.checksum else ('nf:%s:%s' % (a.name or '', a.file_size or 0))
+                buckets.setdefault(key, []).append(a)
+
+            to_delete = Att.browse()
+            for _, group in buckets.items():
+                if len(group) > 1:
+                    keep = max(group, key=lambda r: (r.create_date, r.id))
+                    dupes = [g.id for g in group if g.id != keep.id]
+                    to_delete |= Att.browse(dupes)
+
+            removed = len(to_delete)
+            if removed:
+                to_delete.unlink()
+                total_removed += removed
+                lines.append(_("Settlement %s: eliminados %s duplicado(s).") % (st.display_name or st.id, removed))
+            else:
+                lines.append(_("Settlement %s: sin duplicados.") % (st.display_name or st.id))
+
+        # Resumen en el chatter del/los RQ
+        body = "<br/>".join(lines)
+        for req in self:
+            req.message_post(body=_("Depuración de adjuntos en settlements vinculados:<br/>%s") % body)
+
+        if not total_removed:
+            # Opcional: feedback rápido en notificación
+            self.env.user.notify_info(_("No se encontraron adjuntos duplicados en los settlements procesados."))
+        else:
+            self.env.user.notify_success(_("Se eliminaron %s adjunto(s) duplicado(s) en total.") % total_removed)
+        return True
+        
+
     @api.model
     def create(self, vals):
         if vals.get('name', _('New')) == _('New'):
