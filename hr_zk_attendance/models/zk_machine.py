@@ -259,39 +259,65 @@ class ZkMachine(models.Model):
                         # Si solo hay una marca, usamos 23:59 como salida
                         dt_out = datetime.combine(day, time(23, 59))
 
+                    # Conversión a UTC naive (sin tzinfo) para guardar en BD
                     in_naive = to_utc_naive(dt_in)
                     out_naive = to_utc_naive(dt_out)
+                    if out_naive and out_naive <= in_naive:
+                        # Seguridad extra: nunca dejar salida <= entrada
+                        out_naive = False
 
-                    in_str = fields.Datetime.to_string(in_naive)
-                    out_str = fields.Datetime.to_string(out_naive) if out_naive > in_naive else False
-
-                    # 7) Buscar empleado por device_id (Char en hr.employee)
+                    # 7) Empleado por device_id
                     emp = Employee.search([('device_id', '=', device_user_id)], limit=1)
                     if not emp:
                         _logger.warning("Employee with device_id=%s not found; skipping.", device_user_id)
                         continue
 
-                    # 8) Ventana del día en UTC naive para localizar/actualizar registro
-                    local_start = datetime.combine(day, time(0, 0))
-                    local_end = datetime.combine(day, time(23, 59, 59))
-                    start_utc = to_utc_naive(local_start)
-                    end_utc = to_utc_naive(local_end)
+                    # 8) Ventana del día en UTC para localizar solapes
+                    local_start = datetime.combine(day, time(0, 0, 0))
+                    local_end   = datetime.combine(day, time(23, 59, 59))
+                    start_utc   = to_utc_naive(local_start)
+                    end_utc     = to_utc_naive(local_end)
 
-                    existing = Attendance.search([
+                    # Buscar cualquier asistencia SOLAPADA:
+                    # (check_in < end_utc) AND (check_out IS NULL OR check_out > start_utc)
+                    # Esto cubre: dentro del día, cruces parciales y registros abiertos.
+                    overlapped = Attendance.search([
                         ('employee_id', '=', emp.id),
-                        ('check_in', '>=', start_utc),
-                        ('check_in', '<=', end_utc),
-                    ], limit=1)
+                        ('check_in', '<', end_utc),
+                        '|', ('check_out', '=', False),
+                            ('check_out', '>', start_utc),
+                    ])
 
-                    vals = {
-                        'employee_id': emp.id,
-                        'check_in': in_str,
-                        'check_out': out_str,
-                    }
-                    if existing:
-                        existing.write(vals)
-                        _logger.debug("Updated attendance %s for emp %s on %s", existing.id, emp.id, day)
+                    if overlapped:
+                        # Fusionar todas las asistencias solapadas con la nueva ventana
+                        # El check_in resultante será el mínimo; el check_out, el máximo no nulo.
+                        all_ins = [r.check_in for r in overlapped] + [in_naive]
+                        all_outs = [x for x in ([r.check_out for r in overlapped] + [out_naive]) if x]
+                        new_in = min(all_ins)
+                        new_out = max(all_outs) if all_outs else False
+
+                        # Mantener un registro (el más antiguo por check_in) y borrar el resto
+                        keep = overlapped.sorted(key=lambda r: (r.check_in or fields.Datetime.now()))[0]
+                        to_remove = (overlapped - keep)
+                        vals_merge = {
+                            'check_in': fields.Datetime.to_string(new_in),
+                            'check_out': fields.Datetime.to_string(new_out) if new_out else False,
+                        }
+                        keep.write(vals_merge)
+                        if to_remove:
+                            # Eliminamos duplicados ya absorbidos
+                            to_remove.unlink()
+                        _logger.debug(
+                            "Merged %d overlapped attendances into #%s for emp %s on %s",
+                            len(overlapped), keep.id, emp.id, day
+                        )
                     else:
+                        # No hay solapes: crear normal
+                        vals = {
+                            'employee_id': emp.id,
+                            'check_in': fields.Datetime.to_string(in_naive),
+                            'check_out': fields.Datetime.to_string(out_naive) if out_naive else False,
+                        }
                         created = Attendance.create(vals)
                         _logger.debug("Created attendance %s for emp %s on %s", created.id, emp.id, day)
 
