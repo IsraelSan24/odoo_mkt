@@ -27,4 +27,4 @@ access_stock_request_line_manager,access.stock.request.line.manager,model_stock_
 access_stock_request_user,access.stock.request.user,model_stock_request,group_stock_request_user,1,1,1,1
 access_stock_request_line_user,access.stock.request.line.user,model_stock_request_line,group_stock_request_user,1,1,1,1
 
-access_sire_export_wizard_user,sire.export.wizard,model_sire_export_wizard,base.group_user,1,1,1,1
+access_sire_export_wizard_user,sire.export.wizard,model_attendance_report_all,base.group_user,1,1,1,1
