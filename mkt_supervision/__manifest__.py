@@ -23,6 +23,7 @@
 
         'reports/hr_attendance_wizard.xml',
         'reports/hr_attendance_tracking_wizard.xml',
+        'reports/hr_general_attendance_wizard.xml',
 
         'views/stock_request_view.xml',
         'views/stock_request_line_view.xml',
