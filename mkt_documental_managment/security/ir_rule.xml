@@ -37,7 +37,6 @@
         <field name="perm_unlink" eval="True"/>
     </record>
 
-
     <record id="external_control_requirement_rule" model="ir.rule">
         <field name="name">External control rule</field>
         <field name="model_id" ref="mkt_documental_managment.model_documental_requirements"/>
