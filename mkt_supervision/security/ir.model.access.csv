@@ -28,3 +28,6 @@ access_stock_request_user,access.stock.request.user,model_stock_request,group_st
 access_stock_request_line_user,access.stock.request.line.user,model_stock_request_line,group_stock_request_user,1,1,1,1
 
 access_attendance_report_all_user,attendance.report.all,model_attendance_report_all,base.group_user,1,1,1,1
+
+access_applicant_blacklist_confirm_wizard,access_applicant_blacklist_confirm_wizard,model_applicant_blacklist_confirm_wizard,base.group_user,1,1,1,0
+access_partner_blacklist_check_wizard,access_partner_blacklist_check_wizard,model_partner_blacklist_check_wizard,base.group_user,1,1,1,0

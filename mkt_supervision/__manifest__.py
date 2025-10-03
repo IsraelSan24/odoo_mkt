@@ -24,11 +24,16 @@
         'reports/hr_attendance_wizard.xml',
         'reports/hr_attendance_tracking_wizard.xml',
         'reports/hr_general_attendance_wizard.xml',
+        
+        "wizards/applicant_blacklist_confirm_wizard.xml",
+        "wizards/partner_blacklist_check_wizard.xml",
 
         'views/stock_request_view.xml',
         'views/stock_request_line_view.xml',
         "views/stock_picking_views.xml",
         "views/hr_employee_view.xml",
+        "views/hr_applicant_views.xml",
+        "views/hr_departure_wizard_views.xml",
         'views/menu.xml',
     ],
     'installable': True,

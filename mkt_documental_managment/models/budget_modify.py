@@ -13,6 +13,7 @@ class BudgetMmodify(models.Model):
     description = fields.Char(required=True, string='Description')
     modify_type = fields.Selection(selection=[
         ('executive','Executive'),
+        ('responsible', 'Responsible'),
         ('move_btwn_budget','Move between budget'),
         ('executive_revision','Executive revision')], required=True, string='Modify type')
     budget_ids = fields.Many2many(comodel_name='budget', string='Budgets')
@@ -29,6 +30,16 @@ class BudgetMmodify(models.Model):
                                         ('modified','Modified')], default='draft', string='State')
     is_reverted = fields.Boolean(default=False, string='Reverted')
 
+    partner_brand_id = fields.Many2one('res.partner.brand', string='Brand (optional)')
+
+    old_responsible = fields.Many2one(
+        'res.users', string='Old responsible',
+        domain="[('id','in',current_responsible_ids)]"
+    )
+    new_responsible = fields.Many2one('res.users', string='New responsible')
+    current_responsible_ids = fields.Many2many(
+        'res.users', compute='compute_budget_responsibles', string='Current responsibles'
+    )
 
     def revert_executive_modify(self):
         if self.modify_type == 'executive' and self.state == 'modified':
@@ -118,9 +129,66 @@ class BudgetMmodify(models.Model):
         else:
             self.current_executive_ids = False
 
+    
+    @api.onchange('old_responsible', 'partner_brand_id')
+    def _onchange_responsible_brand_fill_budgets(self):
+        """Autollenar budgets al elegir responsable, limitado por marca si aplica."""
+        for rec in self:
+            # siempre limpia primero
+            rec.budget_ids = [(5, 0, 0)]
+            if not rec.old_responsible:
+                continue
+
+            domain = [('responsible_id', '=', rec.old_responsible.id)]
+            if rec.partner_brand_id:
+                domain.append(('partner_brand_id', '=', rec.partner_brand_id.id))
+
+            rec.budget_ids = self.env['budget'].search(domain).ids
+
 
     @api.model
     def create(self, vals):
         if vals.get('name',_('New')) == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code('budget.modify') or _('New')
         return super(BudgetMmodify, self).create(vals)
+
+
+    def modify_responsible_budget(self):
+        """
+        Idéntico a modify_executive_budget pero para el Responsible.
+        La marca (partner_brand_id) es opcional y aquí no es bloqueante:
+        si deseas filtrar budgets por marca, hazlo antes de poblar budget_ids.
+        """
+        for rec in self:
+            for budget in rec.budget_ids:
+                budget.responsible_id = rec.new_responsible
+            rec.state = 'modified'
+
+
+    def revert_responsible_modify(self):
+        """
+        Crea un registro de budget.modify inverso para deshacer el cambio de responsible,
+        idéntico a revert_executive_modify pero con Responsible.
+        """
+        for rec in self:
+            # No dependemos de modify_type para no tocar tu selección original.
+            if rec.state == 'modified' and rec.new_responsible and rec.old_responsible:
+                new_modify = self.env['budget.modify'].create({
+                    'description': _('Revertion of %s') % (rec.name),
+                    # conservamos el mismo modify_type que traiga rec (no añadimos tipos nuevos)
+                    'modify_type': rec.modify_type,
+                    'old_responsible': rec.new_responsible.id,
+                    'new_responsible': rec.old_responsible.id,
+                    'partner_brand_id': rec.partner_brand_id.id if rec.partner_brand_id else False,
+                    'budget_ids': [(4, b.id) for b in rec.budget_ids],
+                })
+                rec.is_reverted = True
+                new_modify.modify_responsible_budget()
+
+
+    @api.depends('description','modify_type','budget_ids','old_responsible')
+    def compute_budget_responsibles(self):
+        Budget = self.env['budget']
+        responsibles = Budget.search([('responsible_id','!=',False)]).mapped('responsible_id')
+        for rec in self:
+            rec.current_responsible_ids = responsibles or self.env['res.users']
