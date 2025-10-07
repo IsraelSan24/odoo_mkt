@@ -101,8 +101,8 @@
                                         'readonly':[('state','!=','draft')],
                                         'required':[('modify_type','=','executive_revision')]}"/>
 
-                            <!-- Brand (opcional) -->
-                            <field name="partner_brand_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <!-- Customer (opcional) -->
+                            <field name="partner_id" attrs="{'readonly':[('state','!=','draft')]}"/>
 
                             <!-- Responsible -->
                             <field name="old_responsible" options="{'no_create':True,'no_open':True}"
