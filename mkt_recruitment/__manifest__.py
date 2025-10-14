@@ -66,7 +66,7 @@
         'views/customize_jobs_page.xml',
         'views/summary_employees_views.xml',
         'views/document_search_templates.xml',
-        'views/menu_views.xml'
+        'views/menu_views.xml',
     ],
     'assets':{
         'web.assets_frontend':[  
@@ -77,6 +77,7 @@
             'mkt_recruitment/static/src/js/documentvalidatebox.js',
             'mkt_recruitment/static/src/js/document_geolocalization.js',
             'mkt_recruitment/static/src/js/validation_digits_document.js',
+            'mkt_recruitment/static/src/js/signature_override.js',
         ],
         'web.assets_backend': [
             'mkt_recruitment/static/src/js/notification_effects.js',
