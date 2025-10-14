@@ -66,6 +66,7 @@
         'views/customize_jobs_page.xml',
         'views/summary_employees_views.xml',
         'views/document_search_templates.xml',
+        'views/menu_views.xml',
     ],
     'assets':{
         'web.assets_frontend':[  
