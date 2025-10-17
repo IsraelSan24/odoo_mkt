@@ -41,4 +41,4 @@ from . import groups_categorys
 from . import res_users
 from . import res_bank
 from . import announcement
-# from . import settlement_voucher_last
+from . import settlement_voucher_last

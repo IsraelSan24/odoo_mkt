@@ -1,0 +1,70 @@
+<odoo>
+  <!-- Tree view -->
+  <record id="view_settlement_voucher_last_tree" model="ir.ui.view">
+    <field name="name">settlement.voucher.last.tree</field>
+    <field name="model">settlement.voucher.last</field>
+    <field name="arch" type="xml">
+      <tree string="Últimos Correlativos" create="false" edit="false" delete="false">
+        <field name="accountable_year_id"/>
+        <field name="accountable_month_id"/>
+        <field name="subdiary"/>
+        <field name="voucher_number"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- Kanban view -->
+  <record id="view_settlement_voucher_last_kanban" model="ir.ui.view">
+    <field name="name">settlement.voucher.last.kanban</field>
+    <field name="model">settlement.voucher.last</field>
+    <field name="arch" type="xml">
+      <kanban class="o_kanban_small_column" create="false" edit="false" delete="false">
+        <field name="accountable_year_id"/>
+        <field name="accountable_month_id"/>
+        <field name="subdiary"/>
+        <field name="voucher_number"/>
+        <templates>
+          <t t-name="kanban-box">
+            <div class="o_kanban_record">
+              <div><strong><field name="subdiary"/></strong></div>
+              <div><field name="voucher_number"/></div>
+              <div class="text-muted">
+                <field name="accountable_year_id"/> /
+                <field name="accountable_month_id"/>
+              </div>
+            </div>
+          </t>
+        </templates>
+      </kanban>
+    </field>
+  </record>
+
+  <!-- Search view para filtros -->
+  <record id="view_settlement_voucher_last_search" model="ir.ui.view">
+    <field name="name">settlement.voucher.last.search</field>
+    <field name="model">settlement.voucher.last</field>
+    <field name="arch" type="xml">
+      <search string="Buscar Correlativos">
+        <field name="subdiary"/>
+        <field name="accountable_year_id"/>
+        <field name="accountable_month_id"/>
+        <filter string="Subdiario" name="group_subdiary" context="{'group_by':'subdiary'}"/>
+        <filter string="Año" name="group_year" context="{'group_by':'accountable_year_id'}"/>
+        <filter string="Mes" name="group_month" context="{'group_by':'accountable_month_id'}"/>
+      </search>
+    </field>
+  </record>
+
+  <!-- Acción -->
+  <record id="action_settlement_voucher_last" model="ir.actions.act_window">
+    <field name="name">Últimos Correlativos</field>
+    <field name="res_model">settlement.voucher.last</field>
+    <field name="view_mode">kanban,tree</field>
+    <field name="search_view_id" ref="view_settlement_voucher_last_search"/>
+    <field name="context">{'create': False}</field>
+    <field name="help" type="html">
+      <p>Consulta con el último correlativo de voucher por subdiario, mes y año.</p>
+      <p>Esta información se genera automáticamente desde los registros de settlement.</p>
+    </field>
+  </record>
+</odoo>

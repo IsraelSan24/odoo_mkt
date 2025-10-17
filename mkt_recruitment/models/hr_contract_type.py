@@ -4,3 +4,4 @@ class ContractType(models.Model):
     _inherit = 'hr.contract.type'
     
     contract_short_name = fields.Char(string='Short name of contract')
+    contract_n_pages = fields.Integer(string="Number of pages")

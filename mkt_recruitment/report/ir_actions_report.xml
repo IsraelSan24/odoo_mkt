@@ -7,11 +7,29 @@
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">mkt_recruitment.report_contract</field>
         <field name="report_file">mkt_recruitment.report_contract</field>
-        <field name="print_report_name">(object.name or '')</field>
+        <field name="print_report_name">(object.vat or '') + '_' + (object.name or '')</field>
         <field name="binding_model_id" ref="model_hr_contract"/>
         <field name="binding_type">report</field>
         <field name="paperformat_id" ref="paperformat_contract"/>
     </record>
+
+<!-- <record id="download_contracts_zip_action" model="ir.actions.server">
+    <field name="name">Donwload Contracts ZIP</field>
+    <field name="model_id" ref="mkt_recruitment.model_hr_contract"/>
+    <field name="binding_model_id" ref="mkt_recruitment.model_hr_contract"/>
+    <field name="state">code</field>
+    <field name="binding_type">action</field>
+    <field name="code">
+        action={
+            'type': 'ir.actions.act_window',
+            'name': 'Donwload Contracts',
+            'res_model': 'contract.zip.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'active_ids': records.ids}
+        }
+    </field>
+</record> -->
 
     <record id="report_recruitmentdocument_action" model="ir.actions.report">
         <field name="name">Recruitment Document</field>

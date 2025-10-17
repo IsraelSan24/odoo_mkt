@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
-from odoo import _, models
+from odoo import _, models, fields
 
 
 class BankReport(models.TransientModel):
     _name = 'bank.report'
     _description = 'Bank report'
     _inherit = ['report.formats']
+    
+    date_from = fields.Date(string="Start Date", required=True)
+    date_to = fields.Date(string="End Date", required=True)
 
     def change_state_name(self, state):
         final_state = ''
@@ -234,6 +237,7 @@ class BankReport(models.TransientModel):
                 ws.write(row, 27, line['responsible'],                                      stl5)
                 ws.write(row, 28, self.change_state_name(line['requirement_state']),       stl3)
                 ws.write(row, 29, self.change_state_name(line['settlement_state']),        stl3)
+                ws.write(row, 30, (line['province'] or '').upper(),                        stl3)
                 row += 1
 
                 if total_payments > 1:
@@ -274,6 +278,7 @@ class BankReport(models.TransientModel):
                         ws.write(row, 27, line['responsible'],   stl7)
                         ws.write(row, 28, self.change_state_name(line['requirement_state']), stl3)
                         ws.write(row, 29, self.change_state_name(line['settlement_state']),   stl3)
+                        ws.write(row, 30, (line['province'] or '').upper(),                   stl3)
                         row += 1
 
             else:
@@ -307,6 +312,7 @@ class BankReport(models.TransientModel):
                 ws.write(row, 27, line['responsible'],   stl7)
                 ws.write(row, 28, self.change_state_name(line['requirement_state']), stl3)
                 ws.write(row, 29, self.change_state_name(line['settlement_state']),   stl3)
+                ws.write(row, 30, (line['province'] or '').upper(),                   stl3)
                 row += 1
 
             line_aux = line['requirement']
@@ -321,8 +327,9 @@ class BankReport(models.TransientModel):
                 dr.dni_or_ruc AS ruc,
                 dr.accounting_account AS accounting_account,
                 dr.bank_accounting_account AS bank_accounting_account,
-                s.date AS date_line,
+                s.date AS date_line,  -- solo se muestra; ya no filtra
                 rp.name AS supplier,
+                rpr.name AS province,
                 dr.concept AS concept,
 
                 -- Primer payment_date si existe en requirement_payment, sino el de dr
@@ -343,8 +350,6 @@ class BankReport(models.TransientModel):
                     WHEN dr.amount_currency_type = 'dolares' THEN '$$'
                 END AS currency,
 
-                -- amount: primer payment_amount si hay >1, o el amount según tipo de moneda
-                -- amount: monto total del requerimiento (según tipo de moneda)
                 CASE
                     WHEN dr.amount_currency_type = 'soles' THEN dr.amount_soles
                     WHEN dr.amount_currency_type = 'dolares' THEN dr.amount_uss
@@ -353,13 +358,12 @@ class BankReport(models.TransientModel):
                 dr.total_retention   AS retention,
                 dr.total_detraction  AS detraction,
 
-                -- vendor: si hay >1 pago, tomo el primer monto de payment_amounts;
-                --       sino, muestro dr.to_pay_supplier
                 CASE
                     WHEN COALESCE(rp_pay.payment_count, 0) > 1
                         THEN rp_pay.payment_amounts[1]
                     ELSE dr.to_pay_supplier
                 END AS vendor,
+
                 s.document AS document,
                 slt.name AS document_type,
                 slt.short_name AS short_name,
@@ -386,6 +390,7 @@ class BankReport(models.TransientModel):
             LEFT JOIN budget AS b ON b.id = dr.budget_id
             LEFT JOIN cost_center AS cc ON cc.id = b.cost_center_id
             LEFT JOIN res_partner AS rp ON rp.id = dr.paid_to
+            LEFT JOIN res_province AS rpr ON rpr.id = rp.province_id
             LEFT JOIN settlement AS s ON dr.id = s.requirement_id
             LEFT JOIN settlement_line_type AS slt ON slt.id = s.document_type_id
             LEFT JOIN res_users AS ru ON ru.id = dr.full_name
@@ -402,9 +407,23 @@ class BankReport(models.TransientModel):
                 GROUP BY requirement_id
             ) rp_pay ON rp_pay.requirement_id = dr.id
 
-            WHERE COALESCE(dr.payment_date, rp_pay.payment_dates[1]) IS NOT NULL
+            WHERE
+                (
+                    -- Cualquier fecha de pago dentro del rango (detalle)
+                    (rp_pay.payment_dates IS NOT NULL AND EXISTS (
+                        SELECT 1
+                        FROM unnest(rp_pay.payment_dates) AS pd
+                        WHERE pd BETWEEN %s AND %s
+                    ))
+                    OR
+                    -- O la fecha de pago del requerimiento (cabecera) si no hubo pagos o para considerar su propia fecha
+                    (dr.payment_date IS NOT NULL AND dr.payment_date BETWEEN %s AND %s)
+                )
             ORDER BY dr.name DESC;
         """
-        self._cr.execute(query)
-        res_query = self._cr.dictfetchall()
-        return res_query
+        params = (
+            self.date_from, self.date_to,  # para rp_pay.payment_dates
+            self.date_from, self.date_to,  # para dr.payment_date
+        )
+        self._cr.execute(query, params)
+        return self._cr.dictfetchall()

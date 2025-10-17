@@ -195,7 +195,7 @@ class RecruitmentDocument(models.Model):
         self = self.sudo()
         self.ensure_one()
         geolocator = Nominatim(user_agent='my-app')
-        location = geolocator.reverse(str(latitude) + ', ' + str(longitude))
+        location = geolocator.reverse(str(latitude) + ', ' + str(longitude), timeout=10)
         self.latitude = latitude
         self.longitude = longitude
         self.ip = ip
@@ -208,7 +208,9 @@ class RecruitmentDocument(models.Model):
         self.device = device
         self.os = ua.os.family
         self.browser = ua.browser.family
-        _logger.info('\n\n\n self.location_maps: %s \n\n\n', self.location_maps)
+        _logger.info('\n\n\n CONTRACT\n self.env.context: %s - %s - %s - %s\n', latitude, longitude, ip, user_agent)
+        _logger.info('\tDevice Info: %s \n', device_info)
+        _logger.info('\tLocation Maps: %s \n\n\n', self.location_maps)
 
 
     @api.depends('signed_on')

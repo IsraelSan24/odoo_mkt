@@ -1,0 +1,8 @@
+.centered-frame {
+    text-align: center;
+}
+
+.centered-frame iframe {
+    display: inline-block;
+    border: 1px solid #ccc;
+}

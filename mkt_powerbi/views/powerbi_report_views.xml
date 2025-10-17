@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- views -->
+    <record id="view_powerbi_report_tree" model="ir.ui.view">
+        <field name="name">powerbi.report.tree</field>
+        <field name="model">powerbi.report</field>
+        <field name="arch" type="xml">
+            <tree string="Properties">
+                <field name="name"/>
+                <field name="author_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_powerbi_report_form" model="ir.ui.view">
+        <field name="name">powerbi.report.form</field>
+        <field name="model">powerbi.report</field>
+        <field name="arch" type="xml">
+            <form string="Properties">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly='1'/>
+                        </h1>
+                        <!-- <p>
+                            <field name="tag_ids" widget="many2many_tags" string="" readonly='1'/>
+                        </p> -->
+                    </div>
+                    <notebook>
+                        <page string="Preview">
+                            <group class="centered-frame">
+                                <field name="powerbi_embed" widget="html" readonly="1" nolabel="1"/>
+                            </group>
+                            <group>
+                                <field name="name" />
+                                <field name="description" />
+                                <field name="author_id" readonly="1"/>
+                                <field name="url"/>
+
+                            </group>
+                        </page>
+
+                        <page string="Customers">
+                            <group>
+                                <field string="Shared with" name="customer_ids">
+                                    <tree editable="bottom">
+                                        <field name="user_id" options="{'no_create': True}" context="{'default_customer': True}" />
+                                        <field name="customer_email" readonly="1" />
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- modified views from view_powerbi_report_form -->
+    <record id="view_powerbi_report_form_customer" model="ir.ui.view">
+        <field name="name">powerbi.report.form.customer</field>
+        <field name="model">powerbi.report</field>
+        <field name="inherit_id" ref="mkt_powerbi.view_powerbi_report_form"/>
+        <field name="priority" eval="50"/>
+        <field name="groups_id" eval="[
+            (4, ref('mkt_powerbi.customer'))
+        ]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[2]//field[@name='name']" position="replace">
+                <field name="name" invisible='1'/>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="replace">
+                <field name="description" attrs="{'invisible': ['|', ('description', '=', False), ('description', '=', '')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='url']" position="replace">
+                <field name="url" invisible='1'/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_powerbi_report_tag_form" model="ir.ui.view">
+        <field name="name">powerbi.report.tag.form</field>
+        <field name="model">powerbi.report.tag</field>
+        <field name="arch" type="xml">
+            <form string="Type">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>  
+
+
+    <!-- Actions -->
+    <record id="powerbi_report_action" model="ir.actions.act_window">
+        <field name="name">Registered BI Reports</field>
+        <field name="res_model">powerbi.report</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="powerbi_report_tag_action" model="ir.actions.act_window">
+        <field name="name">Report Tags</field>
+        <field name="res_model">powerbi.report.tag</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

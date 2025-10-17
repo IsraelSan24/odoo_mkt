@@ -20,3 +20,4 @@ from . import imports
 from . import massive_contract_end
 from . import hr_departure_reason
 from . import hr_contract_history
+from . import ir_actions_report

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>  
+
+    <menuitem id="powerbi_report_root_menu" name="Power BI Reports" web_icon="mkt_powerbi,static/description/icon.png" action="powerbi_report_action"/>
+        <menuitem id="settings_menu" name="Settings"
+                    parent="powerbi_report_root_menu"/>
+            <menuitem id="powerbi_report_tag_submenu" name="Power BI Report Tags"
+                        parent="settings_menu"
+                        action="powerbi_report_tag_action"/>
+
+</odoo>

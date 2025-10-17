@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="powerbi_css" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss" href="/mkt_powerbi/static/src/scss/powerbi
+            .css"/>
+        </xpath>
+    </template>
+</odoo>

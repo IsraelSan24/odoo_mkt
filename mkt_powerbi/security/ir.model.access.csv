@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_powerbi_report_admin,access.powerbi.report,model_powerbi_report,mkt_powerbi.admin,1,1,1,1
+access_powerbi_report_tag_admin,access.powerbi.report.tag,model_powerbi_report_tag,mkt_powerbi.admin,1,1,1,1
+access_powerbi_report_customer_admin,access.powerbi.report.customer,model_powerbi_report_customer,mkt_powerbi.admin,1,1,1,1
+access_powerbi_report_user,access.powerbi.report,model_powerbi_report,mkt_powerbi.user,1,1,1,1
+access_powerbi_report_tag_user,access.powerbi.report.tag,model_powerbi_report_tag,mkt_powerbi.user,1,1,1,1
+access_powerbi_report_customer_user,access.powerbi.report.customer,model_powerbi_report_customer,mkt_powerbi.user,1,1,1,1
+access_powerbi_report_customer,access.powerbi.report,model_powerbi_report,mkt_powerbi.customer,1,0,0,0
+access_powerbi_report_tag_customer,access.powerbi.report.tag,model_powerbi_report_tag,mkt_powerbi.customer,0,0,0,0
+access_powerbi_report_customer_customer,access.powerbi.report.customer,model_powerbi_report_customer,mkt_powerbi.customer,1,0,0,0
