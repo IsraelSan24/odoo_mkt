@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="signup_inherit_terms" inherit_id="auth_signup.signup">
+        <xpath expr="//form//div[last()]" position="before">
+            <div class="form-group mt-3">
+                <div class="form-check text-center">
+                    <input type="checkbox" class="form-check-input" id="accept_terms" required="required"
+                           oninvalid="this.setCustomValidity('Debes aceptar los Términos y Condiciones antes de registrarte.')"
+                           oninput="this.setCustomValidity('')" />
+                    <label style="font-size:0.800rem" class="form-check-label" for="accept_terms">
+                        Acepto los
+                        <a href="#" data-toggle="modal" data-target="#termsModal" style="text-decoration: underline; font-size:0.800rem">
+                            Términos y Condiciones
+                        </a>
+                    </label>
+                </div>
+            </div>
+
+            <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center" id="termsModalLabel"><b>TÉRMINOS Y CONDICIONES DE USO DE LA PLATAFORMA ODOO MKT ALTERNO</b></h5>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Cerrar">❌</button>
+                        </div>
+                        <div class="modal-body" style="text-align: justify; font-size: 14px; line-height: 1.25;">
+                            <p>
+                                El presente documento regula las condiciones de uso de la <b>Plataforma Digital ODOO</b> (en adelante, “LA PLATAFORMA”) por 
+                                parte de los <b>postulantes y trabajadores</b> de <b>MARKETING ALTERNO PERÚ S.A.C.</b> (en adelante, “LA EMPRESA”). Su aceptación 
+                                constituye manifestación expresa de voluntad y genera efectos legales vinculantes entre EL USUARIO y LA EMPRESA.
+                            </p>
+
+                            <h6 class="mt-3"><b>1. Aceptación y Voluntariedad</b></h6>
+                            <p>1.1. EL USUARIO declara aceptar de manera libre, expresa y voluntaria el uso de LA PLATAFORMA, comprometiéndose a cumplir los presentes Términos y Condiciones.</p>
+                            <p>1.2. EL USUARIO reconoce que la aceptación se realiza previo a la generación de su cuenta ODOO, la cual será necesaria para continuar con el proceso de reclutamiento y/o relación laboral.</p>
+
+                            <h6 class="mt-3"><b>2. Creación y Custodia de Credenciales</b></h6>
+                            <p>2.1. EL USUARIO será el único responsable de la creación y custodia de su USUARIO y CONTRASEÑA, generados de manera personal y sin intervención de LA EMPRESA.</p>
+                            <p>2.2. Los códigos de activación serán enviados únicamente al número de celular y/o correo electrónico designados por EL USUARIO en ficha de ingreso.</p>
+                            <p>2.3. Queda estrictamente prohibido compartir o delegar a terceros el acceso a la cuenta creada.</p>
+
+                            <h6 class="mt-3"><b>3. Uso de Firma Digital y Validez Documental</b></h6>
+                            <p>3.1. EL USUARIO se compromete a firmar digitalmente todos los documentos cargados o generados en LA PLATAFORMA, siendo dicha firma válida y con eficacia probatoria ante LA EMPRESA y cualquier instancia administrativa, laboral, judicial o fiscalizadora.</p>
+                            <p>3.2. La firma digital será considerada como manifestación de voluntad libre y consciente de EL USUARIO, no pudiendo alegar posteriormente desconocimiento o falta de validez.</p>
+
+                            <h6 class="mt-3"><b>4. Gestión y Obligaciones de Carga Documental</b></h6>
+                            <p>4.1. EL USUARIO se compromete a cargar información veraz, completa y actualizada (fichas, declaraciones juradas, documentos personales y laborales) en los plazos establecidos.</p>
+                            <p>4.2. La omisión, falsedad o adulteración de documentos constituye <b>falta grave</b> conforme al artículo 25° del D. Leg. 728 y será sancionada según el Reglamento Interno de Trabajo.</p>
+                            <p>4.3. LA EMPRESA se reserva el derecho de verificar la autenticidad de los documentos cargados.</p>
+
+                            <h6 class="mt-3"><b>5. Carácter Digital de las Comunicaciones y Documentos</b></h6>
+                            <p>5.1. EL USUARIO acepta expresamente que toda comunicación laboral (boletas de pago, contratos, memorándums, amonestaciones, constancias, certificaciones, Declaraciones Juradas, Constancia de Alta, modificaciones y/o baja de T Registro, etc.) podrá realizarse de manera <b>virtual o digital</b>, a través de LA PLATAFORMA o por el correo electrónico registrado.</p>
+                            <p>5.2. Los documentos enviados digitalmente tendrán <b>plena validez legal</b>, no siendo necesario recurrir a notificación notarial, salvo disposición expresa de ley.</p>
+
+                            <h6 class="mt-3"><b>6. Cláusula sobre Uso de Imagen, Voz y Video</b></h6>
+                            <p>Autorización Expresa y Voluntaria: El postulante y/o trabajador (en adelante, EL TITULAR) otorga a MARKETING ALTERNO PERÚ S.A.C. (en adelante, LA EMPRESA), autorización expresa, libre, voluntaria, irrevocable y sin limitación territorial ni temporal, para el uso, difusión, reproducción, edición, adaptación, comunicación pública y distribución de su imagen personal, voz, nombre y video en cualquier medio físico o digital, con fines publicitarios, corporativos, de capacitación, promoción de marcas y servicios, campañas internas o externas, y cualquier otra actividad relacionada con el giro comercial de LA EMPRESA.</p>
+
+                            <h6 class="mt-3"><b>7. Ámbito de Uso y Cesión</b></h6>
+                            <p>EL TITULAR reconoce que la autorización comprende, de manera enunciativa mas no limitativa, el uso de su imagen y voz en: Videos institucionales, promocionales o de inducción. (*) Fotografías y material gráfico interno o externo. (*) Publicaciones en redes sociales, páginas web, medios impresos y audiovisuales. (*) Material de capacitación, formación y presentaciones a clientes. (*) Cualquier soporte tecnológico presente o futuro, sin restricción de formato. (*) Renuncia a Reclamos Económicos y Morales.</p>
+                            <p>EL TITULAR declara que la autorización otorgada es gratuita, renunciando de forma expresa e irrevocable a exigir contraprestación económica, compensación, regalías, indemnización o pago alguno por el uso de su imagen, voz o video, presente o futuro. Asimismo, renuncia a iniciar cualquier acción administrativa, laboral, civil o judicial contra LA EMPRESA o sus clientes derivada del uso autorizado.</p>
+                            <h7 class="mt-3"><b>7.1. Ámbito de Uso y Cesión</b></h7>
+                            <p>La autorización se mantiene vigente incluso después de concluido el proceso de selección o de finalizado el vínculo laboral, sin que EL TITULAR pueda revocar su consentimiento o alegar perjuicio alguno.</p>
+                            <h7 class="mt-3"><b>7.2. Cesión a Terceros Vinculados</b></h7>
+                            <p>EL TITULAR reconoce y acepta que LA EMPRESA podrá ceder o autorizar el uso de su imagen, voz o video a clientes, aliados comerciales o agencias vinculadas, únicamente en el marco de campañas o actividades realizadas por LA EMPRESA, sin que ello genere derecho a reclamo alguno.</p>
+                            <h7 class="mt-3"><b>7.3. Exoneración de Responsabilidad</b></h7>
+                            <p>EL TITULAR exonera a LA EMPRESA de toda responsabilidad frente a posibles usos de la imagen, voz o video por parte de terceros autorizados en campañas de publicidad, promoción o comunicación corporativa en las que participe.</p>
+
+                            <h6 class="mt-3"><b>8. Confidencialidad y Protección de Datos</b></h6>
+                            <p>8.1. EL USUARIO reconoce que toda la información cargada o generada en LA PLATAFORMA es de propiedad exclusiva de LA EMPRESA, obligándose a mantener absoluta confidencialidad, incluso después de culminado el vínculo laboral.</p>
+                            <p>8.2. LA EMPRESA garantiza que el tratamiento de datos personales se realizará conforme a la <b>Ley N.° 29733 – Ley de Protección de Datos Personales</b> y normas conexas.</p>
+
+                            <h6 class="mt-3"><b>9. Responsabilidades y Consecuencias</b></h6>
+                            <p>9.1. EL USUARIO será responsable del uso indebido, pérdida, filtración o revelación de sus credenciales, así como de los perjuicios ocasionados a LA EMPRESA por incumplimiento de estos términos.</p>
+                            <p>9.2. En caso de incumplimiento, LA EMPRESA podrá adoptar medidas disciplinarias y/o legales, incluyendo la <b>resolución del contrato de trabajo y el inicio de acciones civiles o penales</b>.</p>
+
+                            <h6 class="mt-3"><b>10. Jurisdicción y Resolución de Controversias</b></h6>
+                            <p>Cualquier controversia derivada del uso de LA PLATAFORMA será resuelta conforme a la legislación peruana vigente. Las partes se someten expresamente a la competencia de los <b>jueces y tribunales de Lima Metropolitana</b>.</p>
+
+                            <h6 class="mt-3"><b>11. Aceptación</b></h6>
+                            <p>Al hacer clic en “<b>ACEPTO</b>” y generar su cuenta en LA PLATAFORMA, EL USUARIO declara haber leído, comprendido y aceptado íntegramente los presentes Términos y Condiciones, los cuales tendrán fuerza vinculante durante todo el proceso de reclutamiento y/o relación laboral con LA EMPRESA.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </xpath>
+    </template>
+</odoo>

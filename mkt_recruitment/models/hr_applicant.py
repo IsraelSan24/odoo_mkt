@@ -185,7 +185,11 @@ class Applicant(models.Model):
                         'identification_id': applicant.partner_id.vat or False
                     }
                     self.env['hr.employee'].create(values)
+                    applicant.partner_id.write({'requires_compliance_process': True})
+
                     applicant.is_autoemployee = True
+
+                
 
 
     @api.model

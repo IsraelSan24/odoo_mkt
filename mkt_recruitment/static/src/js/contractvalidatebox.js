@@ -97,9 +97,12 @@ odoo.define('mkt_recruitment.contract_validate_box', function( require ) {
         },
 
         _getContractId: function() {
+            const contractId = $('#contractvalidatedigits').data('document-id');
+            if (contractId) {
+                return parseInt(contractId);
+            }
             const url = new URL(window.location.href);
-            const contractId = url.pathname.split('/').pop();
-            return parseInt(contractId);
+            return parseInt(url.pathname.split('/').pop());
         }
     })
 })

@@ -12,7 +12,6 @@ class HrEmployeePrivate(models.Model):
     is_duplicated = fields.Boolean(default=False, string='Is duplicated?')
     is_validated = fields.Boolean(default=False, string='Esta validado?')
     is_province = fields.Boolean(default=False, string='Is province?')
-    # massive_contract_end_id = fields.Many2one(comodel_name='massive.contract.end', string='Ceses')
 
 
     @api.onchange('address_home_id','cost_center_id')
@@ -42,7 +41,7 @@ class HrEmployeePrivate(models.Model):
                 name = f"{name} ({record.id})"
             result.append((record.id, name))
         return result
-
+    
 class HrEmployeePublic(models.Model):
     _inherit = "hr.employee.public"
 

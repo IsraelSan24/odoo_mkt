@@ -13,6 +13,9 @@
                 <field name="reference_location"/>
                 <field name="belong_applicant_id"/>
             </field>
+            <field name="vat" position="after">
+                <field name="requires_compliance_process" string="Compliance Process" widget="boolean_toggle"/>
+            </field>
             <xpath expr="//page[@name='internal_notes']" position="after">
                 <page name="private_information" string="Private Information"
                     groups="hr_contract.group_hr_contract_manager,hr_recruitment.group_hr_recruitment_manager">
@@ -43,7 +46,7 @@
                     </group>
                     <group string="Employment relationship data">
                         <group>
-                            <field name="spreadsheet"/>
+                            <field name="spreadsheet" invisible='True'/>
                             <field name="private_pension_system"/>
                             <field name="afp_first_job" attrs="{'invisible':[('private_pension_system','=',False)]}"/>
                             <field name="coming_from_onp" attrs="{'invisible':[('private_pension_system','=',False)]}"/>
