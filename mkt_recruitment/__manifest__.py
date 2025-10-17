@@ -67,6 +67,7 @@
         'views/summary_employees_views.xml',
         'views/document_search_templates.xml',
         'views/menu_views.xml',
+        'views/signup_page.xml',
     ],
     'assets':{
         'web.assets_frontend':[  

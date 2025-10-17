@@ -11,8 +11,8 @@ odoo.define('mkt_recruitment.validation_digits_contract', function( require ) {
         _onClickSignValidation: function ( event ) {
             event.preventDefault();
             var self = this;
-            const contract_url = new URL(window.location.href)
-            if ( contract_url.pathname.includes('my/contracts') ) {
+            const contract_url = new URL(window.location.href);
+            if ( contract_url.pathname.includes('my/contracts') || contract_url.pathname.includes('portal/compliance/signall') ) {
                 rpc.query({
                     model: 'hr.contract',
                     method: 'send_email_to_validate_contract',
@@ -24,11 +24,15 @@ odoo.define('mkt_recruitment.validation_digits_contract', function( require ) {
                 });
             }
         },
+        
         _getContractId: function() {
+            const contractId = this.$el.data('document-id');
+            if (contractId) {
+                return parseInt(contractId);
+            }
             const url = new URL(window.location.href);
-            const contractId = url.pathname.split('/').pop();
-            return parseInt(contractId);
-        },
+            return parseInt(url.pathname.split('/').pop());
+            },
     });
 
 });

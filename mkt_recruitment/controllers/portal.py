@@ -25,6 +25,7 @@ class ApplicantPartner(http.Controller):
             'cities': cities,
             'nationalities': nationalities,
             'identifications': identifications,
+            'action_url': "/applicantpartner/requested"
         }
         return http.request.render('mkt_recruitment.applicantpartner', values)
 
@@ -162,6 +163,7 @@ class RecruitmentPortal(portal.CustomerPortal):
         values.update({
             'error': {},
             'error_message': [],
+            "action_url": "/my/account"
         })
 
         if post and request.httprequest.method == 'POST':
@@ -411,6 +413,7 @@ class RecruitmentPortal(portal.CustomerPortal):
             'has_check_vat': hasattr(request.env['res.partner'], 'check_vat'),
             'redirect': redirect,
             'page_name': 'my_partner_document',
+            "action_url": "/my/applicant_documents"
         })
         
         response = request.render("mkt_recruitment.portal_my_partner_document", values)

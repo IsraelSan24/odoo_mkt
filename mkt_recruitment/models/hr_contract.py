@@ -121,9 +121,8 @@ class Contract(models.Model):
     def geolocation(self, latitude, longitude, ip, user_agent):
         self = self.sudo()
         self.ensure_one()
-        _logger.info('\n\n\n self.env.context: %s \n\n\n', self.env.context)
         geolocator = Nominatim(user_agent='my-app')
-        location = geolocator.reverse(str(latitude) + ', ' + str(longitude))
+        location = geolocator.reverse(str(latitude) + ', ' + str(longitude), timeout=10)
         self.latitude = latitude
         self.longitude = longitude
         self.ip = ip
@@ -136,7 +135,10 @@ class Contract(models.Model):
         self.device = device
         self.os = ua.os.family
         self.browser = ua.browser.family
-        _logger.info('\n\n\n device_info: %s \n\n\n', device_info)
+        _logger.info('\n\n\n CONTRACT\n self.env.context: %s - %s - %s - %s\n', latitude, longitude, ip, user_agent)
+        _logger.info('\tDevice Info: %s \n', device_info)
+        _logger.info('\tLocation Maps: %s \n\n\n', self.location_maps)
+
 
 
     def update_locale_date(self):
