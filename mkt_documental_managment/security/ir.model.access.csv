@@ -73,3 +73,4 @@ access_internal_announcement_user,Internal Announcement - Read Only,model_intern
 access_internal_announcement_admin,Internal Announcement - Admin,model_internal_announcement,mkt_documental_managment.documental_requirement_admin,1,1,1,1
 access_internal_announcement_accounting,Internal Announcement - Accounting,model_internal_announcement,mkt_documental_managment.documental_settlement_accounting,1,1,1,1
 access_requirement_province_acl_user,access_requirement_province_acl_user,model_requirement_province_acl,base.group_user,1,1,1,1
+access_province_report,access_province_report,model_province_report,,1,1,1,1

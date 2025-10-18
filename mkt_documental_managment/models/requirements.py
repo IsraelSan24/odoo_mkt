@@ -1083,6 +1083,7 @@ class DocumentalRequirements(models.Model):
     def button_petitioner_signature(self):
         alias_name = self.env.user.partner_id.alias_name
         user_name = alias_name if alias_name else self.env.user.name
+        self.compute_province
         
         for req in self:
             if req.divided_payment:
@@ -1265,6 +1266,7 @@ class DocumentalRequirements(models.Model):
 
     def settlement_petitioner_sign(self):
         warnings = []  # Acumular mensajes no bloqueantes de CPE
+        self.compute_province
 
         for req in self:
             # === Validaciones de pagos divididos (bloqueantes) ===
