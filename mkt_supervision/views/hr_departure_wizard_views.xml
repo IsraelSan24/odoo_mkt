@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!-- Extiende wizard de cese -->
+  <record id="view_hr_departure_wizard_form_blacklist" model="ir.ui.view">
+    <field name="name">hr.departure.wizard.form.blacklist</field>
+    <field name="model">hr.departure.wizard</field>
+    <field name="inherit_id" ref="hr.hr_departure_wizard_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//group" position="inside">
+        <label for="add_to_blacklist" string="¿Agregar a lista negra?"/>
+        <field name="add_to_blacklist" nolabel="1"/>
+      </xpath>
+    </field>
+  </record>
+</odoo>

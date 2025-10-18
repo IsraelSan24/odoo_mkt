@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!-- Campo VAT en el formulario de postulaciones -->
+  <record id="view_hr_applicant_form_blacklist" model="ir.ui.view">
+    <field name="name">hr.applicant.form.blacklist</field>
+    <field name="model">hr.applicant</field>
+    <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+    <field name="arch" type="xml">
+      <!-- Donde mejor te encaje; aquí lo pongo en el primer group -->
+      <xpath expr="//sheet/group" position="inside">
+        <field name="vat" placeholder="RUC/DNI"/>
+      </xpath>
+    </field>
+  </record>
+</odoo>

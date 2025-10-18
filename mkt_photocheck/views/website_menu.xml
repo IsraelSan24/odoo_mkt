@@ -55,7 +55,7 @@
                                                             <div class="container2">
                                                                 <div class="group">
                                                                     <img src="/mkt_photocheck/static/images/user.jpg" alt="" class="crop-image" id="crop-image" required="True"/>
-                                                                    <input type="file" id="photo" accept=".png,.jpg,.jpeg" name="photo" capture="camera"/>
+                                                                    <input type="file" id="photo" accept=".png,.jpg,.jpeg" name="photo"/>
                                                                     <label for="photo" class="label-file" required="True">Click here to upload an image</label>
                                                                 </div>
                                                             </div>

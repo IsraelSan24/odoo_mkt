@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form view extension -->
+    <record id="view_partner_form_blacklist" model="ir.ui.view">
+        <field name="name">res.partner.form.blacklist</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Lista Negra" name="blacklist_info">
+                    <group>
+                        <group>
+                            <field name="blacklist" widget="boolean_toggle"/>
+                            <field name="blacklist_date"
+                                   attrs="{'invisible': [('blacklist', '=', False)], 'required': [('blacklist', '=', True)]}"/>
+                        </group>
+                        <group>
+                            <field name="blacklist_reason"
+                                   attrs="{'invisible': [('blacklist', '=', False)]}"
+                                   placeholder="Indique el motivo..."/>
+                        </group>
+                    </group>
+                    <div class="alert alert-warning"
+                         attrs="{'invisible': [('blacklist', '=', False)]}">
+                        <strong>⚠️ Advertencia:</strong> Este contacto está en lista negra.
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Tree view extension -->
+    <record id="view_partner_tree_blacklist" model="ir.ui.view">
+        <field name="name">res.partner.tree.blacklist</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-danger">blacklist == True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='display_name']" position="after">
+                <field name="blacklist" invisible="1"/>
+                <field name="blacklist_date" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Search view extension -->
+    <record id="view_partner_search_blacklist" model="ir.ui.view">
+        <field name="name">res.partner.search.blacklist</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter string="En Lista Negra" name="blacklisted" domain="[('blacklist', '=', True)]"/>
+                <filter string="No en Lista Negra" name="not_blacklisted" domain="[('blacklist', '=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Action & menu -->
+    <record id="action_blacklist_contacts" model="ir.actions.act_window">
+        <field name="name">Lista Negra</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('blacklist', '=', True)]</field>
+        <field name="context">{'search_default_blacklisted': 1}</field>
+    </record>
+
+    <menuitem id="menu_blacklist_contacts"
+              name="Lista Negra"
+              parent="contacts.menu_contacts"
+              action="action_blacklist_contacts"
+              sequence="50"/>
+</odoo>

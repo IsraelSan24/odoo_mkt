@@ -13,6 +13,7 @@ class BudgetMmodify(models.Model):
     description = fields.Char(required=True, string='Description')
     modify_type = fields.Selection(selection=[
         ('executive','Executive'),
+        ('responsible', 'Responsible'),
         ('move_btwn_budget','Move between budget'),
         ('executive_revision','Executive revision')], required=True, string='Modify type')
     budget_ids = fields.Many2many(comodel_name='budget', string='Budgets')
@@ -29,6 +30,18 @@ class BudgetMmodify(models.Model):
                                         ('modified','Modified')], default='draft', string='State')
     is_reverted = fields.Boolean(default=False, string='Reverted')
 
+    # === CAMBIO: Filtro por CLIENTE (opcional) ===
+    partner_id = fields.Many2one('res.partner', string='Customer (optional)')
+
+    # === Responsable ===
+    old_responsible = fields.Many2one(
+        'res.users', string='Old responsible',
+        domain="[('id','in',current_responsible_ids)]"
+    )
+    new_responsible = fields.Many2one('res.users', string='New responsible')
+    current_responsible_ids = fields.Many2many(
+        'res.users', compute='compute_budget_responsibles', string='Current responsibles'
+    )
 
     def revert_executive_modify(self):
         if self.modify_type == 'executive' and self.state == 'modified':
@@ -42,12 +55,10 @@ class BudgetMmodify(models.Model):
             self.is_reverted = True
             new_modify.modify_executive_budget()
 
-
     def modify_responsible_revision(self):
         for budget in self.budget_ids:
             budget.responsible_revision = self.executive_revision
         self.state = 'modified'
-
 
     @api.onchange('modify_type')
     def _onchange_modify_type(self):
@@ -62,7 +73,6 @@ class BudgetMmodify(models.Model):
             self.new_budget_id = False
             self.old_executive = False
             self.new_executive = False
-
 
     def modify_settlement_between_budget(self):
         for settlement in self.old_budget_id.budget_line_ids:
@@ -95,12 +105,10 @@ class BudgetMmodify(models.Model):
                 settlement.unlink()
         self.state = 'modified'
 
-
     def modify_executive_budget(self):
         for budget in self.budget_ids:
             budget.executive_id = self.new_executive
         self.state = 'modified'
-
 
     @api.onchange('old_executive','modify_type','revision_executive_id')
     def onchange_budgets(self):
@@ -108,7 +116,6 @@ class BudgetMmodify(models.Model):
             self.budget_ids = self.env['budget'].search([('executive_id','=',self.old_executive.id)]).ids
         if self.revision_executive_id:
             self.budget_ids = self.env['budget'].search([('executive_id','=',self.revision_executive_id.id)]).ids
-
 
     @api.depends('description','modify_type','budget_ids','old_executive')
     def compute_budget_executives(self):
@@ -118,9 +125,49 @@ class BudgetMmodify(models.Model):
         else:
             self.current_executive_ids = False
 
+    # === CAMBIO: Autollenar budgets por RESPONSABLE limitado por CLIENTE ===
+    @api.onchange('old_responsible', 'partner_id')
+    def _onchange_responsible_customer_fill_budgets(self):
+        """Autollenar budgets al elegir responsable, limitado por cliente si aplica."""
+        for rec in self:
+            rec.budget_ids = [(5, 0, 0)]  # limpiar siempre
+            if not rec.old_responsible:
+                continue
+            domain = [('responsible_id', '=', rec.old_responsible.id)]
+            if rec.partner_id:
+                domain.append(('partner_id', '=', rec.partner_id.id))
+            rec.budget_ids = self.env['budget'].search(domain).ids
 
     @api.model
     def create(self, vals):
         if vals.get('name',_('New')) == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code('budget.modify') or _('New')
         return super(BudgetMmodify, self).create(vals)
+
+    # === Responsible: aplicar y revertir ===
+    def modify_responsible_budget(self):
+        for rec in self:
+            for budget in rec.budget_ids:
+                budget.responsible_id = rec.new_responsible
+            rec.state = 'modified'
+
+    def revert_responsible_modify(self):
+        for rec in self:
+            if rec.state == 'modified' and rec.new_responsible and rec.old_responsible:
+                new_modify = self.env['budget.modify'].create({
+                    'description': _('Revertion of %s') % (rec.name),
+                    'modify_type': rec.modify_type,  # no forzamos un tipo nuevo
+                    'old_responsible': rec.new_responsible.id,
+                    'new_responsible': rec.old_responsible.id,
+                    'partner_id': rec.partner_id.id if rec.partner_id else False,
+                    'budget_ids': [(4, b.id) for b in rec.budget_ids],
+                })
+                rec.is_reverted = True
+                new_modify.modify_responsible_budget()
+
+    @api.depends('description','modify_type','budget_ids','old_responsible')
+    def compute_budget_responsibles(self):
+        Budget = self.env['budget']
+        responsibles = Budget.search([('responsible_id','!=',False)]).mapped('responsible_id')
+        for rec in self:
+            rec.current_responsible_ids = responsibles or self.env['res.users']

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="blacklist_public_page" name="MKT Blacklist Public Page">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <section class="s_mkt_blacklist_section" style="min-height: 70vh; padding: 40px 0;">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8 col-md-10">
+                                <div class="card shadow-sm">
+                                    <div class="card-body p-4">
+                                        <h2 class="h4 mb-3 text-primary"><strong>Consulta de Lista Negra</strong></h2>
+                                        <p class="text-muted">Ingrese DNI/RUC, nombre o correo para verificar.</p>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">DNI / RUC / Nombre / Email</label>
+                                            <div class="input-group">
+                                                <input type="text" id="searchInput" class="form-control" placeholder="Ej: 10253665, Juan Pérez, email@example.com"/>
+                                                <button class="btn btn-primary" id="btnSearch" type="button"><i class="fa fa-search"></i> Verificar</button>
+                                            </div>
+                                            <small class="form-text text-muted">Búsqueda por VAT/nombre/email</small>
+                                        </div>
+
+                                        <div id="loadingSpinner" class="text-center my-3" style="display:none;">
+                                            <div class="spinner-border" role="status"><span class="visually-hidden">Buscando...</span></div>
+                                            <p class="mt-2">Buscando...</p>
+                                        </div>
+
+                                        <div id="resultContainer" style="display:none;">
+                                            <div id="alertMessage" class="alert" role="alert" style="border-radius:8px;">
+                                                <i id="alertIcon" class="fa fa-check-circle me-2"></i>
+                                                <span id="alertText" class="fw-semibold"></span>
+                                            </div>
+
+                                            <div class="card mt-3">
+                                                <div class="card-body">
+                                                    <h5 class="card-title"><i class="fa fa-user"></i> Información del Contacto</h5>
+                                                    <div class="row">
+                                                        <div class="col-12"><strong>Nombre: </strong><span id="contactName"></span></div>
+                                                        <div class="col-12"><strong>DNI/RUC: </strong><span id="contactVat"></span></div>
+                                                        <div class="col-12"><strong>Email: </strong><span id="contactEmail"></span></div>
+                                                        <div class="col-12"><strong>Teléfono: </strong><span id="contactPhone"></span></div>
+                                                        <div class="col-12"><strong>Motivo: </strong><span id="contactReason"></span></div>
+                                                        <div class="col-12"><strong>Fecha Incluido: </strong><span id="contactDate"></span></div>
+                                                    </div>
+                                                    <div class="text-center mt-3">
+                                                        <span id="statusBadge" class="badge"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="errorMessage" class="alert alert-warning mt-3" style="display:none;">
+                                            <i class="fa fa-exclamation-triangle me-2"></i><span id="errorText"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>

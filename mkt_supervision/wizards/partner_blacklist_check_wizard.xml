@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!-- Vista del wizard -->
+  <record id="view_partner_blacklist_check_wizard_form" model="ir.ui.view">
+    <field name="name">partner.blacklist.check.wizard.form</field>
+    <field name="model">partner.blacklist.check.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Consultar Blacklist por VAT">
+        <group>
+          <field name="vat" placeholder="Ingresa VAT/RUC/DNI"/>
+
+          <!-- Boolean interno oculto (opcional para otras attrs) -->
+          <field name="is_blacklisted" invisible="1"/>
+
+          <!-- MISMO campo "Estado" con badge verde/rojo -->
+          <field name="status_badge"
+                 widget="badge"
+                 decoration-success="status_badge == 'ok'"
+                 decoration-danger="status_badge == 'bad'"/>
+
+          <field name="message" readonly="1" nolabel="1"/>
+          <field name="partner_ids" readonly="1" widget="many2many_tags"/>
+        </group>
+        <footer>
+          <button name="action_check" type="object" string="Consultar" class="btn-primary"/>
+          <button string="Cerrar" class="btn-secondary" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <!-- Acción para abrir el wizard -->
+  <record id="action_partner_blacklist_check_wizard" model="ir.actions.act_window">
+    <field name="name">Consultar Blacklist</field>
+    <field name="res_model">partner.blacklist.check.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record>
+
+  <!-- Menú (puedes moverlo donde prefieras) -->
+  <menuitem id="menu_partner_blacklist_check_root"
+            name="Consultar Blacklist"
+            parent="contacts.menu_contacts"
+            action="action_partner_blacklist_check_wizard"
+            sequence="91"/>
+</odoo>

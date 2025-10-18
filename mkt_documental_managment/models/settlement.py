@@ -189,7 +189,7 @@ class Settlement(models.Model):
             else:
                 rec.mobility_id = False
 
-    @api.onchange('paid_to', 'document_type_id', 'requirement_id.dni_or_ruc')
+    @api.onchange('paid_to', 'document_type_id')
     def compute_accounting_account(self):
         for rec in self:
             if not rec.document_type_id:
@@ -757,23 +757,37 @@ class Settlement(models.Model):
     #             rec.vendor = 0
 
 
-    @api.depends('currency_id', 'requirement_id', 'service_type_id', 'settle_amount', 'alternative_amount', 'differentiated_payment', 'date', 'settle_amount_sum')
+    @api.depends('currency_id', 'service_type_id', 'settle_amount', 'alternative_amount', 'differentiated_payment', 'date')  # Quitar settle_amount_sum
     def _compute_amounts(self):
+        # Optimización: Una sola query para todas las fechas
+        dates = list(set(rec.date for rec in self if rec.date))
+        change_type_map = {}
+        
+        if dates:
+            change_records = self.env['change.type'].search([('date', 'in', dates)])
+            change_type_map = {ct.date: ct.sell for ct in change_records}
+        
         for rec in self:
-            sale_change_type = self.env['change.type'].search([('date', '=', rec.date)]).mapped('sell')
-            change_type = 1
-            if sale_change_type and rec.currency_id.name == 'USD':
-                change_type = sale_change_type[0]
+            # Usar settle_amount directamente en lugar de settle_amount_sum para evitar loop
+            base_amount = rec.settle_amount
+            if rec.document_type_id.id == 3:
+                base_amount = -rec.settle_amount
+                
+            change_type = change_type_map.get(rec.date, 1)
+            if rec.currency_id.name == 'USD' and change_type:
+                change_type = change_type
+            else:
+                change_type = 1
             
-            effective_amount = rec.alternative_amount if rec.alternative_amount and rec.differentiated_payment else rec.settle_amount_sum
-
-            if rec.settle_amount_sum * change_type > rec.service_type_id.amount_from:
+            effective_amount = rec.alternative_amount if (rec.alternative_amount and rec.differentiated_payment) else base_amount
+            
+            if base_amount * change_type > rec.service_type_id.amount_from:
                 if rec.service_type_id.detraction:
                     rec.vendor = effective_amount - round((effective_amount * rec.service_type_id.percentage) / 100, 0)
                     rec.detraction = round((effective_amount * rec.service_type_id.percentage) / 100, 0)
                     rec.retention = 0.00
                 elif rec.service_type_id.retention:
-                    rec.vendor = effective_amount - round((effective_amount* rec.service_type_id.percentage) / 100, 2)
+                    rec.vendor = effective_amount - round((effective_amount * rec.service_type_id.percentage) / 100, 2)
                     rec.detraction = 0.00
                     rec.retention = round((effective_amount * rec.service_type_id.percentage) / 100, 2)
                 else:
@@ -915,7 +929,7 @@ class Settlement(models.Model):
                     rec.voucher_number = nxt
 
     
-    @api.constrains('journal_ids', 'journal_ids.debit', 'journal_ids.credit')
+    @api.constrains('journal_ids')
     def _check_journal_balanced(self):
         for rec in self:
             lines = rec.journal_ids

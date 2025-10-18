@@ -78,6 +78,7 @@
         'views/res_bank_views.xml',
         'views/settlement_voucher_last_views.xml',
         'views/announcement_views.xml',
+        'views/requirement_province_acl_views.xml',
 
         'report/documental_requirement_report.xml',
         'report/documental_settlement_report.xml',
@@ -100,6 +101,7 @@
         'wizard/bank_report.xml',
         'wizard/mobility_report.xml',
         'wizard/accounting_expenses_report_wiz.xml',
+        'wizard/province_report_wiz.xml',
 
         'views/menu_view.xml',
     ],

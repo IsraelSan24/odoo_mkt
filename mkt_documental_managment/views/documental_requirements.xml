@@ -25,6 +25,8 @@
                         groups="mkt_documental_managment.documental_requirement_admin"/>
                     <button string="Admin Signature" name="action_sign_administration_massive" type="object" class="oe_highlight"
                         groups="mkt_documental_managment.documental_requirement_admin,mkt_documental_managment.documental_requirement_administration"/>
+                    <button string="Eliminar adjuntos duplicados" name="action_deduplicate_settlement_attachments" type="object" class="oe_highlight"
+                        groups="mkt_documental_managment.documental_requirement_admin"/>
                 </header>
                 <field name="is_refund" invisible="True"/>
                 <field name="timer_state" readonly="True" optional="hide"/>
