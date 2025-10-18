@@ -101,6 +101,7 @@
         'wizard/bank_report.xml',
         'wizard/mobility_report.xml',
         'wizard/accounting_expenses_report_wiz.xml',
+        'wizard/province_report_wiz.xml',
 
         'views/menu_view.xml',
     ],
