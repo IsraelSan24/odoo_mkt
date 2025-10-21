@@ -123,7 +123,7 @@
                                                 <img t-attf-src="data:image/png;base64,#{o.env['employer.signature'].browse(2).signature}" style="max-height: 6rem; max-width: 100%;"/>
                                             </t>
                                             <t t-else="">
-                                                <div style="min-height: 100px;"></div>
+                                                <div style="min-height: 4rem;"></div>
                                             </t>
                                         </th>
                                         <th scope="col" style="border: none"></th>
@@ -132,7 +132,7 @@
                                                 <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image-dual" />
                                             </t>
                                             <t t-else="">
-                                                <div style="min-height: 100px;"></div>
+                                                <div style="min-height: 4rem;"></div>
                                             </t>
                                         </th>
                                         <th scope="col" style="border: none"></th>
@@ -220,7 +220,7 @@
                                             <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
                                         </t>
                                         <t t-else="">
-                                            <div style="min-height: 100px;"></div>
+                                            <div style="min-height: 4rem;"></div>
                                         </t>
                                         <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
                                             FIRMA DEL TRABAJADOR
@@ -303,7 +303,7 @@
                                             <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
                                         </t>
                                         <t t-else="">
-                                            <div style="min-height: 100px;"></div>
+                                            <div style="min-height: 4rem;"></div>
                                         </t>
                                         <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
                                             FIRMA DEL TRABAJADOR
@@ -394,7 +394,7 @@
                                             <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
                                         </t>
                                         <t t-else="">
-                                            <div style="min-height: 100px;"></div>
+                                            <div style="min-height: 4rem;"></div>
                                         </t>
                                         <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
                                             FIRMA DEL TRABAJADOR
@@ -487,7 +487,7 @@
                                             <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
                                         </t>
                                         <t t-else="">
-                                            <div style="min-height: 100px;"></div>
+                                            <div style="min-height: 4rem;"></div>
                                         </t>
                                         <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
                                             FIRMA DEL TRABAJADOR
@@ -496,105 +496,6 @@
                                 </tr>
                             </table>
 
-                        </div>
-                        <div style="page-break-after: always;"/>
-                    </div>
-
-                    <div id="work_commitment_document" style="padding:3rem 2rem 0rem;">
-                        <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
-                            <h6 class="document-title">NORMATIVAS &amp; COMPROMISO LABORAL</h6>
-                            
-                            <p class="paragraph">
-                                Por el presente dejo constancia ante mi empleador Marketing Alterno Perú S.A.C., mi compromiso a cumplir las siguientes cláusulas especificas líneas abajo, las cuales han sido motivo de acuerdo entre las partes, siendo consideradas políticas internas del empleador <span class="bold">MARKETING ALTERNO PERU SAC</span>.
-                            </p>
-
-                            <div class="clause-title">1. CONDUCTA PERSONAL</div>
-                            <ul>
-                                <li class="paragraph">Está terminantemente prohibido realizar actos que atenten contra la moral, el orden público y/o las buenas costumbres durante mi jornada laboral o dentro de los espacios asignados para el trabajo. Su incumplimiento será considerado <span class="bold">falta grave</span>.</li>
-                            </ul>
-
-                            <div class="clause-title">2. EXCLUSIVIDAD Y CONFIDENCIALIDAD</div>
-                            <ul>
-                                <li class="paragraph">Reconozco que mi labor es <span class="bold">exclusiva</span> a favor de LA EMPRESA, por lo que <span class="bold">no podré laborar para terceros</span> sin autorización expresa y por escrito, de realizarlo será causal de despido inmediato sin indemnización alguna de por medio. Me obligo a mantener <span class="bold">absoluta confidencialidad</span> respecto a toda información relacionada con la cuenta comercial, actividades, estrategias, datos de clientes, información de ventas, entre otros. Queda <span class="bold">prohibida la difusión por medios digitales (WhatsApp, Facebook, Instagram, etc.)</span> o compartirla con terceros. Su incumplimiento se considera <span class="bold">falta muy grave y causal de despido inmediato</span>.</li>
-                            </ul>
-
-                            <div class="clause-title">3. MARCACIÓN Y REPORTES</div>
-                            <ul>
-                                <li class="paragraph">Es obligatorio el registro de ingreso y salida mediante el aplicativo asignado, así como el reporte de ventas, stock, y cualquier otra información requerida. El no marcar ingreso/salida, tardanzas, inasistencias no justificadas o el envío de reportes fraudulentos (incluidas fotos adulteradas) será causal de sanción disciplinaria y/o <span class="bold">descuento por el día no trabajado</span>, sin perjuicio de la aplicación de medidas mayores según la gravedad del caso.</li>
-                            </ul>
-
-                            <div class="clause-title">4. RESPONSABILIDAD POR IMPLEMENTOS DE TRABAJO</div>
-                            <ul>
-                                <li class="paragraph">Me comprometo al buen uso, conservación y custodia de todos los implementos, materiales, dispositivos o herramientas de trabajo entregados. En caso de <span class="bold">daño, pérdida, robo o deterioro atribuible a mi conducta</span>, deberé asumir el costo total de reposición, lo cual será notificado por mail. Autorizando expresamente de manera libre y voluntaria que se le realicen descuentos proporcionales al daño. La presentación de denuncia policial por robo o pérdida <span class="bold">no exime de responsabilidad económica</span> salvo que se determine ausencia de culpa o negligencia.</li>
-                            </ul>
-
-                            <div class="clause-title">5. COMUNICACIONES Y PERMISOS</div>
-                            <ul>
-                                <li class="paragraph">Toda solicitud o trámite de permisos, licencias, descansos médicos u otras gestiones deberán ser canalizadas <span class="bold">únicamente con mi jefe inmediato</span> (Supervisor de LA EMPRESA). Me comprometo a acatar todas las directrices emitidas por mi superior jerárquico y canales formales de la empresa.</li>
-                            </ul>
-
-                            <div class="clause-title">6. PROHIBICIONES ESPECIALES EN PDV Y/O RUTA</div>
-                            <ul>
-                                <li class="paragraph">Está <span class="bold">estrictamente prohibido</span> realizar ventas no autorizadas, prohibido apropiarse de activos, materiales o bienes del cliente y/o de la empresa, o realizar acciones prohibidas en la cuenta comercial. Su incumplimiento será <span class="bold">causal directa de despido sin derecho a indemnización</span> por afectar la relación comercial con el cliente principal.</li>
-                            </ul>
-
-                            <div class="clause-title">7. MOVILIDAD (DE SER APLICABLE)</div>
-                            <ul>
-                                <li class="paragraph">Reconozco que la <span class="bold">movilidad</span> solo procederá en caso haya firmado el <span class="bold">documento de asignación</span>, previamente aprobado por LA EMPRESA. En caso de no suscribir dicho documento, <span class="bold">renuncio expresamente al derecho de reclamar dicho concepto</span>, siendo este beneficio <span class="bold">no automático ni universal</span>.</li>
-                            </ul>
-
-                            <div class="clause-title">8. COMUNICACIONES FORMALES VÍA CORREO ELECTRÓNICO</div>
-                            <ul>
-                                <li class="paragraph">Autorizo expresamente que todas las <span class="bold">comunicaciones de índole laboral</span> sean remitidas a mi correo electrónico, considerándose válidas y legalmente notificadas.</li>
-                            </ul>
-
-                            <div class="clause-title">9. USO DE IMAGEN, VOZ Y VIDEO</div>
-                            <ul>
-                                <li class="paragraph">Autorizo de manera expresa, libre e informada a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span> para grabar, capturar, almacenar y difundir mi <span class="bold">imagen, voz y/o video</span>, generados en el marco de mis labores, actividades promocionales, capacitaciones, material de inducción o contenido, incluyendo uso en redes sociales, medios digitales, medios gráficos y/o audiovisuales.</li>
-                                <li class="paragraph">Dicha autorización es de carácter <span class="bold">permanente, libre, expresa, indefinida, irrevocable, gratuito y sin limitación temporal</span>, por lo que <span class="bold">renuncio expresamente a solicitar pago, compensación, indemnización alguna</span> por dicho uso presente o futuro. Esta autorización no constituye afectación a mi derecho al honor ni a mi intimidad.</li>
-                            </ul>
-                        </div>
-                        <div style="page-break-after: always;"/>
-                        <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem; padding:3rem 2rem 0rem;">
-                            <div class="clause-title">10. RENUNCIA VOLUNTARIA Y AVISO PREVIO</div>
-                            <p class="paragraph">
-                                Declaro conocer que mi relación laboral se rige por lo dispuesto en el TÚO del Decreto Legislativo 728, Ley de Productividad y Competitividad Laboral, aprobado mediante Decreto Supremo N.º 003-97-TR (LPCL). En cumplimiento de lo establecido en su artículo 18, en caso de renuncia o retiro voluntario, me obligo a presentar aviso escrito con treinta (30) días de anticipación a mi empleador, ASIMISMO tengo conocimiento que de no cumplir con este aviso previo y presentar mi renuncia de manera imprevista antes del término de mi contrato, autorizo expresamente a <span class="bold">LA EMPRESA</span> que se aplique un descuento único de S/ 30.00 (treinta con 00/100 soles), monto destinado a cubrir los gastos administrativos y comerciales que la empresa debe realizar para atender las gestiones derivadas ante mi retiro imprevisto.
-                            </p>
-                            <p class="paragraph">
-                                Declaro haber sido informado en reunión de reclutamiento y previo a la firma de documentos, aceptando libremente, reconociendo que tiene como finalidad evitar perjuicios a la gestión organizacional y comercial de la empresa con las ausencias de los puntos asignados.
-                            </p>
-
-                            <div class="clause-title">11. PROHIBICION ACTOS DESHONESTOS Y RESPONSABILIDAD PENAL</div>
-                            <ul>
-                                <li class="paragraph">Me obligo a mantener una conducta integra, honesta y respetuosa de la ley en el desempeño de mis labores.</li>
-                                <li class="paragraph">El trabajador tiene conocimiento que esta terminantemente prohibido apropiarse, sustraer, ocultar, comercializar o disponer de dinero, productos, activos, materiales o bienes pertenecientes a la empresa y/o cuenta comercial asignada o a terceros con los que tenga relación en el marco de mis funciones.</li>
-                                <li class="paragraph">Asimismo, queda prohibida mi participación en cualquier acto ilegal o no autorizadas, falsificación de documentos, adulteración de información o cualquier otro acto.</li>
-                                <li class="paragraph">En caso de verificarse actos deshonestos, robos, fraudes o participación en hechos delictivos, LA EMPRESA procederá a denunciarme penalmente ante las autoridades competentes, sin perjuicio de la aplicación de las sanciones laborales correspondientes (incluido el despido por falta grave conforme al artículo 25 del D. Leg. 728).</li>
-                            </ul>
-                            <p class="paragraph">
-                                Declaro haber sido informado de estas obligaciones y de que toda infracción en esta materia acarreará las consecuencias legales, civiles, administrativas y penales que correspondan.
-                            </p>
-
-                            <div class="clause-title">DISPOSICIONES FINALES</div>
-                            <p class="paragraph">
-                                Declaro que he leído y comprendido íntegramente el presente documento, y que firmo en señal de aceptación libre y voluntaria, sin que medie error, dolo, violencia o intimidación. Reconozco que el presente compromiso laboral constituye parte integrante de mi contrato de trabajo, y asimismo, autorizo de manera expresa a que, en caso de incumplimiento comprobado de mis deberes, y previa comunicación formal por parte de LA EMPRESA, se apliquen las medidas disciplinarias correspondientes conforme al Reglamento Interno de Trabajo y al D. Leg. 728 – Ley de Productividad y Competitividad Laboral, declaro también que la aceptación de este documento ha sido realizada sin mediar error, dolo, violencia o intimidación, y que tengo pleno conocimiento de que todo incumplimiento podrá derivar en sanciones laborales y/o acciones legales de acuerdo con la legislación peruana aplicable.
-                            </p>
-
-                            <table style="width:100%; margin-top:50px; text-align:center; border-collapse:collapse;">
-                                <tr>
-                                    <td style="vertical-align:bottom; text-align:center;">
-                                        <t t-if="o.applicant_signature">
-                                            <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
-                                        </t>
-                                        <t t-else="">
-                                            <div style="min-height: 100px;"></div>
-                                        </t>
-                                        <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
-                                            FIRMA DEL TRABAJADOR
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
                         </div>
                         <div style="page-break-after: always;"/>
                     </div>
@@ -668,7 +569,7 @@
                                             <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
                                         </t>
                                         <t t-else="">
-                                            <div style="min-height: 100px;"></div>
+                                            <div style="min-height: 4rem;"></div>
                                         </t>
                                         <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
                                             FIRMA DEL TRABAJADOR
@@ -721,7 +622,7 @@
                                             <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
                                         </t>
                                         <t t-else="">
-                                            <div style="min-height: 100px;"></div>
+                                            <div style="min-height: 4rem;"></div>
                                         </t>
                                         <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
                                             FIRMA DEL TRABAJADOR
@@ -808,7 +709,7 @@
                                             <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
                                         </t>
                                         <t t-else="">
-                                            <div style="min-height: 100px;"></div>
+                                            <div style="min-height: 4rem;"></div>
                                         </t>
                                         <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
                                             FIRMA DEL TRABAJADOR
@@ -912,7 +813,7 @@
                                                 <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image-dual"/>
                                             </t>
                                             <t t-else="">
-                                                <div style="min-height: 100px;"></div>
+                                                <div style="min-height: 4rem;"></div>
                                             </t>
                                         </th>
                                         <th scope="col" style="border: none"></th>
@@ -924,7 +825,7 @@
                                                 </div>
                                             </t>
                                             <t t-else="">
-                                                <div style="min-height: 100px;"></div>
+                                                <div style="min-height: 4rem;"></div>
                                             </t>
                                         </th>
                                     </tr>
@@ -1023,7 +924,7 @@
                                             <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
                                         </t>
                                         <t t-else="">
-                                            <div style="min-height: 100px;"></div>
+                                            <div style="min-height: 4rem;"></div>
                                         </t>
                                         <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
                                             FIRMA DEL TRABAJADOR
@@ -1123,7 +1024,7 @@
                                                 <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image-dual"/>
                                             </t>
                                             <t t-else="">
-                                                <div style="min-height: 100px;"></div>
+                                                <div style="min-height: 4rem;"></div>
                                             </t>
                                         </th>
                                         <th scope="col" style="border: none"></th>
@@ -1135,7 +1036,7 @@
                                                 </div>
                                             </t>
                                             <t t-else="">
-                                                <div style="min-height: 100px;"></div>
+                                                <div style="min-height: 4rem;"></div>
                                             </t>
                                         </th>
                                     </tr>
@@ -1239,7 +1140,7 @@
                                                 <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image-dual"/>
                                             </t>
                                             <t t-else="">
-                                                <div style="min-height: 100px;"></div>
+                                                <div style="min-height: 4rem;"></div>
                                             </t>
                                         </th>
                                         <th scope="col" style="border: none"></th>
@@ -1248,7 +1149,7 @@
                                                 <img t-attf-src="data:image/png;base64,#{o.env['employer.signature'].browse(2).signature}" style="max-height: 6rem; max-width: 100%;"/>
                                             </t>
                                             <t t-else="">
-                                                <div style="min-height: 100px;"></div>
+                                                <div style="min-height: 4rem;"></div>
                                             </t>
                                         </th>
                                         <th scope="col" style="border: none"></th>
@@ -1620,7 +1521,7 @@
                                             <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
                                         </t>
                                         <t t-else="">
-                                            <div style="min-height: 100px;"></div>
+                                            <div style="min-height: 4rem;"></div>
                                         </t>
                                         <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
                                             FIRMA DEL TRABAJADOR
@@ -1789,7 +1690,7 @@
                                                 <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height:80px; max-width:100%;"/>
                                             </t>
                                             <t t-else="">
-                                                <div style="min-height: 100px;"></div>
+                                                <div style="min-height: 4rem;"></div>
                                             </t>
                                             <div style="margin-top:5px; border-top:1px solid #000; width:200px; margin:auto;"></div>
                                             <p style="margin-top:5px;">Firma del Trabajador</p>
@@ -1813,7 +1714,7 @@
                                                 <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
                                             </t>
                                             <t t-else="">
-                                                <div style="min-height: 100px;"></div>
+                                                <div style="min-height: 4rem;"></div>
                                             </t>
                                             <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
                                                 <p style="margin-top:5px;">FIRMA DEL TRABAJADOR</p>
@@ -1939,7 +1840,7 @@
                                                 <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height:80px; max-width:100%;"/>
                                             </t>
                                             <t t-else="">
-                                                <div style="min-height: 100px;"></div>
+                                                <div style="min-height: 4rem;"></div>
                                             </t>
                                             <div style="margin-top:5px; border-top:1px solid #000; width:200px; margin:auto;"></div>
                                             <p style="margin-top:5px;">Firma del Trabajador</p>
@@ -1962,7 +1863,7 @@
                                                 <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
                                             </t>
                                             <t t-else="">
-                                                <div style="min-height: 100px;"></div>
+                                                <div style="min-height: 4rem;"></div>
                                             </t>
                                             <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
                                                 <p style="margin-top:5px;">FIRMA DEL TRABAJADOR</p>
@@ -2055,7 +1956,7 @@
                                                 <img t-att-src="image_data_uri(o.applicant_signature)" style="max-height:80px; max-width:100%;"/>
                                             </t>
                                             <t t-else="">
-                                                <div style="min-height: 100px;"></div>
+                                                <div style="min-height: 4rem;"></div>
                                             </t>
                                             <div style="margin-top:5px; border-top:1px solid #000; width:200px; margin:auto;"></div>
                                             <p style="margin-top:5px;">Firma del Trabajador</p>
@@ -2078,7 +1979,7 @@
                                                 <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
                                             </t>
                                             <t t-else="">
-                                                <div style="min-height: 100px;"></div>
+                                                <div style="min-height: 4rem;"></div>
                                             </t>
                                             <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
                                                 <p style="margin-top:5px;">FIRMA DEL TRABAJADOR</p>
@@ -2087,6 +1988,105 @@
                                     </tr>
                                 </table>
                                 
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div style="padding:2rem 2rem 0rem;">
+                                <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
+                                    <h6 class="document-title">ANEXO I.- NORMATIVAS &amp; COMPROMISO LABORAL</h6>
+                                    
+                                    <p class="paragraph">
+                                        Por el presente dejo constancia ante mi empleador Marketing Alterno Perú S.A.C., mi compromiso a cumplir las siguientes cláusulas especificas líneas abajo, las cuales han sido motivo de acuerdo entre las partes, siendo consideradas políticas internas del empleador <span class="bold">MARKETING ALTERNO PERU SAC</span>.
+                                    </p>
+
+                                    <div class="clause-title">1. CONDUCTA PERSONAL</div>
+                                    <ul>
+                                        <li class="paragraph">Está terminantemente prohibido realizar actos que atenten contra la moral, el orden público y/o las buenas costumbres durante mi jornada laboral o dentro de los espacios asignados para el trabajo. Su incumplimiento será considerado <span class="bold">falta grave</span>.</li>
+                                    </ul>
+
+                                    <div class="clause-title">2. EXCLUSIVIDAD Y CONFIDENCIALIDAD</div>
+                                    <ul>
+                                        <li class="paragraph">Reconozco que mi labor es <span class="bold">exclusiva</span> a favor de LA EMPRESA, por lo que <span class="bold">no podré laborar para terceros</span> sin autorización expresa y por escrito, de realizarlo será causal de despido inmediato sin indemnización alguna de por medio. Me obligo a mantener <span class="bold">absoluta confidencialidad</span> respecto a toda información relacionada con la cuenta comercial, actividades, estrategias, datos de clientes, información de ventas, entre otros. Queda <span class="bold">prohibida la difusión por medios digitales (WhatsApp, Facebook, Instagram, etc.)</span> o compartirla con terceros. Su incumplimiento se considera <span class="bold">falta muy grave y causal de despido inmediato</span>.</li>
+                                    </ul>
+
+                                    <div class="clause-title">3. MARCACIÓN Y REPORTES</div>
+                                    <ul>
+                                        <li class="paragraph">Es obligatorio el registro de ingreso y salida mediante el aplicativo asignado, así como el reporte de ventas, stock, y cualquier otra información requerida. El no marcar ingreso/salida, tardanzas, inasistencias no justificadas o el envío de reportes fraudulentos (incluidas fotos adulteradas) será causal de sanción disciplinaria y/o <span class="bold">descuento por el día no trabajado</span>, sin perjuicio de la aplicación de medidas mayores según la gravedad del caso.</li>
+                                    </ul>
+
+                                    <div class="clause-title">4. RESPONSABILIDAD POR IMPLEMENTOS DE TRABAJO</div>
+                                    <ul>
+                                        <li class="paragraph">Me comprometo al buen uso, conservación y custodia de todos los implementos, materiales, dispositivos o herramientas de trabajo entregados. En caso de <span class="bold">daño, pérdida, robo o deterioro atribuible a mi conducta</span>, deberé asumir el costo total de reposición, lo cual será notificado por mail. Autorizando expresamente de manera libre y voluntaria que se le realicen descuentos proporcionales al daño. La presentación de denuncia policial por robo o pérdida <span class="bold">no exime de responsabilidad económica</span> salvo que se determine ausencia de culpa o negligencia.</li>
+                                    </ul>
+
+                                    <div class="clause-title">5. COMUNICACIONES Y PERMISOS</div>
+                                    <ul>
+                                        <li class="paragraph">Toda solicitud o trámite de permisos, licencias, descansos médicos u otras gestiones deberán ser canalizadas <span class="bold">únicamente con mi jefe inmediato</span> (Supervisor de LA EMPRESA). Me comprometo a acatar todas las directrices emitidas por mi superior jerárquico y canales formales de la empresa.</li>
+                                    </ul>
+
+                                    <div class="clause-title">6. PROHIBICIONES ESPECIALES EN PDV Y/O RUTA</div>
+                                    <ul>
+                                        <li class="paragraph">Está <span class="bold">estrictamente prohibido</span> realizar ventas no autorizadas, prohibido apropiarse de activos, materiales o bienes del cliente y/o de la empresa, o realizar acciones prohibidas en la cuenta comercial. Su incumplimiento será <span class="bold">causal directa de despido sin derecho a indemnización</span> por afectar la relación comercial con el cliente principal.</li>
+                                    </ul>
+
+                                    <div class="clause-title">7. MOVILIDAD (DE SER APLICABLE)</div>
+                                    <ul>
+                                        <li class="paragraph">Reconozco que la <span class="bold">movilidad</span> solo procederá en caso haya firmado el <span class="bold">documento de asignación</span>, previamente aprobado por LA EMPRESA. En caso de no suscribir dicho documento, <span class="bold">renuncio expresamente al derecho de reclamar dicho concepto</span>, siendo este beneficio <span class="bold">no automático ni universal</span>.</li>
+                                    </ul>
+
+                                    <div class="clause-title">8. COMUNICACIONES FORMALES VÍA CORREO ELECTRÓNICO</div>
+                                    <ul>
+                                        <li class="paragraph">Autorizo expresamente que todas las <span class="bold">comunicaciones de índole laboral</span> sean remitidas a mi correo electrónico, considerándose válidas y legalmente notificadas.</li>
+                                    </ul>
+
+                                    <div class="clause-title">9. USO DE IMAGEN, VOZ Y VIDEO</div>
+                                    <ul>
+                                        <li class="paragraph">Autorizo de manera expresa, libre e informada a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span> para grabar, capturar, almacenar y difundir mi <span class="bold">imagen, voz y/o video</span>, generados en el marco de mis labores, actividades promocionales, capacitaciones, material de inducción o contenido, incluyendo uso en redes sociales, medios digitales, medios gráficos y/o audiovisuales.</li>
+                                        <li class="paragraph">Dicha autorización es de carácter <span class="bold">permanente, libre, expresa, indefinida, irrevocable, gratuito y sin limitación temporal</span>, por lo que <span class="bold">renuncio expresamente a solicitar pago, compensación, indemnización alguna</span> por dicho uso presente o futuro. Esta autorización no constituye afectación a mi derecho al honor ni a mi intimidad.</li>
+                                    </ul>
+                                </div>
+                                <div style="page-break-after: always;"/>
+                                <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem; padding:3rem 2rem 0rem;">
+                                    <div class="clause-title">10. RENUNCIA VOLUNTARIA Y AVISO PREVIO</div>
+                                    <p class="paragraph">
+                                        Declaro conocer que mi relación laboral se rige por lo dispuesto en el TÚO del Decreto Legislativo 728, Ley de Productividad y Competitividad Laboral, aprobado mediante Decreto Supremo N.º 003-97-TR (LPCL). En cumplimiento de lo establecido en su artículo 18, en caso de renuncia o retiro voluntario, me obligo a presentar aviso escrito con treinta (30) días de anticipación a mi empleador, ASIMISMO tengo conocimiento que de no cumplir con este aviso previo y presentar mi renuncia de manera imprevista antes del término de mi contrato, autorizo expresamente a <span class="bold">LA EMPRESA</span> que se aplique un descuento único de S/ 30.00 (treinta con 00/100 soles), monto destinado a cubrir los gastos administrativos y comerciales que la empresa debe realizar para atender las gestiones derivadas ante mi retiro imprevisto.
+                                    </p>
+                                    <p class="paragraph">
+                                        Declaro haber sido informado en reunión de reclutamiento y previo a la firma de documentos, aceptando libremente, reconociendo que tiene como finalidad evitar perjuicios a la gestión organizacional y comercial de la empresa con las ausencias de los puntos asignados.
+                                    </p>
+
+                                    <div class="clause-title">11. PROHIBICION ACTOS DESHONESTOS Y RESPONSABILIDAD PENAL</div>
+                                    <ul>
+                                        <li class="paragraph">Me obligo a mantener una conducta integra, honesta y respetuosa de la ley en el desempeño de mis labores.</li>
+                                        <li class="paragraph">El trabajador tiene conocimiento que esta terminantemente prohibido apropiarse, sustraer, ocultar, comercializar o disponer de dinero, productos, activos, materiales o bienes pertenecientes a la empresa y/o cuenta comercial asignada o a terceros con los que tenga relación en el marco de mis funciones.</li>
+                                        <li class="paragraph">Asimismo, queda prohibida mi participación en cualquier acto ilegal o no autorizadas, falsificación de documentos, adulteración de información o cualquier otro acto.</li>
+                                        <li class="paragraph">En caso de verificarse actos deshonestos, robos, fraudes o participación en hechos delictivos, LA EMPRESA procederá a denunciarme penalmente ante las autoridades competentes, sin perjuicio de la aplicación de las sanciones laborales correspondientes (incluido el despido por falta grave conforme al artículo 25 del D. Leg. 728).</li>
+                                    </ul>
+                                    <p class="paragraph">
+                                        Declaro haber sido informado de estas obligaciones y de que toda infracción en esta materia acarreará las consecuencias legales, civiles, administrativas y penales que correspondan.
+                                    </p>
+
+                                    <div class="clause-title">DISPOSICIONES FINALES</div>
+                                    <p class="paragraph">
+                                        Declaro que he leído y comprendido íntegramente el presente documento, y que firmo en señal de aceptación libre y voluntaria, sin que medie error, dolo, violencia o intimidación. Reconozco que el presente compromiso laboral constituye parte integrante de mi contrato de trabajo, y asimismo, autorizo de manera expresa a que, en caso de incumplimiento comprobado de mis deberes, y previa comunicación formal por parte de LA EMPRESA, se apliquen las medidas disciplinarias correspondientes conforme al Reglamento Interno de Trabajo y al D. Leg. 728 – Ley de Productividad y Competitividad Laboral, declaro también que la aceptación de este documento ha sido realizada sin mediar error, dolo, violencia o intimidación, y que tengo pleno conocimiento de que todo incumplimiento podrá derivar en sanciones laborales y/o acciones legales de acuerdo con la legislación peruana aplicable.
+                                    </p>
+
+                                    <table style="width:100%; margin-top:50px; text-align:center; border-collapse:collapse;">
+                                        <tr>
+                                            <td style="vertical-align:bottom; text-align:center;">
+                                                <t t-if="o.applicant_signature">
+                                                    <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <div style="min-height: 4rem;"></div>
+                                                </t>
+                                                <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
+                                                    FIRMA DEL TRABAJADOR
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </t>
                     </div>

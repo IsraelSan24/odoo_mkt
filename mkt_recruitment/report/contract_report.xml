@@ -7930,26 +7930,31 @@
                     <p>There are not contract type selected.</p>
                 </t>
             </div>
-            <div class="footer">
-                <div class="d-flex flex-row">
-                    <div class="text-start">
-                        <img t-att-src="'/report/barcode/?type=QR&amp;value=' + base_url + 'contracteconsult/search' + '&amp;width=100&amp;height=100'"/>
-                    </div>
-                    <div style="margin-left:10px;font-size:0.563rem">
-                        <div>Contract: <span t-esc="o.name"/></div>
-                        <div>IP: <span t-esc="o.ip"/></div>
-                        <div>User: <span t-esc="o.partner_name"/> DNI: <span t-esc="o.vat"/></div>
-                        <div>OS: <span t-esc="o.os"/> Browser <span t-esc="o.browser"/></div>
-                        <div>Email: <span t-esc="o.email"/></div>
-                        <div>Token: <span t-esc="o.access_token"/></div>
-                        <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
-                        <div style="white-space: nowrap;">Este documento se generó por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.</div>
-                    </div>
-                    <div class="ms-auto p-2" style="margin-top:60px;margin-left:80px;">
-                        pág <span class="page"/> de <span class="topage"/>
+            
+            <t t-if="o.state == 'signed'">
+                <div class="footer" >
+                    <div class="d-flex flex-row">
+                        <div class="text-start">
+                            <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'documentsearch' + '&amp;width=70'" style="width:70px; height:70px; object-fit:contain;"/>
+                        </div>
+                        <div style="margin-left:10px;font-size:0.400rem;">
+                            <div>Contract: <span t-esc="o.name"/></div>
+                            <div>Email: <span t-esc="o.email"/></div>
+                            <div>DNI: <span t-esc="o.vat"/>. User: <span t-esc="o.partner_name"/></div>
+                            <div>IP: <span t-esc="o.ip"/>. OS: <span t-esc="o.os"/></div>
+                            <div>Browser: <span t-esc="o.browser"/></div>
+                            <div>Token: <span t-esc="o.access_token"/></div>
+                            <div>Latitude/Longitude: <span t-esc="o.latitude"/> / <span t-esc="o.longitude"/></div>
+                            <div style="white-space: nowrap;">
+                                Generado por la plataforma de Marketing Alterno Perú SAC y el mismo da validez de su legitimidad.
+                            </div>
+                        </div>
+                        <div class="ms-auto p-2" style="margin-top:50px;margin-left:300px;font-size:0.563rem;">
+                            pág <span class="page"/> de <span class="topage"/>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </t>
         </t>
     </template>
 
