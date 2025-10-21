@@ -594,6 +594,24 @@ async function consultarDNI() {
   }
 }
 
+  function toggleFifthCategory(checkbox, isYes) {
+      const FalseCheckbox = document.getElementById('fifth_no');
+      const TrueCheckbox = document.getElementById('fifth_yes');
+      // const errorMsg = document.querySelector('#fifth_no').closest('.form-group').querySelector('.invalid-feedback');
+
+      // Asegurar exclusividad entre checkboxes
+      if (isYes) {
+          FalseCheckbox.checked = false;
+      } else {
+          TrueCheckbox.checked = false;
+      }
+
+      // Ocultar mensaje de error si el usuario selecciona algo
+      // if (TrueCheckbox.checked || FalseCheckbox.checked) {
+      //     errorMsg.style.display = 'none';
+      // }
+  }
+
 
 function validateForm(event) {
   event.preventDefault();
@@ -614,7 +632,7 @@ function validateForm(event) {
       }
   });
 
-  // Añadir validación de sistema de pensiones
+  /* ======================= VALIDACIÓN SISTEMA DE PENSIONES ======================= */
   const privatePensionCheckbox = document.getElementById('private_pension_system');
   const nationalPensionCheckbox = document.getElementById('national_pension_system');
   const afpRadios = document.querySelectorAll('.radio-option');
@@ -650,14 +668,41 @@ function validateForm(event) {
       allFieldsValid = false;
   }
 
-  if (!pensionValid || !allFieldsValid) {
+
+  /* ======================= VALIDACIÓN QUINTA CATEGORÍA ======================= */
+  const fifthNo = document.getElementById('fifth_no');
+  const fifthYes = document.getElementById('fifth_yes');
+  const fifthError = fifthNo.closest('.form-group').querySelector('.invalid-feedback');
+  let fifthValid = true;
+
+  // Ninguno seleccionado → inválido
+  if (!fifthNo.checked && !fifthYes.checked) {
+      fifthValid = false;
+      fifthError.style.display = 'block';
+      fifthNo.classList.add('is-invalid');
+      fifthYes.classList.add('is-invalid');
+  } else {
+      fifthValid = true;
+      fifthError.style.display = 'none';
+      fifthNo.classList.remove('is-invalid');
+      fifthYes.classList.remove('is-invalid');
+  }
+
+  if (!fifthValid) {
+      requiredFieldsValid = false;
+      allFieldsValid = false;
+  }
+  /* ======================= SCROLL Y MODAL======================= */
+  
+  if (!pensionValid || !fifthValid || !allFieldsValid) {
     const firstInvalid = form.querySelector('.is-invalid');
-    if (firstInvalid) firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (firstInvalid) 
+      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
   
   // Solo abrir el modal si todo está correcto
   if (requiredFieldsValid) {
-      populateModal();
+      populateModal();  
       $('#confirmationModal').modal('show');
   }
 
@@ -666,25 +711,35 @@ function validateForm(event) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  var privatePensionSystemField = document.getElementById('private_pension_system');
-  if (privatePensionSystemField) {
-    privatePensionSystemField.addEventListener('change', function() {
-      const pensionOptions = document.getElementById('pension_options');
-      
-      if (privatePensionSystemField.type === 'checkbox') {
-        pensionOptions.style.display = this.checked ? 'block' : 'none';
-      } else {
-        pensionOptions.style.display = this.value === 'yes' ? 'block' : 'none';
-      }
-      
-      if (!this.checked && this.type === 'checkbox') {
-        document.getElementById('afp_first_job').checked = false;
-        document.getElementById('coming_from_onp').checked = false;
-        document.getElementById('coming_from_afp').checked = false;
-      }
-    });
-  }
+    const privatePensionSystemField = document.getElementById('private_pension_system');
+    const pensionOptions = document.getElementById('pension_options');
+
+    if (privatePensionSystemField && pensionOptions) {
+        // Escucha cambios del checkbox AFP
+        privatePensionSystemField.addEventListener('change', function() {
+            if (privatePensionSystemField.type === 'checkbox') {
+                pensionOptions.style.display = this.checked ? 'block' : 'none';
+            } else {
+                pensionOptions.style.display = this.value === 'yes' ? 'block' : 'none';
+            }
+
+            // Si se desmarca AFP, limpiar los subcampos
+            if (!this.checked && this.type === 'checkbox') {
+                document.getElementById('afp_first_job').checked = false;
+                document.getElementById('coming_from_onp').checked = false;
+                document.getElementById('coming_from_afp').checked = false;
+            }
+        });
+
+        // 🔹 Al cargar la página, aplica el estado correcto según el valor del backend
+        if (privatePensionSystemField.checked || privatePensionSystemField.value === 'yes') {
+            pensionOptions.style.display = 'block';
+        } else {
+            pensionOptions.style.display = 'none';
+        }
+    }
 });
+
 
 
 function populateModal() {
@@ -1130,67 +1185,3 @@ function setSelectByText(selectId, textToMatch, callback = null) {
   }
 }
 
-
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form');  // asegúrate de que el formulario engloba estos campos
-
-    const privatePensionCheckbox = document.getElementById('private_pension_system');
-    const nationalPensionCheckbox = document.getElementById('national_pension_system');
-    const pensionOptionsDiv = document.getElementById('pension_options');
-    const afpRadios = document.querySelectorAll('.radio-option');
-
-    // Mostrar/ocultar opciones AFP
-    window.toggleCheckbox = function(checkbox) {
-        if (checkbox.id === 'private_pension_system') {
-            pensionOptionsDiv.style.display = checkbox.checked ? 'block' : 'none';
-            // Desmarcar radios si se desactiva AFP
-            if (!checkbox.checked) {
-                afpRadios.forEach(r => r.checked = false);
-            }
-        }
-        // Si marca uno, desmarca el otro
-        if (checkbox.id === 'private_pension_system' && checkbox.checked) {
-            nationalPensionCheckbox.checked = false;
-        }
-        if (checkbox.id === 'national_pension_system' && checkbox.checked) {
-            privatePensionCheckbox.checked = false;
-            pensionOptionsDiv.style.display = 'none';
-            afpRadios.forEach(r => r.checked = false);
-        }
-    };
-
-    // Validación antes de enviar
-    window.validateAFP = function(event) {
-        let valid = true;
-
-        // 1️⃣ Verificar que al menos un sistema esté marcado
-        if (!privatePensionCheckbox.checked && !nationalPensionCheckbox.checked) {
-            valid = false;
-            privatePensionCheckbox.classList.add('is-invalid');
-            nationalPensionCheckbox.classList.add('is-invalid');
-        } else {
-            privatePensionCheckbox.classList.remove('is-invalid');
-            nationalPensionCheckbox.classList.remove('is-invalid');
-        }
-
-        // 2️⃣ Si AFP está marcado, verificar que se haya seleccionado una opción
-        if (privatePensionCheckbox.checked) {
-            const afpSelected = Array.from(afpRadios).some(r => r.checked);
-            if (!afpSelected) {
-                valid = false;
-                afpRadios.forEach(r => r.classList.add('is-invalid'));
-            } else {
-                afpRadios.forEach(r => r.classList.remove('is-invalid'));
-            }
-        } else {
-            afpRadios.forEach(r => r.classList.remove('is-invalid'));
-        }
-
-        // Si algo está mal, prevenir el envío
-        if (!valid) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-    };
-});

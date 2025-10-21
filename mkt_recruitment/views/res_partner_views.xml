@@ -54,6 +54,7 @@
                         </group>
                         <group>
                             <field name="national_pension_system"/>
+                            <field name="fifth_category_income"/>
                         </group>
                     </group>
                     <group string="Education">

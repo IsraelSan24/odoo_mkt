@@ -244,6 +244,7 @@ class PortalCompliance(portal.CustomerPortal):
                         'education_end_date',
                         'institution',
                         'profession',
+                        'fifth_category_income'
                 ]
 
                 ## Optional Fields
