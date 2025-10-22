@@ -25,6 +25,8 @@
             <form>
                 <header>
                     <field name="is_reverted" invisible="True"/>
+
+                    <!-- Executive -->
                     <button string="Modify revision" name="modify_responsible_revision"
                         type="object" class="oe_highlight"
                         attrs="{'invisible':['|','|',
@@ -44,40 +46,100 @@
                         type="object" class="oe_highlight"
                         attrs="{'invisible':['|','|',('state','=','draft'),('modify_type','!=','executive'),('is_reverted','!=',False)]}"
                         confirm="Are you sure you want to revert this modification?"/>
+
+                    <!-- Responsible -->
+                    <button string="Modify responsible" name="modify_responsible_budget"
+                        type="object" class="oe_highlight"
+                        attrs="{'invisible':['|','|',
+                            ('state','!=','draft'),('id','=',False),
+                            ('modify_type','!=','responsible')]}"/>
+                    <button string="Revert responsible" name="revert_responsible_modify"
+                        type="object"
+                        attrs="{'invisible':['|','|',
+                            ('state','=','draft'),('modify_type','!=','responsible'),
+                            ('is_reverted','!=',False)]}"
+                        confirm="Are you sure you want to revert this responsible modification?"/>
+
                     <field name="state" widget="statusbar"
                         statusbar_visible="draft,modified"/>
                 </header>
+
                 <sheet>
                     <widget name="web_ribbon" title="Modified" bg_color="bg-success"
                         attrs="{'invisible':[('state','!=','modified')]}"/>
+
                     <group>
                         <h1>
                             <field name="name"/>
                         </h1>
                     </group>
+
                     <group>
                         <group>
                             <field name="description" attrs="{'readonly':[('state','!=','draft')]}"/>
                             <field name="modify_type" attrs="{'readonly':[('state','!=','draft')]}"/>
+
+                            <!-- Executive -->
                             <field name="old_executive" options="{'no_create':True,'no_open':True}"
-                                attrs="{'invisible':[('modify_type','!=','executive')],'readonly':[('state','!=','draft')],'required':[('modify_type','=','executive')]}"/>
+                                attrs="{'invisible':[('modify_type','!=','executive')],
+                                        'readonly':[('state','!=','draft')],
+                                        'required':[('modify_type','=','executive')]}"/>
+
+                            <!-- Move between budgets -->
                             <field name="old_budget_id" options="{'no_create':True,'no_open':True}"
-                                attrs="{'invisible':[('modify_type','!=','move_btwn_budget')],'readonly':[('state','!=','draft')],'required':[('modify_type','=','move_btwn_budget')]}"/>
+                                attrs="{'invisible':[('modify_type','!=','move_btwn_budget')],
+                                        'readonly':[('state','!=','draft')],
+                                        'required':[('modify_type','=','move_btwn_budget')]}"/>
+
+                            <!-- Executive revision -->
                             <field name="revision_executive_id" options="{'no_create':True,'no_open':True}"
-                                attrs="{'invisible':[('modify_type','!=','executive_revision')],'readonly':[('state','!=','draft')],'required':[('modify_type','=','executive_revision')]}"/>
+                                attrs="{'invisible':[('modify_type','!=','executive_revision')],
+                                        'readonly':[('state','!=','draft')],
+                                        'required':[('modify_type','=','executive_revision')]}"/>
                             <field name="executive_revision" options="{'no_create':True,'no_open':True}"
-                                attrs="{'invisible':[('modify_type','!=','executive_revision')],'readonly':[('state','!=','draft')],'required':[('modify_type','=','executive_revision')]}"/>
+                                attrs="{'invisible':[('modify_type','!=','executive_revision')],
+                                        'readonly':[('state','!=','draft')],
+                                        'required':[('modify_type','=','executive_revision')]}"/>
+
+                            <!-- Brand (opcional) -->
+                            <field name="partner_brand_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+
+                            <!-- Responsible -->
+                            <field name="old_responsible" options="{'no_create':True,'no_open':True}"
+                                domain="[('id','in', current_responsible_ids)]"
+                                attrs="{'invisible':[('modify_type','!=','responsible')],
+                                        'readonly':[('state','!=','draft')],
+                                        'required':[('modify_type','=','responsible')]}"/>
                         </group>
+
                         <group>
+                            <!-- budget_ids visible para executive, executive_revision y RESPONSIBLE -->
                             <field name="budget_ids" widget="many2many_tags" options="{'no_create':True}"
-                                attrs="{'invisible':[('modify_type','not in',('executive','executive_revision'))],'readonly':[('state','!=','draft')]}"/>
+                                attrs="{'invisible':[('modify_type','not in',('executive','executive_revision','responsible'))],
+                                        'readonly':[('state','!=','draft')]}"/>
+
+                            <!-- Executive -->
                             <field name="new_executive" options="{'no_create':True,'no_open':True}"
-                                attrs="{'invisible':[('modify_type','!=','executive')],'readonly':[('state','!=','draft')],'required':[('modify_type','=','executive')]}"/>
+                                attrs="{'invisible':[('modify_type','!=','executive')],
+                                        'readonly':[('state','!=','draft')],
+                                        'required':[('modify_type','=','executive')]}"/>
                             <field name="current_executive_ids" invisible="True"/>
+
+                            <!-- Responsible -->
+                            <field name="new_responsible" options="{'no_create':True,'no_open':True}"
+                                attrs="{'invisible':[('modify_type','!=','responsible')],
+                                        'readonly':[('state','!=','draft')],
+                                        'required':[('modify_type','=','responsible')]}"/>
+                            <field name="current_responsible_ids" invisible="True"/>
+
+                            <!-- Move between budgets -->
                             <field name="new_budget_id" options="{'no_create':True,'no_open':True}"
-                                attrs="{'invisible':[('modify_type','!=','move_btwn_budget')],'readonly':[('state','!=','draft')],'required':[('modify_type','=','move_btwn_budget')]}"/>
+                                attrs="{'invisible':[('modify_type','!=','move_btwn_budget')],
+                                        'readonly':[('state','!=','draft')],
+                                        'required':[('modify_type','=','move_btwn_budget')]}"/>
                         </group>
                     </group>
+
                     <notebook attrs="{'invisible':[('modify_type','!=','move_btwn_budget')]}">
                         <page string="Settlements">
                             <field name="budget_line_ids" attrs="{'invisible':[('state','!=','draft')]}" readonly="False">
@@ -113,6 +175,7 @@
                         </page>
                     </notebook>
                 </sheet>
+
                 <div class="oe_chatter">
                     <field name="message_follower_ids"/>
                     <field name="activity_ids"/>
