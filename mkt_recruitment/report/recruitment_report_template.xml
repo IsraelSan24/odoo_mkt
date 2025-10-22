@@ -1180,44 +1180,10 @@
                     <div id="worker_pension_system_document" style="padding:2rem 1.5rem 0rem;">
                         <div style="width: 100%;text-align: justify; height: auto; font-size:0.590rem">
                             <h1 class="regimen-title">RÉGIMEN PENSIONARIO DEL TRABAJADOR</h1>
-                            
-                            <p style="margin-bottom: 5px">
-                                <span class="bold">1.-</span> Si actualmente Ud. se encuentra afiliado al Sistema Privado de Pensiones (AFP) o al Sistema Nacional de Pensiones (ONP), deberá indicarlo en el siguiente recuadro:
-                            </p>
-
-                            <div class="bold" style="margin-left: 15px">RÉGIMEN PENSIONARIO</div>
-
-                            <div>
-                                <div class="checkbox-container" style="margin-left: 15px">
-                                    <span t-attf-class="checkbox #{o.private_pension_system and 'checked' or ''}"></span>
-                                    <span class="bold">SISTEMA PRIVADO DE PENSIONES (AFP)</span>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="checkbox-container" style="margin-left: 15px">
-                                    <span t-attf-class="checkbox #{o.national_pension_system and 'checked' or ''}"></span>
-                                    <span class="bold">SISTEMA NACIONAL DE PENSIONES (ONP)</span>
-                                </div>
-                            </div>
-
-                            <p style="margin-bottom: 5px; margin-top: 10px">
-                                <span class="bold" >2.-</span> Si actualmente Ud. no se encuentra afiliado al Sistema Privado de Pensiones (AFP) o al Sistema Nacional de Pensiones (ONP), deberá llenar el siguiente formato:
-                            </p>
 
                             <div class="bold">FORMATO DE ELECCIÓN DEL SISTEMA PENSIONARIO (R.M 112-2013-TR) </div>
 
                             <div class="bold">I. DATOS DEL TRABAJADOR</div>
-
-                            <!-- <div class="form-field" style="margin-left: 15px">
-                                <span class="field-label">1. APELLIDO PATERNO:</span>
-                                <span class="field-value"><t t-esc="o.partner_name or ''"/></span>
-                            </div>
-
-                            <div class="form-field" style="margin-left: 15px">
-                                <span class="field-label">2. APELLIDO MATERNO:</span>
-                                <span class="field-value"><t t-esc="o.partner_name or ''"/></span>
-                            </div> -->
 
                             <div class="form-field" style="margin-left: 15px">
                                 <span class="field-label">1. NOMBRE COMPLETO:</span>
@@ -1263,12 +1229,7 @@
 
                             <div class="form-field" style="margin-left: 15px">
                                 <span class="field-label">4. FECHA DE NACIMIENTO:</span>
-                                <!-- <span style="margin-right: 5px;">Día</span> -->
                                 <span class="field-value field-value-short" style="min-width: 40px;"><t t-esc="o.birthday or ''"/></span>
-                                <!-- <span style="margin: 0 5px;">Mes</span>
-                                <span class="field-value field-value-short" style="min-width: 40px;"><t t-esc="o.birthday or ''"/></span>
-                                <span style="margin: 0 5px;">Año</span>
-                                <span class="field-value field-value-short" style="min-width: 60px;"><t t-esc="o.birthday or ''"/></span> -->
                             </div>
 
                             <div class="form-field" style="margin-left: 15px">
@@ -1276,25 +1237,7 @@
                             </div>
 
                             <div class="domicilio-group">
-                                <!-- <div class="form-field mb-5">
-                                    <div class="checkbox-container">
-                                        <span t-attf-class="checkbox #{o.street == 'avenida' and 'checked' or ''}"></span>
-                                        <span>Avenida</span>
-                                    </div>
-                                    <div class="checkbox-container">
-                                        <span t-attf-class="checkbox #{o.street == 'calle' and 'checked' or ''}"></span>
-                                        <span>Calle</span>
-                                    </div>
-                                    <div class="checkbox-container">
-                                        <span t-attf-class="checkbox #{o.street == 'jiron' and 'checked' or ''}"></span>
-                                        <span>Jirón</span>
-                                    </div>
-                                    <div class="checkbox-container">
-                                        <span t-attf-class="checkbox #{o.street == 'otros' and 'checked' or ''}"></span>
-                                        <span>Otros:</span>
-                                    </div>
-                                </div> -->
-
+                            
                                 <div class="form-field" style="margin-left: 0;">
                                     <span class="field-value" style="min-width: 300px;"><t t-esc="o.street or ''"/></span>
                                 </div>
@@ -1315,6 +1258,16 @@
                                 </div>
                             </div>
 
+                            <div class="form-field" style="margin-left: 15px">
+                                <span class="field-label">6. CORREO ELECTRÓNICO:</span>
+                                <span class="field-value"><t t-esc="o.email or ''"/></span>
+                            </div>
+
+                            <div class="form-field" style="margin-left: 15px">
+                                <span class="field-label">7. CELULAR:</span>
+                                <span class="field-value"><t t-esc="o.phone or ''"/></span>
+                            </div>
+
                             <div class="bold" style="margin-bottom: 5px; margin-top: 10px">II. DATOS DE LA ENTIDAD EMPLEADORA</div>
 
                             <div class="form-field" style="margin-left: 15px">
@@ -1332,38 +1285,87 @@
                                 <span class="field-value field-value-short"><t t-esc="'Lima'"/></span>
                             </div>
 
-                            <!-- <div class="bold" style="margin-bottom: 5px; margin-top: 10px">III. DATOS DEL VÍNCULO LABORAL</div>
+                            <div class="bold" style="margin-bottom: 5px; margin-top: 10px">III. DATOS DEL VÍNCULO LABORAL</div>
 
                             <div class="form-field" style="margin-left: 15px">
-                                <span class="field-label">1. FECHA DE INICIO DE RELACIÓN LABORAL:</span>
-                                <span style="margin-right: 5px;">Día</span>
-                                <span class="field-value field-value-short" style="min-width: 40px;"><t t-esc="o.date_document or ''"/></span>
-                                <span style="margin: 0 5px;">Mes</span>
-                                <span class="field-value field-value-short" style="min-width: 40px;"><t t-esc="o.date_document or ''"/></span>
-                                <span style="margin: 0 5px;">Año</span>
-                                <span class="field-value field-value-short" style="min-width: 60px;"><t t-esc="o.date_document or ''"/></span>
+                                <span class="field-label">1. FECHA DE INICIO DE RELACIÓN LABORAL (*):</span>
+                                <!-- <span class="field-value field-value-short" style="min-width: 40px;"><t t-esc="o.date_document or ''"/></span> -->
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on.day"/>
+                                </t>
+                                <t t-else="">
+                                    ____
+                                </t>
+                                    / 
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on.month"/>
+                                </t>
+                                <t t-else="">
+                                    ____
+                                </t>
+                                    / 
+                                <t t-if="o.applicant_signature">
+                                    <span t-esc="o.signed_on.year"/>
+                                </t>
+                                <t t-else="">
+                                    ____
+                                </t>
                             </div>
 
-                            <div class="form-field" style="margin-left: 15px">
-                                <span class="field-label">2. REMUNERACIÓN:</span>
-                                <span class="field-value field-value-short"><t t-esc="o.vat or ''"/></span>
-                            </div> -->
-
-                            <div class="bold" style="margin-bottom: 5px; margin-top: 10px">III. ELECCIÓN DEL SISTEMA PENSIONARIO:</div>
+                            <div class="bold" style="margin-bottom: 5px; margin-top: 10px">IV. ELECCIÓN DEL SISTEMA PENSIONARIO:</div>
 
                             <div>
                                 <div class="checkbox-container" style="margin-left: 15px">
-                                    <span t-attf-class="checkbox #{o.private_pension_system and 'checked' or ''}"></span>
+                                    <span t-attf-class="checkbox #{o.national_pension_system and 'checked' or ''}"></span>
                                     <span class="bold">1. SISTEMA NACIONAL DE PENSIONES (ONP)</span>
                                 </div>
                             </div>
 
                             <div>
                                 <div class="checkbox-container" style="margin-left: 15px">
-                                    <span t-attf-class="checkbox #{o.national_pension_system and 'checked' or ''}"></span>
+                                    <span t-attf-class="checkbox #{o.private_pension_system and 'checked' or ''}"></span>
                                     <span class="bold">2. SISTEMA PRIVADO DE PENSIONES (AFP)</span>
                                 </div>
                             </div>
+                            <div>
+                                <div class="checkbox-container" style="margin-left: 50px">
+                                    <span t-attf-class="checkbox #{o.afp_first_job and 'checked' or ''}"></span>
+                                    <span class="bold">Primer Empleo</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-container" style="margin-left: 50px">
+                                    <span t-attf-class="checkbox #{o.coming_from_afp and 'checked' or ''}"></span>
+                                    <span class="bold">Proveniente de la AFP</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-container" style="margin-left: 50px">
+                                    <span t-attf-class="checkbox #{o.coming_from_onp and 'checked' or ''}"></span>
+                                    <span class="bold">Proveniente de la ONP</span>
+                                </div>
+                            </div>
+
+                            <br/>
+                            <p class="paragraph">
+                                Yo&#44; 
+                                <strong>
+                                    <span t-esc="o.partner_name if o.partner_name else '______________'"/> 
+                                </strong>
+                                con documento de identidad N&#176;
+                                <strong>
+                                    <span t-esc="o.vat if o.vat else '______________'"/> 
+                                </strong>
+                                ,
+                                mediante este documento autorizo el envío mensual de mi Estado de Cuenta por correo electr&#243;nico&#44; de acuerdo con el art&#237;culo 103&#176; de la Resoluci&#243;n 080&#45;98&#45;SAFP&#44; desde la fecha de suscripci&#243;n del presente&#46;
+                            </p>
+                            <p class="paragraph">
+                                Importante&#58; Si el trabajador no hubiese manifestado su voluntad de afiliarse a un sistema pensionario&#44; el artículo 16&#176; de la Ley N&#176;28991 establece que el empleador lo deber&#225; afiliar a la AFP ganadora de la licitaci&#243;n&#46;
+                            </p>
+                            <!-- <br/> -->
+                            <p class="paragraph">
+                                De acuerdo con las medidas de simplificaci&#243;n y eficiencia administrativa&#44; aceptas de manera expresa el env&#237;o de notificaciones e informaci&#243;n por correo electr&#243;nico a la direcci&#243;n de correo electr&#243;nico que constar&#225; en tu contrato de afiliaci&#243;n o que posteriormente actualices a trav&#233;s de nuestros canales correspondientes&#46; Las notificaciones por correo electr&#243;nico e informaci&#243;n que te enviemos corresponden al tr&#225;mite de car&#225;cter pensionario y no pensionario que realices con AFP&#46;
+                            </p>
 
                             <p class="paragraph date" style="margin-top: 50px">
                                 Ciudad de
@@ -1399,7 +1401,7 @@
                                             <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
                                         </t>
                                         <t t-else="">
-                                            <div style="min-height: 4rem;"></div>
+                                            <div style="min-height: 100px;"></div>
                                         </t>
                                         <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
                                             FIRMA DEL TRABAJADOR
@@ -1407,6 +1409,10 @@
                                     </td>
                                 </tr>
                             </table>
+
+                            <p style="margin-top:50px; font-size:0.520rem;">
+                                (*) La diferencia entre la fecha de inicio laboral y la fecha de firma no deben exceder los 20 dias calendario
+                            </p>
 
                         </div>
                         <div style="page-break-after: always;"/>
