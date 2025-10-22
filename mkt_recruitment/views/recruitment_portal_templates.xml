@@ -9541,13 +9541,19 @@
                                     Declaro que, a la fecha de inicio de mi vínculo laboral con <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>, mi situación respecto a la percepción de rentas de quinta categoría es la siguiente (marque con una "X" la opción que corresponda):
                                 </p>
 
-                                <p class="paragraph">
-                                    <span class="checkbox"></span> <span class="bold">A. NO he percibido</span> remuneraciones de quinta categoría (Participación de Utilidades, liquidación de beneficios sociales, reintegros de remuneración y otros conceptos remunerativos) en el presente año de otro(s) empleador(es) antes de mi ingreso a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>
-                                </p>
+                                <div>
+                                    <div class="checkbox-container" style="margin-left: 5px">
+                                        <span t-attf-class="checkbox #{not o.partner_id.fifth_category_income and 'checked' or ''}"></span>
+                                        <span class="bold">A. NO he percibido</span> remuneraciones de quinta categoría (Participación de Utilidades, liquidación de beneficios sociales, reintegros de remuneración y otros conceptos remunerativos) en el presente año de otro(s) empleador(es) antes de mi ingreso a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>
+                                    </div>
+                                </div>
 
-                                <p class="paragraph">
-                                    <span class="checkbox"></span> <span class="bold">B. SÍ he percibido</span> remuneraciones de quinta categoría en el presente año de otro(s) empleador(es) antes de mi ingreso a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>
-                                </p>
+                                <div>
+                                    <div class="checkbox-container" style="margin-left: 5px">
+                                        <span t-attf-class="checkbox #{o.partner_id.fifth_category_income and 'checked' or ''}"></span>
+                                        <span class="bold">B. SÍ he percibido</span> remuneraciones de quinta categoría en el presente año de otro(s) empleador(es) antes de mi ingreso a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>
+                                    </div>
+                                </div>
 
                                 <p class="paragraph">
                                     En virtud de lo anterior y en cumplimiento de lo dispuesto en el <span class="bold">Artículo 44º del Reglamento de la Ley del Impuesto a la Renta</span>, así como en la <span class="bold">Resolución de Superintendencia N.° 037-2002/SUNAT</span>, me comprometo:
@@ -10375,7 +10381,7 @@
                             </div>
                         </div>
 
-                        <div id="worker_pension_system_document_2" style="padding:2rem 1.5rem 0rem; border: 1px solid;">
+                        <div id="worker_pension_system_document" style="padding:2rem 1.5rem 0rem; border: 1px solid;">
                             <div style="width: 100%;text-align: justify; height: auto; font-size:0.590rem; padding: 2rem 0.5rem 4rem;">
                                 <h1 class="regimen-title">RÉGIMEN PENSIONARIO DEL TRABAJADOR</h1>
                                 
@@ -10407,7 +10413,7 @@
 
                                 <div class="bold">I. DATOS DEL TRABAJADOR</div>
 
-                                <div class="form-field" style="margin-left: 15px">
+                                <!-- <div class="form-field" style="margin-left: 15px">
                                     <span class="field-label">1. APELLIDO PATERNO:</span>
                                     <span class="field-value"><t t-esc="o.partner_name or ''"/></span>
                                 </div>
@@ -10415,15 +10421,15 @@
                                 <div class="form-field" style="margin-left: 15px">
                                     <span class="field-label">2. APELLIDO MATERNO:</span>
                                     <span class="field-value"><t t-esc="o.partner_name or ''"/></span>
-                                </div>
+                                </div> -->
 
                                 <div class="form-field" style="margin-left: 15px">
-                                    <span class="field-label">3. NOMBRES:</span>
+                                    <span class="field-label">1. NOMBRE COMPLETO:</span>
                                     <span class="field-value"><t t-esc="o.partner_name or ''"/></span>
                                 </div>
 
                                 <div class="form-field" style="margin-left: 15px">
-                                    <span class="field-label">4. TIPO DE DOCUMENTO:</span>
+                                    <span class="field-label">2. TIPO DE DOCUMENTO:</span>
                                     <div class="checkbox-container">
                                         <span t-attf-class="checkbox #{o.identification_type == 'DNI' and 'checked' or ''}"></span>
                                         <span>DNI</span>
@@ -10448,7 +10454,7 @@
                                 </div>
 
                                 <div class="form-field" style="margin-left: 15px">
-                                    <span class="field-label">5. SEXO:</span>
+                                    <span class="field-label">3. SEXO:</span>
                                     <div class="checkbox-container">
                                         <span t-attf-class="checkbox #{o.gender == 'female' and 'checked' or ''}"></span>
                                         <span>F</span>
@@ -10460,17 +10466,17 @@
                                 </div>
 
                                 <div class="form-field" style="margin-left: 15px">
-                                    <span class="field-label">6. FECHA DE NACIMIENTO:</span>
-                                    <span style="margin-right: 5px;">Día</span>
+                                    <span class="field-label">4. FECHA DE NACIMIENTO:</span>
+                                    <!-- <span style="margin-right: 5px;">Día</span> -->
                                     <span class="field-value field-value-short" style="min-width: 40px;"><t t-esc="o.birthday or ''"/></span>
-                                    <span style="margin: 0 5px;">Mes</span>
+                                    <!-- <span style="margin: 0 5px;">Mes</span>
                                     <span class="field-value field-value-short" style="min-width: 40px;"><t t-esc="o.birthday or ''"/></span>
                                     <span style="margin: 0 5px;">Año</span>
-                                    <span class="field-value field-value-short" style="min-width: 60px;"><t t-esc="o.birthday or ''"/></span>
+                                    <span class="field-value field-value-short" style="min-width: 60px;"><t t-esc="o.birthday or ''"/></span> -->
                                 </div>
 
                                 <div class="form-field" style="margin-left: 15px">
-                                    <span class="field-label">7. DOMICILIO:</span>
+                                    <span class="field-label">5. DOMICILIO:</span>
                                 </div>
 
                                 <div class="domicilio-group">
@@ -10530,7 +10536,7 @@
                                     <span class="field-value field-value-short"><t t-esc="'Lima'"/></span>
                                 </div>
 
-                                <div class="bold" style="margin-bottom: 5px; margin-top: 10px">III. DATOS DEL VÍNCULO LABORAL</div>
+                                <!-- <div class="bold" style="margin-bottom: 5px; margin-top: 10px">III. DATOS DEL VÍNCULO LABORAL</div>
 
                                 <div class="form-field" style="margin-left: 15px">
                                     <span class="field-label">1. FECHA DE INICIO DE RELACIÓN LABORAL:</span>
@@ -10545,9 +10551,9 @@
                                 <div class="form-field" style="margin-left: 15px">
                                     <span class="field-label">2. REMUNERACIÓN:</span>
                                     <span class="field-value field-value-short"><t t-esc="o.vat or ''"/></span>
-                                </div>
+                                </div> -->
 
-                                <div class="bold" style="margin-bottom: 5px; margin-top: 10px">IV. ELECCIÓN DEL SISTEMA PENSIONARIO:</div>
+                                <div class="bold" style="margin-bottom: 5px; margin-top: 10px">III. ELECCIÓN DEL SISTEMA PENSIONARIO:</div>
 
                                 <div>
                                     <div class="checkbox-container" style="margin-left: 15px">
