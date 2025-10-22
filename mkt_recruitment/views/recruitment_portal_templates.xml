@@ -9541,13 +9541,19 @@
                                     Declaro que, a la fecha de inicio de mi vínculo laboral con <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>, mi situación respecto a la percepción de rentas de quinta categoría es la siguiente (marque con una "X" la opción que corresponda):
                                 </p>
 
-                                <p class="paragraph">
-                                    <span class="checkbox"></span> <span class="bold">A. NO he percibido</span> remuneraciones de quinta categoría (Participación de Utilidades, liquidación de beneficios sociales, reintegros de remuneración y otros conceptos remunerativos) en el presente año de otro(s) empleador(es) antes de mi ingreso a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>
-                                </p>
+                                <div>
+                                    <div class="checkbox-container" style="margin-left: 5px">
+                                        <span t-attf-class="checkbox #{not o.partner_id.fifth_category_income and 'checked' or ''}"></span>
+                                        <span class="bold">A. NO he percibido</span> remuneraciones de quinta categoría (Participación de Utilidades, liquidación de beneficios sociales, reintegros de remuneración y otros conceptos remunerativos) en el presente año de otro(s) empleador(es) antes de mi ingreso a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>
+                                    </div>
+                                </div>
 
-                                <p class="paragraph">
-                                    <span class="checkbox"></span> <span class="bold">B. SÍ he percibido</span> remuneraciones de quinta categoría en el presente año de otro(s) empleador(es) antes de mi ingreso a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>
-                                </p>
+                                <div>
+                                    <div class="checkbox-container" style="margin-left: 5px">
+                                        <span t-attf-class="checkbox #{o.partner_id.fifth_category_income and 'checked' or ''}"></span>
+                                        <span class="bold">B. SÍ he percibido</span> remuneraciones de quinta categoría en el presente año de otro(s) empleador(es) antes de mi ingreso a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>
+                                    </div>
+                                </div>
 
                                 <p class="paragraph">
                                     En virtud de lo anterior y en cumplimiento de lo dispuesto en el <span class="bold">Artículo 44º del Reglamento de la Ley del Impuesto a la Renta</span>, así como en la <span class="bold">Resolución de Superintendencia N.° 037-2002/SUNAT</span>, me comprometo:
@@ -9708,101 +9714,6 @@
                                     </tr>
                                 </table>
 
-                            </div>
-                        </div>
-
-                        <div id="work_commitment_document" style="padding:3rem 2rem 0rem; border: 1px solid;">
-                            <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem; padding: 2rem 0.5rem 4rem;">
-                                <h6 class="document-title">NORMATIVAS &amp; COMPROMISO LABORAL</h6>
-                                
-                                <p class="paragraph">
-                                    Por el presente dejo constancia ante mi empleador Marketing Alterno Perú S.A.C., mi compromiso a cumplir las siguientes cláusulas especificas líneas abajo, las cuales han sido motivo de acuerdo entre las partes, siendo consideradas políticas internas del empleador <span class="bold">MARKETING ALTERNO PERU SAC</span>.
-                                </p>
-
-                                <div class="clause-title">1. CONDUCTA PERSONAL</div>
-                                <ul>
-                                    <li class="paragraph">Está terminantemente prohibido realizar actos que atenten contra la moral, el orden público y/o las buenas costumbres durante mi jornada laboral o dentro de los espacios asignados para el trabajo. Su incumplimiento será considerado <span class="bold">falta grave</span>.</li>
-                                </ul>
-
-                                <div class="clause-title">2. EXCLUSIVIDAD Y CONFIDENCIALIDAD</div>
-                                <ul>
-                                    <li class="paragraph">Reconozco que mi labor es <span class="bold">exclusiva</span> a favor de LA EMPRESA, por lo que <span class="bold">no podré laborar para terceros</span> sin autorización expresa y por escrito, de realizarlo será causal de despido inmediato sin indemnización alguna de por medio. Me obligo a mantener <span class="bold">absoluta confidencialidad</span> respecto a toda información relacionada con la cuenta comercial, actividades, estrategias, datos de clientes, información de ventas, entre otros. Queda <span class="bold">prohibida la difusión por medios digitales (WhatsApp, Facebook, Instagram, etc.)</span> o compartirla con terceros. Su incumplimiento se considera <span class="bold">falta muy grave y causal de despido inmediato</span>.</li>
-                                </ul>
-
-                                <div class="clause-title">3. MARCACIÓN Y REPORTES</div>
-                                <ul>
-                                    <li class="paragraph">Es obligatorio el registro de ingreso y salida mediante el aplicativo asignado, así como el reporte de ventas, stock, y cualquier otra información requerida. El no marcar ingreso/salida, tardanzas, inasistencias no justificadas o el envío de reportes fraudulentos (incluidas fotos adulteradas) será causal de sanción disciplinaria y/o <span class="bold">descuento por el día no trabajado</span>, sin perjuicio de la aplicación de medidas mayores según la gravedad del caso.</li>
-                                </ul>
-
-                                <div class="clause-title">4. RESPONSABILIDAD POR IMPLEMENTOS DE TRABAJO</div>
-                                <ul>
-                                    <li class="paragraph">Me comprometo al buen uso, conservación y custodia de todos los implementos, materiales, dispositivos o herramientas de trabajo entregados. En caso de <span class="bold">daño, pérdida, robo o deterioro atribuible a mi conducta</span>, deberé asumir el costo total de reposición, lo cual será notificado por mail. Autorizando expresamente de manera libre y voluntaria que se le realicen descuentos proporcionales al daño. La presentación de denuncia policial por robo o pérdida <span class="bold">no exime de responsabilidad económica</span> salvo que se determine ausencia de culpa o negligencia.</li>
-                                </ul>
-
-                                <div class="clause-title">5. COMUNICACIONES Y PERMISOS</div>
-                                <ul>
-                                    <li class="paragraph">Toda solicitud o trámite de permisos, licencias, descansos médicos u otras gestiones deberán ser canalizadas <span class="bold">únicamente con mi jefe inmediato</span> (Supervisor de LA EMPRESA). Me comprometo a acatar todas las directrices emitidas por mi superior jerárquico y canales formales de la empresa.</li>
-                                </ul>
-
-                                <div class="clause-title">6. PROHIBICIONES ESPECIALES EN PDV Y/O RUTA</div>
-                                <ul>
-                                    <li class="paragraph">Está <span class="bold">estrictamente prohibido</span> realizar ventas no autorizadas, prohibido apropiarse de activos, materiales o bienes del cliente y/o de la empresa, o realizar acciones prohibidas en la cuenta comercial. Su incumplimiento será <span class="bold">causal directa de despido sin derecho a indemnización</span> por afectar la relación comercial con el cliente principal.</li>
-                                </ul>
-
-                                <div class="clause-title">7. MOVILIDAD (DE SER APLICABLE)</div>
-                                <ul>
-                                    <li class="paragraph">Reconozco que la <span class="bold">movilidad</span> solo procederá en caso haya firmado el <span class="bold">documento de asignación</span>, previamente aprobado por LA EMPRESA. En caso de no suscribir dicho documento, <span class="bold">renuncio expresamente al derecho de reclamar dicho concepto</span>, siendo este beneficio <span class="bold">no automático ni universal</span>.</li>
-                                </ul>
-
-                                <div class="clause-title">8. COMUNICACIONES FORMALES VÍA CORREO ELECTRÓNICO</div>
-                                <ul>
-                                    <li class="paragraph">Autorizo expresamente que todas las <span class="bold">comunicaciones de índole laboral</span> sean remitidas a mi correo electrónico, considerándose válidas y legalmente notificadas.</li>
-                                </ul>
-
-                                <div class="clause-title">9. USO DE IMAGEN, VOZ Y VIDEO</div>
-                                <ul>
-                                    <li class="paragraph">Autorizo de manera expresa, libre e informada a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span> para grabar, capturar, almacenar y difundir mi <span class="bold">imagen, voz y/o video</span>, generados en el marco de mis labores, actividades promocionales, capacitaciones, material de inducción o contenido, incluyendo uso en redes sociales, medios digitales, medios gráficos y/o audiovisuales.</li>
-                                    <li class="paragraph">Dicha autorización es de carácter <span class="bold">permanente, libre, expresa, indefinida, irrevocable, gratuito y sin limitación temporal</span>, por lo que <span class="bold">renuncio expresamente a solicitar pago, compensación, indemnización alguna</span> por dicho uso presente o futuro. Esta autorización no constituye afectación a mi derecho al honor ni a mi intimidad.</li>
-                                </ul>
-                                <div class="clause-title">10. RENUNCIA VOLUNTARIA Y AVISO PREVIO</div>
-                                <p class="paragraph">
-                                    Declaro conocer que mi relación laboral se rige por lo dispuesto en el TÚO del Decreto Legislativo 728, Ley de Productividad y Competitividad Laboral, aprobado mediante Decreto Supremo N.º 003-97-TR (LPCL). En cumplimiento de lo establecido en su artículo 18, en caso de renuncia o retiro voluntario, me obligo a presentar aviso escrito con treinta (30) días de anticipación a mi empleador, ASIMISMO tengo conocimiento que de no cumplir con este aviso previo y presentar mi renuncia de manera imprevista antes del término de mi contrato, autorizo expresamente a <span class="bold">LA EMPRESA</span> que se aplique un descuento único de S/ 30.00 (treinta con 00/100 soles), monto destinado a cubrir los gastos administrativos y comerciales que la empresa debe realizar para atender las gestiones derivadas ante mi retiro imprevisto.
-                                </p>
-                                <p class="paragraph">
-                                    Declaro haber sido informado en reunión de reclutamiento y previo a la firma de documentos, aceptando libremente, reconociendo que tiene como finalidad evitar perjuicios a la gestión organizacional y comercial de la empresa con las ausencias de los puntos asignados.
-                                </p>
-
-                                <div class="clause-title">11. PROHIBICION ACTOS DESHONESTOS Y RESPONSABILIDAD PENAL</div>
-                                <ul>
-                                    <li class="paragraph">Me obligo a mantener una conducta integra, honesta y respetuosa de la ley en el desempeño de mis labores.</li>
-                                    <li class="paragraph">El trabajador tiene conocimiento que esta terminantemente prohibido apropiarse, sustraer, ocultar, comercializar o disponer de dinero, productos, activos, materiales o bienes pertenecientes a la empresa y/o cuenta comercial asignada o a terceros con los que tenga relación en el marco de mis funciones.</li>
-                                    <li class="paragraph">Asimismo, queda prohibida mi participación en cualquier acto ilegal o no autorizadas, falsificación de documentos, adulteración de información o cualquier otro acto.</li>
-                                    <li class="paragraph">En caso de verificarse actos deshonestos, robos, fraudes o participación en hechos delictivos, LA EMPRESA procederá a denunciarme penalmente ante las autoridades competentes, sin perjuicio de la aplicación de las sanciones laborales correspondientes (incluido el despido por falta grave conforme al artículo 25 del D. Leg. 728).</li>
-                                </ul>
-                                <p class="paragraph">
-                                    Declaro haber sido informado de estas obligaciones y de que toda infracción en esta materia acarreará las consecuencias legales, civiles, administrativas y penales que correspondan.
-                                </p>
-
-                                <div class="clause-title">DISPOSICIONES FINALES</div>
-                                <p class="paragraph">
-                                    Declaro que he leído y comprendido íntegramente el presente documento, y que firmo en señal de aceptación libre y voluntaria, sin que medie error, dolo, violencia o intimidación. Reconozco que el presente compromiso laboral constituye parte integrante de mi contrato de trabajo, y asimismo, autorizo de manera expresa a que, en caso de incumplimiento comprobado de mis deberes, y previa comunicación formal por parte de LA EMPRESA, se apliquen las medidas disciplinarias correspondientes conforme al Reglamento Interno de Trabajo y al D. Leg. 728 – Ley de Productividad y Competitividad Laboral, declaro también que la aceptación de este documento ha sido realizada sin mediar error, dolo, violencia o intimidación, y que tengo pleno conocimiento de que todo incumplimiento podrá derivar en sanciones laborales y/o acciones legales de acuerdo con la legislación peruana aplicable.
-                                </p>
-
-                                <table style="width:100%; margin-top:50px; text-align:center; border-collapse:collapse;">
-                                    <tr>
-                                        <td style="vertical-align:bottom; text-align:center;">
-                                            <t t-if="o.applicant_signature">
-                                                <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 100px;"></div>
-                                            </t>
-                                            <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
-                                                FIRMA DEL TRABAJADOR
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
                             </div>
                         </div>
 
@@ -10470,7 +10381,7 @@
                             </div>
                         </div>
 
-                        <div id="worker_pension_system_document_2" style="padding:2rem 1.5rem 0rem; border: 1px solid;">
+                        <div id="worker_pension_system_document" style="padding:2rem 1.5rem 0rem; border: 1px solid;">
                             <div style="width: 100%;text-align: justify; height: auto; font-size:0.590rem; padding: 2rem 0.5rem 4rem;">
                                 <h1 class="regimen-title">RÉGIMEN PENSIONARIO DEL TRABAJADOR</h1>
                                 
@@ -10502,7 +10413,7 @@
 
                                 <div class="bold">I. DATOS DEL TRABAJADOR</div>
 
-                                <div class="form-field" style="margin-left: 15px">
+                                <!-- <div class="form-field" style="margin-left: 15px">
                                     <span class="field-label">1. APELLIDO PATERNO:</span>
                                     <span class="field-value"><t t-esc="o.partner_name or ''"/></span>
                                 </div>
@@ -10510,15 +10421,15 @@
                                 <div class="form-field" style="margin-left: 15px">
                                     <span class="field-label">2. APELLIDO MATERNO:</span>
                                     <span class="field-value"><t t-esc="o.partner_name or ''"/></span>
-                                </div>
+                                </div> -->
 
                                 <div class="form-field" style="margin-left: 15px">
-                                    <span class="field-label">3. NOMBRES:</span>
+                                    <span class="field-label">1. NOMBRE COMPLETO:</span>
                                     <span class="field-value"><t t-esc="o.partner_name or ''"/></span>
                                 </div>
 
                                 <div class="form-field" style="margin-left: 15px">
-                                    <span class="field-label">4. TIPO DE DOCUMENTO:</span>
+                                    <span class="field-label">2. TIPO DE DOCUMENTO:</span>
                                     <div class="checkbox-container">
                                         <span t-attf-class="checkbox #{o.identification_type == 'DNI' and 'checked' or ''}"></span>
                                         <span>DNI</span>
@@ -10543,7 +10454,7 @@
                                 </div>
 
                                 <div class="form-field" style="margin-left: 15px">
-                                    <span class="field-label">5. SEXO:</span>
+                                    <span class="field-label">3. SEXO:</span>
                                     <div class="checkbox-container">
                                         <span t-attf-class="checkbox #{o.gender == 'female' and 'checked' or ''}"></span>
                                         <span>F</span>
@@ -10555,17 +10466,17 @@
                                 </div>
 
                                 <div class="form-field" style="margin-left: 15px">
-                                    <span class="field-label">6. FECHA DE NACIMIENTO:</span>
-                                    <span style="margin-right: 5px;">Día</span>
+                                    <span class="field-label">4. FECHA DE NACIMIENTO:</span>
+                                    <!-- <span style="margin-right: 5px;">Día</span> -->
                                     <span class="field-value field-value-short" style="min-width: 40px;"><t t-esc="o.birthday or ''"/></span>
-                                    <span style="margin: 0 5px;">Mes</span>
+                                    <!-- <span style="margin: 0 5px;">Mes</span>
                                     <span class="field-value field-value-short" style="min-width: 40px;"><t t-esc="o.birthday or ''"/></span>
                                     <span style="margin: 0 5px;">Año</span>
-                                    <span class="field-value field-value-short" style="min-width: 60px;"><t t-esc="o.birthday or ''"/></span>
+                                    <span class="field-value field-value-short" style="min-width: 60px;"><t t-esc="o.birthday or ''"/></span> -->
                                 </div>
 
                                 <div class="form-field" style="margin-left: 15px">
-                                    <span class="field-label">7. DOMICILIO:</span>
+                                    <span class="field-label">5. DOMICILIO:</span>
                                 </div>
 
                                 <div class="domicilio-group">
@@ -10625,7 +10536,7 @@
                                     <span class="field-value field-value-short"><t t-esc="'Lima'"/></span>
                                 </div>
 
-                                <div class="bold" style="margin-bottom: 5px; margin-top: 10px">III. DATOS DEL VÍNCULO LABORAL</div>
+                                <!-- <div class="bold" style="margin-bottom: 5px; margin-top: 10px">III. DATOS DEL VÍNCULO LABORAL</div>
 
                                 <div class="form-field" style="margin-left: 15px">
                                     <span class="field-label">1. FECHA DE INICIO DE RELACIÓN LABORAL:</span>
@@ -10640,9 +10551,9 @@
                                 <div class="form-field" style="margin-left: 15px">
                                     <span class="field-label">2. REMUNERACIÓN:</span>
                                     <span class="field-value field-value-short"><t t-esc="o.vat or ''"/></span>
-                                </div>
+                                </div> -->
 
-                                <div class="bold" style="margin-bottom: 5px; margin-top: 10px">IV. ELECCIÓN DEL SISTEMA PENSIONARIO:</div>
+                                <div class="bold" style="margin-bottom: 5px; margin-top: 10px">III. ELECCIÓN DEL SISTEMA PENSIONARIO:</div>
 
                                 <div>
                                     <div class="checkbox-container" style="margin-left: 15px">
@@ -10703,6 +10614,400 @@
 
                             </div>
                         </div>
+                        <t t-if="o.partner_id.belong_applicant_id.job_id.department_id and o.partner_id.belong_applicant_id.job_id.department_id.id == 75">
+                            <div id="labor_commitment_document" class="mt-5" style="border: 1px solid;">
+                                <div style="width: 100%; text-align: justify; height: auto; font-size:0.625rem; line-height: 1.3; padding: 2rem 2rem 4rem;">
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <!-- Columna izquierda: título -->
+                                            <td style="text-align:right; width:75%;">
+                                                <h3 style="margin:0; font-size:15px; font-weight:bold;">
+                                                    ANEXO I.- NORMATIVAS &amp; COMPROMISO LABORAL
+                                                </h3>
+                                            </td>
+                                            <!-- Columna derecha: logo -->
+                                            <td style="text-align:right; width:25%;">
+                                                <img t-attf-src="/logo.png?company={{ recruitment_document.env.user.company_id.id }}"
+                                                    style="padding: 0px; margin: 0px; height: auto; width: 100px;" 
+                                                    t-att-alt="recruitment_document.env.user.company_id.name"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <!-- Datos del trabajador -->
+                                    <div style="margin-bottom:2px;">
+                                        <b>Datos del trabajador:</b>
+                                    </div>
+                                    <div style="margin-bottom:8px; margin-left:30px;">
+                                        <p style="margin:0">Nombre y Apellidos: 
+                                            <t t-esc="o.partner_name or ''"/>
+                                        </p>
+                                        <p style="margin:0">Documento de Identidad: 
+                                            <t t-esc="o.vat or ''"/>
+                                        </p>
+                                        <p style="margin:0">Cargo: 
+                                            <t t-esc="o.partner_id.belong_applicant_id.job_id.name or ''"/>
+                                        </p>
+                                        <p style="margin:0">Cuenta comercial asignada: 
+                                            <t t-esc="o.partner_id.belong_applicant_id.department_id.complete_name or ''"/>
+                                        </p>
+                                        <p style="margin:0">Correo electrónico autorizado para notificaciones digitales:
+                                            <t t-esc="o.email or ''"/>
+                                        </p>
+                                        <p style="margin:0">Domicilio: 
+                                            <t t-esc="o.street or ''"/>
+                                        </p>
+                                    </div>
+
+
+                                    <!-- Intro -->
+                                    <div style="margin-bottom:4px; text-align:justify;">
+                                        <p>
+                                            Por el presente dejo constancia ante mi empleador Marketing Alterno Perú S.A.C., mi compromiso a cumplir las siguientes cláusulas 
+                                            específicas líneas abajo, las cuales han sido motivo de acuerdo entre las partes, siendo consideradas políticas internas del empleador 
+                                            <strong>MARKETING ALTERNO PERU SAC</strong>.
+                                        </p>
+                                    </div>
+
+                                    <!-- 1 -->
+                                    <div style="margin-bottom:0px;">
+                                        <h7 style="margin:2px 0;"><b>1. POLÍTICAS INTERNAS Y NORMATIVA:</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px;">
+                                            <li style="margin:4px 0;">Me obligo a cumplir estrictamente con las políticas internas de LA EMPRESA, incluyendo, pero no limitándose, al Reglamento Interno de Trabajo (RIT), 
+                                            Reglamento Interno de Seguridad y Salud en el Trabajo (RISST), protocolos de bioseguridad, lineamientos de marca, y demás normas aplicables 
+                                            (Hostigamiento Sexual, Protección de Datos Personales, Política Salarial, etc.). Reconozco que el incumplimiento de dichas disposiciones podrá ser 
+                                            sancionado disciplinariamente conforme al D. Leg. 728 - Ley de Productividad y Competitividad Laboral, pudiendo configurarse faltas leves, graves o muy graves, incluso causal de despido.</li>
+                                            <li style="margin:4px 0;">EL TRABAJADOR deja constancia que conoce su jornada laboral y que toda hora extra solo procede con autorización escrita o digital de mi jefe inmediato.</li>
+                                        </ul>
+                                    </div>
+
+
+                                    <!-- 2 -->
+                                    <div style="margin-bottom:0px;">
+                                        <h7 style="margin:2px 0;"><b>2. USO DE UNIFORME, FOTOCHECK Y CONDUCTA PERSONAL</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px;">
+                                            <li style="margin:4px 0;">Me comprometo al uso obligatorio del uniforme de la marca asignada, fotocheck visible, y presentación personal adecuada. Está terminantemente prohibido 
+                                            realizar actos que atenten contra la moral, el orden público y/o las buenas costumbres durante mi jornada laboral o dentro de los espacios asignados para el trabajo. 
+                                            Su incumplimiento será considerado <strong>falta grave y causal de despido</strong>.</li>
+                                            <li style="margin:4px 0;">El Colaborador tiene conocimiento de la obligatoriedad de tener Carnet de Sanidad Vigente y atento a las fechas de actualización para evitar perjudicar el servicio, 
+                                            pues de no respetarse sería causal de sanción disciplinaria y/o suspensión de labores.</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- 3 -->
+                                    <div style="margin-bottom:0px;">
+                                        <h7 style="margin:2px 0;"><b>3. EXCLUSIVIDAD Y CONFIDENCIALIDAD</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px;">
+                                            <li style="margin:4px 0;">Reconozco que mi prestación de servicios es <strong>exclusiva</strong> a favor de LA EMPRESA, por lo que <strong>no podré laborar para terceros</strong> sin autorización expresa y por escrito, 
+                                            de realizarlo será causal de despido inmediato sin indemnización alguna de por medio. Me obligo a mantener <strong>absoluta confidencialidad</strong> respecto a toda información 
+                                            relacionada con la cuenta comercial, actividades, estrategias, datos de clientes, información de ventas, entre otros. Queda <strong>prohibida la difusión por medios 
+                                            digitales (WhatsApp, Facebook, Instagram, etc.)</strong> o compartirla con terceros. Su incumplimiento se considera <strong>falta muy grave y causal de despido inmediato</strong> 
+                                            sin dar lugar a indemnizaciones, siendo de conocimiento de las partes.</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- 4 -->
+                                    <div style="margin-bottom:0px;">
+                                        <h7 style="margin:2px 0;"><b>4. MARCACIÓN Y REPORTES</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px;">
+                                            <li style="margin:4px 0;">Es obligatorio el registro de ingreso y salida mediante el aplicativo asignado, así como el reporte de ventas, stock, y cualquier otra 
+                                            información requerida. El no marcar ingreso/salida, tardanzas, inasistencias no justificadas o el envío de reportes fraudulentos 
+                                            (incluidas fotos adulteradas) será causal de sanción disciplinaria y/o <strong>descuento por el día no trabajado</strong>, sin perjuicio de la aplicación 
+                                            de medidas mayores según la gravedad del caso.</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- 5 -->
+                                    <div style="margin-bottom:0px;">
+                                        <h7 style="margin:2px 0;"><b>5. RESPONSABILIDAD POR IMPLEMENTOS DE TRABAJO</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px;">
+                                            <li style="margin:4px 0;">Me comprometo al buen uso, conservación y custodia de todos los implementos, materiales, dispositivos o herramientas de trabajo entregados. 
+                                            En caso de <strong>daño, pérdida, robo o deterioro atribuible a mi conducta</strong>, deberé asumir el costo total de reposición.</li>
+                                            <li style="margin:4px 0;">La presentación de denuncia policial por robo o pérdida <strong>no exime de responsabilidad económica</strong> salvo que se determine ausencia de culpa o negligencia.</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- 6 -->
+                                    <div style="margin-bottom:0px;">
+                                        <h7 style="margin:2px 0;"><b>6. COMUNICACIONES Y PERMISOS</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px;">
+                                            <li style="margin:4px 0;">Toda solicitud o trámite de permisos, licencias, descansos médicos u otras gestiones deberán ser canalizadas únicamente <strong>con mi jefe 
+                                            inmediato</strong> (Supervisor de cuenta de LA EMPRESA). Me comprometo a acatar todas las directrices emitidas por mi superior jerárquico y 
+                                            canales formales de la empresa.</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- 7 -->
+                                    <div style="margin-bottom:0px;">
+                                        <h7 style="margin:2px 0;"><b>7. PARTICIPACIÓN OBLIGATORIA EN CAPACITACIONES</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px;">
+                                            <li style="margin:4px 0;">Me obligo a participar activamente en las <strong>inducciones, entrenamientos, charlas técnicas, reuniones virtuales o presenciales y capacitaciones programadas</strong>, 
+                                            considerando estas como parte integral de mi jornada laboral.</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- 8 -->
+                                    <div style="margin-bottom:0px;">
+                                        <h7 style="margin:2px 0;"><b>8. PROHIBICIONES ESPECIALES EN PDV</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px;">
+                                            <li style="margin:4px 0;">Está <strong>estrictamente prohibido</strong> realizar ventas no autorizadas, prohibido apropiarse de activos, materiales o bienes del cliente 
+                                            y/o de la empresa, los productos y degustación (dependiendo la cuenta comercial serán tratados de acuerdo a la mecánica de la cuenta comercial), 
+                                            prohibido instalar programas o manipular productos de la cuenta comercial. Su incumplimiento será <strong>causal directa de despido sin derecho a indemnización</strong> 
+                                            por afectar la relación comercial con el cliente principal y se aplicarán los descuentos correspondientes, autorizando mediante la presente a toda 
+                                            aceptación de las medidas disciplinarias.</li>
+                                        </ul>
+                                    </div>
+                                    
+
+                                    <div style="margin-bottom:2px;">
+                                        <ul style="text-align:justify; padding-left:16px; margin-bottom:2px;">
+                                            <li style="margin:4px 0;"><strong>Operaciones y procedimientos en punto de venta (PDV)</strong></li>
+                                        </ul>
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        <ol style="padding-left:30px;">
+                                            <li>Realizar el inventario de stock snapshot a través del terminal.</li>
+                                            <li>Mantener limpio y ordenado el módulo de atención asignado.</li>
+                                            <li>Realizar apertura y cierre de caja por la persona a cargo, realizando el depósito correspondiente según lineamientos compartidos.</li>
+                                            <li>No entregar premios mayores a S/ 150 sin autorización del jefe directo.</li>
+                                            <li>Respetar las reglas, regulaciones y sistemas de cada juego.</li>
+                                            <li>Actualizar información de pozos ganadores y material POP en el PDV.</li>
+                                            <li>Garantizar la seguridad de todo el material de venta.</li>
+                                            <li>Reportar déficit de material publicitario y de venta.</li>
+                                            <li>Reportar problemas técnicos de los terminales de forma inmediata.</li>
+                                            <li>Realizar depósitos diarios según el procedimiento establecido.</li>
+                                            <li>Realizar adelantos parciales de dinero según la frecuencia requerida.</li>
+                                            <li>Realizar corte de caja al cambio de turno y reporte de inventario.</li>
+                                            <li>Mantener seguro el dinero y bienes asignados; todo dinero debe guardarse en la caja de seguridad y seguir las indicaciones establecidas.</li>
+                                            <li>Reportar al call center y al supervisor inmediato cualquier incidencia (robo, billetes falsos, pérdida de productos, candados o placas rotas, etc.).</li>
+                                            <li>Comunicar al jefe inmediato toda cancelación de jugadas al momento de realizarse.</li>
+                                            <li>Mantener en orden el dinero, vales de depósito, validaciones, tickets cancelados, pago de premios y demás documentos relacionados.</li>
+                                            <li>Usar el pin o pegatina de “Juego Responsable” promoviéndolo y repartir folletos y todo material correspondiente.</li>
+                                            <li>Informar a los clientes sobre el programa de juego responsable e invitarlos a escribir a juego.responsable@lotobola.com.pe.</li>
+                                        </ol>
+                                    </div>                    
+
+                                    <!-- Continuación secciones 9..15 -->
+                                    <div style="margin-bottom:8px;">
+                                        <h7 style="margin:4px 0;"><b>9. RESPONSABILIDAD POR FONDOS Y VALORES (CAJA CHICA)</b></h7>
+                                        <p style="text-align:justify; margin:4px 0; padding-left:16px;">
+                                            En caso de pérdida, faltante o uso indebido de fondos, valores o bienes asignados atribuible a mi dolo, negligencia o incumplimiento, 
+                                            y previa verificación documentada por parte de LA EMPRESA, autorizo libre y expresamente que el monto correspondiente a la pérdida sea:
+                                        </p>
+                                        <ul style="text-align:justify; padding-left:16px; margin-bottom:4px;">
+                                            <li>Compensado o descontado de mi remuneración mensual, y/o todo pendiente remunerativo respetando el límite legal establecido en el art. 648 del Código Procesal Civil.</li>
+                                            <li>Que, en caso de renuncia o despido, deducirlo de mi liquidación de beneficios sociales.</li>
+                                            <li>El trabajador se obliga a dar cumplimiento a los procedimientos designados para la custodia y seguridad del dinero, el cual no puede ser transportado sin autorización.</li>
+                                        </ul>
+                                        <p style="text-align:justify; padding-left:16px; margin-top:4px;">
+                                            LA EMPRESA me comunicará formalmente el resultado de la verificación y el monto exacto materia de descuento.
+                                        </p>
+                                    </div>
+
+                                    <div style="margin-bottom:8px;">
+                                        <h7 style="margin:4px 0;"><b>10. MOVILIDAD (DE SER APLICABLE)</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px;">
+                                            <li style="margin:4px 0;">Reconozco que la <strong>movilidad</strong> solo procederá en caso haya firmado el <strong>documento de asignación y modalidad de liquidación de movilidad</strong>, 
+                                            previamente aprobado por LA EMPRESA. En caso de no suscribir dicho documento, <strong>renuncio expresamente al derecho de reclamar dicho concepto</strong>, siendo
+                                            este beneficio <strong>no automático ni universal</strong>.</li>
+                                        </ul>
+                                    </div>
+
+                                    <div style="margin-bottom:8px;">
+                                        <h7 style="margin:4px 0;"><b>11. COMUNICACIONES FORMALES VÍA CORREO ELECTRÓNICO</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px;">
+                                            <li style="margin:4px 0;">Autorizo expresamente que todas las <strong>comunicaciones formales de índole laboral (memorándums, sanciones, notificaciones, comunicados, etc.)</strong> sean 
+                                            remitidas a mi correo electrónico, considerándose válidas y legalmente notificadas sin necesidad de formalización notarial.</li>
+                                        </ul>
+                                    </div>
+
+                                    <div style="margin-bottom:8px;">
+                                        <h7 style="margin:4px 0;"><b>12. USO DE IMAGEN, VOZ Y VIDEO</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px;">
+                                            <li style="margin:4px 0;">Autorizo de manera expresa, libre e informada a <strong>MARKETING ALTERNO PERÚ S.A.C.</strong> para grabar, capturar, almacenar y difundir mi 
+                                            <strong>imagen, voz y/o video</strong>, generados en el marco de mis labores, actividades promocionales, capacitaciones, eventos, 
+                                            material de inducción o contenido institucional, incluyendo uso en redes sociales, medios digitales, internos o externos, medios gráficos y/o audiovisuales.</li>
+                                            <li style="margin:4px 0;">Dicha autorización es de carácter <strong>libre, expresa, permanente, irrevocable, gratuito, indefinida y sin limitación territorial o temporal</strong>, 
+                                            por lo que <strong>renuncio expresamente a solicitar pago, compensación económica, indemnización o contraprestación alguna</strong> por dicho uso presente o futuro.</li>
+                                            <li style="margin:4px 0;">Esta autorización no constituye afectación a mi derecho al honor ni a mi intimidad, en tanto se encuentra referida al ámbito laboral y es utilizada conforme a 
+                                            fines institucionales de LA EMPRESA.</li>
+                                        </ul>
+                                    </div>
+
+                                    <div style="margin-bottom:8px;">
+                                        <h7 style="margin:4px 0;"><b>13. DECLARACIÓN DE NO CONSUMO DE ALCOHOL O DROGAS EN HORARIO LABORAL</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px;">
+                                            <li style="margin:4px 0;">Obligación expresa de no presentarme bajo efectos del alcohol, drogas o sustancias controladas, caso contrario es falta grave o causal de despido inmediato.</li>
+                                        </ul>
+                                    </div>
+
+                                    <div style="margin-bottom:8px;">
+                                        <h7 style="margin:4px 0;"><b>14. RENUNCIA VOLUNTARIA Y AVISO PREVIO</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px;">
+                                            <li style="margin:4px 0;">Declaro conocer que mi relación laboral se rige por lo dispuesto en el Texto Único Ordenado del Decreto Legislativo 728, Ley de Productividad y Competitividad 
+                                            Laboral, aprobado mediante Decreto Supremo N.º 003-97-TR (LPCL). En cumplimiento de lo establecido en su artículo 18, en caso de renuncia o retiro 
+                                            voluntario, me obligo a presentar aviso escrito con treinta (30) días de anticipación a mi empleador, pues de no cumplir con este aviso previo y presentar mi 
+                                            renuncia de manera imprevista previamente al termino de mi contrato, autorizo expresamente a LA EMPRESA a aplicar un descuento único de S/ 30.00 (treinta 
+                                            con 00/100 soles), monto destinado a cubrir los gastos administrativos y comerciales que la empresa debe realizar para atender las gestiones derivadas de mi 
+                                            desvinculación.</li>
+                                            <li style="margin:4px 0;">Declaro que esta disposición me ha sido informada, comprendida y aceptada libremente, reconociendo que tiene como finalidad evitar perjuicios a la gestión 
+                                            organizacional y comercial de la empresa.</li>
+                                        </ul>
+                                    </div>
+
+                                    <div style="margin-bottom:8px;">
+                                        <h7 style="margin:4px 0;"><b>15. PROHIBICIÓN ACTOS DESHONESTOS Y RESPONSABILIDAD PENAL</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px; margin-bottom:4px;">
+                                            <li style="margin:4px 0;">Me obligo a mantener una conducta integra, honesta y respetuosa de la ley en el desempeño de mis labores.</li>
+                                            <li style="margin:4px 0;">El trabajador tiene conocimiento que esta terminantemente prohibido apropiarse, sustraer, ocultar, comercializar o disponer de dinero, 
+                                            productos, activos, materiales o bienes pertenecientes a la empresa y/o cuenta comercial asignada o a terceros con los que tenga relación en el marco de mis funciones.</li>
+                                            <li style="margin:4px 0;">Asimismo, queda prohibida mi participación en cualquier acto ilegal vinculado a juegos de azar, apuestas no autorizadas, falsificación de documentos, 
+                                            manipulación de terminales, adulteración de información o cualquier otro acto que constituya delito o falta conforme al Código Penal Peruano.</li>
+                                            <li style="margin:4px 0;">En caso de verificarse actos deshonestos, robos, fraudes o participación en hechos delictivos, LA EMPRESA procederá a denunciarme penalmente ante las 
+                                            autoridades competentes, sin perjuicio de la aplicación de las sanciones laborales correspondientes (incluido el despido por falta grave conforme al artículo 
+                                            25 del D. Leg. 728)</li>
+                                        </ul>
+                                        <p style="text-align:justify; margin:4px 0; padding-left:16px;">
+                                            Declaro haber sido informado de estas obligaciones y de que toda infracción en esta materia acarreará las consecuencias legales, civiles, administrativas 
+                                            y penales que correspondan.
+                                        </p>
+                                    </div>
+
+                                    <div style="margin-top:10px; margin-bottom:16px;">
+                                        <h7 style="margin:4px 0;"><b>DISPOSICIONES FINALES</b></h7>
+                                        <ul style="text-align:justify; padding-left:16px; margin-bottom:4px;">
+                                            <li style="margin:4px 0;">El presente compromiso forma parte del contrato de trabajo y del Reglamento Interno, y que el trabajador declara haberlo leído y entendido, 
+                                            encontrándose de acuerdo con todos los lineamientos establecidos.</li>
+                                            <li style="margin:4px 0;">Declaro que he leído y comprendido íntegramente el presente documento, y que firmo en señal de aceptación libre y voluntaria, sin que medie error, dolo, 
+                                            violencia o intimidación. Reconozco que el presente compromiso laboral constituye parte integrante de mi contrato de trabajo, y asimismo, autorizo de 
+                                            manera expresa a que, en caso de incumplimiento comprobado de mis deberes, y previa comunicación formal por parte de LA EMPRESA, se apliquen las 
+                                            medidas disciplinarias correspondientes conforme al Reglamento Interno de Trabajo y al D. Leg. 728 – Ley de Productividad y Competitividad Laboral, 
+                                            incluyendo descuentos legales en mi remuneración o en mi liquidación de beneficios sociales por conceptos tales como pérdidas de dinero, bienes, 
+                                            implementos, adelantos otorgados u otros casos previstos en la normativa vigente.</li>
+                                        </ul>
+                                        <p style="text-align:justify; margin:4px 0; padding-left:16px;">
+                                            Declaro también que la aceptación de este documento ha sido realizada sin mediar error, dolo, violencia o intimidación, y que tengo pleno conocimiento de 
+                                            que todo incumplimiento podrá derivar en sanciones laborales y/o acciones legales de acuerdo con la legislación peruana aplicable.
+                                        </p>
+                                    </div>
+
+                                    <!-- Firma final -->
+                                    <table style="width:100%; margin-top:50px; text-align:center; border-collapse:collapse;">
+                                        <tr>
+                                            <td style="vertical-align:bottom; text-align:center;">
+                                                <t t-if="o.applicant_signature">
+                                                    <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <div style="min-height: 100px;"></div>
+                                                </t>
+                                                <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
+                                                    FIRMA DEL TRABAJADOR
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                </div>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div id="work_commitment_document" style="padding:3rem 2rem 0rem; border: 1px solid;">
+                                <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem; padding: 2rem 0.5rem 4rem;">
+                                    <h6 class="document-title">NORMATIVAS &amp; COMPROMISO LABORAL</h6>
+                                    
+                                    <p class="paragraph">
+                                        Por el presente dejo constancia ante mi empleador Marketing Alterno Perú S.A.C., mi compromiso a cumplir las siguientes cláusulas especificas líneas abajo, las cuales han sido motivo de acuerdo entre las partes, siendo consideradas políticas internas del empleador <span class="bold">MARKETING ALTERNO PERU SAC</span>.
+                                    </p>
+
+                                    <div class="clause-title">1. CONDUCTA PERSONAL</div>
+                                    <ul>
+                                        <li class="paragraph">Está terminantemente prohibido realizar actos que atenten contra la moral, el orden público y/o las buenas costumbres durante mi jornada laboral o dentro de los espacios asignados para el trabajo. Su incumplimiento será considerado <span class="bold">falta grave</span>.</li>
+                                    </ul>
+
+                                    <div class="clause-title">2. EXCLUSIVIDAD Y CONFIDENCIALIDAD</div>
+                                    <ul>
+                                        <li class="paragraph">Reconozco que mi labor es <span class="bold">exclusiva</span> a favor de LA EMPRESA, por lo que <span class="bold">no podré laborar para terceros</span> sin autorización expresa y por escrito, de realizarlo será causal de despido inmediato sin indemnización alguna de por medio. Me obligo a mantener <span class="bold">absoluta confidencialidad</span> respecto a toda información relacionada con la cuenta comercial, actividades, estrategias, datos de clientes, información de ventas, entre otros. Queda <span class="bold">prohibida la difusión por medios digitales (WhatsApp, Facebook, Instagram, etc.)</span> o compartirla con terceros. Su incumplimiento se considera <span class="bold">falta muy grave y causal de despido inmediato</span>.</li>
+                                    </ul>
+
+                                    <div class="clause-title">3. MARCACIÓN Y REPORTES</div>
+                                    <ul>
+                                        <li class="paragraph">Es obligatorio el registro de ingreso y salida mediante el aplicativo asignado, así como el reporte de ventas, stock, y cualquier otra información requerida. El no marcar ingreso/salida, tardanzas, inasistencias no justificadas o el envío de reportes fraudulentos (incluidas fotos adulteradas) será causal de sanción disciplinaria y/o <span class="bold">descuento por el día no trabajado</span>, sin perjuicio de la aplicación de medidas mayores según la gravedad del caso.</li>
+                                    </ul>
+
+                                    <div class="clause-title">4. RESPONSABILIDAD POR IMPLEMENTOS DE TRABAJO</div>
+                                    <ul>
+                                        <li class="paragraph">Me comprometo al buen uso, conservación y custodia de todos los implementos, materiales, dispositivos o herramientas de trabajo entregados. En caso de <span class="bold">daño, pérdida, robo o deterioro atribuible a mi conducta</span>, deberé asumir el costo total de reposición, lo cual será notificado por mail. Autorizando expresamente de manera libre y voluntaria que se le realicen descuentos proporcionales al daño. La presentación de denuncia policial por robo o pérdida <span class="bold">no exime de responsabilidad económica</span> salvo que se determine ausencia de culpa o negligencia.</li>
+                                    </ul>
+
+                                    <div class="clause-title">5. COMUNICACIONES Y PERMISOS</div>
+                                    <ul>
+                                        <li class="paragraph">Toda solicitud o trámite de permisos, licencias, descansos médicos u otras gestiones deberán ser canalizadas <span class="bold">únicamente con mi jefe inmediato</span> (Supervisor de LA EMPRESA). Me comprometo a acatar todas las directrices emitidas por mi superior jerárquico y canales formales de la empresa.</li>
+                                    </ul>
+
+                                    <div class="clause-title">6. PROHIBICIONES ESPECIALES EN PDV Y/O RUTA</div>
+                                    <ul>
+                                        <li class="paragraph">Está <span class="bold">estrictamente prohibido</span> realizar ventas no autorizadas, prohibido apropiarse de activos, materiales o bienes del cliente y/o de la empresa, o realizar acciones prohibidas en la cuenta comercial. Su incumplimiento será <span class="bold">causal directa de despido sin derecho a indemnización</span> por afectar la relación comercial con el cliente principal.</li>
+                                    </ul>
+
+                                    <div class="clause-title">7. MOVILIDAD (DE SER APLICABLE)</div>
+                                    <ul>
+                                        <li class="paragraph">Reconozco que la <span class="bold">movilidad</span> solo procederá en caso haya firmado el <span class="bold">documento de asignación</span>, previamente aprobado por LA EMPRESA. En caso de no suscribir dicho documento, <span class="bold">renuncio expresamente al derecho de reclamar dicho concepto</span>, siendo este beneficio <span class="bold">no automático ni universal</span>.</li>
+                                    </ul>
+
+                                    <div class="clause-title">8. COMUNICACIONES FORMALES VÍA CORREO ELECTRÓNICO</div>
+                                    <ul>
+                                        <li class="paragraph">Autorizo expresamente que todas las <span class="bold">comunicaciones de índole laboral</span> sean remitidas a mi correo electrónico, considerándose válidas y legalmente notificadas.</li>
+                                    </ul>
+
+                                    <div class="clause-title">9. USO DE IMAGEN, VOZ Y VIDEO</div>
+                                    <ul>
+                                        <li class="paragraph">Autorizo de manera expresa, libre e informada a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span> para grabar, capturar, almacenar y difundir mi <span class="bold">imagen, voz y/o video</span>, generados en el marco de mis labores, actividades promocionales, capacitaciones, material de inducción o contenido, incluyendo uso en redes sociales, medios digitales, medios gráficos y/o audiovisuales.</li>
+                                        <li class="paragraph">Dicha autorización es de carácter <span class="bold">permanente, libre, expresa, indefinida, irrevocable, gratuito y sin limitación temporal</span>, por lo que <span class="bold">renuncio expresamente a solicitar pago, compensación, indemnización alguna</span> por dicho uso presente o futuro. Esta autorización no constituye afectación a mi derecho al honor ni a mi intimidad.</li>
+                                    </ul>
+                                    <div class="clause-title">10. RENUNCIA VOLUNTARIA Y AVISO PREVIO</div>
+                                    <p class="paragraph">
+                                        Declaro conocer que mi relación laboral se rige por lo dispuesto en el TÚO del Decreto Legislativo 728, Ley de Productividad y Competitividad Laboral, aprobado mediante Decreto Supremo N.º 003-97-TR (LPCL). En cumplimiento de lo establecido en su artículo 18, en caso de renuncia o retiro voluntario, me obligo a presentar aviso escrito con treinta (30) días de anticipación a mi empleador, ASIMISMO tengo conocimiento que de no cumplir con este aviso previo y presentar mi renuncia de manera imprevista antes del término de mi contrato, autorizo expresamente a <span class="bold">LA EMPRESA</span> que se aplique un descuento único de S/ 30.00 (treinta con 00/100 soles), monto destinado a cubrir los gastos administrativos y comerciales que la empresa debe realizar para atender las gestiones derivadas ante mi retiro imprevisto.
+                                    </p>
+                                    <p class="paragraph">
+                                        Declaro haber sido informado en reunión de reclutamiento y previo a la firma de documentos, aceptando libremente, reconociendo que tiene como finalidad evitar perjuicios a la gestión organizacional y comercial de la empresa con las ausencias de los puntos asignados.
+                                    </p>
+
+                                    <div class="clause-title">11. PROHIBICION ACTOS DESHONESTOS Y RESPONSABILIDAD PENAL</div>
+                                    <ul>
+                                        <li class="paragraph">Me obligo a mantener una conducta integra, honesta y respetuosa de la ley en el desempeño de mis labores.</li>
+                                        <li class="paragraph">El trabajador tiene conocimiento que esta terminantemente prohibido apropiarse, sustraer, ocultar, comercializar o disponer de dinero, productos, activos, materiales o bienes pertenecientes a la empresa y/o cuenta comercial asignada o a terceros con los que tenga relación en el marco de mis funciones.</li>
+                                        <li class="paragraph">Asimismo, queda prohibida mi participación en cualquier acto ilegal o no autorizadas, falsificación de documentos, adulteración de información o cualquier otro acto.</li>
+                                        <li class="paragraph">En caso de verificarse actos deshonestos, robos, fraudes o participación en hechos delictivos, LA EMPRESA procederá a denunciarme penalmente ante las autoridades competentes, sin perjuicio de la aplicación de las sanciones laborales correspondientes (incluido el despido por falta grave conforme al artículo 25 del D. Leg. 728).</li>
+                                    </ul>
+                                    <p class="paragraph">
+                                        Declaro haber sido informado de estas obligaciones y de que toda infracción en esta materia acarreará las consecuencias legales, civiles, administrativas y penales que correspondan.
+                                    </p>
+
+                                    <div class="clause-title">DISPOSICIONES FINALES</div>
+                                    <p class="paragraph">
+                                        Declaro que he leído y comprendido íntegramente el presente documento, y que firmo en señal de aceptación libre y voluntaria, sin que medie error, dolo, violencia o intimidación. Reconozco que el presente compromiso laboral constituye parte integrante de mi contrato de trabajo, y asimismo, autorizo de manera expresa a que, en caso de incumplimiento comprobado de mis deberes, y previa comunicación formal por parte de LA EMPRESA, se apliquen las medidas disciplinarias correspondientes conforme al Reglamento Interno de Trabajo y al D. Leg. 728 – Ley de Productividad y Competitividad Laboral, declaro también que la aceptación de este documento ha sido realizada sin mediar error, dolo, violencia o intimidación, y que tengo pleno conocimiento de que todo incumplimiento podrá derivar en sanciones laborales y/o acciones legales de acuerdo con la legislación peruana aplicable.
+                                    </p>
+
+                                    <table style="width:100%; margin-top:50px; text-align:center; border-collapse:collapse;">
+                                        <tr>
+                                            <td style="vertical-align:bottom; text-align:center;">
+                                                <t t-if="o.applicant_signature">
+                                                    <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <div style="min-height: 100px;"></div>
+                                                </t>
+                                                <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
+                                                    FIRMA DEL TRABAJADOR
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+
 
                     </div>
                 </div>

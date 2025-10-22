@@ -3036,7 +3036,6 @@
                                 <div class="container mt-3 mb-5">
                                     <div class="row justify-content-center border rounded-lg bg-white shadow p-5 o_applicant_partner">
                                             <form id="employeeForm" role="form" t-att-action="action_url" method="POST">
-                                            <!-- <form id="employeeForm" role="form" action="/applicantpartner/requested" method="POST"> -->
                                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                                 <div class="row mb-3 border border-info rounded-lg p-3">
                                                     <div class="col-lg-4 align-content-center">
@@ -3050,8 +3049,11 @@
                                                                 <select name="identification_type_id" id="identification_type_id" class="form-control" required="True">
                                                                     <option value="">Identification...</option>
                                                                     <t t-foreach="identifications or []" t-as="identification">
-                                                                        <option t-att-value="identification.id" id="identification_name" t-att-selected="(partner and partner.l10n_latam_identification_type_id.name == identification.name) or None">
-                                                                            <t t-esc="identification.name"/>
+                                                                        <option 
+                                                                            t-att-value="identification.id" 
+                                                                            id="identification_name" 
+                                                                            t-att-selected="((partner and partner.l10n_latam_identification_type_id.name == identification.name)) or None">
+                                                                                <t t-esc="identification.name"/>
                                                                         </option>
                                                                     </t>
                                                                 </select>
@@ -3059,7 +3061,13 @@
                                                             <div class="form-group col-md-6">
                                                                 <label for="dni">Document number*</label>
                                                                 <div class="input-group">
-                                                                    <input type="text" name="dni" class="form-control" id="dni" required="True" t-att-value="partner and partner.vat or ''"/>
+                                                                    <input type="text" 
+                                                                           name="dni" 
+                                                                           class="form-control" 
+                                                                           id="dni" 
+                                                                           required="True" 
+                                                                           t-att-readonly="action_url == '/portal/compliance/step/1' and 'readonly' or None"
+                                                                           t-att-value="partner and partner.vat or ''"/>
                                                                     <button type="button" class="btn btn-secondary custom-button ml-1" onclick="consultarDNI()">
                                                                         <i class="fa fa-search"></i>
                                                                     </button>
@@ -3127,7 +3135,7 @@
                                                             </div>
                                                             <div class="form-group col-md-6">
                                                                 <label for="phone">Phone Number*</label>
-                                                                <input type="number" name="phone" class="form-control" id="phone" required="True" t-att-value="partner and partner.phone or partner.mobile or ''"/>
+                                                                <input type="number" name="phone" class="form-control" id="phone" required="True" t-att-value="(partner.phone if partner else '') or (partner.mobile if partner else '')"/>
                                                                 <div class="invalid-feedback">
                                                                     Please enter a valid phone number.
                                                                 </div>
@@ -3261,8 +3269,8 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="row mb-3 border border-info rounded-lg p-3">
-                                                    <h2 class="text-center font-weight-bold text-info">Educational Background</h2>
+                                                <div class="row mb-3 border border-info rounded-lg p-3 text-center">
+                                                    <h2 class="w-100 font-weight-bold text-info">Educational Background</h2>
                                                     <div id="educationContainer">
                                                         <div class="education-entry row">
                                                             <div class="col-md-2">
@@ -3325,7 +3333,7 @@
                                                     <div id="childrenFields" class="col-md-12"></div>
                                                 </div>
 
-                                                <div class="row mb-3 border border-info rounded-lg p-3 d-flex flex-column">
+                                                <!-- <div class="row mb-3 border border-info rounded-lg p-3 d-flex flex-column">
                                                     <h2 class="text-center font-weight-bold text-info">First Beneficiaries</h2>
                                                     <p class="text-center font-weight-bold text-body">Spouse or children (In the absence of spouse, concubine may be named - Art 326°; Civil Code).</p>
                                                     <div class="form-group">
@@ -3354,24 +3362,47 @@
                                                         </div>
                                                     </div>
                                                     <div id="otrosMembersFields" class="col-md-12"></div>
-                                                </div>
+                                                </div> -->
+                                                
                                                 <div class="row mb-3 border border-info rounded-lg p-3 d-flex flex-column">
+                                                    <h2 class="text-center font-weight-bold text-info">Pension System</h2>
                                                     <div class="form-row">
-                                                        <div class="form-group col-md-6">
-                                                            <label for="private_pension_system" class="h4 font-weight-bold text-info">Private pension system(AFP)</label>
-                                                            <input type="checkbox" class="form-control" id="private_pension_system" name="private_pension_system" onclick="toggleCheckbox(this)"/>
-                                                            <p>If you choose 'Private Pension System', you will be able to choose if it is your first job or if you come from the ONP.</p>
+                                                        <div class="form-group col-md-6 text-center">
+                                                            <label for="private_pension_system" class="h4 font-weight-bold text-info">Private pension system (AFP)</label>
+                                                            <input type="checkbox" 
+                                                                   class="form-control" 
+                                                                   id="private_pension_system" 
+                                                                   name="private_pension_system" 
+                                                                   onclick="toggleCheckbox(this)"
+                                                                   t-att-checked="'checked' if partner.private_pension_system == True else None"
+                                                                  />
+                                                            <p class="text-center">If you choose 'Private Pension System', you will be able to choose if it is your first job or if you come from the ONP.</p>
                                                             <div id="pension_options" style="display: none;">
                                                                 <div class="form-check">
-                                                                    <input type="radio" class="form-check-input radio-option" id="afp_first_job" name="afp_first_job" value="afp_first_job" />
+                                                                    <input type="radio" 
+                                                                           class="form-check-input radio-option" 
+                                                                           id="afp_first_job" 
+                                                                           name="afp_first_job" 
+                                                                           value="afp_first_job"
+                                                                           t-att-checked="'checked' if partner.afp_first_job == True else None" />
                                                                     <label class="form-check-label" for="afp_first_job">(AFP) First job</label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input type="radio" class="form-check-input radio-option" id="coming_from_onp" name="coming_from_onp" value="coming_from_onp" />
+                                                                    <input type="radio" 
+                                                                           class="form-check-input radio-option" 
+                                                                           id="coming_from_onp" 
+                                                                           name="coming_from_onp" 
+                                                                           value="coming_from_onp"
+                                                                           t-att-checked="'checked' if partner.coming_from_onp == True else None" />
                                                                     <label class="form-check-label" for="coming_from_onp">Coming from the ONP</label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input type="radio" class="form-check-input radio-option" id="coming_from_afp" name="coming_from_afp" value="coming_from_afp" />
+                                                                    <input type="radio" 
+                                                                           class="form-check-input radio-option" 
+                                                                           id="coming_from_afp" 
+                                                                           name="coming_from_afp" 
+                                                                           value="coming_from_afp"
+                                                                           t-att-checked="'checked' if partner.coming_from_afp == True else None" />
                                                                     <label class="form-check-label" for="coming_from_afp">Coming from the AFP</label>
                                                                 </div>
                                                             </div>
@@ -3379,15 +3410,59 @@
                                                                 Please select a valid pension.
                                                             </div>
                                                         </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label for="national_pension_system" class="h4 font-weight-bold text-info">National pension system</label>
-                                                            <input type="checkbox" class="form-control" id="national_pension_system" name="national_pension_system" onclick="toggleCheckbox(this)"/>
+                                                        <div class="form-group col-md-6 text-center">
+                                                            <label for="national_pension_system" class="h4 font-weight-bold text-info">National pension system (ONP)</label>
+                                                            <input type="checkbox" 
+                                                                   class="form-control" 
+                                                                   id="national_pension_system" 
+                                                                   name="national_pension_system" 
+                                                                   onclick="toggleCheckbox(this)"
+                                                                   t-att-checked="'checked' if partner.national_pension_system == True else None" />
                                                             <div class="invalid-feedback">
                                                                 Please select a valid pension.
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="row mb-3 border border-info rounded-lg p-3 d-flex flex-column">
+                                                    <div class="form-group col-md-12">
+                                                        <label class="h4 font-weight-bold text-info">
+                                                            Fifth Category Income from Other Employers
+                                                        </label>
+                                                        <p>
+                                                            Seleccione según corresponda:
+                                                        </p>
+
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" id="fifth_no" name="fifth_category_income"
+                                                                t-att-checked="'checked' if partner.fifth_category_income == False else None"
+                                                                onclick="toggleFifthCategory(this, false)"/>
+                                                            <label for="fifth_no">
+                                                                <b>NO:</b> No he percibido remuneraciones de quinta categoría(*) en el presente año de otro(s) empleador(es).
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="form-check mt-2">
+                                                            <input type="checkbox" class="form-check-input" id="fifth_yes" name="fifth_category_income"
+                                                                t-att-checked="'checked' if partner.fifth_category_income == True else None"
+                                                                onclick="toggleFifthCategory(this, true)"/>
+                                                            <label for="fifth_yes">
+                                                                <b>SÍ:</b> He percibido remuneraciones de quinta categoría(*) en el presente año de otro(s) empleador(es).
+                                                            </label>
+                                                        </div>
+                                                        
+                                                        <div class="invalid-feedback d-block" style="display: none !important;">
+                                                            Please select an option.
+                                                        </div>
+
+                                                        <p class="mt-2 text-muted">
+                                                            (*)Incluye participación de utilidades, liquidación de beneficios sociales, reintegros de remuneración y otros conceptos remunerativos.
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                
                                                 <div class="row">
                                                     <div class="col-md-12 d-flex justify-content-center">
                                                         <div class="form-group">
@@ -3570,20 +3645,20 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="row">
+                                                                    <!-- <div class="row">
                                                                         <div class="col-md-6 font-weight-bold text-info">Number of First Beneficiaries:</div>
                                                                         <div class="col-md-6" id="modal-familyMembers"></div>
                                                                     </div>
                                                                     <div class="row">
-                                                                        <div id="familyMembersModal"></div> <!-- Div para First beneficiarios -->
-                                                                    </div>
-                                                                    <div class="row">
+                                                                        <div id="familyMembersModal"></div> 
+                                                                    </div> -->
+                                                                    <!-- <div class="row">
                                                                         <div class="col-md-6 font-weight-bold text-info">Number of Other Beneficiaries:</div>
                                                                         <div class="col-md-6" id="modal-otrosMembers"></div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div id="otrosMembersModal"></div> <!-- Div para otros beneficiarios -->
-                                                                    </div>
+                                                                    </div> -->
+                                                                    <!-- <div class="row">
+                                                                        <div id="otrosMembersModal"></div> 
+                                                                    </div> -->
                                                                     <div class="row">
                                                                         <div class="col-md-6">
                                                                             <div class="row">
@@ -3596,6 +3671,10 @@
                                                                             <div class="row">
                                                                                 <div class="col-md-6 font-weight-bold text-info">National Pension System:</div>
                                                                                 <div class="col-md-6" id="modal-national_pension_system"></div>
+                                                                            </div> 
+                                                                            <div class="row">
+                                                                                <div class="col-md-6 font-weight-bold text-info">Fifth Category Income Tax:</div>
+                                                                                <div class="col-md-6" id="modal-fifth_category_income"></div>
                                                                             </div>
                                                                         </div>
                                                                     </div>

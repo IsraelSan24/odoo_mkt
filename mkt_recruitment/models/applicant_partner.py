@@ -242,6 +242,7 @@ class ApplicantPartner(models.Model):
     coming_from_onp = fields.Boolean(default=False, string='Coming from ONP')
     coming_from_afp = fields.Boolean(default=False, string='Coming from AFP')
     national_pension_system = fields.Boolean(default=False, string='National pension system')
+    fifth_category_income = fields.Boolean(string="Fifth Category Income from Other Employeers")
 
     state = fields.Selection(selection=states, default='draft', string='State', tracking=True)
 
@@ -394,6 +395,7 @@ class ApplicantPartner(models.Model):
                         'education_end_date': rec.education_end_date,
                         'institution': rec.institution,
                         'profession': rec.profession,
+                        'fifth_category_income': rec.fifth_category_income
                     })
                     partner.sudo()._onchange_age()
                     self.state = 'uploaded'

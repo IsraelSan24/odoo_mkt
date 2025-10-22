@@ -328,13 +328,19 @@
                                 Declaro que, a la fecha de inicio de mi vínculo laboral con <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>, mi situación respecto a la percepción de rentas de quinta categoría es la siguiente (marque con una "X" la opción que corresponda):
                             </p>
 
-                            <p class="paragraph">
-                                <span class="checkbox"></span> <span class="bold">A. NO he percibido</span> remuneraciones de quinta categoría (Participación de Utilidades, liquidación de beneficios sociales, reintegros de remuneración y otros conceptos remunerativos) en el presente año de otro(s) empleador(es) antes de mi ingreso a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>
-                            </p>
+                            <div>
+                                <div class="checkbox-container" style="margin-left: 5px">
+                                    <span t-attf-class="checkbox #{not o.partner_id.fifth_category_income and 'checked' or ''}"></span>
+                                    <span class="bold">A. NO he percibido</span> remuneraciones de quinta categoría (Participación de Utilidades, liquidación de beneficios sociales, reintegros de remuneración y otros conceptos remunerativos) en el presente año de otro(s) empleador(es) antes de mi ingreso a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>
+                                </div>
+                            </div>
 
-                            <p class="paragraph">
-                                <span class="checkbox"></span> <span class="bold">B. SÍ he percibido</span> remuneraciones de quinta categoría en el presente año de otro(s) empleador(es) antes de mi ingreso a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>
-                            </p>
+                            <div>
+                                <div class="checkbox-container" style="margin-left: 5px">
+                                    <span t-attf-class="checkbox #{o.partner_id.fifth_category_income and 'checked' or ''}"></span>
+                                    <span class="bold">B. SÍ he percibido</span> remuneraciones de quinta categoría en el presente año de otro(s) empleador(es) antes de mi ingreso a <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>
+                                </div>
+                            </div>
 
                             <p class="paragraph">
                                 En virtud de lo anterior y en cumplimiento de lo dispuesto en el <span class="bold">Artículo 44º del Reglamento de la Ley del Impuesto a la Renta</span>, así como en la <span class="bold">Resolución de Superintendencia N.° 037-2002/SUNAT</span>, me comprometo:
@@ -1171,135 +1177,7 @@
                         <div style="page-break-after: always;"/>
                     </div>
 
-                    <!-- <div id="worker_pension_system_document" style="padding:3rem 2rem 0rem;">
-                        <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem">
-                            <h6 class="document-title">RÉGIMEN PENSIONARIO DEL TRABAJADOR</h6>
-                            
-                            <p class="paragraph">
-                                <span class="bold">1.-</span> Si actualmente Ud. se encuentra afiliado al Sistema Privado de Pensiones (AFP) o al Sistema Nacional de Pensiones (ONP), deberá indicarlo en el siguiente recuadro:
-                            </p>
-
-                            <div class="clause-title">RÉGIMEN PENSIONARIO</div>
-
-                            <p class="paragraph">
-                                <span class="checkbox"></span> <span class="bold">SISTEMA PRIVADO DE PENSIONES (AFP)</span>
-                            </p>
-
-                            <p class="paragraph">
-                                <span class="checkbox"></span> <span class="bold">SISTEMA NACIONAL DE PENSIONES (ONP)</span>
-                            </p>
-
-                            <p class="paragraph">
-                                <span class="checkbox"></span> <span class="bold">PENSIONISTA *</span>
-                            </p>
-
-                            <p class="paragraph" style="font-size: 9pt;">
-                                * Si Usted percibe una pensión por algún régimen pensionario, deberá adjuntar al presente formato una copia de cualquier documento que acredite su situación previsional de jubilado.
-                            </p>
-
-                            <p class="paragraph" style="margin-top: 20px;">
-                                <span class="bold">2.-</span> Si actualmente Ud. no se encuentra afiliado al Sistema Privado de Pensiones (AFP) o al Sistema Nacional de Pensiones (ONP), deberá llenar el siguiente formato:
-                            </p>
-
-                            <div class="clause-title">FORMATO DE ELECCIÓN DEL SISTEMA PENSIONARIO</div>
-                            <p class="paragraph center" style="font-size: 9pt;">R.M 112-2013-TR</p>
-
-                            <div class="clause-title">I. DATOS DEL TRABAJADOR</div>
-
-                            <p class="paragraph">
-                                1. APELLIDO PATERNO: <span style="display: inline-block; border-bottom: 1px solid #000; width: 400px; margin-left: 10px;"></span>
-                            </p>
-
-                            <p class="paragraph">
-                                2. APELLIDO MATERNO: <span style="display: inline-block; border-bottom: 1px solid #000; width: 400px; margin-left: 10px;"></span>
-                            </p>
-
-                            <p class="paragraph">
-                                3. NOMBRES: <span style="display: inline-block; border-bottom: 1px solid #000; width: 450px; margin-left: 10px;"></span>
-                            </p>
-
-                            <p class="paragraph">
-                                4. TIPO DE DOCUMENTO: <span class="checkbox"></span> DNI <span class="checkbox"></span> Carnét de Extranjería <span class="checkbox"></span> Pasaporte <span class="checkbox"></span> Otro
-                            </p>
-
-                            <p class="paragraph">
-                                Nº: <span style="display: inline-block; border-bottom: 1px solid #000; width: 200px; margin-left: 10px;"></span>
-                            </p>
-
-                            <p class="paragraph">
-                                5. SEXO: <span class="checkbox"></span> F <span class="checkbox"></span> M
-                            </p>
-
-                            <p class="paragraph">
-                                6. FECHA DE NACIMIENTO: Día <span style="display: inline-block; border-bottom: 1px solid #000; width: 50px; margin: 0 10px;"></span> Mes <span style="display: inline-block; border-bottom: 1px solid #000; width: 50px; margin: 0 10px;"></span> Año <span style="display: inline-block; border-bottom: 1px solid #000; width: 80px; margin-left: 10px;"></span>
-                            </p>
-
-                            <p class="paragraph">
-                                7. DOMICILIO
-                            </p>
-
-                            <p class="paragraph" style="margin-left: 20px;">
-                                <span class="checkbox"></span> Avenida <span class="checkbox"></span> Calle <span class="checkbox"></span> Jirón <span class="checkbox"></span> Otros: <span style="display: inline-block; border-bottom: 1px solid #000; width: 300px; margin-left: 10px;"></span>
-                            </p>
-
-                            <p class="paragraph">
-                                DISTRITO: <span style="display: inline-block; border-bottom: 1px solid #000; width: 200px; margin-left: 10px;"></span>
-                            </p>
-
-                            <p class="paragraph">
-                                PROVINCIA: <span style="display: inline-block; border-bottom: 1px solid #000; width: 200px; margin-left: 10px;"></span>
-                            </p>
-
-                            <p class="paragraph">
-                                DEPARTAMENTO: <span style="display: inline-block; border-bottom: 1px solid #000; width: 200px; margin-left: 10px;"></span>
-                            </p>
-
-                            <div class="clause-title">II. DATOS DE LA ENTIDAD EMPLEADORA</div>
-
-                            <p class="paragraph">
-                                1. NOMBRE O RAZON SOCIAL: <span style="display: inline-block; border-bottom: 1px solid #000; width: 350px; margin-left: 10px;"></span>
-                            </p>
-
-                            <p class="paragraph">
-                                2. RUC: <span style="display: inline-block; border-bottom: 1px solid #000; width: 200px; margin-left: 10px;"></span>
-                            </p>
-
-                            <p class="paragraph">
-                                3. DPTO DEL DOMICILIO FISCAL: <span style="display: inline-block; border-bottom: 1px solid #000; width: 300px; margin-left: 10px;"></span>
-                            </p>
-
-                            <div class="clause-title">III. DATOS DEL VINCULO LABORAL</div>
-
-                            <p class="paragraph">
-                                1. FECHA DE INICIO DE RELACIÓN LABORAL: Día <span style="display: inline-block; border-bottom: 1px solid #000; width: 50px; margin: 0 10px;"></span> Mes <span style="display: inline-block; border-bottom: 1px solid #000; width: 50px; margin: 0 10px;"></span> Año <span style="display: inline-block; border-bottom: 1px solid #000; width: 80px; margin-left: 10px;"></span>
-                            </p>
-
-                            <p class="paragraph">
-                                2. REMUNERACION: <span style="display: inline-block; border-bottom: 1px solid #000; width: 200px; margin-left: 10px;"></span>
-                            </p>
-
-                            <div class="clause-title">IV. ELECCIÓN DEL SISTEMA PENSIONARIO:</div>
-
-                            <p class="paragraph">
-                                1. <span class="checkbox"></span> <span class="bold">SISTEMA NACIONAL DE PENSIONES (ONP)</span>
-                            </p>
-
-                            <p class="paragraph">
-                                2. <span class="checkbox"></span> <span class="bold">SISTEMA PRIVADO DE PENSIONES (AFP)</span>
-                            </p>
-
-                            <p class="paragraph" style="margin-top: 40px;">
-                                Firma del trabajador: <span style="display: inline-block; border-bottom: 1px solid #000; width: 200px; margin-left: 10px;"></span>
-                            </p>
-
-                            <p class="paragraph">
-                                Ciudad de <span style="display: inline-block; border-bottom: 1px solid #000; width: 150px; margin: 0 10px;"></span>, de <span style="display: inline-block; border-bottom: 1px solid #000; width: 100px; margin: 0 10px;"></span> de <span style="display: inline-block; border-bottom: 1px solid #000; width: 150px; margin: 0 10px;"></span> del 201 <span style="display: inline-block; border-bottom: 1px solid #000; width: 50px;"></span>
-                            </p>
-                        </div>
-                        <div style="page-break-after: always;"/>
-                    </div> -->
-
-                    <div id="worker_pension_system_document_2" style="padding:2rem 1.5rem 0rem;">
+                    <div id="worker_pension_system_document" style="padding:2rem 1.5rem 0rem;">
                         <div style="width: 100%;text-align: justify; height: auto; font-size:0.590rem">
                             <h1 class="regimen-title">RÉGIMEN PENSIONARIO DEL TRABAJADOR</h1>
                             
@@ -1331,7 +1209,7 @@
 
                             <div class="bold">I. DATOS DEL TRABAJADOR</div>
 
-                            <div class="form-field" style="margin-left: 15px">
+                            <!-- <div class="form-field" style="margin-left: 15px">
                                 <span class="field-label">1. APELLIDO PATERNO:</span>
                                 <span class="field-value"><t t-esc="o.partner_name or ''"/></span>
                             </div>
@@ -1339,15 +1217,15 @@
                             <div class="form-field" style="margin-left: 15px">
                                 <span class="field-label">2. APELLIDO MATERNO:</span>
                                 <span class="field-value"><t t-esc="o.partner_name or ''"/></span>
-                            </div>
+                            </div> -->
 
                             <div class="form-field" style="margin-left: 15px">
-                                <span class="field-label">3. NOMBRES:</span>
+                                <span class="field-label">1. NOMBRE COMPLETO:</span>
                                 <span class="field-value"><t t-esc="o.partner_name or ''"/></span>
                             </div>
 
                             <div class="form-field" style="margin-left: 15px">
-                                <span class="field-label">4. TIPO DE DOCUMENTO:</span>
+                                <span class="field-label">2. TIPO DE DOCUMENTO:</span>
                                 <div class="checkbox-container">
                                     <span t-attf-class="checkbox #{o.identification_type == 'DNI' and 'checked' or ''}"></span>
                                     <span>DNI</span>
@@ -1372,7 +1250,7 @@
                             </div>
 
                             <div class="form-field" style="margin-left: 15px">
-                                <span class="field-label">5. SEXO:</span>
+                                <span class="field-label">3. SEXO:</span>
                                 <div class="checkbox-container">
                                     <span t-attf-class="checkbox #{o.gender == 'female' and 'checked' or ''}"></span>
                                     <span>F</span>
@@ -1384,17 +1262,17 @@
                             </div>
 
                             <div class="form-field" style="margin-left: 15px">
-                                <span class="field-label">6. FECHA DE NACIMIENTO:</span>
-                                <span style="margin-right: 5px;">Día</span>
+                                <span class="field-label">4. FECHA DE NACIMIENTO:</span>
+                                <!-- <span style="margin-right: 5px;">Día</span> -->
                                 <span class="field-value field-value-short" style="min-width: 40px;"><t t-esc="o.birthday or ''"/></span>
-                                <span style="margin: 0 5px;">Mes</span>
+                                <!-- <span style="margin: 0 5px;">Mes</span>
                                 <span class="field-value field-value-short" style="min-width: 40px;"><t t-esc="o.birthday or ''"/></span>
                                 <span style="margin: 0 5px;">Año</span>
-                                <span class="field-value field-value-short" style="min-width: 60px;"><t t-esc="o.birthday or ''"/></span>
+                                <span class="field-value field-value-short" style="min-width: 60px;"><t t-esc="o.birthday or ''"/></span> -->
                             </div>
 
                             <div class="form-field" style="margin-left: 15px">
-                                <span class="field-label">7. DOMICILIO:</span>
+                                <span class="field-label">5. DOMICILIO:</span>
                             </div>
 
                             <div class="domicilio-group">
@@ -1454,7 +1332,7 @@
                                 <span class="field-value field-value-short"><t t-esc="'Lima'"/></span>
                             </div>
 
-                            <div class="bold" style="margin-bottom: 5px; margin-top: 10px">III. DATOS DEL VÍNCULO LABORAL</div>
+                            <!-- <div class="bold" style="margin-bottom: 5px; margin-top: 10px">III. DATOS DEL VÍNCULO LABORAL</div>
 
                             <div class="form-field" style="margin-left: 15px">
                                 <span class="field-label">1. FECHA DE INICIO DE RELACIÓN LABORAL:</span>
@@ -1469,9 +1347,9 @@
                             <div class="form-field" style="margin-left: 15px">
                                 <span class="field-label">2. REMUNERACIÓN:</span>
                                 <span class="field-value field-value-short"><t t-esc="o.vat or ''"/></span>
-                            </div>
+                            </div> -->
 
-                            <div class="bold" style="margin-bottom: 5px; margin-top: 10px">IV. ELECCIÓN DEL SISTEMA PENSIONARIO:</div>
+                            <div class="bold" style="margin-bottom: 5px; margin-top: 10px">III. ELECCIÓN DEL SISTEMA PENSIONARIO:</div>
 
                             <div>
                                 <div class="checkbox-container" style="margin-left: 15px">
@@ -1991,9 +1869,9 @@
                             </div>
                         </t>
                         <t t-else="">
-                            <div style="padding:2rem 2rem 0rem;">
+                            <div id="work_commitment_document" style="padding:2rem 2rem 0rem;">
                                 <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem;">
-                                    <h6 class="document-title">ANEXO I.- NORMATIVAS &amp; COMPROMISO LABORAL</h6>
+                                    <h6 class="document-title">NORMATIVAS &amp; COMPROMISO LABORAL</h6>
                                     
                                     <p class="paragraph">
                                         Por el presente dejo constancia ante mi empleador Marketing Alterno Perú S.A.C., mi compromiso a cumplir las siguientes cláusulas especificas líneas abajo, las cuales han sido motivo de acuerdo entre las partes, siendo consideradas políticas internas del empleador <span class="bold">MARKETING ALTERNO PERU SAC</span>.
@@ -2078,7 +1956,7 @@
                                                     <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image"/>
                                                 </t>
                                                 <t t-else="">
-                                                    <div style="min-height: 4rem;"></div>
+                                                    <div style="min-height: 100px;"></div>
                                                 </t>
                                                 <div style="border-top:1px solid #000; width:200px; text-align:center; font-weight:bold; margin:0 auto;">
                                                     FIRMA DEL TRABAJADOR
@@ -2089,6 +1967,7 @@
                                 </div>
                             </div>
                         </t>
+
                     </div>
                 </div>
             </div>

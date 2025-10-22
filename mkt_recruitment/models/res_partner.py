@@ -333,6 +333,7 @@ class Partner(models.Model):
     children_to_display = fields.Integer(compute='_compute_children_to_display', store=False)
 
     requires_compliance_process = fields.Boolean(string="Requires Compliance Process", tracking=True, default=False)
+    fifth_category_income = fields.Boolean(string="Fifth Category Income from Other Employeers")
 
     @api.depends('children')
     def _compute_children_to_display(self):
