@@ -12,3 +12,4 @@ from . import bank_report
 from . import mobility_report
 from . import accounting_expenses_report_wiz
 from . import province_report
+from . import province_reimbursements_report

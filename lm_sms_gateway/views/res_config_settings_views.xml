@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="res_config_settings_view_form_lm_sms" model="ir.ui.view">
+    <field name="name">res.config.settings.view.form.lm.sms</field>
+    <field name="model">res.config.settings</field>
+    <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//div[@id='api_integration']" position="after">
+        <div class="app_settings_block" data-string="LabsMobile SMS" string="LabsMobile SMS">
+          <h2>LabsMobile SMS</h2>
+          <div class="row mt16 o_settings_container">
+            <div class="col-12 col-lg-6">
+              <div class="o_setting_box">
+                <div class="o_setting_left">
+                  <field name="lm_user" placeholder="usuario@correo"/>
+                  <field name="lm_token" password="True"/>
+                  <field name="lm_tpoa_default" placeholder="MiRemitente"/>
+                  <field name="lm_base_url"/>
+                  <field name="lm_country_code" placeholder="51"/>
+                  <field name="lm_force_country_code"/>
+                </div>
+                <div class="o_setting_right">
+                  <label for="lm_user" string="Usuario + Token"/>
+                  <p class="text-muted">Se usará Basic Auth con el par <em>user:token</em> codificado Base64.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </xpath>
+    </field>
+  </record>
+</odoo>

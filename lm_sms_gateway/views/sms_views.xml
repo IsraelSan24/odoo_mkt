@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!-- Botón en contactos -->
+  <record id="view_partner_form_lm_sms" model="ir.ui.view">
+    <field name="name">res.partner.form.lm.sms</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//sheet//div[@name='button_box']" position="inside">
+        <button name="action_open_lm_sms_wizard"
+                type="object"
+                class="oe_stat_button"
+                icon="fa-comment">
+         <div class="o_stat_info">
+          <span class="o_stat_text">Enviar SMS</span>
+         </div>
+        </button>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="res_partner_send_sms_server_action" model="ir.actions.server">
+    <field name="name">Enviar SMS (LabsMobile)</field>
+    <field name="model_id" ref="base.model_res_partner"/>
+    <field name="binding_model_id" ref="base.model_res_partner"/>
+    <field name="state">code</field>
+    <field name="code">action = env["res.partner"].browse(env.context.get("active_ids")).action_open_lm_sms_wizard()</field>
+  </record>
+
+  <!-- Wizard -->
+  <record id="view_lm_sms_compose_form" model="ir.ui.view">
+    <field name="name">lm.sms.compose.wizard.form</field>
+    <field name="model">lm.sms.compose.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Enviar SMS" create="false">
+        <group>
+          <field name="tpoa" placeholder="(opcional)"/>
+          <field name="message" nolabel="1" placeholder="Escribe tu mensaje..."/>
+          <field name="partner_ids" domain="[('mobile','!=',False)]"/>
+          <field name="msisdn_preview" readonly="1" widget="text"/>
+        </group>
+        <footer>
+          <button string="Enviar" type="object" name="action_send" class="btn-primary"/>
+          <button string="Cancelar" class="btn-secondary" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

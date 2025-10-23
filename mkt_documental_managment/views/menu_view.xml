@@ -44,6 +44,8 @@
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_intern_control" sequence="46"/>
             <menuitem id="province_report_submenu" name="Province Report" action="action_province_report"
                 parent="reporting_menu" groups="mkt_documental_managment.documental_requirement_external_control,mkt_documental_managment.documental_requirement_admin" sequence="47"/>
+            <menuitem id="menu_province_reimbursements_report" name="Reporte de reembolsos de provincia"
+                parent="reporting_menu" action="action_province_reimbursements_report" groups="mkt_documental_managment.documental_requirement_external_control,mkt_documental_managment.documental_requirement_admin" sequence="48"/>
         <menuitem id="accounting_menu" name="Accounting" parent="doc_mng_root" sequence="6" groups="mkt_documental_managment.documental_requirement_accounting,mkt_documental_managment.documental_requirement_admin"/>
             <menuitem id="accounting_settlement_submenu" name="Voucher" action="view_settlement_action" parent="accounting_menu" sequence="0"/>
             <menuitem id="proof_of_purchase_submenu" name="Proof of purchase" action="view_settlement_proof_of_purchase_action" parent="accounting_menu" sequence="1"/>
