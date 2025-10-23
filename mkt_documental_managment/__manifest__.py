@@ -102,6 +102,7 @@
         'wizard/mobility_report.xml',
         'wizard/accounting_expenses_report_wiz.xml',
         'wizard/province_report_wiz.xml',
+        'wizard/province_reimbursements_report_views.xml',
 
         'views/menu_view.xml',
     ],
