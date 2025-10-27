@@ -35,5 +35,18 @@
         <field name="groups" eval="[4, ref('group_user_hr')]"/>
     </record>
 
+    <record id="rule_recruiter_team_applicant" model="ir.rule">
+        <field name="name">Recruiter Team</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="domain_force">
+            [
+                '|',
+                ('department_id', 'in', user.get_recruiter_departments()),
+                ('department_id', '=', False)
+            ]
+        </field>
+        <field name="groups" eval="[4, ref('group_user_hr')]"/>
+    </record>
+
 
 </odoo>

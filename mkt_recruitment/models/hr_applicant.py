@@ -1,6 +1,6 @@
 from odoo import _, api, fields, models, Command
 from datetime import timedelta
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, AccessError
 from odoo.addons.mkt_recruitment.models.apiperu import apiperu_dni
 import logging
 _logger = logging.getLogger(__name__)
@@ -17,13 +17,22 @@ class Applicant(models.Model):
     applicant_partner_id = fields.Many2one(comodel_name='applicant.partner', string='Applicant partner')
     is_reinstatement = fields.Boolean(default=False, string='Is reinstatement', store=True)
 
+    first_contract_start = fields.Date(string="First Contract Start Date", tracking=True) 
+    first_contract_end = fields.Date(string="First Contract End Date", tracking=True)
 
     def write(self, vals):
         if 'stage_id' in vals:
             new_stage = self.env['hr.recruitment.stage'].browse(vals['stage_id'])
             if not new_stage.exists():
                 raise UserError("El nuevo estado no es válido.")
-                
+            
+            # restrict if not in group
+            if new_stage.id == 4 and not self.env.user.has_group('mkt_supervision.group_supervision_hiring_approver'):
+                _logger.info(f"\n\n\nHRAPPLICANT RESTRICT GROUP\n\n\n")
+                raise AccessError("You don't have permissions to move candidates to this stage.")
+
+
+            _logger.info(f"\n\n\nHR APPLICANT PASSED\n\n\n")
             for rec in self:
                 if not rec.stage_id:
                     raise UserError("El registro no tiene un estado actual asignado.")
@@ -69,10 +78,11 @@ class Applicant(models.Model):
 
     @api.depends('stage_id')
     def _compute_auto_employee_and_documents(self):
-        self.create_employee_by_stage()
-        self.update_data_partner()
-        self.access_portal_partner()
         self.contact_merge_stage()
+        self.update_data_partner()
+        self.create_employee_by_stage()
+        self.access_portal_partner()
+        self.create_first_contract()
 
 
     def update_data_partner(self):
@@ -182,14 +192,36 @@ class Applicant(models.Model):
                         'work_phone': applicant.department_id.company_id.phone,
                         'applicant_id': applicant.ids,
                         'image_1920': applicant.photo,
-                        'identification_id': applicant.partner_id.vat or False
+                        'identification_id': applicant.partner_id.vat or False,
+                        'cost_center_id': applicant.cost_center_id.id or False
                     }
                     self.env['hr.employee'].create(values)
                     applicant.partner_id.write({'requires_compliance_process': True})
 
                     applicant.is_autoemployee = True
 
+
+    def create_first_contract(self):
+        pass
+        # for applicant in self:
+        #     if applicant.stage_id.create_first_contract:
+        #         employee_contract_history = self.env['hr.contract.history'].search([('employee_id', '=', applicant.emp_id.id)])
                 
+        #         if (not employee_contract_history or len(employee_contract_history) == 1):
+        #             if not employee_contract_history.contract_id:
+        #                 values = {
+        #                 'employee_id': applicant.emp_id.id,
+        #                 'date_start': applicant.first_contract_start,
+        #                 'date_end': applicant.first_contract_end,
+        #                 'wage': applicant.salary_proposed,
+        #                 'structure_type_id': 1,
+        #                 'is_renovation': False,
+        #                 'department_id': applicant.emp_id.department_id.id,
+        #                 'job_id': applicant.emp_id.job_id.id,
+        #                 }
+        #                 first_contract = self.env['hr.contract'].sudo().create(values)
+        #                 first_contract.write_data() 
+        #                 first_contract._compute_contract_duration()
 
 
     @api.model

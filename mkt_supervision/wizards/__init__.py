@@ -1,2 +1,3 @@
 from . import applicant_blacklist_confirm_wizard
 from . import partner_blacklist_check_wizard
+from . import applicant_set_contract_fields_wizard
