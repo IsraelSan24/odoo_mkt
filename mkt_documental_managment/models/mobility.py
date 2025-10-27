@@ -1,24 +1,24 @@
+# -*- coding: utf-8 -*-
 from odoo import _, api, fields, models
+from odoo.tools import ustr
+from odoo.exceptions import ValidationError, UserError
 from datetime import datetime
-from odoo.exceptions import ValidationError
 from odoo.addons.mkt_documental_managment.models.signature import signature_generator
 
 state = [
-    ('draft','Draft'),
-    ('executive','Executive'),
-    ('done','Done'),
-    ('refused','Refused'),
+    ('draft', 'Draft'),
+    ('executive', 'Executive'),
+    ('done', 'Done'),
+    ('refused', 'Refused'),
 ]
 
 def get_default_dni(self):
-    vat = self.env.user.vat
-    return vat
+    return self.env.user.vat
 
 months = [('enero', 'Enero'), ('febrero', 'Febrero'), ('marzo', 'Marzo'),
-          ('abril', 'Abril'), ('mayo', 'Mayo'),('junio', 'Junio'),
-          ('julio', 'Julio'),('agosto', 'Agosto'),('septiembre', 'Septiembre'),
-          ('octubre', 'Octubre'),('noviembre', 'Noviembre'),('diciembre', 'Diciembre'),
-]
+          ('abril', 'Abril'), ('mayo', 'Mayo'), ('junio', 'Junio'),
+          ('julio', 'Julio'), ('agosto', 'Agosto'), ('septiembre', 'Septiembre'),
+          ('octubre', 'Octubre'), ('noviembre', 'Noviembre'), ('diciembre', 'Diciembre')]
 
 CIUDAD_CODIGOS = {
     'Arequipa': '0001',
@@ -45,7 +45,7 @@ CIUDAD_CODIGOS = {
 
 class DocumentalMobilityExpediture(models.Model):
     _name = 'documental.mobility.expediture'
-    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Documental Mobility Expediture'
     _order = 'id desc'
 
@@ -58,14 +58,18 @@ class DocumentalMobilityExpediture(models.Model):
     period = fields.Selection(selection=months, string='Period', default='enero', tracking=True)
     employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee", default=lambda self: self.env.user.employee_id)
     full_name = fields.Many2one(comodel_name="res.users", string='Full Name', default=lambda self: self.env.user)
+
     city_id = fields.Many2one('res.province', compute='compute_city', string='Ciudad', store=True)
     codigo_city = fields.Char(string='Código de Ciudad', compute='_compute_codigo_city', store=True)
+
     dni = fields.Char(string='DNI', default=get_default_dni)
     date = fields.Datetime(string='Date', default=fields.Datetime.now)
+
     mobility_detail_ids = fields.One2many('documental.mobility.expediture.detail', 'documental_mobility_id', string='Mobility Expediture Details')
     restrict_mobility_detail_ids = fields.One2many('documental.mobility.expediture.detail', 'documental_mobility_id', string='Mobility Expediture Details')
+
     amount_total = fields.Float(string='Amount Total', compute='compute_amount_total', store=True, tracking=True)
-    
+
     petitioner_signature = fields.Binary(string="Petitioner", copy=False, attachment=True)
     is_petitioner_signed = fields.Boolean(default=False, tracking=True, copy=False)
     petitioner_signed_on = fields.Datetime(string="Signed by petitioner on", tracking=True)
@@ -74,34 +78,82 @@ class DocumentalMobilityExpediture(models.Model):
     is_executive_signed = fields.Boolean(default=False, tracking=True, copy=False)
     executive_signed_on = fields.Datetime(string="Signed by executive on", tracking=True)
 
+    # --------------------------
+    # Helpers internos
+    # --------------------------
+    def _safe_display_name(self, user):
+        """
+        Devuelve un nombre amigable para firma:
+        alias_name > partner.name > user.name
+        Lanza UserError si no hay forma de obtener un nombre.
+        """
+        if not user:
+            raise UserError(_("No user provided for signature."))
 
+        alias_name = ustr(getattr(getattr(user, "partner_id", False), "alias_name", "") or "").strip()
+        if alias_name:
+            return alias_name
 
+        partner_name = ustr(getattr(getattr(user, "partner_id", False), "name", "") or "").strip()
+        if partner_name:
+            return partner_name
+
+        user_name = ustr(getattr(user, "name", "") or "").strip()
+        if user_name:
+            return user_name
+
+        raise UserError(_("The user has no name or alias configured to generate a signature."))
+
+    def _safe_budget_responsible_name(self):
+        """
+        Obtiene el nombre del responsable desde budget_id con validación.
+        """
+        if not self.budget_id:
+            raise UserError(_("Set a Budget before signing."))
+        if not self.budget_id.responsible_id:
+            raise UserError(_("The Budget has no Responsible user set."))
+        return self._safe_display_name(self.budget_id.responsible_id)
+
+    # --------------------------
+    # Computes / defaults
+    # --------------------------
+    @api.depends('full_name')
     def compute_city(self):
         for record in self:
-            partner = record.full_name.partner_id
-            record.city_id = partner.province_id if partner else False
+            partner = record.full_name.partner_id if record.full_name else False
+            record.city_id = partner.province_id.id if (partner and partner.province_id) else False
 
- 
     @api.model
     def default_get(self, fields_list):
         defaults = super(DocumentalMobilityExpediture, self).default_get(fields_list)
-        # Obtener la ciudad asociada al usuario actual
         user_partner = self.env.user.partner_id
         if user_partner and user_partner.province_id:
             defaults['city_id'] = user_partner.province_id.id
         return defaults
 
- 
     @api.depends('city_id')
     def _compute_codigo_city(self):
-        """Asigna el código correspondiente basado en el campo city_id."""
         for record in self:
             if record.city_id:
                 record.codigo_city = CIUDAD_CODIGOS.get(record.city_id.name, '')
             else:
                 record.codigo_city = ''
-                
-                
+
+    @api.depends('mobility_detail_ids.amount')
+    def compute_amount_total(self):
+        for mob in self:
+            mob.amount_total = sum(mob.mobility_detail_ids.mapped('amount'))
+
+    # (Esta función no alteraba campos; la dejo por compatibilidad)
+    @api.depends('mobility_detail_ids.date')
+    def compute_amount_partial(self):
+        # Si en el futuro deseas calcular parciales por fecha, puedes hacerlo aquí.
+        for mob in self:
+            pass
+
+    # --------------------------
+    # Acciones
+    # --------------------------
     def attach_files(self):
         attachments = []
         for line in self.mobility_detail_ids:
@@ -116,45 +168,51 @@ class DocumentalMobilityExpediture(models.Model):
                 }
                 attachment = self.env['ir.attachment'].create(attach)
                 attachments.append(attachment.id)
-
+        return attachments
 
     def button_refused(self):
         self.write({
-            'petitioner_signature': False, 
+            'petitioner_signature': False,
             'is_petitioner_signed': False,
             'executive_signature': False,
             'is_executive_signed': False,
             'state': 'refused',
         })
 
-
     def button_petitioner_signature(self):
-        alias_name = self.env.user.partner_id.alias_name
-        user_name = alias_name if alias_name else self.env.user.name
-        responsible_name = self.budget_id.responsible_id.partner_id.alias_name
-        self.attach_files()
-        self.button_done()
-        self.write({
-            'petitioner_signature': signature_generator(user_name),
-            'is_petitioner_signed': True,
-            'petitioner_signed_on': fields.Datetime.now(),
-            'executive_signature': signature_generator(responsible_name),
-            'is_executive_signed': True,
-            'executive_signed_on': fields.Datetime.now(),
-            'state': 'executive',
-        })
+        for rec in self:
+            rec.attach_files()
+            rec.button_done()  # mantengo tu flujo original
 
+            petitioner_name = rec._safe_display_name(rec.env.user)
+            responsible_name = rec._safe_budget_responsible_name()
+
+            petitioner_png_b64 = signature_generator(petitioner_name)
+            executive_png_b64 = signature_generator(responsible_name)
+
+            rec.write({
+                'petitioner_signature': petitioner_png_b64,
+                'is_petitioner_signed': True,
+                'petitioner_signed_on': fields.Datetime.now(),
+
+                'executive_signature': executive_png_b64,
+                'is_executive_signed': True,
+                'executive_signed_on': fields.Datetime.now(),
+
+                'state': 'executive',
+            })
 
     def button_executive_signature(self):
-        alias_name = self.env.user.partner_id.alias_name
-        user_name = alias_name if alias_name else self.env.user.name
-        self.write({
-            'executive_signature': signature_generator(user_name),
-            'is_executive_signed': True,
-            'executive_signed_on': fields.Datetime.now(),
-            'state': 'done',
-        })
+        for rec in self:
+            exec_name = rec._safe_display_name(rec.env.user)
+            exec_png_b64 = signature_generator(exec_name)
 
+            rec.write({
+                'executive_signature': exec_png_b64,
+                'is_executive_signed': True,
+                'executive_signed_on': fields.Datetime.now(),
+                'state': 'done',
+            })
 
     def button_intern_control_refuse(self):
         self.write({
@@ -164,87 +222,40 @@ class DocumentalMobilityExpediture(models.Model):
         })
         self.button_refused()
 
-
-    @api.depends('mobility_detail_ids.date')
-    def compute_amount_partial(self):
-        for mob in self:
-            dateOne = []
-            amount_partial = 0.0
-            for line in mob.mobility_detail_ids:
-                dateOne.append(line.date)
-                amount_partial += line.amount
-
-
-    @api.depends('mobility_detail_ids.amount')
-    def compute_amount_total(self):
-        for mob in self:
-            amount_total = 0.0
-            for line in mob.mobility_detail_ids:
-                amount_total += line.amount
-                mob.update({
-                    'amount_total': amount_total,
-                })
-
-
     def get_date_without_decimals(self):
         for rec in self:
             rec.date = rec.create_date
 
-
     def action_print_pdf(self):
         return self.env.ref('mkt_documental_managment.report_documental_mobility_expediture').report_action(self)
-
 
     def _get_report_documental_mobility_expediture_base_filename(self):
         self.ensure_one()
         return _('Mobility Expediture - %s') % (self.name or '')
 
-
     def draft(self):
         self.state = 'draft'
 
-
     def button_done(self):
         for rec in self.mobility_detail_ids:
-            if sum( self.env['documental.mobility.expediture.detail'].search([('user_id','=',rec.user_id.id),('date','=',rec.date),('state','!=','refused')]).mapped('amount') ) > 45:
-                raise ValidationError(_('The mobility must not exceed the maximum amount of 45. On the date %s the maximum is exceeded.\n'
-                        'Note: If you consider that in the %s Mobility Form you have not consumed more than 45 soles, '
-                        'they may have been consumed in other records.') % (str(rec.date), rec.documental_mobility_id.name))
+            # Suma de montos del mismo usuario/fecha en otros registros no 'refused'
+            total_day = sum(self.env['documental.mobility.expediture.detail'].search([
+                ('user_id', '=', rec.user_id.id),
+                ('date', '=', rec.date),
+                ('state', '!=', 'refused')
+            ]).mapped('amount'))
+            if total_day > 45:
+                raise ValidationError(_(
+                    'The mobility must not exceed the maximum amount of 45. '
+                    'On the date %s the maximum is exceeded.\n'
+                    'Note: If you consider that in the %s Mobility Form you have not consumed more than 45 soles, '
+                    'they may have been consumed in other records.'
+                ) % (str(rec.date), rec.documental_mobility_id.name))
 
-
-
-    # @api.model
-    # def _get_report_data(self):
-    #     query = """
-    #         SELECT
-    #             rp.name AS partner,
-    #             SUM(dmed.amount) AS amount,
-    #             dmed.date AS date_line,
-    #             dme.state AS state
-    #         FROM documental_mobility_expediture_detail AS dmed
-    #         INNER JOIN documental_mobility_expediture AS dme ON dme.id=dmed.documental_mobility_id
-    #         LEFT JOIN res_users AS ru ON ru.id=dmed.create_uid
-    #         LEFT JOIN res_partner AS rp ON rp.id=ru.partner_id
-    #         -- WHERE dme.state != 'draft'
-    #         GROUP BY rp.name, dmed.date, dme.state
-    #         ORDER BY dmed.date
-    #     """
-    #     self._cr.execute(query)
-    #     res_query = self._cr.dictfetchall()
-    #     return res_query
-
-
-    # @api.model
-    # def create(self, vals):
-    #     if vals.get('name', _('New')) == _('New'):
-    #         vals['name'] = self.env['ir.sequence'].next_by_code('documental.mobility.expediture') or _('New')
-    #     mobility = super(DocumentalMobilityExpediture, self).create(vals)
-    #     return mobility
-    
     @api.model
     def create(self, vals):
         """Genera el nombre del registro basado en la ciudad."""
-        # Asignar city_id automáticamente si no está definido en vals
+        # Asegurar city_id
         if not vals.get('city_id'):
             user_ciudad = self.env.user.partner_id.province_id
             if user_ciudad:
@@ -252,22 +263,16 @@ class DocumentalMobilityExpediture(models.Model):
             else:
                 raise ValidationError(_('Debe configurar una ciudad en el usuario antes de guardar.'))
 
-        # Obtener el registro de city_id
-        city_id = vals.get('city_id')
-        ciudad = self.env['res.province'].browse(city_id)
+        ciudad = self.env['res.province'].browse(vals.get('city_id'))
 
-        # Verificar si la ciudad es Lima
         if ciudad.name == 'Lima':
-            # Usar directamente la secuencia configurada en el XML para Lima
             vals['name'] = self.env['ir.sequence'].next_by_code('documental.mobility.expediture')
         else:
-            # Usar la secuencia configurada para provincias
             sequence_code = 'documental.mobility.expediture.ciudad'
             codigo = CIUDAD_CODIGOS.get(ciudad.name, '')
             if not codigo:
                 raise ValidationError(_('El código para la ciudad "%s" no está definido.') % ciudad.name)
 
-            # Obtener la secuencia correspondiente y generar el nombre
             sequence = self.env['ir.sequence'].search([('code', '=', sequence_code)], limit=1)
             if not sequence:
                 raise ValidationError(_('No se encontró una secuencia configurada para la ciudad "%s".') % ciudad.name)
@@ -282,9 +287,11 @@ class DocumentalMobilityExpeditureDetail(models.Model):
     _name = 'documental.mobility.expediture.detail'
     _description = 'documental mobility expediture detail'
 
-    documental_mobility_id = fields.Many2one(comodel_name="documental.mobility.expediture", string='Documental Mobility', ondelete="cascade")
+    documental_mobility_id = fields.Many2one(
+        comodel_name="documental.mobility.expediture", string='Documental Mobility', ondelete="cascade")
     sequence_handle = fields.Integer(string="Sequence handle")
-    date = fields.Date(string='Date', default=datetime.now())
+    # Mejor: usar context_today para evitar eval en import-time
+    date = fields.Date(string='Date', default=fields.Date.context_today)
     reason = fields.Char(string='Reason')
     origin_place = fields.Char(string="From")
     destiny = fields.Char(string='To')
@@ -296,17 +303,16 @@ class DocumentalMobilityExpeditureDetail(models.Model):
     user_id = fields.Many2one(comodel_name="res.users", related="documental_mobility_id.full_name", store=True)
     state = fields.Selection(related='documental_mobility_id.state', string="State", store=True)
 
-
-    # @api.model
-    # def _get_file_name(self, vals):
-    #     return vals.get('document_filename') or _('File')
-
-
+    @api.depends('date', 'documental_mobility_id', 'documental_mobility_id.mobility_detail_ids.amount')
     def _compute_total_amount(self):
-        dateList = []
         for rec in self:
-            date_records = self.search([('date', '=', rec.date),('documental_mobility_id','=',self.documental_mobility_id.id)])
-            total = sum(date_records.amount for date_records in date_records)
-            dateList.append(len(date_records))
+            if not rec.documental_mobility_id or not rec.date:
+                rec.rowspan_quant = 0
+                rec.partial_amount = 0.0
+                continue
+            date_records = self.search([
+                ('date', '=', rec.date),
+                ('documental_mobility_id', '=', rec.documental_mobility_id.id),
+            ])
             rec.rowspan_quant = len(date_records)
-            rec.partial_amount = total
+            rec.partial_amount = sum(date_records.mapped('amount'))
