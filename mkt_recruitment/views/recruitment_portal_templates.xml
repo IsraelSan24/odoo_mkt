@@ -714,7 +714,15 @@
                             <li class="list-group-item flex-grow-1 o_contract_signature_t" 
                                 t-att-data-document-id="contract_document.id" 
                                 t-att-data-token="contract_document.access_token" >
-                                <a t-if="contract_document.has_to_be_signed(True)" role="button" class="btn btn-primary btn-block mb8 o_valterm" data-toggle="modal" data-target="#contractvalidatebox" href="#">
+                                <a t-if="contract_document.has_to_be_signed(True)" 
+                                    role="button" 
+                                    class="btn btn-primary btn-block mb8 o_valterm" 
+                                    id="o_open_sign_options"
+                                    href="#"
+                                    data-toggle="modal" 
+                                    data-target="#contractSignOptionsModal"
+                                    t-att-data-document-id="contract_document.id" 
+                                    t-att-data-token="contract_document.access_token">
                                     <i class="fa fa-check"/>Accept &amp; Sign
                                 </a>
                                 <t t-if="contract_document.contract_signature">
@@ -767,9 +775,40 @@
                     </t>
                 </t>
 
+                <!-- Modal de opciones: SMS o Email -->
+                <div role="dialog" class="modal fade" id="contractSignOptionsModal" tabindex="-1" >
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <header class="modal-header">
+                            <h4 class="modal-title">Choose how to receive the code</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">❌</button>
+                        </header>
+                        <div class="modal-body text-center p-3">
+                            <p>A validation code is mandatory to sign your contract. Select the method to receive the validation code:</p>
+                            <div class="d-flex justify-content-around">
+                            <button id="send-via-sms" class="btn btn-primary" type="button">Send via SMS</button>
+                            <button id="send-via-email" class="btn btn-outline-primary" type="button">Send via Email</button>
+                            </div>
+                            <div id="send-method-spinner" style="display:none;margin-top:12px;">
+                            <i class="fa fa-spinner fa-spin"></i> Sending...
+                            </div>
+                            <div id="send-method-error" class="text-danger mt-2" style="display:none;"></div>
+                        </div>
+                        <footer class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </footer>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div role="dialog" class="modal fade o_contract_validate_box" id="contractvalidatebox">
                     <div class="modal-dialog" t-if="contract_document.has_to_be_signed(True)">
-                        <form id="contractvalidatedigits" method="POST" t-att-data-document-id="contract_document.id" t-att-data-token="contract_document.access_token" class="js_accept_json modal-content js_website_submit_form">
+                        <form id="contractvalidatedigits" 
+                            method="POST" 
+                            t-att-data-document-id="contract_document.id" 
+                            t-att-data-token="contract_document.access_token" 
+                            class="js_accept_json modal-content js_website_submit_form">
                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                             <style>
                                 .digit-input, digit-input-4 {
@@ -795,12 +834,32 @@
                                     -moz-appearance: textfield; /* Firefox */
                                 }
                             </style>
+
+                            <input type="hidden" id="verification_method" name="verification_method" value=""/>
+
                             <header class="modal-header">
-                                <h4 class="modal-title">Enter the code</h4>
+                                <h4 class="modal-title">Enter Verification Codes</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">❌</button>
                             </header>
-                            <div class="p-2 text-start">
-                                <small>We sent an email to your personal email <span t-esc="contract_document.email"/> with the code. If you have not received an email within two minutes, please try Accept and Sign again.</small>
+
+                            <div class="modal-body">
+                                <div class="text-center mb-3" id="verification-message">
+                                    <p id="verification-text">We sent a verification code to:</p>
+                                    
+                                    <!-- Email info (oculto por defecto) -->
+                                    <div id="email-info" style="display: none;">
+                                        <strong><i class="fa fa-envelope"></i> <span t-esc="contract_document.email"/></strong>
+                                    </div>
+                                    
+                                    <!-- SMS info (oculto por defecto) -->
+                                    <div id="sms-info" style="display: none;">
+                                        <strong><i class="fa fa-mobile"></i> <span t-esc="contract_document.phone or 'your mobile phone'"/></strong>
+                                    </div>
+                                    
+                                    <p class="text-muted small mt-2">
+                                        If you haven't received it within 2 minutes, please try again.
+                                    </p>
+                                </div>
                             </div>
                             <main class="modal-body" id="validate-dialog-contract" style="display:flex;justify-content:center;">
                                 <input name="p_number1" type="number" class="digit-input" id="input1"/>
