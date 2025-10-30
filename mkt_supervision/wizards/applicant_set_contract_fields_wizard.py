@@ -1,4 +1,5 @@
 from odoo import models, fields
+from odoo.exceptions import UserError
 
 class ApplicantSetFieldsWizard(models.TransientModel):
     _name = "applicant.set.contract.fields.wizard"
@@ -12,6 +13,10 @@ class ApplicantSetFieldsWizard(models.TransientModel):
     def action_confirm(self):
         active_ids = self.env.context.get('active_ids', [])
         applicants = self.env['hr.applicant'].browse(active_ids)
+        supervision_status = applicants.mapped('supervision_data_approved')
+
+        if ('rejected' in supervision_status or 'approved' in supervision_status):
+            raise UserError("You can only modify contract data when request is pending.")
 
         for applicant in applicants:
             applicant.cost_center_id = self.cost_center_id if self.cost_center_id else False

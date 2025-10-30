@@ -8,8 +8,6 @@ _logger = logging.getLogger(__name__)
 class HrApplicant(models.Model):
     _inherit = 'hr.applicant'
 
-    cost_center_id = fields.Many2one('cost.center', string="Cost Center", tracking=True)
-
     def _is_blacklisted_vat(self):
         Partner = self.env['res.partner']
         for rec in self:
@@ -53,8 +51,11 @@ class HrApplicant(models.Model):
             
             if not all([record.salary_proposed, record.first_contract_start, record.first_contract_end, record.cost_center_id]):
                 raise MissingError(f"Some fields are required to approve applicant {record.partner_name or record.name}:\n-> Cost Center\n-> Salary Proposed\n-> First Contract Start\n-> First Contract End")
-
+            
             record.stage_id = self.env['hr.recruitment.stage'].browse(4)
+            record.supervision_data_sent = True
+            record.selected_applicant_approved = True
+            record.supervision_data_approved = 'pending'
 
 
     def action_open_set_fields_wizard(self):

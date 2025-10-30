@@ -10,8 +10,9 @@
         <menuitem id="massive_contract_end_menu" name="Massive contract end" action="view_massive_contract_end_action" parent="contract_end_menu" sequence="1"/>
 
     <menuitem id="contracts_menu" name="Contracts" parent="hr.menu_hr_root" sequence="90"/>
-        <menuitem id="employee_contract_submenu" name="Employee Contracts" action="hr_contract.action_hr_contract" parent="contracts_menu" sequence="0"/>
-        <menuitem id="contract_mass_submenu" name="Massive contract" action="view_contract_mass_action" parent="contracts_menu" sequence="1"/>
+        <menuitem id="contract_requests_submenu" name="Contract Requests" action="mkt_recruitment.action_hr_applicant_tree_payroll" parent="contracts_menu" sequence="0"/>
+        <menuitem id="employee_contract_submenu" name="Employee Contracts" action="hr_contract.action_hr_contract" parent="contracts_menu" sequence="1"/>
+        <menuitem id="contract_mass_submenu" name="Massive contract" action="view_contract_mass_action" parent="contracts_menu" sequence="2"/>
 
     <menuitem id="recruitment_applicant_menu" name="Recruitment Document" parent="hr.menu_hr_root" sequence="91"/>
         <menuitem id="emp_recruitment_document_submenu" name="Sheets" action="view_recruitment_document_action" parent="recruitment_applicant_menu" sequence="0"/>

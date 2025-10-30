@@ -401,6 +401,14 @@ class PortalCompliance(portal.CustomerPortal):
             if step == 3:
                 partner.sudo().write({'requires_compliance_process': False})
                 # partner.sudo().write({'is_validate': True})
+                applicant = request.env['hr.applicant'].sudo().search([('partner_id', '=', partner.id), ('stage_id', '=', 4)], limit=1, order='write_date desc')
+
+                _logger.info(f"\n\n\nEND COMPLIANCE: Aplicant - {len(applicant)} - {applicant.id} - {applicant.supervision_data_approved}\n\n\n")
+
+                if applicant and (applicant.supervision_data_approved == 'approved'):
+                    _logger.info(f"\n\n\nEND COMPLIANCE: APPLICANT FOUND TO CREATE FIRST_CONTRACT\n\n\n")
+                    applicant.sudo().create_first_contract()
+                    _logger.info(f"\n\n\nEND COMPLIANCE: FIRST CONTRACT CREATED\n\n\n")
                 return request.redirect('/my/home')
             
         values = {'step': step, 'error': {}, 'error_message': [], 'compliance_process': partner.requires_compliance_process, "action_url": f"/portal/compliance/step/{step}"}
