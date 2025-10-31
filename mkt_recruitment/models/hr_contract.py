@@ -101,29 +101,59 @@ class Contract(models.Model):
 
 
     def send_email_to_validate_contract(self):
+        self.ensure_one()
+        self = self.sudo()
+
+        try:
+            email_to = self.sudo().email
+            if not email_to:
+                raise UserError(_("This contract has no email associated."))
+            
+            self.validation_password = ''.join(random.choice(string.digits) for i in range(4))
+
+            mail_obj = self.env['mail.mail'].sudo()
+            subject = 'Validation code of Marketing Alterno contract'
+            body_html = f"""
+                <p>Dear {self.employee_id.name or ''},</p>
+                <p>Your verification code to sign your contract is:</p>
+                <h2 style="text-align:center;">{self.validation_password}</h2>
+                <p>If you did not request this, please ignore this email.</p>
+            """
+            mail = mail_obj.create({
+                'subject': subject,
+                'body_html': body_html,
+                'email_to': email_to,
+            })
+            mail.send()
+
+            if mail.state in ['outgoing', 'sent', 'received']:
+                return {'success': True, 'message': _('Email sent successfully.')}
+            elif mail.state == 'exception':
+                return {'success': False, 'message': _(f'Error sending email: {mail.failure_reason}')}
+
+        except UserError as e:
+            return {'success': False, 'message': str(e)}
+
+        except Exception as e:
+            _logger.error("Error sending validation email for contract %s: %s", self.id, e, exc_info=True)
+            return {'success': False, 'message': _('Unexpected error sending email. Please contact TI team.')}
+
+    def send_sms_to_validate_contract(self):
+        self.ensure_one()
         self = self.sudo()
         self.validation_password = ''.join(random.choice(string.digits) for i in range(4))
-        mail_obj = self.env['mail.mail'].sudo()
-        subject = 'Validation code of Marketing Alterno contract'
-        body = '''
-            Hola, tu código de verificación para firmar tu contracto es el siguiente:\n
-            %s
-        ''' % ( self.validation_password )
-        email_to = self.sudo().email
-        mail = mail_obj.create({
-            'subject': subject,
-            'body_html': body,
-            'email_to': email_to,
-        })
-        mail.send()
+
+        message = f"Your verification code to sign your contract is: {self.validation_password}."
+
+        return self.env['sms.gateway.labsmobile'].send_sms(self.phone, message, tpoa=None)
+
 
 
     def geolocation(self, latitude, longitude, ip, user_agent):
         self = self.sudo()
         self.ensure_one()
-        _logger.info('\n\n\n self.env.context: %s \n\n\n', self.env.context)
         geolocator = Nominatim(user_agent='my-app')
-        location = geolocator.reverse(str(latitude) + ', ' + str(longitude))
+        location = geolocator.reverse(str(latitude) + ', ' + str(longitude), timeout=10)
         self.latitude = latitude
         self.longitude = longitude
         self.ip = ip
@@ -136,7 +166,10 @@ class Contract(models.Model):
         self.device = device
         self.os = ua.os.family
         self.browser = ua.browser.family
-        _logger.info('\n\n\n device_info: %s \n\n\n', device_info)
+        _logger.info('\n\n\n CONTRACT\n self.env.context: %s - %s - %s - %s\n', latitude, longitude, ip, user_agent)
+        _logger.info('\tDevice Info: %s \n', device_info)
+        _logger.info('\tLocation Maps: %s \n\n\n', self.location_maps)
+
 
 
     def update_locale_date(self):

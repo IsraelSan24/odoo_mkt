@@ -12,6 +12,7 @@
                     decoration-muted="state == 'draft'"
                     decoration-success="state == 'uploaded'"
                     decoration-danger="state == 'not_found'"/>
+                <field name="create_date"/>
             </tree>
         </field>
     </record>
@@ -83,6 +84,7 @@
                         </group>
                         <group>
                             <field name="national_pension_system" readonly="1"/>
+                            <field name="fifth_category_income" readonly="1"/>
                         </group>
                     </group>
                     

@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, _
-from odoo.exceptions import RedirectWarning
+from odoo.exceptions import RedirectWarning, ValidationError, UserError, MissingError
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class HrApplicant(models.Model):
     _inherit = 'hr.applicant'
@@ -38,3 +41,29 @@ class HrApplicant(models.Model):
         # Llama write con bandera para no re-disparar el bloqueo
         self.with_context(force_blacklist_continue=True).write({'stage_id': stage_id})
         return True
+
+
+    def action_approve_selected_applicants(self):
+        for record in self:
+            
+            if int(record.stage_id) != 2:
+                raise UserError(f"You can approve only selected applicants.")
+            
+            if not all([record.salary_proposed, record.first_contract_start, record.first_contract_end, record.cost_center_id]):
+                raise MissingError(f"Some fields are required to approve applicant {record.partner_name or record.name}:\n-> Cost Center\n-> Salary Proposed\n-> First Contract Start\n-> First Contract End")
+            
+            record.stage_id = self.env['hr.recruitment.stage'].browse(4)
+            record.supervision_data_sent = True
+            record.selected_applicant_approved = True
+            record.supervision_data_approved = 'pending'
+
+
+    def action_open_set_fields_wizard(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Set First Contract Fields',
+            'res_model': 'applicant.set.contract.fields.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'active_ids': self.ids}
+        }

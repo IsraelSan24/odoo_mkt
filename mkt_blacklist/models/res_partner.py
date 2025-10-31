@@ -7,6 +7,11 @@ class ResPartner(models.Model):
     blacklist = fields.Boolean(string='Lista Negra', default=False)
     blacklist_reason = fields.Text(string='Motivo de Lista Negra', help='Descripción del motivo por el cual está en lista negra')
     blacklist_date = fields.Date(string='Fecha de Inclusión', help='Fecha en que fue agregado a la lista negra')
+    l10n_latam_identification_type_id = fields.Many2one(
+        'l10n_latam.identification.type',
+        string='Tipo de Identificación',
+        help='Tipo de documento de identificación'
+    )
 
     @api.onchange('blacklist')
     def _onchange_blacklist(self):

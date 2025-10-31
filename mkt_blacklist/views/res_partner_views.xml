@@ -39,8 +39,13 @@
                 <attribute name="decoration-danger">blacklist == True</attribute>
             </xpath>
             <xpath expr="//field[@name='display_name']" position="after">
-                <field name="blacklist" invisible="1"/>
+                <!-- <field name="blacklist" invisible="1"/> -->
+                <field name="blacklist" string="Lista Negra" optional="show"/>
                 <field name="blacklist_date" optional="show"/>
+                <field name="blacklist_reason" optional="show"/>
+                <field name="l10n_latam_identification_type_id" 
+                       string="Tipo Doc."
+                       optional="show"/>
             </xpath>
         </field>
     </record>

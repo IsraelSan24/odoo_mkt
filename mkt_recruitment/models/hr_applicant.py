@@ -1,6 +1,6 @@
 from odoo import _, api, fields, models, Command
 from datetime import timedelta
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, AccessError
 from odoo.addons.mkt_recruitment.models.apiperu import apiperu_dni
 import logging
 _logger = logging.getLogger(__name__)
@@ -17,13 +17,31 @@ class Applicant(models.Model):
     applicant_partner_id = fields.Many2one(comodel_name='applicant.partner', string='Applicant partner')
     is_reinstatement = fields.Boolean(default=False, string='Is reinstatement', store=True)
 
+    first_contract_start = fields.Date(string="First Contract Start Date", tracking=True) 
+    first_contract_end = fields.Date(string="First Contract End Date", tracking=True)
+
+    cost_center_id = fields.Many2one('cost.center', string="Cost Center", tracking=True)
+    selected_applicant_approved = fields.Boolean(string="Is selected applicant approved?", tracking=True)
+    supervision_data_approved = fields.Selection([
+                                    ('pending', 'Pending'),
+                                    ('approved', 'Approved'),
+                                    ('rejected', 'Rejected'),
+                                ], string='Supervision Status', tracking=True)
+    supervision_data_sent = fields.Boolean("Is supervision data sent?", tracking=True, default=False) 
 
     def write(self, vals):
         if 'stage_id' in vals:
             new_stage = self.env['hr.recruitment.stage'].browse(vals['stage_id'])
             if not new_stage.exists():
                 raise UserError("El nuevo estado no es válido.")
-                
+            
+            # restrict if not in group
+            if new_stage.id == 4 and not self.env.user.has_group('mkt_supervision.group_supervision_hiring_approver'):
+                _logger.info(f"\n\n\nHRAPPLICANT RESTRICT GROUP\n\n\n")
+                raise AccessError("You don't have permissions to move candidates to this stage.")
+
+
+            _logger.info(f"\n\n\nHR APPLICANT PASSED\n\n\n")
             for rec in self:
                 if not rec.stage_id:
                     raise UserError("El registro no tiene un estado actual asignado.")
@@ -69,10 +87,26 @@ class Applicant(models.Model):
 
     @api.depends('stage_id')
     def _compute_auto_employee_and_documents(self):
-        self.create_employee_by_stage()
-        self.update_data_partner()
-        self.access_portal_partner()
-        self.contact_merge_stage()
+        for rec in self:
+            # Si el stage es el inicial (id = 1), omitir la validación
+            if rec.stage_id.id == 1:
+                continue
+
+            # Solo aplicar la validación en los stages 2, 3 o 4
+            if rec.stage_id.id in (2, 3, 4):
+                look_for_employee = rec.env['hr.employee'].search([
+                    ('address_home_id.vat', '=', rec.vat)
+                ], limit=1)
+
+                if look_for_employee:
+                    raise UserError(
+                        f"An active employee exists with this DNI {rec.vat} ({look_for_employee.name}). "
+                        "It is necessary to terminate the employee before trying to continue with a new recruitment process."
+                    )
+            rec.contact_merge_stage()
+            rec.update_data_partner()
+            rec.create_employee_by_stage()
+            rec.access_portal_partner()
 
 
     def update_data_partner(self):
@@ -149,43 +183,69 @@ class Applicant(models.Model):
 
     def create_employee_by_stage(self):
         employee = False
-        for applicant in self:
-            if not applicant.is_autoemployee and applicant.stage_id.employee_stage:
-                contact_name = False
-                if applicant.partner_id:
-                    address_id = applicant.partner_id.address_get(['contact'])['contact']
-                    contact_name = applicant.partner_id.display_name
-                else:
-                    # Creates a partner if applicant is not associated to a partner
-                    if not applicant.partner_name:
-                        raise UserError(_('You must define a Contact Name for this applicant.'))
-                    new_partner_id = self.env['res.partner'].create({
-                        'is_company': False,
-                        'type': 'private',
-                        'name': applicant.partner_name,
-                        'email': applicant.email_from,
-                        'phone': applicant.partner_phone,
-                        'mobile': applicant.partner_mobile,
-                        'vat': applicant.vat or False
-                    })
-                    applicant.partner_id = new_partner_id
-                    address_id = new_partner_id.address_get(['contact'])['contact']
-                if applicant.partner_name or contact_name:
-                    values = {
-                        'name': applicant.partner_name or contact_name,
-                        'job_id': applicant.job_id.id,
-                        'job_title': applicant.job_id.name,
-                        'address_home_id': address_id,
-                        'department_id': applicant.department_id.id or False,
-                        'address_id': applicant.company_id and applicant.company_id.partner_id
-                                and applicant.company_id.partner_id.id or False,
-                        'work_phone': applicant.department_id.company_id.phone,
-                        'applicant_id': applicant.ids,
-                        'image_1920': applicant.photo,
-                        'identification_id': applicant.partner_id.vat or False
-                    }
-                    self.env['hr.employee'].create(values)
-                    applicant.is_autoemployee = True
+        if not self.is_autoemployee and self.stage_id.employee_stage:
+            look_for_employee = self.env['hr.employee'].search([('address_home_id.vat', '=', self.vat)], limit=1)
+            if look_for_employee:
+                raise UserError(f"An active employee exists with this DNI {self.vat} ({look_for_employee.name}). It is necesary to terminate the employee before trying to continue with a new recruitment process.")
+
+            contact_name = False
+            if self.partner_id:
+                address_id = self.partner_id.address_get(['contact'])['contact']
+                contact_name = self.partner_id.display_name
+            else:
+                # Creates a partner if applicant is not associated to a partner
+                if not self.partner_name:
+                    raise UserError(_('You must define a Contact Name for this applicant.'))
+                new_partner_id = self.env['res.partner'].create({
+                    'is_company': False,
+                    'type': 'private',
+                    'name': self.partner_name,
+                    'email': self.email_from,
+                    'phone': self.partner_phone,
+                    'mobile': self.partner_mobile,
+                    'vat': self.vat or False
+                })
+                self.partner_id = new_partner_id
+                address_id = new_partner_id.address_get(['contact'])['contact']
+            if self.partner_name or contact_name:
+                values = {
+                    'name': self.partner_name or contact_name,
+                    'job_id': self.job_id.id,
+                    'job_title': self.job_id.name,
+                    'address_home_id': address_id,
+                    'department_id': self.department_id.id or False,
+                    'address_id': self.company_id and self.company_id.partner_id
+                            and self.company_id.partner_id.id or False,
+                    'work_phone': self.department_id.company_id.phone,
+                    'applicant_id': self.ids,
+                    'image_1920': self.photo,
+                    'identification_id': self.partner_id.vat or False,
+                    # 'cost_center_id': self.cost_center_id.id or False
+                }
+                self.env['hr.employee'].create(values)
+                self.partner_id.write({'requires_compliance_process': True})
+
+                self.is_autoemployee = True
+
+
+    def create_first_contract(self):
+        employee_contract_history = self.env['hr.contract.history'].search([('employee_id', '=', self.emp_id.id)])
+        
+        if (not employee_contract_history or len(employee_contract_history) == 1):
+            if not employee_contract_history.contract_id:
+                values = {
+                'employee_id': self.emp_id.id,
+                'date_start': self.first_contract_start,
+                'date_end': self.first_contract_end,
+                'wage': self.salary_proposed,
+                'structure_type_id': 1,
+                'is_renovation': False,
+                'department_id': self.emp_id.department_id.id,
+                'job_id': self.emp_id.job_id.id,
+                }
+                first_contract = self.env['hr.contract'].sudo().create(values)
+                first_contract.write_data() 
+                first_contract._compute_contract_duration()
 
 
     @api.model
@@ -204,3 +264,73 @@ class Applicant(models.Model):
             if reinstatement:
                 vals['is_reinstatement'] = True
         return super(Applicant, self).create(vals)
+    
+    def action_approve_supervision_data(self):
+        for record in self:
+            
+            if int(record.stage_id) != 4:
+                raise UserError(f"You can approve only applicants in Contract Proposal.")
+            
+            if record.supervision_data_approved != 'pending':
+                raise UserError(f"You can approve only when the request is pending.")
+
+            record.supervision_data_approved = 'approved'
+
+            if not record.partner_id.requires_compliance_process:
+                current_employee = self.env['hr.employee'].search([('address_home_id.id', '=', record.partner_id.id)], order='create_date desc', limit=1)
+                
+                if current_employee:
+                    current_employee.sudo().write({'cost_center_id': record.cost_center_id.id})
+                    record.create_first_contract()
+                else:
+                    _logger.info(f"\n\n\nNO EMPLOYEE WAS FOUND\n\n\n")
+
+    def action_correct_supervision_data(self):
+        for record in self:
+            
+            if int(record.stage_id) != 4:
+                raise UserError(f"You can correct data only for applicants in Contract Proposal.")
+
+            if record.supervision_data_approved != 'rejected':
+                    raise UserError(f"You can correct only when the request is rejected.")
+
+            self.supervision_data_approved = 'pending'
+
+    def action_reject_supervision_data(self):
+        for record in self:
+            
+            if int(record.stage_id) != 4:
+                raise UserError(f"You can approve only applicants in Contract Proposal.")
+
+            if record.supervision_data_approved != 'pending':
+                raise UserError(f"You can reject only when the request is pending.")
+
+            self.supervision_data_approved = 'rejected'
+    
+    def action_restore_supervision_data(self):
+        for record in self:
+            
+            if int(record.stage_id) != 4:
+                raise UserError(f"You can restore only applicants in Contract Proposal.")
+            
+            if record.supervision_data_approved != 'approved':
+                raise UserError(f"You can restore only when the request is approved.")
+
+            record.supervision_data_approved = 'pending'
+
+            current_employee = self.env['hr.employee'].search([('address_home_id.id', '=', record.partner_id.id)], order='create_date desc', limit=1)
+            
+            if current_employee:
+                current_employee.sudo().write({'cost_center_id': False})
+
+                employee_contract_history = self.env['hr.contract.history'].search([('employee_id', '=', record.emp_id.id)])
+
+                if employee_contract_history and len(employee_contract_history) == 1:
+                    if employee_contract_history.contract_id:
+                        first_contract = employee_contract_history.contract_id.sudo()
+                        if first_contract.state in ['cancel', 'draft']:
+                            first_contract.toggle_active()
+                        else:
+                            raise UserError("It is not possible to restore the request because the first contract has been signed.")
+            else:
+                _logger.info(f"\n\n\nNO EMPLOYEE WAS FOUND\n\n\n")
