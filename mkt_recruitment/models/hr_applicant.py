@@ -88,10 +88,21 @@ class Applicant(models.Model):
     @api.depends('stage_id')
     def _compute_auto_employee_and_documents(self):
         for rec in self:
-            look_for_employee = rec.env['hr.employee'].search([('address_home_id.vat', '=', rec.vat)], limit=1)
-            if look_for_employee:
-                raise UserError(f"An active employee exists with this DNI {rec.vat} ({look_for_employee.name}). It is necesary to terminate the employee before trying to continue with a new recruitment process.")
+            # Si el stage es el inicial (id = 1), omitir la validación
+            if rec.stage_id.id == 1:
+                continue
 
+            # Solo aplicar la validación en los stages 2, 3 o 4
+            if rec.stage_id.id in (2, 3, 4):
+                look_for_employee = rec.env['hr.employee'].search([
+                    ('address_home_id.vat', '=', rec.vat)
+                ], limit=1)
+
+                if look_for_employee:
+                    raise UserError(
+                        f"An active employee exists with this DNI {rec.vat} ({look_for_employee.name}). "
+                        "It is necessary to terminate the employee before trying to continue with a new recruitment process."
+                    )
             rec.contact_merge_stage()
             rec.update_data_partner()
             rec.create_employee_by_stage()
