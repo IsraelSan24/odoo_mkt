@@ -12,6 +12,7 @@
                     decoration-muted="state == 'draft'"
                     decoration-success="state == 'uploaded'"
                     decoration-danger="state == 'not_found'"/>
+                <field name="create_date"/>
             </tree>
         </field>
     </record>

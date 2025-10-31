@@ -3034,7 +3034,7 @@
                                 </div>
 
                                 <div class="container mt-3 mb-5">
-                                    <div class="row justify-content-center border rounded-lg bg-white shadow p-5 o_applicant_partner">
+                                    <div class="row justify-content-center border rounded-lg bg-white shadow p-5 o_applicant_partner o_dni_validation_form">
                                             <form id="employeeForm" role="form" t-att-action="action_url" method="POST">
                                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                                 <div class="row mb-3 border border-info rounded-lg p-3">
@@ -3058,7 +3058,7 @@
                                                                     </t>
                                                                 </select>
                                                             </div>
-                                                            <div class="form-group col-md-6">
+                                                            <div class="form-group col-md-6 o_dni_validation_field">
                                                                 <label for="dni">Document number*</label>
                                                                 <div class="input-group">
                                                                     <input type="text" 
@@ -3068,7 +3068,7 @@
                                                                            required="True" 
                                                                            t-att-readonly="action_url == '/portal/compliance/step/1' and 'readonly' or None"
                                                                            t-att-value="partner and partner.vat or ''"/>
-                                                                    <button type="button" class="btn btn-secondary custom-button ml-1" onclick="consultarDNI()">
+                                                                    <button type="button" class="btn btn-primary btn_validate_dni">
                                                                         <i class="fa fa-search"></i>
                                                                     </button>
                                                                 </div>
@@ -3079,7 +3079,7 @@
                                                         </div>
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
-                                                                <label for="name">Name*</label>
+                                                                <label for="name">Complete Name*</label>
                                                                 <input type="text" name="name" class="form-control" id="name" required="True" t-att-value="partner and partner.name or ''"/>
                                                                 <div class="invalid-feedback">
                                                                     Please enter your name.
@@ -3195,24 +3195,26 @@
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3 border border-info rounded-lg p-3">
-                                                    <div class="col-lg-4 align-content-center">
+                                                    <!-- <div class="col-lg-4 align-content-center">
                                                         <div id="map" style="height: 400px; width: 100%; border-radius: 10px;"></div>
-                                                    </div>
+                                                    </div> -->
+                                                    <h2 class="w-100 font-weight-bold text-info">Address</h2>
                                                     <div class="col-lg-8">
-                                                        <h2 class="font-weight-bold text-info">Address</h2>
-                                                        <div class="form-row">
+                                                        <div class="form-row" style="display: none;">
                                                             <div class="form-group col-md-6">
                                                                 <label for="country_id">Country*</label>
                                                                 <select name="country_id" id="country_id" class="form-control" required="True">
                                                                     <option value="">Countries...</option>
                                                                     <t t-foreach="countries or []" t-as="country">
-                                                                        <option t-att-value="country.id" id="country_name" t-att-selected="(partner and partner.country_id.id == country.id) or None">
+                                                                        <option t-att-value="country.id" id="country_name" t-att-selected="(partner and partner.country_id.id == country.id) or 173">
                                                                             <t t-esc="country.name"/>
                                                                         </option>
                                                                     </t>
                                                                 </select>
                                                             </div>
-                                                            <div class="form-group col-md-6">
+                                                        </div>
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-4">
                                                                 <label for="state_id">Department*</label>
                                                                 <select name="state_id" id="state_id" class="form-control" required="True">
                                                                     <option value="">Department...</option>
@@ -3223,9 +3225,7 @@
                                                                     </t>
                                                                 </select>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-6">
+                                                            <div class="form-group col-md-4">
                                                                 <label for="city_id">Province*</label>
                                                                 <select name="city_id" id="city_id" class="form-control" required="True">
                                                                     <option value="">Province...</option>
@@ -3236,7 +3236,7 @@
                                                                     </t>
                                                                 </select>
                                                             </div>
-                                                            <div class="form-group col-md-6">
+                                                            <div class="form-group col-md-4">
                                                                 <label for="district_id">District*</label>
                                                                 <select name="district_id" id="district_id" class="form-control" required="True">
                                                                     <option value="">District...</option>
@@ -3374,7 +3374,7 @@
                                                                    id="private_pension_system" 
                                                                    name="private_pension_system" 
                                                                    onclick="toggleCheckbox(this)"
-                                                                   t-att-checked="'checked' if partner.private_pension_system == True else None"
+                                                                   t-att-checked="'checked' if (partner and partner.private_pension_system == True) else None"
                                                                   />
                                                             <p class="text-center">If you choose 'Private Pension System', you will be able to choose if it is your first job or if you come from the ONP.</p>
                                                             <div id="pension_options" style="display: none;">
@@ -3384,7 +3384,7 @@
                                                                            id="afp_first_job" 
                                                                            name="afp_first_job" 
                                                                            value="afp_first_job"
-                                                                           t-att-checked="'checked' if partner.afp_first_job == True else None" />
+                                                                           t-att-checked="'checked' if (partner and partner.afp_first_job == True) else None" />
                                                                     <label class="form-check-label" for="afp_first_job">(AFP) First job</label>
                                                                 </div>
                                                                 <div class="form-check">
@@ -3393,7 +3393,7 @@
                                                                            id="coming_from_onp" 
                                                                            name="coming_from_onp" 
                                                                            value="coming_from_onp"
-                                                                           t-att-checked="'checked' if partner.coming_from_onp == True else None" />
+                                                                           t-att-checked="'checked' if (partner and partner.coming_from_onp == True) else None" />
                                                                     <label class="form-check-label" for="coming_from_onp">Coming from the ONP</label>
                                                                 </div>
                                                                 <div class="form-check">
@@ -3402,7 +3402,7 @@
                                                                            id="coming_from_afp" 
                                                                            name="coming_from_afp" 
                                                                            value="coming_from_afp"
-                                                                           t-att-checked="'checked' if partner.coming_from_afp == True else None" />
+                                                                           t-att-checked="'checked' if (partner and partner.coming_from_afp == True) else None" />
                                                                     <label class="form-check-label" for="coming_from_afp">Coming from the AFP</label>
                                                                 </div>
                                                             </div>
@@ -3417,7 +3417,7 @@
                                                                    id="national_pension_system" 
                                                                    name="national_pension_system" 
                                                                    onclick="toggleCheckbox(this)"
-                                                                   t-att-checked="'checked' if partner.national_pension_system == True else None" />
+                                                                   t-att-checked="'checked' if (partner and partner.national_pension_system == True) else None" />
                                                             <div class="invalid-feedback">
                                                                 Please select a valid pension.
                                                             </div>
@@ -3436,7 +3436,7 @@
 
                                                         <div class="form-check">
                                                             <input type="checkbox" class="form-check-input" id="fifth_no" name="fifth_category_income"
-                                                                t-att-checked="'checked' if partner.fifth_category_income == False else None"
+                                                                t-att-checked="'checked' if (partner and partner.fifth_category_income == False) else None"
                                                                 onclick="toggleFifthCategory(this, false)"/>
                                                             <label for="fifth_no">
                                                                 <b>NO:</b> No he percibido remuneraciones de quinta categoría(*) en el presente año de otro(s) empleador(es).
@@ -3445,7 +3445,7 @@
 
                                                         <div class="form-check mt-2">
                                                             <input type="checkbox" class="form-check-input" id="fifth_yes" name="fifth_category_income"
-                                                                t-att-checked="'checked' if partner.fifth_category_income == True else None"
+                                                                t-att-checked="'checked' if (partner and partner.fifth_category_income == True) else None"
                                                                 onclick="toggleFifthCategory(this, true)"/>
                                                             <label for="fifth_yes">
                                                                 <b>SÍ:</b> He percibido remuneraciones de quinta categoría(*) en el presente año de otro(s) empleador(es).

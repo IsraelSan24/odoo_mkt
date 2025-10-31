@@ -618,15 +618,9 @@
                     <button string="Download documents" name="download_attach_files" type="object" class="oe_highlight"/>
                 </header>
                 <field name="name"/>
+                <field name="vat"/>
                 <field name="is_current_dni"/>
                 <field name="is_current_dni_back"/>
-                <field name="is_services_receipt"/>
-                <field name="is_certijoven"/>
-                <field name="certificate_of_vaccination" invisible="True"/> 
-                <field name="health_card" invisible="True"/> 
-                <field name="contributions_report" invisible="True"/> 
-                <field name="is_electronic_fine" invisible="True"/> 
-                <field name="is_t_record"/>
                 <field name="document_okay" widget="boolean_toggle" readonly="True"/>
                 <field name="children_okay" widget="boolean_toggle" readonly="True"/>
             </tree>
@@ -640,5 +634,27 @@
         <field name="domain">[('belong_applicant_id','!=',False),('belong_applicant_id.active','=',True),('belong_applicant_id.stage_id.name','in',('Propuesta de contrato','Contrato firmado'))]</field>
         <field name="view_id" ref="view_res_partner_document_tree"/>
     </record>
+
+    <record id="view_res_partner_filter_inherit_vat" model="ir.ui.view">
+        <field name="name">view.res.partner.filter.inherit.vat</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+
+            <!-- Buscamos el campo original y lo reemplazamos -->
+            <field name="name" position="attributes">
+                <attribute name="filter_domain">
+                    ['|', '|', '|',
+                        ('display_name', 'ilike', self),
+                        ('ref', '=', self),
+                        ('email', 'ilike', self),
+                        ('vat', 'ilike', self)
+                    ]
+                </attribute>
+            </field>
+
+        </field>
+    </record>
+
 
 </odoo>

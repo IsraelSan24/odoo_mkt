@@ -79,6 +79,7 @@
             'mkt_recruitment/static/src/js/document_geolocalization.js',
             'mkt_recruitment/static/src/js/validation_digits_document.js',
             'mkt_recruitment/static/src/js/signature_override.js',
+            'mkt_recruitment/static/src/js/api_dni_plus.js',
         ],
         'web.assets_backend': [
             'mkt_recruitment/static/src/js/notification_effects.js',
