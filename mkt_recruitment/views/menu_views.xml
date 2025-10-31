@@ -2,7 +2,7 @@
 <odoo>
 
     <menuitem id="recruitment_document_menu" name="Recruitment Document" parent="hr_recruitment.menu_hr_recruitment_root" sequence="3"/>
-        <menuitem id="recruitment_document_submenu" name="Sheets" action="view_recruitment_document_action" parent="recruitment_document_menu" sequence="0"/>
+        <menuitem id="recruitment_document_submenu" name="Affidavits" action="view_recruitment_document_action" parent="recruitment_document_menu" sequence="0"/>
         <menuitem id="res_partner_pending_document_submenu" name="Partner document" action="view_res_partner_document_action" parent="recruitment_document_menu" sequence="1"/>
         <menuitem id="applicant_partner_submenu" name="Applicant partner" action="view_applicant_partner_action" parent="recruitment_document_menu" sequence="2"/>
 
@@ -15,7 +15,7 @@
         <menuitem id="contract_mass_submenu" name="Massive contract" action="view_contract_mass_action" parent="contracts_menu" sequence="2"/>
 
     <menuitem id="recruitment_applicant_menu" name="Recruitment Document" parent="hr.menu_hr_root" sequence="91"/>
-        <menuitem id="emp_recruitment_document_submenu" name="Sheets" action="view_recruitment_document_action" parent="recruitment_applicant_menu" sequence="0"/>
+        <menuitem id="emp_recruitment_document_submenu" name="Affidavits" action="view_recruitment_document_action" parent="recruitment_applicant_menu" sequence="0"/>
         <menuitem id="emp_res_partner_pending_document_submenu" name="Partner document" action="view_res_partner_document_action" parent="recruitment_applicant_menu" sequence="1"/>
         <menuitem id="emp_applicant_partner_submenu" name="Applicant partner" action="view_applicant_partner_action" parent="recruitment_applicant_menu" sequence="2"/>
 
