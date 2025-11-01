@@ -6,47 +6,47 @@ from odoo.http import request
 from odoo.addons.portal.controllers import portal
 from odoo.addons.portal.controllers.portal import pager as portal_pager
 
-class ApplicantPartner(http.Controller):
+# class ApplicantPartner(http.Controller):
     
-    @http.route('/applicantpartner', type='http', auth='public', website=True)
-    def applicantpartner(self, **kw):
-        countries = request.env['res.country'].sudo().search([('code','=','PE')])
-        states = request.env['res.country.state'].sudo().search([('country_id.code','=','PE')])
-        cities = request.env['res.city'].sudo().search([])
-        districts = request.env['l10n_pe.res.city.district'].sudo().search([])
-        nationalities = request.env['res.country'].sudo().search([('demonym','!=',False)])
-        identifications = request.env['l10n_latam.identification.type'].sudo().search([
-            ('name', 'in', ('DNI', 'PTP', 'Pasaporte', 'Cédula Extranjera', 'Carnet de Extranjeria'))
-        ])
-        values = {
-            'countries': countries,
-            'states': states,
-            'districts': districts,
-            'cities': cities,
-            'nationalities': nationalities,
-            'identifications': identifications,
-            'action_url': "/applicantpartner/requested"
-        }
-        return http.request.render('mkt_recruitment.applicantpartner', values)
+#     @http.route('/applicantpartner', type='http', auth='public', website=True)
+#     def applicantpartner(self, **kw):
+#         countries = request.env['res.country'].sudo().search([('code','=','PE')])
+#         states = request.env['res.country.state'].sudo().search([('country_id.code','=','PE')])
+#         cities = request.env['res.city'].sudo().search([])
+#         districts = request.env['l10n_pe.res.city.district'].sudo().search([])
+#         nationalities = request.env['res.country'].sudo().search([('demonym','!=',False)])
+#         identifications = request.env['l10n_latam.identification.type'].sudo().search([
+#             ('name', 'in', ('DNI', 'PTP', 'Pasaporte', 'Cédula Extranjera', 'Carnet de Extranjeria'))
+#         ])
+#         values = {
+#             'countries': countries,
+#             'states': states,
+#             'districts': districts,
+#             'cities': cities,
+#             'nationalities': nationalities,
+#             'identifications': identifications,
+#             'action_url': "/applicantpartner/requested"
+#         }
+#         return http.request.render('mkt_recruitment.applicantpartner', values)
 
 
-    @http.route('/applicantpartner/requested', type='http', auth='public', website=True)
-    def applicantpartner_requested(self, **post):
-        # Asegura que los campos opcionales estén definidos o sean None
-        if not post.get('education_start_date'):
-            post['education_start_date'] = None
-        if not post.get('education_end_date'):
-            post['education_end_date'] = None
+#     @http.route('/applicantpartner/requested', type='http', auth='public', website=True)
+#     def applicantpartner_requested(self, **post):
+#         # Asegura que los campos opcionales estén definidos o sean None
+#         if not post.get('education_start_date'):
+#             post['education_start_date'] = None
+#         if not post.get('education_end_date'):
+#             post['education_end_date'] = None
 
-        dni = post.get('dni')
-        if dni:
-            record = request.env['applicant.partner'].sudo().search([('dni', '=', dni)], limit=1, order='id desc')
-            if record:
-                record.sudo().unlink()
+#         dni = post.get('dni')
+#         if dni:
+#             record = request.env['applicant.partner'].sudo().search([('dni', '=', dni)], limit=1, order='id desc')
+#             if record:
+#                 record.sudo().unlink()
 
-        new_applicant_partner = request.env['applicant.partner'].sudo().create(post)
-        new_applicant_partner.send_email()
-        return request.render('mkt_recruitment.applicantpartner_requested', {})
+#         new_applicant_partner = request.env['applicant.partner'].sudo().create(post)
+#         new_applicant_partner.send_email()
+#         return request.render('mkt_recruitment.applicantpartner_requested', {})
 
 
 class RecruitmentPortal(portal.CustomerPortal):
