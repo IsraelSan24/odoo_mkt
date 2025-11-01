@@ -3704,7 +3704,7 @@
         </field>
     </record>
 
-    <!-- <record id="applicantpartner_requested" model="website.page">
+    <record id="applicantpartner_requested" model="website.page">
         <field name="name">Applicant partner requested</field>
         <field name="type">qweb</field>
         <field name="url">/applicantpartner_requested</field>
@@ -3728,6 +3728,6 @@
                 </t>
             </t>
         </field>
-    </record> -->
+    </record>
 
 </odoo>
