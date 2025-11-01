@@ -12,54 +12,89 @@ odoo.define('mkt_recruitment.my_geolocalization', function( require ) {
         events: {
             'click #validate-btn-boxes': '_onClickGeo',
         },
+
         _onClickGeo: function ( event ) {
-            console.log('------------------------------------------------se ejecuto------------------------------------------------');
             event.preventDefault();
-            var self = this;
-            const contract_url = new URL(window.location.href)
-            if ( contract_url.pathname.includes('my/contracts')) {
-                console.log('In contract');
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function(position) {
-                        const userAgent = navigator.userAgent;
-                        const ctx = Object.assign({}, session.user_context, {
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude,
-                            user_agent: userAgent,
-                        });
-                        latitude = position.coords.latitude;
-                        longitude = position.coords.longitude;
-                        fetch('https://api.ipify.org?format=json')
-                            .then(response => response.json())
-                            .then(data =>{
-                                const ip = data.ip;
-                                console.log('Ip ' + ip);
-                                rpc.query({
-                                    model: 'hr.contract',
-                                    method: 'geolocation',
-                                    args: [[self._getContractId()], position.coords.latitude, position.coords.longitude, ip, userAgent],
-                                }).then(function(result) {
-                                    console.log('Successfully executed geolocation function:', result);
-                                }).catch(function(error) {
-                                    console.error('Error executing geolocation function:', error);
-                                    alert('Error de acceso, por favor contactarse con el area de sistemas de Marketing Alterno.');
-                                });
-                            })
-                    });
-                }
-                else {
-                    alert('Error de geolocalisación, por favor contactarse con el area de sistemas de Marketing Alterno.');
-                }
-            }
-            else {
+
+            const url = new URL(window.location.href);
+            const path = url.pathname;
+
+            if (path.includes('my/contracts')) {
+                this._geoContract();
+            } else if (path.includes('portal/compliance/signall')) {
+                this._geoCompliance();
+            } else {
                 alert('Error de url, por favor contactarse con el area de sistemas de Marketing Alterno.');
             }
         },
-        _getContractId: function() {
-            const url = new URL(window.location.href);
-            const contractId = url.pathname.split('/').pop();
-            return parseInt(contractId);
-        },
-    });
 
-});
+        _geoContract: function() {
+            const self = this;
+            console.log("Ejecutando geolocalización de contrato...");
+            this._getGeo(function(latitude, longitude, ip, user_agent) {
+                rpc.query({
+                    model: 'hr.contract',
+                    method: 'geolocation',
+                    args: [[self._getContractId()], latitude, longitude, ip, user_agent],
+                }).then(result => console.log("Geo contract OK:", result))
+                    .catch(error => console.log("Geo contract error:", error));
+            });
+        },
+
+        _geoCompliance: function() {
+            const self = this;
+            console.log("Ejecutando geolocalición de compliance...");
+            this._getGeo(function(latitude, longitude, ip, user_agent) {
+                const rec_id = self._getDocumentId();
+                const contract_id = self._getContractId();
+                console.log("REC ID", rec_id);
+                console.log("CON ID", contract_id);
+                if (rec_id) {
+                    rpc.query({
+                        model: 'recruitment.document',
+                        method: 'geolocation',
+                        args: [[rec_id], latitude, longitude, ip, user_agent],
+                    });
+                }
+                if (contract_id) {
+                    rpc.query({
+                        model: 'hr.contract',
+                        method: 'geolocation',
+                        args: [[contract_id], latitude, longitude, ip, user_agent],
+                    });
+                }
+            });
+        },
+
+        _getGeo: function(callback) {
+            if (!navigator.geolocation) {
+                alert("Error de geolocalización. Contacte al Área de Sistemas");
+                return;
+            }
+            navigator.geolocation.getCurrentPosition(function(position){
+                fetch('https://api.ipify.org?format=json')
+                    .then(response => response.json())
+                    .then(data => callback(position.coords.latitude, position.coords.longitude, data.ip, navigator.userAgent))
+            });
+        },
+            
+        _getDocumentId: function() {
+            const documentId = $('form#contractaccept').data('rec-document-id');
+            if (documentId) {
+                return parseInt(documentId);
+            }
+            const url = new URL(window.location.href);
+            return parseInt(url.pathname.split('/').pop());
+            },
+        
+        _getContractId: function() {
+            const contractId = $('form#contractaccept').data('document-id');
+            if (contractId) {
+                return parseInt(contractId);
+            }
+            const url = new URL(window.location.href);
+            return parseInt(url.pathname.split('/').pop());
+            },
+
+        });
+    });

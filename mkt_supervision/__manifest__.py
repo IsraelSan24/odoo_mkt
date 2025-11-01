@@ -27,6 +27,7 @@
         
         "wizards/applicant_blacklist_confirm_wizard.xml",
         "wizards/partner_blacklist_check_wizard.xml",
+        "wizards/applicant_set_contract_fields_wizard.xml",
 
         'views/stock_request_view.xml',
         'views/stock_request_line_view.xml',

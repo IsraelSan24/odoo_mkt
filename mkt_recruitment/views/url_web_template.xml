@@ -3001,12 +3001,30 @@
         <field name="name">Applicant partner</field>
         <field name="type">qweb</field>
         <field name="url">/applicantpartner</field>
-        <field name="website_published">True</field>
+        <field name="website_published">False</field>
         <field name="key">mkt_recruitment.applicantpartner</field>
         <field name="arch" type="xml">
             <t name="Request" t-name="mkt_recruitment.applicantpartner">
                 <t t-call="website.layout">
                     <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/website_menu.css"/>
+
+                    <t t-if="children_data_json">
+                        <script type="application/json" id="partnerChildrenData">
+                            <t t-raw="children_data_json"/>
+                        </script>
+                    </t>
+                    <t t-if="other_beneficiary_data_json">
+                        <script type="application/json" id="partnerOtherBeneficiaryData">
+                            <t t-raw="other_beneficiary_data_json"/>
+                        </script>
+                    </t>
+
+                    <t t-if="first_beneficiaries_data_json">
+                        <script type="application/json" id="partnerFirstBeneficiariesData">
+                            <t t-raw="first_beneficiaries_data_json"/>
+                        </script>
+                    </t>
+
                     <script type="text/javascript" src="/mkt_recruitment/static/src/js/website_menu.js"></script>
                     <div id="wrap">
                         <div class="oe_structure">
@@ -3016,8 +3034,8 @@
                                 </div>
 
                                 <div class="container mt-3 mb-5">
-                                    <div class="row justify-content-center border rounded-lg bg-white shadow p-5 o_applicant_partner">
-                                            <form id="employeeForm" role="form" action="/applicantpartner/requested" method="POST">
+                                    <div class="row justify-content-center border rounded-lg bg-white shadow p-5 o_applicant_partner o_dni_validation_form">
+                                            <form id="employeeForm" role="form" t-att-action="action_url" method="POST">
                                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                                 <div class="row mb-3 border border-info rounded-lg p-3">
                                                     <div class="col-lg-4 align-content-center">
@@ -3027,21 +3045,30 @@
                                                         <h2 class="font-weight-bold text-info">Personal Information</h2>
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
-                                                                <label for="identification_type_id">Identification Type</label>
+                                                                <label for="identification_type_id">Identification Type*</label>
                                                                 <select name="identification_type_id" id="identification_type_id" class="form-control" required="True">
                                                                     <option value="">Identification...</option>
                                                                     <t t-foreach="identifications or []" t-as="identification">
-                                                                        <option t-att-value="identification.id" id="identification_name" t-att-selected="identification.name == 'DNI'">
-                                                                            <t t-esc="identification.name"/>
+                                                                        <option 
+                                                                            t-att-value="identification.id" 
+                                                                            id="identification_name" 
+                                                                            t-att-selected="((partner and partner.l10n_latam_identification_type_id.name == identification.name)) or None">
+                                                                                <t t-esc="identification.name"/>
                                                                         </option>
                                                                     </t>
                                                                 </select>
                                                             </div>
-                                                            <div class="form-group col-md-6">
-                                                                <label for="dni">Document number</label>
+                                                            <div class="form-group col-md-6 o_dni_validation_field">
+                                                                <label for="dni">Document number*</label>
                                                                 <div class="input-group">
-                                                                    <input type="text" name="dni" class="form-control" id="dni" required="True"/>
-                                                                    <button type="button" class="btn btn-secondary custom-button ml-1" onclick="consultarDNI()">
+                                                                    <input type="text" 
+                                                                           name="dni" 
+                                                                           class="form-control" 
+                                                                           id="dni" 
+                                                                           required="True" 
+                                                                           t-att-readonly="action_url == '/portal/compliance/step/1' and 'readonly' or None"
+                                                                           t-att-value="partner and partner.vat or ''"/>
+                                                                    <button type="button" class="btn btn-primary btn_validate_dni">
                                                                         <i class="fa fa-search"></i>
                                                                     </button>
                                                                 </div>
@@ -3052,18 +3079,18 @@
                                                         </div>
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
-                                                                <label for="name">Name</label>
-                                                                <input type="text" name="name" class="form-control" id="name"/>
+                                                                <label for="name">Complete Name*</label>
+                                                                <input type="text" name="name" class="form-control" id="name" required="True" t-att-value="partner and partner.name or ''"/>
                                                                 <div class="invalid-feedback">
                                                                     Please enter your name.
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-md-6">
-                                                                <label for="nationality_id">Nationality</label>
+                                                                <label for="nationality_id">Nationality*</label>
                                                                 <select name="nationality_id" id="nationality_id" class="form-control" required="True">
                                                                     <option value="">Nationality...</option>
                                                                     <t t-foreach="nationalities or []" t-as="nationality">
-                                                                        <option t-att-value="nationality.id" id="nationality_name" t-att-selected="nationality.code == 'PE'">
+                                                                        <option t-att-value="nationality.id" id="nationality_name" t-att-selected="(partner and partner.demonym == nationality.demonym) or None">
                                                                             <t t-esc="nationality.demonym"/>
                                                                         </option>
                                                                     </t>
@@ -3072,18 +3099,18 @@
                                                         </div>
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
-                                                                <label for="birthday">Date of Birth</label>
-                                                                <input type="date" name="birthday" class="form-control" id="birthday" required="True"/>
+                                                                <label for="birthday">Date of Birth*</label>
+                                                                <input type="date" name="birthday" class="form-control" id="birthday" required="True" t-att-value="partner and partner.birthday or ''"/>
                                                                 <div class="invalid-feedback">
                                                                     Please enter your date of birth.
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-md-6">
-                                                                <label for="gender">Gender</label>
+                                                                <label for="gender">Gender*</label>
                                                                 <select class="form-control" name="gender" id="gender" required="True">
                                                                     <option value="">Select an option</option>
-                                                                    <option value="male">Male</option>
-                                                                    <option value="female">Female</option>
+                                                                    <option value="male" t-att-selected="(partner and partner.gender == 'male') or None">Male</option>
+                                                                    <option value="female" t-att-selected="(partner and partner.gender == 'female') or None">Female</option>
                                                                 </select>
                                                                 <div class="invalid-feedback">
                                                                     Please select your gender.
@@ -3092,22 +3119,23 @@
                                                         </div>
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
-                                                                <label for="marital">Marital Status</label>
+                                                                <label for="marital">Marital Status*</label>
                                                                 <select name="marital" class="form-control" id="marital" required="True">
                                                                     <option value="">Select an option</option>
-                                                                    <option value="Soltero/a">Single</option>
-                                                                    <option value="Casado/a">Married</option>
-                                                                    <option value="Conviviente">Cohabitant</option>
-                                                                    <option value="Viudo/a">Widowed</option>
-                                                                    <option value="Divorciado/a">Divorced</option>
+                                                                    <option value="Soltero/a" t-att-selected="(partner and partner.marital == 'Soltero/a') or None">Single</option>
+                                                                    <option value="Casado/a" t-att-selected="(partner and partner.marital == 'Casado/a') or None">Married</option>
+                                                                    <option value="Conviviente" t-att-selected="(partner and partner.marital == 'Conviviente') or None">Cohabitant</option>
+                                                                    <option value="Viudo/a" t-att-selected="(partner and partner.marital == 'Viudo/a') or None">Widowed</option>
+                                                                    <option value="Divorciado/a" t-att-selected="(partner and partner.marital == 'Divorciado/a') or None">Divorced</option>
                                                                 </select>
+
                                                                 <div class="invalid-feedback">
                                                                     Please select your marital status.
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-md-6">
-                                                                <label for="phone">Phone Number</label>
-                                                                <input type="number" name="phone" class="form-control" id="phone"/>
+                                                                <label for="phone">Phone Number*</label>
+                                                                <input type="number" name="phone" class="form-control" id="phone" required="True" t-att-value="(partner.phone if partner else '') or (partner.mobile if partner else '')"/>
                                                                 <div class="invalid-feedback">
                                                                     Please enter a valid phone number.
                                                                 </div>
@@ -3115,8 +3143,8 @@
                                                         </div>
                                                         <div class="form-row">
                                                             <div class="form-group col-md-12">
-                                                                <label for="email">E-mail address</label>
-                                                                <input type="email" name="email" class="form-control" id="email" required="True"/>
+                                                                <label for="email">E-mail address*</label>
+                                                                <input type="email" name="email" class="form-control" id="email" required="True" t-att-value="partner and partner.personal_email or ''"/>
                                                                 <div class="invalid-feedback">
                                                                     Please enter a valid email address.
                                                                 </div>
@@ -3130,14 +3158,14 @@
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
                                                                 <label for="emergency_contact">Name of emergency family member</label>
-                                                                <input type="text" name="emergency_contact" class="form-control" id="emergency_contact"/>
+                                                                <input type="text" name="emergency_contact" class="form-control" id="emergency_contact" t-att-value="partner and partner.emergency_contact or ''"/>
                                                                 <div class="invalid-feedback">
                                                                     Please enter a valid name.
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-md-6">
                                                                 <label for="emergency_phone">Emergency Family Member Number</label>
-                                                                <input type="number" name="emergency_phone" class="form-control" id="emergency_phone"/>
+                                                                <input type="number" name="emergency_phone" class="form-control" id="emergency_phone" t-att-value="partner and partner.emergency_phone or ''"/>
                                                                 <div class="invalid-feedback">
                                                                     Please enter a valid phone number.
                                                                 </div>
@@ -3145,16 +3173,16 @@
                                                             
                                                             <div class="form-group col-md-6">
                                                                 <label for="emergency_contact_relationship">Relationship</label>
-                                                                <select name="emergency_contact_relationship" class="form-control" id="emergency_contact_relationship" required="True">
+                                                                <select name="emergency_contact_relationship" class="form-control" id="emergency_contact_relationship">
                                                                     <option value="">Select an option</option>
-                                                                    <option value="Madre">Mother</option>
-                                                                    <option value="Padre">Father</option>
-                                                                    <option value="Hermano">Brother</option>
-                                                                    <option value="Hermana">Sister</option>
-                                                                    <option value="Esposo/a">Spouse</option>
-                                                                    <option value="Conviviente">Concubine</option>
-                                                                    <option value="Hijo">Son</option>
-                                                                    <option value="Hija">Daughter</option>
+                                                                    <option value="Madre" t-att-selected="(partner and partner.emergency_contact_relationship == 'Madre') or None">Mother</option>
+                                                                    <option value="Padre" t-att-selected="(partner and partner.emergency_contact_relationship == 'Padre') or None">Father</option>
+                                                                    <option value="Hermano" t-att-selected="(partner and partner.emergency_contact_relationship == 'Hermano') or None">Brother</option>
+                                                                    <option value="Hermana" t-att-selected="(partner and partner.emergency_contact_relationship == 'Hermana') or None">Sister</option>
+                                                                    <option value="Esposo/a" t-att-selected="(partner and partner.emergency_contact_relationship == 'Esposo/a') or None">Spouse</option>
+                                                                    <option value="Conviviente" t-att-selected="(partner and partner.emergency_contact_relationship == 'Conviviente') or None">Concubine</option>
+                                                                    <option value="Hijo" t-att-selected="(partner and partner.emergency_contact_relationship == 'Hijo') or None">Son</option>
+                                                                    <option value="Hija" t-att-selected="(partner and partner.emergency_contact_relationship == 'Hija') or None">Daughter</option>
                                                                 </select>
                                                                 <div class="invalid-feedback">
                                                                     Please select the relationship of your emergency contact.
@@ -3167,53 +3195,53 @@
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3 border border-info rounded-lg p-3">
-                                                    <div class="col-lg-4 align-content-center">
+                                                    <!-- <div class="col-lg-4 align-content-center">
                                                         <div id="map" style="height: 400px; width: 100%; border-radius: 10px;"></div>
-                                                    </div>
+                                                    </div> -->
+                                                    <h2 class="w-100 font-weight-bold text-info">Address</h2>
                                                     <div class="col-lg-8">
-                                                        <h2 class="font-weight-bold text-info">Address</h2>
-                                                        <div class="form-row">
+                                                        <div class="form-row" style="display: none;">
                                                             <div class="form-group col-md-6">
-                                                                <label for="country_id">Country</label>
+                                                                <label for="country_id">Country*</label>
                                                                 <select name="country_id" id="country_id" class="form-control" required="True">
                                                                     <option value="">Countries...</option>
                                                                     <t t-foreach="countries or []" t-as="country">
-                                                                        <option t-att-value="country.id" id="country_name">
+                                                                        <option t-att-value="country.id" id="country_name" t-att-selected="(partner and partner.country_id.id == country.id) or 173">
                                                                             <t t-esc="country.name"/>
-                                                                        </option>
-                                                                    </t>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group col-md-6">
-                                                                <label for="state_id">Department</label>
-                                                                <select name="state_id" id="state_id" class="form-control" required="True">
-                                                                    <option value="">Department...</option>
-                                                                    <t t-foreach="states or []" t-as="state">
-                                                                        <option t-att-value="state.id" id="state_name" t-att-data-country_id="state.country_id.id">
-                                                                            <t t-esc="state.name"/>
                                                                         </option>
                                                                     </t>
                                                                 </select>
                                                             </div>
                                                         </div>
                                                         <div class="form-row">
-                                                            <div class="form-group col-md-6">
-                                                                <label for="city_id">Province</label>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="state_id">Department*</label>
+                                                                <select name="state_id" id="state_id" class="form-control" required="True">
+                                                                    <option value="">Department...</option>
+                                                                    <t t-foreach="states or []" t-as="state">
+                                                                        <option t-att-value="state.id" id="state_name" t-att-data-country_id="state.country_id.id" t-att-selected="(partner and partner.state_id.id == state.id) or None">
+                                                                            <t t-esc="state.name"/>
+                                                                        </option>
+                                                                    </t>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="city_id">Province*</label>
                                                                 <select name="city_id" id="city_id" class="form-control" required="True">
                                                                     <option value="">Province...</option>
                                                                     <t t-foreach="cities or []" t-as="citie">
-                                                                        <option t-att-value="citie.id" id="citie_name" t-att-data-state_id="citie.state_id.id">
+                                                                        <option t-att-value="citie.id" id="citie_name" t-att-data-state_id="citie.state_id.id" t-att-selected="(partner and partner.city_id.id == citie.id) or None">
                                                                             <t t-esc="citie.name"/>
                                                                         </option>
                                                                     </t>
                                                                 </select>
                                                             </div>
-                                                            <div class="form-group col-md-6">
-                                                                <label for="district_id">District</label>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="district_id">District*</label>
                                                                 <select name="district_id" id="district_id" class="form-control" required="True">
                                                                     <option value="">District...</option>
                                                                     <t t-foreach="districts or []" t-as="district">
-                                                                        <option t-att-value="district.id" id="district_name" t-att-data-city_id="district.city_id.id">
+                                                                        <option t-att-value="district.id" id="district_name" t-att-data-city_id="district.city_id.id" t-att-selected="(partner and partner.l10n_pe_district.id == district.id) or None">
                                                                             <t t-esc="district.name"/>
                                                                         </option>
                                                                     </t>
@@ -3222,8 +3250,8 @@
                                                         </div>
                                                         <div class="form-row">
                                                             <div class="form-group col-md-12">
-                                                                <label for="street">Address</label>
-                                                                <input type="text" name="street" class="form-control" id="street"/>
+                                                                <label for="street">Address*</label>
+                                                                <input type="text" name="street" class="form-control" id="street" required="True" t-att-value="(partner and partner.street) or None"/>
                                                                 <div class="invalid-feedback">
                                                                     Please enter your Address.
                                                                 </div>
@@ -3232,7 +3260,7 @@
                                                         <div class="form-row">
                                                             <div class="form-group col-md-12">
                                                                 <label for="reference_location">Address Reference</label>
-                                                                <input type="text" name="reference_location" class="form-control" id="reference_location"/>
+                                                                <input type="text" name="reference_location" class="form-control" id="reference_location" t-att-value="(partner and partner.reference_location) or None"/>
                                                                 <div class="invalid-feedback">
                                                                     Please enter your Address Reference.
                                                                 </div>
@@ -3241,52 +3269,52 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="row mb-3 border border-info rounded-lg p-3">
-                                                    <h2 class="text-center font-weight-bold text-info">Educational Background</h2>
+                                                <div class="row mb-3 border border-info rounded-lg p-3 text-center">
+                                                    <h2 class="w-100 font-weight-bold text-info">Educational Background</h2>
                                                     <div id="educationContainer">
                                                         <div class="education-entry row">
                                                             <div class="col-md-2">
-                                                                <label for="education_level">Education Level</label>
+                                                                <label for="education_level">Education Level*</label>
                                                                 <select id="education_level" name="education_level" class="form-control" required="True">
                                                                     <option value="">Select...</option>
-                                                                    <option value="wo_formal_education">WITHOUT FORMAL EDUCATION</option>
-                                                                    <option value="incomplete_special_education">INCOMPLETE SPECIAL EDUCATION</option>
-                                                                    <option value="complete_special_education">COMPLETE SPECIAL EDUCATION</option>
-                                                                    <option value="incomplete_primary_education">INCOMPLETE PRIMARY EDUCATION</option>
-                                                                    <option value="complete_primary_education">COMPLETE PRIMARY EDUCATION</option>
-                                                                    <option value="incomplete_seconday_education">INCOMPLETE SECONDARY EDUCATION</option>
-                                                                    <option value="complete_secondary_education">COMPLETE SECONDARY EDUCATION</option>
-                                                                    <option value="incomplete_technical_education">INCOMPLETE TECHNICAL EDUCATION</option>
-                                                                    <option value="complete_technical_education">COMPLETE TECHNICAL EDUCATION</option>
-                                                                    <option value="incomplete_higher_education">INCOMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
-                                                                    <option value="complete_higher_education">COMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
-                                                                    <option value="incomplete_universitary_education">INCOMPLETE UNIVERSITARY EDUCATION</option>
-                                                                    <option value="complete_universitary_education">COMPLETE UNIVERSITARY EDUCATION</option>
-                                                                    <option value="bachelor_degree">BACHELOR DEGREE</option>
-                                                                    <option value="titled">TITLED</option>
-                                                                    <option value="incomplete_masters_studies">INCOMPLETE STUDIES OF MASTER</option>
-                                                                    <option value="complete_masters_studies">COMPLETE STUDIES OF MASTER</option>
-                                                                    <option value="master_degree">MASTER DEGREE</option>
-                                                                    <option value="complete_doctoral_studies">COMPLETE DOCTORAL STUDIES</option>
-                                                                    <option value="incomplete_doctoral_studies">INCOMPLETE DOCTORAL STUDIES</option>
-                                                                    <option value="doctoral_degree">DOCTORAL DEGREE</option>
+                                                                    <option value="wo_formal_education" t-att-selected="(partner and partner.education_level == 'wo_formal_education') or None" >WITHOUT FORMAL EDUCATION</option>
+                                                                    <option value="incomplete_special_education" t-att-selected="(partner and partner.education_level == 'incomplete_special_education') or None" >INCOMPLETE SPECIAL EDUCATION</option>
+                                                                    <option value="complete_special_education" t-att-selected="(partner and partner.education_level == 'complete_special_education') or None" >COMPLETE SPECIAL EDUCATION</option>
+                                                                    <option value="incomplete_primary_education" t-att-selected="(partner and partner.education_level == 'incomplete_primary_education') or None" >INCOMPLETE PRIMARY EDUCATION</option>
+                                                                    <option value="complete_primary_education" t-att-selected="(partner and partner.education_level == 'complete_primary_education') or None" >COMPLETE PRIMARY EDUCATION</option>
+                                                                    <option value="incomplete_seconday_education" t-att-selected="(partner and partner.education_level == 'incomplete_seconday_education') or None" >INCOMPLETE SECONDARY EDUCATION</option>
+                                                                    <option value="complete_secondary_education" t-att-selected="(partner and partner.education_level == 'complete_secondary_education') or None" >COMPLETE SECONDARY EDUCATION</option>
+                                                                    <option value="incomplete_technical_education" t-att-selected="(partner and partner.education_level == 'incomplete_technical_education') or None" >INCOMPLETE TECHNICAL EDUCATION</option>
+                                                                    <option value="complete_technical_education" t-att-selected="(partner and partner.education_level == 'complete_technical_education') or None" >COMPLETE TECHNICAL EDUCATION</option>
+                                                                    <option value="incomplete_higher_education" t-att-selected="(partner and partner.education_level == 'incomplete_higher_education') or None" >INCOMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
+                                                                    <option value="complete_higher_education" t-att-selected="(partner and partner.education_level == 'complete_higher_education') or None" >COMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
+                                                                    <option value="incomplete_universitary_education" t-att-selected="(partner and partner.education_level == 'incomplete_universitary_education') or None" >INCOMPLETE UNIVERSITARY EDUCATION</option>
+                                                                    <option value="complete_universitary_education" t-att-selected="(partner and partner.education_level == 'complete_universitary_education') or None" >COMPLETE UNIVERSITARY EDUCATION</option>
+                                                                    <option value="bachelor_degree" t-att-selected="(partner and partner.education_level == 'bachelor_degree') or None" >BACHELOR DEGREE</option>
+                                                                    <option value="titled" t-att-selected="(partner and partner.education_level == 'titled') or None" >TITLED</option>
+                                                                    <option value="incomplete_masters_studies" t-att-selected="(partner and partner.education_level == 'incomplete_masters_studies') or None" >INCOMPLETE STUDIES OF MASTER</option>
+                                                                    <option value="complete_masters_studies" t-att-selected="(partner and partner.education_level == 'complete_masters_studies') or None" >COMPLETE STUDIES OF MASTER</option>
+                                                                    <option value="master_degree" t-att-selected="(partner and partner.education_level == 'master_degree') or None" >MASTER DEGREE</option>
+                                                                    <option value="complete_doctoral_studies" t-att-selected="(partner and partner.education_level == 'complete_doctoral_studies') or None" >COMPLETE DOCTORAL STUDIES</option>
+                                                                    <option value="incomplete_doctoral_studies" t-att-selected="(partner and partner.education_level == 'incomplete_doctoral_studies') or None" >INCOMPLETE DOCTORAL STUDIES</option>
+                                                                    <option value="doctoral_degree" t-att-selected="(partner and partner.education_level == 'doctoral_degree') or None" >DOCTORAL DEGREE</option>
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-2">
-                                                                <label for="education_start_date">Start Date</label>
-                                                                <input type="date" name="education_start_date" id="education_start_date" class="form-control"/>
+                                                                <label for="education_start_date">Start Date*</label>
+                                                                <input type="date" name="education_start_date" id="education_start_date" class="form-control" required="True" t-att-value="(partner and partner.education_start_date) or None"/>
                                                             </div>
                                                             <div class="col-md-2">
                                                                 <label for="education_end_date">End Date</label>
-                                                                <input type="date" name="education_end_date" id="education_end_date" class="form-control"/>
+                                                                <input type="date" name="education_end_date" id="education_end_date" class="form-control" t-att-value="(partner and partner.education_end_date) or None"/>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <label for="institution">Institution</label>
-                                                                <input type="text" name="institution" id="institution" class="form-control"/>
+                                                                <label for="institution">Institution*</label>
+                                                                <input type="text" name="institution" id="institution" class="form-control" required="True" t-att-value="(partner and partner.institution) or None"/>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <label for="profession">Profession</label>
-                                                                <input type="text" name="profession" id="profession" class="form-control"/>
+                                                                <label for="profession">Profession*</label>
+                                                                <input type="text" name="profession" id="profession" class="form-control" required="True" t-att-value="(partner and partner.profession) or None"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -3297,7 +3325,7 @@
                                                     <p class="text-center font-weight-bold text-body">You may add up to 6 children as dependents.</p>
                                                     <div class="form-group">
                                                         <label for="children">Number of children</label>
-                                                        <input type="number" name="children" class="form-control" id="children" min="0" max="6" value="0"/>
+                                                        <input type="number" name="children" class="form-control" id="children" min="0" max="6"  t-att-value="(partner and partner.children) or 0"/>
                                                             <div class="invalid-feedback">
                                                                 Please, the number of Sons.
                                                         </div>
@@ -3305,11 +3333,12 @@
                                                     <div id="childrenFields" class="col-md-12"></div>
                                                 </div>
 
-                                                <div class="row mb-3 border border-info rounded-lg p-3 d-flex flex-column">
+                                                <!-- <div class="row mb-3 border border-info rounded-lg p-3 d-flex flex-column">
                                                     <h2 class="text-center font-weight-bold text-info">First Beneficiaries</h2>
                                                     <p class="text-center font-weight-bold text-body">Spouse or children (In the absence of spouse, concubine may be named - Art 326°; Civil Code).</p>
                                                     <div class="form-group">
                                                         <label for="familyMembers">Number of family members</label>
+                                                        <input type="number" class="form-control" id="firstMembers" t-att-value="n_first_beneficiaries or 0" style="display:none;"/>
                                                         <button type="button" class="btn btn-outline-primary mb-3" id="copyChildrenToBeneficiaries">
                                                             Copiar hijos como beneficiarios
                                                         </button>
@@ -3327,30 +3356,53 @@
                                                     <p class="text-center font-weight-bold text-body">Parents and minor siblings - ART. 1° D.L. 688.</p>
                                                     <div class="form-group">
                                                         <label for="otrosMembers">Number of family members</label>
-                                                        <input type="number" class="form-control" id="otrosMembers" oninput="validateInput()" min="0" max="4" value="0"/>
+                                                        <input type="number" class="form-control" id="otrosMembers" oninput="validateInput()" min="0" max="4" t-att-value="n_other_beneficiary or 0"/>
                                                         <div class="invalid-feedback">
                                                             Please enter a valid number.
                                                         </div>
                                                     </div>
                                                     <div id="otrosMembersFields" class="col-md-12"></div>
-                                                </div>
+                                                </div> -->
+                                                
                                                 <div class="row mb-3 border border-info rounded-lg p-3 d-flex flex-column">
+                                                    <h2 class="text-center font-weight-bold text-info">Pension System</h2>
                                                     <div class="form-row">
-                                                        <div class="form-group col-md-6">
-                                                            <label for="private_pension_system" class="h4 font-weight-bold text-info">Private pension system(AFP)</label>
-                                                            <input type="checkbox" class="form-control" id="private_pension_system" name="private_pension_system" onclick="toggleCheckbox(this)"/>
-                                                            <p>If you choose 'Private Pension System', you will be able to choose if it is your first job or if you come from the ONP.</p>
+                                                        <div class="form-group col-md-6 text-center">
+                                                            <label for="private_pension_system" class="h4 font-weight-bold text-info">Private pension system (AFP)</label>
+                                                            <input type="checkbox" 
+                                                                   class="form-control" 
+                                                                   id="private_pension_system" 
+                                                                   name="private_pension_system" 
+                                                                   onclick="toggleCheckbox(this)"
+                                                                   t-att-checked="'checked' if (partner and partner.private_pension_system == True) else None"
+                                                                  />
+                                                            <p class="text-center">If you choose 'Private Pension System', you will be able to choose if it is your first job or if you come from the ONP.</p>
                                                             <div id="pension_options" style="display: none;">
                                                                 <div class="form-check">
-                                                                    <input type="radio" class="form-check-input radio-option" id="afp_first_job" name="afp_first_job" value="afp_first_job" />
+                                                                    <input type="radio" 
+                                                                           class="form-check-input radio-option" 
+                                                                           id="afp_first_job" 
+                                                                           name="afp_first_job" 
+                                                                           value="afp_first_job"
+                                                                           t-att-checked="'checked' if (partner and partner.afp_first_job == True) else None" />
                                                                     <label class="form-check-label" for="afp_first_job">(AFP) First job</label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input type="radio" class="form-check-input radio-option" id="coming_from_onp" name="coming_from_onp" value="coming_from_onp" />
+                                                                    <input type="radio" 
+                                                                           class="form-check-input radio-option" 
+                                                                           id="coming_from_onp" 
+                                                                           name="coming_from_onp" 
+                                                                           value="coming_from_onp"
+                                                                           t-att-checked="'checked' if (partner and partner.coming_from_onp == True) else None" />
                                                                     <label class="form-check-label" for="coming_from_onp">Coming from the ONP</label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input type="radio" class="form-check-input radio-option" id="coming_from_afp" name="coming_from_afp" value="coming_from_afp" />
+                                                                    <input type="radio" 
+                                                                           class="form-check-input radio-option" 
+                                                                           id="coming_from_afp" 
+                                                                           name="coming_from_afp" 
+                                                                           value="coming_from_afp"
+                                                                           t-att-checked="'checked' if (partner and partner.coming_from_afp == True) else None" />
                                                                     <label class="form-check-label" for="coming_from_afp">Coming from the AFP</label>
                                                                 </div>
                                                             </div>
@@ -3358,19 +3410,68 @@
                                                                 Please select a valid pension.
                                                             </div>
                                                         </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label for="national_pension_system" class="h4 font-weight-bold text-info">National pension system</label>
-                                                            <input type="checkbox" class="form-control" id="national_pension_system" name="national_pension_system" onclick="toggleCheckbox(this)"/>
+                                                        <div class="form-group col-md-6 text-center">
+                                                            <label for="national_pension_system" class="h4 font-weight-bold text-info">National pension system (ONP)</label>
+                                                            <input type="checkbox" 
+                                                                   class="form-control" 
+                                                                   id="national_pension_system" 
+                                                                   name="national_pension_system" 
+                                                                   onclick="toggleCheckbox(this)"
+                                                                   t-att-checked="'checked' if (partner and partner.national_pension_system == True) else None" />
                                                             <div class="invalid-feedback">
                                                                 Please select a valid pension.
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="row mb-3 border border-info rounded-lg p-3 d-flex flex-column">
+                                                    <div class="form-group col-md-12">
+                                                        <label class="h4 font-weight-bold text-info">
+                                                            Fifth Category Income from Other Employers
+                                                        </label>
+                                                        <p>
+                                                            Seleccione según corresponda:
+                                                        </p>
+
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" id="fifth_no" name="fifth_category_income"
+                                                                t-att-checked="'checked' if (partner and partner.fifth_category_income == False) else None"
+                                                                onclick="toggleFifthCategory(this, false)"/>
+                                                            <label for="fifth_no">
+                                                                <b>NO:</b> No he percibido remuneraciones de quinta categoría(*) en el presente año de otro(s) empleador(es).
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="form-check mt-2">
+                                                            <input type="checkbox" class="form-check-input" id="fifth_yes" name="fifth_category_income"
+                                                                t-att-checked="'checked' if (partner and partner.fifth_category_income == True) else None"
+                                                                onclick="toggleFifthCategory(this, true)"/>
+                                                            <label for="fifth_yes">
+                                                                <b>SÍ:</b> He percibido remuneraciones de quinta categoría(*) en el presente año de otro(s) empleador(es).
+                                                            </label>
+                                                        </div>
+                                                        
+                                                        <div class="invalid-feedback d-block" style="display: none !important;">
+                                                            Please select an option.
+                                                        </div>
+
+                                                        <p class="mt-2 text-muted">
+                                                            (*)Incluye participación de utilidades, liquidación de beneficios sociales, reintegros de remuneración y otros conceptos remunerativos.
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                
                                                 <div class="row">
-                                                    <div class="form-row col-md-6">
+                                                    <div class="col-md-12 d-flex justify-content-center">
                                                         <div class="form-group">
-                                                            <button type="button" class="btn btn-info btn-lg" style="width:100%;" onclick="validateForm(event)">Send</button>
+                                                            <t t-if="compliance_process">
+                                                                <button type="button" class="btn btn-info btn-lg" style="width:100%;" onclick="validateForm(event)">Validate</button>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <button type="button" class="btn btn-info btn-lg" style="width:100%;" onclick="validateForm(event)">Send</button>
+                                                            </t>
                                                         </div>
                                                     </div> 
                                                 </div>
@@ -3544,20 +3645,20 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="row">
+                                                                    <!-- <div class="row">
                                                                         <div class="col-md-6 font-weight-bold text-info">Number of First Beneficiaries:</div>
                                                                         <div class="col-md-6" id="modal-familyMembers"></div>
                                                                     </div>
                                                                     <div class="row">
-                                                                        <div id="familyMembersModal"></div> <!-- Div para First beneficiarios -->
-                                                                    </div>
-                                                                    <div class="row">
+                                                                        <div id="familyMembersModal"></div> 
+                                                                    </div> -->
+                                                                    <!-- <div class="row">
                                                                         <div class="col-md-6 font-weight-bold text-info">Number of Other Beneficiaries:</div>
                                                                         <div class="col-md-6" id="modal-otrosMembers"></div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div id="otrosMembersModal"></div> <!-- Div para otros beneficiarios -->
-                                                                    </div>
+                                                                    </div> -->
+                                                                    <!-- <div class="row">
+                                                                        <div id="otrosMembersModal"></div> 
+                                                                    </div> -->
                                                                     <div class="row">
                                                                         <div class="col-md-6">
                                                                             <div class="row">
@@ -3570,6 +3671,10 @@
                                                                             <div class="row">
                                                                                 <div class="col-md-6 font-weight-bold text-info">National Pension System:</div>
                                                                                 <div class="col-md-6" id="modal-national_pension_system"></div>
+                                                                            </div> 
+                                                                            <div class="row">
+                                                                                <div class="col-md-6 font-weight-bold text-info">Fifth Category Income Tax:</div>
+                                                                                <div class="col-md-6" id="modal-fifth_category_income"></div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -3579,7 +3684,12 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" id="cancelButton" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                        <button type="button" id="confirmButton" class="btn btn-primary" onclick="submitForm()">Confirm and Send</button>
+                                                        <t t-if="compliance_process">
+                                                            <button type="button" id="confirmButton" class="btn btn-primary" onclick="submitForm()">Confirm and Continue</button>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <button type="button" id="confirmButton" class="btn btn-primary" onclick="submitForm()">Confirm and Send</button>
+                                                        </t>
                                                     </div>
                                                 </div>
                                             </div>

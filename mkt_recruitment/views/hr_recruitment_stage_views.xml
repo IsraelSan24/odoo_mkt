@@ -9,6 +9,7 @@
             <xpath expr="//field[@name='template_id']" position="after">
                 <field name="update_data"/>
                 <field name="access_portal"/>
+                <!-- <field name="create_first_contract"/> -->
             </xpath>
             <field name="job_ids" position="after">
                 <field name="employee_stage"/>

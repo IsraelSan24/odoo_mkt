@@ -17,6 +17,10 @@
             <xpath expr="//field[@name='stage_id']" position="attributes">
                 <attribute name="options">{'clickable': False, 'fold_field': 'fold'}</attribute>
             </xpath>
+            <xpath expr="//field[@name='availability']" position="before">
+                <field name="first_contract_start" required='0'/>
+                <field name="first_contract_end" required='0'/>
+            </xpath>
             <xpath expr="//header/button[@name='create_employee_from_applicant']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
@@ -33,13 +37,19 @@
                 <attribute name="readonly">True</attribute>
             </field>
             <field name="email_cc" position="attributes">
-                <attribute name="readonly">True</attribute>
+                <attribute name="invisible">1</attribute>
             </field>
             <field name="partner_phone" position="attributes">
                 <attribute name="readonly">True</attribute>
             </field>
             <field name="partner_mobile" position="attributes">
                 <attribute name="readonly">True</attribute>
+            </field>
+            <field name="type_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="categ_ids" position="attributes">
+                <attribute name="invisible">1</attribute>
             </field>
             <field name="job_id" position="attributes">
                 <attribute name="readonly">True</attribute>
@@ -50,6 +60,21 @@
             <field name="user_id" position="attributes">
                 <attribute name="readonly">True</attribute>
             </field>
+            <field name="medium_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="source_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <xpath expr="//field[@name='salary_expected']/ancestor::group[1]/div" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//label[@for='salary_expected']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- <xpath expr="//label[@for='salary_proposed']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath> -->
             <xpath expr="//widget[@name='web_ribbon' and @bg_color='bg-danger']" position="after">
                 <widget name="web_ribbon" title="Reinstatement" bg_color="bg-warning" attrs="{'invisible': [('is_reinstatement', '=', False)]}"/>
                 <field name="is_reinstatement" invisible="1"/>
@@ -77,4 +102,125 @@
         </field>
     </record>
 
+    <record id="hr_tree_view_applicant" model="ir.ui.view">
+        <field name="name">Applicants</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_name']" position="after">
+                <field name="vat" string="ID"/>
+            </xpath>
+            
+            <xpath expr="//field[@name='job_id']" position="before">
+                <field name="department_id" string="Department"/>
+            </xpath>
+
+            <xpath expr="//field[@name='priority']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='categ_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_mobile']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <!-- Nueva vista tipo tree -->
+    <record id="view_hr_applicant_tree_payroll" model="ir.ui.view">
+        <field name="name">hr.applicant.tree.payroll</field>
+        <field name="model">hr.applicant</field>
+        <field name="arch" type="xml">
+            <tree string="Applicant Contract Request" 
+                  decoration-danger="supervision_data_approved == 'rejected'" 
+                  decoration-success="supervision_data_approved == 'approved'">
+                <field name="supervision_data_approved" invisible='1'/>
+                <field name="partner_name"/>
+                <field name="vat"/>
+                <field name="job_id"/>
+                <field name="department_id"/>
+                <field name="cost_center_id" decoration-bf="1"/>
+                <field name="salary_proposed" decoration-bf="1"/>
+                <field name="first_contract_start" decoration-bf="1"/>
+                <field name="first_contract_end" decoration-bf="1"/>
+                <field name="supervision_data_approved" widget="badge" decoration-info="supervision_data_approved == 'pending'" decoration-warning="supervision_data_approved == 'rejected'" decoration-success="supervision_data_approved == 'approved'"/>
+                <field name="write_date" readonly="1" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hr_applicant_tree_payroll_buttom" model="ir.ui.view">
+        <field name="name">hr.applicant.tree.payroll.buttom</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="mkt_recruitment.view_hr_applicant_tree_payroll"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="stage_id" invisible='1'/>
+                <button name="action_approve_supervision_data"
+                        type="object"
+                        string="Approve"
+                        class="btn-primary"
+                        icon="fa-check-circle"
+                        attrs="{'invisible': ['|', ('stage_id', '!=', 4), ('supervision_data_approved', 'in', ['approved', 'rejected'])]}"/>
+            </xpath>
+            <xpath expr="//tree" position="inside">
+                <header>
+                    <button name="action_approve_supervision_data"
+                            type="object"
+                            string="Approve"
+                            class="btn-secondary"/>
+                    <button name="action_reject_supervision_data"
+                            type="object"
+                            string="Reject"
+                            class="btn-secondary"/>
+                    <button name="action_restore_supervision_data"
+                            type="object"
+                            string="Restore"
+                            class="btn-secondary"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_hr_applicant_search_custom_payroll" model="ir.ui.view">
+        <field name="name">hr.applicant.search.custom.payroll</field>
+        <field name="model">hr.applicant</field>
+        <field name="arch" type="xml">
+        <search string="Search Applicants">
+            <field name="partner_name" />
+            <field name="job_id"/>
+
+            <filter string="Pending" name="supervision_data_pending_to_approved" domain="[('supervision_data_approved', '=', 'pending')]"/>
+            <filter string="Approved" name="supervision_data_approved" domain="[('supervision_data_approved', '=', 'approved')]"/>
+            <filter string="Refused" name="supervision_data_refused" domain="[('supervision_data_approved', '=', 'rejected')]"/>
+            <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            <separator/>
+            <filter string="Update Date" name="filter_create" date="write_date"/>
+
+
+            <group expand="0" string="Group By">
+            <filter string="Department" name="department" domain="[]" context="{'group_by': 'department_id'}"/>
+            <filter string="Responsible" name="responsible" domain="[]" context="{'group_by': 'user_id'}"/>
+            <filter string="Job" name="job" domain="[]" context="{'group_by': 'job_id'}"/>
+            <filter string="Update Date" name="write_date" context="{'group_by': 'write_date'}"/>
+            </group>
+        </search>
+        </field>
+    </record>
+
+    <!-- Acción que usa esta vista -->
+    <record id="action_hr_applicant_tree_payroll" model="ir.actions.act_window">
+        <field name="name">Applicants Contract Request</field>
+        <field name="res_model">hr.applicant</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('stage_id.id', '=', 4), ('selected_applicant_approved', '=', 'true')]</field>
+        <field name="context">{'search_default_supervision_data_pending_to_approved': 1}</field>
+        <field name="view_id" ref="view_hr_applicant_tree_payroll"/>
+        <field name="search_view_id" ref="mkt_recruitment.view_hr_applicant_search_custom_payroll" />
+    </record>
 </odoo>

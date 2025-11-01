@@ -18,75 +18,92 @@ document.addEventListener('DOMContentLoaded', function () {
   var childrenInput = document.getElementById('children');
   var childrenFields = document.getElementById('childrenFields');
 
-  if (childrenInput && childrenFields) {
-    childrenInput.addEventListener('input', function () {
-      var numChildren = parseInt(this.value);
-      childrenFields.innerHTML = '';
+  // Cargar datos previos del partner, si existen
+    var existingChildrenData = [];
+    var dataScript = document.getElementById('partnerChildrenData');
+    if (dataScript) {
+        try {
+            existingChildrenData = JSON.parse(dataScript.textContent);
+        } catch (e) {
+            console.error("Error parsing partnerChildrenData JSON:", e);
+        }
+    }
 
-      if (numChildren < 0 || numChildren > 6) {
+  function generateChildrenFields(numChildren, existingData=[]) {
+    // Limpiar campos existentes
+    childrenFields.innerHTML = '';
+
+    if (numChildren < 0 || numChildren > 6) {
         alert('Sólo se permiten números entre 0 y 6.');
-        this.value = '';
+        childrenInput.value = '';
         return;
       }
 
-      for (var i = 0; i < numChildren; i++) {
-        var childField = document.createElement('div');
-        childField.classList.add('form-row', 'mb-3');
+    for (var i = 0; i < numChildren; i++) {
+      var child = existingData[i] || {};  // Si hay data previa, precargar
 
-        childField.innerHTML = `
-          <div class="col-md-12">
-              <h3 class="font-weight-bold text-success">Hijo(a) ${i + 1}</h3>
-          </div>
+      var childField = document.createElement('div');
+      childField.classList.add('form-row', 'mb-3');
+      childField.innerHTML = `
+        <div class="col-md-12">
+            <h3 class="font-weight-bold text-success">Hijo(a) ${i + 1}</h3>
+        </div>
 
-          <div class="form-group col">
-              <label for="child_dni${i + 1}">DNI</label>
-              <input type="text" name="child_dni${i + 1}" id="child_dni${i + 1}" class="form-control" required />
-              <div class="invalid-feedback">Por favor, ingrese su DNI.</div>
-          </div>
+        <div class="form-group col">
+            <label for="child_dni${i + 1}">DNI*</label>
+            <input type="text" name="child_dni${i + 1}" id="child_dni${i + 1}" class="form-control" value="${child.dni || ''}" required />
+        </div>
 
-          <div class="form-group col">
-              <label for="child_full_name${i + 1}">Nombre</label>
-              <input type="text" name="child_full_name${i + 1}" id="child_full_name${i + 1}" class="form-control" required />
-              <div class="invalid-feedback">Por favor, ingrese su nombre.</div>
-          </div>
+        <div class="form-group col">
+            <label for="child_full_name${i + 1}">Nombre*</label>
+            <input type="text" name="child_full_name${i + 1}" id="child_full_name${i + 1}" class="form-control" value="${child.full_name || ''}" required />
+        </div>
 
-          <div class="form-group col">
-              <label for="child_birthday${i + 1}">F. Nac</label>
-              <input type="date" name="child_birthday${i + 1}" id="child_birthday${i + 1}" class="form-control" required />
-              <div class="invalid-feedback">Por favor, ingrese su fecha de nacimiento.</div>
-          </div>
+        <div class="form-group col">
+            <label for="child_birthday${i + 1}">F. Nac*</label>
+            <input type="date" name="child_birthday${i + 1}" id="child_birthday${i + 1}" class="form-control" value="${child.birthday || ''}" required />
+        </div>
 
-          <div class="form-group col">
-              <label for="child_relationship${i + 1}">Parentesco</label>
-              <select class="form-control" name="child_relationship${i + 1}" id="child_relationship${i + 1}" required>
-                  <option value="">Seleccione una opción</option>
-                  <option value="Hijo">Hijo</option>
-                  <option value="Hija">Hija</option>
-              </select>
-              <div class="invalid-feedback">Por favor, seleccione un parentesco.</div>
-          </div>
+        <div class="form-group col">
+            <label for="child_relationship${i + 1}">Parentesco*</label>
+            <select class="form-control" name="child_relationship${i + 1}" id="child_relationship${i + 1}" required>
+                <option value="">Seleccione una opción</option>
+                <option value="Hijo" ${child.relationship === 'Hijo' ? 'selected' : ''}>Hijo</option>
+                <option value="Hija" ${child.relationship === 'Hija' ? 'selected' : ''}>Hija</option>
+            </select>
+        </div>
 
-          <div class="form-group col">
-              <label for="child_gender${i + 1}">Género</label>
-              <select class="form-control" name="child_gender${i + 1}" id="child_gender${i + 1}" required>
-                  <option value="">Seleccione una opción</option>
-                  <option value="male">Masculino</option>
-                  <option value="female">Femenino</option>
-              </select>
-              <div class="invalid-feedback">Por favor, seleccione un género.</div>
-          </div>
+        <div class="form-group col">
+            <label for="child_gender${i + 1}">Género*</label>
+            <select class="form-control" name="child_gender${i + 1}" id="child_gender${i + 1}" required>
+                <option value="">Seleccione una opción</option>
+                <option value="male" ${child.gender === 'male' ? 'selected' : ''}>Masculino</option>
+                <option value="female" ${child.gender === 'female' ? 'selected' : ''}>Femenino</option>
+            </select>
+        </div>
 
-          <div class="form-group col">
-              <label for="child_address${i + 1}">Dirección</label>
-              <input type="text" name="child_address${i + 1}" id="child_address${i + 1}" class="form-control" required />
-              <div class="invalid-feedback">Por favor, ingrese una dirección.</div>
-          </div>
+        <div class="form-group col">
+            <label for="child_address${i + 1}">Dirección*</label>
+            <input type="text" name="child_address${i + 1}" id="child_address${i + 1}" class="form-control" value="${child.address || ''}" required />
+        </div>
+      `;
 
-        `;
+      childrenFields.appendChild(childField);
+    }
+  }
+  
+  // Generar al escribir
+  if (childrenInput && childrenFields) {
+      childrenInput.addEventListener('input', function () {
+          var numChildren = parseInt(this.value);
+          generateChildrenFields(numChildren);
+      });
 
-        childrenFields.appendChild(childField);
+      // Generar al cargar (si ya hay valor)
+      var initialChildren = parseInt(childrenInput.value) || 0;
+      if (initialChildren > 0) {
+          generateChildrenFields(initialChildren, existingChildrenData);
       }
-    });
   }
 });
 
@@ -166,7 +183,7 @@ function createBeneficiaryRow(autoGenerated = false, data = {}) {
         <input type="text" name="familiar_address${index}" class="form-control" value="${data.address || ''}" required />
     </div>
 
-    <div class="form-group col">
+    <div class="form-group col" style="display:none;">
         <label>Beneficiario</label>
         <input type="checkbox" name="is_beneficiary${index}" class="form-control" checked />
     </div>
@@ -234,84 +251,217 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  var otrosMembersField = document.getElementById('otrosMembers');
+  var otrosMembersInput = document.getElementById('otrosMembers');
   var otrosMembersFields = document.getElementById('otrosMembersFields');
 
-  otrosMembersField.addEventListener('input', function() {
-    var numFamilyMembers = parseInt(this.value);
-    otrosMembersFields.innerHTML = '';
+   // Cargar datos previos del partner, si existen
+    var existingOtherBeneficiaryData = [];
+    var dataScript = document.getElementById('partnerOtherBeneficiaryData');
+    if (dataScript) {
+        try {
+            existingOtherBeneficiaryData = JSON.parse(dataScript.textContent);
+        } catch (e) {
+            console.error("Error parsing partnerOtherBeneficiaryData JSON:", e);
+        }
+    }
 
-    for (var j = 0; j < numFamilyMembers; j++) {
-      var otrosMembersField = document.createElement('div');
-      otrosMembersField.classList.add('form-row', 'mb-3');
-      otrosMembersField.innerHTML = `
-        
-          <div class="col-md-12">
-              <h3 class="font-weight-bold text-info">Familiar${j + 7}</h3>
-          </div>
+    
+    function generateOtherBeneficiaryFields(numOtherBeneficiary, existingData=[]) {
+      otrosMembersFields.innerHTML = '';
+
+      for (var j = 0; j < numOtherBeneficiary; j++) {
+        var otherBeneficiary = existingData[j] || {};  // Si hay data previa, precargar
+
+        var otrosMembersInput = document.createElement('div');
+        otrosMembersInput.classList.add('form-row', 'mb-3');
+        otrosMembersInput.innerHTML = `
           
-          <div class="form-group col">
-              <label for="familiar_dni${j + 7}">DNI</label>
-              <input type="text" name="familiar_dni${j + 7}" id="familiar_dni${j + 7}" class="form-control" required="True"/>
-              <div class="invalid-feedback">
-                Por favor, ingrese su DNI.
-              </div>
-          </div>
-          <div class="form-group col">
-              <label for="familiar_full_name${j + 7}" >Nombre</label>
-              <input type="text" name="familiar_full_name${j + 7}" id="familiar_full_name${j + 7}" class="form-control" required="True"/>
-              <div class="invalid-feedback">
-                Por favor, ingrese su nombre.
-              </div>
-          </div>
-          <div class="form-group col">
-              <label for="familiar_birthday${j + 7}">F. Nac</label>
-              <input type="date" name="familiar_birthday${j + 7}" class="form-control" id="familiar_birthday${j + 7}" required="True"/>
-              <div class="invalid-feedback">
-                Por favor, ingrese su fecha de nacimiento.
-              </div>
-          </div>
-          <div class="form-group col">
-              <label for="familiar_relationship${j + 7}">Parentesco</label>
-              <select class="form-control" name="familiar_relationship${j + 7}" id="familiar_relationship${j + 7}" required="True">
-                  <option value="">Seleccione una opción</option>
-                  <option value="Madre">Madre</option>
-                  <option value="Padre">Padre</option>
-                  <option value="Hermano">Hermano</option>
-                  <option value="Hermana">Hermana</option>
-              </select>
-              <div class="invalid-feedback">
-                Por favor, seleccione un parentesco.
-              </div>
-          </div>
-          <div class="form-group col">
-              <label for="familiar_gender${j + 7}">Género</label>
-              <select class="form-control" name="familiar_gender${j + 7}" id="familiar_gender${j + 7}" required="True">
-                  <option value="">Seleccione una opción</option>
-                  <option value="male">Masculino</option>
-                  <option value="female">Femenino</option>
-              </select>
-              <div class="invalid-feedback">
-                Por favor, seleccione un género.
-              </div>
-          </div>
-          <div class="form-group col">
-              <label for="familiar_address${j + 7}">Dirección</label>
-              <input type="text" name="familiar_address${j + 7}" class="form-control" id="familiar_address${j + 7}" required="True"/>
-              <div class="invalid-feedback">
-                Por favor, ingrese una dirección.
-              </div>
-          </div>
-          <div class="form-group col">
+            <div class="col-md-12">
+                <h3 class="font-weight-bold text-info">Otro Beneficiario ${j + 1}</h3>
+            </div>
+            
+            <div class="form-group col">
+                <label for="familiar_dni${j + 7}">DNI*</label>
+                <input type="text" name="familiar_dni${j + 7}" id="familiar_dni${j + 7}" class="form-control" required="True" value="${otherBeneficiary.dni || ''}"/>
+                <div class="invalid-feedback">
+                  Por favor, ingrese su DNI.
+                </div>
+            </div>
+            <div class="form-group col">
+                <label for="familiar_full_name${j + 7}" >Nombre*</label>
+                <input type="text" name="familiar_full_name${j + 7}" id="familiar_full_name${j + 7}" class="form-control" required="True" value="${otherBeneficiary.full_name || ''}"/>
+                <div class="invalid-feedback">
+                  Por favor, ingrese su nombre.
+                </div>
+            </div>
+            <div class="form-group col">
+                <label for="familiar_birthday${j + 7}">F. Nac*</label>
+                <input type="date" name="familiar_birthday${j + 7}" class="form-control" id="familiar_birthday${j + 7}" required="True" value="${otherBeneficiary.birthday || ''}"/>
+                <div class="invalid-feedback">
+                  Por favor, ingrese su fecha de nacimiento.
+                </div>
+            </div>
+            <div class="form-group col">
+                <label for="familiar_relationship${j + 7}">Parentesco*</label>
+                <select class="form-control" name="familiar_relationship${j + 7}" id="familiar_relationship${j + 7}" required="True">
+                    <option value="">Seleccione una opción</option>
+                    <option value="Madre" ${otherBeneficiary.relationship === 'Madre' ? 'selected' : ''} >Madre</option>
+                    <option value="Padre" ${otherBeneficiary.relationship === 'Padre' ? 'selected' : ''} >Padre</option>
+                    <option value="Hermano" ${otherBeneficiary.relationship === 'Hermano' ? 'selected' : ''} >Hermano</option>
+                    <option value="Hermana" ${otherBeneficiary.relationship === 'Hermana' ? 'selected' : ''} >Hermana</option>
+                </select>
+                <div class="invalid-feedback">
+                  Por favor, seleccione un parentesco.
+                </div>
+            </div>
+
+            <div class="form-group col">
+                <label for="familiar_gender${j + 7}">Género*</label>
+                <select class="form-control" name="familiar_gender${j + 7}" id="familiar_gender${j + 7}" required="True">
+                    <option value="">Seleccione una opción</option>
+                    <option value="male" ${otherBeneficiary.gender === 'male' ? 'selected' : ''} >Masculino</option>
+                    <option value="female" ${otherBeneficiary.gender === 'female' ? 'selected' : ''} >Femenino</option>
+                </select>
+                <div class="invalid-feedback">
+                  Por favor, seleccione un género.
+                </div>
+            </div>
+            <div class="form-group col">
+                <label for="familiar_address${j + 7}">Dirección*</label>
+                <input type="text" name="familiar_address${j + 7}" class="form-control" id="familiar_address${j + 7}" required="True" value="${otherBeneficiary.address || ''}"/>
+                <div class="invalid-feedback">
+                  Por favor, ingrese una dirección.
+                </div>
+            </div>
+            <div class="form-group col" style="display:none;">
               <label for="is_beneficiary${j + 7}">Beneficiario</label>
               <input type="checkbox" name="is_beneficiary${j + 7}" class="form-control" id="is_beneficiary${j + 7}" checked/>
-          </div>
-          
-        
-      `;
-      otrosMembersFields.appendChild(otrosMembersField);
+            </div>
+        `;
+        otrosMembersFields.appendChild(otrosMembersInput);
+      }
     }
-  });
+    // Generar al escribir
+    if (otrosMembersInput && otrosMembersFields) {
+        otrosMembersInput.addEventListener('input', function () {
+            var numOtherBeneficiary = parseInt(this.value);
+            generateOtherBeneficiaryFields(numOtherBeneficiary);
+        });
+
+        // Generar al cargar (si ya hay valor)
+        var initialOtherBeneficiary = parseInt(otrosMembersInput.value) || 0;
+        if (initialOtherBeneficiary > 0) {
+            generateOtherBeneficiaryFields(initialOtherBeneficiary, existingOtherBeneficiaryData);
+        }
+    }
+
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  var firstMembersInput = document.getElementById('firstMembers');
+  var firstMembersFields = document.getElementById('familyMembersFields');
+
+   // Cargar datos previos del partner, si existen
+    var existingFirstBeneficiariesData = [];
+    var dataScript = document.getElementById('partnerFirstBeneficiariesData');
+    if (dataScript) {
+        try {
+            existingFirstBeneficiariesData = JSON.parse(dataScript.textContent);
+        } catch (e) {
+            console.error("Error parsing partnerFirstBeneficiariesData JSON:", e);
+        }
+    }
+
+    
+    function generateFirstBeneficiariesFields(numFirstBeneficiaries, existingData=[]) {
+      firstMembersFields.innerHTML = '';
+
+      for (var j = 0; j < numFirstBeneficiaries; j++) {
+        var firstBeneficiary = existingData[j] || {};  // Si hay data previa, precargar
+
+        var firstMembersInput = document.createElement('div');
+        firstMembersInput.classList.add('form-row', 'mb-3');
+        firstMembersInput.innerHTML = `
+          
+            <div class="col-md-12">
+                <h3 class="font-weight-bold text-info"> Beneficiario ${j + 1}</h3>
+            </div>
+            
+            <div class="form-group col">
+                <label for="familiar_dni${j + 1}">DNI*</label>
+                <input type="text" name="familiar_dni${j + 1}" id="familiar_dni${j + 1}" class="form-control" required="True" value="${firstBeneficiary.dni || ''}"/>
+                <div class="invalid-feedback">
+                  Por favor, ingrese su DNI.
+                </div>
+            </div>
+            <div class="form-group col">
+                <label for="familiar_full_name${j + 1}" >Nombre*</label>
+                <input type="text" name="familiar_full_name${j + 1}" id="familiar_full_name${j + 1}" class="form-control" required="True" value="${firstBeneficiary.full_name || ''}"/>
+                <div class="invalid-feedback">
+                  Por favor, ingrese su nombre.
+                </div>
+            </div>
+            <div class="form-group col">
+                <label for="familiar_birthday${j + 1}">F. Nac*</label>
+                <input type="date" name="familiar_birthday${j + 1}" class="form-control" id="familiar_birthday${j + 1}" required="True" value="${firstBeneficiary.birthday || ''}"/>
+                <div class="invalid-feedback">
+                  Por favor, ingrese su fecha de nacimiento.
+                </div>
+            </div>
+            <div class="form-group col">
+                <label for="familiar_relationship${j + 1}">Parentesco*</label>
+                <select class="form-control" name="familiar_relationship${j + 1}" id="familiar_relationship${j + 1}" required="True">
+                    <option value="">Seleccione una opción</option>
+                    <option value="Madre" ${firstBeneficiary.relationship === 'Madre' ? 'selected' : ''} >Madre</option>
+                    <option value="Padre" ${firstBeneficiary.relationship === 'Padre' ? 'selected' : ''} >Padre</option>
+                    <option value="Hermano" ${firstBeneficiary.relationship === 'Hermano' ? 'selected' : ''} >Hermano</option>
+                    <option value="Hermana" ${firstBeneficiary.relationship === 'Hermana' ? 'selected' : ''} >Hermana</option>
+                </select>
+                <div class="invalid-feedback">
+                  Por favor, seleccione un parentesco.
+                </div>
+            </div>
+
+            <div class="form-group col">
+                <label for="familiar_gender${j + 1}">Género*</label>
+                <select class="form-control" name="familiar_gender${j + 1}" id="familiar_gender${j + 1}" required="True">
+                    <option value="">Seleccione una opción</option>
+                    <option value="male" ${firstBeneficiary.gender === 'male' ? 'selected' : ''} >Masculino</option>
+                    <option value="female" ${firstBeneficiary.gender === 'female' ? 'selected' : ''} >Femenino</option>
+                </select>
+                <div class="invalid-feedback">
+                  Por favor, seleccione un género.
+                </div>
+            </div>
+            <div class="form-group col">
+                <label for="familiar_address${j + 1}">Dirección*</label>
+                <input type="text" name="familiar_address${j + 1}" class="form-control" id="familiar_address${j + 1}" required="True" value="${firstBeneficiary.address || ''}"/>
+                <div class="invalid-feedback">
+                  Por favor, ingrese una dirección.
+                </div>
+            </div>
+            <div class="form-group col" style="display:none;">
+              <label for="is_beneficiary${j + 1}">Beneficiario</label>
+              <input type="checkbox" name="is_beneficiary${j + 1}" class="form-control" id="is_beneficiary${j + 1}" checked/>
+            </div>
+        `;
+        firstMembersFields.appendChild(firstMembersInput);
+      }
+    }
+    // Generar al escribir
+    if (firstMembersInput && firstMembersFields) {
+        firstMembersInput.addEventListener('input', function () {
+            var numFirstBeneficiaries = parseInt(this.value);
+            generateFirstBeneficiariesFields(numFirstBeneficiaries);
+        });
+
+        // Generar al cargar (si ya hay valor)
+        var initialfirstBeneficiary = parseInt(firstMembersInput.value) || 0;
+        if (initialfirstBeneficiary > 0) {
+            generateFirstBeneficiariesFields(initialfirstBeneficiary, existingFirstBeneficiariesData);
+        }
+    }
+
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -444,6 +594,24 @@ async function consultarDNI() {
   }
 }
 
+  function toggleFifthCategory(checkbox, isYes) {
+      const FalseCheckbox = document.getElementById('fifth_no');
+      const TrueCheckbox = document.getElementById('fifth_yes');
+      // const errorMsg = document.querySelector('#fifth_no').closest('.form-group').querySelector('.invalid-feedback');
+
+      // Asegurar exclusividad entre checkboxes
+      if (isYes) {
+          FalseCheckbox.checked = false;
+      } else {
+          TrueCheckbox.checked = false;
+      }
+
+      // Ocultar mensaje de error si el usuario selecciona algo
+      // if (TrueCheckbox.checked || FalseCheckbox.checked) {
+      //     errorMsg.style.display = 'none';
+      // }
+  }
+
 
 function validateForm(event) {
   event.preventDefault();
@@ -464,35 +632,114 @@ function validateForm(event) {
       }
   });
 
+  /* ======================= VALIDACIÓN SISTEMA DE PENSIONES ======================= */
+  const privatePensionCheckbox = document.getElementById('private_pension_system');
+  const nationalPensionCheckbox = document.getElementById('national_pension_system');
+  const afpRadios = document.querySelectorAll('.radio-option');
+
+  let pensionValid = true;
+
+  // Al menos uno de los dos debe estar marcado
+  if (!privatePensionCheckbox.checked && !nationalPensionCheckbox.checked) {
+      pensionValid = false;
+      privatePensionCheckbox.classList.add('is-invalid');
+      nationalPensionCheckbox.classList.add('is-invalid');
+  } else {
+      privatePensionCheckbox.classList.remove('is-invalid');
+      nationalPensionCheckbox.classList.remove('is-invalid');
+  }
+
+  // Si AFP está seleccionado, validar que se haya marcado una de las 3 opciones
+  if (privatePensionCheckbox.checked) {
+      const afpSelected = Array.from(afpRadios).some(r => r.checked);
+      if (!afpSelected) {
+          pensionValid = false;
+          afpRadios.forEach(r => r.classList.add('is-invalid'));
+      } else {
+          afpRadios.forEach(r => r.classList.remove('is-invalid'));
+      }
+  } else {
+      afpRadios.forEach(r => r.classList.remove('is-invalid'));
+  }
+
+  // Si falla esta validación, no continúes
+  if (!pensionValid) {
+      requiredFieldsValid = false;
+      allFieldsValid = false;
+  }
+
+
+  /* ======================= VALIDACIÓN QUINTA CATEGORÍA ======================= */
+  const fifthNo = document.getElementById('fifth_no');
+  const fifthYes = document.getElementById('fifth_yes');
+  const fifthError = fifthNo.closest('.form-group').querySelector('.invalid-feedback');
+  let fifthValid = true;
+
+  // Ninguno seleccionado → inválido
+  if (!fifthNo.checked && !fifthYes.checked) {
+      fifthValid = false;
+      fifthError.style.display = 'block';
+      fifthNo.classList.add('is-invalid');
+      fifthYes.classList.add('is-invalid');
+  } else {
+      fifthValid = true;
+      fifthError.style.display = 'none';
+      fifthNo.classList.remove('is-invalid');
+      fifthYes.classList.remove('is-invalid');
+  }
+
+  if (!fifthValid) {
+      requiredFieldsValid = false;
+      allFieldsValid = false;
+  }
+  /* ======================= SCROLL Y MODAL======================= */
+  
+  if (!pensionValid || !fifthValid || !allFieldsValid) {
+    const firstInvalid = form.querySelector('.is-invalid');
+    if (firstInvalid) 
+      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  
+  // Solo abrir el modal si todo está correcto
   if (requiredFieldsValid) {
-   
-      populateModal();
+      populateModal();  
       $('#confirmationModal').modal('show');
   }
+
   return allFieldsValid;
 }
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  var privatePensionSystemField = document.getElementById('private_pension_system');
-  if (privatePensionSystemField) {
-    privatePensionSystemField.addEventListener('change', function() {
-      const pensionOptions = document.getElementById('pension_options');
-      
-      if (privatePensionSystemField.type === 'checkbox') {
-        pensionOptions.style.display = this.checked ? 'block' : 'none';
-      } else {
-        pensionOptions.style.display = this.value === 'yes' ? 'block' : 'none';
-      }
-      
-      if (!this.checked && this.type === 'checkbox') {
-        document.getElementById('afp_first_job').checked = false;
-        document.getElementById('coming_from_onp').checked = false;
-        document.getElementById('coming_from_afp').checked = false;
-      }
-    });
-  }
+    const privatePensionSystemField = document.getElementById('private_pension_system');
+    const pensionOptions = document.getElementById('pension_options');
+
+    if (privatePensionSystemField && pensionOptions) {
+        // Escucha cambios del checkbox AFP
+        privatePensionSystemField.addEventListener('change', function() {
+            if (privatePensionSystemField.type === 'checkbox') {
+                pensionOptions.style.display = this.checked ? 'block' : 'none';
+            } else {
+                pensionOptions.style.display = this.value === 'yes' ? 'block' : 'none';
+            }
+
+            // Si se desmarca AFP, limpiar los subcampos
+            if (!this.checked && this.type === 'checkbox') {
+                document.getElementById('afp_first_job').checked = false;
+                document.getElementById('coming_from_onp').checked = false;
+                document.getElementById('coming_from_afp').checked = false;
+            }
+        });
+
+        // 🔹 Al cargar la página, aplica el estado correcto según el valor del backend
+        if (privatePensionSystemField.checked || privatePensionSystemField.value === 'yes') {
+            pensionOptions.style.display = 'block';
+        } else {
+            pensionOptions.style.display = 'none';
+        }
+    }
 });
+
 
 
 function populateModal() {
@@ -937,3 +1184,4 @@ function setSelectByText(selectId, textToMatch, callback = null) {
     callback();
   }
 }
+
