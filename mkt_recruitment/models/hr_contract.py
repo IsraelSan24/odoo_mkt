@@ -129,7 +129,7 @@ class Contract(models.Model):
             if mail.state in ['outgoing', 'sent', 'received']:
                 return {'success': True, 'message': _('Email sent successfully.')}
             elif mail.state == 'exception':
-                return {'success': False, 'message': _(f'Error sending email: {mail.failure_reason}')}
+                return {'success': False, 'message': _('Error sending email: %s' % mail.failure_reason)}
 
         except UserError as e:
             return {'success': False, 'message': str(e)}
