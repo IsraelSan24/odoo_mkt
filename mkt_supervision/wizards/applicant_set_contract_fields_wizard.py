@@ -8,10 +8,10 @@ class ApplicantSetFieldsWizard(models.TransientModel):
     _name = "applicant.set.contract.fields.wizard"
     _description = "Set necessary fields to approve selected applicants."
 
-    first_contract_start = fields.Date(string='First Contract Start Date')
-    first_contract_end = fields.Date(string='First Contract End Date')
-    salary_proposed = fields.Float(string="Proposed Salary")
-    cost_center_id = fields.Many2one('cost.center', string='Cost Center')
+    first_contract_start = fields.Date(string=_('First Contract Start Date'))
+    first_contract_end = fields.Date(string=_('First Contract End Date'))
+    salary_proposed = fields.Float(string=_("Proposed Salary"))
+    cost_center_id = fields.Many2one('cost.center', string=_('Cost Center'))
 
 
     def _save_data(self):

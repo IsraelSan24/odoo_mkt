@@ -47,7 +47,7 @@ class HrApplicant(models.Model):
         for record in self:
             
             if record.stage_id.id != 2:
-                raise UserError(_(f"You can approve only selected applicants."))
+                raise UserError(_("You can approve only selected applicants."))
             
             # Verificar campos requeridos
             missing_fields = []
@@ -77,7 +77,7 @@ class HrApplicant(models.Model):
     def action_open_set_fields_wizard(self):
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Set First Contract Fields',
+            'name': _('Set First Contract Fields'),
             'res_model': 'applicant.set.contract.fields.wizard',
             'view_mode': 'form',
             'target': 'new',
