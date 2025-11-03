@@ -100,9 +100,9 @@ class Applicant(models.Model):
 
                 if look_for_employee:
                     raise UserError(_(
-                        f"An active employee exists with this DNI {rec.vat} ({look_for_employee.name}). "
+                        "An active employee exists with this DNI %s (%s). "
                         "It is necessary to terminate the employee before trying to continue with a new recruitment process."
-                    ))
+                        (rec.vat, look_for_employee.name)))
             rec.contact_merge_stage()
             rec.update_data_partner()
             rec.create_employee_by_stage()
