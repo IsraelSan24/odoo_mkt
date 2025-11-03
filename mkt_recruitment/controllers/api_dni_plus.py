@@ -38,12 +38,16 @@ class DNIAPIController(http.Controller):
             if response.status_code == 200:
                 data = response.json()
                 access_data = data.get('data', {})
+                code = data.get('codigo', False)
+                message = data.get('respuesta', False)
                 
                 _logger.info(f"DNI data retrieved successfully for: {dni}")
                 
                 return {
                     'success': True,
-                    'data': access_data
+                    'data': access_data,
+                    'code': code,
+                    'message': message,
                 }
             else:
                 _logger.error(f"API Error {response.status_code}: {response.text}")

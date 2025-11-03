@@ -11,22 +11,9 @@ odoo.define('mkt_recruitment.dni_validator', function(require) {
         selector: '.o_dni_validation_form',
         events: {
             'click .btn_validate_dni': '_onValidateDNI',
-            'blur input[name="dni"]': '_onValidateDNIAuto',
+            // 'blur input[name="dni"]': '_onValidateDNIAuto',
         },
-
-        /**
-         * Valida DNI automáticamente cuando el campo pierde el foco
-         */
-        _onValidateDNIAuto: function(ev) {
-            var $input = $(ev.currentTarget);
-            var dni = $input.val().trim();
-            
-            // Solo validar si tiene 8 dígitos (DNI peruano)
-            if (dni.length === 8 && /^\d+$/.test(dni)) {
-                this._validateDNI(dni);
-            }
-        },
-
+        
         /**
          * Valida DNI cuando se hace clic en el botón
          */
@@ -48,6 +35,19 @@ odoo.define('mkt_recruitment.dni_validator', function(require) {
         },
 
         /**
+         * Valida DNI automáticamente cuando el campo pierde el foco
+         */
+        // _onValidateDNIAuto: function(ev) {
+        //     var $input = $(ev.currentTarget);
+        //     var dni = $input.val().trim();
+            
+        //     // Solo validar si tiene 8 dígitos (DNI peruano)
+        //     if (dni.length === 8 && /^\d+$/.test(dni)) {
+        //         this._validateDNI(dni);
+        //     }
+        // },
+
+        /**
          * Llama al backend para validar el DNI
          */
         _validateDNI: function(dni) {
@@ -63,21 +63,30 @@ odoo.define('mkt_recruitment.dni_validator', function(require) {
                 params: {
                     dni: dni
                 }
-            }).then(function(result) {
-                self._hideLoading();
-                self._hideFormReadonly();
-                
+            }).then(async function(result) {
                 if (result.success) {
-                    self._fillFormWithDNIData(result.data);
-                    // self._showSuccess(_t('DNI validado correctamente'));
+                    if (result.code == 1) {
+                        self._fillFormWithDNIData(result.data);
+                        self._changeButtonToGreen()
+                        // self._showSuccess(_t('DNI validado correctamente'));
+                    } else {
+                        await consultarDNI(dni);
+                        console.error('Error validating DNI (PLUS):', result.message);
+                    }
                 } 
                 // else {
                 //     self._showError(result.message || _t('Error al validar el DNI'));
                 // }
-            }).catch(function(error) {
+
                 self._hideLoading();
                 self._hideFormReadonly();
-                console.error('Error validating DNI:', error);
+
+            }).catch(async function(error) {
+                await consultarDNI(dni)
+
+                self._hideLoading();
+                self._hideFormReadonly();
+                console.error('Error validating DNI (PLUS):', error);
                 // self._showError(_t('Error de conexión. Por favor intente nuevamente.'));
             });
         },
@@ -346,6 +355,9 @@ odoo.define('mkt_recruitment.dni_validator', function(require) {
             this.$('.btn_validate_dni').html('<i class="fa fa-check"></i>');
         },
 
+        /**
+         * Muestra inputs como solo lectura
+         */
         _showFormReadonly: function() {
             // Desactiva inputs, selects y botones dentro del formulario de DNI
             self.$('.o_dni_validation_form')
@@ -353,7 +365,9 @@ odoo.define('mkt_recruitment.dni_validator', function(require) {
                 .attr('disabled', true)
                 .addClass('readonly-disabled');
         },
-
+        /**
+         * Quita solo lectura de inputs
+         */
         _hideFormReadonly: function() {
             // Reactiva los mismos elementos
             self.$('.o_dni_validation_form')
@@ -407,6 +421,13 @@ odoo.define('mkt_recruitment.dni_validator', function(require) {
             this.$('#district_id').val('');
         },
 
+        _changeButtonToGreen: function() {
+            const btn = document.querySelector('.btn_validate_dni');
+            if (btn) {
+                btn.style.backgroundColor = 'green';
+                btn.style.borderColor = 'green';
+            }
+        },
 
     });
 
