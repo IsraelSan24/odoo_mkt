@@ -46,17 +46,33 @@ class HrApplicant(models.Model):
     def action_approve_selected_applicants(self):
         for record in self:
             
-            if int(record.stage_id) != 2:
+            if record.stage_id.id != 2:
                 raise UserError(f"You can approve only selected applicants.")
             
-            if not all([record.salary_proposed, record.first_contract_start, record.first_contract_end, record.cost_center_id]):
-                raise MissingError(f"Some fields are required to approve applicant {record.partner_name or record.name}:\n-> Cost Center\n-> Salary Proposed\n-> First Contract Start\n-> First Contract End")
-            
-            record.stage_id = self.env['hr.recruitment.stage'].browse(4)
-            record.supervision_data_sent = True
-            record.selected_applicant_approved = True
-            record.supervision_data_approved = 'pending'
+            # Verificar campos requeridos
+            missing_fields = []
 
+            if not record.cost_center_id:
+                missing_fields.append("Cost Center")
+            if not record.salary_proposed:
+                missing_fields.append("Salary Proposed")
+            if not record.first_contract_start:
+                missing_fields.append("First Contract Start")
+            if not record.first_contract_end:
+                missing_fields.append("First Contract End")
+
+            if missing_fields:
+                raise UserError(_(
+                    "Some fields are required to approve applicant %s:\n→ %s"
+                ) % (record.partner_name or record.name, "\n→ ".join(missing_fields)))
+
+            record.write({
+                'stage_id': self.env.ref('hr_recruitment.stage_job4').id,  # Mejor usar xml_id que hardcodear 4
+                'supervision_data_sent': True,
+                'selected_applicant_approved': True,
+                'supervision_data_approved': 'pending',
+            })
+            
 
     def action_open_set_fields_wizard(self):
         return {
