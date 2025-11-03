@@ -99,10 +99,10 @@ class Applicant(models.Model):
                 ], limit=1)
 
                 if look_for_employee:
-                    raise UserError(
+                    raise UserError(_(
                         f"An active employee exists with this DNI {rec.vat} ({look_for_employee.name}). "
                         "It is necessary to terminate the employee before trying to continue with a new recruitment process."
-                    )
+                    ))
             rec.contact_merge_stage()
             rec.update_data_partner()
             rec.create_employee_by_stage()
@@ -186,7 +186,7 @@ class Applicant(models.Model):
         if not self.is_autoemployee and self.stage_id.employee_stage:
             look_for_employee = self.env['hr.employee'].search([('address_home_id.vat', '=', self.vat)], limit=1)
             if look_for_employee:
-                raise UserError(f"An active employee exists with this DNI {self.vat} ({look_for_employee.name}). It is necesary to terminate the employee before trying to continue with a new recruitment process.")
+                raise UserError(_(f"An active employee exists with this DNI {self.vat} ({look_for_employee.name}). It is necesary to terminate the employee before trying to continue with a new recruitment process."))
 
             contact_name = False
             if self.partner_id:
@@ -269,10 +269,10 @@ class Applicant(models.Model):
         for record in self:
             
             if int(record.stage_id) != 4:
-                raise UserError(f"You can approve only applicants in Contract Proposal.")
+                raise UserError(_(f"You can approve only applicants in Contract Proposal."))
             
             if record.supervision_data_approved != 'pending':
-                raise UserError(f"You can approve only when the request is pending.")
+                raise UserError(_(f"You can approve only when the request is pending."))
 
             record.supervision_data_approved = 'approved'
 
@@ -289,10 +289,10 @@ class Applicant(models.Model):
         for record in self:
             
             if int(record.stage_id) != 4:
-                raise UserError(f"You can correct data only for applicants in Contract Proposal.")
+                raise UserError(_(f"You can correct data only for applicants in Contract Proposal."))
 
             if record.supervision_data_approved != 'rejected':
-                    raise UserError(f"You can correct only when the request is rejected.")
+                    raise UserError(_(f"You can correct only when the request is rejected."))
 
             self.supervision_data_approved = 'pending'
 
@@ -300,10 +300,10 @@ class Applicant(models.Model):
         for record in self:
             
             if int(record.stage_id) != 4:
-                raise UserError(f"You can approve only applicants in Contract Proposal.")
+                raise UserError(_(f"You can approve only applicants in Contract Proposal."))
 
             if record.supervision_data_approved != 'pending':
-                raise UserError(f"You can reject only when the request is pending.")
+                raise UserError(_(f"You can reject only when the request is pending."))
 
             self.supervision_data_approved = 'rejected'
     
@@ -311,10 +311,10 @@ class Applicant(models.Model):
         for record in self:
             
             if int(record.stage_id) != 4:
-                raise UserError(f"You can restore only applicants in Contract Proposal.")
+                raise UserError(_(f"You can restore only applicants in Contract Proposal."))
             
             if record.supervision_data_approved != 'approved':
-                raise UserError(f"You can restore only when the request is approved.")
+                raise UserError(_(f"You can restore only when the request is approved."))
 
             record.supervision_data_approved = 'pending'
 
