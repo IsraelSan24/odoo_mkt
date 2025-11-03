@@ -34,7 +34,7 @@ class AttendanceTrackingReport(models.TransientModel):
     def _get_my_subordinates(self):
         my_employee = self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1)
         if not my_employee:
-            raise ValidationError("No hay un empleado vinculado al usuario actual.")
+            raise ValidationError(_("No hay un empleado vinculado al usuario actual."))
         
         subordinates = my_employee
         to_check = my_employee
