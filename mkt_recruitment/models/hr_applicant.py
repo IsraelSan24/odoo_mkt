@@ -33,20 +33,20 @@ class Applicant(models.Model):
         if 'stage_id' in vals:
             new_stage = self.env['hr.recruitment.stage'].browse(vals['stage_id'])
             if not new_stage.exists():
-                raise UserError("El nuevo estado no es válido.")
+                raise UserError(_("El nuevo estado no es válido."))
             
             # restrict if not in group
             if new_stage.id == 4 and not self.env.user.has_group('mkt_supervision.group_supervision_hiring_approver'):
                 _logger.info(f"\n\n\nHRAPPLICANT RESTRICT GROUP\n\n\n")
-                raise AccessError("You don't have permissions to move candidates to this stage.")
+                raise AccessError(_("You don't have permissions to move candidates to this stage."))
 
 
             _logger.info(f"\n\n\nHR APPLICANT PASSED\n\n\n")
             for rec in self:
                 if not rec.stage_id:
-                    raise UserError("El registro no tiene un estado actual asignado.")
+                    raise UserError(_("El registro no tiene un estado actual asignado."))
                 if abs(new_stage.sequence - rec.stage_id.sequence) > 1:
-                    raise UserError("Solo puedes cambiar el estado al siguiente o anterior en la vista Kanban.")
+                    raise UserError(_("Solo puedes cambiar el estado al siguiente o anterior en la vista Kanban."))
         
         res = super(Applicant, self).write(vals)
         
@@ -331,6 +331,6 @@ class Applicant(models.Model):
                         if first_contract.state in ['cancel', 'draft']:
                             first_contract.toggle_active()
                         else:
-                            raise UserError("It is not possible to restore the request because the first contract has been signed.")
+                            raise UserError(_("It is not possible to restore the request because the first contract has been signed."))
             else:
                 _logger.info(f"\n\n\nNO EMPLOYEE WAS FOUND\n\n\n")

@@ -243,7 +243,7 @@ class Contract(models.Model):
     #     if 'state' in vals:
     #         if vals['state'] != self.state:
     #             if not self.env.context.get('from_signed_function', False):
-    #                 raise UserError("No puedes cambiar el estado a 'Done' mediante arrastre en Kanban.")
+    #                 raise UserError(_("No puedes cambiar el estado a 'Done' mediante arrastre en Kanban."))
     #     res = super(Contract, self).write(vals)
     #     return res
 

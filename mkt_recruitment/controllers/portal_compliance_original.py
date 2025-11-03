@@ -481,7 +481,7 @@ class PortalCompliance(portal.CustomerPortal):
 
         employee = request.env.user.employee_id or request.env.user.partner_id.employee_ids
         if len(employee) != 1 or not employee :
-            raise ValidationError("Más de 1 empleado, o ninguno asociado a este usuario.")
+            raise ValidationError(_("Más de 1 empleado, o ninguno asociado a este usuario."))
         
         first_contract = request.env['hr.contract'].sudo().search([('employee_id', '=', employee.id)], limit=1, order='create_date desc')
         first_recruitment_document = request.env['recruitment.document'].sudo().search([('partner_id', '=', partner.id)], limit=1, order='create_date desc')
@@ -506,8 +506,7 @@ class PortalCompliance(portal.CustomerPortal):
             return html
     
         else:
-            # raise MissingError("Aún no se ha generado tu primer contrato, espera a la indicación de tu reclutador.")
-            raise MissingError("Your first contranct hasn't been generated yet, please wait to your recruiter's indication.")
+            raise MissingError(_("Your first contranct hasn't been generated yet, please wait to your recruiter's indication."))
 
 
     @http.route(['/my/contracts','/my/contracts/page/<int:page>'], type='http', auth='user', website=True)
