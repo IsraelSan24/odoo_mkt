@@ -11,7 +11,8 @@
           <field name="salary_proposed"/>
         </group>
         <footer>
-          <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>
+          <button string="Save and Approve" type="object" name="action_save_and_approve" class="btn-primary"/>
+          <button string="Save" type="object" name="action_save" class="btn-secondary"/>
           <button string="Cancel" special="cancel" class="btn-secondary"/>
         </footer>
       </form>

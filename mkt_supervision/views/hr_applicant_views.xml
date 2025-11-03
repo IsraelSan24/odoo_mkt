@@ -51,7 +51,7 @@
       <field name="model">hr.applicant</field>
       <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
       <field name="arch" type="xml">
-          <xpath expr="//header" position="inside">
+          <xpath expr="//header/button[@name='archive_applicant']" position="before">
             <button name="action_approve_selected_applicants"
                     type="object"
                     string="Approve"
@@ -69,7 +69,7 @@
       <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
       <field name="arch" type="xml">
           <xpath expr="//tree" position="inside">
-            <button name="action_approve_selected_applicants"
+            <button name="action_open_set_fields_wizard"
                     type="object"
                     string="Approve"
                     class="btn-primary"
@@ -79,20 +79,16 @@
           </xpath>
           <xpath expr="//tree" position="inside">
             <header>
-              <button name="action_approve_selected_applicants"
+              <button name="action_open_set_fields_wizard"
                       type="object"
                       string="Approve"
-                      class="btn-secondary"
+                      class="btn-primary"
+                      icon="fa-check-circle"
                       groups="mkt_supervision.group_supervision_hiring_approver"/>
             </header>
           </xpath>
           <xpath expr="//tree" position="inside">
             <header>
-              <button name="action_open_set_fields_wizard"
-                      type="object"
-                      string="Set Contract"
-                      class="btn-secondary"
-                      groups="mkt_supervision.group_supervision_hiring_approver"/>
               <button name="archive_applicant"
                       type="object"
                       string="Reject"
@@ -102,17 +98,6 @@
           </xpath>
       </field>
   </record>
-
-  <!-- <record id="action_approve_selected_applicants" model="ir.actions.server">
-      <field name="name">Approve Applicants</field>
-      <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
-      <field name="state">code</field>
-      <field name="binding_model_id" ref="hr_recruitment.model_hr_applicant"/>
-      <field name="binding_type">action</field>
-      <field name="code">
-          action = records.action_approve_selected_applicants()
-      </field>
-  </record> -->
 
  
   <record id="view_hr_applicant_search_custom" model="ir.ui.view">

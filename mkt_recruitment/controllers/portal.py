@@ -523,7 +523,7 @@ class RecruitmentPortal(portal.CustomerPortal):
     def portal_my_documents(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
         values = self._prepare_portal_layout_values()
         partner = request.env.user.partner_id
-        RecruitmentDocument = request.env['recruitment.document']
+        RecruitmentDocument = request.env['recruitment.document'].sudo()
         domain = self._prepare_documents_domain(partner)
         searchbar_sortings = self._get_document_searchbar_sorting()
         if not sortby:

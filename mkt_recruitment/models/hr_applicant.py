@@ -17,36 +17,36 @@ class Applicant(models.Model):
     applicant_partner_id = fields.Many2one(comodel_name='applicant.partner', string='Applicant partner')
     is_reinstatement = fields.Boolean(default=False, string='Is reinstatement', store=True)
 
-    first_contract_start = fields.Date(string="First Contract Start Date", tracking=True) 
-    first_contract_end = fields.Date(string="First Contract End Date", tracking=True)
+    first_contract_start = fields.Date(string=_("First Contract Start Date"), tracking=True) 
+    first_contract_end = fields.Date(string=_("First Contract End Date"), tracking=True)
 
     cost_center_id = fields.Many2one('cost.center', string="Cost Center", tracking=True)
-    selected_applicant_approved = fields.Boolean(string="Is selected applicant approved?", tracking=True)
+    selected_applicant_approved = fields.Boolean(string=_("Is selected applicant approved?"), tracking=True)
     supervision_data_approved = fields.Selection([
                                     ('pending', 'Pending'),
                                     ('approved', 'Approved'),
                                     ('rejected', 'Rejected'),
                                 ], string='Supervision Status', tracking=True)
-    supervision_data_sent = fields.Boolean("Is supervision data sent?", tracking=True, default=False) 
+    supervision_data_sent = fields.Boolean(_("Is supervision data sent?"), tracking=True, default=False) 
 
     def write(self, vals):
         if 'stage_id' in vals:
             new_stage = self.env['hr.recruitment.stage'].browse(vals['stage_id'])
             if not new_stage.exists():
-                raise UserError("El nuevo estado no es válido.")
+                raise UserError(_("El nuevo estado no es válido."))
             
             # restrict if not in group
             if new_stage.id == 4 and not self.env.user.has_group('mkt_supervision.group_supervision_hiring_approver'):
                 _logger.info(f"\n\n\nHRAPPLICANT RESTRICT GROUP\n\n\n")
-                raise AccessError("You don't have permissions to move candidates to this stage.")
+                raise AccessError(_("You don't have permissions to move candidates to this stage."))
 
 
             _logger.info(f"\n\n\nHR APPLICANT PASSED\n\n\n")
             for rec in self:
                 if not rec.stage_id:
-                    raise UserError("El registro no tiene un estado actual asignado.")
+                    raise UserError(_("El registro no tiene un estado actual asignado."))
                 if abs(new_stage.sequence - rec.stage_id.sequence) > 1:
-                    raise UserError("Solo puedes cambiar el estado al siguiente o anterior en la vista Kanban.")
+                    raise UserError(_("Solo puedes cambiar el estado al siguiente o anterior en la vista Kanban."))
         
         res = super(Applicant, self).write(vals)
         
@@ -99,10 +99,10 @@ class Applicant(models.Model):
                 ], limit=1)
 
                 if look_for_employee:
-                    raise UserError(
-                        f"An active employee exists with this DNI {rec.vat} ({look_for_employee.name}). "
+                    raise UserError(_(
+                        "An active employee exists with this DNI %s (%s). "
                         "It is necessary to terminate the employee before trying to continue with a new recruitment process."
-                    )
+                        (rec.vat, look_for_employee.name)))
             rec.contact_merge_stage()
             rec.update_data_partner()
             rec.create_employee_by_stage()
@@ -186,7 +186,7 @@ class Applicant(models.Model):
         if not self.is_autoemployee and self.stage_id.employee_stage:
             look_for_employee = self.env['hr.employee'].search([('address_home_id.vat', '=', self.vat)], limit=1)
             if look_for_employee:
-                raise UserError(f"An active employee exists with this DNI {self.vat} ({look_for_employee.name}). It is necesary to terminate the employee before trying to continue with a new recruitment process.")
+                raise UserError(_("An active employee exists with this DNI %s (%s). It is necesary to terminate the employee before trying to continue with a new recruitment process.") % (self.vat, look_for_employee.name))
 
             contact_name = False
             if self.partner_id:
@@ -269,10 +269,10 @@ class Applicant(models.Model):
         for record in self:
             
             if int(record.stage_id) != 4:
-                raise UserError(f"You can approve only applicants in Contract Proposal.")
+                raise UserError(_("You can approve only applicants in Contract Proposal."))
             
             if record.supervision_data_approved != 'pending':
-                raise UserError(f"You can approve only when the request is pending.")
+                raise UserError(_("You can approve only when the request is pending."))
 
             record.supervision_data_approved = 'approved'
 
@@ -289,10 +289,10 @@ class Applicant(models.Model):
         for record in self:
             
             if int(record.stage_id) != 4:
-                raise UserError(f"You can correct data only for applicants in Contract Proposal.")
+                raise UserError(_("You can correct data only for applicants in Contract Proposal."))
 
             if record.supervision_data_approved != 'rejected':
-                    raise UserError(f"You can correct only when the request is rejected.")
+                    raise UserError(_("You can correct only when the request is rejected."))
 
             self.supervision_data_approved = 'pending'
 
@@ -300,10 +300,10 @@ class Applicant(models.Model):
         for record in self:
             
             if int(record.stage_id) != 4:
-                raise UserError(f"You can approve only applicants in Contract Proposal.")
+                raise UserError(_("You can approve only applicants in Contract Proposal."))
 
             if record.supervision_data_approved != 'pending':
-                raise UserError(f"You can reject only when the request is pending.")
+                raise UserError(_("You can reject only when the request is pending."))
 
             self.supervision_data_approved = 'rejected'
     
@@ -311,10 +311,10 @@ class Applicant(models.Model):
         for record in self:
             
             if int(record.stage_id) != 4:
-                raise UserError(f"You can restore only applicants in Contract Proposal.")
+                raise UserError(_("You can restore only applicants in Contract Proposal."))
             
             if record.supervision_data_approved != 'approved':
-                raise UserError(f"You can restore only when the request is approved.")
+                raise UserError(_("You can restore only when the request is approved."))
 
             record.supervision_data_approved = 'pending'
 
@@ -331,6 +331,6 @@ class Applicant(models.Model):
                         if first_contract.state in ['cancel', 'draft']:
                             first_contract.toggle_active()
                         else:
-                            raise UserError("It is not possible to restore the request because the first contract has been signed.")
+                            raise UserError(_("It is not possible to restore the request because the first contract has been signed."))
             else:
                 _logger.info(f"\n\n\nNO EMPLOYEE WAS FOUND\n\n\n")
