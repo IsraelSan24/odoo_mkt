@@ -47,7 +47,7 @@ class HrApplicant(models.Model):
         for record in self:
             
             if record.stage_id.id != 2:
-                raise UserError(f"You can approve only selected applicants.")
+                raise UserError(_(f"You can approve only selected applicants."))
             
             # Verificar campos requeridos
             missing_fields = []
