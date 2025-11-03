@@ -571,6 +571,30 @@ async function apiperu_dni(dni) {
     } else {
       console.error(`Error ${response.status}`);
       console.error(await response.text());
+
+      const div = document.createElement('div');
+      div.textContent = 'DNI no encontrado (llenar datos manualmente)';
+      div.style.cssText = `
+          position: fixed;
+          top: 30%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: #9b4934ff;
+          color: white;
+          padding: 16px 28px;
+          border-radius: 10px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+          z-index: 9999;
+          font-weight: bold;
+          font-size: 14px;
+          text-align: center;
+          max-width: 80%;
+          animation: fadeInOut 3s ease;
+      `;
+      document.body.appendChild(div);
+      setTimeout(() => div.remove(), 4000);
+
+
     }
   } catch (error) {
     console.error(`Error ${error}`);
@@ -583,9 +607,15 @@ async function consultarDNI() {
     try {
       const [nombre_completo] = await apiperu_dni(dni);
       document.getElementById("name").value = nombre_completo;
+
+      // On success change button to green
+      const btn = document.querySelector('.btn_validate_dni');
+      if (btn) {
+          btn.style.backgroundColor = 'green';
+          btn.style.borderColor = 'green';
+      }
+      
       console.log(document.getElementById("name").value);
-      console.log(name);
-      console.log(nombre_completo);
     } catch (error) {
       console.error("Error al consultar el DNI:", error);
     }
