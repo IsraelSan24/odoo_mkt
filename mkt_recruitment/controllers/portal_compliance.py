@@ -406,6 +406,12 @@ class PortalCompliance(portal.CustomerPortal):
                 _logger.info(f"\n\n\nEND COMPLIANCE: Aplicant - {len(applicant)} - {applicant.id} - {applicant.supervision_data_approved}\n\n\n")
 
                 if applicant and (applicant.supervision_data_approved == 'approved'):
+
+                    current_employee = request.env['hr.employee'].sudo().search([('address_home_id.id', '=', partner.id)], order='create_date desc', limit=1)
+                    
+                    if current_employee:
+                        current_employee.sudo().write({'cost_center_id': applicant.cost_center_id.id})
+
                     _logger.info(f"\n\n\nEND COMPLIANCE: APPLICANT FOUND TO CREATE FIRST_CONTRACT\n\n\n")
                     applicant.sudo().create_first_contract()
                     _logger.info(f"\n\n\nEND COMPLIANCE: FIRST CONTRACT CREATED\n\n\n")
