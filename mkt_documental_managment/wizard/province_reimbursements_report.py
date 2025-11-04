@@ -188,12 +188,13 @@ class ProvinceReimbursementsReport(models.TransientModel):
     def _get_query_rows(self):
         """
         Agrega por RQ:
-          - rq_create_date (dr.create_date::date) y rq_month
-          - province (res_province.name desde rp.province_id)
-          - amount (monto solicitado del RQ: soles/u$s)
-          - real_expense = SUM(s.settle_amount_sum) por RQ
-          - estado del RQ
-          - placeholders client_name / activity_name (vacíos)
+        - rq_create_date (dr.create_date::date) y rq_month
+        - province (res_province.name desde rp.province_id)
+        - amount (monto solicitado del RQ: soles/u$s)
+        - real_expense = SUM(s.vendor_sum) por RQ  [cámbialo a settle_amount_sum si lo prefieres]
+        - estado del RQ
+        - client_name (b.partner_id->res_partner.name)
+        - activity_name (b.campaign_id->budget_campaign.name)
         """
         query = """
             SELECT
@@ -217,27 +218,34 @@ class ProvinceReimbursementsReport(models.TransientModel):
                     ELSE 0
                 END AS amount,
 
-                -- Gasto real total por RQ
-                COALESCE(SUM(s.settle_amount_sum), 0) AS real_expense,
+                -- Gasto real total por RQ (usa vendor_sum)
+                COALESCE(SUM(s.vendor_sum), 0) AS real_expense,
 
-                -- Placeholders (quedarán en blanco hasta confirmar campos)
-                NULL::varchar AS client_name,
-                NULL::varchar AS activity_name
+                -- Cliente y Actividad tomados del presupuesto
+                bp.name AS client_name,
+                bc.name AS activity_name
 
             FROM documental_requirements AS dr
-                LEFT JOIN budget       AS b   ON b.id  = dr.budget_id
-                LEFT JOIN cost_center  AS cc  ON cc.id = b.cost_center_id
-                LEFT JOIN res_partner  AS rp  ON rp.id = dr.paid_to
-                LEFT JOIN res_province AS rpr ON rpr.id = rp.province_id
-                LEFT JOIN settlement   AS s   ON s.requirement_id = dr.id
+                LEFT JOIN budget             AS b   ON b.id  = dr.budget_id
+                LEFT JOIN cost_center        AS cc  ON cc.id = b.cost_center_id
+                LEFT JOIN res_partner        AS rp  ON rp.id = dr.paid_to
+                LEFT JOIN res_province       AS rpr ON rpr.id = rp.province_id
+                LEFT JOIN settlement         AS s   ON s.requirement_id = dr.id
+
+                -- joins para cliente y actividad del presupuesto
+                LEFT JOIN res_partner        AS bp  ON bp.id = b.partner_id
+                LEFT JOIN budget_campaign    AS bc  ON bc.id = b.campaign_id
 
             WHERE (dr.intern_control_signed_on IS NOT NULL OR dr.settlement_intern_control_signed_on IS NOT NULL)
-              AND dr.active != FALSE
+                AND dr.active != FALSE
+                AND rpr.name IS NOT NULL
+                AND rpr.name NOT ILIKE 'Lima'
             GROUP BY
                 dr.id, dr.name, dr.create_date,
                 b.name, cc.code, rp.name, rpr.name,
                 dr.concept, dr.requirement_state,
-                dr.amount_soles, dr.amount_uss
+                dr.amount_soles, dr.amount_uss,
+                bp.name, bc.name
             ORDER BY dr.name DESC
         """
         self._cr.execute(query)
