@@ -98,11 +98,8 @@ class Applicant(models.Model):
                     ('address_home_id.vat', '=', rec.vat)
                 ], limit=1)
 
-                if look_for_employee:
-                    raise UserError(_(
-                        "An active employee exists with this DNI %s (%s). "
-                        "It is necessary to terminate the employee before trying to continue with a new recruitment process."
-                        (rec.vat, look_for_employee.name)))
+                if look_for_employee and not rec.is_autoemployee:
+                    raise UserError(_("An active employee exists with this DNI %s (%s). It is necesary to terminate the employee before trying to continue with a new recruitment process.") % (rec.vat, look_for_employee.name))
             rec.contact_merge_stage()
             rec.update_data_partner()
             rec.create_employee_by_stage()

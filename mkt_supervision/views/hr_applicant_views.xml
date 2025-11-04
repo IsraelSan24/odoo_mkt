@@ -23,16 +23,16 @@
           </xpath>
  
           <xpath expr="//field[@name='salary_proposed']" position="attributes">
-              <attribute name="attrs">{'readonly': [('stage_id', '=', 5)]}</attribute>
+              <attribute name="attrs">{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}</attribute>
           </xpath>
           <xpath expr="//field[@name='salary_proposed_extra']" position="attributes">
-              <attribute name="attrs">{'readonly': [('stage_id', '=', 5)]}</attribute>
+              <attribute name="attrs">{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}</attribute>
           </xpath>
            <xpath expr="//field[@name='first_contract_start']" position="attributes">
-              <attribute name="attrs">{'readonly': [('stage_id', '=', 5)]}</attribute>
+              <attribute name="attrs">{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}</attribute>
           </xpath>
            <xpath expr="//field[@name='first_contract_end']" position="attributes">
-              <attribute name="attrs">{'readonly': [('stage_id', '=', 5)]}</attribute>
+              <attribute name="attrs">{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}</attribute>
           </xpath>
           <xpath expr="//field[@name='availability']" position="attributes">
               <attribute name="attrs">{'readonly': [('stage_id', '=', 5)]}</attribute>
@@ -40,8 +40,13 @@
           <xpath expr="//field[@name='company_id']" position="attributes">
               <attribute name="attrs">{'readonly': [('stage_id', '=', 5)]}</attribute>
           </xpath>
+          <xpath expr="//field[@name='department_id']" position="before">
+              <field name="supervision_data_approved" invisible="1"/>
+          </xpath>
           <xpath expr="//field[@name='department_id']" position="after">
-              <field name="cost_center_id" groups="mkt_supervision.group_supervision_hiring_approver" />
+              <field name="cost_center_id" 
+                     groups="mkt_supervision.group_supervision_hiring_approver" 
+                     attrs="{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
           </xpath>
       </field>
   </record>
