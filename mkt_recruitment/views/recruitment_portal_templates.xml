@@ -338,7 +338,7 @@
                                         <tbody>
                                             <tr>
                                                 <!-- Cambiado familiar_relationship1 a child_relationship1 -->
-                                                <t t-if="res_partner['child_relationship1'] == 'Hijo' or res_partner['child_relationship1'] == 'Hija'">
+                                                <t t-if="res_partner['child_dni1']">
                                                     <td scope="col">
                                                         <!-- Cambiado familiar_full_name1 a child_full_name1 -->
                                                         <t t-if="res_partner['child_full_name1']">
@@ -408,7 +408,7 @@
                                             </tr>
                                             <tr>
                                                 <!-- Cambiado familiar_relationship2 a child_relationship2 -->
-                                                <t t-if="res_partner['child_relationship2'] == 'Hijo' or res_partner['child_relationship2'] == 'Hija'">
+                                                <t t-if="res_partner['child_dni2']">
                                                     <td scope="col">
                                                         <!-- Cambiado familiar_full_name2 a child_full_name2 -->
                                                         <t t-if="res_partner['child_full_name2']">
@@ -478,7 +478,7 @@
                                             </tr>
                                             <tr>
                                                 <!-- Cambiado familiar_relationship3 a child_relationship3 -->
-                                                <t t-if="res_partner['child_relationship3'] == 'Hijo' or res_partner['child_relationship3'] == 'Hija'">
+                                                <t t-if="res_partner['child_dni3']">
                                                     <td scope="col">
                                                         <!-- Cambiado familiar_full_name3 a child_full_name3 -->
                                                         <t t-if="res_partner['child_full_name3']">
@@ -548,7 +548,7 @@
                                             </tr>
                                             <tr>
                                                 <!-- Cambiado familiar_relationship4 a child_relationship4 -->
-                                                <t t-if="res_partner['child_relationship4'] == 'Hijo' or res_partner['child_relationship4'] == 'Hija'">
+                                                <t t-if="res_partner['child_dni4']">
                                                     <td scope="col">
                                                         <!-- Cambiado familiar_full_name4 a child_full_name4 -->
                                                         <t t-if="res_partner['child_full_name4']">

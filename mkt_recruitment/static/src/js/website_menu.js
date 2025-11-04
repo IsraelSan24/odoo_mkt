@@ -55,36 +55,13 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
 
         <div class="form-group col">
-            <label for="child_full_name${i + 1}">Nombre*</label>
+            <label for="child_full_name${i + 1}">Nombres y Apellidos*</label>
             <input type="text" name="child_full_name${i + 1}" id="child_full_name${i + 1}" class="form-control" value="${child.full_name || ''}" required />
         </div>
 
         <div class="form-group col">
             <label for="child_birthday${i + 1}">F. Nac*</label>
             <input type="date" name="child_birthday${i + 1}" id="child_birthday${i + 1}" class="form-control" value="${child.birthday || ''}" required />
-        </div>
-
-        <div class="form-group col">
-            <label for="child_relationship${i + 1}">Parentesco*</label>
-            <select class="form-control" name="child_relationship${i + 1}" id="child_relationship${i + 1}" required>
-                <option value="">Seleccione una opción</option>
-                <option value="Hijo" ${child.relationship === 'Hijo' ? 'selected' : ''}>Hijo</option>
-                <option value="Hija" ${child.relationship === 'Hija' ? 'selected' : ''}>Hija</option>
-            </select>
-        </div>
-
-        <div class="form-group col">
-            <label for="child_gender${i + 1}">Género*</label>
-            <select class="form-control" name="child_gender${i + 1}" id="child_gender${i + 1}" required>
-                <option value="">Seleccione una opción</option>
-                <option value="male" ${child.gender === 'male' ? 'selected' : ''}>Masculino</option>
-                <option value="female" ${child.gender === 'female' ? 'selected' : ''}>Femenino</option>
-            </select>
-        </div>
-
-        <div class="form-group col">
-            <label for="child_address${i + 1}">Dirección*</label>
-            <input type="text" name="child_address${i + 1}" id="child_address${i + 1}" class="form-control" value="${child.address || ''}" required />
         </div>
       `;
 
@@ -299,38 +276,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="date" name="familiar_birthday${j + 7}" class="form-control" id="familiar_birthday${j + 7}" required="True" value="${otherBeneficiary.birthday || ''}"/>
                 <div class="invalid-feedback">
                   Por favor, ingrese su fecha de nacimiento.
-                </div>
-            </div>
-            <div class="form-group col">
-                <label for="familiar_relationship${j + 7}">Parentesco*</label>
-                <select class="form-control" name="familiar_relationship${j + 7}" id="familiar_relationship${j + 7}" required="True">
-                    <option value="">Seleccione una opción</option>
-                    <option value="Madre" ${otherBeneficiary.relationship === 'Madre' ? 'selected' : ''} >Madre</option>
-                    <option value="Padre" ${otherBeneficiary.relationship === 'Padre' ? 'selected' : ''} >Padre</option>
-                    <option value="Hermano" ${otherBeneficiary.relationship === 'Hermano' ? 'selected' : ''} >Hermano</option>
-                    <option value="Hermana" ${otherBeneficiary.relationship === 'Hermana' ? 'selected' : ''} >Hermana</option>
-                </select>
-                <div class="invalid-feedback">
-                  Por favor, seleccione un parentesco.
-                </div>
-            </div>
-
-            <div class="form-group col">
-                <label for="familiar_gender${j + 7}">Género*</label>
-                <select class="form-control" name="familiar_gender${j + 7}" id="familiar_gender${j + 7}" required="True">
-                    <option value="">Seleccione una opción</option>
-                    <option value="male" ${otherBeneficiary.gender === 'male' ? 'selected' : ''} >Masculino</option>
-                    <option value="female" ${otherBeneficiary.gender === 'female' ? 'selected' : ''} >Femenino</option>
-                </select>
-                <div class="invalid-feedback">
-                  Por favor, seleccione un género.
-                </div>
-            </div>
-            <div class="form-group col">
-                <label for="familiar_address${j + 7}">Dirección*</label>
-                <input type="text" name="familiar_address${j + 7}" class="form-control" id="familiar_address${j + 7}" required="True" value="${otherBeneficiary.address || ''}"/>
-                <div class="invalid-feedback">
-                  Por favor, ingrese una dirección.
                 </div>
             </div>
             <div class="form-group col" style="display:none;">
@@ -1045,96 +990,96 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // MAPA DINAMICO CON GOOGLE MAPS
 
-let map;
-let marker;
-let geocoder;
+// let map;
+// let marker;
+// let geocoder;
 
-window.addEventListener('load', function () {
-  if (typeof google !== 'undefined' && google.maps) {
-    initMap();
-  }
-});
-
-
-function initMap() {
-  const defaultLatLng = { lat: -12.0464, lng: -77.0428 }; // Lima, Perú por defecto
-  map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 6,
-    center: defaultLatLng,
-  });
-
-  geocoder = new google.maps.Geocoder();
-
-  map.addListener("click", (event) => {
-    placeMarker(event.latLng);
-    reverseGeocode(event.latLng);
-  });
-}
-
-function placeMarker(location) {
-  if (marker) {
-    marker.setPosition(location);
-  } else {
-    marker = new google.maps.Marker({
-      position: location,
-      map: map,
-    });
-  }
-}
+// window.addEventListener('load', function () {
+//   if (typeof google !== 'undefined' && google.maps) {
+//     initMap();
+//   }
+// });
 
 
-function reverseGeocode(latlng) {
-  geocoder.geocode({ location: latlng }, function (results, status) {
-    if (status === "OK" && results[0]) {
-      const components = results[0].address_components;
+// function initMap() {
+//   const defaultLatLng = { lat: -12.0464, lng: -77.0428 }; // Lima, Perú por defecto
+//   map = new google.maps.Map(document.getElementById("map"), {
+//     zoom: 6,
+//     center: defaultLatLng,
+//   });
 
-      let country = "";
-      let department = "";
-      let province = "";
-      let district = "";
+//   geocoder = new google.maps.Geocoder();
 
-      components.forEach((comp) => {
-        const types = comp.types;
+//   map.addListener("click", (event) => {
+//     placeMarker(event.latLng);
+//     reverseGeocode(event.latLng);
+//   });
+// }
 
-        if (types.includes("country")) {
-          country = comp.long_name;
-        }
+// function placeMarker(location) {
+//   if (marker) {
+//     marker.setPosition(location);
+//   } else {
+//     marker = new google.maps.Marker({
+//       position: location,
+//       map: map,
+//     });
+//   }
+// }
 
-        if (types.includes("administrative_area_level_1")) {
-          department = comp.long_name;
-        }
 
-        if (types.includes("administrative_area_level_2")) {
-          province = comp.long_name;
-        }
+// function reverseGeocode(latlng) {
+//   geocoder.geocode({ location: latlng }, function (results, status) {
+//     if (status === "OK" && results[0]) {
+//       const components = results[0].address_components;
 
-        if (types.includes("sublocality") || types.includes("locality")) {
-          district = comp.long_name;
-        }
-      });
+//       let country = "";
+//       let department = "";
+//       let province = "";
+//       let district = "";
 
-      console.log("🗺 Dirección detectada:");
-      console.log("País:", country);
-      console.log("Departamento:", department);
-      console.log("Provincia:", province);
-      console.log("Distrito:", district);
+//       components.forEach((comp) => {
+//         const types = comp.types;
 
-      // Paso 1: Seleccionar país y esperar a que esté listo
-      setSelectByText("country_id", country, function () {
-        // Paso 2: Seleccionar departamento y esperar a que ubigeo.js lo procese
-        setSelectByText("state_id", department, function () {
-          // Paso 3: Seleccionar provincia (solo si el departamento ya está cargado)
-          setSelectByText("city_id", province, function () {
-            // Paso 4: Finalmente seleccionar distrito
-            setSelectByText("district_id", district);
-          });
-        });
-      });
-    } else {
-      alert("No se pudo obtener la ubicación.");
-    }
-  });
-}
+//         if (types.includes("country")) {
+//           country = comp.long_name;
+//         }
+
+//         if (types.includes("administrative_area_level_1")) {
+//           department = comp.long_name;
+//         }
+
+//         if (types.includes("administrative_area_level_2")) {
+//           province = comp.long_name;
+//         }
+
+//         if (types.includes("sublocality") || types.includes("locality")) {
+//           district = comp.long_name;
+//         }
+//       });
+
+//       console.log("🗺 Dirección detectada:");
+//       console.log("País:", country);
+//       console.log("Departamento:", department);
+//       console.log("Provincia:", province);
+//       console.log("Distrito:", district);
+
+//       // Paso 1: Seleccionar país y esperar a que esté listo
+//       setSelectByText("country_id", country, function () {
+//         // Paso 2: Seleccionar departamento y esperar a que ubigeo.js lo procese
+//         setSelectByText("state_id", department, function () {
+//           // Paso 3: Seleccionar provincia (solo si el departamento ya está cargado)
+//           setSelectByText("city_id", province, function () {
+//             // Paso 4: Finalmente seleccionar distrito
+//             setSelectByText("district_id", district);
+//           });
+//         });
+//       });
+//     } else {
+//       alert("No se pudo obtener la ubicación.");
+//     }
+//   });
+// }
 
 
 

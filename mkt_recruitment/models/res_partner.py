@@ -229,7 +229,7 @@ class Partner(models.Model):
     services_receipt_filename = fields.Char(compute='compute_document_filename', string='Services receipt filename', store=True)
     is_services_receipt = fields.Boolean(default=False, string='Services receipt?')
 
-    certijoven = fields.Binary(string='Certijoven')
+    certijoven = fields.Binary(string='Certificado Único Laboral')
     certijoven_filename = fields.Char(compute='compute_document_filename', string='Certijoven filename', store=True)
     is_certijoven = fields.Boolean(default=False, string='Certijoven?')
 
