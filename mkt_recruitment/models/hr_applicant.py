@@ -223,6 +223,10 @@ class Applicant(models.Model):
                 self.env['hr.employee'].create(values)
                 self.partner_id.write({'requires_compliance_process': True})
 
+                if self.partner_id.is_validate:
+                    self.partner_id.write({'is_validate': False})
+
+
                 self.is_autoemployee = True
 
 
