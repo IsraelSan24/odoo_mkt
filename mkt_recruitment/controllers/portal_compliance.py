@@ -87,7 +87,6 @@ class PortalCompliance(portal.CustomerPortal):
     def home(self, **kw):
         partner = request.env.user.partner_id
 
-        # if self._needs_compliance(partner) and not request.httprequest.path.startswith('/portal/compliance/'):
         if partner.requires_compliance_process and not request.httprequest.path.startswith('/portal/compliance/'):
             return request.redirect('/portal/compliance/step/1')
         
@@ -96,11 +95,15 @@ class PortalCompliance(portal.CustomerPortal):
     @http.route(['/portal/compliance/step/<int:step>'], type='http', auth='user', website=True, methods=['GET', 'POST'])
     def compliance_step(self, step=1, **post):
         partner = request.env.user.partner_id
-
+        
         if partner.requires_compliance_process and not request.httprequest.path.startswith('/portal/compliance/'):
             return request.redirect('/my/home')
 
+        applicant = request.env['hr.applicant'].sudo().search([('partner_id', '=', partner.id), ('stage_id', '=', 4)], limit=1, order='write_date desc')
         
+        if not applicant.signed_in:
+            applicant.sudo().write({'signed_in': True})
+
         if request.httprequest.method == 'POST':
             if step == 1:
 
@@ -295,6 +298,8 @@ class PortalCompliance(portal.CustomerPortal):
 
 
                 partner = request.env['res.partner'].sudo().browse(partner.id)
+                if not applicant.data_completed:
+                    applicant.sudo().write({'data_completed': True})
                 return request.redirect('/portal/compliance/step/2')
                   
             if step == 2:
@@ -395,13 +400,27 @@ class PortalCompliance(portal.CustomerPortal):
                     partner.sudo().onchange_health_card()
                     partner.sudo().onchange_contributions_report()
                     partner.sudo().compute_document_filename()
-          
+
+                    if not applicant.docs_completed:
+                        applicant.sudo().write({'docs_completed': True})
                     return request.redirect('/portal/compliance/step/3')
             
             if step == 3:
                 partner.sudo().write({'requires_compliance_process': False})
-                # partner.sudo().write({'is_validate': True})
-                applicant = request.env['hr.applicant'].sudo().search([('partner_id', '=', partner.id), ('stage_id', '=', 4)], limit=1, order='write_date desc')
+
+                if not applicant.accepted_t_and_c:
+                    applicant.sudo().write({'accepted_t_and_c': True})
+
+                # For people in middle of process
+                try:
+                    if not applicant.data_completed:
+                        applicant.sudo().write({'signed_in': True})
+                    if not applicant.data_completed:
+                        applicant.sudo().write({'data_completed': True})
+                    if not applicant.data_completed:
+                        applicant.sudo().write({'docs_completed': True})
+                except Exception as e:
+                    _logger.error(f"\n\n\nEND COMPLIANCE: Can't update data. {e}\n\n\n")
 
                 _logger.info(f"\n\n\nEND COMPLIANCE: Aplicant - {len(applicant)} - {applicant.id} - {applicant.supervision_data_approved}\n\n\n")
 

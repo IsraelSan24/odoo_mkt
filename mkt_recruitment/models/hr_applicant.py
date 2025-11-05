@@ -139,6 +139,7 @@ class Applicant(models.Model):
         if self.stage_id.access_portal:
             contact = self.env['res.partner'].search([('vat','=',self.vat)], order='create_date desc')
             portal_wizar_vals = {}
+            
             if contact and len(contact) == 1:
                 self.hr_responsible_contract_id = self.env.user.id
                 # try:
