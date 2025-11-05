@@ -93,7 +93,13 @@ class Contract(models.Model):
     device = fields.Char(copy=False)
     os = fields.Char(copy=False)
     browser = fields.Char(copy=False)
+    # is_province_id = fields.Boolean(string='Is province?', compute="_compute_is_province", store=True)
 
+
+    # @api.depends('employee_id.is_province')
+    # def _compute_is_province(self):
+    #     for rec in self:
+    #         rec.is_province = rec.employee_id.is_province
 
     def action_validation_password(self, enteredcode):
         self = self.sudo()
