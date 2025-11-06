@@ -12,7 +12,17 @@ class HrEmployeePrivate(models.Model):
     is_duplicated = fields.Boolean(default=False, string='Is duplicated?')
     is_validated = fields.Boolean(default=False, string='Esta validado?')
     is_province = fields.Boolean(default=False, string='Is province?')
+    is_terminated = fields.Boolean(
+        string='Cesado',
+        compute=lambda self: [setattr(r, 'is_terminated', not r.active) for r in self],
+        store=False
+    )
 
+    massive_contract_end_id = fields.Many2one(
+        'massive.contract.end',
+        string='Massive Contract End',
+        ondelete='set null'
+    )
 
     @api.onchange('address_home_id','cost_center_id')
     def identification_id_onchange(self):
