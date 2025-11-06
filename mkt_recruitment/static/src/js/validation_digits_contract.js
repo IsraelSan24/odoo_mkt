@@ -57,11 +57,11 @@ odoo.define('mkt_recruitment.validation_digits_contract', function( require ) {
             $('#verification_method').val(method);
 
             if (method === 'email') {
-                $('#verification-text').text('We sent a verification code to your email:');
+                $('#verification-text').text('Te enviamos un código de validación a tu correo:');
                 $('#email-info').show();
                 $('#sms-info').hide();
             } else if (method === 'sms') {
-                $('#verification-text').text('We sent a verification code to your phone:');
+                $('#verification-text').text('Te enviamos un código de validación a tu celular:');
                 $('#email-info').hide();
                 $('#sms-info').show();
             }
