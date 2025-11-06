@@ -8,6 +8,7 @@
             <tree>
                 <field name="name"/>
                 <field name="file_employees"/>
+                <field name="create_date"/>
             </tree>
         </field>
     </record>
@@ -20,35 +21,36 @@
                 <sheet>
                     <group>
                         <div>
+                            <field name="massive_termination_done" invisible="1"/>
                             <group>
-                                <group>
-                                    <field name="name"/>
-                                </group>
-                                <group>
-                                    <field name="file_employees"/>
-                                    <field name="file_result"/>
-                                </group>
+                                <h1>
+                                    <field name="name" string="Nombre del Cese Masivo" readonly="1"/>
+                                </h1>
                             </group>
                             <group>
-                                <field name="error_message"/>
+                                <field name="file_employees" string="Empleados a Cesar" attrs="{'readonly': [('massive_termination_done', '=', True)]}"/>
+                                <field name="file_result" string="Empleados no Encontrados"  attrs="{'invisible': [('file_result', '=', False)]}"/>
+                                <field name="error_message" string="Errores de Verificación"  attrs="{'invisible': [('error_message', '=', False)]}" readonly="1"/>
                             </group>
                             <group>
-                                <field name="employee_ids" options="{'no_create': True, 'no_open': True}" create="0" edit="0">
+                                <field name="employee_ids" context="{'active_test': False}" attrs="{'readonly': [('massive_termination_done', '=', True)]}" nolabel="1">
                                     <tree>
                                         <field name="identification_id"/>
                                         <field name="name"/>
+                                        <field name="cost_center_id"/>
+                                        <field name="department_id"/>
                                         <field name="is_duplicated"/>
-                                        <field name="equipment_count"/>
-                                        <field name="employee_type"/>
-                                        <field name="is_validated"/>
+                                        <field name="is_terminated" string="Cesado"/>
+                                        <field name="departure_reason_id" column_invisible="parent.massive_termination_done == False"/>
+                                        <field name="departure_date" column_invisible="parent.massive_termination_done == False"/>
                                         <!-- <button name="identification_id_onchange" type="object" string="Update NºIdentification" class="oe_highlight"/> -->
                                     </tree>
                                 </field>
                             </group>
                         <footer>
                             <field name="reviewed" invisible="True"/>
-                            <button string="Employee verification" name="employee_verification_xlsx" type="object" class="oe_highlight"/>
-                            <button string="Employee termination" name="massive_employee_terminations_xlsx" type="object" class="oe_highlight" attrs="{'invisible': [('reviewed', '=', False)]}"/>
+                            <button string="Employee verification" name="employee_verification_xlsx" type="object" class="oe_highlight" attrs="{'invisible': [('massive_termination_done', '=', True)]}"/>
+                            <button string="Employee termination" name="massive_employee_terminations_xlsx" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('reviewed', '=', False), ('massive_termination_done', '=', True)]}"/>
                         </footer>
                         </div>
                     </group>
