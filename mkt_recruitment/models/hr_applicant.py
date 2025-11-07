@@ -264,7 +264,7 @@ class Applicant(models.Model):
                     vals['partner_name'] = vals.get('partner_name').upper().strip()
             except Exception as e:
                 # Si hay error, mantén el valor del usuario
-                vals['partner_name'] = vals.get('partner_name').upper().strip()
+                # vals['partner_name'] = vals.get('partner_name').upper().strip()
                 _logger.warning("No se pudo obtener el nombre desde API PERU para %s: %s", vat, e)
         else:
             # Si no hay DNI válido, mantiene lo que ingresó el usuario
