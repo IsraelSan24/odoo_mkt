@@ -252,11 +252,24 @@ class Applicant(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get('partner_name'):
+        vat = vals.get('vat')
+        if vat and len(vat) == 8:
             try:
-                vals['partner_name'] = apiperu_dni(vals.get('vat'))
-            except:
-                pass
+                # Solo sustituye si la API devuelve algo válido
+                name_from_api = apiperu_dni(vat)
+                if name_from_api:
+                    vals['partner_name'] = name_from_api
+                else:
+                    # Si la API no responde, mantiene lo que el usuario puso
+                    vals['partner_name'] = vals.get('partner_name').upper().strip()
+            except Exception as e:
+                # Si hay error, mantén el valor del usuario
+                # vals['partner_name'] = vals.get('partner_name').upper().strip()
+                _logger.warning("No se pudo obtener el nombre desde API PERU para %s: %s", vat, e)
+        else:
+            # Si no hay DNI válido, mantiene lo que ingresó el usuario
+            vals['partner_name'] = vals.get('partner_name').upper().strip()
+            
         if vals.get('email_from'):
             vals['email_from'] = vals['email_from'].lower()
         if vals.get('vat'):
