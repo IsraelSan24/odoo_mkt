@@ -274,8 +274,7 @@ class Applicant(models.Model):
             vals['email_from'] = vals['email_from'].lower()
         if vals.get('vat'):
             vals['vat'] = vals['vat'].strip()
-            time_range = fields.Datetime.today() - timedelta(days=10)
-            reinstatement = self.env['hr.applicant'].search([('vat', '=', vals['vat']),('stage_id.sequence', 'in', [4,5]),('create_date', '<', time_range)], limit=1)
+            reinstatement = self.env['hr.applicant'].search([('vat', '=', vals['vat']),('stage_id.sequence', 'in', [2,3])], limit=1)
             if reinstatement:
                 vals['is_reinstatement'] = True
         return super(Applicant, self).create(vals)
