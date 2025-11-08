@@ -224,6 +224,7 @@
                 <field name="data_completed" string="2) Completó Ficha de Datos"/>
                 <field name="docs_completed" string="3) Subió Documentos"/>
                 <field name="accepted_t_and_c" string="4) Aceptó Términos"/>
+                <field name="create_date" readonly="1"/>
                 <field name="write_date" readonly="1" optional="hide"/>
             </tree>
         </field>
