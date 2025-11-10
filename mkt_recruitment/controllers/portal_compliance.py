@@ -787,18 +787,6 @@ class PortalCompliance(portal.CustomerPortal):
             raise MissingError(_("Your first contract hasn't been generated yet, please wait to your recruiter's indication."))
 
 
-    @require_portal_checks
-    @http.route(['/my/contracts','/my/contracts/page/<int:page>'], type='http', auth='user', website=True)
-    def portal_my_contracts(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
-        partner = request.env.user.partner_id
-
-        if self._is_first_contract(partner):
-            _logger.info(f"\n\nEs primer contrato\n\n")
-            return request.redirect('/portal/compliance/signall')
-
-        # 🔁 Si no, seguimos con la lógica normal del portal
-        return super().portal_my_contracts(page=page, date_begin=date_begin, date_end=date_end, sortby=sortby, **kw)
-
     @http.route('/portal/terms-and-conditions', type='http', auth='user', website=True, methods=['GET', 'POST'])
     def portal_terms_and_conditions(self, **post):
         partner = request.env.user.partner_id

@@ -424,11 +424,36 @@ class RecruitmentPortal(portal.CustomerPortal):
         return response
 
 
+    def _is_first_contract(self, partner):
+        """Check if user has only one draft contract without signed documents"""
+        contracts_available = request.env['hr.contract'].sudo().search([
+            ('employee_id.address_home_id', '=', partner.id),
+            ('signature_state', '!=', 'canceled')
+        ])
+        recruitment_document_signed = request.env['recruitment.document'].sudo().search([
+            ('partner_id', '=', partner.id),
+            ('state', '=', 'signed')
+        ])
+
+        if len(contracts_available) == 1:
+            if contracts_available.state != 'draft':
+                return False
+            else:
+                if recruitment_document_signed:
+                    return False
+                return True
+        return False
+
     @require_portal_checks
     @http.route(['/my/contracts','/my/contracts/page/<int:page>'], type='http', auth='user', website=True)
     def portal_my_contracts(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
-        values = self._prepare_portal_layout_values()
         partner = request.env.user.partner_id
+
+        # Check if this is first contract - redirect to compliance sign all if yes
+        if self._is_first_contract(partner):
+            return request.redirect('/portal/compliance/signall')
+
+        values = self._prepare_portal_layout_values()
         ContractDocument = request.env['hr.contract'].sudo()
         domain = self._prepare_contracts_domain(partner)
         searchbar_sortings = self._get_contract_searchbar_sortings()
