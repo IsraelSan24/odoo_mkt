@@ -25,8 +25,8 @@ patch(NameAndSignature.prototype, "signature_patch_hide_draw", {
             // });
 
             // Cambiar estilo de fuente por defecto
-            const desiredFontIndex = 2;  
-            this._setFont(desiredFontIndex);
+            // const desiredFontIndex = 2;  
+            // this._setFont(desiredFontIndex);
 
             // Forzamos refresh de vista
             this._updatePreviewButtons?.();

@@ -469,6 +469,9 @@ class RecruitmentPortal(portal.CustomerPortal):
         if report_type in ('html','pdf','text'):
             return self._show_report(model=contract_sudo, report_type=report_type, report_ref="mkt_recruitment.report_contract_action", download=download)
         
+        partner = request.env.user.partner_id
+        signature_short_name = partner._get_signature_name()
+
         values = {
             'contract_document': contract_sudo,
             'message': message,
@@ -477,6 +480,7 @@ class RecruitmentPortal(portal.CustomerPortal):
             'employee_id': contract_sudo.employee_id.id,
             'report_type': 'html',
             'action': contract_sudo._get_portal_return_action(),
+            'signature_short_name': signature_short_name
         }
         return request.render('mkt_recruitment.contract_document_portal_template', values)
 
@@ -569,6 +573,9 @@ class RecruitmentPortal(portal.CustomerPortal):
         if report_type in ('html', 'pdf', 'text'):
             return self._show_report(model=document_sudo, report_type=report_type, report_ref="mkt_recruitment.report_recruitmentdocument_action", download=download)
         
+        partner = request.env.user.partner_id
+        signature_short_name = partner._get_signature_name()
+        
         values = {
             'recruitment_document': document_sudo,
             'message': message,
@@ -577,6 +584,8 @@ class RecruitmentPortal(portal.CustomerPortal):
             'partner_id': document_sudo.partner_id.id,
             'report_type': 'html',
             'action': document_sudo._get_portal_return_action(),
+            'signature_short_name': signature_short_name
+            
         }
         return request.render('mkt_recruitment.recruitment_document_portal_template', values)
 

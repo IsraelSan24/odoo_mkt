@@ -130,6 +130,9 @@ class PortalCompliance(portal.CustomerPortal):
     def compliance_step(self, step=1, **post):
         partner = request.env.user.partner_id
 
+        if not partner.requires_compliance_process:
+            return request.redirect("/my/home")
+
         applicant = request.env['hr.applicant'].sudo().search([('partner_id', '=', partner.id), ('stage_id', '=', 4)], limit=1, order='write_date desc')
         
         if not applicant.signed_in:
@@ -756,6 +759,10 @@ class PortalCompliance(portal.CustomerPortal):
         
         first_contract = request.env['hr.contract'].sudo().search([('employee_id', '=', employee.id)], limit=1, order='create_date desc')
         first_recruitment_document = request.env['recruitment.document'].sudo().search([('partner_id', '=', partner.id)], limit=1, order='create_date desc')
+    
+        signature_short_name = partner._get_signature_name()
+        _logger.info(f"\n\n\n{partner.name}\n\n\n")
+        _logger.info(f"\n\n\n{signature_short_name}\n\n\n")
 
         if first_contract.is_sended:
             values = {
@@ -767,7 +774,8 @@ class PortalCompliance(portal.CustomerPortal):
                 'employee_id': first_contract.employee_id.id,
                 'report_type': 'html',
                 'action': first_contract._get_portal_return_action(),
-                'recruitment_document': first_recruitment_document
+                'recruitment_document': first_recruitment_document,
+                'signature_short_name': signature_short_name
             }
             html = request.env['ir.ui.view']._render_template(
                 'mkt_recruitment.contract_document_portal_template',
