@@ -334,6 +334,7 @@ class Partner(models.Model):
 
     requires_compliance_process = fields.Boolean(string="Requires Compliance Process", tracking=True, default=False)
     fifth_category_income = fields.Boolean(string="Fifth Category Income from Other Employeers")
+    t_and_c_login = fields.Boolean(string="Terms and Conditions Login", tracking=True, default=False, help="Requires user to accept terms and conditions on first portal login")
 
     @api.depends('children')
     def _compute_children_to_display(self):

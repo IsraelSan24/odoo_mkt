@@ -253,7 +253,10 @@ class Applicant(models.Model):
                     # 'cost_center_id': self.cost_center_id.id or False
                 }
                 self.env['hr.employee'].create(values)
-                self.partner_id.write({'requires_compliance_process': True})
+                self.partner_id.write({
+                    'requires_compliance_process': True,
+                    't_and_c_login': True
+                })
 
                 if self.partner_id.is_validate:
                     self.partner_id.write({'is_validate': False})

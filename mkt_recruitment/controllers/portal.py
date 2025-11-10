@@ -5,6 +5,7 @@ from odoo.exceptions import AccessError, MissingError
 from odoo.http import request
 from odoo.addons.portal.controllers import portal
 from odoo.addons.portal.controllers.portal import pager as portal_pager
+from .portal_compliance import require_portal_checks
 
 # class ApplicantPartner(http.Controller):
     
@@ -156,6 +157,7 @@ class RecruitmentPortal(portal.CustomerPortal):
 
 
 
+    @require_portal_checks
     @http.route(['/my/account'], type='http', auth='user', website=True)
     def account(self, redirect=None, **post):
         values = self._prepare_portal_layout_values()
@@ -264,6 +266,7 @@ class RecruitmentPortal(portal.CustomerPortal):
 
 
 
+    @require_portal_checks
     @http.route(['/my/applicant_documents'], type='http', auth='user', website=True)
     def applicant_documents(self, redirect=None, **post):
         values = self._prepare_portal_layout_values()
@@ -421,6 +424,7 @@ class RecruitmentPortal(portal.CustomerPortal):
         return response
 
 
+    @require_portal_checks
     @http.route(['/my/contracts','/my/contracts/page/<int:page>'], type='http', auth='user', website=True)
     def portal_my_contracts(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
         values = self._prepare_portal_layout_values()
@@ -519,6 +523,7 @@ class RecruitmentPortal(portal.CustomerPortal):
         }
 
 
+    @require_portal_checks
     @http.route(['/my/documents','/my/documents/page/<int:page>'], type='http', auth='user', website=True)
     def portal_my_documents(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
         values = self._prepare_portal_layout_values()
@@ -553,6 +558,7 @@ class RecruitmentPortal(portal.CustomerPortal):
         return request.render("mkt_recruitment.portal_my_documents", values)
 
 
+    @require_portal_checks
     @http.route('/my/documents/<int:document_id>', type='http', auth='user', website=True)
     def portal_document_page(self, document_id, report_type=None, access_token=None, message=False, download=False, **kw):
         try:
