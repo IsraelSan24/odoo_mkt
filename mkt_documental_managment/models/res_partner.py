@@ -12,7 +12,7 @@ class ResPartner(models.Model):
     blacklist = fields.Boolean(default=False, string='Blacklist', tracking=True)
     is_province = fields.Boolean(string='Blacklist', compute="compute_is_province", store=True)
 
-    @api.onchange('province_id')
+    @api.depends('province_id')
     def compute_is_province(self):
         for rec in self:
             rec.is_province = rec.province_id.name != 'Lima'
