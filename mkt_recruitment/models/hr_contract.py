@@ -93,7 +93,13 @@ class Contract(models.Model):
     device = fields.Char(copy=False)
     os = fields.Char(copy=False)
     browser = fields.Char(copy=False)
+    # is_province_id = fields.Boolean(string='Is province?', compute="_compute_is_province", store=True)
 
+
+    # @api.depends('employee_id.is_province')
+    # def _compute_is_province(self):
+    #     for rec in self:
+    #         rec.is_province = rec.employee_id.is_province
 
     def action_validation_password(self, enteredcode):
         self = self.sudo()
@@ -112,12 +118,12 @@ class Contract(models.Model):
             self.validation_password = ''.join(random.choice(string.digits) for i in range(4))
 
             mail_obj = self.env['mail.mail'].sudo()
-            subject = 'Validation code of Marketing Alterno contract'
+            subject = 'Código de validación de contrato de Marketing Alterno'
             body_html = f"""
-                <p>Dear {self.employee_id.name or ''},</p>
-                <p>Your verification code to sign your contract is:</p>
+                <p>Estimado {self.employee_id.name or ''},</p>
+                <p>Tu código de validación para firmar tu contrato es:</p>
                 <h2 style="text-align:center;">{self.validation_password}</h2>
-                <p>If you did not request this, please ignore this email.</p>
+                <p>Si tu no solicitaste esto, por favor ignora este correo.</p>
             """
             mail = mail_obj.create({
                 'subject': subject,
@@ -143,7 +149,7 @@ class Contract(models.Model):
         self = self.sudo()
         self.validation_password = ''.join(random.choice(string.digits) for i in range(4))
 
-        message = f"Your verification code to sign your contract is: {self.validation_password}."
+        message = f"El código de verificación para firmar tu contrato es: {self.validation_password}."
 
         return self.env['sms.gateway.labsmobile'].send_sms(self.phone, message, tpoa=None)
 

@@ -98,11 +98,8 @@ class Applicant(models.Model):
                     ('address_home_id.vat', '=', rec.vat)
                 ], limit=1)
 
-                if look_for_employee:
-                    raise UserError(_(
-                        "An active employee exists with this DNI %s (%s). "
-                        "It is necessary to terminate the employee before trying to continue with a new recruitment process."
-                        (rec.vat, look_for_employee.name)))
+                if look_for_employee and not rec.is_autoemployee:
+                    raise UserError(_("An active employee exists with this DNI %s (%s). It is necesary to terminate the employee before trying to continue with a new recruitment process.") % (rec.vat, look_for_employee.name))
             rec.contact_merge_stage()
             rec.update_data_partner()
             rec.create_employee_by_stage()
@@ -141,44 +138,77 @@ class Applicant(models.Model):
     def access_portal_partner(self):
         if self.stage_id.access_portal:
             contact = self.env['res.partner'].search([('vat','=',self.vat)], order='create_date desc')
-            portal_wizar_vals = {}
-            if contact and len(contact) == 1:
-                self.hr_responsible_contract_id = self.env.user.id
-                # try:
-                #     portal_wizard_user_vals = {
-                #         'wizard_id': self.env['portal.wizard'].create(portal_wizar_vals).id,
-                #         'partner_id': contact.id,
-                #         'email': contact.email,
-                #         'user_id': contact.user_id,
-                #     }
-                #     portal_wizard_user = self.env['portal.wizard.user'].create(portal_wizard_user_vals)
-                #     portal_wizard_user.action_grant_access()
-                # except:
-                #     pass
-                portal_wizard_user_vals = {
-                    'wizard_id': self.env['portal.wizard'].create(portal_wizar_vals).id,
-                    'partner_id': contact.id,
-                    'email': contact.email,
-                    'user_id': contact.user_id,
-                }
-                portal_wizard_user = self.env['portal.wizard.user'].create(portal_wizard_user_vals)
-                user = self.env['res.users'].with_context(active_test=False).search([('partner_id', '=', self.partner_id.id)], limit=1)
-                if self.is_reinstatement == False:
-                    if not user:
-                        portal_wizard_user.action_grant_access()
-                    else:
-                        portal_wizard_user.action_invite_again()
-                else:
-                    if user.active == False:
-                        user.toggle_active()
-                    if user:
-                        user.login = self.email_from
-            elif len(contact) > 1:
-                raise UserError(_('More than one contact has been found with the same DNI, please solve the problem to continue with the process.'))
-            elif len(contact) < 1:
+
+            if not contact:
                 raise UserError(_('No contacts were found with the same DNI, please solve the problem to continue with the process.'))
+            
+            if len(contact) > 1:
+                raise UserError(_('More than one contact has been found with the same DNI, please solve the problem to continue with the process.'))
+
+            self.hr_responsible_contract_id = self.env.user.id
+
+            # Verify if user associated to that contact exist
+            user = self.env['res.users'].sudo().with_context(active_test=False).search([('partner_id', '=', contact.id)], limit=1)
+
+
+            password = str(contact.vat)
+            if not user:
+                user = self.env['res.users'].with_context(no_reset_password=True).sudo().create({
+                    'name': contact.name,
+                    'login': contact.email,
+                    'partner_id': contact.id,
+                    'groups_id': [(6, 0, [self.env.ref('base.group_portal').id])],
+                })
+
+                user.password = password
+                self._send_email_with_credentials(user, contact)
             else:
-                raise UserError(_('The contact for this application is not found.'))
+                if user.active:
+                    # user.password = password
+                    # self._send_email_with_credentials(user, contact)
+                    # _logger.info(f"User {user.login} already exists and is active.")
+                    pass
+
+                else:
+                    user.password = password
+                    user.login = self.email_from
+                    user.sudo().toggle_active()
+                    self._send_email_with_credentials(user, contact)
+
+
+    def _send_email_with_credentials(self, user, contact):
+
+        # Send email with credentials
+        template = self.env.ref('mkt_recruitment.mail_new_user_credentials')
+
+        mail = False
+
+        if template:
+            mail_id = template.sudo().send_mail(self.id, force_send=True)
+            mail = self.env['mail.mail'].browse(mail_id)
+
+        else:
+            mail_obj = self.env['mail.mail'].sudo()
+            subject = 'Marketing Alterno - Acceso al Portal ODOO'
+            body_html = f"""
+                    Hola {user.name},<br/><br/>
+                    Tu cuenta del portal ODOO ha sido creada.<br/>
+                    <b>Usuario:</b> {user.login}<br/>
+                    <b>Tu contraseña es tu número de identificación.<br/><br/>
+                    Puedes ingresar aquí: <a href="{self.env['ir.config_parameter'].sudo().get_param('web.base.url.home')}">Portal</a><br/><br/>
+                """
+            mail = mail_obj.create({
+                'subject': subject,
+                'body_html': body_html,
+                'email_to': contact.personal_email or contact.email,
+            })
+            mail.send()
+
+        if mail.state in ['outgoing', 'sent', 'received']:
+            return {'success': True, 'message': _('Email sent successfully.')}
+        elif mail.state == 'exception':
+            return {'success': False, 'message': _('Error sending email: %s' % mail.failure_reason)}
+
 
 
     def create_employee_by_stage(self):
@@ -223,7 +253,14 @@ class Applicant(models.Model):
                     # 'cost_center_id': self.cost_center_id.id or False
                 }
                 self.env['hr.employee'].create(values)
-                self.partner_id.write({'requires_compliance_process': True})
+                self.partner_id.write({
+                    'requires_compliance_process': True,
+                    't_and_c_login': True
+                })
+
+                if self.partner_id.is_validate:
+                    self.partner_id.write({'is_validate': False})
+
 
                 self.is_autoemployee = True
 
@@ -250,17 +287,29 @@ class Applicant(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get('partner_name'):
+        vat = vals.get('vat')
+        if vat and len(vat) == 8:
             try:
-                vals['partner_name'] = apiperu_dni(vals.get('vat'))
-            except:
-                pass
+                # Solo sustituye si la API devuelve algo válido
+                name_from_api = apiperu_dni(vat)
+                if name_from_api:
+                    vals['partner_name'] = name_from_api
+                else:
+                    # Si la API no responde, mantiene lo que el usuario puso
+                    vals['partner_name'] = vals.get('partner_name').upper().strip()
+            except Exception as e:
+                # Si hay error, mantén el valor del usuario
+                # vals['partner_name'] = vals.get('partner_name').upper().strip()
+                _logger.warning("No se pudo obtener el nombre desde API PERU para %s: %s", vat, e)
+        else:
+            # Si no hay DNI válido, mantiene lo que ingresó el usuario
+            vals['partner_name'] = vals.get('partner_name').upper().strip()
+            
         if vals.get('email_from'):
             vals['email_from'] = vals['email_from'].lower()
         if vals.get('vat'):
             vals['vat'] = vals['vat'].strip()
-            time_range = fields.Datetime.today() - timedelta(days=10)
-            reinstatement = self.env['hr.applicant'].search([('vat', '=', vals['vat']),('stage_id.sequence', 'in', [4,5]),('create_date', '<', time_range)], limit=1)
+            reinstatement = self.env['hr.applicant'].with_context(active_test=False).search([('vat', '=', vals['vat']),('stage_id.sequence', 'in', [2,3])], limit=1)
             if reinstatement:
                 vals['is_reinstatement'] = True
         return super(Applicant, self).create(vals)

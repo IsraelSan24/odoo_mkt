@@ -68,6 +68,7 @@
         'views/document_search_templates.xml',
         'views/menu_views.xml',
         'views/signup_page.xml',
+        'views/portal_terms_and_conditions.xml',
     ],
     'assets':{
         'web.assets_frontend':[  

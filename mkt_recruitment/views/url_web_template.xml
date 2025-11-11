@@ -3194,12 +3194,12 @@
                                                         <img src="/mkt_recruitment/static/src/img/contact.svg" alt="" class="img-fluid mx-auto d-block"/>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-3 border border-info rounded-lg p-3">
+                                                <div class="row mb-3 border border-info rounded-lg p-3 text-center">
                                                     <!-- <div class="col-lg-4 align-content-center">
                                                         <div id="map" style="height: 400px; width: 100%; border-radius: 10px;"></div>
                                                     </div> -->
                                                     <h2 class="w-100 font-weight-bold text-info">Address</h2>
-                                                    <div class="col-lg-8">
+                                                    <div class="col-lg-12">
                                                         <div class="form-row" style="display: none;">
                                                             <div class="form-group col-md-6">
                                                                 <label for="country_id">Country*</label>
@@ -3258,7 +3258,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-row">
-                                                            <div class="form-group col-md-12">
+                                                            <div class="form-group col">
                                                                 <label for="reference_location">Address Reference</label>
                                                                 <input type="text" name="reference_location" class="form-control" id="reference_location" t-att-value="(partner and partner.reference_location) or None"/>
                                                                 <div class="invalid-feedback">
@@ -3269,38 +3269,41 @@
                                                     </div>
                                                 </div>
 
+
                                                 <div class="row mb-3 border border-info rounded-lg p-3 text-center">
                                                     <h2 class="w-100 font-weight-bold text-info">Educational Background</h2>
-                                                    <div id="educationContainer">
-                                                        <div class="education-entry row">
-                                                            <div class="col-md-2">
-                                                                <label for="education_level">Education Level*</label>
-                                                                <select id="education_level" name="education_level" class="form-control" required="True">
-                                                                    <option value="">Select...</option>
-                                                                    <option value="wo_formal_education" t-att-selected="(partner and partner.education_level == 'wo_formal_education') or None" >WITHOUT FORMAL EDUCATION</option>
-                                                                    <option value="incomplete_special_education" t-att-selected="(partner and partner.education_level == 'incomplete_special_education') or None" >INCOMPLETE SPECIAL EDUCATION</option>
-                                                                    <option value="complete_special_education" t-att-selected="(partner and partner.education_level == 'complete_special_education') or None" >COMPLETE SPECIAL EDUCATION</option>
-                                                                    <option value="incomplete_primary_education" t-att-selected="(partner and partner.education_level == 'incomplete_primary_education') or None" >INCOMPLETE PRIMARY EDUCATION</option>
-                                                                    <option value="complete_primary_education" t-att-selected="(partner and partner.education_level == 'complete_primary_education') or None" >COMPLETE PRIMARY EDUCATION</option>
-                                                                    <option value="incomplete_seconday_education" t-att-selected="(partner and partner.education_level == 'incomplete_seconday_education') or None" >INCOMPLETE SECONDARY EDUCATION</option>
-                                                                    <option value="complete_secondary_education" t-att-selected="(partner and partner.education_level == 'complete_secondary_education') or None" >COMPLETE SECONDARY EDUCATION</option>
-                                                                    <option value="incomplete_technical_education" t-att-selected="(partner and partner.education_level == 'incomplete_technical_education') or None" >INCOMPLETE TECHNICAL EDUCATION</option>
-                                                                    <option value="complete_technical_education" t-att-selected="(partner and partner.education_level == 'complete_technical_education') or None" >COMPLETE TECHNICAL EDUCATION</option>
-                                                                    <option value="incomplete_higher_education" t-att-selected="(partner and partner.education_level == 'incomplete_higher_education') or None" >INCOMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
-                                                                    <option value="complete_higher_education" t-att-selected="(partner and partner.education_level == 'complete_higher_education') or None" >COMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
-                                                                    <option value="incomplete_universitary_education" t-att-selected="(partner and partner.education_level == 'incomplete_universitary_education') or None" >INCOMPLETE UNIVERSITARY EDUCATION</option>
-                                                                    <option value="complete_universitary_education" t-att-selected="(partner and partner.education_level == 'complete_universitary_education') or None" >COMPLETE UNIVERSITARY EDUCATION</option>
-                                                                    <option value="bachelor_degree" t-att-selected="(partner and partner.education_level == 'bachelor_degree') or None" >BACHELOR DEGREE</option>
-                                                                    <option value="titled" t-att-selected="(partner and partner.education_level == 'titled') or None" >TITLED</option>
-                                                                    <option value="incomplete_masters_studies" t-att-selected="(partner and partner.education_level == 'incomplete_masters_studies') or None" >INCOMPLETE STUDIES OF MASTER</option>
-                                                                    <option value="complete_masters_studies" t-att-selected="(partner and partner.education_level == 'complete_masters_studies') or None" >COMPLETE STUDIES OF MASTER</option>
-                                                                    <option value="master_degree" t-att-selected="(partner and partner.education_level == 'master_degree') or None" >MASTER DEGREE</option>
-                                                                    <option value="complete_doctoral_studies" t-att-selected="(partner and partner.education_level == 'complete_doctoral_studies') or None" >COMPLETE DOCTORAL STUDIES</option>
-                                                                    <option value="incomplete_doctoral_studies" t-att-selected="(partner and partner.education_level == 'incomplete_doctoral_studies') or None" >INCOMPLETE DOCTORAL STUDIES</option>
-                                                                    <option value="doctoral_degree" t-att-selected="(partner and partner.education_level == 'doctoral_degree') or None" >DOCTORAL DEGREE</option>
-                                                                </select>
+                                                    <!-- <div id="educationContainer"> -->
+                                                        <div class="education-entry col-lg-12">
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-12">
+                                                                    <label for="education_level">Education Level*</label>
+                                                                    <select id="education_level" name="education_level" class="form-control" required="True">
+                                                                        <option value="">Select...</option>
+                                                                        <option value="wo_formal_education" t-att-selected="(partner and partner.education_level == 'wo_formal_education') or None" >WITHOUT FORMAL EDUCATION</option>
+                                                                        <option value="incomplete_special_education" t-att-selected="(partner and partner.education_level == 'incomplete_special_education') or None" >INCOMPLETE SPECIAL EDUCATION</option>
+                                                                        <option value="complete_special_education" t-att-selected="(partner and partner.education_level == 'complete_special_education') or None" >COMPLETE SPECIAL EDUCATION</option>
+                                                                        <option value="incomplete_primary_education" t-att-selected="(partner and partner.education_level == 'incomplete_primary_education') or None" >INCOMPLETE PRIMARY EDUCATION</option>
+                                                                        <option value="complete_primary_education" t-att-selected="(partner and partner.education_level == 'complete_primary_education') or None" >COMPLETE PRIMARY EDUCATION</option>
+                                                                        <option value="incomplete_seconday_education" t-att-selected="(partner and partner.education_level == 'incomplete_seconday_education') or None" >INCOMPLETE SECONDARY EDUCATION</option>
+                                                                        <option value="complete_secondary_education" t-att-selected="(partner and partner.education_level == 'complete_secondary_education') or None" >COMPLETE SECONDARY EDUCATION</option>
+                                                                        <option value="incomplete_technical_education" t-att-selected="(partner and partner.education_level == 'incomplete_technical_education') or None" >INCOMPLETE TECHNICAL EDUCATION</option>
+                                                                        <option value="complete_technical_education" t-att-selected="(partner and partner.education_level == 'complete_technical_education') or None" >COMPLETE TECHNICAL EDUCATION</option>
+                                                                        <option value="incomplete_higher_education" t-att-selected="(partner and partner.education_level == 'incomplete_higher_education') or None" >INCOMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
+                                                                        <option value="complete_higher_education" t-att-selected="(partner and partner.education_level == 'complete_higher_education') or None" >COMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
+                                                                        <option value="incomplete_universitary_education" t-att-selected="(partner and partner.education_level == 'incomplete_universitary_education') or None" >INCOMPLETE UNIVERSITARY EDUCATION</option>
+                                                                        <option value="complete_universitary_education" t-att-selected="(partner and partner.education_level == 'complete_universitary_education') or None" >COMPLETE UNIVERSITARY EDUCATION</option>
+                                                                        <option value="bachelor_degree" t-att-selected="(partner and partner.education_level == 'bachelor_degree') or None" >BACHELOR DEGREE</option>
+                                                                        <option value="titled" t-att-selected="(partner and partner.education_level == 'titled') or None" >TITLED</option>
+                                                                        <option value="incomplete_masters_studies" t-att-selected="(partner and partner.education_level == 'incomplete_masters_studies') or None" >INCOMPLETE STUDIES OF MASTER</option>
+                                                                        <option value="complete_masters_studies" t-att-selected="(partner and partner.education_level == 'complete_masters_studies') or None" >COMPLETE STUDIES OF MASTER</option>
+                                                                        <option value="master_degree" t-att-selected="(partner and partner.education_level == 'master_degree') or None" >MASTER DEGREE</option>
+                                                                        <option value="complete_doctoral_studies" t-att-selected="(partner and partner.education_level == 'complete_doctoral_studies') or None" >COMPLETE DOCTORAL STUDIES</option>
+                                                                        <option value="incomplete_doctoral_studies" t-att-selected="(partner and partner.education_level == 'incomplete_doctoral_studies') or None" >INCOMPLETE DOCTORAL STUDIES</option>
+                                                                        <option value="doctoral_degree" t-att-selected="(partner and partner.education_level == 'doctoral_degree') or None" >DOCTORAL DEGREE</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-md-2">
+                                                            <!-- <div class="col-md-2">
                                                                 <label for="education_start_date">Start Date*</label>
                                                                 <input type="date" name="education_start_date" id="education_start_date" class="form-control" required="True" t-att-value="(partner and partner.education_start_date) or None"/>
                                                             </div>
@@ -3315,9 +3318,9 @@
                                                             <div class="col-md-3">
                                                                 <label for="profession">Profession*</label>
                                                                 <input type="text" name="profession" id="profession" class="form-control" required="True" t-att-value="(partner and partner.profession) or None"/>
-                                                            </div>
+                                                            </div> -->
                                                         </div>
-                                                    </div>
+                                                    <!-- </div> -->
                                                 </div>
 
                                                 <div class="row mb-3 border border-primary rounded-lg p-3 d-flex flex-column">
@@ -3396,7 +3399,7 @@
                                                                            t-att-checked="'checked' if (partner and partner.coming_from_onp == True) else None" />
                                                                     <label class="form-check-label" for="coming_from_onp">Coming from the ONP</label>
                                                                 </div>
-                                                                <div class="form-check">
+                                                                <!-- <div class="form-check">
                                                                     <input type="radio" 
                                                                            class="form-check-input radio-option" 
                                                                            id="coming_from_afp" 
@@ -3404,7 +3407,7 @@
                                                                            value="coming_from_afp"
                                                                            t-att-checked="'checked' if (partner and partner.coming_from_afp == True) else None" />
                                                                     <label class="form-check-label" for="coming_from_afp">Coming from the AFP</label>
-                                                                </div>
+                                                                </div> -->
                                                             </div>
                                                             <div class="invalid-feedback">
                                                                 Please select a valid pension.
@@ -3427,9 +3430,7 @@
 
                                                 <div class="row mb-3 border border-info rounded-lg p-3 d-flex flex-column">
                                                     <div class="form-group col-md-12">
-                                                        <label class="h4 font-weight-bold text-info">
-                                                            Fifth Category Income from Other Employers
-                                                        </label>
+                                                        <h2 class="text-center font-weight-bold text-info">Ingreso de Quinta Categoría por Otros Empleadores</h2>
                                                         <p>
                                                             Seleccione según corresponda:
                                                         </p>

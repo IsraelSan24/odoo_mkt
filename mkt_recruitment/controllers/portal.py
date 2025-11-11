@@ -5,6 +5,7 @@ from odoo.exceptions import AccessError, MissingError
 from odoo.http import request
 from odoo.addons.portal.controllers import portal
 from odoo.addons.portal.controllers.portal import pager as portal_pager
+from .portal_compliance import require_portal_checks
 
 # class ApplicantPartner(http.Controller):
     
@@ -156,6 +157,7 @@ class RecruitmentPortal(portal.CustomerPortal):
 
 
 
+    @require_portal_checks
     @http.route(['/my/account'], type='http', auth='user', website=True)
     def account(self, redirect=None, **post):
         values = self._prepare_portal_layout_values()
@@ -264,6 +266,7 @@ class RecruitmentPortal(portal.CustomerPortal):
 
 
 
+    @require_portal_checks
     @http.route(['/my/applicant_documents'], type='http', auth='user', website=True)
     def applicant_documents(self, redirect=None, **post):
         values = self._prepare_portal_layout_values()
@@ -421,10 +424,36 @@ class RecruitmentPortal(portal.CustomerPortal):
         return response
 
 
+    def _is_first_contract(self, partner):
+        """Check if user has only one draft contract without signed documents"""
+        contracts_available = request.env['hr.contract'].sudo().search([
+            ('employee_id.address_home_id', '=', partner.id),
+            ('signature_state', '!=', 'canceled')
+        ])
+        recruitment_document_signed = request.env['recruitment.document'].sudo().search([
+            ('partner_id', '=', partner.id),
+            ('state', '=', 'signed')
+        ])
+
+        if len(contracts_available) == 1:
+            if contracts_available.state != 'draft':
+                return False
+            else:
+                if recruitment_document_signed:
+                    return False
+                return True
+        return False
+
+    @require_portal_checks
     @http.route(['/my/contracts','/my/contracts/page/<int:page>'], type='http', auth='user', website=True)
     def portal_my_contracts(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
-        values = self._prepare_portal_layout_values()
         partner = request.env.user.partner_id
+
+        # Check if this is first contract - redirect to compliance sign all if yes
+        if self._is_first_contract(partner):
+            return request.redirect('/portal/compliance/signall')
+
+        values = self._prepare_portal_layout_values()
         ContractDocument = request.env['hr.contract'].sudo()
         domain = self._prepare_contracts_domain(partner)
         searchbar_sortings = self._get_contract_searchbar_sortings()
@@ -465,6 +494,9 @@ class RecruitmentPortal(portal.CustomerPortal):
         if report_type in ('html','pdf','text'):
             return self._show_report(model=contract_sudo, report_type=report_type, report_ref="mkt_recruitment.report_contract_action", download=download)
         
+        partner = request.env.user.partner_id
+        signature_short_name = partner._get_signature_name()
+
         values = {
             'contract_document': contract_sudo,
             'message': message,
@@ -473,6 +505,7 @@ class RecruitmentPortal(portal.CustomerPortal):
             'employee_id': contract_sudo.employee_id.id,
             'report_type': 'html',
             'action': contract_sudo._get_portal_return_action(),
+            'signature_short_name': signature_short_name
         }
         return request.render('mkt_recruitment.contract_document_portal_template', values)
 
@@ -519,6 +552,7 @@ class RecruitmentPortal(portal.CustomerPortal):
         }
 
 
+    @require_portal_checks
     @http.route(['/my/documents','/my/documents/page/<int:page>'], type='http', auth='user', website=True)
     def portal_my_documents(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
         values = self._prepare_portal_layout_values()
@@ -553,6 +587,7 @@ class RecruitmentPortal(portal.CustomerPortal):
         return request.render("mkt_recruitment.portal_my_documents", values)
 
 
+    @require_portal_checks
     @http.route('/my/documents/<int:document_id>', type='http', auth='user', website=True)
     def portal_document_page(self, document_id, report_type=None, access_token=None, message=False, download=False, **kw):
         try:
@@ -563,6 +598,9 @@ class RecruitmentPortal(portal.CustomerPortal):
         if report_type in ('html', 'pdf', 'text'):
             return self._show_report(model=document_sudo, report_type=report_type, report_ref="mkt_recruitment.report_recruitmentdocument_action", download=download)
         
+        partner = request.env.user.partner_id
+        signature_short_name = partner._get_signature_name()
+        
         values = {
             'recruitment_document': document_sudo,
             'message': message,
@@ -571,6 +609,8 @@ class RecruitmentPortal(portal.CustomerPortal):
             'partner_id': document_sudo.partner_id.id,
             'report_type': 'html',
             'action': document_sudo._get_portal_return_action(),
+            'signature_short_name': signature_short_name
+            
         }
         return request.render('mkt_recruitment.recruitment_document_portal_template', values)
 
