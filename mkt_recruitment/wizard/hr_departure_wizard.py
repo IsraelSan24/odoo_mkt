@@ -27,6 +27,8 @@ class HrDepartureWizard(models.TransientModel):
             employee.address_home_id.user_id.write({'groups_id': new_groups})
             employee.address_home_id.user_id.toggle_active()
             employee.address_home_id.is_validate = False
+            employee.address_home_id.document_okay = False
+            employee.address_home_id.children_okay = False
             employee.address_home_id = False
         if employee.user_id:
             employee.user_id.write({'groups_id': new_groups})

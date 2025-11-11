@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, _
-from odoo.exceptions import RedirectWarning
+from odoo.exceptions import RedirectWarning, ValidationError, UserError, MissingError
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class HrApplicant(models.Model):
     _inherit = 'hr.applicant'
@@ -38,3 +41,45 @@ class HrApplicant(models.Model):
         # Llama write con bandera para no re-disparar el bloqueo
         self.with_context(force_blacklist_continue=True).write({'stage_id': stage_id})
         return True
+
+
+    def action_approve_selected_applicants(self):
+        for record in self:
+            
+            if record.stage_id.id != 2:
+                raise UserError(_("You can approve only selected applicants."))
+            
+            # Verificar campos requeridos
+            missing_fields = []
+
+            if not record.cost_center_id:
+                missing_fields.append("Cost Center")
+            if not record.salary_proposed:
+                missing_fields.append("Salary Proposed")
+            if not record.first_contract_start:
+                missing_fields.append("First Contract Start")
+            if not record.first_contract_end:
+                missing_fields.append("First Contract End")
+
+            if missing_fields:
+                raise UserError(_(
+                    "Some fields are required to approve applicant %s:\n→ %s"
+                ) % (record.partner_name or record.name, "\n→ ".join(missing_fields)))
+
+            record.write({
+                'stage_id': self.env.ref('hr_recruitment.stage_job4').id,  # Mejor usar xml_id que hardcodear 4
+                'supervision_data_sent': True,
+                'selected_applicant_approved': True,
+                'supervision_data_approved': 'pending',
+            })
+            
+
+    def action_open_set_fields_wizard(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Set First Contract Fields'),
+            'res_model': 'applicant.set.contract.fields.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'active_ids': self.ids}
+        }

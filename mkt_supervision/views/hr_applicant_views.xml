@@ -12,4 +12,194 @@
       </xpath>
     </field>
   </record>
+
+  <record id="view_hr_applicant_form_contracts" model="ir.ui.view">
+      <field name="name">hr.applicant.form.contracts</field>
+      <field name="model">hr.applicant</field>
+      <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="//field[@name='salary_expected']/ancestor::group[1]" position="attributes">
+              <attribute name="groups">mkt_supervision.group_supervision_hiring_approver</attribute>
+          </xpath>
+ 
+          <xpath expr="//field[@name='salary_proposed']" position="attributes">
+              <attribute name="attrs">{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}</attribute>
+          </xpath>
+          <xpath expr="//field[@name='salary_proposed_extra']" position="attributes">
+              <attribute name="attrs">{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}</attribute>
+          </xpath>
+           <xpath expr="//field[@name='first_contract_start']" position="attributes">
+              <attribute name="attrs">{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}</attribute>
+          </xpath>
+           <xpath expr="//field[@name='first_contract_end']" position="attributes">
+              <attribute name="attrs">{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}</attribute>
+          </xpath>
+          <xpath expr="//field[@name='availability']" position="attributes">
+              <attribute name="attrs">{'readonly': [('stage_id', '=', 5)]}</attribute>
+          </xpath>
+          <xpath expr="//field[@name='company_id']" position="attributes">
+              <attribute name="attrs">{'readonly': [('stage_id', '=', 5)]}</attribute>
+          </xpath>
+          <xpath expr="//field[@name='department_id']" position="before">
+              <field name="supervision_data_approved" invisible="1"/>
+          </xpath>
+          <xpath expr="//field[@name='department_id']" position="after">
+              <field name="cost_center_id" 
+                     groups="mkt_supervision.group_supervision_hiring_approver" 
+                     attrs="{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
+          </xpath>
+      </field>
+  </record>
+
+  <record id="view_hr_applicant_form_buttom" model="ir.ui.view">
+      <field name="name">hr.applicant.form.buttom</field>
+      <field name="model">hr.applicant</field>
+      <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="//header/button[@name='archive_applicant']" position="before">
+            <button name="action_approve_selected_applicants"
+                    type="object"
+                    string="Approve"
+                    class="btn-primary"
+                    icon="fa-check-circle"
+                    attrs="{'invisible': [('stage_id', '!=', 2)]}"
+                    groups="mkt_supervision.group_supervision_hiring_approver"/>
+          </xpath>
+      </field>
+  </record>
+
+  <record id="view_hr_applicant_tree_buttom" model="ir.ui.view">
+      <field name="name">hr.applicant.tree.buttom</field>
+      <field name="model">hr.applicant</field>
+      <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
+      <field name="arch" type="xml">
+          <xpath expr="//tree" position="inside">
+            <button name="action_open_set_fields_wizard"
+                    type="object"
+                    string="Approve"
+                    class="btn-primary"
+                    icon="fa-check-circle"
+                    attrs="{'invisible': [('stage_id', '!=', 2)]}"
+                    groups="mkt_supervision.group_supervision_hiring_approver"/>
+          </xpath>
+          <xpath expr="//tree" position="inside">
+            <header>
+              <button name="action_open_set_fields_wizard"
+                      type="object"
+                      string="Approve"
+                      class="btn-primary"
+                      icon="fa-check-circle"
+                      groups="mkt_supervision.group_supervision_hiring_approver"/>
+            </header>
+          </xpath>
+          <xpath expr="//tree" position="inside">
+            <header>
+              <button name="archive_applicant"
+                      type="object"
+                      string="Reject"
+                      class="btn-secondary"
+                      groups="mkt_supervision.group_supervision_hiring_approver"/>
+            </header>
+          </xpath>
+      </field>
+  </record>
+
+ 
+  <record id="view_hr_applicant_search_custom" model="ir.ui.view">
+    <field name="name">hr.applicant.search.custom</field>
+    <field name="model">hr.applicant</field>
+    <field name="arch" type="xml">
+      <search string="Search Applicants">
+        <field name="partner_name" />
+        <field name="job_id"/>
+        <field name="stage_id"/>
+
+        <filter name="selected" string="Seleccionados" domain="[('stage_id.id', '=', 2)]"/>
+        <filter name="contract_proposal" string="Propuesta de Contrato" domain="[('stage_id.id', '=', 4)]"/>
+        <filter name="contract_signed" string="Contrato Firmado" domain="[('stage_id.id', '=', 5)]"/>
+
+        <separator/>
+        <filter string="Archived / Refused" name="inactive" domain="[('active', '=', False)]"/>
+        <separator/>
+        <filter string="Creation Date" name="filter_create" date="create_date"/>
+        <filter string="Last Stage Update" name="filter_date_last_stage_update" date="date_last_stage_update"/>
+
+
+        <group expand="0" string="Group By">
+          <filter string="Department" name="department" domain="[]" context="{'group_by': 'department_id'}"/>
+          <filter string="Responsible" name="responsible" domain="[]" context="{'group_by': 'user_id'}"/>
+          <filter string="Job" name="job" domain="[]" context="{'group_by': 'job_id'}"/>
+          <filter string="Stage" name="stage" domain="[]" context="{'group_by': 'stage_id'}"/>
+          <filter string="Creation Date" name="creation_date" context="{'group_by': 'create_date'}"/>
+          <filter string="Last Stage Update" name="last_stage_update" context="{'group_by': 'date_last_stage_update'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <record id="view_hr_applicant_tree_contract_data" model="ir.ui.view">
+      <field name="name">hr.applicant.tree.contract.data</field>
+      <field name="model">hr.applicant</field>
+      <field name="arch" type="xml">
+          <tree string="Applicant Contract Request" 
+                decoration-danger="supervision_data_approved == 'rejected'" 
+                decoration-success="supervision_data_approved == 'approved'"
+                editable="bottom">
+              <field name="supervision_data_approved" invisible='1'/>
+              <field name="partner_name" readonly="1"/>
+              <field name="vat" readonly="1"/>
+              <field name="job_id" readonly="1" options="{'no_open': True}"/>
+              <field name="department_id" readonly="1" options="{'no_open': True}"/>
+              <field name="cost_center_id" decoration-bf="1" options="{'no_open': True}" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
+              <field name="salary_proposed" decoration-bf="1" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
+              <field name="first_contract_start" decoration-bf="1" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
+              <field name="first_contract_end" decoration-bf="1" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
+              <field name="supervision_data_approved" widget="badge" decoration-info="supervision_data_approved == 'pending'" decoration-warning="supervision_data_approved == 'rejected'" decoration-success="supervision_data_approved == 'approved'"/>
+              <field name="write_date" readonly="1" optional="hide"/>
+              <field name="stage_id" invisible='1'/>
+              <header>
+                <button name="action_open_set_fields_wizard"
+                        type="object"
+                        string="Set Contract"
+                        class="btn-secondary"/>
+                <button name="action_correct_supervision_data"
+                        type="object"
+                        string="Correct"
+                        class="btn-secondary"/>
+              </header>
+          </tree>
+      </field>
+  </record>
+
+  <record id="view_hr_applicant_search_custom_contract" model="ir.ui.view">
+      <field name="name">hr.applicant.search.custom.contract</field>
+      <field name="model">hr.applicant</field>
+      <field name="arch" type="xml">
+      <search string="Search Applicants">
+          <field name="partner_name" />
+          <field name="job_id"/>
+
+          <filter string="Pending/Refused" name="supervision_data_pending_refused" domain="['|', ('supervision_data_approved', '=', 'pending'), ('supervision_data_approved', '=', 'rejected')]"/>
+          <filter string="Pending" name="supervision_data_pending_to_approved" domain="[('supervision_data_approved', '=', 'pending')]"/>
+          <filter string="Approved" name="supervision_data_approved" domain="[('supervision_data_approved', '=', 'approved')]"/>
+          <filter string="Refused" name="supervision_data_refused" domain="[('supervision_data_approved', '=', 'rejected')]"/>
+          <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+          <separator/>
+          <filter string="Update Date" name="filter_create" date="write_date"/>
+
+          <group expand="0" string="Group By">
+          <filter string="Department" name="department" domain="[]" context="{'group_by': 'department_id'}"/>
+          <filter string="Responsible" name="responsible" domain="[]" context="{'group_by': 'user_id'}"/>
+          <filter string="Job" name="job" domain="[]" context="{'group_by': 'job_id'}"/>
+          <filter string="Update Date" name="write_date" context="{'group_by': 'write_date'}"/>
+          </group>
+      </search>
+      </field>
+  </record>
+
+
+
+
+
+
 </odoo>

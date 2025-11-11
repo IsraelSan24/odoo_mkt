@@ -34,4 +34,16 @@
         <field name="use_date_range">TRUE</field>
     </record>
 
+    <record id="massive_contract_end_sequence" model="ir.sequence">
+        <field name="name">Massive Contract End</field>
+        <field name="code">massive.contract.end</field>
+        <field name="active">TRUE</field>
+        <field name="prefix">CM%(year)s-</field>
+        <field name="padding">6</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="use_date_range">TRUE</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
 </odoo>

@@ -29,3 +29,184 @@ label[for^="file"] {
     padding: 6px 12px;
     cursor: pointer;
 }
+
+
+.document-container {
+    font-family: Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    padding: 40px;
+    color: #333;
+}
+.document-title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-decoration: underline;
+}
+.clause-title {
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.paragraph {
+    text-align: justify;
+    margin-bottom: 10px;
+}
+.paragraph.li0 {
+    margin-left: 0px;
+}
+.paragraph.date{
+    float: right;
+}
+.ol-left-small{
+    margin-left: 20px
+}
+.ul-left-0{
+    margin-left: 0px
+}
+.signature-section {
+    margin-top: 50px;
+    display: table;
+    width: 100%;
+}
+.signature-box {
+    display: table-cell;
+    width: 45%;
+    text-align: center;
+    vertical-align: bottom;
+}
+.signature-image{
+    width:240px; 
+    height:auto; 
+    max-height:40px; 
+    object-fit:contain;
+}
+.signature-image-dual{
+    width:260px; 
+    height:auto; 
+    max-height:50px;
+}
+
+.list-item {
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+.bold {
+    font-weight: bold;
+}
+.underline {
+    text-decoration: underline;
+}
+.center {
+    text-align: center;
+}
+.checkbox {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #000;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/************************REGIMEN PENSIONARIO**************************/
+
+
+.regimen-container {
+    font-size: 8pt;
+    line-height: 0.5;
+    padding: 30px 10px;
+    color: #333;
+}
+.regimen-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 13pt;
+    margin-bottom: 15px;
+    text-decoration: underline;
+}
+.section-title {
+    font-weight: bold;
+    font-size: 10pt;
+    margin-top: 10px;
+    margin-bottom: 8px;
+    text-decoration: underline;
+}
+.subsection-title {
+    font-weight: bold;
+    font-size: 10pt;
+    margin-top: 8px;
+    margin-bottom: 5px;
+}
+.text-small {
+    font-size: 8pt;
+    font-style: italic;
+    margin-left: 5px;
+}
+.checkbox-container {
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 5px;
+}
+.checkbox {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border: 1.5px solid #000;
+    margin-right: 5px;
+    vertical-align: middle;
+    position: relative;
+}
+.checkbox.checked::after {
+    content: "✓";
+    position: absolute;
+    left: 1px;
+    top: -10px;
+    font-size: 14pt;
+    font-weight: bold;
+}
+.form-field {
+    margin-bottom: 6px;
+    font-size: 0.625rem;
+}
+.field-label {
+    display: inline-block;
+    font-weight: normal;
+    min-width: 180px;
+}
+.field-value {
+    display: inline-block;
+    border-bottom: 1px solid #000;
+    min-width: 220px;
+    padding-left: 5px;
+}
+.field-value-short {
+    min-width: 150px;
+}
+.field-value-medium {
+    min-width: 100px;
+}
+.domicilio-group {
+    margin-left: 20px;
+    margin-top: 3px;
+}
+.signature-area {
+    margin-top: 25px;
+    text-align: left;
+}
+.signature-line {
+    display: inline-block;
+    border-bottom: 1px solid #000;
+    width: 250px;
+    margin-left: 10px;
+}
+.mb-5 {
+    margin-bottom: 5px;
+}
+.mb-10 {
+    margin-bottom: 10px;
+}
+.mt-5 {
+    margin-top: 5px;
+}
