@@ -334,6 +334,7 @@ class Partner(models.Model):
 
     requires_compliance_process = fields.Boolean(string="Requires Compliance Process", tracking=True, default=False)
     fifth_category_income = fields.Boolean(string="Fifth Category Income from Other Employeers")
+    t_and_c_login = fields.Boolean(string="Terms and Conditions Login", tracking=True, default=False, help="Requires user to accept terms and conditions on first portal login")
 
     @api.depends('children')
     def _compute_children_to_display(self):
@@ -833,3 +834,22 @@ class Partner(models.Model):
                 'url': '/web/content/%s?download=true' % zip_attachment.id,
                 'target': 'self',
             }
+        
+    def _get_signature_name(self) -> str:
+        """
+        Recibe un nombre completo (por ejemplo: 'SAENZ CORDOVA, ALEXANDER MARK')
+        y retorna solo el primer apellido y el primer nombre, separados por coma.
+        Si no hay coma en el nombre original, retorna el texto tal cual.
+        """
+        if not self.name or ',' not in self.name:
+            return self.name.strip()
+
+        name = self.name.lower()
+        # Dividir en apellidos y nombres
+        last_part, first_part = [part.strip() for part in name.split(',', 1)]
+
+        # Tomar solo el primer apellido y el primer nombre
+        first_lastname = last_part.split()[0] if last_part else ''
+        first_name = first_part.split()[0] if first_part else ''
+
+        return f"{first_lastname.capitalize()}, {first_name.capitalize()}".strip()

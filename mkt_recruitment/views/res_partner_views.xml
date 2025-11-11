@@ -15,6 +15,7 @@
             </field>
             <field name="vat" position="after">
                 <field name="requires_compliance_process" string="Compliance Process" widget="boolean_toggle"/>
+                <field name="t_and_c_login" string="Terms &amp; Conditions Login" widget="boolean_toggle" groups="base.group_system"/>
             </field>
             <xpath expr="//page[@name='internal_notes']" position="after">
                 <page name="private_information" string="Private Information"

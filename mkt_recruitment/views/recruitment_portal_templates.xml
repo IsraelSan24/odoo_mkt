@@ -912,7 +912,7 @@
                                         <t t-else="">
                                             <t t-set="call_url" t-value="contract_document.get_portal_url(suffix='/sign')"/>
                                         </t>
-                                        <t t-set="default_name" t-value="contract_document.employee_id.name"/>
+                                        <t t-set="default_name" t-value="signature_short_name"/>
                                     </t>
                                 </main>
                             </form>
@@ -9237,7 +9237,7 @@
                                     </small>
                                     <t t-call="portal.signature_form">
                                         <t t-set="call_url" t-value="recruitment_document.get_portal_url(suffix='/sign')"/>
-                                        <t t-set="default_name" t-value="recruitment_document.partner_id.name"/>
+                                        <t t-set="default_name" t-value="signature_short_name"/>
                                     </t>
                                 </main>
                             </form>

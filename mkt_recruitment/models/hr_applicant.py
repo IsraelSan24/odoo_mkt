@@ -138,45 +138,77 @@ class Applicant(models.Model):
     def access_portal_partner(self):
         if self.stage_id.access_portal:
             contact = self.env['res.partner'].search([('vat','=',self.vat)], order='create_date desc')
-            portal_wizar_vals = {}
-            
-            if contact and len(contact) == 1:
-                self.hr_responsible_contract_id = self.env.user.id
-                # try:
-                #     portal_wizard_user_vals = {
-                #         'wizard_id': self.env['portal.wizard'].create(portal_wizar_vals).id,
-                #         'partner_id': contact.id,
-                #         'email': contact.email,
-                #         'user_id': contact.user_id,
-                #     }
-                #     portal_wizard_user = self.env['portal.wizard.user'].create(portal_wizard_user_vals)
-                #     portal_wizard_user.action_grant_access()
-                # except:
-                #     pass
-                portal_wizard_user_vals = {
-                    'wizard_id': self.env['portal.wizard'].create(portal_wizar_vals).id,
-                    'partner_id': contact.id,
-                    'email': contact.email,
-                    'user_id': contact.user_id,
-                }
-                portal_wizard_user = self.env['portal.wizard.user'].create(portal_wizard_user_vals)
-                user = self.env['res.users'].with_context(active_test=False).search([('partner_id', '=', self.partner_id.id)], limit=1)
-                if self.is_reinstatement == False:
-                    if not user:
-                        portal_wizard_user.action_grant_access()
-                    else:
-                        portal_wizard_user.action_invite_again()
-                else:
-                    if user.active == False:
-                        user.toggle_active()
-                    if user:
-                        user.login = self.email_from
-            elif len(contact) > 1:
-                raise UserError(_('More than one contact has been found with the same DNI, please solve the problem to continue with the process.'))
-            elif len(contact) < 1:
+
+            if not contact:
                 raise UserError(_('No contacts were found with the same DNI, please solve the problem to continue with the process.'))
+            
+            if len(contact) > 1:
+                raise UserError(_('More than one contact has been found with the same DNI, please solve the problem to continue with the process.'))
+
+            self.hr_responsible_contract_id = self.env.user.id
+
+            # Verify if user associated to that contact exist
+            user = self.env['res.users'].sudo().with_context(active_test=False).search([('partner_id', '=', contact.id)], limit=1)
+
+
+            password = str(contact.vat)
+            if not user:
+                user = self.env['res.users'].with_context(no_reset_password=True).sudo().create({
+                    'name': contact.name,
+                    'login': contact.email,
+                    'partner_id': contact.id,
+                    'groups_id': [(6, 0, [self.env.ref('base.group_portal').id])],
+                })
+
+                user.password = password
+                self._send_email_with_credentials(user, contact)
             else:
-                raise UserError(_('The contact for this application is not found.'))
+                if user.active:
+                    # user.password = password
+                    # self._send_email_with_credentials(user, contact)
+                    # _logger.info(f"User {user.login} already exists and is active.")
+                    pass
+
+                else:
+                    user.password = password
+                    user.login = self.email_from
+                    user.sudo().toggle_active()
+                    self._send_email_with_credentials(user, contact)
+
+
+    def _send_email_with_credentials(self, user, contact):
+
+        # Send email with credentials
+        template = self.env.ref('mkt_recruitment.mail_new_user_credentials')
+
+        mail = False
+
+        if template:
+            mail_id = template.sudo().send_mail(self.id, force_send=True)
+            mail = self.env['mail.mail'].browse(mail_id)
+
+        else:
+            mail_obj = self.env['mail.mail'].sudo()
+            subject = 'Marketing Alterno - Acceso al Portal ODOO'
+            body_html = f"""
+                    Hola {user.name},<br/><br/>
+                    Tu cuenta del portal ODOO ha sido creada.<br/>
+                    <b>Usuario:</b> {user.login}<br/>
+                    <b>Tu contraseña es tu número de identificación.<br/><br/>
+                    Puedes ingresar aquí: <a href="{self.env['ir.config_parameter'].sudo().get_param('web.base.url.home')}">Portal</a><br/><br/>
+                """
+            mail = mail_obj.create({
+                'subject': subject,
+                'body_html': body_html,
+                'email_to': contact.personal_email or contact.email,
+            })
+            mail.send()
+
+        if mail.state in ['outgoing', 'sent', 'received']:
+            return {'success': True, 'message': _('Email sent successfully.')}
+        elif mail.state == 'exception':
+            return {'success': False, 'message': _('Error sending email: %s' % mail.failure_reason)}
+
 
 
     def create_employee_by_stage(self):
@@ -221,7 +253,10 @@ class Applicant(models.Model):
                     # 'cost_center_id': self.cost_center_id.id or False
                 }
                 self.env['hr.employee'].create(values)
-                self.partner_id.write({'requires_compliance_process': True})
+                self.partner_id.write({
+                    'requires_compliance_process': True,
+                    't_and_c_login': True
+                })
 
                 if self.partner_id.is_validate:
                     self.partner_id.write({'is_validate': False})
@@ -274,7 +309,7 @@ class Applicant(models.Model):
             vals['email_from'] = vals['email_from'].lower()
         if vals.get('vat'):
             vals['vat'] = vals['vat'].strip()
-            reinstatement = self.env['hr.applicant'].search([('vat', '=', vals['vat']),('stage_id.sequence', 'in', [2,3])], limit=1)
+            reinstatement = self.env['hr.applicant'].with_context(active_test=False).search([('vat', '=', vals['vat']),('stage_id.sequence', 'in', [2,3])], limit=1)
             if reinstatement:
                 vals['is_reinstatement'] = True
         return super(Applicant, self).create(vals)

@@ -6,10 +6,47 @@ from odoo import _, SUPERUSER_ID
 import binascii
 import base64
 import json
+from functools import wraps
 
 import logging
 
 _logger = logging.getLogger(__name__)
+
+
+def require_portal_checks(f):
+    """
+    Decorator to centralize portal access control.
+    Validates that user has accepted Terms & Conditions and completed Compliance process
+    before accessing protected portal routes.
+
+    Prevents infinite redirects by excluding the T&C and Compliance routes themselves.
+    """
+    @wraps(f)
+    def wrapper(self, *args, **kwargs):
+        partner = request.env.user.partner_id
+        current_path = request.httprequest.path
+
+        # Routes that don't require validation (to avoid infinite redirects)
+        excluded_paths = [
+            '/portal/terms-and-conditions',
+            '/portal/compliance/',
+        ]
+
+        is_excluded = any(current_path.startswith(path) for path in excluded_paths)
+
+        if not is_excluded:
+            # Priority 1: Terms and Conditions (must be first)
+            if partner.t_and_c_login:
+                _logger.info(f"User {partner.id} needs to accept Terms & Conditions - Redirecting from {current_path}")
+                return request.redirect('/portal/terms-and-conditions')
+
+            # Priority 2: Compliance process
+            if partner.requires_compliance_process:
+                _logger.info(f"User {partner.id} needs to complete compliance - Redirecting from {current_path}")
+                return request.redirect('/portal/compliance/step/1')
+
+        return f(self, *args, **kwargs)
+    return wrapper
 
 class PortalCompliance(portal.CustomerPortal):
     # portal.CustomerPortal.MANDATORY_BILLING_FIELDS.remove("city")
@@ -83,21 +120,18 @@ class PortalCompliance(portal.CustomerPortal):
         return False
         
 
+    @require_portal_checks
     @http.route(['/my/home', '/my'], type='http', auth='user', website=True, inherit=True)
     def home(self, **kw):
-        partner = request.env.user.partner_id
-
-        if partner.requires_compliance_process and not request.httprequest.path.startswith('/portal/compliance/'):
-            return request.redirect('/portal/compliance/step/1')
-        
         return super().home(**kw)
     
+    @require_portal_checks
     @http.route(['/portal/compliance/step/<int:step>'], type='http', auth='user', website=True, methods=['GET', 'POST'])
     def compliance_step(self, step=1, **post):
         partner = request.env.user.partner_id
-        
-        if partner.requires_compliance_process and not request.httprequest.path.startswith('/portal/compliance/'):
-            return request.redirect('/my/home')
+
+        if not partner.requires_compliance_process:
+            return request.redirect("/my/home")
 
         applicant = request.env['hr.applicant'].sudo().search([('partner_id', '=', partner.id), ('stage_id', '=', 4)], limit=1, order='write_date desc')
         
@@ -705,6 +739,7 @@ class PortalCompliance(portal.CustomerPortal):
             'redirect_url': '/my/home',
         }
 
+    @require_portal_checks
     @http.route('/portal/compliance/signall', type='http', auth='user', website=True, methods=['GET', 'POST'])
     def portal_sign_all(self, **post):
         partner = request.env.user.partner_id
@@ -724,6 +759,10 @@ class PortalCompliance(portal.CustomerPortal):
         
         first_contract = request.env['hr.contract'].sudo().search([('employee_id', '=', employee.id)], limit=1, order='create_date desc')
         first_recruitment_document = request.env['recruitment.document'].sudo().search([('partner_id', '=', partner.id)], limit=1, order='create_date desc')
+    
+        signature_short_name = partner._get_signature_name()
+        _logger.info(f"\n\n\n{partner.name}\n\n\n")
+        _logger.info(f"\n\n\n{signature_short_name}\n\n\n")
 
         if first_contract.is_sended:
             values = {
@@ -735,7 +774,8 @@ class PortalCompliance(portal.CustomerPortal):
                 'employee_id': first_contract.employee_id.id,
                 'report_type': 'html',
                 'action': first_contract._get_portal_return_action(),
-                'recruitment_document': first_recruitment_document
+                'recruitment_document': first_recruitment_document,
+                'signature_short_name': signature_short_name
             }
             html = request.env['ir.ui.view']._render_template(
                 'mkt_recruitment.contract_document_portal_template',
@@ -747,14 +787,27 @@ class PortalCompliance(portal.CustomerPortal):
             raise MissingError(_("Your first contract hasn't been generated yet, please wait to your recruiter's indication."))
 
 
-    @http.route(['/my/contracts','/my/contracts/page/<int:page>'], type='http', auth='user', website=True)
-    def portal_my_contracts(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
+    @http.route('/portal/terms-and-conditions', type='http', auth='user', website=True, methods=['GET', 'POST'])
+    def portal_terms_and_conditions(self, **post):
         partner = request.env.user.partner_id
-        
-        if self._is_first_contract(partner):
-            _logger.info(f"\n\nEs primer contrato\n\n")
-            return request.redirect('/portal/compliance/signall')
 
-        # 🔁 Si no, seguimos con la lógica normal del portal
-        return super().portal_my_contracts(page=page, date_begin=date_begin, date_end=date_end, sortby=sortby, **kw)
+        # If terms are already accepted, redirect to home
+        if not partner.t_and_c_login:
+            return request.redirect('/my/home')
+
+        # Handle form submission
+        if request.httprequest.method == 'POST':
+            if post.get('accept_terms'):
+                partner.sudo().write({'t_and_c_login': False})
+                _logger.info(f"\n\n\nTerms and conditions accepted by partner {partner.id}\n\n\n")
+                return request.redirect('/my/home')
+            else:
+                return request.redirect('/web/session/logout?redirect=/')
+
+        # Render terms and conditions page
+        values = {
+            'partner': partner,
+            'page_title': 'Términos y Condiciones de Uso',
+        }
+        return request.render('mkt_recruitment.portal_terms_and_conditions_page', values)
 
