@@ -169,7 +169,10 @@ class Applicant(models.Model):
                 self._send_email_with_credentials(user, contact)
             else:
                 if user.active:
-                    user.password = password
+                    user.sudo().write({
+                        'password': password,
+                        'login': self.email_from,
+                    })
                     self._send_email_with_credentials(user, contact)
                     _logger.info(f"User {user.login} already exists and is active.")
 
