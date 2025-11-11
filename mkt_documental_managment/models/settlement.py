@@ -1,6 +1,6 @@
 from odoo import _, api, fields, models
 from datetime import datetime
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from odoo.tools.float_utils import float_compare, float_is_zero
 from odoo.addons.mkt_documental_managment.models.api_dni import apiperu_dni
 from odoo.addons.mkt_documental_managment.models.api_ruc import apiperu_ruc
@@ -431,31 +431,63 @@ class Settlement(models.Model):
     #             line.validation_voucher()
 
 
-    def validation_voucher(self):
+    @api.constrains('document', 'document_type_id')
+    def _check_ft_document_format(self):
+        patt_ft = re.compile(r'^F\d{3}-\d{1,8}$')  # F001-12345678
         for rec in self:
-            if rec.document_type_id.short_name == 'FT':
-                cpe_data = apiperu_cpe(
-                    rec.dni_ruc, 
-                    '01', 
-                    (rec.document.split('-')[0]).upper(), 
-                    rec.document.split('-')[1].lstrip('0'), 
-                    rec.date.strftime("%Y-%m-%d"), 
-                    rec.settle_amount
-                )
-                if cpe_data and cpe_data.get('data'):
-                    cpe_data_detail = cpe_data['data']
-                    if cpe_data_detail and 'comprobante_estado_codigo' in cpe_data_detail:
-                        if cpe_data_detail['comprobante_estado_codigo'] == '1':
-                            rec.cpe_state = 'accepted'
-                        else:
-                            rec.cpe_state = 'non_existent'
+            if getattr(rec.document_type_id, 'short_name', '') == 'FT':
+                doc = (rec.document or '').strip().upper()
+                if not patt_ft.match(doc):
+                    raise ValidationError(
+                        _("Para Factura (CPE 01) el documento debe tener formato F###-######## (ej.: F001-12345678).")
+                    )
+                
 
-                        # Asignar el estado de la empresa como texto
-                        if 'empresa_estado_descripcion' in cpe_data_detail:
-                            rec.cpe_company_state = cpe_data_detail['empresa_estado_descripcion']
-                            _logger.info("Empresa estado: %s", cpe_data_detail.get('empresa_estado_descripcion'))  # <- aquí sí es seguro
+    def validation_voucher(self):
+        patt_ft = re.compile(r'^(F\d{3})-(\d{1,8})$')  # captura serie y número
+
+        for rec in self:
+            if getattr(rec.document_type_id, 'short_name', '') == 'FT':
+                # Normaliza y valida antes de llamar a la API
+                doc = (rec.document or '').strip().upper()
+                m = patt_ft.match(doc)
+                if not m:
+                    raise UserError(
+                        _("Formato inválido para Factura. Usa F###-######## (ej.: F001-12345678).")
+                    )
+
+                serie, numero = m.group(1), m.group(2)
+                numero_sin_ceros = numero.lstrip('0') or '0'
+
+                try:
+                    cpe_data = apiperu_cpe(
+                        rec.dni_ruc,
+                        '01',  # Factura
+                        serie,
+                        numero_sin_ceros,
+                        rec.date.strftime("%Y-%m-%d") if rec.date else "",
+                        rec.settle_amount,
+                    )
+                except Exception as e:
+                    _logger.exception("Error invocando apiperu_cpe: %s", e)
+                    rec.cpe_state = 'failed'
+                    rec.cpe_company_state = 'Desconocido'
+                    # Mensaje operativo al usuario
+                    raise UserError(_("No se pudo validar el CPE por un error de conexión. Inténtalo nuevamente."))
+
+                # === Manejo de respuesta ===
+                if cpe_data and cpe_data.get('data'):
+                    detail = cpe_data['data']
+                    code = detail.get('comprobante_estado_codigo')
+                    if code == '1':
+                        rec.cpe_state = 'accepted'
                     else:
-                        rec.cpe_state = 'failed'
+                        rec.cpe_state = 'non_existent'
+
+                    if 'empresa_estado_descripcion' in detail:
+                        rec.cpe_company_state = detail['empresa_estado_descripcion']
+                        _logger.info("Empresa estado: %s", detail.get('empresa_estado_descripcion'))
+                    else:
                         rec.cpe_company_state = 'Desconocido'
                 else:
                     rec.cpe_state = 'failed'
