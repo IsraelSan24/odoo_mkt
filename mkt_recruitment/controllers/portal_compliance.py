@@ -734,6 +734,10 @@ class PortalCompliance(portal.CustomerPortal):
 
         query_string = '&message=sign_ok'
 
+        partner.write({'document_okay': True,
+                       'is_validate': True,
+                       'children_okay': True})
+
         return {
             'force_refresh': True,
             'redirect_url': '/my/home',

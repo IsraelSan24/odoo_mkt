@@ -149,7 +149,7 @@ class Applicant(models.Model):
 
             # Verify if user associated to that contact exist
             user = self.env['res.users'].sudo().with_context(active_test=False).search([('partner_id', '=', contact.id)], limit=1)
-
+            employee = self.env['hr.employee'].sudo().search([('address_home_id', '=', contact.id)], limit=1)
 
             password = str(contact.vat)
             if not user:
@@ -161,18 +161,29 @@ class Applicant(models.Model):
                 })
 
                 user.password = password
+
+                if employee:
+                    employee.write({
+                        'user_id': user.id
+                    })
                 self._send_email_with_credentials(user, contact)
             else:
                 if user.active:
-                    # user.password = password
-                    # self._send_email_with_credentials(user, contact)
-                    # _logger.info(f"User {user.login} already exists and is active.")
-                    pass
+                    user.password = password
+                    self._send_email_with_credentials(user, contact)
+                    _logger.info(f"User {user.login} already exists and is active.")
 
                 else:
-                    user.password = password
-                    user.login = self.email_from
+                    user.sudo().write({
+                        'password': password,
+                        'login': self.email_from,
+                    })
+                    
                     user.sudo().toggle_active()
+                    if employee:
+                        employee.write({
+                            'user_id': user.id
+                        })
                     self._send_email_with_credentials(user, contact)
 
 
@@ -260,6 +271,12 @@ class Applicant(models.Model):
 
                 if self.partner_id.is_validate:
                     self.partner_id.write({'is_validate': False})
+                
+                if self.partner_id.document_okay:
+                    self.partner_id.write({'document_okay': False})
+                
+                if self.partner_id.children_okay:
+                    self.partner_id.write({'children_okay': False})
 
 
                 self.is_autoemployee = True

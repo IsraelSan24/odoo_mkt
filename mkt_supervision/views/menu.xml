@@ -90,9 +90,9 @@
         
         <menuitem id="menu_mkt_supervision_reports" name="Empleados" parent="menu_mkt_supervision_root" sequence="1"/>
             <menuitem id="menu_employee_supervision_group" name="Empleados" parent="menu_mkt_supervision_reports" action="" sequence="1"/>
-                <menuitem id="menu_action_hr_applicant_selected" name="Seleccionados" parent="menu_employee_supervision_group" sequence="1" action="action_hr_applicant_selected"/>
-                <menuitem id="menu_action_hr_applicant_contract_request" name="Solicitud de Contrato" parent="menu_employee_supervision_group" action="action_hr_applicant_contract_request_supervision" sequence="2" groups="group_supervision_hiring_approver" />
-                <menuitem id="menu_action_employee_supervision" name="Empleados" parent="menu_employee_supervision_group" action="action_employee_under_supervision" sequence="3" groups="group_supervision_hiring_approver" />
+                <menuitem id="menu_action_employee_supervision" name="Empleados" parent="menu_employee_supervision_group" action="action_employee_under_supervision" sequence="1" groups="group_supervision_hiring_approver" />
+                <menuitem id="menu_action_hr_applicant_selected" name="Seleccionados" parent="menu_employee_supervision_group" sequence="2" action="action_hr_applicant_selected"/>
+                <menuitem id="menu_action_hr_applicant_contract_request" name="Solicitud de Contrato" parent="menu_employee_supervision_group" action="action_hr_applicant_contract_request_supervision" sequence="3" groups="group_supervision_hiring_approver" />
             
             <menuitem id="menu_attendance_supervision_group" name="Asistencias" parent="menu_mkt_supervision_reports" action="" sequence="2"/>
                 <menuitem id="menu_action_attendance_supervision" name="Asistencia" parent="menu_attendance_supervision_group" action="action_attendance_under_supervision" sequence="1"/>
