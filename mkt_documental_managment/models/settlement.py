@@ -38,6 +38,8 @@ document_currencies = [
         ('euros', 'Euros')
     ]
 
+PATT_SERIE_NUM = re.compile(r'^([FE][A-Z0-9]{3})-(\d{1,8})$')
+
 def get_default_tax(self):
     return self.env['tax.taxes'].search([('name','=','IGV(18%)')]).id
 
@@ -433,62 +435,49 @@ class Settlement(models.Model):
 
     @api.constrains('document', 'document_type_id')
     def _check_ft_document_format(self):
-        patt_ft = re.compile(r'^F\d{3}-\d{1,8}$')  # F001-12345678
         for rec in self:
             if getattr(rec.document_type_id, 'short_name', '') == 'FT':
                 doc = (rec.document or '').strip().upper()
-                if not patt_ft.match(doc):
+                if not PATT_SERIE_NUM.match(doc):
                     raise ValidationError(
-                        _("Para Factura (CPE 01) el documento debe tener formato F###-######## (ej.: F001-12345678).")
+                        _("Para Factura (CPE 01) usa F/E + 3 alfanuméricos y número: "
+                          "FXXX-######## (p.ej. F0A1-12345678).")
                     )
                 
 
     def validation_voucher(self):
-        patt_ft = re.compile(r'^(F\d{3})-(\d{1,8})$')  # captura serie y número
-
         for rec in self:
             if getattr(rec.document_type_id, 'short_name', '') == 'FT':
-                # Normaliza y valida antes de llamar a la API
                 doc = (rec.document or '').strip().upper()
-                m = patt_ft.match(doc)
+                m = PATT_SERIE_NUM.match(doc)
                 if not m:
                     raise UserError(
-                        _("Formato inválido para Factura. Usa F###-######## (ej.: F001-12345678).")
+                        _("Formato inválido para Factura. Usa F/E + 3 alfanuméricos y número: "
+                          "FXXX-######## (p.ej. F0A1-12345678).")
                     )
 
                 serie, numero = m.group(1), m.group(2)
                 numero_sin_ceros = numero.lstrip('0') or '0'
+                fecha = rec.date.strftime("%Y-%m-%d") if rec.date else ""
+                if not fecha:
+                    raise UserError(_("La factura no tiene fecha definida."))
 
                 try:
                     cpe_data = apiperu_cpe(
-                        rec.dni_ruc,
-                        '01',  # Factura
-                        serie,
-                        numero_sin_ceros,
-                        rec.date.strftime("%Y-%m-%d") if rec.date else "",
-                        rec.settle_amount,
+                        rec.dni_ruc, '01', serie, numero_sin_ceros, fecha, rec.settle_amount,
                     )
                 except Exception as e:
                     _logger.exception("Error invocando apiperu_cpe: %s", e)
                     rec.cpe_state = 'failed'
                     rec.cpe_company_state = 'Desconocido'
-                    # Mensaje operativo al usuario
                     raise UserError(_("No se pudo validar el CPE por un error de conexión. Inténtalo nuevamente."))
 
-                # === Manejo de respuesta ===
                 if cpe_data and cpe_data.get('data'):
                     detail = cpe_data['data']
                     code = detail.get('comprobante_estado_codigo')
-                    if code == '1':
-                        rec.cpe_state = 'accepted'
-                    else:
-                        rec.cpe_state = 'non_existent'
-
-                    if 'empresa_estado_descripcion' in detail:
-                        rec.cpe_company_state = detail['empresa_estado_descripcion']
-                        _logger.info("Empresa estado: %s", detail.get('empresa_estado_descripcion'))
-                    else:
-                        rec.cpe_company_state = 'Desconocido'
+                    rec.cpe_state = 'accepted' if code == '1' else 'non_existent'
+                    rec.cpe_company_state = detail.get('empresa_estado_descripcion', 'Desconocido')
+                    _logger.info("Empresa estado: %s", detail.get('empresa_estado_descripcion'))
                 else:
                     rec.cpe_state = 'failed'
                     rec.cpe_company_state = 'Desconocido'
