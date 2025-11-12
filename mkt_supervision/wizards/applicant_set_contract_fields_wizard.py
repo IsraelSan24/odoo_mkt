@@ -12,6 +12,22 @@ class ApplicantSetFieldsWizard(models.TransientModel):
     first_contract_end = fields.Date(string=_('First Contract End Date'))
     salary_proposed = fields.Float(string=_("Proposed Salary"))
     cost_center_id = fields.Many2one('cost.center', string=_('Cost Center'))
+    work_type = fields.Selection([
+        ('week_end', 'Fin de Semana'),
+        ('fix_without_mobility', 'Fijo sin Movilidad'),
+        ('fix_with_mobility', 'Fijo con Movilidad'),
+        ],
+        string=_('Work Type'),
+        default='fix_without_mobility')
+    company_id = fields.Many2one('res.company', string='Compañía', default=lambda self: self.env.company)
+
+
+    @api.model
+    def _default_parent_id(self):
+        current_employee = self.env['hr.employee'].search([('address_home_id', '=', self.env.user.partner_id.id)], limit=1) 
+        return current_employee or False
+    
+    parent_id = fields.Many2one('hr.employee', 'Jefe Directo', domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", default=_default_parent_id)
 
 
     def _save_data(self):
@@ -34,6 +50,8 @@ class ApplicantSetFieldsWizard(models.TransientModel):
             'first_contract_start': self.first_contract_start or False,
             'first_contract_end': self.first_contract_end or False,
             'salary_proposed': self.salary_proposed or False,
+            'work_type': self.work_type or False,
+            'parent_id': self.parent_id or False,
         }
         applicants.write(vals)
 
@@ -50,3 +68,4 @@ class ApplicantSetFieldsWizard(models.TransientModel):
         applicants.action_approve_selected_applicants()
 
         return {'type': 'ir.actions.act_window_close'}
+    

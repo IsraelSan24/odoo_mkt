@@ -37,6 +37,12 @@
           <xpath expr="//field[@name='availability']" position="attributes">
               <attribute name="attrs">{'readonly': [('stage_id', '=', 5)]}</attribute>
           </xpath>
+          <xpath expr="//field[@name='work_type']" position="attributes">
+              <attribute name="attrs">{'readonly': [('stage_id', '=', 5)]}</attribute>
+          </xpath>
+          <xpath expr="//field[@name='parent_id']" position="attributes">
+              <attribute name="attrs">{'readonly': [('stage_id', '=', 5)]}</attribute>
+          </xpath>
           <xpath expr="//field[@name='company_id']" position="attributes">
               <attribute name="attrs">{'readonly': [('stage_id', '=', 5)]}</attribute>
           </xpath>
@@ -154,6 +160,9 @@
               <field name="salary_proposed" decoration-bf="1" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
               <field name="first_contract_start" decoration-bf="1" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
               <field name="first_contract_end" decoration-bf="1" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
+              <field name="work_type" decoration-bf="1" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
+              <field name="company_id" invisible='1'/>
+              <field name="parent_id" decoration-bf="1" options="{'no_open': True}" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
               <field name="supervision_data_approved" widget="badge" decoration-info="supervision_data_approved == 'pending'" decoration-warning="supervision_data_approved == 'rejected'" decoration-success="supervision_data_approved == 'approved'"/>
               <field name="write_date" readonly="1" optional="hide"/>
               <field name="stage_id" invisible='1'/>

@@ -29,6 +29,17 @@ class Applicant(models.Model):
                                 ], string='Supervision Status', tracking=True)
     supervision_data_sent = fields.Boolean(_("Is supervision data sent?"), tracking=True, default=False) 
 
+    company_id = fields.Many2one('res.company', string='Compañía', default=lambda self: self.env.company)
+    work_type = fields.Selection([
+        ('week_end', 'Fin de Semana'),
+        ('fix_without_mobility', 'Fijo sin Movilidad'),
+        ('fix_with_mobility', 'Fijo con Movilidad'),
+        ],
+        string=_('Tipo de Trabajo'))
+
+    parent_id = fields.Many2one('hr.employee', 'Jefe Directo', domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
+
+
     def write(self, vals):
         if 'stage_id' in vals:
             new_stage = self.env['hr.recruitment.stage'].browse(vals['stage_id'])
@@ -345,14 +356,15 @@ class Applicant(models.Model):
 
             record.supervision_data_approved = 'approved'
 
-            if not record.partner_id.requires_compliance_process:
-                current_employee = self.env['hr.employee'].search([('address_home_id.id', '=', record.partner_id.id)], order='create_date desc', limit=1)
-                
-                if current_employee:
-                    current_employee.sudo().write({'cost_center_id': record.cost_center_id.id})
+            current_employee = self.env['hr.employee'].search([('address_home_id.id', '=', record.partner_id.id)], order='create_date desc', limit=1)
+            
+            if current_employee:
+                current_employee.sudo().write({'cost_center_id': record.cost_center_id.id,
+                                                'parent_id': record.parent_id.id})
+                if not record.partner_id.requires_compliance_process:
                     record.create_first_contract()
-                else:
-                    _logger.info(f"\n\n\nNO EMPLOYEE WAS FOUND\n\n\n")
+            else:
+                _logger.info(f"\n\n\nNO EMPLOYEE WAS FOUND\n\n\n")
 
     def action_correct_supervision_data(self):
         for record in self:
@@ -390,7 +402,8 @@ class Applicant(models.Model):
             current_employee = self.env['hr.employee'].search([('address_home_id.id', '=', record.partner_id.id)], order='create_date desc', limit=1)
             
             if current_employee:
-                current_employee.sudo().write({'cost_center_id': False})
+                current_employee.sudo().write({'cost_center_id': False,
+                                               'parent_id': False})
 
                 employee_contract_history = self.env['hr.contract.history'].search([('employee_id', '=', record.emp_id.id)])
 

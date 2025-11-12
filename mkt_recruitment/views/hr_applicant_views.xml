@@ -21,6 +21,12 @@
                 <field name="first_contract_start" required='0'/>
                 <field name="first_contract_end" required='0'/>
             </xpath>
+            <xpath expr="//field[@name='availability']" position="after">
+                <field name="work_type" required='0'/>
+                <field name="company_id" invisible='1'/>
+                <field name="parent_id" required='0'/>
+                
+            </xpath>
             <xpath expr="//header/button[@name='create_employee_from_applicant']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
@@ -147,6 +153,9 @@
                 <field name="salary_proposed" decoration-bf="1"/>
                 <field name="first_contract_start" decoration-bf="1"/>
                 <field name="first_contract_end" decoration-bf="1"/>
+                <field name="work_type" decoration-bf="1"/>
+                <field name="company_id" invisible='1'/>
+                <field name="parent_id" decoration-bf="1"/>
                 <field name="supervision_data_approved" widget="badge" decoration-info="supervision_data_approved == 'pending'" decoration-warning="supervision_data_approved == 'rejected'" decoration-success="supervision_data_approved == 'approved'"/>
                 <field name="write_date" readonly="1" optional="hide"/>
             </tree>
