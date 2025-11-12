@@ -69,6 +69,7 @@
         'views/menu_views.xml',
         'views/signup_page.xml',
         'views/portal_terms_and_conditions.xml',
+        'views/res_users_views.xml',
     ],
     'assets':{
         'web.assets_frontend':[  

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_res_users_send_portal_credentials" model="ir.ui.view">
+      <field name="name">res.users.send.portal.credentials</field>
+      <field name="model">res.users</field>
+      <field name="inherit_id" ref="base.view_users_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="//header/button[@name='action_reset_password']" position="after">
+            <button name="action_send_email_with_credentials"
+                    type="object"
+                    string="Enviar Credenciales Portal"
+                    class="btn-primary"
+                    icon="fa-check-circle"/>
+          </xpath>
+      </field>
+  </record>
+
+</odoo>
