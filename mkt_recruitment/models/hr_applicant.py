@@ -35,7 +35,7 @@ class Applicant(models.Model):
         ('fix_without_mobility', 'Fijo sin Movilidad'),
         ('fix_with_mobility', 'Fijo con Movilidad'),
         ],
-        string=_('Tipo de Trabajo'))
+        string=_('Condición'))
 
     parent_id = fields.Many2one('hr.employee', 'Jefe Directo', domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
 
@@ -416,3 +416,14 @@ class Applicant(models.Model):
                             raise UserError(_("It is not possible to restore the request because the first contract has been signed."))
             else:
                 _logger.info(f"\n\n\nNO EMPLOYEE WAS FOUND\n\n\n")
+
+
+    def action_applicant_data_wizard(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Datos del Postulante',
+            'res_model': 'applicant.data.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'active_ids': self.ids}
+        }

@@ -192,6 +192,13 @@
                             class="btn-secondary"/>
                 </header>
             </xpath>
+            <xpath expr="//tree" position="inside">
+                <button name="action_applicant_data_wizard"
+                        type="object"
+                        string="Ver Info"
+                        class="btn-secondary"
+                        icon="fa-eye"/>
+            </xpath>
         </field>
     </record>
 

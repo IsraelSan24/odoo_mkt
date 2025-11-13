@@ -383,7 +383,9 @@ class Partner(models.Model):
     def _compute_function(self):
         for record in self:
             if record.belong_applicant_id:
-                record.function = record.belong_applicant_id.job_id.name
+                record.function = record.belong_applicant_id.job_id.name or False
+            else:
+                record.function = False
 
     @api.onchange('children')
     def _onchange_children(self):
