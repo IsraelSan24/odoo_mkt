@@ -7935,7 +7935,7 @@
                 <div class="footer" >
                     <div class="d-flex flex-row">
                         <div class="text-start">
-                            <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'documentsearch' + '&amp;width=70'" style="width:70px; height:70px; object-fit:contain;"/>
+                            <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'contracteconsult' + '&amp;width=70'" style="width:70px; height:70px; object-fit:contain;"/>
                         </div>
                         <div style="margin-left:10px;font-size:0.400rem;">
                             <div>Contract: <span t-esc="o.name"/></div>
