@@ -331,6 +331,7 @@ class Partner(models.Model):
     child_dnifile6_back_filename = fields.Char(compute='compute_child_document_filename', string='Filename DNI hijo 6 (Reverso)', store=True)
 
     children_to_display = fields.Integer(compute='_compute_children_to_display', store=False)
+    function = fields.Char(compute='_compute_function', string='Job Position')
 
     requires_compliance_process = fields.Boolean(string="Requires Compliance Process", tracking=True, default=False)
     fifth_category_income = fields.Boolean(string="Fifth Category Income from Other Employeers")
@@ -377,6 +378,14 @@ class Partner(models.Model):
                 rec.child_dnifile5_back_filename = _('DNI(Reverso)-Hijo-') + rec.child_dni5
             if rec.child_dni6 and rec.child_dnifile6_back:
                 rec.child_dnifile6_back_filename = _('DNI(Reverso)-Hijo-') + rec.child_dni6
+
+    @api.depends('belong_applicant_id')
+    def _compute_function(self):
+        for record in self:
+            if record.belong_applicant_id:
+                record.function = record.belong_applicant_id.job_id.name or False
+            else:
+                record.function = False
 
     @api.onchange('children')
     def _onchange_children(self):

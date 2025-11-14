@@ -30,6 +30,7 @@
         'wizard/employee_verification_wizard.xml',
         'wizard/contract_mass_identifiers_wizard.xml',
         'wizard/contracts_download_wizard.xml',
+        'wizard/applicant_data_wizard.xml',
 
         'data/ir_sequence.xml',
         'data/config_data.xml',
@@ -69,6 +70,7 @@
         'views/menu_views.xml',
         'views/signup_page.xml',
         'views/portal_terms_and_conditions.xml',
+        'views/res_users_views.xml',
     ],
     'assets':{
         'web.assets_frontend':[  

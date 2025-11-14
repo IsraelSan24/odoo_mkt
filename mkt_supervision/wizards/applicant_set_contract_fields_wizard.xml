@@ -5,10 +5,13 @@
     <field name="arch" type="xml">
       <form string="Set First Contract Fields">
         <group>
-          <field name="cost_center_id"/>
-          <field name="first_contract_start"/>
-          <field name="first_contract_end"/>
-          <field name="salary_proposed"/>
+          <field name="cost_center_id" string= "Centro de Costo"/>
+          <field name="first_contract_start" string= "Fecha Inicio de Contrato"/>
+          <field name="first_contract_end" string= "Fecha Fin de Contrato"/>
+          <field name="salary_proposed" string= "Salario"/>
+          <field name="work_type" string= "Condición"/>
+          <field name="parent_id" string= "Jefe Directo" options="{'no_open': True}"/>
+          <field name="company_id" invisible='1'/>
         </group>
         <footer>
           <button string="Save and Approve" type="object" name="action_save_and_approve" class="btn-primary"/>

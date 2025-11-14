@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, _
 
 class ResUsers(models.Model):
     _inherit = 'res.users'
@@ -9,3 +9,12 @@ class ResUsers(models.Model):
         if recruiter_team:
             return recruiter_team.brand_group_ids.ids
         return []
+    
+    def action_send_email_with_credentials(self):
+        self.ensure_one()
+
+        current_applicant = self.env['hr.applicant'].search([('partner_id', '=', self.partner_id.id)], limit=1, order='create_date desc')   
+        if current_applicant:
+            result = current_applicant._send_email_with_credentials(self, self.partner_id)
+
+        return result
