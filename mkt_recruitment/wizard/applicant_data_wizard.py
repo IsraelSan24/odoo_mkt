@@ -278,3 +278,123 @@ class ApplicantDataWizard(models.TransientModel):
             'target': 'self',
         }
 
+    def action_download_child_dnifile1(self):
+        self.ensure_one()
+        if not self.child_dnifile1:
+            raise UserError("No hay archivo para descargar.")
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile1?download=true&filename={self.child_dnifile1_filename}",
+            'target': 'self',
+        }
+
+    def action_download_child_dnifile1_back(self):
+        self.ensure_one()
+        if not self.child_dnifile1_back:
+            raise UserError("No hay archivo posterior para descargar.")
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile1_back?download=true&filename={self.child_dnifile1_back_filename}",
+            'target': 'self',
+        }
+
+    def action_download_child_dnifile2(self):
+        self.ensure_one()
+        if not self.child_dnifile2:
+            raise UserError("No hay archivo para descargar.")
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile2?download=true&filename={self.child_dnifile2_filename}",
+            'target': 'self',
+        }
+
+    def action_download_child_dnifile2_back(self):
+        self.ensure_one()
+        if not self.child_dnifile2_back:
+            raise UserError("No hay archivo posterior para descargar.")
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile2_back?download=true&filename={self.child_dnifile2_back_filename}",
+            'target': 'self',
+        }
+
+    def action_download_child_dnifile3(self):
+        self.ensure_one()
+        if not self.child_dnifile3:
+            raise UserError("No hay archivo para descargar.")
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile3?download=true&filename={self.child_dnifile3_filename}",
+            'target': 'self',
+        }
+
+    def action_download_child_dnifile3_back(self):
+        self.ensure_one()
+        if not self.child_dnifile3_back:
+            raise UserError("No hay archivo posterior para descargar.")
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile3_back?download=true&filename={self.child_dnifile3_back_filename}",
+            'target': 'self',
+        }
+
+    def action_download_child_dnifile4(self):
+        self.ensure_one()
+        if not self.child_dnifile4:
+            raise UserError("No hay archivo para descargar.")
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile4?download=true&filename={self.child_dnifile4_filename}",
+            'target': 'self',
+        }
+
+    def action_download_child_dnifile4_back(self):
+        self.ensure_one()
+        if not self.child_dnifile4_back:
+            raise UserError("No hay archivo posterior para descargar.")
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile4_back?download=true&filename={self.child_dnifile4_back_filename}",
+            'target': 'self',
+        }
+
+    def action_download_child_dnifile5(self):
+        self.ensure_one()
+        if not self.child_dnifile5:
+            raise UserError("No hay archivo para descargar.")
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile5?download=true&filename={self.child_dnifile5_filename}",
+            'target': 'self',
+        }
+
+    def action_download_child_dnifile5_back(self):
+        self.ensure_one()
+        if not self.child_dnifile5_back:
+            raise UserError("No hay archivo posterior para descargar.")
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile5_back?download=true&filename={self.child_dnifile5_back_filename}",
+            'target': 'self',
+        }
+
+    def action_download_child_dnifile6(self):
+        self.ensure_one()
+        if not self.child_dnifile6:
+            raise UserError("No hay archivo para descargar.")
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile6?download=true&filename={self.child_dnifile6_filename}",
+            'target': 'self',
+        }
+
+    def action_download_child_dnifile6_back(self):
+        self.ensure_one()
+        if not self.child_dnifile6_back:
+            raise UserError("No hay archivo posterior para descargar.")
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile6_back?download=true&filename={self.child_dnifile6_back_filename}",
+            'target': 'self',
+        }
+
