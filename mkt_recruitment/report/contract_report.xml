@@ -7931,7 +7931,7 @@
                 </t>
             </div>
             
-            <t t-if="o.state == 'signed'">
+            <t t-if="o.state in ('signed', 'open', 'close')">
                 <div class="footer" >
                     <div class="d-flex flex-row">
                         <div class="text-start">
