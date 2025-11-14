@@ -14,6 +14,7 @@
                         <field name="birthday" readonly='1'/>
                         <field name="gender" readonly='1'/>
                         <field name="age" readonly='1'/>
+                        <field name="phone" readonly='1'/>
                         <field name="email" readonly='1'/>
                         <!-- <field name="nationality_id" readonly='1' class="oe_edit_only"/> -->
                     </group>
@@ -55,27 +56,27 @@
                 </group>
                 <group string="Documentos">
                     <group >
-                        <field name="current_dni" filename="current_dni_filename"/>
+                        <field name="current_dni" filename="current_dni_filename" attrs="{'invisible': [('current_dni', '=', False)]}"/>
                         <field name="current_dni_filename" invisible="True"/>
                         <field name="is_current_dni" invisible="True"/>
                         
-                        <field name="current_dni_back" filename="current_dni_back_filename"/>
+                        <field name="current_dni_back" filename="current_dni_back_filename" attrs="{'invisible': [('current_dni_back', '=', False)]}"/>
                         <field name="current_dni_back_filename" invisible="True"/>
                         <field name="is_current_dni_back" invisible="True"/>
                     </group>
                     <group>
-                        <button name="action_download_current_dni"
-                            string="Descargar (Frontal)"
+                        <button name="action_preview_current_dni"
+                            string="Ver (Frontal)"
                             type="object"
                             class="btn-secondary"
-                            icon="fa-download"
+                            icon="fa-eye"
                             attrs="{'invisible': [('current_dni', '=', False)]}"/>
                         <br/>
-                        <button name="action_download_current_dni_back"
-                            string="Descargar (Posterior)"
+                        <button name="action_preview_current_dni_back"
+                            string="Ver (Posterior)"
                             type="object"
                             class="btn-secondary"
-                            icon="fa-download"
+                            icon="fa-eye"
                             attrs="{'invisible': [('current_dni_back', '=', False)]}"/>
                     </group>
                 </group>
@@ -115,22 +116,22 @@
                                 <!-- <td style="border: 2px solid black;"><field name="child_address1" readonly="1"/></td> -->
                                 <td style="border: 2px solid black;">
                                     <field name="child_dnifile1_filename" readonly='1' invisible="True"/>
-                                    <field name="child_dnifile1" widget="binary" filename="child_dnifile1_filename"/>
-                                    <button name="action_download_child_dnifile1"
-                                            string="Descargar (Frontal)"
+                                    <field name="child_dnifile1" widget="binary" filename="child_dnifile1_filename" attrs="{'invisible': [('child_dnifile1', '=', False)]}" />
+                                    <button name="action_preview_child_dnifile1"
+                                            string="Ver (Frontal)"
                                             type="object"
                                             class="btn-secondary"
-                                            icon="fa-download"
+                                            icon="fa-eye"
                                             attrs="{'invisible': [('child_dnifile1', '=', False)]}"/>
                                 </td>
                                 <td style="border: 2px solid black;">
                                     <field name="child_dnifile1_back_filename" readonly='1' invisible="True"/>
-                                    <field name="child_dnifile1_back" widget="binary" filename="child_dnifile1_back_filename"/>
-                                    <button name="action_download_child_dnifile1_back"
-                                            string="Descargar (Posterior)"
+                                    <field name="child_dnifile1_back" widget="binary" filename="child_dnifile1_back_filename" attrs="{'invisible': [('child_dnifile1_back', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile1_back"
+                                            string="Ver (Posterior)"
                                             type="object"
                                             class="btn-secondary"
-                                            icon="fa-download"
+                                            icon="fa-eye"
                                             attrs="{'invisible': [('child_dnifile1_back', '=', False)]}"/>
                                 </td>
                                 <td style="border: none"></td>
@@ -144,22 +145,22 @@
                                 <!-- <td style="border: 2px solid black;"><field name="child_address2" readonly="1"/></td> -->
                                 <td style="border: 2px solid black;">
                                     <field name="child_dnifile2_filename" readonly='1' invisible="True"/>
-                                    <field name="child_dnifile2" widget="binary" filename="child_dnifile2_filename"/>
-                                    <button name="action_download_child_dnifile2"
-                                            string="Descargar (Frontal)"
+                                    <field name="child_dnifile2" widget="binary" filename="child_dnifile2_filename" attrs="{'invisible': [('child_dnifile2', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile2"
+                                            string="Ver (Frontal)"
                                             type="object"
                                             class="btn-secondary"
-                                            icon="fa-download"
+                                            icon="fa-eye"
                                             attrs="{'invisible': [('child_dnifile2', '=', False)]}"/>
                                 </td>
                                 <td style="border: 2px solid black;">
                                     <field name="child_dnifile2_back_filename" readonly='1' invisible="True"/>
-                                    <field name="child_dnifile2_back" widget="binary" filename="child_dnifile2_back_filename"/>
-                                    <button name="action_download_child_dnifile2_back"
-                                            string="Descargar (Posterior)"
+                                    <field name="child_dnifile2_back" widget="binary" filename="child_dnifile2_back_filename" attrs="{'invisible': [('child_dnifile2_back', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile2_back"
+                                            string="Ver (Posterior)"
                                             type="object"
                                             class="btn-secondary"
-                                            icon="fa-download"
+                                            icon="fa-eye"
                                             attrs="{'invisible': [('child_dnifile2_back', '=', False)]}"/>
                                 </td>
                                 <td style="border: none"></td>
@@ -173,22 +174,22 @@
                                 <!-- <td style="border: 2px solid black;"><field name="child_address3" readonly="1"/></td> -->
                                 <td style="border: 2px solid black;">
                                     <field name="child_dnifile3_filename" readonly='1' invisible="True"/>
-                                    <field name="child_dnifile3" widget="binary" filename="child_dnifile3_filename"/>
-                                    <button name="action_download_child_dnifile3"
-                                            string="Descargar (Frontal)"
+                                    <field name="child_dnifile3" widget="binary" filename="child_dnifile3_filename" attrs="{'invisible': [('child_dnifile3', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile3"
+                                            string="Ver (Frontal)"
                                             type="object"
                                             class="btn-secondary"
-                                            icon="fa-download"
+                                            icon="fa-eye"
                                             attrs="{'invisible': [('child_dnifile3', '=', False)]}"/>
                                 </td>
                                 <td style="border: 2px solid black;">
                                     <field name="child_dnifile3_back_filename" readonly='1' invisible="True"/>
-                                    <field name="child_dnifile3_back" widget="binary" filename="child_dnifile3_back_filename"/>
-                                    <button name="action_download_child_dnifile3_back"
-                                            string="Descargar (Posterior)"
+                                    <field name="child_dnifile3_back" widget="binary" filename="child_dnifile3_back_filename" attrs="{'invisible': [('child_dnifile3_back', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile3_back"
+                                            string="Ver (Posterior)"
                                             type="object"
                                             class="btn-secondary"
-                                            icon="fa-download"
+                                            icon="fa-eye"
                                             attrs="{'invisible': [('child_dnifile3_back', '=', False)]}"/>
                                 </td>
                                 <td style="border: none"></td>
@@ -202,22 +203,22 @@
                                 <!-- <td style="border: 2px solid black;"><field name="child_address4" readonly="1"/></td> -->
                                 <td style="border: 2px solid black;">
                                     <field name="child_dnifile4_filename" readonly='1' invisible="True"/>
-                                    <field name="child_dnifile4" widget="binary" filename="child_dnifile4_filename"/>
-                                    <button name="action_download_child_dnifile4"
-                                            string="Descargar (Frontal)"
+                                    <field name="child_dnifile4" widget="binary" filename="child_dnifile4_filename" attrs="{'invisible': [('child_dnifile4', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile4"
+                                            string="Ver (Frontal)"
                                             type="object"
                                             class="btn-secondary"
-                                            icon="fa-download"
+                                            icon="fa-eye"
                                             attrs="{'invisible': [('child_dnifile4', '=', False)]}"/>
                                 </td>
                                 <td style="border: 2px solid black;">
                                     <field name="child_dnifile4_back_filename" readonly='1' invisible="True"/>
-                                    <field name="child_dnifile4_back" widget="binary" filename="child_dnifile4_back_filename"/>
-                                    <button name="action_download_child_dnifile4_back"
-                                            string="Descargar (Posterior)"
+                                    <field name="child_dnifile4_back" widget="binary" filename="child_dnifile4_back_filename" attrs="{'invisible': [('child_dnifile4_back', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile4_back"
+                                            string="Ver (Posterior)"
                                             type="object"
                                             class="btn-secondary"
-                                            icon="fa-download"
+                                            icon="fa-eye"
                                             attrs="{'invisible': [('child_dnifile4_back', '=', False)]}"/>
                                 </td>
                                 <td style="border: none"></td>
@@ -231,22 +232,22 @@
                                 <!-- <td style="border: 2px solid black;"><field name="child_address5" readonly="1"/></td> -->
                                 <td style="border: 2px solid black;">
                                     <field name="child_dnifile5_filename" readonly='1' invisible="True"/>
-                                    <field name="child_dnifile5" widget="binary" filename="child_dnifile5_filename"/>
-                                    <button name="action_download_child_dnifile5"
-                                            string="Descargar (Frontal)"
+                                    <field name="child_dnifile5" widget="binary" filename="child_dnifile5_filename" attrs="{'invisible': [('child_dnifile5', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile5"
+                                            string="Ver (Frontal)"
                                             type="object"
                                             class="btn-secondary"
-                                            icon="fa-download"
+                                            icon="fa-eye"
                                             attrs="{'invisible': [('child_dnifile5', '=', False)]}"/>
                                 </td>
                                 <td style="border: 2px solid black;">
                                     <field name="child_dnifile5_back_filename" readonly='1' invisible="True"/>
-                                    <field name="child_dnifile5_back" widget="binary" filename="child_dnifile5_back_filename"/>
-                                    <button name="action_download_child_dnifile5_back"
-                                            string="Descargar (Posterior)"
+                                    <field name="child_dnifile5_back" widget="binary" filename="child_dnifile5_back_filename" attrs="{'invisible': [('child_dnifile5_back', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile5_back"
+                                            string="Ver (Posterior)"
                                             type="object"
                                             class="btn-secondary"
-                                            icon="fa-download"
+                                            icon="fa-eye"
                                             attrs="{'invisible': [('child_dnifile5_back', '=', False)]}"/>
                                 </td>
                                 <td style="border: none"></td>
@@ -260,22 +261,22 @@
                                 <!-- <td style="border: 2px solid black;"><field name="child_address6" readonly="1"/></td> -->
                                 <td style="border: 2px solid black;">
                                     <field name="child_dnifile6_filename" readonly='1' invisible="True"/>
-                                    <field name="child_dnifile6" widget="binary" filename="child_dnifile6_filename"/>
-                                    <button name="action_download_child_dnifile6"
-                                            string="Descargar (Frontal)"
+                                    <field name="child_dnifile6" widget="binary" filename="child_dnifile6_filename" attrs="{'invisible': [('child_dnifile6', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile6"
+                                            string="Ver (Frontal)"
                                             type="object"
                                             class="btn-secondary"
-                                            icon="fa-download"
+                                            icon="fa-eye"
                                             attrs="{'invisible': [('child_dnifile6', '=', False)]}"/>
                                 </td>
                                 <td style="border: 2px solid black;">
                                     <field name="child_dnifile6_back_filename" readonly='1' invisible="True"/>
-                                    <field name="child_dnifile6_back" widget="binary" filename="child_dnifile6_back_filename"/>
-                                    <button name="action_download_child_dnifile6_back"
-                                            string="Descargar (Posterior)"
+                                    <field name="child_dnifile6_back" widget="binary" filename="child_dnifile6_back_filename" attrs="{'invisible': [('child_dnifile6_back', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile6_back"
+                                            string="Ver (Posterior)"
                                             type="object"
                                             class="btn-secondary"
-                                            icon="fa-download"
+                                            icon="fa-eye"
                                             attrs="{'invisible': [('child_dnifile6_back', '=', False)]}"/>
                                 </td>
                                 <td style="border: none"></td>

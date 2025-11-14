@@ -56,7 +56,7 @@ class ApplicantDataWizard(models.TransientModel):
     age = fields.Integer(string="Edad")
     # nationality_id = fields.Many2one('res.country', string="")
     demonym = fields.Char(string="Nacionalidad")
-    phone = fields.Char(string="Teléfono")
+    phone = fields.Char(string="Celular")
     
     email = fields.Char(string="Correo Electrónico")
     personal_email = fields.Char(string="Correo Electrónico Personal")
@@ -247,8 +247,22 @@ class ApplicantDataWizard(models.TransientModel):
                 })
         return res
     
+    def _get_dict_previsualization(self, preview_wizard, applicant_id, partner):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Previsualizar Documento',
+            'res_model': 'document.preview.wizard',
+            'res_id': preview_wizard.id,
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'active_id': applicant_id,
+                'partner_id': partner.id,
+            }
+        }
 
-    def action_download_current_dni(self):
+
+    def action_preview_current_dni(self):
         self.ensure_one()
         applicant_id = self.env.context.get('active_id')
         applicant = self.env['hr.applicant'].browse(applicant_id)
@@ -257,144 +271,247 @@ class ApplicantDataWizard(models.TransientModel):
         if not partner.current_dni:
             raise UserError("No hay archivo para descargar.")
 
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"/web/content/res.partner/{partner.id}/current_dni?download=true&filename={partner.current_dni_filename}",
-            'target': 'self',
-        }
+        preview_wizard = self.env['document.preview.wizard'].create({
+            'document': partner.current_dni,
+            'document_filename': partner.current_dni_filename,
+            'previous_wizard_id': self.id,
+            'previous_wizard_model': self._name,
+        })
 
-    def action_download_current_dni_back(self):
+        return self._get_dict_previsualization(preview_wizard, applicant_id, partner)
+
+
+    def action_preview_current_dni_back(self):
         self.ensure_one()
         applicant_id = self.env.context.get('active_id')
         applicant = self.env['hr.applicant'].browse(applicant_id)
         partner = applicant.partner_id
 
         if not partner.current_dni_back:
-            raise UserError("No hay archivo posterior para descargar.")
-
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"/web/content/res.partner/{partner.id}/current_dni_back?download=true&filename={partner.current_dni_back_filename}",
-            'target': 'self',
-        }
-
-    def action_download_child_dnifile1(self):
-        self.ensure_one()
-        if not self.child_dnifile1:
             raise UserError("No hay archivo para descargar.")
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile1?download=true&filename={self.child_dnifile1_filename}",
-            'target': 'self',
-        }
 
-    def action_download_child_dnifile1_back(self):
-        self.ensure_one()
-        if not self.child_dnifile1_back:
-            raise UserError("No hay archivo posterior para descargar.")
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile1_back?download=true&filename={self.child_dnifile1_back_filename}",
-            'target': 'self',
-        }
+        preview_wizard = self.env['document.preview.wizard'].create({
+            'document': partner.current_dni_back,
+            'document_filename': partner.current_dni_back_filename,
+            'previous_wizard_id': self.id,
+            'previous_wizard_model': self._name,
+        })
 
-    def action_download_child_dnifile2(self):
+        return self._get_dict_previsualization(preview_wizard, applicant_id, partner)
+
+    def action_preview_child_dnifile1(self):
         self.ensure_one()
-        if not self.child_dnifile2:
+        applicant_id = self.env.context.get('active_id')
+        applicant = self.env['hr.applicant'].browse(applicant_id)
+        partner = applicant.partner_id
+
+        if not partner.child_dnifile1:
             raise UserError("No hay archivo para descargar.")
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile2?download=true&filename={self.child_dnifile2_filename}",
-            'target': 'self',
-        }
 
-    def action_download_child_dnifile2_back(self):
-        self.ensure_one()
-        if not self.child_dnifile2_back:
-            raise UserError("No hay archivo posterior para descargar.")
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile2_back?download=true&filename={self.child_dnifile2_back_filename}",
-            'target': 'self',
-        }
+        preview_wizard = self.env['document.preview.wizard'].create({
+            'document': partner.child_dnifile1,
+            'document_filename': partner.child_dnifile1_filename,
+            'previous_wizard_id': self.id,
+            'previous_wizard_model': self._name,
+        })
 
-    def action_download_child_dnifile3(self):
+        return self._get_dict_previsualization(preview_wizard, applicant_id, partner)
+
+    def action_preview_child_dnifile1_back(self):
         self.ensure_one()
-        if not self.child_dnifile3:
+        applicant_id = self.env.context.get('active_id')
+        applicant = self.env['hr.applicant'].browse(applicant_id)
+        partner = applicant.partner_id
+
+        if not partner.child_dnifile1_back:
             raise UserError("No hay archivo para descargar.")
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile3?download=true&filename={self.child_dnifile3_filename}",
-            'target': 'self',
-        }
 
-    def action_download_child_dnifile3_back(self):
-        self.ensure_one()
-        if not self.child_dnifile3_back:
-            raise UserError("No hay archivo posterior para descargar.")
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile3_back?download=true&filename={self.child_dnifile3_back_filename}",
-            'target': 'self',
-        }
+        preview_wizard = self.env['document.preview.wizard'].create({
+            'document': partner.child_dnifile1_back,
+            'document_filename': partner.child_dnifile1_back_filename,
+            'previous_wizard_id': self.id,
+            'previous_wizard_model': self._name,
+        })
 
-    def action_download_child_dnifile4(self):
+        return self._get_dict_previsualization(preview_wizard, applicant_id, partner)
+
+    def action_preview_child_dnifile2(self):
         self.ensure_one()
-        if not self.child_dnifile4:
+        applicant_id = self.env.context.get('active_id')
+        applicant = self.env['hr.applicant'].browse(applicant_id)
+        partner = applicant.partner_id
+
+        if not partner.child_dnifile2:
             raise UserError("No hay archivo para descargar.")
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile4?download=true&filename={self.child_dnifile4_filename}",
-            'target': 'self',
-        }
 
-    def action_download_child_dnifile4_back(self):
-        self.ensure_one()
-        if not self.child_dnifile4_back:
-            raise UserError("No hay archivo posterior para descargar.")
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile4_back?download=true&filename={self.child_dnifile4_back_filename}",
-            'target': 'self',
-        }
+        preview_wizard = self.env['document.preview.wizard'].create({
+            'document': partner.child_dnifile2,
+            'document_filename': partner.child_dnifile2_filename,
+            'previous_wizard_id': self.id,
+            'previous_wizard_model': self._name,
+        })
 
-    def action_download_child_dnifile5(self):
+        return self._get_dict_previsualization(preview_wizard, applicant_id, partner)
+
+    def action_preview_child_dnifile2_back(self):
         self.ensure_one()
-        if not self.child_dnifile5:
+        applicant_id = self.env.context.get('active_id')
+        applicant = self.env['hr.applicant'].browse(applicant_id)
+        partner = applicant.partner_id
+
+        if not partner.child_dnifile2_back:
             raise UserError("No hay archivo para descargar.")
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile5?download=true&filename={self.child_dnifile5_filename}",
-            'target': 'self',
-        }
 
-    def action_download_child_dnifile5_back(self):
-        self.ensure_one()
-        if not self.child_dnifile5_back:
-            raise UserError("No hay archivo posterior para descargar.")
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile5_back?download=true&filename={self.child_dnifile5_back_filename}",
-            'target': 'self',
-        }
+        preview_wizard = self.env['document.preview.wizard'].create({
+            'document': partner.child_dnifile2_back,
+            'document_filename': partner.child_dnifile2_back_filename,
+            'previous_wizard_id': self.id,
+            'previous_wizard_model': self._name,
+        })
 
-    def action_download_child_dnifile6(self):
+        return self._get_dict_previsualization(preview_wizard, applicant_id, partner)
+
+    def action_preview_child_dnifile3(self):
         self.ensure_one()
-        if not self.child_dnifile6:
+        applicant_id = self.env.context.get('active_id')
+        applicant = self.env['hr.applicant'].browse(applicant_id)
+        partner = applicant.partner_id
+
+        if not partner.child_dnifile3:
             raise UserError("No hay archivo para descargar.")
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile6?download=true&filename={self.child_dnifile6_filename}",
-            'target': 'self',
-        }
 
-    def action_download_child_dnifile6_back(self):
+        preview_wizard = self.env['document.preview.wizard'].create({
+            'document': partner.child_dnifile3,
+            'document_filename': partner.child_dnifile3_filename,
+            'previous_wizard_id': self.id,
+            'previous_wizard_model': self._name,
+        })
+
+        return self._get_dict_previsualization(preview_wizard, applicant_id, partner)
+
+    def action_preview_child_dnifile3_back(self):
         self.ensure_one()
-        if not self.child_dnifile6_back:
-            raise UserError("No hay archivo posterior para descargar.")
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"/web/content/applicant.data.wizard/{self.id}/child_dnifile6_back?download=true&filename={self.child_dnifile6_back_filename}",
-            'target': 'self',
-        }
+        applicant_id = self.env.context.get('active_id')
+        applicant = self.env['hr.applicant'].browse(applicant_id)
+        partner = applicant.partner_id
+
+        if not partner.child_dnifile3_back:
+            raise UserError("No hay archivo para descargar.")
+
+        preview_wizard = self.env['document.preview.wizard'].create({
+            'document': partner.child_dnifile3_back,
+            'document_filename': partner.child_dnifile3_back_filename,
+            'previous_wizard_id': self.id,
+            'previous_wizard_model': self._name,
+        })
+
+        return self._get_dict_previsualization(preview_wizard, applicant_id, partner)
+
+    def action_preview_child_dnifile4(self):
+        self.ensure_one()
+        applicant_id = self.env.context.get('active_id')
+        applicant = self.env['hr.applicant'].browse(applicant_id)
+        partner = applicant.partner_id
+
+        if not partner.child_dnifile4:
+            raise UserError("No hay archivo para descargar.")
+
+        preview_wizard = self.env['document.preview.wizard'].create({
+            'document': partner.child_dnifile4,
+            'document_filename': partner.child_dnifile4_filename,
+            'previous_wizard_id': self.id,
+            'previous_wizard_model': self._name,
+        })
+
+        return self._get_dict_previsualization(preview_wizard, applicant_id, partner)
+
+    def action_preview_child_dnifile4_back(self):
+        self.ensure_one()
+        applicant_id = self.env.context.get('active_id')
+        applicant = self.env['hr.applicant'].browse(applicant_id)
+        partner = applicant.partner_id
+
+        if not partner.child_dnifile4_back:
+            raise UserError("No hay archivo para descargar.")
+
+        preview_wizard = self.env['document.preview.wizard'].create({
+            'document': partner.child_dnifile4_back,
+            'document_filename': partner.child_dnifile4_back_filename,
+            'previous_wizard_id': self.id,
+            'previous_wizard_model': self._name,
+        })
+
+        return self._get_dict_previsualization(preview_wizard, applicant_id, partner)
+
+    def action_preview_child_dnifile5(self):
+        self.ensure_one()
+        applicant_id = self.env.context.get('active_id')
+        applicant = self.env['hr.applicant'].browse(applicant_id)
+        partner = applicant.partner_id
+
+        if not partner.child_dnifile5:
+            raise UserError("No hay archivo para descargar.")
+
+        preview_wizard = self.env['document.preview.wizard'].create({
+            'document': partner.child_dnifile5,
+            'document_filename': partner.child_dnifile5_filename,
+            'previous_wizard_id': self.id,
+            'previous_wizard_model': self._name,
+        })
+
+        return self._get_dict_previsualization(preview_wizard, applicant_id, partner)
+
+    def action_preview_child_dnifile5_back(self):
+        self.ensure_one()
+        applicant_id = self.env.context.get('active_id')
+        applicant = self.env['hr.applicant'].browse(applicant_id)
+        partner = applicant.partner_id
+
+        if not partner.child_dnifile5_back:
+            raise UserError("No hay archivo para descargar.")
+
+        preview_wizard = self.env['document.preview.wizard'].create({
+            'document': partner.child_dnifile5_back,
+            'document_filename': partner.child_dnifile5_back_filename,
+            'previous_wizard_id': self.id,
+            'previous_wizard_model': self._name,
+        })
+
+        return self._get_dict_previsualization(preview_wizard, applicant_id, partner)
+
+    def action_preview_child_dnifile6(self):
+        self.ensure_one()
+        applicant_id = self.env.context.get('active_id')
+        applicant = self.env['hr.applicant'].browse(applicant_id)
+        partner = applicant.partner_id
+
+        if not partner.child_dnifile6:
+            raise UserError("No hay archivo para descargar.")
+
+        preview_wizard = self.env['document.preview.wizard'].create({
+            'document': partner.child_dnifile6,
+            'document_filename': partner.child_dnifile6_filename,
+            'previous_wizard_id': self.id,
+            'previous_wizard_model': self._name,
+        })
+
+        return self._get_dict_previsualization(preview_wizard, applicant_id, partner)
+
+    def action_preview_child_dnifile6_back(self):
+        self.ensure_one()
+        applicant_id = self.env.context.get('active_id')
+        applicant = self.env['hr.applicant'].browse(applicant_id)
+        partner = applicant.partner_id
+
+        if not partner.child_dnifile6_back:
+            raise UserError("No hay archivo para descargar.")
+
+        preview_wizard = self.env['document.preview.wizard'].create({
+            'document': partner.child_dnifile6_back,
+            'document_filename': partner.child_dnifile6_back_filename,
+            'previous_wizard_id': self.id,
+            'previous_wizard_model': self._name,
+        })
+
+        return self._get_dict_previsualization(preview_wizard, applicant_id, partner)
 

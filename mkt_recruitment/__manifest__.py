@@ -31,6 +31,7 @@
         'wizard/contract_mass_identifiers_wizard.xml',
         'wizard/contracts_download_wizard.xml',
         'wizard/applicant_data_wizard.xml',
+        'wizard/document_preview_wizard.xml',
 
         'data/ir_sequence.xml',
         'data/config_data.xml',

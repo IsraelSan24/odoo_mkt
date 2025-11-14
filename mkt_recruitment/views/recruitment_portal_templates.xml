@@ -616,6 +616,146 @@
                                                         
                                                 </t>
                                             </tr>
+                                            <tr>
+                                                <!-- Cambiado familiar_relationship5 a child_relationship5 -->
+                                                <t t-if="res_partner['child_dni5']">
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_full_name5 a child_full_name5 -->
+                                                        <t t-if="res_partner['child_full_name5']">
+                                                            <span t-esc="res_partner['child_full_name5']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_dni5 a child_dni5 -->
+                                                        <t t-if="res_partner['child_dni5']">
+                                                            <span t-esc="res_partner['child_dni5']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile5">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile5"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile5" name="child_dnifile5" t-att-value="partner.child_dnifile5 or ''" t-att-required="not partner.child_dnifile5" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile5">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile5">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile5">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile5_back">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile5_back"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile5_back" name="child_dnifile5_back" t-att-value="partner.child_dnifile5_back or ''" t-att-required="not partner.child_dnifile5_back" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile5_back">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile5_back">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile5_back">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </t>
+                                                <t t-else="">
+                                                        
+                                                </t>
+                                            </tr>
+                                            <tr>
+                                                <!-- Cambiado familiar_relationship6 a child_relationship6 -->
+                                                <t t-if="res_partner['child_dni6']">
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_full_name6 a child_full_name6 -->
+                                                        <t t-if="res_partner['child_full_name6']">
+                                                            <span t-esc="res_partner['child_full_name6']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_dni5 a child_dni6 -->
+                                                        <t t-if="res_partner['child_dni6']">
+                                                            <span t-esc="res_partner['child_dni6']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile6">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile6"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile6" name="child_dnifile6" t-att-value="partner.child_dnifile6 or ''" t-att-required="not partner.child_dnifile6" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile6">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile6">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile6">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile6_back">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile6_back"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile6_back" name="child_dnifile6_back" t-att-value="partner.child_dnifile6_back or ''" t-att-required="not partner.child_dnifile6_back" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile6_back">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile6_back">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile6_back">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </t>
+                                                <t t-else="">
+                                                        
+                                                </t>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
