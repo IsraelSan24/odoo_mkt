@@ -8,7 +8,9 @@
             <form string="Preview Document">
                 <sheet>
                     <field name="document_filename" invisible="1"/>
-                    <field name="document" widget="image" options="{'size': [800, 600]}"/>
+                    <field name="partner_id" invisible="1"/>
+                    <field name="document_field" invisible="1"/>
+                    <field name="document_base64" widget="image_preview"/>
                 </sheet>
                 <footer>
                     <button string="Regresar" type="object" name="action_go_back" class="btn-primary"/>

@@ -87,6 +87,7 @@
         ],
         'web.assets_backend': [
             'mkt_recruitment/static/src/js/notification_effects.js',
+            'mkt_recruitment/static/src/js/image_preview_widget.js',
             'mkt_recruitment/static/src/scss/notification_effects.scss',
         ],
     },
