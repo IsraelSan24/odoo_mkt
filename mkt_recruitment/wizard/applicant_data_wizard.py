@@ -272,7 +272,8 @@ class ApplicantDataWizard(models.TransientModel):
             raise UserError("No hay archivo para descargar.")
 
         preview_wizard = self.env['document.preview.wizard'].create({
-            'document': partner.current_dni,
+            'partner_id': partner.id,
+            'document_field': 'current_dni',
             'document_filename': partner.current_dni_filename,
             'previous_wizard_id': self.id,
             'previous_wizard_model': self._name,
@@ -291,7 +292,8 @@ class ApplicantDataWizard(models.TransientModel):
             raise UserError("No hay archivo para descargar.")
 
         preview_wizard = self.env['document.preview.wizard'].create({
-            'document': partner.current_dni_back,
+            'partner_id': partner.id,
+            'document_field': 'current_dni_back',
             'document_filename': partner.current_dni_back_filename,
             'previous_wizard_id': self.id,
             'previous_wizard_model': self._name,
@@ -309,7 +311,8 @@ class ApplicantDataWizard(models.TransientModel):
             raise UserError("No hay archivo para descargar.")
 
         preview_wizard = self.env['document.preview.wizard'].create({
-            'document': partner.child_dnifile1,
+            'partner_id': partner.id,
+            'document_field': 'child_dnifile1',
             'document_filename': partner.child_dnifile1_filename,
             'previous_wizard_id': self.id,
             'previous_wizard_model': self._name,
@@ -327,7 +330,8 @@ class ApplicantDataWizard(models.TransientModel):
             raise UserError("No hay archivo para descargar.")
 
         preview_wizard = self.env['document.preview.wizard'].create({
-            'document': partner.child_dnifile1_back,
+            'partner_id': partner.id,
+            'document_field': 'child_dnifile1_back',
             'document_filename': partner.child_dnifile1_back_filename,
             'previous_wizard_id': self.id,
             'previous_wizard_model': self._name,
@@ -345,7 +349,8 @@ class ApplicantDataWizard(models.TransientModel):
             raise UserError("No hay archivo para descargar.")
 
         preview_wizard = self.env['document.preview.wizard'].create({
-            'document': partner.child_dnifile2,
+            'partner_id': partner.id,
+            'document_field': 'child_dnifile2',
             'document_filename': partner.child_dnifile2_filename,
             'previous_wizard_id': self.id,
             'previous_wizard_model': self._name,
@@ -363,7 +368,8 @@ class ApplicantDataWizard(models.TransientModel):
             raise UserError("No hay archivo para descargar.")
 
         preview_wizard = self.env['document.preview.wizard'].create({
-            'document': partner.child_dnifile2_back,
+            'partner_id': partner.id,
+            'document_field': 'child_dnifile2_back',
             'document_filename': partner.child_dnifile2_back_filename,
             'previous_wizard_id': self.id,
             'previous_wizard_model': self._name,
@@ -381,7 +387,8 @@ class ApplicantDataWizard(models.TransientModel):
             raise UserError("No hay archivo para descargar.")
 
         preview_wizard = self.env['document.preview.wizard'].create({
-            'document': partner.child_dnifile3,
+            'partner_id': partner.id,
+            'document_field': 'child_dnifile3',
             'document_filename': partner.child_dnifile3_filename,
             'previous_wizard_id': self.id,
             'previous_wizard_model': self._name,
@@ -399,7 +406,8 @@ class ApplicantDataWizard(models.TransientModel):
             raise UserError("No hay archivo para descargar.")
 
         preview_wizard = self.env['document.preview.wizard'].create({
-            'document': partner.child_dnifile3_back,
+            'partner_id': partner.id,
+            'document_field': 'child_dnifile3_back',
             'document_filename': partner.child_dnifile3_back_filename,
             'previous_wizard_id': self.id,
             'previous_wizard_model': self._name,
@@ -417,7 +425,8 @@ class ApplicantDataWizard(models.TransientModel):
             raise UserError("No hay archivo para descargar.")
 
         preview_wizard = self.env['document.preview.wizard'].create({
-            'document': partner.child_dnifile4,
+            'partner_id': partner.id,
+            'document_field': 'child_dnifile4',
             'document_filename': partner.child_dnifile4_filename,
             'previous_wizard_id': self.id,
             'previous_wizard_model': self._name,
@@ -435,7 +444,8 @@ class ApplicantDataWizard(models.TransientModel):
             raise UserError("No hay archivo para descargar.")
 
         preview_wizard = self.env['document.preview.wizard'].create({
-            'document': partner.child_dnifile4_back,
+            'partner_id': partner.id,
+            'document_field': 'child_dnifile4_back',
             'document_filename': partner.child_dnifile4_back_filename,
             'previous_wizard_id': self.id,
             'previous_wizard_model': self._name,
@@ -453,7 +463,8 @@ class ApplicantDataWizard(models.TransientModel):
             raise UserError("No hay archivo para descargar.")
 
         preview_wizard = self.env['document.preview.wizard'].create({
-            'document': partner.child_dnifile5,
+            'partner_id': partner.id,
+            'document_field': 'child_dnifile5',
             'document_filename': partner.child_dnifile5_filename,
             'previous_wizard_id': self.id,
             'previous_wizard_model': self._name,
@@ -471,7 +482,8 @@ class ApplicantDataWizard(models.TransientModel):
             raise UserError("No hay archivo para descargar.")
 
         preview_wizard = self.env['document.preview.wizard'].create({
-            'document': partner.child_dnifile5_back,
+            'partner_id': partner.id,
+            'document_field': 'child_dnifile5_back',
             'document_filename': partner.child_dnifile5_back_filename,
             'previous_wizard_id': self.id,
             'previous_wizard_model': self._name,
@@ -489,7 +501,8 @@ class ApplicantDataWizard(models.TransientModel):
             raise UserError("No hay archivo para descargar.")
 
         preview_wizard = self.env['document.preview.wizard'].create({
-            'document': partner.child_dnifile6,
+            'partner_id': partner.id,
+            'document_field': 'child_dnifile6',
             'document_filename': partner.child_dnifile6_filename,
             'previous_wizard_id': self.id,
             'previous_wizard_model': self._name,
@@ -507,7 +520,8 @@ class ApplicantDataWizard(models.TransientModel):
             raise UserError("No hay archivo para descargar.")
 
         preview_wizard = self.env['document.preview.wizard'].create({
-            'document': partner.child_dnifile6_back,
+            'partner_id': partner.id,
+            'document_field': 'child_dnifile6_back',
             'document_filename': partner.child_dnifile6_back_filename,
             'previous_wizard_id': self.id,
             'previous_wizard_model': self._name,
