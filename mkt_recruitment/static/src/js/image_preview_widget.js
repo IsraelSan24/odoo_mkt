@@ -4,9 +4,17 @@ odoo.define('mkt_recruitment.ImagePreviewWidget', function (require) {
     const AbstractField = require('web.AbstractField');
     const fieldRegistry = require('web.field_registry');
 
-    // ... (CSS sin cambios) ...
+    // ────────────────────────────────────────────
+    // Inyectar CSS del widget
+    // ────────────────────────────────────────────
     const styles = `
-    .outer-container {
+    /* --- Estilos Comunes --- */
+    .o_field_image_preview {
+        width: 100%;
+    }
+
+    /* --- Estilos para Modo IMAGEN (Tu visor personalizado) --- */
+    .image-viewer-container {
         height: 75vh;
         max-width: 100%;
         min-width: 800px;
@@ -16,8 +24,9 @@ odoo.define('mkt_recruitment.ImagePreviewWidget', function (require) {
         // background: #f1f1f1;
         margin-top: 40px;
         cursor: grab;
+        position: relative;
     }
-    .outer-container.is-grabbing {
+    .image-viewer-container.is-grabbing {
         cursor: grabbing;
     }
     .zoom-wrapper {
@@ -34,7 +43,21 @@ odoo.define('mkt_recruitment.ImagePreviewWidget', function (require) {
         display: block;
         max-width: none;
         user-select: none;
-        pointer-events: none;
+        pointer-events: none; /* Para permitir el paneo sin arrastrar la img fantasma */
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* --- Estilos para Modo PDF (Visor nativo) --- */
+    .pdf-viewer-container {
+        height: 80vh; /* Un poco más alto para el PDF */
+        width: 100%;
+        border: 1px solid #ccc;
+    }
+    .pdf-viewer-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
     }
     `;
 
@@ -48,6 +71,7 @@ odoo.define('mkt_recruitment.ImagePreviewWidget', function (require) {
 
         className: 'o_field_image_preview',
         
+        // Estado solo necesario para el modo Imagen
         state: {
             scale: 1,
             rotation: 0,
@@ -55,6 +79,7 @@ odoo.define('mkt_recruitment.ImagePreviewWidget', function (require) {
             naturalHeight: 0,
         },
         
+        // Variables para el Paneo (solo imagen)
         isDragging: false,
         startX: 0,
         startY: 0,
@@ -62,18 +87,46 @@ odoo.define('mkt_recruitment.ImagePreviewWidget', function (require) {
         startScrollTop: 0,
 
         _render: function () {
-            // ... (Función _render sin cambios) ...
             this.$el.empty();
-            const imageData = this.value;
+            const data = this.value;
             
+            // Reiniciar estado
             this.state = { scale: 1, rotation: 0, naturalWidth: 0, naturalHeight: 0 };
-            this.isDragging = false; 
+            this.isDragging = false;
 
-            if (!imageData) {
-                this.$el.html('<p>No hay documento disponible</p>');
+            if (!data) {
+                this.$el.html('<p class="text-muted">No hay documento disponible</p>');
                 return;
             }
 
+            // 1. Detectar si es PDF
+            const isPdf = data.startsWith('JVBERi');
+
+            if (isPdf) {
+                // ============================================================
+                // MODO PDF: Visor Nativo
+                // ============================================================
+                // Sin botones custom, sin eventos custom. Solo el iframe.
+                const src = 'data:application/pdf;base64,' + data;
+                
+                this.$el.html(`
+                    <div class="pdf-viewer-container">
+                        <iframe class="pdf-viewer-iframe" src="${src}" type="application/pdf">
+                            <p>Tu navegador no soporta visualización de PDF.</p>
+                        </iframe>
+                    </div>
+                `);
+                
+                // AQUÍ TERMINA EL RENDER PARA PDF. NO HACEMOS NADA MÁS.
+                return;
+            }
+
+            // ============================================================
+            // MODO IMAGEN: Visor Personalizado
+            // ============================================================
+            const src = 'data:image/png;base64,' + data;
+
+            // Renderizamos botones y estructura compleja
             this.$el.html(`
                 <div>
                     <div style="
@@ -89,24 +142,26 @@ odoo.define('mkt_recruitment.ImagePreviewWidget', function (require) {
                         <button class="btn btn-sm btn-warning reset">Reset</button>
                     </div>
                     
-                    <div class="outer-container">
+                    <div class="image-viewer-container">
                         <div class="zoom-wrapper">
                             <div class="rotation-wrapper">
-                                <img class="preview-image" src="data:image/png;base64,${imageData}">
+                                <img class="preview-image" src="${src}">
                             </div>
                         </div>
                     </div>
                 </div>
             `);
 
-            // --- Carga y Transformaciones ---
+            // --- Lógica de Carga de Imagen ---
             const img = this.$('.preview-image')[0];
+            
             const _onImageReady = (target) => {
                 if (this.state.naturalWidth > 0) return;
                 this.state.naturalWidth = target.naturalWidth;
                 this.state.naturalHeight = target.naturalHeight;
-                this._updateTransform(); 
+                this._updateTransform(); // Aplicar estado inicial
             };
+
             if (img.complete) {
                 _onImageReady(img);
             } else {
@@ -114,53 +169,59 @@ odoo.define('mkt_recruitment.ImagePreviewWidget', function (require) {
                     _onImageReady(e.target);
                 });
             }
-            this._bindEvents();
+            
+            // Adjuntar eventos SOLO para la imagen
+            this._bindImageEvents();
         },
 
-        /**
-         * Aplica las transformaciones CSS basadas en el estado.
-         */
+        // ────────────────────────────────────────────
+        // Funciones Exclusivas para MODO IMAGEN
+        // ────────────────────────────────────────────
+
         _updateTransform: function () {
-            // ... (Función _updateTransform sin cambios) ...
-            if (this.state.naturalWidth === 0) {
-                return;
-            }
+            if (this.state.naturalWidth === 0) return;
+
             const { scale, rotation, naturalWidth, naturalHeight } = this.state;
             let tx = 0, ty = 0;
             const normRotation = (rotation % 360 + 360) % 360;
+            
             let currentWidth = naturalWidth;
             let currentHeight = naturalHeight;
             
-            if (normRotation === 90) { tx = naturalHeight; ty = 0; currentWidth = naturalHeight; currentHeight = naturalWidth; }
-            else if (normRotation === 180) { tx = naturalWidth; ty = naturalHeight; }
-            else if (normRotation === 270) { tx = 0; ty = naturalWidth; currentWidth = naturalHeight; currentHeight = naturalWidth; }
+            // Calcular compensaciones de rotación y tamaño del contenedor
+            if (normRotation === 90) { 
+                tx = naturalHeight; ty = 0; 
+                currentWidth = naturalHeight; currentHeight = naturalWidth; 
+            }
+            else if (normRotation === 180) { 
+                tx = naturalWidth; ty = naturalHeight; 
+            }
+            else if (normRotation === 270) { 
+                tx = 0; ty = naturalWidth; 
+                currentWidth = naturalHeight; currentHeight = naturalWidth; 
+            }
             
+            // Forzar tamaño del wrapper para que el scroll funcione bien
             this.$('.rotation-wrapper').css({
                 width: currentWidth + 'px',
                 height: currentHeight + 'px'
             });
             
             this.$('.zoom-wrapper').css('transform', `scale(${scale})`);
+            
+            // Orden: Translate primero, luego Rotate
             this.$('.rotation-wrapper').css(
                 'transform', 
                 `translate(${tx}px, ${ty}px) rotate(${rotation}deg)`
             );
         },
 
-        /**
-         * Reinicia el scroll del visor a la esquina superior izquierda.
-         */
         _resetScroll: function() {
-            // ... (Función _resetScroll sin cambios) ...
-            this.$('.outer-container').scrollTop(0).scrollLeft(0);
+            this.$('.image-viewer-container').scrollTop(0).scrollLeft(0);
         },
         
-        /**
-         * Asigna los eventos a los botones
-         */
-        _bindEvents: function() {
-            
-            // --- Eventos de Botones ---
+        _bindImageEvents: function() {
+            // 1. Botones
             this.$('.zoom-in').on('click', () => {
                 this.state.scale += 0.2; this._updateTransform();
             });
@@ -177,8 +238,8 @@ odoo.define('mkt_recruitment.ImagePreviewWidget', function (require) {
                 this.state.scale = 1; this.state.rotation = 0; this._updateTransform(); this._resetScroll();
             });
             
-            // --- Eventos de Paneo ---
-            const $container = this.$('.outer-container');
+            // 2. Paneo (Drag & Drop)
+            const $container = this.$('.image-viewer-container');
 
             $container.on('mousedown', (e) => {
                 if (e.button !== 0) return;
@@ -206,33 +267,20 @@ odoo.define('mkt_recruitment.ImagePreviewWidget', function (require) {
                 $container.scrollTop(this.startScrollTop - deltaY);
             });
             
-            // --- NUEVO: Evento de Zoom con Rueda del Ratón ---
-            
+            // 3. Zoom con Ctrl + Rueda
             $container.on('wheel', (e) => {
-                // Solo activamos el zoom si la tecla Ctrl está presionada
-                if (!e.ctrlKey) {
-                    // Si Ctrl no está presionado, permite el scroll vertical
-                    // normal del contenedor.
-                    return;
-                }
-
-                // Si Ctrl SÍ está presionado, prevenimos el zoom del navegador
+                if (!e.ctrlKey) return; // Si no es Ctrl, dejar scroll normal
                 e.preventDefault();
 
-                // Usamos un incremento más pequeño para la rueda, da mejor sensación
                 const zoomIncrement = 0.1;
-
-                // e.originalEvent.deltaY < 0 es rueda "hacia arriba" (Zoom In)
                 if (e.originalEvent.deltaY < 0) {
                     this.state.scale += zoomIncrement;
-                    this._updateTransform();
                 } else {
-                // e.originalEvent.deltaY > 0 es rueda "hacia abajo" (Zoom Out)
                     if (this.state.scale > (zoomIncrement + 0.1)) {
                         this.state.scale -= zoomIncrement;
-                        this._updateTransform();
                     }
                 }
+                this._updateTransform();
             });
         }
     });
