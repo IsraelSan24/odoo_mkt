@@ -11,9 +11,9 @@ odoo.define('mkt_recruitment.ImagePreviewWidget', function (require) {
         max-width: 100%;
         min-width: 800px;
         min-height: 500px;
-        overflow: auto;
-        border: 1px solid #ddd;
-        background: #f1f1f1;
+        // overflow: auto;
+        // border: 1px solid #ddd;
+        // background: #f1f1f1;
         margin-top: 40px;
         cursor: grab;
     }
