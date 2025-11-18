@@ -17,8 +17,11 @@ class Applicant(models.Model):
     applicant_partner_id = fields.Many2one(comodel_name='applicant.partner', string='Applicant partner')
     is_reinstatement = fields.Boolean(default=False, string='Is reinstatement', store=True)
 
+    first_contract_id = fields.Many2one('hr.contract', string=_("First Contract"))
+    first_contract_type_id = fields.Many2one('hr.contract.type', string=_("First Contract Type"))
     first_contract_start = fields.Date(string=_("First Contract Start Date"), tracking=True) 
     first_contract_end = fields.Date(string=_("First Contract End Date"), tracking=True)
+    send_first_contract = fields.Boolean(string=_("Send Contract"))
 
     cost_center_id = fields.Many2one('cost.center', string="Cost Center", tracking=True)
     selected_applicant_approved = fields.Boolean(string=_("Is selected applicant approved?"), tracking=True)
@@ -38,6 +41,26 @@ class Applicant(models.Model):
         string=_('Condición'))
 
     parent_id = fields.Many2one('hr.employee', 'Jefe Directo', domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
+
+    @api.model
+    def _init_data(self):
+        ICP = self.env['ir.config_parameter'].sudo()
+        
+        # Verificar si ya se ejecutó
+        if ICP.get_param('mkt_recruitment.init_data_executed'):
+            return
+        
+        for rec in self.search([]):
+            if rec.selected_applicant_approved and rec.supervision_data_approved == 'approved':
+                employee_first_contract = rec.env['hr.contract.history'].search([('employee_id', '=', rec.emp_id.id)], order='id desc', limit=1)
+
+                if employee_first_contract:
+                    rec.send_first_contract = employee_first_contract.contract_id.is_sended or False
+                    rec.first_contract_id = employee_first_contract.contract_id.id or False
+                    rec.first_contract_type_id = employee_first_contract.contract_id.contract_type_id.id or False
+
+        ICP.set_param('mkt_recruitment.init_data_executed', 'True')
+
 
 
     def write(self, vals):
@@ -115,6 +138,17 @@ class Applicant(models.Model):
             rec.update_data_partner()
             rec.create_employee_by_stage()
             rec.access_portal_partner()
+
+    @api.onchange("send_first_contract")
+    def _artifical_onchange_send_first_contract(self):
+        for rec in self:
+            if rec.supervision_data_approved == 'approved' and rec.first_contract_id and rec.first_contract_type_id:
+                rec.env['hr.contract'].browse(rec.first_contract_id.id).write({'is_sended': rec.send_first_contract,
+                                                                               'contract_type_id': rec.first_contract_type_id.id})
+            else:
+                rec.send_first_contract = False
+                # raise UserError(_("You can only send the contract when the supervision data is approved and the first contract is created."))
+
 
 
     def update_data_partner(self):
@@ -314,6 +348,7 @@ class Applicant(models.Model):
                 first_contract = self.env['hr.contract'].sudo().create(values)
                 first_contract.write_data() 
                 first_contract._compute_contract_duration()
+                self.first_contract_id = first_contract.id
 
 
     @api.model
@@ -417,6 +452,12 @@ class Applicant(models.Model):
             else:
                 _logger.info(f"\n\n\nNO EMPLOYEE WAS FOUND\n\n\n")
 
+            # Reset first contract data
+            record.write({
+                "send_first_contract": False,
+                "first_contract_id": False,
+                "first_contract_type_id": False
+            })
 
     def action_applicant_data_wizard(self):
         return {
@@ -427,3 +468,25 @@ class Applicant(models.Model):
             'target': 'new',
             'context': {'active_ids': self.ids}
         }
+    
+    def action_open_first_contract(self):
+        self.ensure_one()
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Contrato',
+            'res_model': 'hr.contract',
+            'res_id': self.first_contract_id.id,
+            'view_mode': 'form',
+            'view_type': 'form',
+            'target': 'current',
+        }
+    
+    def action_send_unsend_first_contract(self):
+        for rec in self:
+            if rec.first_contract_id and rec.first_contract_type_id and rec.supervision_data_approved == 'approved':
+                rec.send_first_contract = not rec.send_first_contract
+                rec.env['hr.contract'].browse(rec.first_contract_id.id).write({'is_sended': rec.send_first_contract,
+                                                                               'contract_type_id': rec.first_contract_type_id.id})
+            else:
+                raise UserError(_("You can only send/unsend the contract when the supervision data is approved and the first contract is created."))
