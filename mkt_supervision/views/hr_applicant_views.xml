@@ -116,7 +116,8 @@
     <field name="model">hr.applicant</field>
     <field name="arch" type="xml">
       <search string="Search Applicants">
-        <field name="partner_name" />
+        <field name="partner_name" string="Nombre o DNI" filter_domain="['|',('vat','ilike',self),('partner_name','ilike',self)]"/>
+        <field name="department_id" string="Marca (Departamento)"/>
         <field name="job_id"/>
         <field name="stage_id"/>
 
@@ -185,8 +186,9 @@
       <field name="model">hr.applicant</field>
       <field name="arch" type="xml">
       <search string="Search Applicants">
-          <field name="partner_name" />
+          <field name="partner_name" string="Nombre o DNI" filter_domain="['|',('vat','ilike',self),('partner_name','ilike',self)]"/>
           <field name="job_id"/>
+          <field name="cost_center_id" string="Centro de Costo"/>
 
           <filter string="Pending/Refused" name="supervision_data_pending_refused" domain="['|', ('supervision_data_approved', '=', 'pending'), ('supervision_data_approved', '=', 'rejected')]"/>
           <filter string="Pending" name="supervision_data_pending_to_approved" domain="[('supervision_data_approved', '=', 'pending')]"/>
