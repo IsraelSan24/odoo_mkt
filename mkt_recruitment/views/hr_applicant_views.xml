@@ -162,6 +162,7 @@
                 <field name="supervision_data_approved" readonly="1" widget="badge" decoration-info="supervision_data_approved == 'pending'" decoration-warning="supervision_data_approved == 'rejected'" decoration-success="supervision_data_approved == 'approved'"/>
                 <field name="write_date" readonly="1" optional="hide"/>
                 <field name="first_contract_id" optional="hide"  options="{'no_create': True, 'no_open': True}" groups="base.group_system"/>
+                <field name="first_contract_signed" readonly="1" groups="base.group_system" optional="hide"/>
             </tree>
         </field>
     </record>
@@ -226,8 +227,9 @@
         <field name="model">hr.applicant</field>
         <field name="arch" type="xml">
         <search string="Search Applicants">
-            <field name="partner_name" />
+            <field name="partner_name" string="Nombre o DNI" filter_domain="['|',('vat','ilike',self),('partner_name','ilike',self)]"/>
             <field name="job_id"/>
+            <field name="cost_center_id" string="Centro de Costo"/>
 
             <filter string="Pending" name="supervision_data_pending_to_approved" domain="[('supervision_data_approved', '=', 'pending')]"/>
             <filter string="Approved" name="supervision_data_approved" domain="[('supervision_data_approved', '=', 'approved')]"/>

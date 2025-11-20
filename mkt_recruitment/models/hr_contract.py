@@ -93,6 +93,9 @@ class Contract(models.Model):
     device = fields.Char(copy=False)
     os = fields.Char(copy=False)
     browser = fields.Char(copy=False)
+
+    applicant_ids = fields.One2many('hr.applicant', 'first_contract_id')
+
     # is_province_id = fields.Boolean(string='Is province?', compute="_compute_is_province", store=True)
 
 
@@ -242,6 +245,21 @@ class Contract(models.Model):
             vals['name'] = self.env['ir.sequence'].next_by_code('hr.contract') or _('New')
         res = super(Contract, self).create(vals)
         res.write_data()
+
+        n_contracts = self.env['hr.contract'].search_count([
+            ('employee_id', '=', res.employee_id.id),])
+        
+        if n_contracts == 1:
+            applicant = res.employee_id.address_home_id.belong_applicant_id
+
+            if applicant and res.employee_id == applicant.emp_id:
+
+                if not applicant.first_contract_id and applicant.supervision_data_approved == 'approved':
+
+                    if (applicant.first_contract_type_id == res.contract_type_id) and (applicant.first_contract_start == res.date_start) and (applicant.first_contract_end == res.date_end) and (applicant.salary_proposed == res.wage):
+                        applicant.with_context(skip_contract_sync=True).write({
+                            "first_contract_id": res.id,
+                        })
         return res
 
 
@@ -433,3 +451,44 @@ class Contract(models.Model):
 
                 'company_vat': rec.employee_id.address_home_id.vat,
             })
+
+    def write(self, vals):
+        res = super().write(vals)
+
+        if not self.env.context.get("skip_applicant_sync"):
+            if vals.get('active') is False:
+                for rec in self:
+                    if rec.applicant_ids:
+                        rec.applicant_ids.with_context(skip_contract_sync=True).write({
+                            "first_contract_id": False,
+                            "send_first_contract": False,
+                        })
+
+                return res
+            self._sync_to_applicants()
+        return res
+
+    def _sync_to_applicants(self):
+        for rec in self:
+            for applicant in rec.applicant_ids:
+                applicant.with_context(skip_contract_sync=True).write({
+                    "first_contract_type_id": rec.contract_type_id.id or False,
+                    "send_first_contract": rec.is_sended or False,
+                })
+
+    def unlink(self):
+
+        for rec in self:
+            if rec.signed_by_employer:
+                raise UserError(_("You cannot delete a contract that has been signed by the employer."))
+
+            if rec.signed_by or rec.signed_on:
+                raise UserError(_("You cannot delete a contract that has been signed by the employee."))
+            
+            if rec.applicant_ids:
+                rec.applicant_ids.with_context(skip_contract_sync=True).write({
+                    "send_first_contract": False,
+                })
+
+
+        return super().unlink()
