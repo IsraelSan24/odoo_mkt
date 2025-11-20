@@ -123,6 +123,12 @@ class RecruitmentPortal(portal.CustomerPortal):
         if 'document_count' in counters:
             values['document_count'] = RecruitmentDocument.search_count(self._prepare_documents_domain(partner)) \
                 if RecruitmentDocument.check_access_rights('read', raise_exception=False) else 0
+        if 'trecord_count' in counters:
+            partner = request.env.user.partner_id
+            values['trecord_count'] = request.env['t.record'].sudo().search_count([
+                ('partner_id', '=', partner.id),
+                ('state', '!=', 'draft'),
+            ])
         return values
 
 
@@ -651,16 +657,6 @@ class RecruitmentPortal(portal.CustomerPortal):
             'force_refresh': True,
             'redirect_url': '/my/documents',
         }
-    
-    def _prepare_home_portal_values(self, counters):
-        values = super()._prepare_home_portal_values(counters)
-        if 'trecord_count' in counters:
-            partner = request.env.user.partner_id
-            values['trecord_count'] = request.env['t.record'].sudo().search_count([
-                ('partner_id', '=', partner.id),
-                ('state', '!=', 'draft'),
-            ])
-        return values
 
     @http.route(['/my/trecord', '/my/trecord/page/<int:page>'], type='http', auth='user', website=True)
     def portal_my_trecords(self, page=1, sortby=None, **kw):

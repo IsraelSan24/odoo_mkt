@@ -56,8 +56,8 @@ class Applicant(models.Model):
         ICP = self.env['ir.config_parameter'].sudo()
         
         # Verificar si ya se ejecutó
-        # if ICP.get_param('mkt_recruitment.init_data_executed'):
-        #     return
+        if ICP.get_param('mkt_recruitment.init_data_executed'):
+            return
         
         for rec in self.search([]):
             if rec.selected_applicant_approved and rec.supervision_data_approved == 'approved':
