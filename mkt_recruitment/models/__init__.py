@@ -22,3 +22,4 @@ from . import hr_departure_reason
 from . import hr_contract_history
 from . import ir_actions_report
 from . import hr_applicant_tracking
+from . import t_record
