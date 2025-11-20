@@ -458,8 +458,8 @@ odoo.define('mkt_recruitment.validation_digits_trecord', function (require) {
                     alert(res.error);
                     return;
                 }
-                info('Success! Redirecting to:', '/my/trecord');
-                window.location = '/my/trecord';
+                info('Success! Redirecting to:', (res && res.redirect_url) || '/my/trecord');
+                window.location = (res && res.redirect_url) || '/my/trecord';
             }).catch(err => {
                 error('=== RPC ERROR ===', err);
                 alert(_t('Error processing signature. Please try again.'));

@@ -808,7 +808,7 @@ class RecruitmentPortal(portal.CustomerPortal):
             return {'error': _('Error processing signature.')}
 
         # return {'force_refresh': True, 'redirect_url': '/my/trecord'}
-        return {}
+        return {'force_refresh': True}
 
     @http.route('/trecord/verify/<string:token>', type='http', auth='public', website=True, sitemap=False)
     def trecord_public_pdf(self, token=None, download=False, **kw):

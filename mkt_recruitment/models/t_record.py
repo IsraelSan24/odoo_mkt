@@ -208,7 +208,7 @@ class TRecord(models.Model):
             _logger.info("TRecord[%s] sending email -> mail_id:%s to:%s", self.id, mail.id, email_to)
             mail.send()
 
-            mail.flush_recordset()  # por si aún no se actualiza state
+            # mail.flush_recordset()  # por si aún no se actualiza state
             _state = mail.state
             _logger.info("TRecord[%s] email result -> state:%s failure_reason:%s",
                          self.id, _state, getattr(mail, 'failure_reason', ''))

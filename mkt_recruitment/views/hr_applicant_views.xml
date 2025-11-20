@@ -158,7 +158,7 @@
                 <field name="work_type" readonly="1" decoration-bf="1"/>
                 <field name="company_id" readonly="1" invisible='1'/>
                 <field name="parent_id" readonly="1" decoration-bf="1" options="{'no_open': True}"/>
-                <field name="first_contract_type_id" options="{'no_create': True, 'no_open': True}"/>
+                <field name="first_contract_type_id" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('first_contract_signed', '=', True)]}"/>
                 <field name="supervision_data_approved" readonly="1" widget="badge" decoration-info="supervision_data_approved == 'pending'" decoration-warning="supervision_data_approved == 'rejected'" decoration-success="supervision_data_approved == 'approved'"/>
                 <field name="write_date" readonly="1" optional="hide"/>
                 <field name="first_contract_id" optional="hide"  options="{'no_create': True, 'no_open': True}" groups="base.group_system"/>
