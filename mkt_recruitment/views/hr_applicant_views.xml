@@ -145,7 +145,7 @@
                   editable="bottom"
                   decoration-danger="supervision_data_approved == 'rejected'" 
                   decoration-success="supervision_data_approved == 'approved'"
-                  default_order="write_date desc">
+                  default_order="create_date desc">
                 <field name="supervision_data_approved" readonly="1" invisible='1'/>
                 <field name="partner_name" readonly="1"/>
                 <field name="vat" readonly="1"/>

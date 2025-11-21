@@ -500,13 +500,13 @@ class Applicant(models.Model):
                 raise UserError(_("You can only send/unsend the contract when the supervision data is approved and the first contract is created."))
             
     def action_print_first_contract(self):
-        valid_applicants = []
+        valid_contracts = []
         for rec in self:
             if not rec.first_contract_id:
                 raise UserError(_("Contract not found. Please create it first."))
-            valid_applicants.append(rec.id)
+            valid_contracts.append(rec.first_contract_id.id)
 
-        return self.env['hr.contract'].browse(valid_applicants).action_print_contract_report()
+        return self.env['hr.contract'].browse(valid_contracts).action_print_contract_report()
 
     def unlink(self):
         for rec in self:
