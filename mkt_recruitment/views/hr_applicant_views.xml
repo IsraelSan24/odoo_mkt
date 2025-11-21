@@ -233,6 +233,7 @@
             <field name="job_id"/>
             <field name="cost_center_id" string="Centro de Costo"/>
 
+            <filter string="Pending/Approved (Contract not signed)" name="supervision_data_pending_and_approved_no_signed_contract" domain="['|', ('supervision_data_approved', '=', 'pending'), '&amp;', ('stage_id', '=', 4), ('supervision_data_approved', '=', 'approved')]"/>
             <filter string="Pending" name="supervision_data_pending_to_approved" domain="[('supervision_data_approved', '=', 'pending')]"/>
             <filter string="Approved" name="supervision_data_approved" domain="[('supervision_data_approved', '=', 'approved')]"/>
             <filter string="Approved (Contract not signed)" name="supervision_data_approved_no_signed_contract" domain="[('supervision_data_approved', '=', 'approved'), ('stage_id', '=', 4)]"/>
@@ -288,7 +289,7 @@
         <field name="res_model">hr.applicant</field>
         <field name="view_mode">tree</field>
         <field name="domain">[('stage_id.id', 'in', [4, 5]), ('selected_applicant_approved', '=', 'true')]</field>
-        <field name="context">{'search_default_supervision_data_pending_to_approved': 1}</field>
+        <field name="context">{'search_default_supervision_data_pending_and_approved_no_signed_contract': 1}</field>
         <field name="view_id" ref="view_hr_applicant_tree_payroll"/>
         <field name="search_view_id" ref="mkt_recruitment.view_hr_applicant_search_custom_payroll" />
     </record>
