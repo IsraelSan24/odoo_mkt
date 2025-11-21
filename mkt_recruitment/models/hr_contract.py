@@ -354,7 +354,13 @@ class Contract(models.Model):
 
     def _get_report_base_filename(self):
         self.ensure_one()
-        return '%s' % (self.name)
+        return '%s_%s' % (self.vat or '', self.name)
+
+    def action_print_contract_report(self):
+        if len(self) > 1:
+            return self.env['contract.zip.wizard'].with_context(active_ids=self.ids).create({}).action_generate_zip_contracts()
+        else:
+            return self.env.ref('mkt_recruitment.report_contract_action').report_action(self)
 
 
     def _compute_access_url(self):

@@ -7966,4 +7966,14 @@
         </t>
     </template>
 
+    <!-- <record id="action_print_contract_custom_server" model="ir.actions.server">
+        <field name="name">Imprimir Contrato PDF</field>
+        <field name="model_id" ref="model_hr_contract"/>
+        <field name="binding_model_id" ref="model_hr_contract"/>
+        <field name="state">code</field>
+        <field name="code">
+action = records.action_print_contract_report()
+        </field>
+    </record> -->
+
 </odoo>
