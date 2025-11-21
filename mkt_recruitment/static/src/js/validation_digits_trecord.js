@@ -356,6 +356,9 @@ odoo.define('mkt_recruitment.validation_digits_trecord', function (require) {
             ev.preventDefault();
             info('=== CONFIRM SIGN START ===');
 
+            const $btn = $(ev.currentTarget);
+            $btn.prop('disabled', true);
+
             const id = this._trecordId();
             const token = this._token();
 
@@ -422,12 +425,14 @@ odoo.define('mkt_recruitment.validation_digits_trecord', function (require) {
             if (!signature) {
                 error('VALIDATION FAILED: No signature');
                 alert(_t('Please draw your signature before confirming.'));
+                $btn.prop('disabled', false);
                 return;
             }
 
             if (digits.length !== 4) {
                 error('VALIDATION FAILED: Digits invalid', digits);
                 alert(_t('Please enter a valid 4-digit code.'));
+                $btn.prop('disabled', false);
                 return;
             }
 
@@ -456,6 +461,7 @@ odoo.define('mkt_recruitment.validation_digits_trecord', function (require) {
                 if (res && res.error) {
                     error('Server returned error:', res.error);
                     alert(res.error);
+                    $btn.prop('disabled', false);
                     return;
                 }
                 info('Success! Redirecting to:', (res && res.redirect_url) || '/my/trecord');
@@ -463,6 +469,7 @@ odoo.define('mkt_recruitment.validation_digits_trecord', function (require) {
             }).catch(err => {
                 error('=== RPC ERROR ===', err);
                 alert(_t('Error processing signature. Please try again.'));
+                $btn.prop('disabled', false);
             });
         },
     });
