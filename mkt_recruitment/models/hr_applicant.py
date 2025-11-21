@@ -103,9 +103,11 @@ class Applicant(models.Model):
                     partner.write({
                         'belong_applicant_id': rec.id
                     })
+
+        if not self.env.context.get('skip_contract_sync'):
+            self._sync_to_contracts()
         
         return res
-
 
     def _message_post_after_hook(self, message, msg_vals):
         if self.email_from and not self.partner_id:
@@ -503,12 +505,6 @@ class Applicant(models.Model):
                 raise UserError(_("You can only delete applicants in the initial stage. Try archive them instead."))
 
         return super().unlink()
-    
-    def write(self, vals):
-        res = super().write(vals)
-        if not self.env.context.get('skip_contract_sync'):
-            self._sync_to_contracts()
-        return res
 
     def _sync_to_contracts(self):
         for rec in self:

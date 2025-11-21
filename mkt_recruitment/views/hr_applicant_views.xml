@@ -173,15 +173,6 @@
         <field name="inherit_id" ref="mkt_recruitment.view_hr_applicant_tree_payroll"/>
         <field name="arch" type="xml">
             <xpath expr="//tree" position="inside">
-                <field name="stage_id" invisible='1'/>
-                <button name="action_approve_supervision_data"
-                        type="object"
-                        string="Approve"
-                        class="btn-primary"
-                        icon="fa-check-circle"
-                        attrs="{'invisible': ['|', ('stage_id', '!=', 4), ('supervision_data_approved', 'in', ['approved', 'rejected'])]}"/>
-            </xpath>
-            <xpath expr="//tree" position="inside">
                 <header>
                     <button name="action_approve_supervision_data"
                             type="object"
@@ -199,24 +190,35 @@
                             type="object"
                             string="Enviar/No Enviar Contrato"
                             class="btn-secondary"/>
+                    <button name="action_print_first_contract"
+                            type="object"
+                            string="Imprimir Contrato"
+                            class="btn-secondary"/>
                 </header>
             </xpath>
             <xpath expr="//tree" position="inside">
+                <field name="stage_id" invisible='1'/>
+                <field name="first_contract_id" invisible='1'/>
+                <field name="first_contract_type_id" invisible='1'/>
+                <field name="stage_id" optional="hide" readonly='1'/>
+                <field name="send_first_contract" widget="boolean_toggle" optional="hide"
+                       attrs="{'invisible': ['|', ('supervision_data_approved', '!=', 'approved'), '|', ('first_contract_id', '=', False), ('first_contract_type_id', '=', False)]}"></field>
                 <button name="action_applicant_data_wizard"
                         type="object"
                         string="Ver Info"
                         class="btn-secondary"
                         icon="fa-eye"/>
-                <field name="first_contract_id" invisible='1'/>
-                <field name="first_contract_type_id" invisible='1'/>
+                <button name="action_approve_supervision_data"
+                        type="object"
+                        string="Approve"
+                        class="btn-primary"
+                        icon="fa-check-circle"
+                        attrs="{'invisible': ['|', ('stage_id', '!=', 4), ('supervision_data_approved', 'in', ['approved', 'rejected'])]}"/>
                 <button name="action_open_first_contract" 
                         type="object" 
                         string="Ver Contrato" 
                         class="btn-primary"
                         attrs="{'invisible': ['|', ('supervision_data_approved', '!=', 'approved'), '|', ('first_contract_id', '=', False), ('first_contract_type_id', '=', False)]}"/>
-                <field name="stage_id" optional="hide" readonly='1'/>
-                <field name="send_first_contract" widget="boolean_toggle" optional="hide"
-                       attrs="{'invisible': ['|', ('supervision_data_approved', '!=', 'approved'), '|', ('first_contract_id', '=', False), ('first_contract_type_id', '=', False)]}"></field>
             </xpath>
         </field>
     </record>
