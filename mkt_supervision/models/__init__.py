@@ -6,3 +6,4 @@ from . import hr_employee
 from . import hr_leave_type_extension
 from . import hr_applicant
 from . import hr_departure_wizard
+from . import attendance_tareo_sheet

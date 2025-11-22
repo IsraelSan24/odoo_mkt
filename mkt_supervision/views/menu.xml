@@ -98,7 +98,8 @@
                 <menuitem id="menu_action_attendance_supervision" name="Asistencia" parent="menu_attendance_supervision_group" action="action_attendance_under_supervision" sequence="1"/>
                 <menuitem id="menu_action_attendance_report" name="Reporte de Asistencia" parent="menu_attendance_supervision_group" action="action_attendance_report_wizard" sequence="2"/>
                 <menuitem id="menu_action_attendance_tracking_report" name="Reporte de Tareo" parent="menu_attendance_supervision_group" action="action_attendance_tracking_report_wizard" sequence="3"/>
-                <menuitem id="menu_action_attendance_report_all" name="Reporte de Asistencias (Todos)" parent="menu_attendance_supervision_group" action="action_attendance_report_all_wizard" sequence="4" groups="hr_contract.group_hr_contract_manager"/>
+                <menuitem id="menu_attendance_tareo_sheet" name="Tareo" parent="menu_attendance_supervision_group" action="action_attendance_tareo_sheet_my" sequence="4" groups="mkt_supervision.group_supervision_supervisor,mkt_supervision.group_supervision_admin"/>
+                <menuitem id="menu_action_attendance_report_all" name="Reporte de Asistencias (Todos)" parent="menu_attendance_supervision_group" action="action_attendance_report_all_wizard" sequence="5" groups="hr_contract.group_hr_contract_manager"/>
 
             <menuitem id="menu_blacklist_group" name="Blacklist" parent="menu_mkt_supervision_reports" action="" sequence="3"/>
                 <menuitem id="menu_partner_blacklist_check_root" name="Consultar Blacklist" parent="menu_blacklist_group" action="action_partner_blacklist_check_wizard" sequence="1"/>

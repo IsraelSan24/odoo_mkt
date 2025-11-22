@@ -9,8 +9,19 @@
                     <field name="year"/>
                 </group>
                 <footer>
-                    <button string="Exportar a Excel" type="object" name="action_print_xlsx" class="btn-primary"/>
-                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                    <button string="Crear Tareo Editable"
+                            type="object"
+                            name="action_generate_tareo_sheet"
+                            class="btn-secondary"/>
+
+                    <button string="Exportar a Excel"
+                            type="object"
+                            name="action_print_xlsx"
+                            class="btn-primary"/>
+
+                    <button string="Cancelar"
+                            class="btn-secondary"
+                            special="cancel"/>
                 </footer>
             </form>
         </field>
@@ -23,5 +34,3 @@
         <field name="target">new</field>
     </record>
 </odoo>
-
-

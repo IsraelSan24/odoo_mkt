@@ -23,7 +23,6 @@ class AttendanceTrackingReport(models.TransientModel):
         return self.print_report_formats(function_name='xlsx', report_format='xlsx')
 
     def _get_file_name(self, function_name, file_name=False):
-        # Personalizamos el nombre del archivo resultante
         name = _('Reporte Asistencia Ausencia %s-%s') % (self.month, self.year)
         dic = super(AttendanceTrackingReport, self)._get_file_name(
             function_name,
@@ -31,19 +30,26 @@ class AttendanceTrackingReport(models.TransientModel):
         )
         return dic
 
-    def _get_my_subordinates(self):
+    def _get_my_subordinates_and_me(self):
+        """
+        Obtiene el empleado actual y todos sus subordinados recursivamente.
+        Retorna una lista de IDs de empleados.
+        """
         my_employee = self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1)
         if not my_employee:
             raise ValidationError(_("No hay un empleado vinculado al usuario actual."))
         
-        subordinates = my_employee
+        # Incluimos al empleado actual
+        all_employees = my_employee
         to_check = my_employee
+        
+        # Buscamos recursivamente todos los subordinados
         while to_check:
             children = self.env['hr.employee'].search([('parent_id', 'in', to_check.ids)])
-            to_check = children - subordinates
-            subordinates |= to_check
+            to_check = children - all_employees
+            all_employees |= to_check
 
-        return (subordinates - my_employee).ids
+        return all_employees.ids
 
     def _get_datas_report_xlsx(self, workbook):
         """
@@ -68,18 +74,15 @@ class AttendanceTrackingReport(models.TransientModel):
         ws = workbook.add_worksheet(sheet_name)
         ws.set_zoom(80)
 
-        # --- Definición de anchos de columna:
-        # Columna A (DNI), B (Nombre), luego columnas 3..(3+num_days-1) para cada día,
-        # y luego 9 columnas de totales:
+        # --- Definición de anchos de columna
         ws.set_column(0, 0, 12)  # Col A: DNI
         ws.set_column(1, 1, 20)  # Col B: Nombre
         for col in range(2, 2 + num_days):
-            ws.set_column(col, col, 3)  # cada día muy angosto (3 caracteres)
-        # Finalmente, 9 columnas de totales (con texto rotado):
+            ws.set_column(col, col, 3)  # cada día muy angosto
         for col in range(2 + num_days, 2 + num_days + 9):
-            ws.set_column(col, col, 10)
+            ws.set_column(col, col, 10)  # columnas de totales
 
-        # --- Formatos:
+        # --- Formatos
         header_center = workbook.add_format({
             'font_color': '#FFFFFF', 'bg_color': '#4F81BD',
             'align': 'center', 'valign': 'vcenter', 'border': 1, 'bold': True
@@ -99,37 +102,32 @@ class AttendanceTrackingReport(models.TransientModel):
             'align': 'center', 'valign': 'vcenter', 'border': 1,
             'bg_color': '#D9D9D9'
         })
-        # Formato para texto vertical:
         header_vertical = workbook.add_format({
             'font_color': '#FFFFFF', 'bg_color': '#4F81BD',
             'align': 'center', 'valign': 'bottom', 'border': 1,
             'rotation': 90, 'bold': True
         })
 
-        # --- Escribir encabezados ---
-        # Fila 0 (índice 0): Mes y Año centrado sobre columnas de día
+        # --- Escribir encabezados
         title = _('MES DE %s %s') % (calendar.month_name[mes].upper(), anio)
         if num_days > 0:
             ws.merge_range(0, 2, 0, 2 + num_days - 1, title, header_center_merged)
-        # También ponemos "DNI" y "NOMBRE" en las filas 0-2:
         ws.merge_range(0, 0, 2, 0, _('DNI'), header_center)
         ws.merge_range(0, 1, 2, 1, _('NOMBRE'), header_center)
 
-        # Fila 1 (índice 1): Día de la semana para cada columna de día
+        # Fila 1: Día de la semana
         for day in range(1, num_days + 1):
             fecha = datetime(anio, mes, day).date()
-            weekday = fecha.weekday()  # 0=Lunes ... 6=Domingo
-            # Mapeamos a sigla: L=0, M=1, X=2, J=3, V=4, S=5, D=6
+            weekday = fecha.weekday()
             siglas = ['L', 'M', 'X', 'J', 'V', 'S', 'D']
             letra = siglas[weekday]
             ws.write(1, 2 + (day - 1), letra, header_day)
 
-        # Fila 2 (índice 2): Día numérico
+        # Fila 2: Día numérico
         for day in range(1, num_days + 1):
             ws.write(2, 2 + (day - 1), day, header_day)
 
-        # Encabezados de totales (columnas 2+num_days ... 2+num_days+8),
-        # texto vertical escrito de abajo hacia arriba
+        # Encabezados de totales
         totales = [
             _('DIAS TRABAJADOS'),
             _('DIAS VACACIONES'),
@@ -145,29 +143,19 @@ class AttendanceTrackingReport(models.TransientModel):
         for idx, txt in enumerate(totales):
             ws.write(2, inicio_tot + idx, txt, header_vertical)
 
-        # --- Pre-carga de datos desde la BD ---
-        subordinates = self._get_my_subordinates()
-        # 1) Empleados activos
-        employees = self._get_query_employees(subordinates)
-
-        # 2) Asistencias: agrupados por empleado y fecha
-        attends = self._get_query_attendance(first_day, last_day, subordinates)
-        # Convertimos a set de tuplas para búsqueda rápida:
+        # --- Pre-carga de datos
+        all_employee_ids = self._get_my_subordinates_and_me()
+        employees = self._get_query_employees(all_employee_ids)
+        attends = self._get_query_attendance(first_day, last_day, all_employee_ids)
         attend_set = set((r[0], r[1]) for r in attends)
 
-        # 3) Ausencias: licencias validadas que cubran cada día
-        leaves_raw = self._get_query_leaves(first_day, last_day, subordinates)
-        # leaves_raw: lista de dict {emp_id, inicio, fin, sigla}
-
-        # Construimos un diccionario:
-        # leaves_map[(emp_id, fecha)] = 'SIGLA'
+        leaves_raw = self._get_query_leaves(first_day, last_day, all_employee_ids)
         leaves_map = {}
         for rec in leaves_raw:
             emp = rec['emp_id']
             ini = rec['inicio']
             fin = rec['fin']
             sig = rec['sigla'] or ''
-            # Recorremos cada día del rango y si está dentro del mes, lo agregamos
             current = max(ini, first_day)
             end_range = min(fin, last_day)
             delta = (end_range - current).days
@@ -175,78 +163,65 @@ class AttendanceTrackingReport(models.TransientModel):
                 dia = current + timedelta(days=d)
                 leaves_map[(emp, dia)] = sig
 
-
-        # --- Escribir filas de datos (a partir de la fila 3, índice base 0) ---
+        # --- Escribir filas de datos
         row = 3
         for emp in employees:
             emp_id = emp['emp_id']
             dni = emp['dni'] or ''
             nombre = emp['nombre'] or ''
-            # Columna 0: DNI
             ws.write(row, 0, dni, data_center)
-            # Columna 1: Nombre
             ws.write(row, 1, nombre, data_center)
 
-            # Variables auxiliares para totales
             tot_ausencias = 0
             tot_vacaciones = 0
             tot_subsidio = 0
             tot_paternidad = 0
             tot_medico_menor = 0
             tot_medico_mayor = 0
-            tot_feriados = 0  # si tienes feriados específicos, suma aquí
-            tot_no_laborados = 0  # adjunto
+            tot_feriados = 0
+            tot_no_laborados = 0
             tot_sin_goce = 0
 
-            # Recorremos cada día del mes
             for dia in range(1, num_days + 1):
                 fecha = datetime(anio, mes, dia).date()
                 col = 2 + (dia - 1)
 
-                # 1) ¿Es sábado o domingo?
-                if fecha.weekday() in (5, 6):  # 5=Sábado, 6=Domingo
+                if fecha.weekday() in (5, 6):
                     ws.write(row, col, 'H', data_center_gray)
                     tot_no_laborados += 1
                     continue
 
-                # 2) ¿Tiene licencia ese día?
                 key = (emp_id, fecha)
                 if key in leaves_map:
                     sigla = leaves_map[key]
                     ws.write(row, col, sigla, data_center)
-                    # Contabilizamos según la sigla (mapeo arbitrario):
-                    # Puedes ajustar esta lógica si quieres categorizarlos de otra manera:
-                    if sigla.upper() == 'V':  # Ej: Vacaciones
+                    if sigla.upper() == 'V':
                         tot_vacaciones += 1
-                    elif sigla.upper() == 'S':  # Ej: Subsidio maternidad
+                    elif sigla.upper() == 'S':
                         tot_subsidio += 1
-                    elif sigla.upper() == 'P':  # Ej: Paternidad
+                    elif sigla.upper() == 'P':
                         tot_paternidad += 1
-                    elif sigla.upper() == 'M':  # Ej: Médico menor 20
+                    elif sigla.upper() == 'M':
                         tot_medico_menor += 1
-                    elif sigla.upper() == 'N':  # Ej: Médico mayor 20
+                    elif sigla.upper() == 'N':
                         tot_medico_mayor += 1
-                    elif sigla.upper() == 'F':  # Ej: Feriado
+                    elif sigla.upper() == 'F':
                         tot_feriados += 1
-                    elif sigla.upper() == 'L':  # Ej: Sin goce (licencia)
+                    elif sigla.upper() == 'L':
                         tot_sin_goce += 1
                     else:
-                        tot_ausencias += 1  # cualquier otra ausencia
+                        tot_ausencias += 1
                     continue
 
-                # 3) Si no es fin de semana ni hay licencia, revisamos asistencia
                 if (emp_id, fecha) in attend_set:
                     ws.write(row, col, 'A', data_center)
                 else:
-                    # Si no hay asistencia ni licencia, se cuenta como día no laborado
                     ws.write(row, col, '', data_center)
                     tot_no_laborados += 1
 
-            # 4) Rellenamos totales en las 9 columnas finales
             dias_trabajados = num_days - tot_ausencias - tot_vacaciones - tot_subsidio \
                               - tot_paternidad - tot_medico_menor - tot_medico_mayor \
                               - tot_feriados - tot_no_laborados - tot_sin_goce
-            # Fila `row`, columna `2 + num_days + idx`
             tot_values = [
                 dias_trabajados,
                 tot_vacaciones,
@@ -263,13 +238,7 @@ class AttendanceTrackingReport(models.TransientModel):
 
             row += 1
     
-
-    def _get_query_employees(self, subordinates):
-        '''
-        Empleados: obtenemos los empleados activos con su DNI y nombre.
-
-        Retorna una lista de diccionarios con claves 'emp_id', 'dni', 'nombre'.
-        '''
+    def _get_query_employees(self, employee_ids):
         query_emp = """
             SELECT he.id AS emp_id, rp.vat AS dni, rp.name AS nombre
             FROM hr_employee he
@@ -278,17 +247,10 @@ class AttendanceTrackingReport(models.TransientModel):
             WHERE he.active = True AND he.id = ANY(%s)
             ORDER BY rp.name
         """
-        self.env.cr.execute(query_emp, (subordinates,))
+        self.env.cr.execute(query_emp, (employee_ids,))
         return self.env.cr.dictfetchall()
         
-    def _get_query_attendance(self, first_day, last_day, subordinates):
-        '''
-        Asistencia: obtenemos los registros de asistencia
-        para el rango de fechas especificado.
-        
-        Retorna una lista de tuplas (emp_id, fecha).
-        '''
-
+    def _get_query_attendance(self, first_day, last_day, employee_ids):
         query_att = """
             WITH attendance_data AS (
                 SELECT
@@ -302,18 +264,10 @@ class AttendanceTrackingReport(models.TransientModel):
             )
             SELECT emp_id, fecha FROM attendance_data
         """
-
-        self.env.cr.execute(query_att, (first_day, last_day, subordinates,))
+        self.env.cr.execute(query_att, (first_day, last_day, employee_ids,))
         return self.env.cr.fetchall()
         
-    def _get_query_leaves(self, first_day, last_day, subordinates):
-        ''' 
-        Licencias: obtenemos las licencias validadas
-        que cubren el rango de fechas especificado.
-
-        Retorna una lista de diccionarios con claves 'emp_id', 'inicio', 'fin', 'sigla'.
-        '''
-        
+    def _get_query_leaves(self, first_day, last_day, employee_ids):
         query_leave = """
             SELECT hl.employee_id AS emp_id,
                    (hl.date_from AT TIME ZONE 'UTC' AT TIME ZONE 'America/Lima')::date AS inicio,
@@ -326,6 +280,87 @@ class AttendanceTrackingReport(models.TransientModel):
               AND (hl.date_to   AT TIME ZONE 'UTC' AT TIME ZONE 'America/Lima')::date >= %s
               AND hl.employee_id = ANY(%s)
         """
-        # Elegimos de tal forma que si hay un rango que cruce el mes, quede registrado
-        self.env.cr.execute(query_leave, (last_day, first_day, subordinates,))
+        self.env.cr.execute(query_leave, (last_day, first_day, employee_ids,))
         return self.env.cr.dictfetchall()
+    
+    def action_generate_tareo_sheet(self):
+        """
+        Crea un registro persistente (attendance.tareo.sheet) con las mismas
+        asistencias/ausencias que se usan para el XLSX, pero editable.
+        Ahora incluye al usuario actual.
+        """
+        self.ensure_one()
+
+        mes = int(self.month)
+        anio = int(self.year)
+        first_day = datetime(anio, mes, 1).date()
+        num_days = calendar.monthrange(anio, mes)[1]
+        last_day = datetime(anio, mes, num_days).date()
+
+        # Incluir al usuario actual y sus subordinados
+        all_employee_ids = self._get_my_subordinates_and_me()
+        employees = self._get_query_employees(all_employee_ids)
+        attends = self._get_query_attendance(first_day, last_day, all_employee_ids)
+        attend_set = set((r[0], r[1]) for r in attends)
+
+        leaves_raw = self._get_query_leaves(first_day, last_day, all_employee_ids)
+        leaves_map = {}
+        for rec in leaves_raw:
+            emp = rec['emp_id']
+            ini = rec['inicio']
+            fin = rec['fin']
+            sig = rec['sigla'] or ''
+            current = max(ini, first_day)
+            end_range = min(fin, last_day)
+            for d in range((end_range - current).days + 1):
+                dia = current + timedelta(days=d)
+                leaves_map[(emp, dia)] = sig
+
+        # Construimos líneas
+        line_vals = []
+        for emp in employees:
+            emp_id = emp['emp_id']
+            vals_line = {
+                'employee_id': emp_id,
+                'dni': emp['dni'],
+                'employee_name': emp['nombre'],
+            }
+
+            for day in range(1, num_days + 1):
+                fecha = datetime(anio, mes, day).date()
+                field_name = 'day_%02d' % day
+                value = ''
+
+                if fecha.weekday() in (5, 6):
+                    value = 'H'
+                else:
+                    key = (emp_id, fecha)
+                    if key in leaves_map:
+                        value = leaves_map[key]
+                    elif key in attend_set:
+                        value = 'A'
+                    else:
+                        value = ''
+
+                vals_line[field_name] = value
+
+            line_vals.append((0, 0, vals_line))
+
+        sheet = self.env['attendance.tareo.sheet'].create({
+            'company_id': self.env.company.id,
+            'responsible_id': self.env.user.id,
+            'month': self.month,
+            'year': self.year,
+            'date_from': first_day,
+            'date_to': last_day,
+            'line_ids': line_vals,
+        })
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Tareo %s-%s') % (self.month, self.year),
+            'res_model': 'attendance.tareo.sheet',
+            'res_id': sheet.id,
+            'view_mode': 'form',
+            'target': 'current',
+        }
