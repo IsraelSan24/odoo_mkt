@@ -628,82 +628,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div t-attf-class="form-group #{error.get('education_start_date') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="education_start_date">Start Date</label>*
-                                        <t t-if="partner.is_validate == False">
-                                            <input type="date" id="education_start_date" name="education_start_date" t-attf-class="form-control #{error.get('education_start_date') and 'is-invalid' or ''}" t-att-value="education_start_date or partner.education_start_date"/>
-                                        </t>
-                                        <t t-else="">
-                                            <t t-if="partner.education_start_date">
-                                                <input type="date" id="education_start_date" name="education_start_date" t-attf-class="form-control #{error.get('education_start_date') and 'is-invalid' or ''}" t-att-value="education_start_date or partner.education_start_date" style="display: none;"/>
-                                                <br/>
-                                                <span t-esc="partner.education_start_date"/>
-                                            </t>
-                                            <t t-else="">
-                                                <input type="date" id="education_start_date" name="education_start_date" t-attf-class="form-control #{error.get('education_start_date') and 'is-invalid' or ''}" t-att-value="education_start_date or partner.education_start_date" style="display: none;"/>
-                                            </t>
-                                        </t>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div t-attf-class="form-group #{error.get('education_end_date') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="education_end_date">End Date</label>*
-                                        <t t-if="partner.is_validate == False">
-                                            <input type="date" id="education_end_date" name="education_end_date" t-attf-class="form-control #{error.get('education_end_date') and 'is-invalid' or ''}" t-att-value="education_end_date or partner.education_end_date"/>
-                                        </t>
-                                        <t t-else="">
-                                            <t t-if="partner.education_end_date">
-                                                <input type="date" id="education_end_date" name="education_end_date" t-attf-class="form-control #{error.get('education_end_date') and 'is-invalid' or ''}" t-att-value="education_end_date or partner.education_end_date" style="display: none;"/>
-                                                <br/>
-                                                <span t-esc="partner.education_end_date"/>
-                                            </t>
-                                            <t t-else="">
-                                                <input type="date" id="education_end_date" name="education_end_date" t-attf-class="form-control #{error.get('education_end_date') and 'is-invalid' or ''}" t-att-value="education_end_date or partner.education_end_date" style="display: none;"/>
-                                            </t>
-                                        </t>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div t-attf-class="form-group #{error.get('institution') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="institution">Institution</label>*
-                                        <t t-if="partner.is_validate == False">
-                                            <input type="text" name="institution" t-attf-class="form-control #{error.get('institution') and 'is-invalid' or ''}" t-att-value="institution or partner.institution"/>
-                                        </t>
-                                        <t t-else="">
-                                            <t t-if="partner.institution">
-                                                <input type="text" name="institution" t-attf-class="form-control #{error.get('institution') and 'is-invalid' or ''}" t-att-value="institution or partner.institution" style="display: none;"/>
-                                                <br/>
-                                                <span t-esc="partner.institution"/>
-                                            </t>
-                                            <t t-else="">
-                                                <input type="text" name="institution" t-attf-class="form-control #{error.get('institution') and 'is-invalid' or ''}" t-att-value="institution or partner.institution" style="display: none;"/>
-                                            </t>
-                                        </t>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div t-attf-class="form-group #{error.get('profession') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="profession">Profession</label>*
-                                        <t t-if="partner.is_validate == False">
-                                            <input type="text" name="profession" t-attf-class="form-control #{error.get('profession') and 'is-invalid' or ''}" t-att-value="profession or partner.profession"/>
-                                        </t>
-                                        <t t-else="">
-                                            <t t-if="partner.profession">
-                                                <input type="text" name="profession" t-attf-class="form-control #{error.get('profession') and 'is-invalid' or ''}" t-att-value="profession or partner.profession" style="display: none;"/>
-                                                <br/>
-                                                <span t-esc="partner.profession"/>
-                                            </t>
-                                            <t t-else="">
-                                                <input type="text" name="profession" t-attf-class="form-control #{error.get('profession') and 'is-invalid' or ''}" t-att-value="profession or partner.profession" style="display: none;"/>
-                                            </t>
-                                        </t>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="row mt-3 bg-white border rounded rounded-lg">
@@ -1161,7 +1085,7 @@
                         </div>
                     </div>
 
-                    <div class="row mt-3 bg-white border rounded rounded-lg">
+                    <!-- <div class="row mt-3 bg-white border rounded rounded-lg">
                         <div class="col-md-12">
                             <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
                             <script type="text/javascript" src="/mkt_recruitment/static/src/js/my_account.js"/>
@@ -1989,7 +1913,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row mt-3 bg-white border rounded rounded-lg">
                         <div class="col-md-12">
                             <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
