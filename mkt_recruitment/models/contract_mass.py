@@ -375,6 +375,48 @@ class ContractMass(models.Model):
             },
         }
 
+    def action_open_identifiers_renovation_wizard(self):
+        self.ensure_one()
+        return {
+            'name': _('Introduce IDs (Renovation)'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'contract.mass.identifiers.wizard',
+            'view_mode': 'form',
+            'view_id': self.env.ref('mkt_recruitment.identifiers_wizard_form_view').id,
+            'target': 'new',
+            'context': {
+                'default_identifiers_input': '',
+                'active_model': self._name,
+                'active_id': self.id,
+                'mode': 'renovation'
+            },
+        }
+
+    def process_identifiers_renovation(self, text):
+        self.ensure_one()
+        id_list = self._parse_identifiers(text)
+        if not id_list:
+            return []
+
+        # Search employees by VAT (address_home_id.vat)
+        employees = self.env['hr.employee'].search([
+            ('address_home_id.vat', 'in', id_list),
+            ('active', '=', True)
+        ])
+        
+        # Update renew_employee_ids
+        self.renew_employee_ids = [(6, 0, employees.ids)]
+        
+        # Calculate missing
+        found_vats = set(employees.mapped('address_home_id.vat'))
+        
+        missing = []
+        for identifier in id_list:
+            if identifier not in found_vats:
+                missing.append(identifier)
+        
+        return missing
+
     @api.onchange('mode')
     def _onchange_mode(self):
         """Limpia los campos relacionados al modo cuando se cambia de un modo a otro."""

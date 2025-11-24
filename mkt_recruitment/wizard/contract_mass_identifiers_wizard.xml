@@ -8,9 +8,10 @@
                 <sheet>
                     <group>
                         <field name="identifiers_input" widget="text" />
+                        <field name="not_found_identifiers" widget="text" attrs="{'invisible': [('not_found_identifiers', '=', False)]}"/>
                     </group>
                     <footer>
-                        <button string="Apply" type="object" name="action_apply" class="btn-primary"/>
+                        <button string="Buscar" type="object" name="action_apply" class="btn-primary"/>
                         <button string="Cancel" class="btn-secondary" special="cancel"/>
                     </footer>
                 </sheet>
