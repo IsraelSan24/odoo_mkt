@@ -76,6 +76,11 @@
                                     string="Search Employees by IDs" 
                                     class="btn-primary"
                                     attrs="{'readonly':[('state','!=','draft')], 'invisible': [('mode','!=','new_employee')]}"/>
+                            <button name="action_open_identifiers_renovation_wizard" 
+                                    type="object" 
+                                    string="Search Employees by IDs" 
+                                    class="btn-primary"
+                                    attrs="{'readonly':[('state','!=','draft')], 'invisible': ['|', ('mode','!=','renovation'), ('state','!=','draft')]}"/>
                         </group>
                         <group>
                             <field name="validate_cost_center_id" 
