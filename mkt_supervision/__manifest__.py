@@ -35,6 +35,7 @@
         "views/hr_employee_view.xml",
         "views/hr_applicant_views.xml",
         "views/hr_departure_wizard_views.xml",
+        "views/attendance_tareo_views.xml",
         'views/menu.xml',
     ],
     'installable': True,
