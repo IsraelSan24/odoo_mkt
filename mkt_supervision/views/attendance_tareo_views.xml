@@ -166,12 +166,19 @@
                     </group>
                     <notebook>
                         <page string="Tareo">
+                            <!-- Campo necesario para column_invisible -->
+                            <field name="days_in_month" invisible="1"/>
+                            
                             <field name="line_ids" context="{'default_sheet_id': active_id}">
-                                <tree editable="bottom" string="Tareo mensual">
+                                <tree editable="bottom" string="Tareo mensual"
+                                      decoration-success="attendance_percentage == 1.0"
+                                      decoration-warning="attendance_percentage &gt;= 0.90 and attendance_percentage &lt; 1.0"
+                                      decoration-danger="attendance_percentage &lt; 0.90">
                                     <!-- Campo invisible para controlar readonly -->
                                     <field name="sheet_id" invisible="1"/>
                                     <field name="sheet_state" invisible="1"/>
                                     <field name="available_employee_ids" invisible="1"/>
+                                    <field name="sheet_days_in_month" invisible="1"/>
                                     
                                     <!-- Información del empleado - NO editable después de crear -->
                                     <field name="employee_id" width="200px" 
@@ -179,7 +186,7 @@
                                     <field name="dni" width="100px" readonly="1"/>
                                     <field name="employee_name" width="200px" readonly="1"/>
 
-                                    <!-- Días - EDITABLE solo cuando no está approved -->
+                                    <!-- Días 1-28: siempre visibles -->
                                     <field name="day_01" width="50px" 
                                            attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
                                     <field name="day_02" width="50px" 
@@ -236,12 +243,27 @@
                                            attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
                                     <field name="day_28" width="50px" 
                                            attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
-                                    <field name="day_29" width="50px" 
-                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
-                                    <field name="day_30" width="50px" 
-                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
-                                    <field name="day_31" width="50px" 
-                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    
+                                    <!-- Día 29: visible solo si el mes tiene 29+ días -->
+                                    <field name="day_29" width="50px"
+                                        attrs="{
+                                            'readonly': [('sheet_state', '=', 'approved')],
+                                            'column_invisible': [('parent.days_in_month', '&lt;', 29)]
+                                        }"/>
+
+                                    <!-- Día 30: visible solo si el mes tiene 30+ días -->
+                                    <field name="day_30" width="50px"
+                                        attrs="{
+                                            'readonly': [('sheet_state', '=', 'approved')],
+                                            'column_invisible': [('parent.days_in_month', '&lt;', 30)]
+                                        }"/>
+
+                                    <!-- Día 31: visible solo si el mes tiene 31 días -->
+                                    <field name="day_31" width="50px"
+                                        attrs="{
+                                            'readonly': [('sheet_state', '=', 'approved')],
+                                            'column_invisible': [('parent.days_in_month', '&lt;', 31)]
+                                        }"/>
 
                                     <!-- Totales - NO editables -->
                                     <field name="days_worked" width="80px" string="Trabajados" readonly="1"/>

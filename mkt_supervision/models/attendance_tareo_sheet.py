@@ -37,6 +37,12 @@ class AttendanceTareoSheet(models.Model):
     date_from = fields.Date(string='Desde')
     date_to = fields.Date(string='Hasta')
 
+    days_in_month = fields.Integer(
+        string='Días del mes',
+        compute='_compute_days_in_month',
+        store=True,
+    )
+
     general_comments = fields.Text(
         string='Comentarios generales',
         help='Comentarios u observaciones generales del tareo del mes.',
@@ -60,6 +66,19 @@ class AttendanceTareoSheet(models.Model):
         default='draft',
         tracking=True,
     )
+
+    @api.depends('month', 'year')
+    def _compute_days_in_month(self):
+        for rec in self:
+            if rec.month and rec.year:
+                try:
+                    month_int = int(rec.month)
+                    year_int = int(rec.year)
+                    rec.days_in_month = calendar.monthrange(year_int, month_int)[1]
+                except Exception:
+                    rec.days_in_month = 0
+            else:
+                rec.days_in_month = 0
 
     def action_send(self):
         """Enviar el tareo para aprobación."""
@@ -117,6 +136,11 @@ class AttendanceTareoLine(models.Model):
         string='Hoja de tareo',
         required=True,
         ondelete='cascade',
+    )
+    sheet_days_in_month = fields.Integer(
+        related='sheet_id.days_in_month',
+        string='Días del mes',
+        store=False,
     )
     employee_id = fields.Many2one(
         'hr.employee',
