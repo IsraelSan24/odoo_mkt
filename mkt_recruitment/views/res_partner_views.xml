@@ -150,12 +150,12 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="border: 2px solid black;"><field name="child_dni1" readonly="1"/></td>
-                                    <td style="border: 2px solid black;"><field name="child_full_name1" readonly="1"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_gender1" readonly="1"/></td> -->
-                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship1" readonly="1"/></td> -->
-                                    <td style="border: 2px solid black;"><field name="child_birthday1" readonly="1"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_address1" readonly="1"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_dni1" readonly="0"/></td>
+                                    <td style="border: 2px solid black;"><field name="child_full_name1" readonly="0"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_gender1" readonly="0"/></td> -->
+                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship1" readonly="0"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_birthday1" readonly="0"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_address1" readonly="0"/></td> -->
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile1_filename" invisible="True"/>
                                         <field name="child_dnifile1" widget="binary" filename="child_dnifile1_filename"/>
@@ -167,12 +167,12 @@
                                     <td style="border: none"></td>
                                 </tr>
                                 <tr>
-                                    <td style="border: 2px solid black;"><field name="child_dni2" readonly="1"/></td>
-                                    <td style="border: 2px solid black;"><field name="child_full_name2" readonly="1"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_gender2" readonly="1"/></td> -->
-                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship2" readonly="1"/></td> -->
-                                    <td style="border: 2px solid black;"><field name="child_birthday2" readonly="1"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_address2" readonly="1"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_dni2" readonly="0"/></td>
+                                    <td style="border: 2px solid black;"><field name="child_full_name2" readonly="0"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_gender2" readonly="0"/></td> -->
+                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship2" readonly="0"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_birthday2" readonly="0"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_address2" readonly="0"/></td> -->
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile2_filename" invisible="True"/>
                                         <field name="child_dnifile2" widget="binary" filename="child_dnifile2_filename"/>
@@ -184,12 +184,12 @@
                                     <td style="border: none"></td>
                                 </tr>
                                 <tr>
-                                    <td style="border: 2px solid black;"><field name="child_dni3" readonly="1"/></td>
-                                    <td style="border: 2px solid black;"><field name="child_full_name3" readonly="1"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_gender3" readonly="1"/></td> -->
-                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship3" readonly="1"/></td> -->
-                                    <td style="border: 2px solid black;"><field name="child_birthday3" readonly="1"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_address3" readonly="1"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_dni3" readonly="0"/></td>
+                                    <td style="border: 2px solid black;"><field name="child_full_name3" readonly="0"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_gender3" readonly="0"/></td> -->
+                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship3" readonly="0"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_birthday3" readonly="0"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_address3" readonly="0"/></td> -->
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile3_filename" invisible="True"/>
                                         <field name="child_dnifile3" widget="binary" filename="child_dnifile3_filename"/>
@@ -201,12 +201,12 @@
                                     <td style="border: none"></td>
                                 </tr>
                                 <tr>
-                                    <td style="border: 2px solid black;"><field name="child_dni4" readonly="1"/></td>
-                                    <td style="border: 2px solid black;"><field name="child_full_name4" readonly="1"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_gender4" readonly="1"/></td> -->
-                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship4" readonly="1"/></td> -->
-                                    <td style="border: 2px solid black;"><field name="child_birthday4" readonly="1"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_address4" readonly="1"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_dni4" readonly="0"/></td>
+                                    <td style="border: 2px solid black;"><field name="child_full_name4" readonly="0"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_gender4" readonly="0"/></td> -->
+                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship4" readonly="0"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_birthday4" readonly="0"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_address4" readonly="0"/></td> -->
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile4_filename" invisible="True"/>
                                         <field name="child_dnifile4" widget="binary" filename="child_dnifile4_filename"/>
@@ -218,12 +218,12 @@
                                     <td style="border: none"></td>
                                 </tr>
                                 <tr>
-                                    <td style="border: 2px solid black;"><field name="child_dni5" readonly="1"/></td>
-                                    <td style="border: 2px solid black;"><field name="child_full_name5" readonly="1"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_gender5" readonly="1"/></td> -->
-                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship5" readonly="1"/></td> -->
-                                    <td style="border: 2px solid black;"><field name="child_birthday5" readonly="1"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_address5" readonly="1"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_dni5" readonly="0"/></td>
+                                    <td style="border: 2px solid black;"><field name="child_full_name5" readonly="0"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_gender5" readonly="0"/></td> -->
+                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship5" readonly="0"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_birthday5" readonly="0"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_address5" readonly="0"/></td> -->
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile5_filename" invisible="True"/>
                                         <field name="child_dnifile5" widget="binary" filename="child_dnifile5_filename"/>
@@ -235,12 +235,12 @@
                                     <td style="border: none"></td>
                                 </tr>
                                 <tr>
-                                    <td style="border: 2px solid black;"><field name="child_dni6" readonly="1"/></td>
-                                    <td style="border: 2px solid black;"><field name="child_full_name6" readonly="1"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_gender6" readonly="1"/></td> -->
-                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship6" readonly="1"/></td> -->
-                                    <td style="border: 2px solid black;"><field name="child_birthday6" readonly="1"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_address6" readonly="1"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_dni6" readonly="0"/></td>
+                                    <td style="border: 2px solid black;"><field name="child_full_name6" readonly="0"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_gender6" readonly="0"/></td> -->
+                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship6" readonly="0"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_birthday6" readonly="0"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_address6" readonly="0"/></td> -->
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile6_filename" invisible="True"/>
                                         <field name="child_dnifile6" widget="binary" filename="child_dnifile6_filename"/>
