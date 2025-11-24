@@ -35,7 +35,7 @@
         </field>
     </record>
     
-    <!-- Acción para HR Contract Manager (ver todos) - SIN RESTRICCIONES DE DOMINIO -->
+    <!-- Acción para HR Contract Manager: Solo sent y approved -->
     <record id="action_attendance_tareo_sheet_all" model="ir.actions.act_window">
         <field name="name">Tareos mensuales</field>
         <field name="res_model">attendance.tareo.sheet</field>
@@ -104,7 +104,7 @@
                             type="object"
                             class="btn-primary"
                             states="draft,rejected"/>
-
+                    
                     <!-- Botón Restablecer a Borrador: disponible solo en sent -->
                     <button name="action_reset_to_draft"
                             string="Restablecer a Borrador"
@@ -134,27 +134,35 @@
                         <!-- Leyenda de códigos -->
                         <div class="alert alert-info" role="alert" style="margin: 10px;">
                             <strong>Leyenda de códigos:</strong><br/>
-                            <span style="display: inline-block; margin-right: 15px;"><strong>A:</strong> Asistió</span>
-                            <span style="display: inline-block; margin-right: 15px;"><strong>V:</strong> Vacaciones</span>
-                            <span style="display: inline-block; margin-right: 15px;"><strong>S:</strong> Subsidio Maternidad</span>
-                            <span style="display: inline-block; margin-right: 15px;"><strong>P:</strong> Licencia Paternidad</span>
-                            <span style="display: inline-block; margin-right: 15px;"><strong>M:</strong> Descanso Médico &lt; 20 días</span>
-                            <span style="display: inline-block; margin-right: 15px;"><strong>N:</strong> Descanso Médico ≥ 20 días</span><br/>
-                            <span style="display: inline-block; margin-right: 15px;"><strong>F:</strong> Feriado</span>
-                            <span style="display: inline-block; margin-right: 15px;"><strong>H:</strong> Día no laborado (Sáb/Dom)</span>
-                            <span style="display: inline-block; margin-right: 15px;"><strong>L:</strong> Licencia sin goce</span>
-                            <span style="display: inline-block; margin-right: 15px;"><strong>NL:</strong> No laborado</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>A:</strong> Asistencia</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>B:</strong> Inasistencia (Falta)</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>H:</strong> Holidays - Descanso semanal (cuenta como día laborado)</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>S:</strong> Sick Leave - Enfermedad justificada (1-20 días)</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>V:</strong> Vacaciones</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>W:</strong> Holiday Working - Trabajo en día feriado</span><br/>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>R:</strong> Medical Rest - Descanso médico (ESSALUD) INCAP TEMP</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>N:</strong> No vínculo laboral</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>X:</strong> Licencia sin goce de haber (inasistencia)</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>P:</strong> Paternity leave - Licencia por paternidad</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>M:</strong> Maternity leave - Licencia por maternidad</span>
                         </div>
                     </div>
                     
                     <group>
-                        <field name="name" readonly="1"/>
-                        <field name="company_id" attrs="{'readonly': [('state', '=', 'approved')]}"/>
-                        <field name="responsible_id" attrs="{'readonly': [('state', '=', 'approved')]}"/>
-                        <field name="month" attrs="{'readonly': [('state', '=', 'approved')]}"/>
-                        <field name="year" attrs="{'readonly': [('state', '=', 'approved')]}"/>
-                        <field name="date_from" readonly="1"/>
-                        <field name="date_to" readonly="1"/>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="company_id" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="responsible_id" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="month" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="year" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="date_from" readonly="1"/>
+                            <field name="date_to" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="general_comments"
+                                attrs="{'readonly': [('state', '=', 'approved')]}"
+                                placeholder="Comentarios generales sobre el tareo del mes..."/>
+                        </group>
                     </group>
                     <notebook>
                         <page string="Tareo">
@@ -245,6 +253,15 @@
                                     <field name="days_feriados" width="80px" string="Feriados" readonly="1"/>
                                     <field name="days_no_laborados" width="100px" string="No Laborados" readonly="1"/>
                                     <field name="days_lic_sin_goce" width="100px" string="Lic. s/Goce" readonly="1"/>
+
+                                    <!-- NUEVOS CAMPOS -->
+                                    <field name="days_inasistencias" width="90px" string="Inasistencias" readonly="1"/>
+                                    <field name="total_days" width="80px" string="Total días" readonly="1"/>
+                                    <field name="attendance_percentage" width="80px" string="% Asist."
+                                        readonly="1" widget="percentage"/>
+                                    <field name="days_difference" width="80px" string="Dif. días" readonly="1"/>
+                                    <field name="comments" width="200px"
+                                        attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
                                 </tree>
                             </field>
                         </page>
@@ -253,7 +270,5 @@
             </form>
         </field>
     </record>
-
-    <menuitem id="menu_attendance_tareo_sheet_all" name="Tareo" action="action_attendance_tareo_sheet_all" parent="hr.menu_hr_employee_payroll" sequence="4"/>
 
 </odoo>

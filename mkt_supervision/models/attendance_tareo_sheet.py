@@ -37,6 +37,12 @@ class AttendanceTareoSheet(models.Model):
     date_from = fields.Date(string='Desde')
     date_to = fields.Date(string='Hasta')
 
+    general_comments = fields.Text(
+        string='Comentarios generales',
+        help='Comentarios u observaciones generales del tareo del mes.',
+        tracking=True,
+    )
+
     line_ids = fields.One2many(
         'attendance.tareo.line',
         'sheet_id',
@@ -83,14 +89,6 @@ class AttendanceTareoSheet(models.Model):
             sheet.state = 'rejected'
             sheet.message_post(body=_('Tareo rechazado. Puede ser editado y reenviado.'))
 
-    @api.depends('month', 'year')
-    def _compute_name(self):
-        for rec in self:
-            if rec.month and rec.year:
-                rec.name = _('Tareo %s-%s') % (rec.month, rec.year)
-            else:
-                rec.name = _('Tareo')
-
     def unlink(self):
         """No permite eliminar registros en estado sent o approved."""
         for sheet in self:
@@ -100,6 +98,14 @@ class AttendanceTareoSheet(models.Model):
                       'Estado actual: %s') % dict(sheet._fields['state'].selection).get(sheet.state)
                 )
         return super(AttendanceTareoSheet, self).unlink()
+
+    @api.depends('month', 'year')
+    def _compute_name(self):
+        for rec in self:
+            if rec.month and rec.year:
+                rec.name = _('Tareo %s-%s') % (rec.month, rec.year)
+            else:
+                rec.name = _('Tareo')
 
 
 class AttendanceTareoLine(models.Model):
@@ -204,6 +210,36 @@ class AttendanceTareoLine(models.Model):
         string='Licencia sin goce',
         compute='_compute_totals',
         store=True,
+    )
+    
+    # Nuevos campos
+    days_inasistencias = fields.Integer(
+        string='Inasistencias',
+        compute='_compute_totals',
+        store=True,
+        help='Suma de Faltas (B) + Licencias sin goce (X)'
+    )
+    total_days = fields.Integer(
+        string='Total días',
+        compute='_compute_totals',
+        store=True,
+        help='Autosuma de todos los conceptos'
+    )
+    attendance_percentage = fields.Float(
+        string='% Asistencia',
+        compute='_compute_totals',
+        store=True,
+        help='Porcentaje de asistencias sobre total de días del mes'
+    )
+    days_difference = fields.Integer(
+        string='Diferencia',
+        compute='_compute_totals',
+        store=True,
+        help='Diferencia entre días del mes y total contabilizado'
+    )
+    comments = fields.Text(
+        string='Comentarios',
+        help='Observaciones sobre el tratamiento del mes'
     )
     
     # Campo relacionado para controlar edición en vista
@@ -363,48 +399,146 @@ class AttendanceTareoLine(models.Model):
         'day_15', 'day_16', 'day_17', 'day_18', 'day_19', 'day_20', 'day_21',
         'day_22', 'day_23', 'day_24', 'day_25', 'day_26', 'day_27', 'day_28',
         'day_29', 'day_30', 'day_31',
+        'sheet_id.month', 'sheet_id.year',
     )
     def _compute_totals(self):
+        """
+        Mapeo de códigos según leyenda:
+
+        A = Attendance (asistencia)                -> días trabajados
+        B = aBsence (falta)                        -> inasistencia
+        H = Holidays (descanso semanal/feriado)    -> día trabajado
+        S = Sick Leave (1-20 días)                 -> DM < 20
+        V = Vacation                               -> vacaciones
+        W = Holiday Working (trabaja en feriado)   -> trabajado + feriado
+        R = medical Rest (subsidio/ESSALUD)        -> DM >= 20
+        N = No vínculo laboral                     -> no laborado
+        X = Licencia sin goce de haber             -> lic. sin goce + inasistencia
+        P = Paternity leave                        -> licencia paternidad
+        M = Maternity leave                        -> subsidio maternidad
+        F = Feriado no trabajado (opcional)        -> feriados
+        NL = No laborado (código libre adicional)  -> no laborado
+        """
         for rec in self:
             dias_trabajados = 0
             vacaciones = 0
-            subsidio = 0
-            paternidad = 0
+            subsidio_maternidad = 0
+            lic_paternidad = 0
             dm_menor = 0
             dm_mayor = 0
             feriados = 0
             no_laborados = 0
-            sin_goce = 0
+            lic_sin_goce = 0
+            faltas = 0
+            no_vinculo = 0
 
+            # Contar por código
             for i in range(1, 32):
                 val = (getattr(rec, f'day_{i:02d}') or '').upper().strip()
                 if not val:
                     continue
+
                 if val == 'A':
                     dias_trabajados += 1
+
+                elif val == 'H':
+                    # Descanso semanal / feriado NO trabajado pero se considera día laborado
+                    dias_trabajados += 1
+
+                elif val == 'W':
+                    # Trabajo en feriado: cuenta como trabajado y como feriado
+                    dias_trabajados += 1
+                    feriados += 1
+
                 elif val == 'V':
                     vacaciones += 1
-                elif val == 'S':
-                    subsidio += 1
-                elif val == 'P':
-                    paternidad += 1
-                elif val == 'M':
-                    dm_menor += 1
-                elif val == 'N':
-                    dm_mayor += 1
-                elif val == 'F':
-                    feriados += 1
-                elif val in ('H', 'NL'):
-                    no_laborados += 1
-                elif val == 'L':
-                    sin_goce += 1
 
+                elif val == 'S':
+                    # Enfermedad justificada (1ros 20 días)
+                    dm_menor += 1
+
+                elif val == 'R':
+                    # Descanso médico (subsidio)
+                    dm_mayor += 1
+
+                elif val == 'M':
+                    # Licencia por maternidad
+                    subsidio_maternidad += 1
+
+                elif val == 'P':
+                    # Licencia por paternidad
+                    lic_paternidad += 1
+
+                elif val == 'X':
+                    # Licencia sin goce de haber (cuenta como inasistencia)
+                    lic_sin_goce += 1
+
+                elif val == 'B':
+                    # Falta
+                    faltas += 1
+
+                elif val == 'N':
+                    # No vínculo laboral
+                    no_vinculo += 1
+
+                elif val == 'F':
+                    # Feriado no trabajado (si lo usas)
+                    feriados += 1
+
+                elif val == 'NL':
+                    # No laborado (otro código opcional)
+                    no_laborados += 1
+
+                else:
+                    # Cualquier código desconocido lo puedes considerar no laborado
+                    no_laborados += 1
+
+            # Totales básicos
             rec.days_worked = dias_trabajados
             rec.days_vacaciones = vacaciones
-            rec.days_subsidio_maternidad = subsidio
-            rec.days_licencia_paternidad = paternidad
+            rec.days_subsidio_maternidad = subsidio_maternidad
+            rec.days_licencia_paternidad = lic_paternidad
             rec.days_dm_menor_20 = dm_menor
             rec.days_dm_mayor_20 = dm_mayor
             rec.days_feriados = feriados
-            rec.days_no_laborados = no_laborados
-            rec.days_lic_sin_goce = sin_goce
+            rec.days_no_laborados = no_laborados + no_vinculo
+            rec.days_lic_sin_goce = lic_sin_goce
+
+            # Inasistencias = B + X
+            rec.days_inasistencias = faltas + lic_sin_goce
+
+            # Autosuma de todos los conceptos (incluyendo faltas y lic. sin goce)
+            total_days = (
+                dias_trabajados
+                + vacaciones
+                + subsidio_maternidad
+                + lic_paternidad
+                + dm_menor
+                + dm_mayor
+                + feriados
+                + no_laborados
+                + no_vinculo
+                + lic_sin_goce
+                + faltas
+            )
+            rec.total_days = total_days
+
+            # Días del mes (para % y diferencia)
+            days_in_month = 0
+            try:
+                if rec.sheet_id and rec.sheet_id.month and rec.sheet_id.year:
+                    month_int = int(rec.sheet_id.month)
+                    year_int = int(rec.sheet_id.year)
+                    days_in_month = calendar.monthrange(year_int, month_int)[1]
+            except Exception:
+                days_in_month = 0
+
+            # Diferencia entre calendario y lo contabilizado
+            if days_in_month:
+                rec.days_difference = days_in_month - total_days
+                # Ojo: widget="percentage" ya multiplica por 100,
+                # así que aquí guardamos solo la fracción 0..1
+                rec.attendance_percentage = dias_trabajados / float(days_in_month)
+            else:
+                rec.days_difference = 0
+                rec.attendance_percentage = 0.0
