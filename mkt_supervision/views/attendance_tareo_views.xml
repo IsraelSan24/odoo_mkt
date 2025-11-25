@@ -292,5 +292,7 @@
             </form>
         </field>
     </record>
+    
+    <menuitem id="menu_attendance_tareo_sheet_all" name="Tareo" action="action_attendance_tareo_sheet_all" parent="hr.menu_hr_employee_payroll" sequence="4"/>
 
 </odoo>
