@@ -80,8 +80,8 @@
         <field name="res_model">hr.applicant</field>
         <field name="view_mode">tree</field>
         <field name="view_id" ref="view_hr_applicant_tree_contract_data"/>
-        <field name="domain">[('stage_id.id', '=', 4), ('supervision_data_approved', '!=', False)]</field>
-        <field name="context">{'search_default_supervision_data_pending_refused': 1}</field>
+        <field name="domain">[('stage_id.id', 'in', [4, 5]), ('supervision_data_approved', '!=', False)]</field>
+        <!-- <field name="context">{'search_default_supervision_data_pending_refused': 1}</field> -->
         <field name="search_view_id" ref="view_hr_applicant_search_custom_contract" />
     </record>
 
