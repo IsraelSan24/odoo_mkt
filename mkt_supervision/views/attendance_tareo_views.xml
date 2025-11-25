@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree de la hoja -->
+    <record id="view_attendance_tareo_sheet_tree" model="ir.ui.view">
+        <field name="name">attendance.tareo.sheet.tree</field>
+        <field name="model">attendance.tareo.sheet</field>
+        <field name="arch" type="xml">
+            <tree string="Tareos mensuales" 
+                  default_order="year desc, month desc"
+                  decoration-success="state == 'approved'"
+                  decoration-danger="state == 'rejected'">
+                <field name="name"/>
+                <field name="month"/>
+                <field name="year"/>
+                <field name="company_id"/>
+                <field name="responsible_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Acción para usuarios normales: solo sus tareos -->
+    <record id="action_attendance_tareo_sheet_my" model="ir.actions.act_window">
+        <field name="name">Mis Tareos mensuales</field>
+        <field name="res_model">attendance.tareo.sheet</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{
+            'search_default_group_by_year': 1,
+            'search_default_group_by_month': 1,
+        }</field>
+        <field name="domain">[('responsible_id', '=', uid)]</field>
+        <field name="help" type="html">
+            <p>Crea y edita tareos mensuales basados en las asistencias y ausencias.</p>
+        </field>
+    </record>
+    
+    <!-- Acción para HR Contract Manager: Solo sent y approved -->
+    <record id="action_attendance_tareo_sheet_all" model="ir.actions.act_window">
+        <field name="name">Tareos mensuales</field>
+        <field name="res_model">attendance.tareo.sheet</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{
+            'search_default_group_by_year': 1,
+            'search_default_group_by_month': 1,
+        }</field>
+        <field name="domain">[('state', 'in', ['sent', 'approved'])]</field>
+        <field name="help" type="html">
+            <p>Gestiona todos los tareos mensuales enviados y aprobados de la empresa.</p>
+        </field>
+    </record>
+    
+    <!-- Vista de búsqueda -->
+    <record id="view_attendance_tareo_sheet_search" model="ir.ui.view">
+        <field name="name">attendance.tareo.sheet.search</field>
+        <field name="model">attendance.tareo.sheet</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Tareos">
+                <field name="name"/>
+                <field name="responsible_id"/>
+                <field name="month"/>
+                <field name="year"/>
+                <field name="state"/>
+                <filter string="Mis Tareos" name="my_tareos" 
+                        domain="[('responsible_id', '=', uid)]"/>
+                <filter string="Borrador" name="draft" 
+                        domain="[('state', '=', 'draft')]"/>
+                <filter string="Enviado" name="sent" 
+                        domain="[('state', '=', 'sent')]"/>
+                <filter string="Aceptado" name="approved" 
+                        domain="[('state', '=', 'approved')]"/>
+                <filter string="Rechazado" name="rejected" 
+                        domain="[('state', '=', 'rejected')]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Año" name="group_by_year" 
+                            context="{'group_by': 'year'}"/>
+                    <filter string="Mes" name="group_by_month" 
+                            context="{'group_by': 'month'}"/>
+                    <filter string="Responsable" name="group_by_responsible" 
+                            context="{'group_by': 'responsible_id'}"/>
+                    <filter string="Estado" name="group_by_state" 
+                            context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Form de la hoja -->
+    <record id="view_attendance_tareo_sheet_form" model="ir.ui.view">
+        <field name="name">attendance.tareo.sheet.form</field>
+        <field name="model">attendance.tareo.sheet</field>
+        <field name="arch" type="xml">
+            <form string="Tareo mensual">
+                <header>
+                    <button name="%(action_attendance_tareo_sheet_my)d"
+                            string="Abrir"
+                            type="action"
+                            class="oe_highlight"
+                            invisible="1"/>
+                    
+                    <!-- Botón Enviar: disponible en draft y rejected -->
+                    <button name="action_send"
+                            string="Enviar"
+                            type="object"
+                            class="btn-primary"
+                            states="draft,rejected"/>
+                    
+                    <!-- Botón Restablecer a Borrador: disponible solo en sent -->
+                    <button name="action_reset_to_draft"
+                            string="Restablecer a Borrador"
+                            type="object"
+                            states="sent"/>
+                    
+                    <!-- Botón Aceptar: solo para HR Contract Manager en estado sent -->
+                    <button name="action_approve"
+                            string="Aceptar"
+                            type="object"
+                            class="btn-success"
+                            states="sent"
+                            groups="hr_contract.group_hr_contract_manager"/>
+                    
+                    <!-- Botón Rechazar: para HR Contract Manager en sent o approved -->
+                    <button name="action_reject"
+                            string="Rechazar"
+                            type="object"
+                            class="btn-danger"
+                            states="sent,approved"
+                            groups="hr_contract.group_hr_contract_manager"/>
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,approved,rejected"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <!-- Leyenda de códigos -->
+                        <div class="alert alert-info" role="alert" style="margin: 10px;">
+                            <strong>Leyenda de códigos:</strong><br/>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>A:</strong> Asistencia</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>B:</strong> Inasistencia (Falta)</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>H:</strong> Holidays - Descanso semanal (cuenta como día laborado)</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>S:</strong> Sick Leave - Enfermedad justificada (1-20 días)</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>V:</strong> Vacaciones</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>W:</strong> Holiday Working - Trabajo en día feriado</span><br/>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>R:</strong> Medical Rest - Descanso médico (ESSALUD) INCAP TEMP</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>N:</strong> No vínculo laboral</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>X:</strong> Licencia sin goce de haber (inasistencia)</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>P:</strong> Paternity leave - Licencia por paternidad</span>
+                            <span style="display: inline-block; margin-left: 15px;"><strong>M:</strong> Maternity leave - Licencia por maternidad</span>
+                        </div>
+                    </div>
+                    
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="company_id" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="responsible_id" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="month" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="year" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="date_from" readonly="1"/>
+                            <field name="date_to" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="general_comments"
+                                attrs="{'readonly': [('state', '=', 'approved')]}"
+                                placeholder="Comentarios generales sobre el tareo del mes..."/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Tareo">
+                            <!-- Campo necesario para column_invisible -->
+                            <field name="days_in_month" invisible="1"/>
+                            
+                            <field name="line_ids" context="{'default_sheet_id': active_id}">
+                                <tree editable="bottom" string="Tareo mensual"
+                                      decoration-success="attendance_percentage == 1.0"
+                                      decoration-warning="attendance_percentage &gt;= 0.90 and attendance_percentage &lt; 1.0"
+                                      decoration-danger="attendance_percentage &lt; 0.90">
+                                    <!-- Campo invisible para controlar readonly -->
+                                    <field name="sheet_id" invisible="1"/>
+                                    <field name="sheet_state" invisible="1"/>
+                                    <field name="available_employee_ids" invisible="1"/>
+                                    <field name="sheet_days_in_month" invisible="1"/>
+                                    
+                                    <!-- Información del empleado - NO editable después de crear -->
+                                    <field name="employee_id" width="200px" 
+                                           attrs="{'readonly': [('id', '!=', False)]}"/>
+                                    <field name="dni" width="100px" readonly="1"/>
+                                    <field name="employee_name" width="200px" readonly="1"/>
+
+                                    <!-- Días 1-28: siempre visibles -->
+                                    <field name="day_01" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_02" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_03" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_04" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_05" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_06" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_07" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_08" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_09" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_10" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_11" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_12" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_13" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_14" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_15" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_16" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_17" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_18" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_19" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_20" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_21" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_22" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_23" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_24" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_25" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_26" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_27" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    <field name="day_28" width="50px" 
+                                           attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                    
+                                    <!-- Día 29: visible solo si el mes tiene 29+ días -->
+                                    <field name="day_29" width="50px"
+                                        attrs="{
+                                            'readonly': [('sheet_state', '=', 'approved')],
+                                            'column_invisible': [('parent.days_in_month', '&lt;', 29)]
+                                        }"/>
+
+                                    <!-- Día 30: visible solo si el mes tiene 30+ días -->
+                                    <field name="day_30" width="50px"
+                                        attrs="{
+                                            'readonly': [('sheet_state', '=', 'approved')],
+                                            'column_invisible': [('parent.days_in_month', '&lt;', 30)]
+                                        }"/>
+
+                                    <!-- Día 31: visible solo si el mes tiene 31 días -->
+                                    <field name="day_31" width="50px"
+                                        attrs="{
+                                            'readonly': [('sheet_state', '=', 'approved')],
+                                            'column_invisible': [('parent.days_in_month', '&lt;', 31)]
+                                        }"/>
+
+                                    <!-- Totales - NO editables -->
+                                    <field name="days_worked" width="80px" string="Trabajados" readonly="1"/>
+                                    <field name="days_vacaciones" width="80px" string="Vacaciones" readonly="1"/>
+                                    <field name="days_subsidio_maternidad" width="100px" string="S. Maternidad" readonly="1"/>
+                                    <field name="days_licencia_paternidad" width="100px" string="L. Paternidad" readonly="1"/>
+                                    <field name="days_dm_menor_20" width="90px" string="DM &lt; 20" readonly="1"/>
+                                    <field name="days_dm_mayor_20" width="90px" string="DM &gt; 20" readonly="1"/>
+                                    <field name="days_feriados" width="80px" string="Feriados" readonly="1"/>
+                                    <field name="days_no_laborados" width="100px" string="No Laborados" readonly="1"/>
+                                    <field name="days_lic_sin_goce" width="100px" string="Lic. s/Goce" readonly="1"/>
+
+                                    <!-- NUEVOS CAMPOS -->
+                                    <field name="days_inasistencias" width="90px" string="Inasistencias" readonly="1"/>
+                                    <field name="total_days" width="80px" string="Total días" readonly="1"/>
+                                    <field name="attendance_percentage" width="80px" string="% Asist."
+                                        readonly="1" widget="percentage"/>
+                                    <field name="days_difference" width="80px" string="Dif. días" readonly="1"/>
+                                    <field name="comments" width="200px"
+                                        attrs="{'readonly': [('sheet_state', '=', 'approved')]}"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
