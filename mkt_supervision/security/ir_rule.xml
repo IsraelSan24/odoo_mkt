@@ -19,6 +19,7 @@
         <field name="domain_force">
             [('employee_id.address_home_id.belong_applicant_id.department_id', 'in', user.get_recruiter_departments())]
         </field>
+    </record>
     <!-- Regla para usuarios normales: solo ven sus propios tareos -->
     <record id="attendance_tareo_sheet_user_rule" model="ir.rule">
         <field name="name">Tareo: Usuario solo ve sus propios registros</field>
