@@ -151,8 +151,8 @@
           <tree string="Applicant Contract Request" 
                 decoration-danger="supervision_data_approved == 'rejected'" 
                 decoration-success="supervision_data_approved == 'approved'"
-                editable="bottom">
-              <field name="supervision_data_approved" invisible='1'/>
+                editable="bottom"
+                default_order="create_date desc">
               <field name="partner_name" readonly="1"/>
               <field name="vat" readonly="1"/>
               <field name="job_id" readonly="1" options="{'no_open': True}"/>
@@ -165,8 +165,15 @@
               <field name="company_id" invisible='1'/>
               <field name="parent_id" decoration-bf="1" options="{'no_open': True}" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
               <field name="supervision_data_approved" widget="badge" decoration-info="supervision_data_approved == 'pending'" decoration-warning="supervision_data_approved == 'rejected'" decoration-success="supervision_data_approved == 'approved'"/>
+              <field name="stage_id" readonly="1"/>
               <field name="write_date" readonly="1" optional="hide"/>
-              <field name="stage_id" invisible='1'/>
+              <field name="first_contract_type_id" invisible="1"/>
+              <field name="first_contract_id" invisible="1"/>
+              <button name="action_open_first_contract" 
+                      type="object" 
+                      string="Ver Contrato" 
+                      class="btn-primary"
+                      attrs="{'invisible': ['|', ('supervision_data_approved', '!=', 'approved'), '|', ('first_contract_id', '=', False), ('first_contract_type_id', '=', False)]}"/>
               <header>
                 <button name="action_open_set_fields_wizard"
                         type="object"
@@ -190,9 +197,9 @@
           <field name="job_id"/>
           <field name="cost_center_id" string="Centro de Costo"/>
 
-          <filter string="Pending/Refused" name="supervision_data_pending_refused" domain="['|', ('supervision_data_approved', '=', 'pending'), ('supervision_data_approved', '=', 'rejected')]"/>
           <filter string="Pending" name="supervision_data_pending_to_approved" domain="[('supervision_data_approved', '=', 'pending')]"/>
-          <filter string="Approved" name="supervision_data_approved" domain="[('supervision_data_approved', '=', 'approved')]"/>
+          <filter string="Approved (Contract not signed)" name="supervision_data_approved_no_signed_contract" domain="[('supervision_data_approved', '=', 'approved'), ('stage_id', '=', 4)]"/>
+          <filter string="Approved (Contract signed)" name="supervision_data_approved_signed_contract" domain="[('supervision_data_approved', '=', 'approved'), ('stage_id', '=', 5)]"/>
           <filter string="Refused" name="supervision_data_refused" domain="[('supervision_data_approved', '=', 'rejected')]"/>
           <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
           <separator/>
