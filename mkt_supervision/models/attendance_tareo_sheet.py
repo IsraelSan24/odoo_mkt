@@ -6,6 +6,9 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 
+DAY_FIELDS = [f'day_{i:02d}' for i in range(1, 32)]
+ALLOWED_CODES = {'A', 'B', 'H', 'S', 'V', 'W', 'R', 'N', 'X', 'P', 'M'}
+
 class AttendanceTareoSheet(models.Model):
     _name = 'attendance.tareo.sheet'
     _description = 'Tareo mensual editable'
@@ -399,20 +402,24 @@ class AttendanceTareoLine(models.Model):
                 dia = current + timedelta(days=d)
                 leaves_map[dia] = sig
         
-        # Generar datos para cada día
+        holiday_dates = self._get_holiday_dates_set()
+
         vals = {}
         for day in range(1, num_days + 1):
             fecha = datetime(anio, mes, day).date()
             field_name = f'day_{day:02d}'
-            
-            # Sábado/Domingo -> 'H'
-            if fecha.weekday() in (5, 6):
+
+            # FERIADO registrado => H (prioridad máxima)
+            if fecha in holiday_dates:
+                vals[field_name] = 'H'
+            elif fecha.weekday() in (5, 6):
                 vals[field_name] = 'H'
             elif fecha in leaves_map:
                 vals[field_name] = leaves_map[fecha]
             elif fecha in attend_dates:
                 vals[field_name] = 'A'
             else:
+                vals[field_name] = ''
                 vals[field_name] = ''
         
         self.write(vals)
@@ -505,14 +512,6 @@ class AttendanceTareoLine(models.Model):
                     # No vínculo laboral
                     no_vinculo += 1
 
-                elif val == 'F':
-                    # Feriado no trabajado (si lo usas)
-                    feriados += 1
-
-                elif val == 'NL':
-                    # No laborado (otro código opcional)
-                    no_laborados += 1
-
                 else:
                     # Cualquier código desconocido lo puedes considerar no laborado
                     no_laborados += 1
@@ -566,3 +565,188 @@ class AttendanceTareoLine(models.Model):
             else:
                 rec.days_difference = 0
                 rec.attendance_percentage = 0.0
+
+    def _get_holiday_dates_set(self):
+        self.ensure_one()
+        sheet = self.sheet_id
+        if not (sheet and sheet.company_id and sheet.year and sheet.month):
+            return set()
+
+        year_int = int(sheet.year)
+        month_int = int(sheet.month)
+        first_day = datetime(year_int, month_int, 1).date()
+        last_day = datetime(year_int, month_int, sheet.days_in_month or calendar.monthrange(year_int, month_int)[1]).date()
+
+        lines = self.env['attendance.tareo.holiday.line'].search([
+            ('company_id', '=', sheet.company_id.id),
+            ('year', '=', year_int),
+            ('active', '=', True),
+            ('year_id.active', '=', True),
+            ('date', '>=', first_day),
+            ('date', '<=', last_day),
+        ])
+        return set(lines.mapped('date'))
+
+    @api.constrains(*DAY_FIELDS, 'sheet_id', 'sheet_id.days_in_month')
+    def _check_day_codes(self):
+        for rec in self:
+            dim = rec.sheet_days_in_month or 0
+            holidays = rec._get_holiday_dates_set()
+            holiday_days = {d.day for d in holidays}
+
+            for i in range(1, 32):
+                field_name = f'day_{i:02d}'
+                val = (getattr(rec, field_name) or '').strip().upper()
+
+                if dim and i > dim and val:
+                    raise ValidationError(_("No puedes llenar el día %02d porque el mes tiene %s días.") % (i, dim))
+
+                if val and val not in ALLOWED_CODES:
+                    raise ValidationError(_("Código inválido '%s' en el día %02d.\nPermitidos: %s") %
+                                        (val, i, ', '.join(sorted(ALLOWED_CODES))))
+
+                if i in holiday_days and val != 'H':
+                    raise ValidationError(_("El día %02d es feriado y debe ser 'H'.") % i)
+
+
+    def _normalize_day_vals(self, vals):
+        for f in DAY_FIELDS:
+            if f in vals and vals[f]:
+                vals[f] = (vals[f] or '').strip().upper()
+        return vals
+
+    @api.model
+    def create(self, vals):
+        vals = self._normalize_day_vals(vals)
+        line = super().create(vals)
+        if line.sheet_id and line.employee_id:
+            has_day_data = any(vals.get(f'day_{i:02d}') for i in range(1, 32))
+            if not has_day_data:
+                line._generate_tareo_data()
+        return line
+
+    def write(self, vals):
+        vals = self._normalize_day_vals(vals)
+        return super().write(vals)
+    
+
+class AttendanceTareoHolidayYear(models.Model):
+    _name = 'attendance.tareo.holiday.year'
+    _description = 'Feriados por año (Tareo)'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _order = 'year desc, id desc'
+
+    name = fields.Char(string='Descripción', compute='_compute_name', store=True)
+    year = fields.Integer(string='Año', required=True, tracking=True)
+    company_id = fields.Many2one(
+        'res.company', string='Compañía', required=True,
+        default=lambda self: self.env.company, tracking=True
+    )
+    active = fields.Boolean(default=True)
+
+    line_ids = fields.One2many(
+        'attendance.tareo.holiday.line', 'year_id',
+        string='Fechas feriado', copy=True
+    )
+
+    _sql_constraints = [
+        ('holiday_year_company_uniq', 'unique(company_id, year)',
+         'Ya existe un registro de feriados para ese año y compañía.'),
+    ]
+
+    @api.depends('year')
+    def _compute_name(self):
+        for r in self:
+            r.name = _('Feriados %s') % (r.year or '')
+
+
+class AttendanceTareoHolidayLine(models.Model):
+    _name = 'attendance.tareo.holiday.line'
+    _description = 'Fecha feriado (Tareo)'
+    _order = 'date asc, id asc'
+
+    year_id = fields.Many2one(
+        'attendance.tareo.holiday.year',
+        string='Feriados del año', required=True, ondelete='cascade', index=True
+    )
+    company_id = fields.Many2one(
+        related='year_id.company_id', string='Compañía', store=True, readonly=True
+    )
+    year = fields.Integer(related='year_id.year', store=True, readonly=True)
+
+    date = fields.Date(string='Fecha', required=True, index=True)
+    description = fields.Char(string='Descripción')
+    active = fields.Boolean(default=True)
+
+    _sql_constraints = [
+        ('holiday_line_uniq', 'unique(year_id, date)',
+         'Esa fecha ya existe dentro del registro de feriados del año.'),
+    ]
+
+    @api.constrains('date', 'year_id')
+    def _check_date_matches_year(self):
+        for r in self:
+            if r.date and r.year_id and r.year_id.year and r.date.year != r.year_id.year:
+                raise ValidationError(_("La fecha %s no corresponde al año %s.") % (r.date, r.year_id.year))
+
+    # ---------- Aplicación a tareos ya creados ----------
+    def _apply_date_to_existing_sheets(self, d, set_h=True):
+        """Marca 'H' (o limpia) en todos los tareos del mes/año de esa fecha."""
+        Sheet = self.env['attendance.tareo.sheet'].sudo()
+        Line = self.env['attendance.tareo.line'].sudo()
+
+        sheets = Sheet.search([
+            ('company_id', '=', self.company_id.id),
+            ('month', '=', str(d.month)),
+            ('year', '=', str(d.year)),
+            ('state', '!=', 'approved'),
+        ])
+        if not sheets:
+            return
+
+        field_name = f'day_{d.day:02d}'
+
+        if set_h:
+            # Poner H a todos (bloqueado por constraint)
+            Line.search([('sheet_id', 'in', sheets.ids)]).write({field_name: 'H'})
+        else:
+            # Limpiar solo si NO es fin de semana y solo si estaba en H
+            # (evita borrar un H de sábado/domingo)
+            if d.weekday() in (5, 6):
+                return
+            lines = Line.search([('sheet_id', 'in', sheets.ids)])
+            to_clear = lines.filtered(lambda l: (getattr(l, field_name) or '').strip().upper() == 'H')
+            if to_clear:
+                to_clear.write({field_name: ''})
+
+    @api.model
+    def create(self, vals):
+        rec = super().create(vals)
+        if rec.active and rec.year_id.active and rec.date:
+            rec._apply_date_to_existing_sheets(rec.date, set_h=True)
+        return rec
+
+    def write(self, vals):
+        old = {r.id: (r.date, r.active, r.year_id.active) for r in self}
+        res = super().write(vals)
+
+        for r in self:
+            old_date, old_active, old_year_active = old.get(r.id, (None, None, None))
+            new_date = r.date
+            new_active = r.active and r.year_id.active
+
+            # si antes aplicaba y ahora no => limpiar
+            if old_date and (old_active and old_year_active) and (not new_active or (new_date and new_date != old_date)):
+                r._apply_date_to_existing_sheets(old_date, set_h=False)
+
+            # si ahora aplica => aplicar
+            if new_date and new_active and (new_date != old_date or not (old_active and old_year_active)):
+                r._apply_date_to_existing_sheets(new_date, set_h=True)
+
+        return res
+
+    def unlink(self):
+        for r in self:
+            if r.active and r.year_id.active and r.date:
+                r._apply_date_to_existing_sheets(r.date, set_h=False)
+        return super().unlink()
