@@ -614,20 +614,55 @@ class AttendanceTareoLine(models.Model):
             if f in vals and vals[f]:
                 vals[f] = (vals[f] or '').strip().upper()
         return vals
+    
+    def _sanitize_out_of_range_vals(self, vals, days_in_month):
+        """Fuerza a vacío los días > days_in_month (para evitar data inválida histórica)."""
+        if not days_in_month:
+            return vals
+        vals2 = dict(vals)
+        for i in range(days_in_month + 1, 32):
+            k = f'day_{i:02d}'
+            # si el usuario intenta poner algo en un día que no existe, error
+            if k in vals2 and vals2[k]:
+                raise ValidationError(_("No puedes llenar el día %02d porque el mes tiene %s días.") % (i, days_in_month))
+            # y si no lo toca, igual lo limpiamos
+            vals2.setdefault(k, False)
+        return vals2
 
     @api.model
     def create(self, vals):
         vals = self._normalize_day_vals(vals)
         line = super().create(vals)
+
+        # genera tareo si corresponde
         if line.sheet_id and line.employee_id:
             has_day_data = any(vals.get(f'day_{i:02d}') for i in range(1, 32))
             if not has_day_data:
                 line._generate_tareo_data()
+
+        # sanea días fuera de rango (por si quedaron)
+        dim = line.sheet_id.days_in_month or 0
+        if dim:
+            clean = {f'day_{i:02d}': False for i in range(dim + 1, 32)}
+            if clean:
+                super(AttendanceTareoLine, line).write(clean)
         return line
 
     def write(self, vals):
         vals = self._normalize_day_vals(vals)
-        return super().write(vals)
+
+        # Importante: write masivo (feriados) => agrupar por hoja (días del mes)
+        by_dim = {}
+        for rec in self:
+            dim = rec.sheet_id.days_in_month or 0
+            by_dim.setdefault(dim, self.env['attendance.tareo.line'])
+            by_dim[dim] |= rec
+
+        for dim, recs in by_dim.items():
+            vals2 = self._sanitize_out_of_range_vals(vals, dim) if dim else vals
+            super(AttendanceTareoLine, recs).write(vals2)
+
+        return True
     
 
 class AttendanceTareoHolidayYear(models.Model):
