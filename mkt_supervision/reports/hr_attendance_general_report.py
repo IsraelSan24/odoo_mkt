@@ -294,16 +294,9 @@ class AttendanceReportAll(models.TransientModel):
                     continue
 
                 tin = info.get('in')
-                tout = info.get('out')
 
-                # Formato: ingreso (línea 1) / salida (línea 2)
-                parts = []
-                if tin:
-                    parts.append(tin.strftime('%H:%M:%S'))
-                if tout:
-                    parts.append(tout.strftime('%H:%M:%S'))
-
-                cell_text = "\n".join(parts) if parts else ""
+                # Mostrar SOLO la hora de entrada; si no hay, marcar ausente
+                cell_text = tin.strftime('%H:%M:%S') if tin else ""
                 ws.write(data_row, col, cell_text, st_day_cell if cell_text else st_day_cell_absent)
 
             data_row += 1
