@@ -33,6 +33,11 @@
                 <page name="private_information" string="Private Information"
                     groups="hr_contract.group_hr_contract_manager,hr_recruitment.group_hr_recruitment_manager">
                     <group>
+                        <field name="is_validate" string="Validate Personal Information" widget="boolean_toggle" group="hr_contract.group_hr_contract_manager"/>
+                        <button string="Send documents" name="button_send_documents" type="object" class="oe_highlight" group="hr_contract.group_hr_contract_manager"/>
+                        <button string="Actualizar informacion" name="buton_update_applicant_partner" type="object" class="oe_highlight" group="hr_contract.group_hr_contract_manager"/>
+                    </group>
+                    <group>
                         <group string="Basic information">
                             <field name="birthday"/>
                             <field name="gender"/>
@@ -41,9 +46,6 @@
                             <field name="demonym"/>
                         </group>
                         <group string="Emergency information">
-                            <button string="Send documents" name="button_send_documents" type="object" class="oe_highlight" group="hr_contract.group_hr_contract_manager"/>
-			                <button string="Actualizar informacion" name="buton_update_applicant_partner" type="object" class="oe_highlight" group="hr_contract.group_hr_contract_manager"/>
-                            <field name="is_validate" widget="boolean_toggle" group="hr_contract.group_hr_contract_manager"/>
                             <field name="emergency_contact"/>
                             <field name="emergency_phone" widget="phone"/>
                             <field name="emergency_contact_relationship"/>
@@ -57,7 +59,7 @@
                             <field name="children"/>
                         </group>
                     </group>
-                    <group string="Employment relationship data">
+                    <group string="Pension System">
                         <group>
                             <field name="spreadsheet" invisible='True'/>
                             <field name="private_pension_system"/>
@@ -67,9 +69,12 @@
                         </group>
                         <group>
                             <field name="national_pension_system"/>
-                            <field name="fifth_category_income"/>
                         </group>
                     </group>
+                    <group string="Fifth Category Income">
+                        <field name="fifth_category_income"/>
+                    </group>
+
                     <group string="Education">
                         <field name="education_level"/>
                         <!-- <field name="education_start_date"/>
@@ -79,10 +84,10 @@
                     </group>
                     <group string="Documents">
                         <group>
-                            <field name="document_okay" widget="boolean_toggle" groups="hr_contract.group_hr_contract_manager"/>
+                            <field name="document_okay" string="Validate Personal Documents" widget="boolean_toggle" groups="hr_contract.group_hr_contract_manager"/>
+                            <button string="Update documents" name="attach_applicant_files" type="object" class="oe_highlight"/>
                         </group>
                         <group>
-                            <button string="Update documents" name="attach_applicant_files" type="object" class="oe_highlight"/>
                             <field name="current_dni" filename="current_dni_filename"/>
                             <field name="current_dni_filename" invisible="True"/>
                             <field name="is_current_dni" invisible="True"/>
@@ -91,14 +96,14 @@
                             <field name="current_dni_back_filename" invisible="True"/>
                             <field name="is_current_dni_back" invisible="True"/>
 
-                            <field name="services_receipt" filename="services_receipt_filename"/>
+                            <!-- <field name="services_receipt" filename="services_receipt_filename"/>
                             <field name="services_receipt_filename" invisible="True"/>
-                            <field name="is_services_receipt" invisible="True"/>
+                            <field name="is_services_receipt" invisible="True"/> -->
 
                             <field name="certijoven" filename="certijoven_filename"/>
                             <field name="certijoven_filename" invisible="True"/>
                             <field name="is_certijoven" invisible="True"/>
-
+<!-- 
                             <field name="t_record" filename="t_record_filename"/>
                             <field name="t_record_filename" invisible="True"/>
                             <field name="is_t_record" invisible="True"/>
@@ -117,12 +122,12 @@
 
                             <field name="contributions_report" filename="contributions_report_filename"/> 
                             <field name="contributions_report_filename" invisible="True"/>
-                            <field name="is_contributions_report" invisible="True"/> 
+                            <field name="is_contributions_report" invisible="True"/>  -->
                             
                         </group>
                     </group>
                     <group string="Family">
-                        <field name="children_okay" widget="boolean_toggle" groups="hr_contract.group_hr_contract_manager"/>
+                        <field name="children_okay" string="Validate Children Data" widget="boolean_toggle" groups="hr_contract.group_hr_contract_manager"/>
                     </group>
                         <table class="table table-bordered" style="padding: 0px 30px 0px 30px; border:none">
                             <colgroup>
@@ -150,104 +155,104 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="border: 2px solid black;"><field name="child_dni1" readonly="0"/></td>
-                                    <td style="border: 2px solid black;"><field name="child_full_name1" readonly="0"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_gender1" readonly="0"/></td> -->
-                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship1" readonly="0"/></td> -->
-                                    <td style="border: 2px solid black;"><field name="child_birthday1" readonly="0"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_address1" readonly="0"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_dni1" readonly="1"/></td>
+                                    <td style="border: 2px solid black;"><field name="child_full_name1" readonly="1"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_gender1" readonly="1"/></td> -->
+                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship1" readonly="1"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_birthday1" readonly="1"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_address1" readonly="1"/></td> -->
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile1_filename" invisible="True"/>
-                                        <field name="child_dnifile1" widget="binary" filename="child_dnifile1_filename"/>
+                                        <field name="child_dnifile1" widget="binary" filename="child_dnifile1_filename" readonly="1"/>
                                     </td>
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile1_back_filename" invisible="True"/>
-                                        <field name="child_dnifile1_back" widget="binary" filename="child_dnifile1_back_filename"/>
+                                        <field name="child_dnifile1_back" widget="binary" filename="child_dnifile1_back_filename" readonly="1"/>
                                     </td>
                                     <td style="border: none"></td>
                                 </tr>
                                 <tr>
-                                    <td style="border: 2px solid black;"><field name="child_dni2" readonly="0"/></td>
-                                    <td style="border: 2px solid black;"><field name="child_full_name2" readonly="0"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_gender2" readonly="0"/></td> -->
-                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship2" readonly="0"/></td> -->
-                                    <td style="border: 2px solid black;"><field name="child_birthday2" readonly="0"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_address2" readonly="0"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_dni2" readonly="1"/></td>
+                                    <td style="border: 2px solid black;"><field name="child_full_name2" readonly="1"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_gender2" readonly="1"/></td> -->
+                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship2" readonly="1"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_birthday2" readonly="1"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_address2" readonly="1"/></td> -->
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile2_filename" invisible="True"/>
-                                        <field name="child_dnifile2" widget="binary" filename="child_dnifile2_filename"/>
+                                        <field name="child_dnifile2" widget="binary" filename="child_dnifile2_filename" readonly="1"/>
                                     </td>
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile2_back_filename" invisible="True"/>
-                                        <field name="child_dnifile2_back" widget="binary" filename="child_dnifile2_back_filename"/>
+                                        <field name="child_dnifile2_back" widget="binary" filename="child_dnifile2_back_filename" readonly="1"/>
                                     </td>
                                     <td style="border: none"></td>
                                 </tr>
                                 <tr>
-                                    <td style="border: 2px solid black;"><field name="child_dni3" readonly="0"/></td>
-                                    <td style="border: 2px solid black;"><field name="child_full_name3" readonly="0"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_gender3" readonly="0"/></td> -->
-                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship3" readonly="0"/></td> -->
-                                    <td style="border: 2px solid black;"><field name="child_birthday3" readonly="0"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_address3" readonly="0"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_dni3" readonly="1"/></td>
+                                    <td style="border: 2px solid black;"><field name="child_full_name3" readonly="1"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_gender3" readonly="1"/></td> -->
+                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship3" readonly="1"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_birthday3" readonly="1"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_address3" readonly="1"/></td> -->
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile3_filename" invisible="True"/>
-                                        <field name="child_dnifile3" widget="binary" filename="child_dnifile3_filename"/>
+                                        <field name="child_dnifile3" widget="binary" filename="child_dnifile3_filename" readonly="1"/>
                                     </td>
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile3_back_filename" invisible="True"/>
-                                        <field name="child_dnifile3_back" widget="binary" filename="child_dnifile3_back_filename"/>
+                                        <field name="child_dnifile3_back" widget="binary" filename="child_dnifile3_back_filename" readonly="1"/>
                                     </td>
                                     <td style="border: none"></td>
                                 </tr>
                                 <tr>
-                                    <td style="border: 2px solid black;"><field name="child_dni4" readonly="0"/></td>
-                                    <td style="border: 2px solid black;"><field name="child_full_name4" readonly="0"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_gender4" readonly="0"/></td> -->
-                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship4" readonly="0"/></td> -->
-                                    <td style="border: 2px solid black;"><field name="child_birthday4" readonly="0"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_address4" readonly="0"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_dni4" readonly="1"/></td>
+                                    <td style="border: 2px solid black;"><field name="child_full_name4" readonly="1"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_gender4" readonly="1"/></td> -->
+                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship4" readonly="1"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_birthday4" readonly="1"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_address4" readonly="1"/></td> -->
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile4_filename" invisible="True"/>
-                                        <field name="child_dnifile4" widget="binary" filename="child_dnifile4_filename"/>
+                                        <field name="child_dnifile4" widget="binary" filename="child_dnifile4_filename" readonly="1"/>
                                     </td>
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile4_back_filename" invisible="True"/>
-                                        <field name="child_dnifile4_back" widget="binary" filename="child_dnifile4_back_filename"/>
+                                        <field name="child_dnifile4_back" widget="binary" filename="child_dnifile4_back_filename" readonly="1"/>
                                     </td>
                                     <td style="border: none"></td>
                                 </tr>
                                 <tr>
-                                    <td style="border: 2px solid black;"><field name="child_dni5" readonly="0"/></td>
-                                    <td style="border: 2px solid black;"><field name="child_full_name5" readonly="0"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_gender5" readonly="0"/></td> -->
-                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship5" readonly="0"/></td> -->
-                                    <td style="border: 2px solid black;"><field name="child_birthday5" readonly="0"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_address5" readonly="0"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_dni5" readonly="1"/></td>
+                                    <td style="border: 2px solid black;"><field name="child_full_name5" readonly="1"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_gender5" readonly="1"/></td> -->
+                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship5" readonly="1"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_birthday5" readonly="1"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_address5" readonly="1"/></td> -->
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile5_filename" invisible="True"/>
-                                        <field name="child_dnifile5" widget="binary" filename="child_dnifile5_filename"/>
+                                        <field name="child_dnifile5" widget="binary" filename="child_dnifile5_filename" readonly="1"/>
                                     </td>
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile5_back_filename" invisible="True"/>
-                                        <field name="child_dnifile5_back" widget="binary" filename="child_dnifile5_back_filename"/>
+                                        <field name="child_dnifile5_back" widget="binary" filename="child_dnifile5_back_filename" readonly="1"/>
                                     </td>
                                     <td style="border: none"></td>
                                 </tr>
                                 <tr>
-                                    <td style="border: 2px solid black;"><field name="child_dni6" readonly="0"/></td>
-                                    <td style="border: 2px solid black;"><field name="child_full_name6" readonly="0"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_gender6" readonly="0"/></td> -->
-                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship6" readonly="0"/></td> -->
-                                    <td style="border: 2px solid black;"><field name="child_birthday6" readonly="0"/></td>
-                                    <!-- <td style="border: 2px solid black;"><field name="child_address6" readonly="0"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_dni6" readonly="1"/></td>
+                                    <td style="border: 2px solid black;"><field name="child_full_name6" readonly="1"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_gender6" readonly="1"/></td> -->
+                                    <!-- <td style="border: 2px solid black;"><field name="child_relationship6" readonly="1"/></td> -->
+                                    <td style="border: 2px solid black;"><field name="child_birthday6" readonly="1"/></td>
+                                    <!-- <td style="border: 2px solid black;"><field name="child_address6" readonly="1"/></td> -->
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile6_filename" invisible="True"/>
-                                        <field name="child_dnifile6" widget="binary" filename="child_dnifile6_filename"/>
+                                        <field name="child_dnifile6" widget="binary" filename="child_dnifile6_filename" readonly="1"/>
                                     </td>
                                     <td style="border: 2px solid black;">
                                         <field name="child_dnifile6_back_filename" invisible="True"/>
-                                        <field name="child_dnifile6_back" widget="binary" filename="child_dnifile6_back_filename"/>
+                                        <field name="child_dnifile6_back" widget="binary" filename="child_dnifile6_back_filename" readonly="1"/>
                                     </td>
                                     <td style="border: none"></td>
                                 </tr>
