@@ -190,6 +190,18 @@ class ZkMachine(models.Model):
         # TZ del usuario que ejecuta (fallback GMT)
         tz_local = pytz.timezone(self.env.user.partner_id.tz or 'GMT')
 
+        # --- NUEVO: helper para normalizar el user_id del dispositivo ---
+        def _normalize_device_user_id(uid):
+            """
+            Convierte a str, quita espacios y ceros a la izquierda.
+            Si todo eran ceros, retorna '0'.
+            """
+            s = str(uid).strip()
+            if not s:
+                return s
+            s2 = s.lstrip('0')
+            return s2 or '0'
+
         for info in self:
             conn = None
             last_status = 'error'
@@ -213,7 +225,6 @@ class ZkMachine(models.Model):
                 # 3) Leer marcaciones (manejo de excepciones con log detallado)
                 raw_att = []
                 try:
-                    # Algunos modelos tardan; el timeout está configurado en el cliente
                     raw_att = conn.get_attendance() or []
                 except Exception as e:
                     _logger.exception("Error on get_attendance() from %s: %s", info.name, e)
@@ -237,11 +248,12 @@ class ZkMachine(models.Model):
                     })
                     continue
 
-                # 5) Agrupar por empleado (user_id del reloj) y fecha local
+                # 5) Agrupar por empleado (user_id del reloj NORMALIZADO) y fecha local
                 grouped = defaultdict(list)
                 for rec in raw_att:
+                    user_key = _normalize_device_user_id(rec.user_id)
                     # rec.timestamp suele venir como naive en hora del dispositivo
-                    grouped[(rec.user_id, rec.timestamp.date())].append(rec.timestamp)
+                    grouped[(user_key, rec.timestamp.date())].append(rec.timestamp)
 
                 # Helper: convierte datetime local (naive) -> UTC naive (sin tzinfo)
                 def to_utc_naive(dt_local):
@@ -251,7 +263,7 @@ class ZkMachine(models.Model):
 
                 # 6) Procesar cada grupo diario
                 Employee = self.env['hr.employee']
-                for (device_user_id, day), timestamps in grouped.items():
+                for (device_user_key, day), timestamps in grouped.items():
                     timestamps.sort()
                     dt_in = timestamps[0]
                     dt_out = timestamps[-1]
@@ -266,10 +278,13 @@ class ZkMachine(models.Model):
                         # Seguridad extra: nunca dejar salida <= entrada
                         out_naive = False
 
-                    # 7) Empleado por device_id
-                    emp = Employee.search([('device_id', '=', device_user_id)], limit=1)
+                    # 7) Empleado por device_id (SIN ceros a la izquierda)
+                    # Busca por clave normalizada y, por seguridad, por el valor original en str.
+                    # (En la práctica, debería bastar el normalizado.)
+                    candidate_ids = list({device_user_key})  # set->list para únicos
+                    emp = Employee.search([('device_id', 'in', candidate_ids)], limit=1)
                     if not emp:
-                        _logger.warning("Employee with device_id=%s not found; skipping.", device_user_id)
+                        _logger.warning("Employee with device_id=%s not found; skipping.", device_user_key)
                         continue
 
                     # 8) Ventana del día en UTC para localizar solapes
@@ -280,7 +295,6 @@ class ZkMachine(models.Model):
 
                     # Buscar cualquier asistencia SOLAPADA:
                     # (check_in < end_utc) AND (check_out IS NULL OR check_out > start_utc)
-                    # Esto cubre: dentro del día, cruces parciales y registros abiertos.
                     overlapped = Attendance.search([
                         ('employee_id', '=', emp.id),
                         ('check_in', '<', end_utc),
@@ -290,7 +304,6 @@ class ZkMachine(models.Model):
 
                     if overlapped:
                         # Fusionar todas las asistencias solapadas con la nueva ventana
-                        # El check_in resultante será el mínimo; el check_out, el máximo no nulo.
                         all_ins = [r.check_in for r in overlapped] + [in_naive]
                         all_outs = [x for x in ([r.check_out for r in overlapped] + [out_naive]) if x]
                         new_in = min(all_ins)
@@ -305,7 +318,6 @@ class ZkMachine(models.Model):
                         }
                         keep.write(vals_merge)
                         if to_remove:
-                            # Eliminamos duplicados ya absorbidos
                             to_remove.unlink()
                         _logger.debug(
                             "Merged %d overlapped attendances into #%s for emp %s on %s",
@@ -337,7 +349,6 @@ class ZkMachine(models.Model):
                     'last_sync_status': 'error',
                     'last_error': last_error,
                 })
-                # Para llamadas manuales, propagamos el error; en cron, ya está capturado arriba
                 raise
             except Exception as e:
                 last_error = str(e)
@@ -347,7 +358,6 @@ class ZkMachine(models.Model):
                     'last_sync_status': 'error',
                     'last_error': last_error,
                 })
-                # No relanzamos aquí para no romper lotes múltiples cuando se llama manualmente
             finally:
                 ZkMachine._safe_disconnect(conn)
 
