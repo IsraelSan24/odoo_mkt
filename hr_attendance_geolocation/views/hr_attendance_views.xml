@@ -4,6 +4,15 @@
         <field name="model">hr.attendance</field>
         <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form" />
         <field name="arch" type="xml">
+            
+            <!-- Agregar campos necesarios para attrs como invisibles -->
+            <xpath expr="//form/sheet" position="inside">
+                <field name="check_in_latitude" invisible="1"/>
+                <field name="check_in_longitude" invisible="1"/>
+                <field name="check_out_latitude" invisible="1"/>
+                <field name="check_out_longitude" invisible="1"/>
+            </xpath>
+
             <xpath expr="//form/sheet/group" position="after">
                 <group
                     name="locations"
@@ -23,6 +32,21 @@
                         /><br />
                         Longitude: <field name="check_out_longitude_text" nolabel="1" />
                     </span>
+                </group>
+                <!-- DEBUG: Campo para ver el JSON -->
+                <!-- <group name="debug_json" string="Debug Data" colspan="4" 
+                       attrs="{'invisible': [('check_in_latitude', '=', False)]}">
+                    <field name="map_location_data" readonly="1" colspan="2"/>
+                </group> -->
+                
+                <!-- Visualización del mapa (solo si hay coordenadas) -->
+                <group name="map_visualization" string="Map Visualization" colspan="4" 
+                       attrs="{'invisible': [('check_in_latitude', '=', False)]}">
+                    <field name="map_location_data" 
+                           widget="google_map_viewer" 
+                           nolabel="1" 
+                           colspan="2"
+                           force_save="0"/>
                 </group>
             </xpath>
         </field>
@@ -55,4 +79,60 @@
             </field>
         </field>
     </record>
+
+<record id="hr_view_employee_form_custom" model="ir.ui.view">
+        <field name="name">hr.employee.form.custom</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group/field[@name='work_location_id']" position="replace">
+                <field name="work_geolocation_id" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_attendance_geolocation_location_view_form" model="ir.ui.view">
+        <field name="name">hr.attendance.geolocation.location.form</field>
+        <field name="model">hr.attendance.geolocation.location</field>
+        <field name="arch" type="xml">
+            <form string="Geolocation Location">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="code" readonly="1"/>
+                            <field name="name" />
+                            <field name="proximity_radius" />
+                            <field name="latitude" />
+                            <field name="longitude" />
+                        </group>
+                        <group string="Map Location">
+                            <field name="map_widget_field" string=" " widget="google_map_picker" options="{'longitude_field': 'longitude', 'latitude_field': 'latitude'}" colspan="2" nolabel="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_attendance_geolocation_location_view_tree" model="ir.ui.view">
+        <field name="name">hr.attendance.geolocation.location.tree</field>
+        <field name="model">hr.attendance.geolocation.location</field>
+        <field name="arch" type="xml">
+            <tree string="Geolocation Location">
+                <field name="code" readonly='1'/>
+                <field name="name" readonly='1'/>
+                <field name="latitude" readonly='1'/>
+                <field name="longitude" readonly='1'/>
+                <field name="proximity_radius" readonly='1'/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_attendance_geolocation_locations" model="ir.actions.act_window">
+        <field name="name">Locations</field>
+        <field name="res_model">hr.attendance.geolocation.location</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
 </odoo>
+

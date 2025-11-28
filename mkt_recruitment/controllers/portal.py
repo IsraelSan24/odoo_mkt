@@ -56,24 +56,21 @@ _logger = logging.getLogger(__name__)
 class RecruitmentPortal(portal.CustomerPortal):
 
     portal.CustomerPortal.MANDATORY_BILLING_FIELDS.remove("city")
+    portal.CustomerPortal.MANDATORY_BILLING_FIELDS.remove("email")
+    portal.CustomerPortal.MANDATORY_BILLING_FIELDS.remove("country_id")
     MANDATORY_BILLING_FIELDS = portal.CustomerPortal.MANDATORY_BILLING_FIELDS + [
         "personal_email",
-        "emergency_phone",
-        "reference_location",
-        "emergency_contact",
-        "emergency_contact_relationship",
-        "l10n_pe_district",
-        "vat",
-        "gender",
-        "education_level",
-        "education_start_date",
-        "education_end_date",
-        "institution",
-        "profession",
         "birthday",
+        "gender",
+        "vat",
         "marital",
-        "children",
+        
+        "state_id",
         "city_id",
+        "l10n_pe_district",
+        "reference_location",
+
+        "education_level",
         ]
 
     OPTIONAL_BILLING_FIELDS = portal.CustomerPortal.OPTIONAL_BILLING_FIELDS + [
@@ -178,21 +175,24 @@ class RecruitmentPortal(portal.CustomerPortal):
         })
 
         if post and request.httprequest.method == 'POST':
-            # 🟢 Evitar errores con checkboxes (que no se mandan si no están marcados)
-            for field in [
-                'private_pension_system', 'national_pension_system',
-                'coming_from_onp', 'coming_from_afp', 'afp_first_job'
-            ]:
-                post[field] = post.get(field, False)
+            # Evitar errores con checkboxes (que no se mandan si no están marcados)
+            if not 'ommit_validation_pension_system_checkboxes' in post:
+                _logger.info("OMMIT VALIDATION PENSION SYSTEM CHECKBOXES")
+                for field in [
+                    'private_pension_system', 'national_pension_system',
+                    'coming_from_onp', 'coming_from_afp', 'afp_first_job'
+                ]:
+                    post[field] = post.get(field, False)
 
-            # 🔍 Obtener campos válidos desde el modelo res.partner
+            # Obtener campos válidos desde el modelo res.partner
             partner_fields = request.env['res.partner'].sudo().fields_get()
             valid_keys = list(partner_fields.keys())
 
-            # 🟡 Filtramos post para evitar errores por campos inexistentes
+            _logger.info(post)
+            # Filtramos post para evitar errores por campos inexistentes
             safe_post = {k: v for k, v in post.items() if k in valid_keys}
 
-            # 🟢 Convertir a int los IDs si existen
+            # Convertir a int los IDs si existen
             for field in ['country_id', 'state_id']:
                 if field in safe_post:
                     try:
@@ -200,33 +200,67 @@ class RecruitmentPortal(portal.CustomerPortal):
                     except Exception:
                         safe_post[field] = False
 
-            # 🟢 Ajuste si usas "zipcode"
-            if 'zipcode' in safe_post:
-                safe_post['zip'] = safe_post.pop('zipcode')
+            # Validación opcional solo para campos reales
+            # error, error_message = {}, []
+            # for field_name in self.MANDATORY_BILLING_FIELDS:
+            #     if field_name in valid_keys and not post.get(field_name):
+            #         error[field_name] = 'missing'
 
-            # 🟢 Validación opcional solo para campos reales
-            error, error_message = {}, []
-            for field_name in self.MANDATORY_BILLING_FIELDS:
-                if field_name in valid_keys and not post.get(field_name):
-                    error[field_name] = 'missing'
+            # LISTA DE TUS CAMPOS DE TIPO FILE
+            file_fields = [
+                'child_dnifile1', 'child_dnifile1_back', 
+                'child_dnifile2', 'child_dnifile2_back',
+                'child_dnifile3', 'child_dnifile3_back',
+                'child_dnifile4', 'child_dnifile4_back',
+                'child_dnifile5', 'child_dnifile5_back',
+                'child_dnifile6', 'child_dnifile6_back'
+            ]
 
-            values.update({'error': error, 'error_message': error_message})
-            values.update(post)
+            for field_name in file_fields:
+                # Verificar si el campo vino en el POST
+                if field_name in safe_post:
+                    file_stream = safe_post[field_name]
+                    
+                    # Verificar si es un objeto FileStorage (archivo subido) y si tiene contenido
+                    if hasattr(file_stream, 'read'):
+                        # Leer el archivo y convertirlo a base64
+                        file_content = file_stream.read()
+                        
+                        if file_content:
+                            # Si hay contenido, codificamos a base64
+                            encoded_file = base64.b64encode(file_content)
+                            safe_post[field_name] = encoded_file
+                            
+                            # Opcional: Si tienes campos para guardar el nombre del archivo
+                            # safe_post[field_name + '_name'] = file_stream.filename
+                        else:
+                            # Si el archivo está vacío (ej. el usuario no subió nada nuevo),
+                            # eliminamos la clave para no sobrescribir lo existente con vacío
+                            # OJO: Si quieres permitir borrar, la lógica es distinta.
+                            safe_post.pop(field_name)
+                    else:
+                        # Si no es un archivo (ej. es un string vacío), lo quitamos para no dar error
+                        if not safe_post[field_name]:
+                            safe_post.pop(field_name)
 
-            if not error:
-                safe_post['is_validate'] = True
-                partner.sudo().write(safe_post)
-                partner.sudo()._onchange_age()
 
-                return request.redirect(redirect or '/my/documents')
+            # values.update({'error': error, 'error_message': error_message})
+            values.update(safe_post)
+            # if not error:
+            safe_post['is_validate'] = True
+            partner.sudo().write(safe_post)
+            partner.sudo()._onchange_age()
+
+            return request.redirect(redirect or '/my/home')
 
         # 🔁 Datos auxiliares para renderizar la página
+        _logger.info(request.env['res.country.state'].sudo().search([('country_id.code','=','PE')]))
         values.update({
             'partner': partner,
-            'countries': request.env['res.country'].sudo().search([]),
+            'countries': request.env['res.country'].sudo().search([('code','=','PE')]),
             'districts': request.env['l10n_pe.res.city.district'].sudo().search([]),
-            'states': request.env['res.country.state'].sudo().search([]),
-            'cities': request.env['res.city'].sudo().search([]),
+            'states': request.env['res.country.state'].sudo().search([('country_id.code','=','PE')]),
+            'cities': request.env['res.city'].sudo().search([('country_id.code','=','PE')]),
             'genders': partner.gender,
             'education_levels': partner.education_level,
             'emergency_contact_relationships': partner.emergency_contact_relationship,

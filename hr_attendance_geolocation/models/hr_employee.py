@@ -7,6 +7,12 @@ from odoo import models, fields, api
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
+    work_geolocation_id = fields.Many2one(
+        'hr.attendance.geolocation.location',
+        string='Work Location',
+        help='The location where the employee is expected to work.'
+    )
+
     def attendance_manual(self, next_action, entered_pin=False, location=False):
         res = super(
             HrEmployee, self.with_context(attendance_location=location)

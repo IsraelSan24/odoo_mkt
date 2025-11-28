@@ -3,8 +3,6 @@
 
     <template id="portal_layout_tooltip" inherit_id="portal.portal_layout">
         <xpath expr="//div[@class='o_portal_my_details']" position="before">
-            <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/portal_layout_tooltip.css"/>
-            <script type="text/javascript" src="/mkt_recruitment/static/src/js/portal_layout_tooltip.js"></script>
             <div class="custom-signal">
                 <span class="close-icon">×</span>
                 Como primer paso, ingresa a detalles y completa tu información.
@@ -14,6 +12,7 @@
 
     <template id="portal_my_details_form_attribute" inherit_id="portal.portal_my_details">
         <xpath expr="//form" position="replace">
+            <script src="/mkt_recruitment/static/src/js/portal_my_details.js"></script>
             <form action="/my/account" method="post" enctype="multipart/form-data"> 
                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                 <div class="container o_portal_details p-3">
@@ -27,13 +26,13 @@
                     <div class="form-group">
                         <div class="row bg-info d-flex align-items-center justify-content-center py-2 mb-2">
                             <div class="col text-center">
-                                <h2>Data Sheet</h2>
+                                <h2>Ficha de Datos</h2>
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-3 bg-white border rounded rounded-lg">
+                    <div id="personal_info" class="row mt-3 bg-white border rounded rounded-lg">
                         <div class="col-md-3 bg-info d-flex align-items-center justify-content-center py-3">
-                            <div class="text-center">
+                            <div class="text-center" style="font-weight: 700;">
                                 <i class="fa fa-user fa-3x mb-2 spin-animation" role="img" aria-label="Persona"></i>
                                 <p class="mb-0">Personal information</p>
                             </div>
@@ -41,72 +40,93 @@
                         <div class="col-md-9 p-4">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <script type="text/javascript" src="/mkt_recruitment/static/src/js/portal_my_details.js"></script>
-                                    <div t-attf-class="form-group #{error.get('name') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="name">Name and Surname</label>
-                                        <t t-if="partner.is_validate == False">
-                                            <input type="text" id="name" name="name" t-attf-class="form-control #{error.get('name') and 'is-invalid' or ''}" t-att-value="name or partner.name" />
+                                    <div t-attf-class="form-group #{error.get('l10n_latam_identification_type_id') and 'o_has_error' or ''}">
+                                        <label class="form-control-label">Tipo de Identificación</label>
+                                        <t t-if="partner.l10n_latam_identification_type_id.name">
+                                            <span class="d-block mt-0" t-esc="partner.l10n_latam_identification_type_id.name"/>
                                         </t>
                                         <t t-else="">
-                                            <t t-if="partner.name">
-                                                <input type="text" id="name" name="name" t-attf-class="form-control #{error.get('name') and 'is-invalid' or ''}" t-att-value="name or partner.name" style="display: none;"/>
-                                                <br/>
-                                                <span t-esc="partner.name"/>
-                                            </t>
-                                            <t t-else="">
-                                                <input type="text" id="name" name="name" t-attf-class="form-control #{error.get('name') and 'is-invalid' or ''}" t-att-value="name or partner.name" style="display: none;"/>
-                                            </t>
+                                            <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                         </t>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div t-attf-class="form-group #{error.get('email') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="email">E-mail address</label>
-                                        <t t-if="partner.is_validate == False">
-                                            <input type="email" id="email" name="email" t-attf-class="form-control #{error.get('email') and 'is-invalid' or ''}" t-att-value="email or partner.email" style="display: none;"/>
-                                            <input type="email" id="email" name="personal_email" t-attf-class="form-control #{error.get('email') and 'is-invalid' or ''}" t-att-value="personal_email or partner.personal_email"/>
+                                    <div t-attf-class="form-group #{error.get('vat') and 'o_has_error' or ''}">
+                                        <label class="form-control-label">Nro. de Identificación</label>
+                                        <t t-if="partner.vat">
+                                            <span class="d-block mt-0" t-esc="partner.vat"/>
                                         </t>
                                         <t t-else="">
-                                            <t t-if="partner.email">
-                                                <input type="email" id="email" name="email" t-attf-class="form-control #{error.get('email') and 'is-invalid' or ''}" t-att-value="email or partner.email" style="display: none;"/>
-                                                <input type="email" id="email" name="personal_email" t-att-value="personal_email or partner.personal_email" style="display: none;"/>
-                                                <br/>
-                                                <span t-esc="partner.email"/>
-                                            </t>
-                                            <t t-else="">
-                                                <input type="email" id="email" name="email" t-attf-class="form-control #{error.get('email') and 'is-invalid' or ''}" t-att-value="email or partner.email" style="display: none;"/>
-                                                <input type="email" id="email" name="personal_email" t-att-value="personal_email or partner.personal_email" style="display: none;"/>
-                                            </t>
+                                            <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                         </t>
                                     </div>
-                                    
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div t-attf-class="form-group #{error.get('phone') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="phone">N° Cell Phone</label>
-                                        <t t-if="partner.is_validate == False">
-                                            <input type="tel" id="phone" name="phone" t-attf-class="form-control #{error.get('phone') and 'is-invalid' or ''}" t-att-value="phone or partner.phone" />
+                                    <div t-attf-class="form-group #{error.get('name') and 'o_has_error' or ''}">
+                                        <label class="form-control-label" for="name">Name and Surname</label>
+                                        <!-- <t t-if="partner.is_validate == False">
+                                            <input type="text" id="name" name="name" t-attf-class="form-control #{error.get('name') and 'is-invalid' or ''}" t-att-value="name or partner.name" />
+                                        </t> -->
+                                        <!-- <t t-else=""> -->
+                                        <t t-if="partner.name">
+                                            <span class="d-block mt-0" t-esc="partner.name"/>
                                         </t>
                                         <t t-else="">
-                                            <t t-if="partner.phone">
-                                                <input type="tel" id="phone" name="phone" t-attf-class="form-control #{error.get('phone') and 'is-invalid' or ''}" t-att-value="phone or partner.phone"  style="display: none;"/>
-                                                <br/>
-                                                <span t-esc="partner.phone"/>
+                                            <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
+                                        </t>
+                                        <!-- </t> -->
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div t-attf-class="form-group #{error.get('demonym') and 'o_has_error' or ''}">
+                                        <label class="form-control-label" for="demonym">Nacionalidad</label>
+                                        <!-- <t t-if="partner.is_validate == False">
+                                            <input type="text" id="demonym" name="demonym" t-attf-class="form-control #{error.get('demonym') and 'is-invalid' or ''}" t-att-value="demonym or partner.demonym" />
+                                        </t>
+                                        <t t-else=""> -->
+                                        <t t-if="partner.demonym">
+                                            <span class="d-block mt-0" t-esc="partner.demonym"/>
+                                        </t>
+                                        <t t-else="">
+                                            <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
+                                        </t>
+                                        <!-- </t> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div t-attf-class="form-group #{error.get('birthday') and 'o_has_error' or ''}">
+                                        <label class="form-control-label" for="birthday">Birthday</label>*
+                                        <t t-if="partner.is_validate == False">
+                                            <input type="date" 
+                                                   id="birthday" 
+                                                   name="birthday" 
+                                                   t-attf-class="form-control #{error.get('birthday') and 'is-invalid' or ''}" 
+                                                   t-att-value="birthday or partner.birthday"
+                                                   required="required"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="partner.birthday">
+                                                <span class="d-block mt-0" t-esc="partner.birthday"/>
                                             </t>
                                             <t t-else="">
-                                                <input type="tel" id="phone" name="phone" t-attf-class="form-control #{error.get('phone') and 'is-invalid' or ''}" t-att-value="phone or partner.phone"  style="display: none;"/>
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                             </t>
                                         </t>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div t-attf-class="form-group #{error.get('gender') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="gender">Gender</label>*
+                                        <label class="form-control-label" for="gender">Gender</label>*
                                         <t t-if="partner.is_validate == False">
-                                        
-                                            <select name="gender" id="gender" t-attf-class="form-control #{error.get('gender') and 'is-invalid' or ''}" t-att-value="genders">
+                                            <select name="gender" 
+                                                    id="gender" 
+                                                    t-attf-class="form-control #{error.get('gender') and 'is-invalid' or ''}" 
+                                                    t-att-value="genders"
+                                                    required="required">
                                                 <option value="">Select Gender</option>
                                                 <option value="male" t-att-selected="genders == 'male'">Male</option>
                                                 <option value="female" t-att-selected="genders == 'female'">Female</option>
@@ -114,31 +134,15 @@
                                         </t>
                                         <t t-else="">
                                             <t t-if="partner.gender">
-                                                <select name="gender" id="gender" t-attf-class="form-control #{error.get('gender') and 'is-invalid' or ''}" t-att-value="genders" style="display: none;">
-                                                    <option value="">Select Gender</option>
-                                                    <option value="male" t-att-selected="genders == 'male'">Male</option>
-                                                    <option value="female" t-att-selected="genders == 'female'">Female</option>
-                                                </select>
-                                                <br/>
-                                                <span t-esc="partner.gender"/>
+                                                <span class="d-block mt-0" t-esc="partner.gender"/>
                                             </t>
                                             <t t-else="">
-                                                <select name="gender" id="gender" t-attf-class="form-control #{error.get('gender') and 'is-invalid' or ''}" t-att-value="genders" style="display: none;">
-                                                    <option value="">Select Gender</option>
-                                                    <option value="male" t-att-selected="genders == 'male'">Male</option>
-                                                    <option value="female" t-att-selected="genders == 'female'">Female</option>
-                                                </select>
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                             </t>
                                         </t>
                                     </div>
                                 </div>
-                                <div t-attf-class="form-group mb-1 #{error.get('company_name') and 'o_has_error' or ''} col-xl-6" style="display:none;">
-                                    <label class="col-form-label label-optional" for="company_name">Company Name</label>
-                                    <input type="text" name="company_name" t-attf-class="form-control #{error.get('company_name') and 'is-invalid' or ''}" t-att-value="company_name or partner.commercial_company_name" t-att-disabled="None if partner_can_edit_vat else '1'" />
-                                    <small t-if="not partner_can_edit_vat" class="form-text text-muted d-block d-xl-none">
-                                        Changing company name is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.
-                                    </small>
-                                </div>
+                            
                                 <div t-attf-class="form-group mb-1 #{error.get('vat') and 'o_has_error' or ''} col-xl-6" style="display:none;">
                                     <label class="col-form-label label-optional" for="vat">VAT Number</label>
                                     <input type="text" name="vat" t-attf-class="form-control #{error.get('vat') and 'is-invalid' or ''}" t-att-value="vat or partner.vat" t-att-disabled="None if partner_can_edit_vat else '1'" />
@@ -150,28 +154,14 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div t-attf-class="form-group #{error.get('birthday') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="birthday">Birthday</label>*
-                                        <t t-if="partner.is_validate == False">
-                                            <input type="date" id="birthday" name="birthday" t-attf-class="form-control #{error.get('birthday') and 'is-invalid' or ''}" t-att-value="birthday or partner.birthday"/>
-                                        </t>
-                                        <t t-else="">
-                                            <t t-if="partner.birthday">
-                                                <input type="date" id="birthday" name="birthday" t-attf-class="form-control #{error.get('birthday') and 'is-invalid' or ''}" t-att-value="birthday or partner.birthday" style="display: none;"/>
-                                                <br/>
-                                                <span t-esc="partner.birthday"/>
-                                            </t>
-                                            <t t-else="">
-                                                <input type="date" id="birthday" name="birthday" t-attf-class="form-control #{error.get('birthday') and 'is-invalid' or ''}" t-att-value="birthday or partner.birthday" style="display: none;"/>
-                                            </t>
-                                        </t>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
                                     <div t-attf-class="form-group #{error.get('marital') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="marital">Marital status</label>*
+                                        <label class="form-control-label" for="marital">Marital status</label>*
                                         <t t-if="partner.is_validate == False">
-                                            <select name="marital" id="marital" t-attf-class="form-control #{error.get('marital') and 'is-invalid' or ''}" t-att-value="maritals or partner.marital">
+                                            <select name="marital" 
+                                                    id="marital" 
+                                                    t-attf-class="form-control #{error.get('marital') and 'is-invalid' or ''}" 
+                                                    t-att-value="maritals or partner.marital"
+                                                    required="required">
                                                 <option value="">Marital status...</option>
                                                 <option value="Soltero/a" t-att-selected="maritals == 'Soltero/a'">Single</option>
                                                 <option value="Viudo/a" t-att-selected="maritals == 'Viudo/a'">Widower</option>
@@ -182,82 +172,99 @@
                                         </t>
                                         <t t-else="">
                                             <t t-if="partner.marital">
-                                                <select name="marital" id="marital" t-attf-class="form-control #{error.get('marital') and 'is-invalid' or ''}" t-att-value="maritals or partner.marital" style="display: none;">
-                                                    <option value="">Marital status...</option>
-                                                    <option value="Soltero/a" t-att-selected="maritals == 'Soltero/a'">Single</option>
-                                                    <option value="Viudo/a" t-att-selected="maritals == 'Viudo/a'">Widower</option>
-                                                    <option value="Casado/a" t-att-selected="maritals == 'Casado/a'">Married</option>
-                                                    <option value="Divorciado/a" t-att-selected="maritals == 'Divorciado/a'">Divorced</option>
-                                                    <option value="Conviviente" t-att-selected="maritals == 'Conviviente'">Cohabitant</option>
-                                                </select>
-                                                <br/>
-                                                <span t-esc="partner.marital"/>
+                                                <span class="d-block mt-0" t-esc="partner.marital"/>
                                             </t>
                                             <t t-else="">
-                                                <select name="marital" id="marital" t-attf-class="form-control #{error.get('marital') and 'is-invalid' or ''}" t-att-value="maritals or partner.marital" style="display: none;">
-                                                    <option value="">Marital status...</option>
-                                                    <option value="Soltero/a" t-att-selected="maritals == 'Soltero/a'">Single</option>
-                                                    <option value="Viudo/a" t-att-selected="maritals == 'Viudo/a'">Widower</option>
-                                                    <option value="Casado/a" t-att-selected="maritals == 'Casado/a'">Married</option>
-                                                    <option value="Divorciado/a" t-att-selected="maritals == 'Divorciado/a'">Divorced</option>
-                                                    <option value="Conviviente" t-att-selected="maritals == 'Conviviente'">Cohabitant</option>
-                                                </select>
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
+                                            </t>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div t-attf-class="form-group #{error.get('phone') and 'o_has_error' or ''}">
+                                        <label class="form-control-label" for="phone">N° Cell Phone</label>*
+                                        <t t-if="partner.is_validate == False">
+                                            <input type="tel" 
+                                                   id="phone" 
+                                                   name="phone" 
+                                                   t-attf-class="form-control #{error.get('phone') and 'is-invalid' or ''}" 
+                                                   t-att-value="phone or partner.phone" 
+                                                   required="required"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="partner.phone">
+                                                <span class="d-block mt-0" t-esc="partner.phone"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                             </t>
                                         </t>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-2">
-                                    <div t-attf-class="form-group #{error.get('children') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="children">N° Children</label>*
+                                <div class="col-md-6">
+                                    <div t-attf-class="form-group #{error.get('personal_email') and 'o_has_error' or ''}">
+                                        <label class="form-control-label" for="email">E-mail address</label>*
                                         <t t-if="partner.is_validate == False">
-                                            <input type="number" name="children" t-attf-class="form-control #{error.get('children') and 'is-invalid' or ''}" t-att-value="children or partner.children"/>
+                                            <input type="email" 
+                                                   id="personal_email" 
+                                                   name="personal_email" 
+                                                   t-attf-class="form-control #{error.get('personal_email') and 'is-invalid' or ''}" 
+                                                   t-att-value="personal_email or partner.personal_email"
+                                                   required="required"/>
                                         </t>
                                         <t t-else="">
-                                            <t t-if="partner.children">
-                                                <input type="number" name="children" t-attf-class="form-control #{error.get('children') and 'is-invalid' or ''}" t-att-value="children or partner.children" style="display: none;"/>
-                                                <br/>
-                                                <span t-esc="partner.children"/>
+                                            <t t-if="partner.personal_email">
+                                                <span class="d-block mt-0" t-esc="partner.personal_email"/>
                                             </t>
                                             <t t-else="">
-                                                <input type="number" name="children" t-attf-class="form-control #{error.get('children') and 'is-invalid' or ''}" t-att-value="children or partner.children" style="display: none;"/>
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                             </t>
                                         </t>
                                     </div>
+                                    
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="emergency_info" class="row mt-3 bg-white border rounded rounded-lg">
+                        <div class="col-md-3 bg-info d-flex align-items-center justify-content-center py-3">
+                            <div class="text-center" style="font-weight: 700;">
+                                <i class="fa fa-user fa-3x mb-2 spin-animation" role="img" aria-label="Contacto Emergencia" ></i>
+                                <p class="mb-0">Emergency Contact</p>
+                            </div>
+                        </div>
+                        <div class="col-md-9 p-4">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div t-attf-class="form-group #{error.get('emergency_contact') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="emergency_contact">Emergency familiar name</label>*
+                                        <label class="form-control-label" for="emergency_contact">Emergency familiar name</label>
                                         <t t-if="partner.is_validate == False">
                                             <input type="text" name="emergency_contact" t-attf-class="form-control #{error.get('emergency_contact') and 'is-invalid' or ''}" t-att-value="emergency_contact or partner.emergency_contact"/>
                                         </t>
                                         <t t-else="">
                                             <t t-if="partner.emergency_contact">
-                                                <input type="text" name="emergency_contact" t-attf-class="form-control #{error.get('emergency_contact') and 'is-invalid' or ''}" t-att-value="emergency_contact or partner.emergency_contact" style="display: none;"/>
-                                                <br/>
-                                                <span t-esc="partner.emergency_contact"/>
+                                                <span class="d-block mt-0" t-esc="partner.emergency_contact"/>
                                             </t>
                                             <t t-else="">
-                                                <input type="text" name="emergency_contact" t-attf-class="form-control #{error.get('emergency_contact') and 'is-invalid' or ''}" t-att-value="emergency_contact or partner.emergency_contact" style="display: none;"/>
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                             </t>
                                         </t>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div t-attf-class="form-group #{error.get('emergency_phone') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="emergency_phone">Emergency familiar phone</label>*
+                                        <label class="form-control-label" for="emergency_phone">Emergency familiar phone</label>
                                         <t t-if="partner.is_validate == False">
                                             <input type="tel" name="emergency_phone" t-attf-class="form-control #{error.get('emergency_phone') and 'is-invalid' or ''}" t-att-value="emergency_phone or partner.emergency_phone"/>
                                         </t>
                                         <t t-else="">
                                             <t t-if="partner.emergency_phone">
-                                                <input type="tel" name="emergency_phone" t-attf-class="form-control #{error.get('emergency_phone') and 'is-invalid' or ''}" t-att-value="emergency_phone or partner.emergency_phone" style="display: none;"/>
-                                                <br/>
-                                                <span t-esc="partner.emergency_phone"/>
+                                                <span class="d-block mt-0" t-esc="partner.emergency_phone"/>
                                             </t>
                                             <t t-else="">
-                                                <input type="tel" name="emergency_phone" t-attf-class="form-control #{error.get('emergency_phone') and 'is-invalid' or ''}" t-att-value="emergency_phone or partner.emergency_phone" style="display: none;"/>
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                             </t>
                                         </t>
                                     </div>
@@ -266,7 +273,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div t-attf-class="form-group #{error.get('emergency_contact_relationship') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="emergency_contact_relationship">Emergency Contact Relationship</label>*
+                                        <label class="form-control-label" for="emergency_contact_relationship">Emergency Contact Relationship</label> 
                                         
                                         <t t-if="partner.is_validate == False">
                                             <select name="emergency_contact_relationship" id="emergency_contact_relationship" t-attf-class="form-control #{error.get('emergency_contact_relationship') and 'is-invalid' or ''}" t-att-value="emergency_contact_relationships or partner.emergency_contact_relationship">
@@ -284,129 +291,64 @@
 
                                         <t t-else="">
                                             <t t-if="partner.emergency_contact_relationship">
-                                                <select name="emergency_contact_relationship" id="emergency_contact_relationship" t-attf-class="form-control #{error.get('emergency_contact_relationship') and 'is-invalid' or ''}" t-att-value="emergency_contact_relationships or partner.emergency_contact_relationship" style="display: none;">
-                                                    <option value="">Select Relationship</option>
-                                                    <option value="Madre" t-att-selected="emergency_contact_relationships == 'Madre'">Mother</option>
-                                                    <option value="Padre" t-att-selected="emergency_contact_relationships == 'Padre'">Father</option>
-                                                    <option value="Hermano" t-att-selected="emergency_contact_relationships == 'Hermano'">Brother</option>
-                                                    <option value="Hermana" t-att-selected="emergency_contact_relationships == 'Hermana'">Sister</option>
-                                                    <option value="Esposo/a" t-att-selected="emergency_contact_relationships == 'Esposo/a'">Spouse</option>
-                                                    <option value="Conviviente" t-att-selected="emergency_contact_relationships == 'Conviviente'">Concubine</option>
-                                                    <option value="Hijo" t-att-selected="emergency_contact_relationships == 'Hijo'">Son</option>
-                                                    <option value="Hija" t-att-selected="emergency_contact_relationships == 'Hija'">Daughter</option>
-                                                </select>
-                                                <br/>
-                                                <span t-esc="partner.emergency_contact_relationship"/>
+                                                <span class="d-block mt-0" t-esc="partner.emergency_contact_relationship"/>
                                             </t>
                                             <t t-else="">
-                                                <select name="emergency_contact_relationship" id="emergency_contact_relationship" t-attf-class="form-control #{error.get('emergency_contact_relationship') and 'is-invalid' or ''}" t-att-value="emergency_contact_relationships or partner.emergency_contact_relationship" style="display: none;">
-                                                    <option value="">Select Relationship</option>
-                                                    <option value="Madre" t-att-selected="emergency_contact_relationships == 'Madre'">Mother</option>
-                                                    <option value="Padre" t-att-selected="emergency_contact_relationships == 'Padre'">Father</option>
-                                                    <option value="Hermano" t-att-selected="emergency_contact_relationships == 'Hermano'">Brother</option>
-                                                    <option value="Hermana" t-att-selected="emergency_contact_relationships == 'Hermana'">Sister</option>
-                                                    <option value="Esposo/a" t-att-selected="emergency_contact_relationships == 'Esposo/a'">Spouse</option>
-                                                    <option value="Conviviente" t-att-selected="emergency_contact_relationships == 'Conviviente'">Concubine</option>
-                                                    <option value="Hijo" t-att-selected="emergency_contact_relationships == 'Hijo'">Son</option>
-                                                    <option value="Hija" t-att-selected="emergency_contact_relationships == 'Hija'">Daughter</option>
-                                                </select>
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                             </t>
                                         </t>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-3 bg-white border rounded rounded-lg">
+                    <div id="personal_location" class="row mt-3 bg-white border rounded rounded-lg">
+                        <div class="col-md-3 bg-info d-flex align-items-center justify-content-center py-3">
+                            <div class="text-center" style="font-weight: 700;">
+                                <i class="fa fa-map-marker fa-3x mb-2 spin-animation" role="img" aria-label="Persona"></i>
+                                <p class="mb-0">Personal location</p>
+                            </div>
+                        </div>
                         <div class="col-md-9 order-md-1 order-2 p-4">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div t-attf-class="form-group #{error.get('country_id') and 'o_has_error' or ''}">
-                                        <label class="form-control-label" for="country_id" style="color:#000000">Country</label>
-                                        <t t-if="partner.is_validate == False">
-                                            <select name="country_id" t-attf-class="form-control #{error.get('country_id') and 'is-invalid' or ''}">
-                                                <option value="">Country...</option>
-                                                <t t-foreach="countries or []" t-as="country">
-                                                    <option t-att-value="country.id" t-att-selected="country.id == int(country_id) if country_id else country.id == partner.country_id.id">
-                                                        <t t-esc="country.name" />
-                                                    </option>
-                                                </t>
-                                            </select>
-                                        </t>
-                                        <t t-else="">
-                                            <t t-if="partner.country_id">
-                                                <select name="country_id" t-attf-class="form-control #{error.get('country_id') and 'is-invalid' or ''}" style="display: none;">
-                                                    <option value="">Country...</option>
-                                                    <t t-foreach="countries or []" t-as="country">
-                                                        <option t-att-value="country.id" t-att-selected="country.id == int(country_id) if country_id else country.id == partner.country_id.id">
-                                                            <t t-esc="country.name" />
-                                                        </option>
-                                                    </t>
-                                                </select>
-                                                <br/>
-                                                <span t-esc="partner.country_id.name"/>
-                                            </t>
-                                            <t t-else="">
-                                                <select name="country_id" t-attf-class="form-control #{error.get('country_id') and 'is-invalid' or ''}" style="display: none;">
-                                                    <option value="">Country...</option>
-                                                    <t t-foreach="countries or []" t-as="country">
-                                                        <option t-att-value="country.id" t-att-selected="country.id == int(country_id) if country_id else country.id == partner.country_id.id">
-                                                            <t t-esc="country.name" />
-                                                        </option>
-                                                    </t>
-                                                </select>
-                                            </t>
-                                        </t>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div t-attf-class="form-group #{error.get('state_id') and 'o_has_error' or ''}">
-                                        <label class="form-control-label label-optional font-weight-bold" for="state_id" style="color:#000000">State / Province</label>
+                                        <div class="d-none">
+                                            <select name="country_id" class="d-none">
+                                                <option t-att-value="states and states[0].country_id.id or ''" selected="selected">Peru</option>
+                                            </select>
+                                        </div>
+                                        <label class="form-control-label" for="state_id">Department</label>*
                                         <t t-if="partner.is_validate == False">
-                                            <select name="state_id" t-attf-class="form-control #{error.get('state_id') and 'is-invalid' or ''}">
-                                                <option value="">select...</option>
+                                            <select name="state_id" 
+                                                    t-attf-class="form-control #{error.get('state_id') and 'is-invalid' or ''}"
+                                                    required="required">
+                                                <option value="">Department...</option>
                                                 <t t-foreach="states or []" t-as="state">
-                                                    <option t-att-value="state.id" style="display:none;" t-att-data-country_id="state.country_id.id" t-att-selected="state.id == partner.state_id.id">
-                                                        <t t-esc="state.name" />
+                                                    <option t-att-value="state.id" t-att-selected="state.id == int(state_id) if state_id else state.id == partner.state_id.id" t-att-data-country_id="state.country_id.id">
+                                                        <t t-esc="state.name"/>
                                                     </option>
                                                 </t>
                                             </select>
                                         </t>
                                         <t t-else="">
                                             <t t-if="partner.state_id">
-                                                <select name="state_id" t-attf-class="form-control #{error.get('state_id') and 'is-invalid' or ''}" style="display: none;">
-                                                    <option value="">select...</option>
-                                                    <t t-foreach="states or []" t-as="state">
-                                                        <option t-att-value="state.id" style="display:none;" t-att-data-country_id="state.country_id.id" t-att-selected="state.id == partner.state_id.id">
-                                                            <t t-esc="state.name" />
-                                                        </option>
-                                                    </t>
-                                                </select>
-                                                <br/>
-                                                <span t-esc="partner.state_id.name"/>
+                                                <span class="d-block mt-0" t-esc="partner.state_id.name"/>
                                             </t>
                                             <t t-else="">
-                                                <select name="state_id" t-attf-class="form-control #{error.get('state_id') and 'is-invalid' or ''}" style="display: none;">
-                                                    <option value="">select...</option>
-                                                    <t t-foreach="states or []" t-as="state">
-                                                        <option t-att-value="state.id" style="display:none;" t-att-data-country_id="state.country_id.id" t-att-selected="state.id == partner.state_id.id">
-                                                            <t t-esc="state.name" />
-                                                        </option>
-                                                    </t>
-                                                </select>
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                             </t>
                                         </t>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div t-attf-class="form-group #{error.get('city_id') and 'o_has_error' or ''}">
-                                        <label class="form-control-label" for="city_id" style="color:#000000">City</label>*
+                                <div class="col-md-4">
+                                    <div t-attf-class="form-group #{error.get('city_id') and 'o_has_error' or ''}" >
+                                        <label class="form-control-label" for="city_id">Province</label>*
                                         <t t-if="partner.is_validate == False">
-                                            <select name="city_id" t-attf-class="form-control #{error.get('city_id') and 'is-invalid' or ''}">
-                                                <option value="">City...</option>
+                                            <select name="city_id" 
+                                                    t-attf-class="form-control #{error.get('city_id') and 'is-invalid' or ''}"
+                                                    required="required">
+                                                <option value="">Province...</option>
                                                 <t t-foreach="cities or []" t-as="city">
                                                     <option t-att-value="city.id" t-att-selected="city.id == int(city_id) if city_id else city.id == partner.city_id.id">
                                                         <t t-esc="city.name"/>
@@ -416,35 +358,21 @@
                                         </t>
                                         <t t-else="">
                                             <t t-if="partner.city">
-                                                <select name="city_id" t-attf-class="form-control #{error.get('city_id') and 'is-invalid' or ''}" style="display: none;">
-                                                    <option value="">City...</option>
-                                                    <t t-foreach="cities or []" t-as="city">
-                                                        <option t-att-value="city.id" t-att-selected="city.id == int(city_id) if city_id else city.id == partner.city_id.id">
-                                                            <t t-esc="city.name"/>
-                                                        </option>
-                                                    </t>
-                                                </select>
-                                                <br/>
-                                                <span t-esc="partner.city"/>
+                                                <span class="d-block mt-0" t-esc="partner.city"/>
                                             </t>
                                             <t t-else="">
-                                                <select name="city_id" t-attf-class="form-control #{error.get('city_id') and 'is-invalid' or ''}" style="display: none;">
-                                                    <option value="">City...</option>
-                                                    <t t-foreach="cities or []" t-as="city">
-                                                        <option t-att-value="city.id" t-att-selected="city.id == int(city_id) if city_id else city.id == partner.city_id.id">
-                                                            <t t-esc="city.name"/>
-                                                        </option>
-                                                    </t>
-                                                </select>
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                             </t>
                                         </t>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group #{error.get('l10n_pe_district') and 'o_has_error' or ''}">
-                                        <label class="form-control-label" for="l10n_pe_district" style="color:#000000">District</label>*
+                                <div class="col-md-4">
+                                    <div t-attf-class="form-group #{error.get('l10n_pe_district') and 'o_has_error' or ''}">
+                                        <label class="form-control-label" for="l10n_pe_district">District</label>*
                                         <t t-if="partner.is_validate == False">
-                                            <select name="l10n_pe_district" t-attf-class="form-control #{error.get('l10n_pe_district') and 'is-invalid' or ''}">
+                                            <select name="l10n_pe_district" 
+                                                    t-attf-class="form-control #{error.get('l10n_pe_district') and 'is-invalid' or ''}"
+                                                    required="required">
                                                 <option value="">District...</option>
                                                 <t t-foreach="districts or []" t-as="district">
                                                     <option t-att-value="district.id" t-att-selected="district.id == int(l10n_pe_district) if l10n_pe_district else district.id == partner.l10n_pe_district.id">
@@ -455,26 +383,10 @@
                                         </t>
                                         <t t-else="">
                                             <t t-if="partner.l10n_pe_district">
-                                                <select name="l10n_pe_district" t-attf-class="form-control #{error.get('l10n_pe_district') and 'is-invalid' or ''}" style="display: none;">
-                                                    <option value="">District...</option>
-                                                    <t t-foreach="districts or []" t-as="district">
-                                                        <option t-att-value="district.id" t-att-selected="district.id == int(l10n_pe_district) if l10n_pe_district else district.id == partner.l10n_pe_district.id">
-                                                            <t t-esc="district.name"/>
-                                                        </option>
-                                                    </t>
-                                                </select>
-                                                <br/>
-                                                <span t-esc="partner.l10n_pe_district.name"/>
+                                                <span class="d-block mt-0" t-esc="partner.l10n_pe_district.name"/>
                                             </t>
                                             <t t-else="">
-                                                <select name="l10n_pe_district" t-attf-class="form-control #{error.get('l10n_pe_district') and 'is-invalid' or ''}" style="display: none;">
-                                                    <option value="">District...</option>
-                                                    <t t-foreach="districts or []" t-as="district">
-                                                        <option t-att-value="district.id" t-att-selected="district.id == int(l10n_pe_district) if l10n_pe_district else district.id == partner.l10n_pe_district.id">
-                                                            <t t-esc="district.name"/>
-                                                        </option>
-                                                    </t>
-                                                </select>
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                             </t>
                                         </t>
                                     </div>
@@ -483,19 +395,20 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div t-attf-class="form-group #{error.get('street') and 'o_has_error' or ''}">
-                                        <script type="text/javascript" src="/mkt_recruitment/static/src/js/portal_my_details.js"></script>
-                                        <label class="form-control-label" for="street" style="color:#000000">Street</label>*
+                                        <label class="form-control-label" for="street">Street</label>*
                                         <t t-if="partner.is_validate == False">
-                                            <input type="text" name="street" t-attf-class="form-control #{error.get('street') and 'is-invalid' or ''}" t-att-value="street or partner.street"/>
+                                            <input type="text" 
+                                                   name="street" 
+                                                   t-attf-class="form-control #{error.get('street') and 'is-invalid' or ''}" 
+                                                   t-att-value="street or partner.street"
+                                                   required="required"/>
                                         </t>
                                         <t t-else="">
                                             <t t-if="partner.street">
-                                                <input type="text" name="street" t-attf-class="form-control #{error.get('street') and 'is-invalid' or ''}" t-att-value="street or partner.street" style="display: none;"/>
-                                                <br/>
-                                                <span t-esc="partner.street"/>
+                                                <span class="d-block mt-0" t-esc="partner.street"/>
                                             </t>
                                             <t t-else="">
-                                                <input type="text" name="street" t-attf-class="form-control #{error.get('street') and 'is-invalid' or ''}" t-att-value="street or partner.street" style="display: none;"/>
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                             </t>
                                         </t>
                                     </div>
@@ -504,47 +417,45 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div t-attf-class="form-group #{error.get('reference_location') and 'o_has_error' or ''}">
-                                        <script type="text/javascript" src="/mkt_recruitment/static/src/js/portal_my_details.js"></script>
-                                        <label class="form-control-label" for="reference_location" style="color:#000000">Reference Location</label>*
+                                        <label class="form-control-label" for="reference_location">Reference Location</label>
                                         <t t-if="partner.is_validate == False">
-                                            <input type="text" name="reference_location" t-attf-class="form-control #{error.get('reference_location') and 'is-invalid' or ''}" t-att-value="reference_location or partner.reference_location"/>
+                                            <input type="text" 
+                                                   name="reference_location" 
+                                                   t-attf-class="form-control #{error.get('reference_location') and 'is-invalid' or ''}" 
+                                                   t-att-value="reference_location or partner.reference_location"/>
                                         </t>
                                         <t t-else="">
                                             <t t-if="partner.reference_location">
-                                                <input type="text" name="reference_location" t-attf-class="form-control #{error.get('reference_location') and 'is-invalid' or ''}" t-att-value="reference_location or partner.reference_location" style="display: none;"/>
-                                                <br/>
-                                                <span t-esc="partner.reference_location"/>
+                                                <span class="d-block mt-0" t-esc="partner.reference_location"/>
                                             </t>
                                             <t t-else="">
-                                                <input type="text" name="reference_location" t-attf-class="form-control #{error.get('reference_location') and 'is-invalid' or ''}" t-att-value="reference_location or partner.reference_location" style="display: none;"/>
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                             </t>
                                         </t>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 d-flex align-items-center justify-content-center py-3 order-md-2 order-1" style="background:#6D3A84">
-                            <div class="text-center" style="color:#FFFFFF; font-weight: 700;">
-                                <i class="fa fa-map-marker fa-3x mb-2 spin-animation" role="img" aria-label="Ubicación" ></i>
-                                <p class="mb-0">Personal location</p>
-                            </div>
-                        </div>
                     </div>
-                    <div class="row mt-3 bg-white border rounded rounded-lg">
+                    <div id="personal_education" class="row mt-3 bg-white border rounded rounded-lg">
                         <div class="col-md-3 bg-info d-flex align-items-center justify-content-center py-3">
-                            <div class="text-center">
-                                <i class="fa fa-graduation-cap fa-3x mb-2 spin-animation" role="img" aria-label="Educación" ></i>
-                                <p class="mb-0">Personal Education</p>
+                            <div class="text-center" style="font-weight: 700;">
+                                <i class="fa fa-graduation-cap fa-3x mb-2 spin-animation" role="img" aria-label="Educacion" ></i>
+                                <p class="mb-0">Education</p>
                             </div>
                         </div>
                         <div class="col-md-9 order-md-1 order-2 p-4">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div t-attf-class="form-group #{error.get('education_level') and 'o_has_error' or ''}">
-                                        <label class="form-control-label text-info" for="education_level">Education Level</label>*
+                                        <label class="form-control-label" for="education_level">Education Level</label>*
                                         <t t-if="partner.is_validate == False">
                                         
-                                            <select name="education_level" id="education_level" t-attf-class="form-control #{error.get('education_level') and 'is-invalid' or ''}" t-att-value="education_levels or partner.education_level">
+                                            <select name="education_level" 
+                                                    id="education_level" 
+                                                    t-attf-class="form-control #{error.get('education_level') and 'is-invalid' or ''}" 
+                                                    t-att-value="education_levels or partner.education_level"
+                                                    required="required">
                                                 <option value="">Select Education Level</option>
                                                 <option value="wo_formal_education" t-att-selected="education_levels == 'wo_formal_education'">WITHOUT FORMAL EDUCATION</option>
                                                 <option value="incomplete_special_education" t-att-selected="education_levels == 'incomplete_special_education'">INCOMPLETE SPECIAL EDUCATION</option>
@@ -571,58 +482,10 @@
                                         </t>
                                         <t t-else="">
                                             <t t-if="partner.education_level">
-                                                <select name="education_level" id="education_level" t-attf-class="form-control #{error.get('education_level') and 'is-invalid' or ''}" t-att-value="education_levels or partner.education_level" style="display: none;">
-                                                    <option value="">Select Education Level</option>
-                                                    <option value="wo_formal_education" t-att-selected="education_levels == 'wo_formal_education'">WITHOUT FORMAL EDUCATION</option>
-                                                    <option value="incomplete_special_education" t-att-selected="education_levels == 'incomplete_special_education'">INCOMPLETE SPECIAL EDUCATION</option>
-                                                    <option value="complete_special_education" t-att-selected="education_levels == 'complete_special_education'">COMPLETE SPECIAL EDUCATION</option>
-                                                    <option value="incomplete_primary_education" t-att-selected="education_levels == 'incomplete_primary_education'">INCOMPLETE PRIMARY EDUCATION</option>
-                                                    <option value="complete_primary_education" t-att-selected="education_levels == 'complete_primary_education'">COMPLETE PRIMARY EDUCATION</option>
-                                                    <option value="incomplete_seconday_education" t-att-selected="education_levels == 'incomplete_seconday_education'">INCOMPLETE SECONDARY EDUCATION</option>
-                                                    <option value="complete_secondary_education" t-att-selected="education_levels == 'complete_secondary_education'">COMPLETE SECONDARY EDUCATION</option>
-                                                    <option value="incomplete_technical_education" t-att-selected="education_levels == 'incomplete_technical_education'">INCOMPLETE TECHNICAL EDUCATION</option>
-                                                    <option value="complete_technical_education" t-att-selected="education_levels == 'complete_technical_education'">COMPLETE TECHNICAL EDUCATION</option>
-                                                    <option value="incomplete_higher_education" t-att-selected="education_levels == 'incomplete_higher_education'">INCOMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
-                                                    <option value="complete_higher_education" t-att-selected="education_levels == 'complete_higher_education'">COMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
-                                                    <option value="incomplete_universitary_education" t-att-selected="education_levels == 'incomplete_universitary_education'">INCOMPLETE UNIVERSITARY EDUCATION</option>
-                                                    <option value="complete_universitary_education" t-att-selected="education_levels == 'complete_universitary_education'">COMPLETE UNIVERSITARY EDUCATION</option>
-                                                    <option value="bachelor_degree" t-att-selected="education_levels == 'bachelor_degree'">BACHELOR DEGREE</option>
-                                                    <option value="titled" t-att-selected="education_levels == 'titled'">TITLED</option>
-                                                    <option value="incomplete_masters_studies" t-att-selected="education_levels == 'incomplete_masters_studies'">INCOMPLETE STUDIES OF MASTER</option>
-                                                    <option value="complete_masters_studies" t-att-selected="education_levels == 'complete_masters_studies'">COMPLETE STUDIES OF MASTER</option>
-                                                    <option value="master_degree" t-att-selected="education_levels == 'master_degree'">MASTER DEGREE</option>
-                                                    <option value="complete_doctoral_studies" t-att-selected="education_levels == 'complete_doctoral_studies'">COMPLETE DOCTORAL STUDIES</option>
-                                                    <option value="incomplete_doctoral_studies" t-att-selected="education_levels == 'incomplete_doctoral_studies'">INCOMPLETE DOCTORAL STUDIES</option>
-                                                    <option value="doctoral_degree" t-att-selected="education_levels == 'doctoral_degree'">DOCTORAL DEGREE</option>
-                                                </select>
-                                                <br/>
-                                                <span t-esc="partner.education_level"/>
+                                                <span class="d-block mt-0" t-esc="partner.education_level"/>
                                             </t>
                                             <t t-else="">
-                                                <select name="education_level" id="education_level" t-attf-class="form-control #{error.get('education_level') and 'is-invalid' or ''}" t-att-value="education_levels or partner.education_level" style="display: none;">
-                                                    <option value="">Select Education Level</option>
-                                                    <option value="wo_formal_education" t-att-selected="education_levels == 'wo_formal_education'">WITHOUT FORMAL EDUCATION</option>
-                                                    <option value="incomplete_special_education" t-att-selected="education_levels == 'incomplete_special_education'">INCOMPLETE SPECIAL EDUCATION</option>
-                                                    <option value="complete_special_education" t-att-selected="education_levels == 'complete_special_education'">COMPLETE SPECIAL EDUCATION</option>
-                                                    <option value="incomplete_primary_education" t-att-selected="education_levels == 'incomplete_primary_education'">INCOMPLETE PRIMARY EDUCATION</option>
-                                                    <option value="complete_primary_education" t-att-selected="education_levels == 'complete_primary_education'">COMPLETE PRIMARY EDUCATION</option>
-                                                    <option value="incomplete_seconday_education" t-att-selected="education_levels == 'incomplete_seconday_education'">INCOMPLETE SECONDARY EDUCATION</option>
-                                                    <option value="complete_secondary_education" t-att-selected="education_levels == 'complete_secondary_education'">COMPLETE SECONDARY EDUCATION</option>
-                                                    <option value="incomplete_technical_education" t-att-selected="education_levels == 'incomplete_technical_education'">INCOMPLETE TECHNICAL EDUCATION</option>
-                                                    <option value="complete_technical_education" t-att-selected="education_levels == 'complete_technical_education'">COMPLETE TECHNICAL EDUCATION</option>
-                                                    <option value="incomplete_higher_education" t-att-selected="education_levels == 'incomplete_higher_education'">INCOMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
-                                                    <option value="complete_higher_education" t-att-selected="education_levels == 'complete_higher_education'">COMPLETE HIGHER EDUCATION(HIGHER INSTITUTE, ETC)</option>
-                                                    <option value="incomplete_universitary_education" t-att-selected="education_levels == 'incomplete_universitary_education'">INCOMPLETE UNIVERSITARY EDUCATION</option>
-                                                    <option value="complete_universitary_education" t-att-selected="education_levels == 'complete_universitary_education'">COMPLETE UNIVERSITARY EDUCATION</option>
-                                                    <option value="bachelor_degree" t-att-selected="education_levels == 'bachelor_degree'">BACHELOR DEGREE</option>
-                                                    <option value="titled" t-att-selected="education_levels == 'titled'">TITLED</option>
-                                                    <option value="incomplete_masters_studies" t-att-selected="education_levels == 'incomplete_masters_studies'">INCOMPLETE STUDIES OF MASTER</option>
-                                                    <option value="complete_masters_studies" t-att-selected="education_levels == 'complete_masters_studies'">COMPLETE STUDIES OF MASTER</option>
-                                                    <option value="master_degree" t-att-selected="education_levels == 'master_degree'">MASTER DEGREE</option>
-                                                    <option value="complete_doctoral_studies" t-att-selected="education_levels == 'complete_doctoral_studies'">COMPLETE DOCTORAL STUDIES</option>
-                                                    <option value="incomplete_doctoral_studies" t-att-selected="education_levels == 'incomplete_doctoral_studies'">INCOMPLETE DOCTORAL STUDIES</option>
-                                                    <option value="doctoral_degree" t-att-selected="education_levels == 'doctoral_degree'">DOCTORAL DEGREE</option>
-                                                </select>
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
                                             </t>
                                         </t>
                                     </div>
@@ -630,462 +493,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-3 bg-white border rounded rounded-lg">
-                        <div class="col-md-12">
-                            <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
-                            <script type="text/javascript" src="/mkt_recruitment/static/src/js/my_account.js"/>
-                            <div class="form-group">
-                                <div class="row d-flex align-items-center justify-content-center py-2 mb-2" style="background:#6D3A84">
-                                    <div class="col text-center" style="color:#FFFFFF; font-weight: 700;">
-                                        <h5>Children</h5>
-                                        <p>Children (In the absence of a spouse, the Concubine can be appointed - Art 326°; Civil Code)</p>
-                                    </div>
-                                </div>
-                                <div class="table-responsive w-100">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <td class="text-info" scope="col">DNI</td>
-                                                <td class="text-info" scope="col">Full name</td>
-                                                <td class="text-info" scope="col">Birthday</td>
-                                                <td class="text-info" scope="col">Relationship</td>
-                                                <td class="text-info" scope="col">Gender</td>
-                                                <td class="text-info" scope="col">Address</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <t t-if="partner.is_validate == False">
-                                                <tr>
-                                                    <td><input type="text" class="form-control" name="child_dni1" t-att-value="child_dni1 or partner.child_dni1"/></td>
-                                                    <td><input type="text" class="form-control" name="child_full_name1" t-att-value="child_full_name1 or partner.child_full_name1"/></td>
-                                                    <td><input type="date" class="form-control" name="child_birthday1" t-att-value="child_birthday1 or partner.child_birthday1"/></td>
-                                                    <td>
-                                                        <select name="child_relationship1" t-attf-class="form-control" t-att-value="child_relationship1s">
-                                                            <option value="">Relationship</option>
-                                                            <option value="Hijo" t-att-selected="child_relationship1s == 'Hijo'">Son</option>
-                                                            <option value="Hija" t-att-selected="child_relationship1s == 'Hija'">Daughter</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="child_gender1" t-attf-class="form-control" t-att-value="child_gender1s">
-                                                            <option value="">Gender</option>
-                                                            <option value="male" t-att-selected="child_gender1s == 'male'">Male</option>
-                                                            <option value="female" t-att-selected="child_gender1s == 'female'">Female</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" class="form-control" name="child_address1" t-att-value="child_address1 or partner.child_address1"/></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" name="child_dni2" t-att-value="child_dni2 or partner.child_dni2"/></td>
-                                                    <td><input type="text" class="form-control" name="child_full_name2" t-att-value="child_full_name2 or partner.child_full_name2"/></td>
-                                                    <td><input type="date" class="form-control" name="child_birthday2" t-att-value="child_birthday2 or partner.child_birthday2"/></td>
-                                                    <td>
-                                                        <select name="child_relationship2" t-attf-class="form-control" t-att-value="child_relationship2s">
-                                                            <option value="">Relationship</option>
-                                                            <option value="Hijo" t-att-selected="child_relationship2s == 'Hijo'">Son</option>
-                                                            <option value="Hija" t-att-selected="child_relationship2s == 'Hija'">Daughter</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="child_gender2" t-attf-class="form-control" t-att-value="child_gender2s">
-                                                            <option value="">Gender</option>
-                                                            <option value="male" t-att-selected="child_gender2s == 'male'">Male</option>
-                                                            <option value="female" t-att-selected="child_gender2s == 'female'">Female</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" class="form-control" name="child_address2" t-att-value="child_address2 or partner.child_address2"/></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" name="child_dni3" t-att-value="child_dni3 or partner.child_dni3"/></td>
-                                                    <td><input type="text" class="form-control" name="child_full_name3" t-att-value="child_full_name3 or partner.child_full_name3"/></td>
-                                                    <td><input type="date" class="form-control" name="child_birthday3" t-att-value="child_birthday3 or partner.child_birthday3"/></td>
-                                                    <td>
-                                                        <select name="child_relationship3" t-attf-class="form-control" t-att-value="child_relationship3s">
-                                                            <option value="">Relationship</option>
-                                                            <option value="Hijo" t-att-selected="child_relationship3s == 'Hijo'">Son</option>
-                                                            <option value="Hija" t-att-selected="child_relationship3s == 'Hija'">Daughter</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="child_gender3" t-attf-class="form-control" t-att-value="child_gender3s">
-                                                            <option value="">Gender</option>
-                                                            <option value="male" t-att-selected="child_gender3s == 'male'">Male</option>
-                                                            <option value="female" t-att-selected="child_gender3s == 'female'">Female</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" class="form-control" name="child_address3" t-att-value="child_address3 or partner.child_address3"/></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" name="child_dni4" t-att-value="child_dni4 or partner.child_dni4"/></td>
-                                                    <td><input type="text" class="form-control" name="child_full_name4" t-att-value="child_full_name4 or partner.child_full_name4"/></td>
-                                                    <td><input type="date" class="form-control" name="child_birthday4" t-att-value="child_birthday4 or partner.child_birthday4"/></td>
-                                                    <td>
-                                                        <select name="child_relationship4" t-attf-class="form-control" t-att-value="child_relationship4s">
-                                                            <option value="">Relationship</option>
-                                                            <option value="Hijo" t-att-selected="child_relationship4s == 'Hijo'">Son</option>
-                                                            <option value="Hija" t-att-selected="child_relationship4s == 'Hija'">Daughter</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="child_gender4" t-attf-class="form-control" t-att-value="child_gender4s">
-                                                            <option value="">Gender</option>
-                                                            <option value="male" t-att-selected="child_gender4s == 'male'">Male</option>
-                                                            <option value="female" t-att-selected="child_gender4s == 'female'">Female</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" class="form-control" name="child_address4" t-att-value="child_address4 or partner.child_address4"/></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" name="child_dni5" t-att-value="child_dni5 or partner.child_dni5"/></td>
-                                                    <td><input type="text" class="form-control" name="child_full_name5" t-att-value="child_full_name5 or partner.child_full_name5"/></td>
-                                                    <td><input type="date" class="form-control" name="child_birthday5" t-att-value="child_birthday5 or partner.child_birthday5"/></td>
-                                                    <td>
-                                                        <select name="child_relationship5" t-attf-class="form-control" t-att-value="child_relationship5s">
-                                                            <option value="">Relationship</option>
-                                                            <option value="Hijo" t-att-selected="child_relationship5s == 'Hijo'">Son</option>
-                                                            <option value="Hija" t-att-selected="child_relationship5s == 'Hija'">Daughter</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="child_gender5" t-attf-class="form-control" t-att-value="child_gender5s">
-                                                            <option value="">Gender</option>
-                                                            <option value="male" t-att-selected="child_gender5s == 'male'">Male</option>
-                                                            <option value="female" t-att-selected="child_gender5s == 'female'">Female</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" class="form-control" name="child_address5" t-att-value="child_address5 or partner.child_address5"/></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" name="child_dni6" t-att-value="child_dni6 or partner.child_dni6"/></td>
-                                                    <td><input type="text" class="form-control" name="child_full_name6" t-att-value="child_full_name6 or partner.child_full_name6"/></td>
-                                                    <td><input type="date" class="form-control" name="child_birthday6" t-att-value="child_birthday6 or partner.child_birthday6"/></td>
-                                                    <td>
-                                                        <select name="child_relationship6" t-attf-class="form-control" t-att-value="child_relationship6s">
-                                                            <option value="">Relationship</option>
-                                                            <option value="Hijo" t-att-selected="child_relationship6s == 'Hijo'">Son</option>
-                                                            <option value="Hija" t-att-selected="child_relationship6s == 'Hija'">Daughter</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="child_gender6" t-attf-class="form-control" t-att-value="child_gender6s">
-                                                            <option value="">Gender</option>
-                                                            <option value="male" t-att-selected="child_gender6s == 'male'">Male</option>
-                                                            <option value="female" t-att-selected="child_gender6s == 'female'">Female</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" class="form-control" name="child_address6" t-att-value="child_address6 or partner.child_address6"/></td>
-                                                </tr>
-                                            </t>
-                                            <t t-else="">
-                                                <tr>
-                                                    <td>
-                                                        <t t-if="partner.child_dni1">
-                                                            <br/>
-                                                            <span t-esc="partner.child_dni1"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_full_name1">
-                                                            <br/>
-                                                            <span t-esc="partner.child_full_name1"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_birthday1">
-                                                            <br/>
-                                                            <span t-esc="partner.child_birthday1"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_relationship1">
-                                                            <br/>
-                                                            <span t-esc="partner.child_relationship1"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_gender1">
-                                                            <br/>
-                                                            <span t-esc="partner.child_gender1"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_address1">
-                                                            <br/>
-                                                            <span t-esc="partner.child_address1"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <t t-if="partner.child_dni2">
-                                                            <br/>
-                                                            <span t-esc="partner.child_dni2"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_full_name2">
-                                                            <br/>
-                                                            <span t-esc="partner.child_full_name2"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_birthday2">
-                                                            <br/>
-                                                            <span t-esc="partner.child_birthday2"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_relationship2">
-                                                            <br/>
-                                                            <span t-esc="partner.child_relationship2"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_gender2">
-                                                            <br/>
-                                                            <span t-esc="partner.child_gender2"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_address2">
-                                                            <br/>
-                                                            <span t-esc="partner.child_address2"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <t t-if="partner.child_dni3">
-                                                            <br/>
-                                                            <span t-esc="partner.child_dni3"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_full_name3">
-                                                            <br/>
-                                                            <span t-esc="partner.child_full_name3"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_birthday3">
-                                                            <br/>
-                                                            <span t-esc="partner.child_birthday3"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_relationship3">
-                                                            <br/>
-                                                            <span t-esc="partner.child_relationship3"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_gender3">
-                                                            <br/>
-                                                            <span t-esc="partner.child_gender3"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_address3">
-                                                            <br/>
-                                                            <span t-esc="partner.child_address3"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <t t-if="partner.child_dni4">
-                                                            <br/>
-                                                            <span t-esc="partner.child_dni4"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_full_name4">
-                                                            <br/>
-                                                            <span t-esc="partner.child_full_name4"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_birthday4">
-                                                            <br/>
-                                                            <span t-esc="partner.child_birthday4"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_relationship4">
-                                                            <br/>
-                                                            <span t-esc="partner.child_relationship4"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_gender4">
-                                                            <br/>
-                                                            <span t-esc="partner.child_gender4"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_address4">
-                                                            <br/>
-                                                            <span t-esc="partner.child_address4"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <t t-if="partner.child_dni5">
-                                                            <br/>
-                                                            <span t-esc="partner.child_dni5"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_full_name5">
-                                                            <br/>
-                                                            <span t-esc="partner.child_full_name5"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_birthday5">
-                                                            <br/>
-                                                            <span t-esc="partner.child_birthday5"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_relationship5">
-                                                            <br/>
-                                                            <span t-esc="partner.child_relationship5"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_gender5">
-                                                            <br/>
-                                                            <span t-esc="partner.child_gender5"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_address5">
-                                                            <br/>
-                                                            <span t-esc="partner.child_address5"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <t t-if="partner.child_dni6">
-                                                            <br/>
-                                                            <span t-esc="partner.child_dni6"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_full_name6">
-                                                            <br/>
-                                                            <span t-esc="partner.child_full_name6"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_birthday6">
-                                                            <br/>
-                                                            <span t-esc="partner.child_birthday6"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_relationship6">
-                                                            <br/>
-                                                            <span t-esc="partner.child_relationship6"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_gender6">
-                                                            <br/>
-                                                            <span t-esc="partner.child_gender6"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="partner.child_address6">
-                                                            <br/>
-                                                            <span t-esc="partner.child_address6"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                        </t>
-                                                    </td>
-                                                </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- <div class="row mt-3 bg-white border rounded rounded-lg">
+                    <!-- <div id="first_beneficiaries" class="row mt-3 bg-white border rounded rounded-lg">
                         <div class="col-md-12">
                             <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
                             <script type="text/javascript" src="/mkt_recruitment/static/src/js/my_account.js"/>
@@ -1575,7 +983,7 @@
                             </div>
                         </div>
                     </div>    
-                    <div class="row mt-3 bg-white border rounded rounded-lg">
+                    <div id="second_beneficiaries" class="row mt-3 bg-white border rounded rounded-lg">
                         <div class="col-md-12">
                             <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
                             <script type="text/javascript" src="/mkt_recruitment/static/src/js/my_account.js"/>
@@ -1914,127 +1322,771 @@
                             </div>
                         </div>
                     </div> -->
-                    <div class="row mt-3 bg-white border rounded rounded-lg">
+                    <div id="pension_system" class="row mt-3 bg-white border rounded rounded-lg">
                         <div class="col-md-12">
                             <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
-                            <script type="text/javascript" src="/mkt_recruitment/static/src/js/my_account.js"/>
-                            <div class="form-group">
-                                <div class="row bg-info d-flex align-items-center justify-content-center py-2 mb-2">
-                                    <div class="col text-center">
-                                        <h5>Employment relationship data</h5>
-                                    </div>
+
+                            <!-- Título -->
+                            <div class="row bg-info text-white text-center py-2 mb-3 rounded">
+                                <div class="col">
+                                    <h5 class="m-0">Pension System</h5>
                                 </div>
                             </div>
-                            <div class="form-group col-xl-6">
-                                <label for="private_pension_system">Private pension System</label>
-                                <t t-if="partner.is_validate == False">
-                                    <input id="private_pension_system" type="checkbox" name="private_pension_system" t-att-checked="private_pension_system or partner.private_pension_system"/>
-                                    <small class="form-text text-muted d-block">
-                                        If you choose 'Private pension System', you can to choose if it's your first job or if coming from ONP.
-                                    </small>
-                                </t>
-                                <t t-else="">
-                                    <t t-if="partner.private_pension_system">
-                                        <br/>
-                                        <input type="checkbox" checked="checked" disabled="disabled"/>
+
+                            <!-- Private Pension System -->
+                            <div class="row mb-3">
+                                <div class="col-xl-6">
+                                    <label for="private_pension_system">Private Pension System</label>
+
+                                    <t t-if="not partner.is_validate">
+                                        <input id="private_pension_system" type="checkbox"
+                                            name="private_pension_system"
+                                            class="toggle-afp"
+                                            t-att-checked="private_pension_system or partner.private_pension_system"/>
+
+                                        <small class="form-text text-muted">
+                                            If you choose “Private Pension System”, select if it's your first job or if coming from ONP.
+                                        </small>
                                     </t>
                                     <t t-else="">
-                                        <br/>
-                                        <input type="checkbox" disabled="disabled"/>
+                                        <div class="d-none">
+                                            <input type="checkbox" name="ommit_validation_pension_system_checkboxes"
+                                            checked="checked"/>
+                                        </div>
+                                        <input id="private_pension_system" type="checkbox"
+                                            disabled="disabled"
+                                            t-att-checked="partner.private_pension_system"/>
                                     </t>
-                                </t>
-                            </div>
-                            <t t-if="partner.is_validate == False">
-                                <div class="form-group col-xl-6 inactive" id="firstjob_container">
-                                    <label for="afp_first_job">(AFP)First job</label>
-                                    <input id="afp_first_job" type="checkbox" name="afp_first_job" t-att-checked="afp_first_job or partner.afp_first_job"/>
                                 </div>
-                            </t>
-                            <t t-else="">
-                                <t t-if="partner.afp_first_job">
-                                    <div class="form-group col-xl-6" id="firstjob_container">
-                                        <label for="afp_first_job">(AFP)First job</label>
-                                        <br/>
-                                        <input type="checkbox" checked="checked" disabled="disabled"/>
-                                    </div>
-                                </t>
-                                <t t-else="">
-                                    <div class="form-group col-xl-6" id="firstjob_container">
-                                        <label for="afp_first_job">(AFP)First job</label>
-                                        <br/>
-                                        <input type="checkbox" disabled="disabled"/>
-                                    </div>
-                                </t>
-                            </t>
-                            <t t-if="partner.is_validate == False">
-                                <div class="form-group col-xl-6 inactive" id="comingfromonp_container">
+                            </div>
+
+                            <!-- AFP Options -->
+                            <div id="afp_options" class="row g-3 mb-3" t-attf-class="row g-3 mb-3 {{ 'd-none' if not (private_pension_system or partner.private_pension_system) else '' }}">
+                                
+                                <!-- AFP First Job -->
+                                <div class="col-xl-6" style="margin-left: 30px;">
+                                    <label for="afp_first_job">First Job</label>
+
+                                    <t t-if="not partner.is_validate">
+                                        <input id="afp_first_job" type="checkbox"
+                                            name="afp_first_job"
+                                            t-att-checked="afp_first_job or partner.afp_first_job"/>
+                                    </t>
+                                    <t t-else="">
+                                        <input id="afp_first_job" type="checkbox" disabled="disabled" t-att-checked="partner.afp_first_job"/>
+                                    </t>
+                                </div>
+
+                                <!-- Coming from ONP -->
+                                <div class="col-xl-6" style="margin-left: 30px;">
                                     <label for="coming_from_onp">Coming from ONP</label>
-                                    <input id="coming_from_onp" type="checkbox" name="coming_from_onp" t-att-checked="coming_from_onp or partner.coming_from_onp"/>
-                                </div>
-                            </t>
-                            <t t-else="">
-                                <t t-if="partner.coming_from_onp">
-                                    <div class="form-group col-xl-6" id="comingfromonp_container">
-                                        <label for="coming_from_onp">Coming from ONP</label>
-                                        <br/>
-                                        <input type="checkbox" checked="checked" disabled="disabled"/>
-                                    </div>
-                                </t>
-                                <t t-else="">
-                                    <div class="form-group col-xl-6" id="comingfromonp_container">
-                                        <label for="coming_from_onp">Coming from ONP</label>
-                                        <br/>
-                                        <input type="checkbox" disabled="disabled"/>
-                                    </div>
-                                </t>
-                            </t>
-                            <t t-if="partner.is_validate == False">
-                                <div class="form-group col-xl-6 inactive" id="comingfromafp_container">
-                                    <label for="coming_from_afp">Coming from AFP</label>
-                                    <input id="coming_from_afp" type="checkbox" name="coming_from_afp" t-att-checked="coming_from_afp or partner.coming_from_afp"/>
-                                </div>
-                            </t>
-                            <t t-else="">
-                                <t t-if="partner.coming_from_afp">
-                                    <div class="form-group col-xl-6" id="comingfromafp_container">
-                                        <label for="coming_from_afp">Coming from AFP</label>
-                                        <br/>
-                                        <input type="checkbox" checked="checked" disabled="disabled"/>
-                                    </div>
-                                </t>
-                                <t t-else="">
-                                    <div class="form-group col-xl-6" id="comingfromafp_container">
-                                        <label for="coming_from_afp">Coming from AFP</label>
-                                        <br/>
-                                        <input type="checkbox" disabled="disabled"/>
-                                    </div>
-                                </t>
-                            </t>
-                            <div class="form-group col-xl-6">
-                                <label for="national_pension_system">National pension system</label>
-                                <t t-if="partner.is_validate == False">
-                                    <input id="national_pension_system" type="checkbox" name="national_pension_system" t-att-checked="national_pension_system or partner.national_pension_system"/>
-                                </t>
-                                <t t-else="">
-                                    <t t-if="partner.national_pension_system">
-                                        <br/>
-                                        <input type="checkbox" checked="checked" disabled="disabled"/>
+
+                                    <t t-if="not partner.is_validate">
+                                        <input id="coming_from_onp" type="checkbox"
+                                            name="coming_from_onp"
+                                            t-att-checked="coming_from_onp or partner.coming_from_onp"/>
                                     </t>
                                     <t t-else="">
-                                        <br/>
-                                        <input type="checkbox" disabled="disabled"/>
+                                        <input id="coming_from_onp" type="checkbox" disabled="disabled" t-att-checked="partner.coming_from_onp"/>
                                     </t>
-                                </t>
+                                </div>
+                            </div>
+
+                            <!-- National Pension System -->
+                            <div class="row mb-3">
+                                <div class="col-xl-6">
+                                    <label for="national_pension_system">National Pension System</label>
+
+                                    <t t-if="not partner.is_validate">
+                                        <input id="national_pension_system" type="checkbox"
+                                            name="national_pension_system"
+                                            t-att-checked="national_pension_system or partner.national_pension_system"/>
+                                    </t>
+                                    <t t-else="">
+                                        <input id="national_pension_system" type="checkbox" disabled="disabled" t-att-checked="partner.national_pension_system"/>
+                                    </t>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div id="fifth_category_income" class="row mt-3 bg-white border rounded rounded-lg">
+                        <div class="form-group col-md-12">
+                            <div class="row bg-info text-white text-center py-2 mb-3 rounded">
+                                <div class="col">
+                                    <h5 class="m-0">Ingreso de Quinta Categoría por Otros Empleadores</h5>
+                                </div>
+                            </div>
+                            <p>Seleccione según corresponda:</p>
+
+                            <t t-if="not partner.is_validate">
+                                
+                                <div class="d-flex flex-column">
+                                    <div class="form-check mb-2">
+                                        <input type="radio" class="form-check-input" id="fifth_no" 
+                                            name="fifth_category_income" 
+                                            value="False" 
+                                            required="required"
+                                            t-att-checked="'checked' if (partner and partner.fifth_category_income == False) else None"/>
+                                        <label class="form-check-label" for="fifth_no">
+                                            <b>NO:</b> No he percibido remuneraciones de quinta categoría(*) en el presente año de otro(s) empleador(es).
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check mb-3">
+                                        <input type="radio" class="form-check-input" id="fifth_yes" 
+                                            name="fifth_category_income" 
+                                            value="True" 
+                                            required="required"
+                                            t-att-checked="'checked' if (partner and partner.fifth_category_income == True) else None"/>
+                                        <label class="form-check-label" for="fifth_yes">
+                                            <b>SÍ:</b> He percibido remuneraciones de quinta categoría(*) en el presente año de otro(s) empleador(es).
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </t> 
+
+                            <t t-else="">
+                                <div class="form-check">
+                                    <input type="radio" id="fifth_no" disabled="disabled" 
+                                        t-att-checked="'checked' if (partner and partner.fifth_category_income == False) else None"/>
+                                    <label class="form-check-label" for="fifth_no">
+                                        <b>NO:</b> No he percibido remuneraciones de quinta categoría(*) en el presente año de otro(s) empleador(es).
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" id="fifth_yes" disabled="disabled" 
+                                        t-att-checked="'checked' if (partner and partner.fifth_category_income == True) else None"/>
+                                    <label class="form-check-label" for="fifth_yes">
+                                        <b>SÍ:</b> He percibido remuneraciones de quinta categoría(*) en el presente año de otro(s) empleador(es).
+                                    </label>
+                                </div>
+                            </t>
+                            <p class="mt-2 text-muted">
+                                (*)Incluye participación de utilidades, liquidación de beneficios sociales, reintegros de remuneración y otros conceptos remunerativos.
+                            </p>
+                        </div>
+                    </div>
+                    <div id="children" class="row mt-3 bg-white border rounded rounded-lg">
+                        <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="row d-flex align-items-center justify-content-center py-2 mb-2" style="background:#6D3A84">
+                                    <div class="col text-center" style="color:#FFFFFF; font-weight: 700;">
+                                        <h5>Children</h5>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <div t-attf-class="form-group #{error.get('children') and 'o_has_error' or ''}">
+                                        <label class="form-control-label" for="children">Number of Children</label>
+                                        <t t-if="partner.children_okay == False">
+                                            <input type="number" 
+                                                   name="children" 
+                                                   t-attf-class="form-control #{error.get('children') and 'is-invalid' or ''}" 
+                                                   t-attf-value="{{ partner.children if partner else 0 }}"
+                                                   min="0" max="6"
+                                                   required="required"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="partner.children">
+                                                <span id="span-children" class="d-block mt-0" t-esc="partner.children"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span class="form-control-plaintext text-muted d-block mt-0">N/A</span>
+                                            </t>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="table-responsive w-100">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td class="text-info" scope="col">DNI</td>
+                                                <td class="text-info" scope="col">Full name</td>
+                                                <td class="text-info" scope="col">Birthday</td>
+                                                <td class="text-info" scope="col">DNI (Frontal)</td>
+                                                <td class="text-info" scope="col">DNI (Back)</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-if="partner.children_okay == False">
+                                                <tr id="child-1" style="display: none;">
+                                                    <td><input type="text" class="form-control" name="child_dni1" t-att-value="child_dni1 or partner.child_dni1"/></td>
+                                                    <td><input type="text" class="form-control" name="child_full_name1" t-att-value="child_full_name1 or partner.child_full_name1"/></td>
+                                                    <td><input type="date" class="form-control" name="child_birthday1" t-att-value="child_birthday1 or partner.child_birthday1"/></td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile1">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile1"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile1" name="child_dnifile1" t-att-value="partner.child_dnifile1 or ''" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile1">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile1">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile1">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile1_back">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile1_back"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile1_back" name="child_dnifile1_back" t-att-value="partner.child_dnifile1_back or ''" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile1_back">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile1_back">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile1_back">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr id="child-2" style="display: none;">
+                                                    <td><input type="text" class="form-control" name="child_dni2" t-att-value="child_dni2 or partner.child_dni2"/></td>
+                                                    <td><input type="text" class="form-control" name="child_full_name2" t-att-value="child_full_name2 or partner.child_full_name2"/></td>
+                                                    <td><input type="date" class="form-control" name="child_birthday2" t-att-value="child_birthday2 or partner.child_birthday2"/></td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile2">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile2"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile2" name="child_dnifile2" t-att-value="partner.child_dnifile2 or ''" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile2">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile2">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile2">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile2_back">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile2_back"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile2_back" name="child_dnifile2_back" t-att-value="partner.child_dnifile2_back or ''" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile2_back">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile2_back">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile2_back">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr id="child-3" style="display: none;">
+                                                    <td><input type="text" class="form-control" name="child_dni3" t-att-value="child_dni3 or partner.child_dni3"/></td>
+                                                    <td><input type="text" class="form-control" name="child_full_name3" t-att-value="child_full_name3 or partner.child_full_name3"/></td>
+                                                    <td><input type="date" class="form-control" name="child_birthday3" t-att-value="child_birthday3 or partner.child_birthday3"/></td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile3">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile3"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile3" name="child_dnifile3" t-att-value="partner.child_dnifile3 or ''" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile3">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile3">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile3">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile3_back">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile3_back"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile3_back" name="child_dnifile3_back" t-att-value="partner.child_dnifile3_back or ''" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile3_back">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile3_back">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile3_back">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr id="child-4" style="display: none;">
+                                                    <td><input type="text" class="form-control" name="child_dni4" t-att-value="child_dni4 or partner.child_dni4"/></td>
+                                                    <td><input type="text" class="form-control" name="child_full_name4" t-att-value="child_full_name4 or partner.child_full_name4"/></td>
+                                                    <td><input type="date" class="form-control" name="child_birthday4" t-att-value="child_birthday4 or partner.child_birthday4"/></td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile4">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile4"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile4" name="child_dnifile4" t-att-value="partner.child_dnifile4 or ''" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile4">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile4">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile4">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile4_back">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile4_back"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile4_back" name="child_dnifile4_back" t-att-value="partner.child_dnifile4_back or ''" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile4_back">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile4_back">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile4_back">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr id="child-5" style="display: none;">
+                                                    <td><input type="text" class="form-control" name="child_dni5" t-att-value="child_dni5 or partner.child_dni5"/></td>
+                                                    <td><input type="text" class="form-control" name="child_full_name5" t-att-value="child_full_name5 or partner.child_full_name5"/></td>
+                                                    <td><input type="date" class="form-control" name="child_birthday5" t-att-value="child_birthday5 or partner.child_birthday5"/></td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile5">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile5"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile5" name="child_dnifile5" t-att-value="partner.child_dnifile5 or ''" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile5">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile5">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile5">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile5_back">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile5_back"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile5_back" name="child_dnifile5_back" t-att-value="partner.child_dnifile5_back or ''" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile5_back">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile5_back">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile5_back">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr id="child-6" style="display: none;">
+                                                    <td><input type="text" class="form-control" name="child_dni6" t-att-value="child_dni6 or partner.child_dni6"/></td>
+                                                    <td><input type="text" class="form-control" name="child_full_name6" t-att-value="child_full_name6 or partner.child_full_name6"/></td>
+                                                    <td><input type="date" class="form-control" name="child_birthday6" t-att-value="child_birthday6 or partner.child_birthday6"/></td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile6">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile6"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile6" name="child_dnifile6" t-att-value="partner.child_dnifile6 or ''" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile6">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile6">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile6">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile6_back">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile6_back"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile6_back" name="child_dnifile6_back" t-att-value="partner.child_dnifile6_back or ''" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile6_back">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile6_back">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile6_back">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <t t-else="">
+                                                <tr id="child-1-validated" style="display: none;">
+                                                    <td>
+                                                        <t t-if="partner.child_dni1">
+                                                            <br/>
+                                                            <span t-esc="partner.child_dni1"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_full_name1">
+                                                            <br/>
+                                                            <span t-esc="partner.child_full_name1"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_birthday1">
+                                                            <br/>
+                                                            <span t-esc="partner.child_birthday1"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile1">
+                                                            <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile1"
+                                                                target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                Download Front
+                                                            </a>
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile1_back">
+                                                            <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile1_back"
+                                                                target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                Download Back
+                                                            </a>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                                <tr id="child-2-validated" style="display: none;">
+                                                    <td>
+                                                        <t t-if="partner.child_dni2">
+                                                            <br/>
+                                                            <span t-esc="partner.child_dni2"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_full_name2">
+                                                            <br/>
+                                                            <span t-esc="partner.child_full_name2"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_birthday2">
+                                                            <br/>
+                                                            <span t-esc="partner.child_birthday2"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile2">
+                                                            <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile2"
+                                                                target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                Download Front
+                                                            </a>
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile2_back">
+                                                            <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile2_back"
+                                                                target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                Download Back
+                                                            </a>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                                <tr id="child-3-validated" style="display: none;">
+                                                    <td>
+                                                        <t t-if="partner.child_dni3">
+                                                            <br/>
+                                                            <span t-esc="partner.child_dni3"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_full_name3">
+                                                            <br/>
+                                                            <span t-esc="partner.child_full_name3"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_birthday3">
+                                                            <br/>
+                                                            <span t-esc="partner.child_birthday3"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile3">
+                                                            <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile3"
+                                                                target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                Download Front
+                                                            </a>
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile3_back">
+                                                            <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile3_back"
+                                                                target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                Download Back
+                                                            </a>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                                <tr id="child-4-validated" style="display: none;">
+                                                    <td>
+                                                        <t t-if="partner.child_dni4">
+                                                            <br/>
+                                                            <span t-esc="partner.child_dni4"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_full_name4">
+                                                            <br/>
+                                                            <span t-esc="partner.child_full_name4"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_birthday4">
+                                                            <br/>
+                                                            <span t-esc="partner.child_birthday4"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile4">
+                                                            <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile4"
+                                                                target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                Download Front
+                                                            </a>
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile4_back">
+                                                            <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile4_back"
+                                                                target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                Download Back
+                                                            </a>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                                <tr id="child-5-validated" style="display: none;">
+                                                    <td>
+                                                        <t t-if="partner.child_dni5">
+                                                            <br/>
+                                                            <span t-esc="partner.child_dni5"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_full_name5">
+                                                            <br/>
+                                                            <span t-esc="partner.child_full_name5"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_birthday5">
+                                                            <br/>
+                                                            <span t-esc="partner.child_birthday5"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile5">
+                                                            <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile5"
+                                                                target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                Download Front
+                                                            </a>
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile5_back">
+                                                            <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile5_back"
+                                                                target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                Download Back
+                                                            </a>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                                <tr id="child-6-validated">
+                                                    <td>
+                                                        <t t-if="partner.child_dni6">
+                                                            <br/>
+                                                            <span t-esc="partner.child_dni6"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_full_name6">
+                                                            <br/>
+                                                            <span t-esc="partner.child_full_name6"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_birthday6">
+                                                            <br/>
+                                                            <span t-esc="partner.child_birthday6"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile6">
+                                                            <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile6"
+                                                                target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                Download Front
+                                                            </a>
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <t t-if="partner.child_dnifile6_back">
+                                                            <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile6_back"
+                                                                target="_blank"
+                                                                class="btn btn-sm btn-primary">
+                                                                Download Back
+                                                            </a>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="clearfix">
-                        <t t-if="not partner.is_validate">
-                            <button class="btn btn-success float-right mb32 mt-3" onclick="validateForm(event)">
-                                Validate
-                                <span class="fa fa-check" />
-                            </button>
-                        </t>
+                        <button class="btn btn-success float-right mb32 mt-3" onclick="validateForm(event)">
+                            Validate
+                            <span class="fa fa-check" />
+                        </button>
+                        <!-- <t t-if="not partner.is_validate">
+                        </t> -->
                     </div>
                     <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -2053,6 +2105,27 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content border-danger"> <div class="modal-header bg-danger text-white">
+                                    <h5 class="modal-title" id="errorModalLabel">
+                                        <i class="fa fa-exclamation-triangle"></i> Datos Incompletos
+                                    </h5>
+                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">X</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="font-weight-bold">Por favor, completa todos los campos marcados en rojo antes de continuar.</p>
+                                    <p>Hay información obligatoria que falta ingresar.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Entendido</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </form>
         </xpath>

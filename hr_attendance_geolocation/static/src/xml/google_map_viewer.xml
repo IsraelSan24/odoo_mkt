@@ -1,0 +1,8 @@
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-name="hr_attendance_geolocation.GoogleMapViewer">
+        <!-- Contenedor del mapa - solo visualización -->
+        <div class="o_google_map_viewer_container"
+             style="width: 100%; height: 400px; position: relative; border: 1px solid #ddd; border-radius: 4px;"/>
+    </t>
+</templates> -->

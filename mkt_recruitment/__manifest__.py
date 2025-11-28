@@ -76,6 +76,8 @@
     ],
     'assets':{
         'web.assets_frontend':[  
+            'mkt_recruitment/static/src/js/my_account_pension.js',
+            'mkt_recruitment/static/src/js/my_account_children.js',
             'mkt_recruitment/static/src/js/ubigeo.js',
             'mkt_recruitment/static/src/js/contractvalidatebox.js',
             'mkt_recruitment/static/src/js/trecordvalidate_box.js',

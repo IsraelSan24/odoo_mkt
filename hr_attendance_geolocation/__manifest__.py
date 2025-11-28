@@ -10,14 +10,25 @@
     "license": "AGPL-3",
     "author": "ForgeFlow S.L., Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/hr-attendance",
-    "depends": ["hr_attendance"],
+    "depends": ['base','hr_attendance'],
     "data": [
+        'security/security.xml',
+        'security/ir.model.access.csv',
+
         'views/hr_attendance_views.xml',
+        'views/menu_views.xml',
+
         'data/location_data.xml',
     ],
     "assets": {
         "web.assets_backend": [
-            'hr_attendance_geolocation/static/src/js/attendance_geolocation.js',
+            '/hr_attendance_geolocation/static/src/xml/google_map_picker.xml',
+            '/hr_attendance_geolocation/static/src/js/google_map_picker.js',
+            '/hr_attendance_geolocation/static/src/js/google_map_viewer.js',  # NUEVO
+            '/hr_attendance_geolocation/static/src/js/attendance_geolocation.js',
+        ],
+        'web.assets_qweb': [
+            '/hr_attendance_geolocation/static/src/xml/google_map_picker.xml',
         ],
     },
 }
