@@ -942,129 +942,6 @@
                         <div style="page-break-after: always;"/>
                     </div>
 
-                    <div id="sunat_tax_foreign_personnel_document" style="padding:3rem 2rem 0rem;">
-                        <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem">
-                            <h6 class="document-title">INFORMATIVO TRIBUTARIO SUNAT (PERSONAL EXTRANJERO)</h6>
-                            
-                            <p class="paragraph center">(REF. INFORME N.° 096-2018-SUNAT/7T0000)</p>
-
-                            <p class="paragraph">
-                                Mediante la presente damos cumplimiento a todo proceso de transparencia y a su vez compartimos la comunicación legal emitida por la superintendencia nacional de administración tributaria (SUNAT), ley de impuesto a la renta (d.s179-2004-ef) – retención del impuesto a la renta por rentas de 5ta categoría obtenidas por no domiciliados), en documentación formal, en la cual queda formalizado lo siguiente:
-                            </p>
-
-                            <div class="clause-title">BASE LEGAL:</div>
-
-                            <p class="paragraph">
-                                - TUO de la ley del impuesto a la renta, aprobado por el DS N° 179-2004-ef, publicado el 8.12.2004 y normas modificatorias (en adelante, la lir).
-                            </p>
-
-                            <p class="paragraph">
-                                - DS N° 001-2018-in, aprueban lineamientos para el otorgamiento del permiso temporal de permanencia para las personas de nacionalidad venezolana, publicado el 23.1.2018.
-                            </p>
-
-                            <p class="paragraph">
-                                - RM. N° 176-2018-tr, establecen disposiciones para la contratación laboral de personas de nacionalidad venezolana con permiso temporal de permanencia – ptp o acta de permiso de trabajo extraordinario –provisional, publicado el 6.7.2018.
-                            </p>
-
-                            <p class="paragraph">Asimismo, del mencionado informe, queda establecido lo siguiente:</p>
-
-                            <p class="paragraph">
-                                En el supuesto de empresas domiciliadas en el perú que contratan trabajadores venezolanos no domiciliados en el país, que cuentan con ptp, los cuales perciben por ello rentas de fuente peruana de quinta categoría:
-                            </p>
-
-                            <ol style="list-style: lower-alpha">
-                                <li class="paragraph">
-                                    Para la retención del impuesto a la renta que tienen que efectuar dichas empresas, no deben aplicar la escala progresiva acumulativa establecida en el artículo 53° de la lir.
-                                </li>
-
-                                <li class="paragraph">
-                                    Cuando tales empresas paguen o acrediten dichas rentas deberán efectuar la retención y el pago, con carácter definitivo, del 30% de la totalidad de los importes pagados o acreditados por concepto del impuesto a la renta que le corresponde pagar a dichos trabajadores.
-                                </li>
-                            </ol>
-
-                            <p class="paragraph">
-                                Asimismo, el art. 7 de la ley impuesto a la renta, señala que se considera personas domiciliadas en el país:
-                            </p>
-
-                            <p class="paragraph">
-                                - Las personas naturales extranjeras que hayan residido o permanecido en el país más de ciento ochenta y tres (183) días calendario durante un periodo de doce (12) meses.
-                            </p>
-
-                            <p class="paragraph">
-                                Para efectos del impuesto a la renta, las personas naturales, perderán su condición de domiciliadas cuando adquieran la residencia en otro país y hayan salido del Perú, lo que deberá acreditarse de acuerdo con las reglas que para el efecto señale el reglamento. en el supuesto que no pueda acreditarse la condición de residente en otro país, las personas naturales, mantendrán su condición de domiciliadas en tanto no permanezcan ausentes del país más de ciento ochenta y tres (183) días calendario dentro de un periodo cualquiera de doce (12) meses.
-                            </p>
-
-                            <p class="paragraph">
-                                Los peruanos que hubieren perdido su condición de domiciliados la recobrarán en cuanto retornen al país, a menos que lo hagan en forma transitoria permaneciendo en el país ciento ochenta y tres (183) días calendario o menos dentro de un periodo cualquiera de doce (12) meses.
-                            </p>
-
-                            <p class="paragraph">
-                                <span class="bold">Artículo 8°.-</span> las personas naturales se consideran domiciliadas o no en el país según fuere su condición al principio de cada ejercicio gravable, juzgada con arreglo a lo dispuesto en el artículo precedente. Los cambios que se produzcan en el curso de un ejercicio gravable sólo producirán efectos a partir del ejercicio siguiente, salvo en el caso en que cumpliendo con los requisitos del segundo párrafo del artículo anterior, la condición de domiciliado se perderá al salir del país.
-                            </p>
-
-                            <p class="paragraph">
-                                El empleador dando cumplimiento al procedimiento de transparencia y legalidad comunica al trabajador sobre las comunicaciones de materia legal tributaria, que se encuentra establecida y de aplicación a todo sujeto con condición "no domiciliado" y las indicaciones establecidas para su aplicación con respecto a la retención del 30% de la totalidad de los importes pagados.
-                            </p>
-
-                            <p class="paragraph">
-                                Es importante precisar que la condición de domiciliado en el país entrará a regir a partir del siguiente ejercicio gravable, es decir, si dentro del año 2022 la persona natural no domiciliada permanece en el país por más de 183 días, entonces se considerará domiciliado para el siguiente año fiscal (2023), y deberá seguir tributando el resto del año 2022 con la tasa del 30% correspondiente a los sujetos no domiciliados.
-                            </p>
-
-                            <p class="paragraph">
-                                En señal de conformidad con el contenido del documento cada una de los puntos tratados en el documento, se formaliza acuerdo entre las partes, continuando con el archivamiento de la documentación.
-                            </p>
-
-                            <table class="table">
-                                <colgroup>
-                                    <col width="10%"/>
-                                    <col width="30%"/>
-                                    <col width="20%"/>
-                                    <col width="30%"/>
-                                    <col width="10%"/>
-                                </colgroup>
-                                <thead>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none">
-                                            <t t-if="o.applicant_signature">
-                                                <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image-dual"/>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 4rem;"></div>
-                                            </t>
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" style="border: none">
-                                            <t t-if="o.applicant_signature">
-                                                <div style="text-align: center;">
-                                                    <img t-attf-src="data:image/png;base64,#{o.env['employer.signature'].browse(2).signature}"
-                                                        style="max-height: 4rem; max-width: 100%; display: inline-block;"/>
-                                                </div>
-                                            </t>
-                                            <t t-else="">
-                                                <div style="min-height: 4rem;"></div>
-                                            </t>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align: top; line-height:0;">
-                                            TRABAJADOR
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                        <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; line-height:1;">
-                                            <p style="margin: 0; padding: 0; white-space: nowrap;">EDUARDO GUSTAVO MEDINA ORMEÑO</p>
-                                            <p style="margin: 0; padding: 0; white-space: nowrap;">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
-                                            <p>EL EMPLEADOR</p>
-                                        </th>
-                                        <th scope="col" style="border: none"></th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div style="page-break-after: always;"/>
-                    </div>
-
                     <div id="agreement_doc_digital_format_document" style="padding:3rem 2rem 0rem;">
                         <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem">
                             <h6 class="document-title">ACUERDO INTERNO SOBRE ENTREGA DE DOCUMENTACIÓN EN FORMATO DIGITAL</h6>
@@ -1197,7 +1074,7 @@
                                     <span>DNI</span>
                                 </div>
                                 <div class="checkbox-container">
-                                    <span t-attf-class="checkbox #{o.identification_type == 'Carnet de Extranjeria' and 'checked' or ''}"></span>
+                                    <span t-attf-class="checkbox #{o.identification_type == 'Carnet de Extranjería' and 'checked' or ''}"></span>
                                     <span>Carnét de Extranjería</span>
                                 </div>
                                 <div class="checkbox-container">
@@ -1205,8 +1082,8 @@
                                     <span>Pasaporte</span>
                                 </div>
                                 <div class="checkbox-container">
-                                    <span t-attf-class="checkbox #{o.identification_type == 'VAT' and 'checked' or ''}"></span>
-                                    <span>Otro</span>
+                                    <span t-attf-class="checkbox #{o.identification_type == 'PTP' and 'checked' or ''}"></span>
+                                    <span>PTP</span>
                                 </div>
                             </div>
 
@@ -1367,7 +1244,7 @@
                                 De acuerdo con las medidas de simplificaci&#243;n y eficiencia administrativa&#44; aceptas de manera expresa el env&#237;o de notificaciones e informaci&#243;n por correo electr&#243;nico a la direcci&#243;n de correo electr&#243;nico que constar&#225; en tu contrato de afiliaci&#243;n o que posteriormente actualices a trav&#233;s de nuestros canales correspondientes&#46; Las notificaciones por correo electr&#243;nico e informaci&#243;n que te enviemos corresponden al tr&#225;mite de car&#225;cter pensionario y no pensionario que realices con AFP&#46;
                             </p>
 
-                            <p class="paragraph date" style="margin-top: 50px">
+                            <p class="paragraph date" style="margin-top: 20px">
                                 Ciudad de
                                 <span t-esc="o.province if o.province else '______________'"/>,
                                 de 
@@ -1394,7 +1271,7 @@
                                 .
                             </p>
 
-                            <table style="width:100%; margin-top:100px; text-align:center; border-collapse:collapse;">
+                            <table style="width:100%; margin-top:70px; text-align:center; border-collapse:collapse;">
                                 <tr>
                                     <td style="vertical-align:bottom; text-align:center;">
                                         <t t-if="o.applicant_signature">
@@ -1417,7 +1294,6 @@
                         </div>
                         <div style="page-break-after: always;"/>
                     </div>
-
 
                     <div id="labor_commitment_document" style="padding:1.25rem;">
                         <t t-if="o.partner_id.belong_applicant_id.job_id.department_id and o.partner_id.belong_applicant_id.job_id.department_id.id == 75"> 
@@ -1873,6 +1749,7 @@
                                 </table>
                                 
                             </div>
+                            <div style="page-break-after: always;"/>
                         </t>
                         <t t-else="">
                             <div id="work_commitment_document" style="padding:2rem 2rem 0rem;">
@@ -1975,6 +1852,561 @@
                         </t>
 
                     </div>
+                
+                    <div id="foreign_personnel">
+                        <t t-if="o.partner_id.l10n_latam_identification_type_id.l10n_pe_vat_code in ('4', '7', 'F')">
+                            <div style="page-break-after: always;"/>
+                            <div id="sunat_tax_foreign_personnel_document" style="padding:2rem 2rem 0rem;">
+                                <div style="width: 100%;text-align: justify; height: auto; font-size:0.625rem">
+                                    <h6 class="document-title">INFORMATIVO TRIBUTARIO SUNAT (PERSONAL EXTRANJERO)</h6>
+                                    
+                                    <p class="paragraph center">(REF. INFORME N.° 096-2018-SUNAT/7T0000)</p>
+
+                                    <p class="paragraph">
+                                        Mediante la presente damos cumplimiento a todo proceso de transparencia y a su vez compartimos la comunicación legal emitida por la superintendencia nacional de administración tributaria (SUNAT), ley de impuesto a la renta (d.s179-2004-ef) – retención del impuesto a la renta por rentas de 5ta categoría obtenidas por no domiciliados), en documentación formal, en la cual queda formalizado lo siguiente:
+                                    </p>
+
+                                    <div class="clause-title">BASE LEGAL:</div>
+
+                                    <p class="paragraph">
+                                        - TUO de la ley del impuesto a la renta, aprobado por el DS N° 179-2004-ef, publicado el 8.12.2004 y normas modificatorias (en adelante, la lir).
+                                    </p>
+
+                                    <p class="paragraph">
+                                        - DS N° 001-2018-in, aprueban lineamientos para el otorgamiento del permiso temporal de permanencia para las personas de nacionalidad venezolana, publicado el 23.1.2018.
+                                    </p>
+
+                                    <p class="paragraph">
+                                        - RM. N° 176-2018-tr, establecen disposiciones para la contratación laboral de personas de nacionalidad venezolana con permiso temporal de permanencia – ptp o acta de permiso de trabajo extraordinario –provisional, publicado el 6.7.2018.
+                                    </p>
+
+                                    <p class="paragraph">Asimismo, del mencionado informe, queda establecido lo siguiente:</p>
+
+                                    <p class="paragraph">
+                                        En el supuesto de empresas domiciliadas en el perú que contratan trabajadores venezolanos no domiciliados en el país, que cuentan con ptp, los cuales perciben por ello rentas de fuente peruana de quinta categoría:
+                                    </p>
+
+                                    <ol style="list-style: lower-alpha">
+                                        <li class="paragraph">
+                                            Para la retención del impuesto a la renta que tienen que efectuar dichas empresas, no deben aplicar la escala progresiva acumulativa establecida en el artículo 53° de la lir.
+                                        </li>
+
+                                        <li class="paragraph">
+                                            Cuando tales empresas paguen o acrediten dichas rentas deberán efectuar la retención y el pago, con carácter definitivo, del 30% de la totalidad de los importes pagados o acreditados por concepto del impuesto a la renta que le corresponde pagar a dichos trabajadores.
+                                        </li>
+                                    </ol>
+
+                                    <p class="paragraph">
+                                        Asimismo, el art. 7 de la ley impuesto a la renta, señala que se considera personas domiciliadas en el país:
+                                    </p>
+
+                                    <p class="paragraph">
+                                        - Las personas naturales extranjeras que hayan residido o permanecido en el país más de ciento ochenta y tres (183) días calendario durante un periodo de doce (12) meses.
+                                    </p>
+
+                                    <p class="paragraph">
+                                        Para efectos del impuesto a la renta, las personas naturales, perderán su condición de domiciliadas cuando adquieran la residencia en otro país y hayan salido del Perú, lo que deberá acreditarse de acuerdo con las reglas que para el efecto señale el reglamento. en el supuesto que no pueda acreditarse la condición de residente en otro país, las personas naturales, mantendrán su condición de domiciliadas en tanto no permanezcan ausentes del país más de ciento ochenta y tres (183) días calendario dentro de un periodo cualquiera de doce (12) meses.
+                                    </p>
+
+                                    <p class="paragraph">
+                                        Los peruanos que hubieren perdido su condición de domiciliados la recobrarán en cuanto retornen al país, a menos que lo hagan en forma transitoria permaneciendo en el país ciento ochenta y tres (183) días calendario o menos dentro de un periodo cualquiera de doce (12) meses.
+                                    </p>
+
+                                    <p class="paragraph">
+                                        <span class="bold">Artículo 8°.-</span> las personas naturales se consideran domiciliadas o no en el país según fuere su condición al principio de cada ejercicio gravable, juzgada con arreglo a lo dispuesto en el artículo precedente. Los cambios que se produzcan en el curso de un ejercicio gravable sólo producirán efectos a partir del ejercicio siguiente, salvo en el caso en que cumpliendo con los requisitos del segundo párrafo del artículo anterior, la condición de domiciliado se perderá al salir del país.
+                                    </p>
+
+                                    <p class="paragraph">
+                                        El empleador dando cumplimiento al procedimiento de transparencia y legalidad comunica al trabajador sobre las comunicaciones de materia legal tributaria, que se encuentra establecida y de aplicación a todo sujeto con condición "no domiciliado" y las indicaciones establecidas para su aplicación con respecto a la retención del 30% de la totalidad de los importes pagados.
+                                    </p>
+
+                                    <p class="paragraph">
+                                        Es importante precisar que la condición de domiciliado en el país entrará a regir a partir del siguiente ejercicio gravable, es decir, si dentro del año 2022 la persona natural no domiciliada permanece en el país por más de 183 días, entonces se considerará domiciliado para el siguiente año fiscal (2023), y deberá seguir tributando el resto del año 2022 con la tasa del 30% correspondiente a los sujetos no domiciliados.
+                                    </p>
+
+                                    <p class="paragraph">
+                                        En señal de conformidad con el contenido del documento cada una de los puntos tratados en el documento, se formaliza acuerdo entre las partes, continuando con el archivamiento de la documentación.
+                                    </p>
+
+                                    <table class="table">
+                                        <colgroup>
+                                            <col width="10%"/>
+                                            <col width="30%"/>
+                                            <col width="20%"/>
+                                            <col width="30%"/>
+                                            <col width="10%"/>
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" style="border: none">
+                                                    <t t-if="o.applicant_signature">
+                                                        <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image-dual"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <div style="min-height: 4rem;"></div>
+                                                    </t>
+                                                </th>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" style="border: none">
+                                                    <t t-if="o.applicant_signature">
+                                                        <div style="text-align: center;">
+                                                            <img t-attf-src="data:image/png;base64,#{o.env['employer.signature'].browse(2).signature}"
+                                                                style="max-height: 4rem; max-width: 100%; display: inline-block;"/>
+                                                        </div>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <div style="min-height: 4rem;"></div>
+                                                    </t>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align: top; line-height:0;">
+                                                    TRABAJADOR
+                                                </th>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; line-height:1;">
+                                                    <p style="margin: 0; padding: 0; white-space: nowrap;">EDUARDO GUSTAVO MEDINA ORMEÑO</p>
+                                                    <p style="margin: 0; padding: 0; white-space: nowrap;">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                                    <p>EL EMPLEADOR</p>
+                                                </th>
+                                                <th scope="col" style="border: none"></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div style="page-break-after: always;"/>
+                            </div>
+                            
+                            <div id="payroll_discount_agreement_document" style="padding:3rem 2rem 0rem;">
+                                <div style="width: 100%;text-align: justify; height: auto; font-size:0.590rem; line-height: 1.2">
+
+                                    <h6 class="document-title">ACUERDO Y AUTORIZACIÓN DE DESCUENTO EN PLANILLA – TRABAJADOR EXTRANJERO</h6>
+                                    
+                                    <p class="paragraph">
+                                        <span class="bold">Yo,</span> <span t-esc="o.name or '__________________'"/>, identificado(a) con <span class="bold">Pasaporte / Carné de Extranjería N°</span> <span t-esc="o.vat or '__________________'"/>, en pleno conocimiento de los procedimientos administrativos establecidos por la empresa <span class="bold">MARKETING ALTERNO PERÚ S.A.C.</span>, <span class="bold">autorizo expresamente y de manera voluntaria</span> al área de <span class="bold">Planillas</span> para que proceda con el <span class="bold">descuento correspondiente</span> de mi remuneración, conforme a las siguientes condiciones:
+                                    </p>
+
+                                    <div class="clause-title">PRIMERO: OBJETO DE LA AUTORIZACIÓN</div>
+                                    <p class="paragraph">
+                                        El presente documento tiene por objeto dejar constancia de mi autorización para que la empresa realice el descuento del monto de S/ 25.00 (Veinticinco con 00/100 Soles) por concepto de tasa administrativa exigida por el Ministerio de Trabajo y Promoción del Empleo (MTPE), correspondiente al pago de tributo N° 5533 en el Banco de la Nación, por concepto de trámite de contrato de trabajo para personal extranjero.
+                                    </p>
+
+                                    <div class="clause-title">SEGUNDO: ALCANCE Y OPORTUNIDAD DEL DESCUENTO</div>
+                                    <p class="paragraph">
+                                        El descuento antes mencionado se efectuará:
+                                    </p>
+                                    <ul class="ul-left-0">
+                                        <li class="paragraph">En el inicio de mi contrato laboral, y</li>
+                                        <li class="paragraph">En cada renovación contractual posterior, a fin de cumplir con los requisitos exigidos por el Ministerio de Trabajo para la aprobación y registro del contrato de trabajo del personal extranjero.</li>
+                                    </ul>
+
+                                    <div class="clause-title">TERCERO: CONOCIMIENTO Y CONSENTIMIENTO</div>
+                                    <p class="paragraph">
+                                        Declaro que:
+                                    </p>
+                                    <ul class="ul-left-0">
+                                        <li class="paragraph">He sido informado(a) de la finalidad del descuento.</li>
+                                        <li class="paragraph">Entiendo que el monto será destinado íntegramente al pago de la tasa administrativa correspondiente.</li>
+                                        <li class="paragraph">Doy mi conformidad libre, voluntaria y expresa, sin que medie coacción o condicionamiento alguno.</li>
+                                        <li class="paragraph">Acepto que el descuento se verá reflejado en mi boleta de remuneraciones del mes correspondiente.</li>
+                                    </ul>
+
+                                    <div class="clause-title">CUARTO: RESPONSABILIDAD Y ACUERDO</div>
+                                    <p class="paragraph">
+                                        Ambas partes dejan constancia de que este documento constituye una autorización escrita válida, y consentimiento expreso para que la empresa proceda.
+                                    </p>
+
+                                    <div class="clause-title">QUINTO: CONFORMIDAD</div>
+                                    <p class="paragraph">
+                                        En señal de conformidad y aceptación de todas las cláusulas precedentes, firmo el presente acuerdo en la ciudad de 
+                                        <span t-esc="o.province if o.province else '______________'"/>
+                                        <!-- , el
+                                        <t t-if="o.applicant_signature">
+                                            <span t-esc="o.signed_on.day"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="datetime.datetime.now().strftime('%d')"/>
+                                        </t>
+                                        de 
+                                        <t t-if="o.applicant_signature">
+                                            <span t-esc="o.signed_on_month"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="mes_actual"/>
+                                        </t>
+                                        del 
+                                        <t t-if="o.applicant_signature">
+                                            <span t-esc="o.signed_on.year"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="datetime.datetime.now().strftime('%Y')"/>
+                                        </t> -->
+                                        .
+                                    </p>
+
+                                    <p class="paragraph" style="margin-top: 50px">
+                                        <span class="bold">Nombres y Apellidos:</span> <span t-esc="o.partner_name if o.partner_name else '______________'"/><br/>
+                                        <span class="bold">Identificación (CE/Pasaporte):</span> <span t-esc="o.vat if o.vat else '______________'"/><br/>
+                                    </p>
+
+                                    <table class="table" style="margin-top: 50px">
+                                        <colgroup>
+                                            <col width="10%"/>
+                                            <col width="30%"/>
+                                            <col width="20%"/>
+                                            <col width="30%"/>
+                                            <col width="10%"/>
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" style="border: none">
+                                                    <t t-if="o.applicant_signature">
+                                                        <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image-dual"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <div style="min-height: 4rem;"></div>
+                                                    </t>
+                                                </th>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" style="border: none">
+                                                    <t t-if="o.applicant_signature">
+                                                        <div style="text-align: center;">
+                                                            <img t-attf-src="data:image/png;base64,#{o.env['employer.signature'].browse(2).signature}"
+                                                                style="max-height: 4rem; max-width: 100%; display: inline-block;"/>
+                                                        </div>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <div style="min-height: 4rem;"></div>
+                                                    </t>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align: top; line-height:0;">
+                                                    TRABAJADOR
+                                                </th>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; line-height:1;">
+                                                    <p style="margin: 0; padding: 0; white-space: nowrap;">EDUARDO GUSTAVO MEDINA ORMEÑO</p>
+                                                    <p style="margin: 0; padding: 0; white-space: nowrap;">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                                    <p>EL EMPLEADOR</p>
+                                                </th>
+                                                <th scope="col" style="border: none"></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div style="page-break-after: always;"/>
+                            </div>
+
+                            <div id="sworn_statement_foreign_worker_document" style="padding:3rem 2rem 0rem;">
+                                <div style="width: 100%;text-align: justify; height: auto; font-size:0.590rem; line-height: 1.2">
+
+                                    <h6 class="document-title">DECLARACIÓN JURADA Y COMPROMISOS DEL TRABAJADOR EXTRANJERO</h6>
+                                    
+                                    <p class="paragraph">
+                                        Yo, <span t-esc="o.partner_name or '__________________'"/>, identificado(a) con Pasaporte / Carné de Extranjería N° <span t-esc="o.vat or '__________________'"/>, con calidad migratoria que me autoriza a trabajar en el Perú, declaro lo siguiente ante <span class="bold">MARKETING ALTERNO PERU SAC</span>, con RUC N° 20512433821, con domicilio en jirón Libertad 757 Urb. Orbea distrito de Magdalena del Mar, provincia y departamento de Lima, en pleno conocimiento de las normas peruanas laborales y migratorias aplicables.
+                                    </p>
+
+                                    <div class="clause-title">I. DECLARACIÓN JURADA DE VERACIDAD Y AUTORIZACIÓN SOBRE SITUACIÓN MIGRATORIA:</div>
+                                    
+                                    <ol class="ol-left-small">
+                                        <li class="paragraph-tight li0">
+                                            Declaro bajo juramento que toda la información y documentos personales que he presentado a la empresa son veraces, auténticos y vigentes, incluyendo mi calidad migratoria, carné de extranjería, pasaporte, títulos y antecedentes.
+                                        </li>
+                                        <li class="paragraph-tight li0">
+                                            Declaro contar con autorización legal para trabajar en el Perú, conforme a lo establecido en la Ley N° 1350 -- Ley de Migraciones, su Reglamento y demás normas conexas.
+                                        </li>
+                                        <li class="paragraph-tight li0">
+                                            Autorizo expresamente a la empresa a verificar ante las autoridades competentes la validez de mi situación migratoria y la autenticidad de la información proporcionada.
+                                        </li>
+                                        <li class="paragraph li0">
+                                            Reconozco que la falsedad, omisión o presentación de documentos falsos constituye falta grave y puede dar lugar a la resolución de mi contrato de trabajo, sin perjuicio de las acciones legales correspondientes.
+                                        </li>
+                                    </ol>
+
+                                    <div class="clause-title">II. COMPROMISO DE CUMPLIMIENTO MIGRATORIO Y RESPONSABILIDAD ADMINISTRATIVA</div>
+                                    
+                                    <ol class="ol-left-small">
+                                        <li class="paragraph-tight li0">
+                                            Me comprometo a mantener vigente y regularizada mi calidad migratoria que me habilita para prestar servicios laborales en territorio peruano durante toda la vigencia de mi vínculo con la empresa.
+                                        </li>
+                                        <li class="paragraph-tight li0">
+                                            Declaro que los costos de renovación, prórroga o cambio de calidad migratoria son de mi responsabilidad exclusiva.
+                                        </li>
+                                        <li class="paragraph-tight li0">
+                                            Me obligo a comunicar a la empresa de manera inmediata cualquier cambio, vencimiento o irregularidad en mi situación migratoria, así como los trámites en curso ante la Superintendencia Nacional de Migraciones.
+                                        </li>
+                                        <li class="paragraph-tight li0">
+                                            Autorizo expresamente a la empresa a no renovar mi contrato de trabajo o a suspender temporalmente el vínculo laboral, en caso de que mi situación migratoria se encuentre vencida, irregular o no cumpla los requisitos legales vigentes para la contratación de personal extranjero.
+                                        </li>
+                                        <li class="paragraph li0">
+                                            Declaro conocer que el incumplimiento de mis obligaciones migratorias exonera de toda responsabilidad a la empresa frente a la autoridad migratoria o laboral.
+                                        </li>
+                                    </ol>
+
+                                    <div class="clause-title">III. COMPROMISO DE CONFIDENCIALIDAD Y USO DE INFORMACIÓN</div>
+                                    
+                                    <ol class="ol-left-small">
+                                        <li class="paragraph-tight li0">
+                                            Me comprometo a guardar estricta reserva y confidencialidad sobre toda información, documentación, datos personales, bases de clientes, estrategias comerciales, precios, procesos internos o cualquier otro material al que tenga acceso en el ejercicio de mis funciones.
+                                        </li>
+                                        <li class="paragraph-tight li0">
+                                            Reconozco que dicha información constituye propiedad exclusiva de la empresa, y que su divulgación o uso indebido sin autorización expresa será considerada falta grave, conforme al artículo 25 inciso "a" del D.S. N° 003-97-TR, y dará lugar a la terminación del vínculo laboral y/o acciones legales.
+                                        </li>
+                                        <li class="paragraph li0">
+                                            Me obligo a devolver toda información, documentos o equipos que contengan datos confidenciales al momento de la culminación de mi relación laboral.
+                                        </li>
+                                    </ol>
+
+                                    <div class="clause-title">IV. DECLARACIÓN DE CUMPLIMIENTO DE POLÍTICAS INTERNAS</div>
+                                    
+                                    <ol class="ol-left-small">
+                                        <li class="paragraph-tight li0">
+                                            Declaro haber recibido, leído y comprendido el Reglamento Interno de Trabajo, lineamientos y las Políticas Internas de la empresa.
+                                        </li>
+                                        <li class="paragraph-tight li0">
+                                            Me comprometo a cumplir las normas de seguridad, conductas dispuestas por la empresa, conforme a la Ley de Seguridad y Salud en el Trabajo N° 29783 y su Reglamento.
+                                        </li>
+                                        <li class="paragraph li0">
+                                            Reconozco que el incumplimiento de dichas políticas puede generar medidas disciplinarias, incluyendo la terminación de mi contrato.
+                                        </li>
+                                    </ol>
+
+                                    <div class="clause-title">V. DECLARACIÓN DE COMPROMISO ÉTICO Y CONDUCTA LABORAL</div>
+                                    
+                                    <ol class="ol-left-small">
+                                        <li class="paragraph-tight li0">
+                                            Me comprometo a mantener en todo momento una conducta ética, respetuosa y profesional dentro y fuera del centro de trabajo.
+                                        </li>
+                                        <li class="paragraph-tight li0">
+                                            Declaro que me abstendré de toda forma de acoso, discriminación, violencia, hostigamiento o conducta inapropiada, conforme a la Ley N° 27942 -- Ley de Prevención y Sanción del Hostigamiento Sexual.
+                                        </li>
+                                        <li class="paragraph li0">
+                                            Asumo la obligación de respetar las diferencias culturales y laborales, promoviendo un ambiente inclusivo y de cooperación.
+                                        </li>
+                                    </ol>
+
+                                    <div class="clause-title">VI. DECLARACIÓN DE EXCLUSIVIDAD LABORAL Y NO DOBLE EMPLEO</div>
+                                    
+                                    <ol class="ol-left-small">
+                                        <li class="paragraph-tight li0">
+                                            Declaro que mi vínculo laboral con MARKETING ALTERNO PERU es exclusivo, y que no mantengo ni mantendré otro contrato de trabajo o prestación de servicios con otras empresas o personas naturales, salvo autorización expresa y escrita de la empresa.
+                                        </li>
+                                        <li class="paragraph-tight li0">
+                                            Reconozco que la calidad migratoria que poseo me autoriza a trabajar únicamente para el empleador declarado ante el Ministerio de Trabajo y Promoción del Empleo.
+                                        </li>
+                                        <li class="paragraph li0">
+                                            En caso de incumplimiento, autorizo a la empresa a resolver el vínculo laboral de forma inmediata, sin responsabilidad alguna para ésta.
+                                        </li>
+                                    </ol>
+
+                                    <div class="clause-title">VII. DISPOSICIONES FINALES</div>
+                                    
+                                    <ul class="ul-left-0">
+                                        <li class="paragraph-tight">
+                                            Declaro haber leído el presente documento en su totalidad, comprendiendo su contenido y efectos legales.
+                                        </li>
+                                        <li class="paragraph-tight">
+                                            Firmo de manera libre, consciente y voluntaria, sin presión alguna, y en señal de conformidad con todas sus cláusulas.
+                                        </li>
+                                        <li class="paragraph">
+                                            Esta declaración tiene valor de declaración jurada.
+                                        </li>
+                                    </ul>
+
+                                    <p class="paragraph">
+                                        <span class="bold">Nombres y Apellidos:</span> <span t-esc="o.partner_name if o.partner_name else '______________'"/><br/>
+                                        <span class="bold">Identificación (CE/Pasaporte):</span> <span t-esc="o.vat if o.vat else '______________'"/><br/>
+                                    </p>
+
+                                    <table class="table" style="margin-top: 10px">
+                                        <colgroup>
+                                            <col width="10%"/>
+                                            <col width="30%"/>
+                                            <col width="20%"/>
+                                            <col width="30%"/>
+                                            <col width="10%"/>
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" style="border: none">
+                                                    <t t-if="o.applicant_signature">
+                                                        <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image-dual"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <div style="min-height: 4rem;"></div>
+                                                    </t>
+                                                </th>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" style="border: none">
+                                                    <t t-if="o.applicant_signature">
+                                                        <div style="text-align: center;">
+                                                            <img t-attf-src="data:image/png;base64,#{o.env['employer.signature'].browse(2).signature}"
+                                                                style="max-height: 4rem; max-width: 100%; display: inline-block;"/>
+                                                        </div>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <div style="min-height: 4rem;"></div>
+                                                    </t>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align: top; line-height:0;">
+                                                    TRABAJADOR
+                                                </th>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; line-height:1;">
+                                                    <p style="margin: 0; padding: 0; white-space: nowrap;">EDUARDO GUSTAVO MEDINA ORMEÑO</p>
+                                                    <p style="margin: 0; padding: 0; white-space: nowrap;">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                                    <p>EL EMPLEADOR</p>
+                                                </th>
+                                                <th scope="col" style="border: none"></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div style="page-break-after: always;"/>
+                            </div>
+
+                            <div id="tax_status_foreign_worker_document" style="padding:3rem 2rem 0rem;">
+                                <div style="width: 100%;text-align: justify; height: auto; font-size:0.590rem; line-height: 1.2">
+
+                                    <h6 class="document-title">COMUNICADO INFORMATIVO A TRABAJADORES EXTRANJEROS – CONDICIÓN TRIBUTARIA DOMICILIADO / NO DOMICILIADO</h6>
+                                    
+                                    <p class="paragraph">
+                                        <span class="bold">Empleador:</span> MARKETING ALTERNO PERÚ S.A.C.<br/>
+                                        <span class="bold">Representante Legal:</span> Eduardo Gustavo Medina Ormeño -- Gerente General<br/>
+                                        <span class="bold">Trabajador:</span> <span t-esc="o.partner_name or '__________________'"/><br/>
+                                        <span class="bold">Documento de Identidad:</span> <span t-esc="o.vat or '__________________'"/>
+                                    </p>
+
+                                    <p class="paragraph">
+                                        <span class="bold">Asunto:</span> Información sobre condición tributaria ante SUNAT -- Trabajadores domiciliados y no domiciliados
+                                    </p>
+
+                                    <p class="paragraph">
+                                        <span class="bold">Referencia:</span> Informe N.° 096-2018-SUNAT/7T0000 y D.S. N.° 179-2004-EF (Ley del Impuesto a la Renta)
+                                    </p>
+
+                                    <div class="clause-title">1. Marco legal y finalidad</div>
+                                    <p class="paragraph">
+                                        En cumplimiento de las disposiciones establecidas por la Superintendencia Nacional de Administración Tributaria (SUNAT) y la Ley del Impuesto a la Renta (D.S. N.° 179-2004-EF), MARKETING ALTERNO PERÚ S.A.C. comunica a todos sus colaboradores extranjeros las normas vigentes aplicables a su condición tributaria como domiciliados o no domiciliados en el Perú, y las implicancias que esta conlleva en la retención del Impuesto a la Renta de Quinta Categoría.
+                                    </p>
+
+                                    <div class="clause-title">2. Condición de no domiciliado</div>
+                                    <p class="paragraph">
+                                        De acuerdo con el artículo 7° de la Ley del Impuesto a la Renta, se considera no domiciliada toda persona natural extranjera que haya residido o permanecido en el Perú menos de ciento ochenta y tres (183) días calendario dentro de un período de doce (12) meses consecutivos.
+                                    </p>
+                                    <p class="paragraph">
+                                        Mientras el trabajador mantenga esta condición:
+                                    </p>
+                                    <ul class="ul-left-0">
+                                        <li class="paragraph">
+                                            Sus ingresos por rentas del trabajo (quinta categoría) estarán sujetos a una retención del 30% sobre la totalidad de los importes pagados o acreditados, conforme al artículo 54° inciso g) de la citada ley.
+                                        </li>
+                                        <li class="paragraph">
+                                            Dicha retención tiene carácter definitivo y será efectuada por la empresa en su calidad de agente de retención, conforme a lo dispuesto por el Código Tributario.
+                                        </li>
+                                    </ul>
+
+                                    <div class="clause-title">3. Condición de domiciliado</div>
+                                    <p class="paragraph">
+                                        Una vez que el trabajador extranjero permanece en el país más de 183 días calendario dentro de un período de 12 meses, adquiere la condición de domiciliado, la cual surte efecto a partir del 1 de enero del año siguiente (artículo 8° de la Ley del Impuesto a la Renta).
+                                    </p>
+                                    <p class="paragraph">
+                                        En tal caso:
+                                    </p>
+                                    <ul class="ul-left-0">
+                                        <li class="paragraph">
+                                            Las rentas de trabajo quedan sujetas al régimen general de retención progresiva acumulativa (es decir, a la escala ordinaria de impuesto a la renta aplicable a todo trabajador domiciliado).
+                                        </li>
+                                        <li class="paragraph">
+                                            La empresa no aplica el 30% de retención por renta de no domiciliado.
+                                        </li>
+                                    </ul>
+
+                                    <div class="clause-title">4. Responsabilidad del trabajador</div>
+                                    <p class="paragraph">
+                                        El trabajador extranjero tiene la obligación de proporcionar información veraz y documentación auténtica que acredite su permanencia en el país y su condición migratoria, incluyendo carnet de extranjería, permisos de residencia, constancias de trabajo anteriores u otros documentos válidos.
+                                    </p>
+                                    <p class="paragraph">
+                                        En caso de que MARKETING ALTERNO PERÚ S.A.C. detecte, o la SUNAT determine, la existencia de documentación fraudulenta, adulterada o inconsistente, será la SUNAT la entidad competente para aplicar las medidas legales, tributarias o sancionadoras que correspondan, las cuales deberán ser acatadas por la empresa en su calidad de agente de retención y contribuyente. Y la presente "firma del trabajador" es considerada autorización expresa del TRABAJADOR para que la empresa pueda tomar las acciones pertinentes y aplicar los descuentos autorizados por el TRABAJADOR.
+                                    </p>
+
+                                    <div class="clause-title">5. Compromiso y conformidad</div>
+                                    <p class="paragraph">
+                                        El trabajador declara haber sido debidamente informado sobre:
+                                    </p>
+                                    <ul class="ul-left-0">
+                                        <li class="paragraph">Las normas tributarias aplicables según su condición migratoria.</li>
+                                        <li class="paragraph">Los procedimientos de retención de impuesto y las responsabilidades de ambas partes.</li>
+                                        <li class="paragraph">Las consecuencias de proporcionar información falsa o incompleta.</li>
+                                    </ul>
+                                    <p class="paragraph">
+                                        Asimismo, si el trabajador acredita su condición de domiciliado, se mantendrá esta comunicación únicamente a título informativo.
+                                    </p>
+                                    <p class="paragraph">
+                                        En señal de conformidad, ambas partes suscriben el presente documento, que servirá como constancia formal de comunicación y respaldo del cumplimiento informativo por parte de la empresa.
+                                    </p>
+
+                                    <table class="table" style="margin-top: 40px">
+                                        <colgroup>
+                                            <col width="10%"/>
+                                            <col width="30%"/>
+                                            <col width="20%"/>
+                                            <col width="30%"/>
+                                            <col width="10%"/>
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" style="border: none">
+                                                    <t t-if="o.applicant_signature">
+                                                        <img t-att-src="image_data_uri(o.applicant_signature)" class="signature-image-dual"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <div style="min-height: 4rem;"></div>
+                                                    </t>
+                                                </th>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" style="border: none">
+                                                    <t t-if="o.applicant_signature">
+                                                        <div style="text-align: center;">
+                                                            <img t-attf-src="data:image/png;base64,#{o.env['employer.signature'].browse(2).signature}"
+                                                                style="max-height: 4rem; max-width: 100%; display: inline-block;"/>
+                                                        </div>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <div style="min-height: 4rem;"></div>
+                                                    </t>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; vertical-align: top; line-height:0;">
+                                                    TRABAJADOR
+                                                </th>
+                                                <th scope="col" style="border: none"></th>
+                                                <th scope="col" class="text-center" style="border-top: 2px solid; border-bottom: none; line-height:1;">
+                                                    <p style="margin: 0; padding: 0; white-space: nowrap;">EDUARDO GUSTAVO MEDINA ORMEÑO</p>
+                                                    <p style="margin: 0; padding: 0; white-space: nowrap;">MARKETING ALTERNO PERU S&#46;A&#46;C</p>
+                                                    <p>EL EMPLEADOR</p>
+                                                </th>
+                                                <th scope="col" style="border: none"></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+
                 </div>
             </div>
             

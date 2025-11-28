@@ -52,6 +52,15 @@ label[for^="file"] {
     margin-bottom: 10px;
 }
 
+.paragraph-tight {
+    text-align: justify;
+    margin-bottom: 5px;
+}
+
+.paragraph-tight.li0 {
+    margin-left: 0px;
+}
+
 .paragraph {
     text-align: justify;
     margin-bottom: 10px;

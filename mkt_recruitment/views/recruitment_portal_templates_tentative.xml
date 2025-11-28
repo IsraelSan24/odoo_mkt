@@ -1,0 +1,1481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_my_home_contract" name="Show My Contract" customize_show="True" inherit_id="portal.portal_my_home" priority="31">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">My contract</t>
+                <t t-set="url" t-value="'/my/contracts'"/>
+                <t t-set="placeholder_count" t-value="'contract_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_menu_contract" name="Portal layout : contract" inherit_id="portal.portal_breadcrumbs" priority="31">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'contract' or contract_document and contract_document.state in ('draft','signed','open')" t-attf-class="breadcrumb-item #{'active'}">
+                <a t-if="contract_document" t-attf-href="/my/contracts?{{ keep_query() }}">Contract Documents</a>
+                <t t-else="">Contract Documents</t>
+            </li>
+            <li t-if="contract_document" class="breadcrumb-item active">
+                <t t-esc="contract_document.name"/>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_documents" name="Show My Documents" customize_show="True" inherit_id="portal.portal_my_home" priority="41">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Partner document</t>
+                <t t-set="url" t-value="'/my/applicant_documents'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_partner_document" name="My Documents">
+        <t t-call="portal.portal_layout">
+            <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/website_menu.css"/>
+            <script type="text/javascript" src="/mkt_recruitment/static/src/js/website_menu.js"></script>
+            <div class="container mt-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4>Applicant Documents</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form t-att-action="action_url" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="row justify-content-between mb-3">
+                                <div class="col-md-4 align-content-center">
+                                    <img src="/mkt_recruitment/static/src/img/card.svg" alt="" class="img-fluid mx-auto d-block h-75"/>
+                                </div>
+                                <div class="col-md-8 align-items-center justify-items-between">
+                                    <div class="col-md-12 mb-3 mt-3">
+                                        <div class="border border-info rounded p-3 h-100">
+                                            <div class="form-group">
+                                                <label for="current_dni"><strong class="text-info">Current DNI(Front)</strong></label>
+                                                <t t-if="partner.current_dni">
+                                                    <div class="mb-2">
+                                                        <a t-attf-href="/web/content/res.partner/#{partner.id}/current_dni"
+                                                        target="_blank"
+                                                        class="btn btn-outline-primary btn-sm mb-2">
+                                                        See current file
+                                                        </a>
+                                                    </div>
+                                                </t>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="current_dni" name="current_dni" t-attf-value="current_dnis or partner.current_dni" t-att-required="not partner.current_dni" t-att-disabled="partner.document_okay"/>
+                                                        <label class="custom-file-label text-muted truncate" for="current_dni">Select file</label>
+                                                    </div>
+                                                </div>
+                                                <small class="form-text text-muted">
+                                                    <t t-if="partner.current_dni">
+                                                        UPLOADED. To update, upload a new file.
+                                                    </t>
+                                                    <t t-else="">
+                                                        This document is mandatory to continue.
+                                                    </t>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 ">
+                                        <div class="border border-info rounded p-3 h-100">
+                                            <div class="form-group">
+                                                <label for="current_dni_back"><strong class="text-info">Current DNI(Back)</strong></label>
+                                                <t t-if="partner.current_dni_back">
+                                                    <div class="mb-2">
+                                                        <a t-attf-href="/web/content/res.partner/#{partner.id}/current_dni_back"
+                                                        target="_blank"
+                                                        class="btn btn-outline-primary btn-sm mb-2">
+                                                        See current file
+                                                        </a>
+                                                    </div>
+                                                </t>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="current_dni_back" name="current_dni_back" t-attf-value="current_dnis or partner.current_dni_back" t-att-required="not partner.current_dni_back" t-att-disabled="partner.document_okay"/>
+                                                        <label class="custom-file-label text-muted truncate" for="current_dni_back">Select file</label>
+                                                    </div>
+                                                </div>
+                                                <small class="form-text text-muted">
+                                                    <t t-if="partner.current_dni_back">
+                                                        UPLOADED. To update, upload a new file. 
+                                                    </t>
+                                                    <t t-else="">
+                                                        This document is mandatory to continue.
+                                                    </t>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="row justify-content-between mb-3">
+                                <div class="col-md-8 order-2 order-md-1 align-items-center justify-items-between">
+                                    <div class="col-md-12 mb-3 mt-3">
+                                        <div class="border border-info rounded p-3 h-100">
+                                            <div class="form-group">
+                                                <label for="services_receipt"><strong class="text-info">Services Receipt</strong></label>
+                                                <t t-if="partner.services_receipt">
+                                                    <div class="mb-2">
+                                                        <a t-attf-href="/web/content/res.partner/#{partner.id}/services_receipt"
+                                                        target="_blank"
+                                                        class="btn btn-outline-primary btn-sm mb-2">
+                                                        See current file
+                                                        </a>
+                                                    </div>
+                                                </t>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="services_receipt" name="services_receipt" t-attf-value="services_receipts or partner.services_receipt" t-att-required="not partner.services_receipt" t-att-disabled="partner.document_okay"/>
+                                                        <label class="custom-file-label text-muted truncate" for="services_receipt">Select file</label>
+                                                    </div>
+                                                </div>
+                                                <small class="form-text text-muted">
+                                                    <t t-if="partner.services_receipt">
+                                                        UPLOADED. To update, upload a new file. 
+                                                    </t>
+                                                    <t t-else="">
+                                                        This document is mandatory to continue.
+                                                    </t>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="border border-info rounded p-3 h-100">
+                                            <div class="form-group">
+                                                <label for="certijoven"><strong class="text-info">Certijoven</strong></label>
+                                                <t t-if="partner.certijoven">
+                                                    <div class="mb-2">
+                                                        <a t-attf-href="/web/content/res.partner/#{partner.id}/certijoven"
+                                                        target="_blank"
+                                                        class="btn btn-outline-primary btn-sm mb-2">
+                                                        See current file
+                                                        </a>
+                                                    </div>
+                                                </t>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="certijoven" name="certijoven" t-attf-value="certijovens or partner.certijoven" t-att-required="not partner.certijoven" t-att-disabled="partner.document_okay"/>
+                                                        <label class="custom-file-label text-muted truncate" for="certijoven">Select file</label>
+                                                    </div>
+                                                </div>
+                                                <small class="form-text text-muted">
+                                                    <t t-if="partner.certijoven">
+                                                        UPLOADED. To update, upload a new file. 
+                                                    </t>
+                                                    <t t-else="">
+                                                        This document is mandatory to continue.
+                                                    </t>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 order-1 order-md-2 align-content-center">
+                                    <img src="/mkt_recruitment/static/src/img/certificate.svg" alt="" class="img-fluid mx-auto d-block h-75"/>
+                                </div>
+                            </div> -->
+                            <!-- <div class="row justify-content-between mb-3">
+                                <div class="col-md-4 align-content-center">
+                                    <img src="/mkt_recruitment/static/src/img/receipt.svg" alt="" class="img-fluid mx-auto d-block h-75"/>
+                                </div>
+                                <div class="col-md-8 align-items-center justify-items-between">
+                                    <div class="col-md-12 mb-3 mt-3">
+                                        <div class="border border-info rounded p-3 h-100">
+                                            <div class="form-group">
+                                                <label for="certificate_of_vaccination"><strong class="text-info">Vaccination Certificate</strong></label>
+                                                <t t-if="partner.certificate_of_vaccination">
+                                                    <div class="mb-2">
+                                                        <a t-attf-href="/web/content/res.partner/#{partner.id}/certificate_of_vaccination"
+                                                        target="_blank"
+                                                        class="btn btn-outline-primary btn-sm mb-2">
+                                                        See current file
+                                                        </a>
+                                                    </div>
+                                                </t>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="certificate_of_vaccination" name="certificate_of_vaccination" t-attf-value="certificate_of_vaccinations or partner.certificate_of_vaccination" t-att-required="not partner.certificate_of_vaccination" t-att-disabled="partner.document_okay"/>
+                                                        <label class="custom-file-label text-muted truncate" for="certificate_of_vaccination">Select file</label>
+                                                    </div>
+                                                </div>
+                                                <small class="form-text text-muted">
+                                                    <t t-if="partner.certificate_of_vaccination">
+                                                        UPLOADED. To update, upload a new file. 
+                                                    </t>
+                                                    <t t-else="">
+                                                        This document is mandatory to continue.
+                                                    </t>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="border border-info rounded p-3 h-100">
+                                            <div class="form-group">
+                                                <label for="health_card"><strong class="text-info">Health card</strong></label>
+                                                <t t-if="partner.health_card">
+                                                    <div class="mb-2">
+                                                        <a t-attf-href="/web/content/res.partner/#{partner.id}/health_card"
+                                                        target="_blank"
+                                                        class="btn btn-outline-primary btn-sm mb-2">
+                                                        See current file
+                                                        </a>
+                                                    </div>
+                                                </t>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="health_card" name="health_card" t-attf-value="certificate_of_vaccinations or partner.health_card" t-att-required="not partner.health_card" t-att-disabled="partner.document_okay"/>
+                                                        <label class="custom-file-label text-muted truncate" for="health_card">Select file</label>
+                                                    </div>
+                                                </div>
+                                                <small class="form-text text-muted">
+                                                    <t t-if="partner.health_card">
+                                                        UPLOADED. To update, upload a new file. 
+                                                    </t>
+                                                    <t t-else="">
+                                                        This document is mandatory to continue.
+                                                    </t>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="row justify-content-between mb-3">
+                                <div class="col-md-8 order-2 order-md-1 align-items-center justify-items-between">
+                                    <div class="col-md-12 mb-3 mt-3">
+                                        <div class="border border-info rounded p-3 h-100">
+                                            <div class="form-group">
+                                                <label for="contributions_report"><strong class="text-info">Contributions report</strong></label>
+                                                <t t-if="partner.contributions_report">
+                                                    <div class="mb-2">
+                                                        <a t-attf-href="/web/content/res.partner/#{partner.id}/contributions_report"
+                                                        target="_blank"
+                                                        class="btn btn-outline-primary btn-sm mb-2">
+                                                        See current file
+                                                        </a>
+                                                    </div>
+                                                </t>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="contributions_report" name="contributions_report" t-attf-value="certificate_of_vaccinations or partner.contributions_report" t-att-required="not partner.contributions_report" t-att-disabled="partner.document_okay"/>
+                                                        <label class="custom-file-label text-muted truncate" for="contributions_report">Select file</label>
+                                                    </div>
+                                                </div>
+                                                <small class="form-text text-muted">
+                                                    <t t-if="partner.contributions_report">
+                                                        UPLOADED. To update, upload a new file. 
+                                                    </t>
+                                                    <t t-else="">
+                                                        This document is mandatory to continue.
+                                                    </t>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="border border-info rounded p-3 h-100">
+                                            <div class="form-group">
+                                                <label for="electronic_fine"><strong class="text-info">Electronic fine</strong></label>
+                                                <t t-if="partner.electronic_fine">
+                                                    <div class="mb-2">
+                                                        <a t-attf-href="/web/content/res.partner/#{partner.id}/electronic_fine"
+                                                        target="_blank"
+                                                        class="btn btn-outline-primary btn-sm mb-2">
+                                                        See current file
+                                                        </a>
+                                                    </div>
+                                                </t>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="electronic_fine" name="electronic_fine" t-attf-value="certificate_of_vaccinations or partner.electronic_fine" t-att-required="not partner.electronic_fine" t-att-disabled="partner.document_okay"/>
+                                                        <label class="custom-file-label text-muted truncate" for="electronic_fine">Select file</label>
+                                                    </div>
+                                                </div>
+                                                <small class="form-text text-muted">
+                                                    <t t-if="partner.electronic_fine">
+                                                        UPLOADED. To update, upload a new file. 
+                                                    </t>
+                                                    <t t-else="">
+                                                        This document is mandatory to continue.
+                                                    </t>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 order-1 order-md-2 align-content-center">
+                                    <img src="/mkt_recruitment/static/src/img/report.svg" alt="" class="img-fluid mx-auto d-block h-75"/>
+                                </div>
+                            </div> -->
+            
+                            <!-- Primeros Beneficiarios -->
+                            <div class="form-group mt-4">
+                                <h5>Children's Data</h5>
+                                <small class="form-text text-muted">
+                                    Spouse or children (In the absence of spouse, concubine may be named - Art 326Â°; Civil Code)
+                                </small>
+                                <div class="table-responsive w-100">
+                                    <table class="table table-bordered mt-2">
+                                        <colgroup>
+                                            <col width="26%"/>
+                                            <col width="10%"/>
+                                            <col width="32%"/>
+                                            <col width="32%"/>
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th>Full name</th>
+                                                <th>DNI</th>
+                                                <th>DNI(front photo)</th>
+                                                <th>DNI(back photo)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <!-- Cambiado familiar_relationship1 a child_relationship1 -->
+                                                <t t-if="res_partner['child_dni1']">
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_full_name1 a child_full_name1 -->
+                                                        <t t-if="res_partner['child_full_name1']">
+                                                            <span t-esc="res_partner['child_full_name1']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_dni1 a child_dni1 -->
+                                                        <t t-if="res_partner['child_dni1']">
+                                                            <span t-esc="res_partner['child_dni1']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile1">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile1"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile1" name="child_dnifile1" t-att-value="partner.child_dnifile1 or ''" t-att-required="not partner.child_dnifile1" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile1">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile1">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile1">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile1_back">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile1_back"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile1_back" name="child_dnifile1_back" t-att-value="partner.child_dnifile1_back or ''" t-att-required="not partner.child_dnifile1_back" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile1_back">
+                                                                        <label class="custom-file-label text-muted truncate" for="child_dnifile1_back">Select New file</label>
+                                                                    </t>
+                                                                    <t t-else="">
+                                                                        <label class="custom-file-label text-muted truncate" for="child_dnifile1_back">Select file</label>
+                                                                    </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </t>
+                                                <t t-else="">
+                                                        
+                                                </t>
+                                            </tr>
+                                            <tr>
+                                                <!-- Cambiado familiar_relationship2 a child_relationship2 -->
+                                                <t t-if="res_partner['child_dni2']">
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_full_name2 a child_full_name2 -->
+                                                        <t t-if="res_partner['child_full_name2']">
+                                                            <span t-esc="res_partner['child_full_name2']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_dni2 a child_dni2 -->
+                                                        <t t-if="res_partner['child_dni2']">
+                                                            <span t-esc="res_partner['child_dni2']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile2">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile2"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile2" name="child_dnifile2" t-att-value="partner.child_dnifile2 or ''" t-att-required="not partner.child_dnifile2" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile2">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile2">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile2">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile2_back">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile2_back"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile2_back" name="child_dnifile2_back" t-att-value="partner.child_dnifile2_back or ''" t-att-required="not partner.child_dnifile2_back" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile2_back">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile2_back">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile2_back">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </t>
+                                                <t t-else="">
+                                                        
+                                                </t>
+                                            </tr>
+                                            <tr>
+                                                <!-- Cambiado familiar_relationship3 a child_relationship3 -->
+                                                <t t-if="res_partner['child_dni3']">
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_full_name3 a child_full_name3 -->
+                                                        <t t-if="res_partner['child_full_name3']">
+                                                            <span t-esc="res_partner['child_full_name3']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_dni3 a child_dni3 -->
+                                                        <t t-if="res_partner['child_dni3']">
+                                                            <span t-esc="res_partner['child_dni3']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile3">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile3"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile3" name="child_dnifile3" t-att-value="partner.child_dnifile3 or ''" t-att-required="not partner.child_dnifile3" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile3">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile3">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile3">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile3_back">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile3_back"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile3_back" name="child_dnifile3_back" t-att-value="partner.child_dnifile3_back or ''" t-att-required="not partner.child_dnifile3_back" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile3_back">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile3_back">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile3_back">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </t>
+                                                <t t-else="">
+                                                        
+                                                </t>
+                                            </tr>
+                                            <tr>
+                                                <!-- Cambiado familiar_relationship4 a child_relationship4 -->
+                                                <t t-if="res_partner['child_dni4']">
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_full_name4 a child_full_name4 -->
+                                                        <t t-if="res_partner['child_full_name4']">
+                                                            <span t-esc="res_partner['child_full_name4']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_dni4 a child_dni4 -->
+                                                        <t t-if="res_partner['child_dni4']">
+                                                            <span t-esc="res_partner['child_dni4']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile4">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile4"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile4" name="child_dnifile4" t-att-value="partner.child_dnifile4 or ''" t-att-required="not partner.child_dnifile4" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile4">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile4">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile4">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile4_back">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile4_back"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile4_back" name="child_dnifile4_back" t-att-value="partner.child_dnifile4_back or ''" t-att-required="not partner.child_dnifile4_back" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile4_back">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile4_back">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile4_back">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </t>
+                                                <t t-else="">
+                                                        
+                                                </t>
+                                            </tr>
+                                            <tr>
+                                                <!-- Cambiado familiar_relationship5 a child_relationship5 -->
+                                                <t t-if="res_partner['child_dni5']">
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_full_name5 a child_full_name5 -->
+                                                        <t t-if="res_partner['child_full_name5']">
+                                                            <span t-esc="res_partner['child_full_name5']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_dni5 a child_dni5 -->
+                                                        <t t-if="res_partner['child_dni5']">
+                                                            <span t-esc="res_partner['child_dni5']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile5">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile5"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile5" name="child_dnifile5" t-att-value="partner.child_dnifile5 or ''" t-att-required="not partner.child_dnifile5" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile5">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile5">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile5">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile5_back">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile5_back"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile5_back" name="child_dnifile5_back" t-att-value="partner.child_dnifile5_back or ''" t-att-required="not partner.child_dnifile5_back" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile5_back">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile5_back">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile5_back">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </t>
+                                                <t t-else="">
+                                                        
+                                                </t>
+                                            </tr>
+                                            <tr>
+                                                <!-- Cambiado familiar_relationship6 a child_relationship6 -->
+                                                <t t-if="res_partner['child_dni6']">
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_full_name6 a child_full_name6 -->
+                                                        <t t-if="res_partner['child_full_name6']">
+                                                            <span t-esc="res_partner['child_full_name6']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <!-- Cambiado familiar_dni5 a child_dni6 -->
+                                                        <t t-if="res_partner['child_dni6']">
+                                                            <span t-esc="res_partner['child_dni6']"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            
+                                                        </t>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile6">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile6"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile6" name="child_dnifile6" t-att-value="partner.child_dnifile6 or ''" t-att-required="not partner.child_dnifile6" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile6">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile6">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile6">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <t t-if="partner.child_dnifile6_back">
+                                                            <div class="mb-2">
+                                                                <a t-attf-href="/web/content/res.partner/#{partner.id}/child_dnifile6_back"
+                                                                target="_blank"
+                                                                class="btn btn-outline-primary btn-sm mb-2">
+                                                                See current file
+                                                                </a>
+                                                            </div>
+                                                        </t>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="child_dnifile6_back" name="child_dnifile6_back" t-att-value="partner.child_dnifile6_back or ''" t-att-required="not partner.child_dnifile6_back" t-att-disabled="partner.children_okay"/>
+                                                                <t t-if="partner.child_dnifile6_back">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile6_back">Select New file</label>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <label class="custom-file-label text-muted truncate" for="child_dnifile6_back">Select file</label>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </t>
+                                                <t t-else="">
+                                                        
+                                                </t>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+            
+                            <!-- BotÃ³n de Confirmar -->
+                            <t t-if="compliance_process" >
+                                <div class="clearfix">
+                                        <input type="hidden" id="compliance_process" t-att-value="compliance_process" />
+                                        <div class="d-flex justify-content-between mt-4">
+                                            <a class="btn btn-secondary" href="javascript:history.back()">Regresar</a>
+                                            <button type="submit" class="btn btn-primary" id="compliance_step2_button">Confirmar y continuar</button>
+                                        </div>
+
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-info btn-lg">
+                                        Confirm <i class="fa fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </t>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_breadcrumbs_inherit" inherit_id="portal.portal_breadcrumbs">
+        <xpath expr="//ol" position="inside">
+            <li t-if="page_name == 'my_partner_document'" class="breadcrumb-item">Partner Document</li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_contracts" name="My Contracts">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Contracts</t>
+            </t>
+            <t t-if="not contracts">
+                <p>There are currently no contracts for your account.</p>
+            </t>
+            <t t-if="contracts" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>
+                            <span class="d-none d-md-inline">Contract</span>
+                            <span class="d-block d-md-none">Ref.</span>
+                        </th>
+                        <th class="text-right">Date start</th>
+                        <th class="text-right">Date finish</th>
+                        <th class="text-right">State</th>
+                    </tr>
+                </thead>
+                <t t-foreach="contracts" t-as="contract">
+                    <t t-if="contract.is_sended and contract.state != 'cancel'">
+                        <tr t-attf-onclick="window.location='#{contract.get_portal_url()}'" style="cursor: pointer;">
+                            <td><t t-esc="contract.name"/></td>
+                            <td class="text-right">
+                                <span t-field="contract.date_start" t-options="{'widget': 'date'}"/>&amp;nbsp;
+                            </td>
+                            <td class="text-right">
+                                <span t-field="contract.date_end" t-options="{'widget': 'date'}"/>&amp;nbsp;
+                            </td>
+                            <td class="text-center">
+                                <span t-if="contract.signature_state == 'to_sign'" class="badge badge-pill badge-warning">
+                                    <i class="fa fa-clock-o" title="To sign"/> To sign
+                                </span>
+                                <span t-if="contract.signature_state == 'signed'" class="badge badge-pill badge-success">
+                                    <i class="fa fa-fw fa-check" title="Signed"/> Signed
+                                </span>
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+
+            </t>
+        </t>
+    </template>
+
+    <template id="contract_document_portal_template" name="Contract Document Portal Template" inherit_id="portal.portal_sidebar" primary="True">
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+            <div class="row mt16 o_portal_sale_sidebar">
+                <t t-call="portal.portal_record_sidebar">
+                    <t t-set="classes" t-value="'col-lg-auto d-print-none'"/>
+                    
+                    <t t-set="title">
+                        <h2 class="mb-0"><b t-field="contract_document.state"/></h2>
+                    </t>
+                    <t t-set="entries">
+                        <ul class="list-group list-group-flush flex-wrap flex-row flex-lg-column">
+                            <li class="list-group-item flex-grow-1 o_contract_signature_t" 
+                                t-att-data-document-id="contract_document.id" 
+                                t-att-data-token="contract_document.access_token" >
+                                <a t-if="contract_document.has_to_be_signed(True)" 
+                                    role="button" 
+                                    class="btn btn-primary btn-block mb8 o_valterm" 
+                                    id="o_open_sign_options"
+                                    href="#"
+                                    data-toggle="modal" 
+                                    data-target="#contractSignOptionsModal"
+                                    t-att-data-document-id="contract_document.id" 
+                                    t-att-data-token="contract_document.access_token">
+                                    <i class="fa fa-check"/>Accept &amp; Sign
+                                </a>
+                                <!-- <t t-if="contract_document.contract_signature"> -->
+                                <div class="o_download_pdf btn-toolbar flex-sm-nowrap">
+                                    <div class="btn-group flex-grow-1 mr-1 mb-1">
+                                        <a class="btn btn-secondary btn-block o_download_btn" t-att-href="contract_document.get_portal_url(report_type='pdf',download=True)" title="Download"><i class="fa fa-download"/> Download</a>
+                                    </div>
+                                    <div class="btn-group flex-grow-1 mb-1">
+                                        <a class="btn btn-secondary btn-block o_print_btn o_portal_invoice_print" t-att-href="contract_document.get_portal_url(report_type='pdf')" title="Print" target="_blank"><i class="fa fa-print"/> View/Print</a>
+                                    </div>
+                                </div>
+                                <!-- </t> -->
+                            </li>
+                        </ul>
+                        <ul class="list-group list-group-flush flex-wrap flex-row flex-lg-column">
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size:0.6rem;">User name: </span><span style="font-size:0.5rem;" t-esc="contract_document.partner_name"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size:0.6rem;">User email: </span><span style="font-size:0.5rem;" t-esc="contract_document.email"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size:0.6rem;">IP: </span><span style="font-size:0.5rem;" t-esc="contract_document.ip"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size:0.6rem;">OS: </span><span style="font-size:0.5rem;" t-esc="contract_document.os"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size:0.6rem;">Browser: </span><span style="font-size:0.5rem;" t-esc="contract_document.browser"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size:0.6rem;">Employee signature date: </span><span style="font-size:0.5rem;" t-esc="contract_document.signed_on"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size:0.6rem;">Employer signature date: </span><span style="font-size:0.5rem;" t-esc="contract_document.employer_signed_on"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size:0.6rem;">Hash: </span><span style="font-size:0.5rem;" t-esc="contract_document.access_token"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size:0.6rem;">Latitude: </span><span style="font-size:0.5rem;" t-esc="contract_document.latitude"/>
+                            </li>
+                            <li class="list-group-item flex-grow-1">
+                                <span style="font-size:0.6rem;">Longitude: </span><span style="font-size:0.5rem;" t-esc="contract_document.longitude"/>
+                            </li>
+                        </ul>
+                    </t>
+                </t>
+
+                <!-- Modal de opciones: SMS o Email -->
+                <div role="dialog" class="modal fade" id="contractSignOptionsModal" tabindex="-1" >
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <header class="modal-header">
+                            <h4 class="modal-title">Choose how to receive the code</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">❌</button>
+                        </header>
+                        <div class="modal-body text-center p-3">
+                            <p>A validation code is mandatory to sign your contract. Select the method to receive the validation code:</p>
+                            <div class="d-flex justify-content-around">
+                            <button id="send-via-sms" class="btn btn-primary" type="button">Send via SMS</button>
+                            <button id="send-via-email" class="btn btn-outline-primary" type="button">Send via Email</button>
+                            </div>
+                            <div id="send-method-spinner" style="display:none;margin-top:12px;">
+                            <i class="fa fa-spinner fa-spin"></i> Sending...
+                            </div>
+                            <div id="send-method-error" class="text-danger mt-2" style="display:none;"></div>
+                        </div>
+                        <footer class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </footer>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div role="dialog" class="modal fade o_contract_validate_box" id="contractvalidatebox">
+                    <div class="modal-dialog" t-if="contract_document.has_to_be_signed(True)">
+                        <form id="contractvalidatedigits" 
+                            method="POST" 
+                            t-att-data-document-id="contract_document.id" 
+                            t-att-data-token="contract_document.access_token" 
+                            class="js_accept_json modal-content js_website_submit_form">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <style>
+                                .digit-input, digit-input-4 {
+                                    width: 50px;
+                                    height: 50px;
+                                    font-size: 24px;
+                                    text-align: center;
+                                    margin: 5px;
+                                    border: 1px solid #ccc;
+                                    border-radius: 5px;
+                                }
+                                .input-container {
+                                    display: flex;
+                                    justify-content: center;
+                                }
+                                /* Hides the spinner (arrows) in number inputs */
+                                input[type=number]::-webkit-outer-spin-button,
+                                input[type=number]::-webkit-inner-spin-button {
+                                    -webkit-appearance: none;
+                                    margin: 0;
+                                }
+                                input[type=number] {
+                                    -moz-appearance: textfield; /* Firefox */
+                                }
+                            </style>
+
+                            <input type="hidden" id="verification_method" name="verification_method" value=""/>
+
+                            <header class="modal-header">
+                                <h4 class="modal-title">Enter Verification Codes</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">❌</button>
+                            </header>
+
+                            <div class="modal-body">
+                                <div class="text-center mb-3" id="verification-message">
+                                    <p id="verification-text">We sent a verification code to:</p>
+                                    
+                                    <!-- Email info (oculto por defecto) -->
+                                    <div id="email-info" style="display: none;">
+                                        <strong><i class="fa fa-envelope"></i> <span t-esc="contract_document.email"/></strong>
+                                    </div>
+                                    
+                                    <!-- SMS info (oculto por defecto) -->
+                                    <div id="sms-info" style="display: none;">
+                                        <strong><i class="fa fa-mobile"></i> <span t-esc="contract_document.phone or 'your mobile phone'"/></strong>
+                                    </div>
+                                    
+                                    <p class="text-muted small mt-2">
+                                        If you haven't received it within 2 minutes, please try again.
+                                    </p>
+                                </div>
+                            </div>
+                            <main class="modal-body" id="validate-dialog-contract" style="display:flex;justify-content:center;">
+                                <input name="p_number1" type="number" class="digit-input" id="input1"/>
+                                <input name="p_number2" type="number" class="digit-input" id="input2"/>
+                                <input name="p_number3" type="number" class="digit-input" id="input3"/>
+                                <input name="p_number4" type="number" class="digit-input" id="input4"/>
+                            </main>
+                            <footer>
+                                <!-- <a id="validate-btn-boxes" role="button" style="display:none;color:red;" class="btn btn-primary btn-block mb8" data-toggle="modal" data-target="#signcontract" href="#"> -->
+                                <a id="validate-btn-boxes" role="button" style="display:none;color:red;" class="btn btn-primary btn-block mb8" data-toggle="modal" href="#">
+                                    Valid code <i class="fa fa-check"/>
+                                </a>
+                                <span id="validation-error-boxes" style="display:none;color:red;">Invalid code. Please, try again.</span>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="contract_document_content" class="col-12 col-lg justify-content-end">
+                    <div role="dialog" class="modal fade" id="signcontract">
+                        <div class="modal-dialog" t-if="contract_document.has_to_be_signed(True)">
+                            <form id="contractaccept" method="POST" 
+                                  t-att-data-document-id="contract_document.id" 
+                                  t-attf-data-rec-document-id="#{recruitment_document and recruitment_document.id or ''}" 
+                                  t-att-data-token="contract_document.access_token" 
+                                  class="js_accept_json modal-content js_website_submit_form">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <header class="modal-header">
+                                    <h4 class="modal-title">Validate Contract</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">❌</button>
+                                </header>
+                                <main class="modal-body" id="sign-dialog-contract">
+                                    <script type="text/javascript" src="/mkt_recruitment/static/src/js/sidebar.js"/>
+                                    <p>
+                                        <span style="margin-bottom: 5px">En señal de recepción y conformidad con el contrato de la plataforma digital; las partes acuerdan que la ejecución y aprobación del documento mediante firma electrónica (como se define a continuación) tendrá la misma fuerza y efecto legal que el intercambio de firmas originales. De conformidad con este formalismo, la firma electrónica significará una firma que consta de una o más letras, caracteres, números u otros símbolos en formato digital incorporados, adjuntos o asociados con el documento electrónico contract_document.</span>
+                                        <br/>
+                                        <span style="margin-bottom: 5px">Asimismo, al colocar su firma electrónica en la documentación, el TRABAJADOR otorga su consentimiento expreso para usar y confiar en el presente documento, entendiendo que su firma tendrá el mismo efecto vinculante que si estuviera proporcionando una firma manuscrita.</span>
+                                        <span>Ambas partes, suscriben el mismo tenor en la ciudad de Lima, con fecha de 
+                                            <strong id="today"> </strong>.
+                                        </span>
+                                        
+                                    </p>
+                                    <small>
+                                        Suggestion: Write only your first name and last name. And also choose "Auto".
+                                    </small>
+                                    <t t-call="portal.signature_form">
+                                        <t t-if="is_first_contract">
+                                            <t t-set="call_url" t-value="'/portal/compliance/signall/sign'"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-set="call_url" t-value="contract_document.get_portal_url(suffix='/sign')"/>
+                                        </t>
+                                        <t t-set="default_name" t-value="signature_short_name"/>
+                                    </t>
+                                </main>
+                            </form>
+                        </div>
+                    </div>
+                    <div t-if="message == 'sign_ok'" class="alert alert-success alert-dismissable d-print-none" role="status">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">❌</button>
+                        <strong>Thank You!</strong><br/>
+                        <t t-if="message == 'sign_ok' and contract_document.state == 'open'">Your document has been signed.</t>
+                    </div>
+
+                    <div t-attf-class="card #{'pb-5' if report_type == 'html' else ''}" id="portal_sale_content_contract">
+                        <div t-call="mkt_recruitment.contract_document_portal_content"/>
+                    </div>
+
+                    <!-- <div id="contract_document_communication" class="mt-4">
+                        <h2>History</h2>
+                        <t t-call="portal.message_thread">
+                            <t t-set="object" t-value="contract_document"/>
+                        </t>
+                    </div> -->
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="contract_document_portal_content" name="Contract Document Portal Content">
+        <div id="contract_introduction" t-attf-class="pb-2 pt-3 #{'card-header bg-white' if report_type == 'html' else ''}">
+            <h2 class="my-0">
+                <em t-esc="contract_document.name"/>
+            </h2>
+        </div>
+        
+        <div t-attf-class="#{'card-body' if report_type == 'html' else ''}">
+            <div id="contract">
+                <div class="row" id="cd_date">
+                    <div class="mb-3 col-12">
+                        <strong>Contract Date:</strong>
+                        <span t-field="contract_document.date_start" t-options="{'widget': 'date'}"/>
+                    </div>
+                </div>
+                
+                <iframe 
+                    t-att-src="'/report/pdf/mkt_recruitment.report_contract/%s' % contract_document.id"
+                    width="100%" 
+                    height="800px"
+                    style="border: 1px solid #ccc;">
+                </iframe>
+
+            </div>
+        </div>
+        <form method="post" t-att-action="action_url">
+            <t t-if="is_first_contract">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="d-flex justify-content-between mt-4">
+                    <a class="btn btn-secondary" href="javascript:history.back()">Regresar</a>
+                </div>
+            </t>
+        </form>
+
+
+    </template>
+
+    <template id="portal_my_home_menu_recruitment" name="Portal layout : recruitments menu entries" inherit_id="portal.portal_breadcrumbs" priority="30">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'document' or recruitment_document and recruitment_document.state in ('to_sign','signed')" t-attf-class="breadcrumb-item #{'active ' if not recruitment_document else ''}">
+                <a t-if="recruitment_document" t-attf-href="/my/documents?{{ keep_query() }}">Recruitment Documents</a>
+                <t t-else="">Recruitment Documents</t>
+            </li>
+            <li t-if="recruitment_document" class="breadcrumb-item active">
+                <t t-esc="recruitment_document.name"/>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_recruitment" name="Show Recruitment Documents" customize_show="True" inherit_id="portal.portal_my_home" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Recruitment Documents</t>
+                <t t-set="url" t-value="'/my/documents'"/>
+                <t t-set="placeholder_count" t-value="'document_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_documents" name="My Recruitment Documents">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Recruitment Documents</t>
+            </t>
+            <!-- <t t-if="not documents or documents.state not in ('to_sign','signed')"> -->
+            <t t-if="not documents">
+                <p>There are currently no documents for your account.</p>
+            </t>
+            <!-- <t t-if="documents and documents.state in ('to_sign','signed')" t-call="portal.portal_table"> -->
+            <t t-if="documents" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>
+                            <span class="d-none d-md-inline">Recruitment Document #</span>
+                            <span class="d-block d-md-none">Ref.</span>
+                        </th>
+                        <th class="text-right">Document Date</th>
+                        <th class="text-right">State</th>
+                    </tr>
+                </thead>
+                <t t-foreach="documents" t-as="document">
+                    <t t-if="document.state in ('to_sign','signed')">
+                        <tr t-attf-onclick="window.location='#{document.get_portal_url()}'" style="cursor: pointer;">
+                            <td><t t-esc="document.name"/></td>
+                            <td class="text-right">
+                                <span t-field="document.date_document" t-options="{'widget': 'date'}"/>&amp;nbsp;
+                                <span class="d-none d-md-inline" t-field="document.date_document" t-options="{'time_only': True}"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-if="document.state == 'to_sign'" class="badge badge-pill badge-warning">
+                                    <i class="fa fa-clock-o" title="To sign"/> To sign
+                                </span>
+                                <span t-if="document.state == 'signed'" class="badge badge-pill badge-success">
+                                    <i class="fa fa-fw fa-check" title="Signed"/> Signed
+                                </span>
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+            </t>
+        </t>
+
+
+
+    </template>
+
+    <template id="recruitment_document_portal_template" name="Recruitment Document Portal Template" inherit_id="portal.portal_sidebar" primary="True">
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+            <div class="row mt16 o_portal_sale_sidebar">
+                <link rel="stylesheet" type="text/css" href="/mkt_recruitment/static/src/css/recruitment_portal_style.css"/>
+                <t t-if="not compliance_process">
+                    <t t-call="portal.portal_record_sidebar">
+                        <t t-set="classes" t-value="'col-lg-auto d-print-none'"/>
+                        
+                        <t t-set="title">
+                            <h2 class="mb-0"><b t-field="recruitment_document.state"/></h2>
+                        </t>
+                        <t t-set="entries">
+
+                                <ul class="list-group list-group-flush flex-wrap flex-row flex-lg-column">
+                                    <li class="list-group-item flex-grow-1 o_document_signature_t">
+                                        <!-- <a t-if="recruitment_document.has_to_be_signed(True)" role="button" class="btn btn-primary btn-block mb8 inactive" data-toggle="modal" data-target="#modalsign" href="#" id="signaturebutton"> -->
+                                        <a t-if="recruitment_document.has_to_be_signed(True)" role="button" class="btn btn-primary btn-block mb8 o_valterm inactive" data-toggle="modal" data-target="#documentvalidatebox" href="#" id="signaturebutton">
+                                            <i class="fa fa-check"/>Accept &amp; Sign
+                                        </a>
+                                        <t t-if="recruitment_document.applicant_signature">
+                                            <div class="o_download_pdf btn-toolbar flex-sm-nowrap">
+                                                <div class="btn-group flex-grow-1 mr-1 mb-1">
+                                                    <a class="btn btn-secondary btn-block o_download_btn" t-att-href="recruitment_document.get_portal_url(report_type='pdf', download=True)" title="Download"><i class="fa fa-download"/> Download</a>
+                                                </div>
+                                                <div class="btn-group flex-grow-1 mb-1">
+                                                    <a class="btn btn-secondary btn-block o_print_btn o_portal_invoice_print" t-att-href="recruitment_document.get_portal_url(report_type='pdf')" title="Print" target="_blank"><i class="fa fa-print"/> Print</a>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </li>
+
+                                    <li class="navspy list-group-item pl-0 flex-grow-1" t-ignore="true" role="complementary">
+                                        <ul class="nav flex-column bs-sidenav"></ul>
+                                    </li>
+                                </ul>
+                        
+                            <ul class="list-group list-group-flush flex-wrap flex-row flex-lg-column">
+                                <li class="list-group-item flex-grow-1">
+                                    <span style="font-size:0.6rem;">User name: </span><span style="font-size:0.5rem;" t-esc="recruitment_document.partner_name" />
+                                </li>
+                                <li class="list-group-item flex-grow-1">
+                                    <span style="font-size:0.6rem;">User email: </span><span style="font-size:0.5rem;" t-esc="recruitment_document.email"/>
+                                </li>
+                                <li class="list-group-item flex-grow-1">
+                                    <span style="font-size:0.6rem;">IP: </span><span style="font-size:0.5rem;" t-esc="recruitment_document.ip"/>
+                                </li>
+                                <li class="list-group-item flex-grow-1">
+                                    <span style="font-size:0.6rem;">OS: </span><span style="font-size:0.5rem;" t-esc="recruitment_document.os"/>
+                                </li>
+                                <li class="list-group-item flex-grow-1">
+                                    <span style="font-size:0.6rem;">Browser: </span><span style="font-size:0.5rem;" t-esc="recruitment_document.browser"/>
+                                </li>
+                                <li class="list-group-item flex-grow-1">
+                                    <span style="font-size:0.6rem;">Signed on: </span><span style="font-size:0.5rem;" t-esc="recruitment_document.signed_on"/>
+                                </li>
+                                <li class="list-group-item flex-grow-1">
+                                    <span style="font-size:0.6rem;">Hash: </span><span style="font-size:0.5rem;" t-esc="recruitment_document.access_token"/>
+                                </li>
+                                <li class="list-group-item flex-grow-1">
+                                    <span style="font-size:0.6rem;">Latitude: </span><span style="font-size:0.5rem;" t-esc="recruitment_document.latitude"/>
+                                </li>
+                                <li class="list-group-item flex-grow-1">
+                                    <span style="font-size:0.6rem;">Longitude: </span><span style="font-size:0.5rem;" t-esc="recruitment_document.longitude"/>
+                                </li>
+                            </ul>
+                        </t>
+                    </t>
+                </t>
+
+                <div role="dialog" class="modal fade o_document_validate_box" id="documentvalidatebox">  
+                    <div class="modal-dialog" t-if="recruitment_document.has_to_be_signed(True)">
+                        <form id="documentvalidatedigits" method="POST" t-att-data-document-id="recruitment_document.id" t-att-data-token="recruitment_document.access_token" class="js_accept_json modal-content js_website_submit_form">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <style>
+                                .digit-input, digit-input-4 {
+                                    width: 50px;
+                                    height: 50px;
+                                    font-size: 24px;
+                                    text-align: center;
+                                    margin: 5px;
+                                    border: 1px solid #ccc;
+                                    border-radius: 5px;
+                                }
+                                .input-container {
+                                    display: flex;
+                                    justify-content: center;
+                                }
+                                input[type=number]::-webkit-outer-spin-button,
+                                input[type=number]::-webkit-inner-spin-button {
+                                    -webkit-appearance: none;
+                                    margin: 0;
+                                }
+                                input[type=number] {
+                                    -moz-appearance: textfield; /* Firefox */
+                                }
+                            </style>
+                            <header class="modal-header">
+                                <h4 class="modal-title">Enter the code</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">❌</button>
+                            </header>
+                            <div class="p-2 text-start">
+                                <small>We sent an email to your personal email <span t-esc="recruitment_document.email"/> with the code. If you have not received an email within two minutes, please try Accept and Sign again.</small>
+                            </div>
+                            <main class="modal-body" id="validate-dialog-document" style="display:flex;justify-content:center;">
+                                <input name="p_number1" type="number" class="digit-input" id="input1"/>
+                                <input name="p_number2" type="number" class="digit-input" id="input2"/>
+                                <input name="p_number3" type="number" class="digit-input" id="input3"/>
+                                <input name="p_number4" type="number" class="digit-input" id="input4"/>
+                            </main>
+                            <footer>
+                                <a id="validate-document-btn-boxes" role="button" style="display:none;color:red;" class="btn btn-primary btn-block mb8" data-toggle="modal" href="#">
+                                    Validate code <i class="fa fa-check"/>
+                                </a>
+                                <span id="validation-document-error-boxes" style="display:none;color:red;">Invalid code. Please, try again.</span>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+                
+                <div id="document_content" class="col-12 col-lg justify-content-end">
+                    <!-- <div role="dialog" class="modal fade" id="modalsign"> -->
+                    <div role="dialog" class="modal fade" id="signdocument">
+                        <div class="modal-dialog" t-if="recruitment_document.has_to_be_signed(True)">
+                            <form id="accept" method="POST" t-att-data-document-id="recruitment_document.id" t-att-data-token="recruitment_document.access_token" class="js_accept_json modal-content js_website_submit_form">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <header class="modal-header">
+                                    <h4 class="modal-title">Validate Document</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">❌</button>
+                                </header>
+                                <!-- <t t-if="not o " t-set="o" t-value="doc"/> -->
+                                <main class="modal-body" id="sign-dialog">
+                                    <script type="text/javascript" src="/mkt_recruitment/static/src/js/sidebar.js"/>
+                                    <div style="text-align: justify; margin:0">
+                                        <p style="margin: 0 0 0.5rem">En señal de recepción y conformidad con cada uno de los documentos de la plataforma digital; las partes acuerdan que la ejecución y aprobación de los documentos, convenios, normativas, reglamentos y autorizaciones mediante firma electrónica (como se define a continuación) tendrá la misma fuerza y efecto legal que el intercambio de firmas originales. De conformidad con este formalismo, la firma electrónica significará una firma que consta de una o más letras, caracteres, números u otros símbolos en formato digital incorporados, adjuntos o asociados con el documento electrónico contract_document.</p>
+                                        <p style="margin: 0 0 0.5rem">Asimismo, al colocar su firma electrónica en la documentación, el TRABAJADOR otorga su consentimiento expreso para usar y confiar en el presente documento, entendiendo que su firma tendrá el mismo efecto vinculante que si estuviera proporcionando una firma manuscrita.</p>
+                                        <p >Ambas partes, suscriben el mismo tenor en la ciudad de Lima, con fecha de 
+                                        <strong id="today"> </strong>.
+                                        </p>
+                                    </div>
+                                    <small>
+                                        Suggestion: Write only your first name and last name. And also choose "Auto".
+                                    </small>
+                                    <t t-call="portal.signature_form">
+                                        <t t-set="call_url" t-value="recruitment_document.get_portal_url(suffix='/sign')"/>
+                                        <t t-set="default_name" t-value="signature_short_name"/>
+                                    </t>
+                                </main>
+                            </form>
+                        </div>
+                    </div>
+                    <div t-if="message == 'sign_ok'" class="alert alert-success alert-dismissable d-print-none" role="status">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">❌</button>
+                        <strong>Thank You!</strong><br/>
+                        <t t-if="message == 'sign_ok' and recruitment_document.state == 'signed'">Your document has been signed.</t>
+                    </div>
+
+                    <div t-attf-class="card #{'pb-5' if report_type == 'html' else ''}" id="portal_sale_content">
+                        <div t-call="mkt_recruitment.recruitment_document_portal_content"/>
+                    </div>
+
+                    <!-- <div id="recruitment_document_communication" class="mt-4">
+                        <h2>History</h2>
+                        <t t-call="portal.message_thread">
+                            <t t-set="object" t-value="recruitment_document"/>
+                        </t>
+                    </div> -->
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="recruitment_document_portal_content" name="Recruitment Document Portal Content">
+        <t t-set="o" t-value="recruitment_document"/>
+        <t t-set="mes_actual" t-value="
+            datetime.datetime.now().strftime('%m')
+            .replace('01','enero').replace('02','febrero')
+            .replace('03','marzo').replace('04','abril')
+            .replace('05','mayo').replace('06','junio')
+            .replace('07','julio').replace('08','agosto')
+            .replace('09','septiembre').replace('10','octubre')
+            .replace('11','noviembre').replace('12','diciembre')"/>
+        <div id="introduction" t-attf-class="pb-2 pt-3 #{'card-header bg-white' if report_type == 'html' else ''}">
+            <h2 class="my-0">
+                <em t-esc="o.name"/>
+            </h2>
+        </div>
+
+        <div t-attf-class="#{'card-body' if report_type == 'html' else ''}">
+            <div id="informations">
+                <div class="row" id="rd_date">
+                    <div class="mb-3 col-12">
+                        <strong>Recruitment Date:</strong>
+                        <span t-field="o.date_document" t-options="{'widget': 'date'}"/>
+                    </div>
+                </div>
+                <t t-if="compliance_process">
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <a class="btn btn-secondary mr-2 mb-2" t-attf-href="/report/pdf/mkt_recruitment.report_recruitmentdocument/#{o.id}" target="_blank">
+                                <i class="fa fa-eye"/> Ver PDF
+                            </a>
+                            <a class="btn btn-primary mb-2" t-attf-href="/report/pdf/mkt_recruitment.report_recruitmentdocument/#{o.id}?filename=#{o.vat}.pdf" download="true">
+                                <i class="fa fa-download"/> Descargar PDF
+                            </a>
+                        </div>
+                    </div>
+                </t>
+
+                <iframe 
+                    t-att-src="'/report/pdf/mkt_recruitment.report_recruitmentdocument/%s' % o.id"
+                    width="100%" 
+                    height="800px"
+                    style="border: 1px solid #ccc;">
+                </iframe>
+
+                <t t-if="not recruitment_document.applicant_signature">
+                    <div class="border border-2 p-2 p-md-3">
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-1">
+                                <input id="annex_1" type="checkbox" required=""/>
+                            </div>
+                            <div class="col-9">
+                                <p style="font-size:0.625rem">Acepto haber leí­do la <a style="font-size:0.625rem" t-attf-href="/dataprotection" title="Annex" target="_blank">Ley de Protección de Datos Personales y su Reglamento</a></p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-1">
+                                <input id="annex_2" type="checkbox" required=""/>
+                            </div>
+                            <div class="col-9">
+                                <p style="font-size:0.625rem">Acepto haber leído la <a style="font-size:0.625rem" t-attf-href="/sstdata" title="Annex" target="_blank">SST&#40;Sistema de Gestion de Seguridad y Salud en el Trabajo&#41;</a></p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-1">
+                                <input id="annex_3" type="checkbox" required=""/>
+                            </div>
+                            <div class="col-9">
+                                <p style="font-size:0.625rem">Acepto haber leído la <a style="font-size:0.625rem" t-attf-href="/internrules" title="Annex" target="_blank">Reglamento Interno de Trabajo</a></p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-1">
+                                <input id="annex_4" type="checkbox" required=""/>
+                            </div>
+                            <div class="col-9">
+                                <p style="font-size:0.625rem">Acepto haber leído la <a style="font-size:0.625rem" t-attf-href="/recomendationsbooklet" title="Annex" target="_blank">Cartilla de Recomendaciones en Materia de Seguridad y Salud en el Trabajo</a></p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-1">
+                                <input id="annex_5" type="checkbox" required=""/>
+                            </div>
+                            <div class="col-9">
+                                <p style="font-size:0.625rem">Acepto haber leído la <a style="font-size:0.625rem" t-attf-href="/wagepolicy" title="Annex" target="_blank">Lineamiento de la Política Remunerativa y Escala Salarial</a></p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-1">
+                                <input id="annex_6" type="checkbox" required=""/>
+                            </div>
+                            <div class="col-9">
+                                <p style="font-size:0.625rem">Acepto haber leído la <a style="font-size:0.625rem" t-attf-href="/sexualharassmentcomplaint" title="Annex" target="_blank">Procedimiento Preventivo Interno de Queja por Hostigamiento Sexual</a></p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-1">
+                                <input id="annex_7" type="checkbox" required=""/>
+                            </div>
+                            <div class="col-9">
+                                <p style="font-size:0.625rem">Acepto haber leído la <a style="font-size:0.625rem" t-attf-href="/policyhealthsafety" title="Annex" target="_blank">Política de Seguridad y Salud en el Trabajo</a></p>
+                            </div>
+                        </div>
+                        <form t-att-action="action_url" method="post">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="clearfix">
+                                <t t-if="compliance_process" >
+                                    <input type="hidden" id="compliance_process" t-att-value="compliance_process" />
+                                    <div class="d-flex justify-content-between mt-4">
+                                        <a class="btn btn-secondary" href="javascript:history.back()">Regresar</a>
+                                        <button type="submit" class="btn btn-primary" id="compliance_step2_button">Aceptar y continuar</button>
+                                    </div>
+                                </t>
+
+                            </div>
+                        </form>
+                    </div>
+                </t>
+            </div>
+        </div>
+        <script type="text/javascript" src="/mkt_recruitment/static/src/js/recruitment_document.js"></script>
+    </template>
+
+</odoo>

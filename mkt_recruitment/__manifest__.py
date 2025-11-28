@@ -73,6 +73,7 @@
         'views/signup_page.xml',
         'views/portal_terms_and_conditions.xml',
         'views/res_users_views.xml',
+        'views/l10n_latam_identification_type.xml',
     ],
     'assets':{
         'web.assets_frontend':[  
@@ -90,6 +91,7 @@
             'mkt_recruitment/static/src/js/signature_override.js',
             'mkt_recruitment/static/src/js/api_dni_plus.js',
             'mkt_recruitment/static/src/scss/trecord_geolocation.js',
+            'mkt_recruitment/static/src/js/recruitment_form_validation.js',
         ],
         'web.assets_backend': [
             'mkt_recruitment/static/src/js/notification_effects.js',
