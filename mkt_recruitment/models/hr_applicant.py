@@ -5,10 +5,14 @@ from odoo.addons.mkt_recruitment.models.apiperu import apiperu_dni
 import logging
 _logger = logging.getLogger(__name__)
 
+identification_type_valid_code = ('1', '4', '7', 'F')
 
 class Applicant(models.Model):
     _inherit = 'hr.applicant'
 
+    identification_type_id = fields.Many2one(comodel_name='l10n_latam.identification.type', string='Identification Types', 
+            domain=[('l10n_pe_vat_code', 'in', identification_type_valid_code)]
+            )
     vat = fields.Char(string='Vat')
     photo = fields.Image(string='Photo')
     is_autoemployee = fields.Boolean(default=False, compute='_compute_auto_employee_and_documents', string='Employee created from stage', store=True)
@@ -103,6 +107,12 @@ class Applicant(models.Model):
                     partner.write({
                         'belong_applicant_id': rec.id
                     })
+
+                    if rec.stage_id.sequence == 2:
+                        if rec.identification_type_id:
+                            partner.write({
+                                'l10n_latam_identification_type_id': rec.identification_type_id.id
+                            })
 
         if not self.env.context.get('skip_contract_sync'):
             self._sync_to_contracts()

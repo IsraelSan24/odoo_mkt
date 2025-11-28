@@ -489,7 +489,7 @@ class PortalCompliance(portal.CustomerPortal):
             districts = request.env['l10n_pe.res.city.district'].sudo().search([])
             nationalities = request.env['res.country'].sudo().search([('demonym','!=',False)])
             identifications = request.env['l10n_latam.identification.type'].sudo().search([
-                ('name', 'in', ('DNI', 'PTP', 'Pasaporte', 'Cédula Extranjera', 'Carnet de Extranjeria'))
+                ('l10n_pe_vat_code', 'in', ('1', '4', '7', 'F'))
             ])
 
             values.update({
