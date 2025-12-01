@@ -75,6 +75,7 @@ class TRecord(models.Model):
 
     # ------------------- Utilities -------------------
     def action_validation_password(self, code):
+        self = self.sudo() 
         self.ensure_one()
         code = (code or '').strip()
         ok = bool(self.validation_password and code and self.validation_password.strip() == code)

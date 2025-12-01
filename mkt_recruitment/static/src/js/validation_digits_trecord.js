@@ -320,11 +320,11 @@ odoo.define('mkt_recruitment.validation_digits_trecord', function (require) {
                             }).then(function (result) {
                                 info('✅ Geolocation saved successfully:', result);
                             }).catch(function (error) {
-                                error('❌ Error saving geolocation:', error);
+                                console.error('❌ Error saving geolocation:', error);
                             });
                         })
                         .catch(function (err) {
-                            error('❌ Error fetching IP:', err);
+                            console.error('❌ Error fetching IP:', err);
                         });
                 },
                 // 2. Manejo de errores explícito (Popups)
