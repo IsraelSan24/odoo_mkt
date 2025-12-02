@@ -27,6 +27,17 @@
         </field>
     </record>
 
+    <record id="view_recruiter_team_search" model="ir.ui.view">
+        <field name="name">view.recruiter.team.search</field>
+        <field name="model">recruiter.team</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="user_id"/>
+                <field name="brand_group_ids" widget="many2many_tags"/>
+            </search>
+        </field>
+    </record>
+
     <record id="view_recruiter_team_action" model="ir.actions.act_window">
         <field name="name">Recruiter Team</field>
         <field name="res_model">recruiter.team</field>
