@@ -54,6 +54,10 @@ class Applicant(models.Model):
         string=_('Condición'))
 
     parent_id = fields.Many2one('hr.employee', 'Jefe Directo', domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
+    province_or_lima = fields.Selection([
+        ('lima', 'Lima'),
+        ('province', 'Provincia'),
+    ], string=_("Province or Lima"))
 
     @api.model
     def _init_data(self):
@@ -78,7 +82,15 @@ class Applicant(models.Model):
 
         ICP.set_param('mkt_recruitment.init_data_executed', 'True')
 
+    @api.model
+    def _set_province_or_lima_from_partner(self):
+        partners = self.env['res.partner'].search([('belong_applicant_id', '!=', False), ('state_id', '!=', False)])
 
+        for partner in partners:
+            applicant = self.browse(partner.belong_applicant_id.id)
+            applicant.write({
+                'province_or_lima': 'lima' if partner.state_id.name.lower() == 'lima' else 'province'
+            })
 
     def write(self, vals):
         if 'stage_id' in vals:
@@ -143,7 +155,6 @@ class Applicant(models.Model):
                     ('stage_id.fold', '=', False)]).write({'partner_id': new_partner.id})
         return super(Applicant, self)._message_post_after_hook(message, msg_vals)
 
-
     @api.depends('stage_id')
     def _compute_auto_employee_and_documents(self):
         for rec in self:
@@ -177,7 +188,6 @@ class Applicant(models.Model):
             if applicant_partner and applicant_partner.state != 'uploaded':
                 applicant_partner.update_partner()
 
-
     def contact_merge_stage(self):
         if self.stage_id.contact_merge:
             contact = self.env['res.partner'].search([('vat', '=', self.vat)], order='create_date asc')
@@ -198,7 +208,6 @@ class Applicant(models.Model):
                     'state': 'selection',
                 })
                 contact_merge.action_merge()
-
 
     def access_portal_partner(self):
         if self.stage_id.access_portal:
@@ -254,7 +263,6 @@ class Applicant(models.Model):
                         })
                     self._send_email_with_credentials(user, contact)
 
-
     def _send_email_with_credentials(self, user, contact):
 
         # Send email with credentials
@@ -287,8 +295,6 @@ class Applicant(models.Model):
             return {'success': True, 'message': _('Email sent successfully.')}
         elif mail.state == 'exception':
             return {'success': False, 'message': _('Error sending email: %s' % mail.failure_reason)}
-
-
 
     def create_employee_by_stage(self):
         employee = False
@@ -348,7 +354,6 @@ class Applicant(models.Model):
 
 
                 self.is_autoemployee = True
-
 
     def create_first_contract(self):
         employee_contract_history = self.env['hr.contract.history'].search([('employee_id', '=', self.emp_id.id)])

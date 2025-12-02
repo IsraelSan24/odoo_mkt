@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <field name="email_from" position="before">
                 <field name="identification_type_id" attrs="{'readonly': [('stage_id', 'in', [5])]}" options="{'no_open': True}"/>
+                <field name="province_or_lima" attrs="{'readonly': [('stage_id', 'in', [5])]}"/>
                 <field name="vat"/>
                 <field name="is_autoemployee" invisible="True"/>
                 <field name="has_documents" invisible="True"/>
