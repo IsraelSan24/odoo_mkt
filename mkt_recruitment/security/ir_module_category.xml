@@ -6,7 +6,11 @@
         <record id="category_recruitment" model="ir.module.category">
             <field name="name">Recruitment document</field>
         </record>
-    
-    </data>
 
+        <record id="category_personnel_selection" model="ir.module.category">
+            <field name="name">Personnel Selection</field>
+        </record>
+
+    </data>
+    
 </odoo>

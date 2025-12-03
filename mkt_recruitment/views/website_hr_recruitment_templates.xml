@@ -226,6 +226,28 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group col-12 s_website_form_field s_website_form_required s_website_form_model_required" data-type="selection" data-name="Field">
+                <div class="row s_col_no_resize s_col_no_bgcolor">
+                    <label class="col-form-label col-sm-auto s_website_form_label" style="width:200px;" for="recruitment02">
+                        <span class="s_website_form_label_content">Lima/Provincia</span>
+                        <span class="s_website_form_mark"> *</span>
+                    </label>
+                    <div class="col-sm">
+                        <select id="recruitment02" 
+                                class="form-control s_website_form_input" 
+                                name="province_or_lima" 
+                                required="" 
+                                data-fill-with="province_or_lima">
+                            <option value="">Selección...</option>
+                            <t t-foreach="request.env['hr.applicant']._fields['province_or_lima'].selection" t-as="option">
+                            <option t-att-value="option[0]">
+                                <t t-esc="option[1]"/>
+                            </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </xpath>
         <xpath expr="//form/div/div[7]" position="after">
             <div class="form-group col-12 s_website_form_field s_website_form_required s_website_form_model_required" data-type="char" data-name="Field">
