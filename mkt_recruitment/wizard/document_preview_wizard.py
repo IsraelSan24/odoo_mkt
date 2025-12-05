@@ -12,7 +12,7 @@ class DocumentPreviewWizard(models.TransientModel):
     document_filename = fields.Char(string='Filename', readonly=True)
     previous_wizard_id = fields.Integer(string='Previous Wizard ID')
     previous_wizard_model = fields.Char(string='Previous Wizard Model')
-    document_html = fields.Html(string='Document HTML', compute='_compute_document_html')
+    # document_html = fields.Html(string='Document HTML', compute='_compute_document_html')
     document_base64 = fields.Char(string='Document Base64', compute='_compute_document_base64')
 
     def action_go_back(self):
