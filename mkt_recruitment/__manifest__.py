@@ -31,6 +31,7 @@
         'wizard/contract_mass_identifiers_wizard.xml',
         'wizard/contracts_download_wizard.xml',
         'wizard/applicant_data_wizard.xml',
+        'wizard/document_preview_wizard.xml',
 
         'data/ir_sequence.xml',
         'data/config_data.xml',
@@ -95,6 +96,7 @@
         ],
         'web.assets_backend': [
             'mkt_recruitment/static/src/js/notification_effects.js',
+            'mkt_recruitment/static/src/js/image_preview_widget.js',
             'mkt_recruitment/static/src/scss/notification_effects.scss',
         ],
     },
