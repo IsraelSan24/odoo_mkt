@@ -124,7 +124,7 @@ class Settlement(models.Model):
     settle_amount_sum = fields.Float(compute='_compute_settle_amount_sum', store=True)
     vendor_sum = fields.Float(compute='_compute_vendor_sum', store=True)
     cost_center_id = fields.Many2one('cost.center', string='CC Number', related='requirement_id.cost_center_id', store=True, readonly=True, copy=False)
-
+    ignore_amount_from = fields.Boolean(default=False, string='Ignore "amount from" for retention and detraction calculation')
 
     @api.onchange('mobility_id')
     def _onchange_mobility_id(self):
@@ -778,7 +778,7 @@ class Settlement(models.Model):
     #             rec.vendor = 0
 
 
-    @api.depends('currency_id', 'service_type_id', 'settle_amount', 'alternative_amount', 'differentiated_payment', 'date')  # Quitar settle_amount_sum
+    @api.depends('currency_id', 'service_type_id', 'settle_amount', 'alternative_amount', 'differentiated_payment', 'date', 'ignore_amount_from')  # Quitar settle_amount_sum
     def _compute_amounts(self):
         # Optimización: Una sola query para todas las fechas
         dates = list(set(rec.date for rec in self if rec.date))
@@ -802,7 +802,7 @@ class Settlement(models.Model):
             
             effective_amount = rec.alternative_amount if (rec.alternative_amount and rec.differentiated_payment) else base_amount
             
-            if base_amount * change_type > rec.service_type_id.amount_from:
+            if (base_amount * change_type > rec.service_type_id.amount_from) or rec.ignore_amount_from:
                 if rec.service_type_id.detraction:
                     rec.vendor = effective_amount - round((effective_amount * rec.service_type_id.percentage) / 100, 0)
                     rec.detraction = round((effective_amount * rec.service_type_id.percentage) / 100, 0)
