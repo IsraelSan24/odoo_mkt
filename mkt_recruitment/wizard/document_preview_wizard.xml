@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_document_preview_wizard_form" model="ir.ui.view">
+        <field name="name">document.preview.wizard.form</field>
+        <field name="model">document.preview.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Preview Document">
+                <sheet>
+                    <field name="document_filename" invisible="1"/>
+                    <field name="partner_id" invisible="1"/>
+                    <field name="document_field" invisible="1"/>
+                    <field name="document_base64" widget="image_preview"/>
+                </sheet>
+                <footer>
+                    <button string="Regresar" type="object" name="action_go_back" class="btn-primary"/>
+                    <button string="Cerrar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

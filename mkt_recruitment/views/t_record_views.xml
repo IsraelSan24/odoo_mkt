@@ -1,5 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+  <record id="view_hr_employee_form_inherit_trecord" model="ir.ui.view">
+    <field name="name">hr.employee.form.inherit.trecord</field>
+    <field name="model">hr.employee</field>
+    <field name="inherit_id" ref="hr.view_employee_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//sheet/notebook" position="inside">
+        <page string="T-Register">
+          <group>
+            <field name="t_record_ids" context="{'default_employee_id': active_id, 'default_partner_id': address_home_id}">
+              <!-- IMPORTANTE: editable="bottom" para que puedas subir/editar cuando esté en draft -->
+              <tree editable="bottom" create="1" delete="1">
+                <field name="name" readonly="1"/>
+                <field name="state" readonly="1"/>
+                <field name="t_record_filename" readonly="1"/>
+                <!-- Binario inline para subir/ver -->
+                <field name="t_record" widget="binary" filename="t_record_filename"
+                       attrs="{'readonly': [('state','in',['to_sign','signed'])]}"/>
+                <!-- Botón de descarga por fila, solo si está firmado -->
+                <button name="action_download_signed" type="object" string="Download"
+                        icon="fa-download"
+                        attrs="{'invisible': ['|', ('state','!=','signed'), ('t_record','=',False)]}"/>
+              </tree>
+
+              <!-- Form por fila con botón de descarga también -->
+              <form string="T-Record">
+                <sheet>
+                  <group>
+                    <group>
+                      <field name="name" readonly="1"/>
+                      <field name="employee_id" readonly="1"/>
+                      <field name="partner_id" readonly="1"/>
+                      <field name="t_record_filename" invisible="1"/>
+                      <field name="t_record" widget="binary" filename="t_record_filename"/>
+                    </group>
+                    <group>
+                      <field name="state" widget="statusbar" statusbar_visible="draft,to_sign,signed"/>
+                      <button name="send_to_sign" type="object" class="btn-secondary"
+                              string="To sign" attrs="{'invisible':[('t_record','=',False)]}"/>
+                      <button name="action_stamp_footer" type="object" class="btn-primary"
+                              string="Estampar pie de página" attrs="{'invisible':[('t_record','=',False)]}"/>
+                      <button name="preview_t_record" type="object" string="Ver en portal"
+                              class="btn-secondary" attrs="{'invisible':[('t_record','=',False)]}"/>
+                      <!-- Botón de descarga en el form -->
+                      <button name="action_download_signed" type="object" class="btn-primary"
+                              string="Download (signed)"
+                              attrs="{'invisible': ['|', ('state','!=','signed'), ('t_record','=',False)]}"/>
+                    </group>
+                  </group>
+                </sheet>
+              </form>
+            </field>
+          </group>
+        </page>
+      </xpath>
+    </field>
+  </record>
 
     <record id="view_t_record_tree" model="ir.ui.view">
         <field name="name">t.record.tree</field>
@@ -15,38 +71,46 @@
         </field>
     </record>
 
-    <record id="view_t_record_form" model="ir.ui.view">
-        <field name="name">t.record.form</field>
-        <field name="model">t.record</field>
-        <field name="arch" type="xml">
-            <form>
-                <header>
-                    <button string="Signature" name="employee_signature" type="object" class="oe_highlight"/>
-                    <button string="Send to sign" name="send_to_sign" type="object" class="oe_highlight"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,to_sign,signed"/>
-                </header>
-                <sheet>
-                    <group>
-                        <group>
-                            <field name="name"/>
-                            <field name="employee_id"/>
-                            <field name="t_record_filename" invisible="1"/>
-                            <field name="t_record" widget="binary" filename="t_record_filename"/>
-                        </group>
-                        <group>
-                            <field name="partner_id"/>
-                            <field name="user_id"/>
-                        </group>
-                    </group>
-                </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids"/>
-                    <field name="activity_ids"/>
-                    <field name="message_ids"/>
-                </div>
-            </form>
-        </field>
-    </record>
+  <record id="view_t_record_form" model="ir.ui.view">
+    <field name="name">t.record.form</field>
+    <field name="model">t.record</field>
+    <field name="arch" type="xml">
+      <form string="T-Record">
+        <header>
+          <button name="send_to_sign" type="object" string="To sign" class="btn-secondary"/>
+          <button name="action_stamp_footer" type="object" string="Estampar pie de página"
+                  class="btn-primary" attrs="{'invisible':[('t_record','=',False)]}"/>
+          <button name="action_download_signed" type="object" string="Download"
+                  class="oe_highlight"
+                  attrs="{'invisible': ['|', ('state','!=','signed'), ('t_record','=',False)]}"/>
+          <field name="state" widget="statusbar" statusbar_visible="draft,to_sign,signed"/>
+        </header>
+        <sheet>
+          <group>
+            <group>
+              <field name="name" readonly="1"/>
+              <field name="employee_id"/>
+              <field name="partner_id" readonly="1"/>
+              <field name="user_id" readonly="1"/>
+            </group>
+            <group>
+              <field name="t_record_filename" invisible="1"/>
+              <field name="t_record" widget="binary" filename="t_record_filename"/>
+            </group>
+          </group>
+          <footer>
+            <button name="preview_t_record" type="object" string="Previsualizar (Portal)"
+                    class="btn-secondary" attrs="{'invisible':[('t_record','=',False)]}"/>
+          </footer>
+        </sheet>
+        <div class="oe_chatter">
+          <field name="message_follower_ids"/>
+          <field name="activity_ids"/>
+          <field name="message_ids"/>
+        </div>
+      </form>
+    </field>
+  </record>
 
     <record id="view_t_record_action" model="ir.actions.act_window">
         <field name="name">T-Record</field>

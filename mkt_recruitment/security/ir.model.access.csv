@@ -15,4 +15,6 @@ access_massive.contract.end,access.massive.contract.end,model_massive_contract_e
 access_employee_verification_wizard,access.employee.verification.wizard,model_employee_verification_wizard,,1,1,1,0
 access_contract_mass_identifiers_wizard,access.contract.mass.identifiers.wizard,model_contract_mass_identifiers_wizard,,1,1,1,0
 access_contract_zip_wizard,access.contract.zip.wizard,model_contract_zip_wizard,,1,1,1,0
+access_applicant_data_wizard,access.applicant.data.wizard,model_applicant_data_wizard,,1,1,1,0
 access_merge_employee_wizard,access.merge.employee.wizard,model_merge_employee_wizard,,1,1,1,1
+access_t_record_manager,access.t.record.manager,model_t_record,hr_contract.group_hr_contract_manager,1,1,1,1

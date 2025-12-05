@@ -24,6 +24,6 @@
         'views/powerbi_report_menus.xml'
     ],
     "installable": True,
-    'application': False,
+    'application': True,
     'license': 'LGPL-3'
 }

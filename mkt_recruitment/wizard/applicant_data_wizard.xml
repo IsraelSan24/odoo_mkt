@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_applicant_data_wizard" model="ir.ui.view">
+        <field name="name">applicant.data.wizard.form</field>
+        <field name="model">applicant.data.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Información Privada" readonly="1">
+                <h1><field name="name" readonly='1'></field></h1>
+                <group string="Información Básica">
+                    <group >
+                        <field name="identification_type" readonly='1'/>
+                        <field name="identification_number" readonly='1'/>
+                        <field name="birthday" readonly='1'/>
+                        <field name="gender" readonly='1'/>
+                        <field name="age" readonly='1'/>
+                        <field name="phone" readonly='1'/>
+                        <field name="email" readonly='1'/>
+                        <!-- <field name="nationality_id" readonly='1' class="oe_edit_only"/> -->
+                    </group>
+                    <group>
+                        <field name="demonym" readonly='1'/>
+                        <field name="state" readonly='1'/>
+                        <field name="city" readonly='1'/>
+                        <field name="district" readonly='1'/>
+                        <field name="street" readonly='1'/>
+                        <field name="reference_location" readonly='1'/>
+                    </group>
+                </group>
+                <group string="Información Contacto de Emergencia">
+                    <field name="emergency_contact" readonly='1'/>
+                    <field name="emergency_phone" readonly='1' widget="phone"/>
+                    <field name="emergency_contact_relationship" readonly='1'/>
+                </group>
+                <group string="Información del Estado Civil">
+                    <group>
+                        <field name="marital" readonly='1'/>
+                    </group>
+                    <group>
+                        <field name="children" readonly='1'/>
+                    </group>
+                </group>
+                <group string="Datos del Vínculo Laboral">
+                    <group>
+                        <field name="private_pension_system" readonly='1'/>
+                        <field name="afp_first_job" readonly='1' attrs="{'invisible':[('private_pension_system','=',False)]}"/>
+                        <field name="coming_from_onp" readonly='1' attrs="{'invisible':[('private_pension_system','=',False)]}"/>
+                    </group>
+                    <group>
+                        <field name="national_pension_system" readonly='1'/>
+                        <field name="fifth_category_income" readonly='1'/>
+                    </group>
+                </group>
+                <group string="Educación">
+                    <field name="education_level" readonly='1'/>
+                </group>
+                <group string="Documentos">
+                    <group >
+                        <field name="current_dni" filename="current_dni_filename" attrs="{'invisible': [('current_dni', '=', False)]}"/>
+                        <field name="current_dni_filename" invisible="True"/>
+                        <field name="is_current_dni" invisible="True"/>
+                        
+                        <field name="current_dni_back" filename="current_dni_back_filename" attrs="{'invisible': [('current_dni_back', '=', False)]}"/>
+                        <field name="current_dni_back_filename" invisible="True"/>
+                        <field name="is_current_dni_back" invisible="True"/>
+                    </group>
+                    <group>
+                        <button name="action_preview_current_dni"
+                            string="Ver (Frontal)"
+                            type="object"
+                            class="btn-secondary"
+                            icon="fa-eye"
+                            attrs="{'invisible': [('current_dni', '=', False)]}"/>
+                        <br/>
+                        <button name="action_preview_current_dni_back"
+                            string="Ver (Posterior)"
+                            type="object"
+                            class="btn-secondary"
+                            icon="fa-eye"
+                            attrs="{'invisible': [('current_dni_back', '=', False)]}"/>
+                    </group>
+                </group>
+                <group string="Familia">
+                
+                    <table class="table table-bordered" style="padding: 0px 30px 0px 30px; border:none">
+                        <colgroup>
+                            <col width="16%"/>
+                            <col width="32%"/>  
+                            <col width="22%"/>
+                            <col width="15%"/>
+                            <col width="15%"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="5" class="text-center" style="border: 2px solid black;">Children</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">N&#176;DNI</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Nombre Completo</th>
+                                <!-- <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Genre</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Relationship</th> -->
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Fecha de Nacimiento</th>
+                                <!-- <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">Address</th> -->
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">DNI (Frontal)</th>
+                                <th scope="col" style="font-weight: bold; background-color: #B297D2; border: 2px solid black">DNI (Posterior)</th>
+                                <th scope="col" style="border: none"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="border: 2px solid black;"><field name="child_dni1" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_full_name1" readonly="1"/></td>
+                                <!-- <td style="border: 2px solid black;"><field name="child_gender1" readonly="1"/></td> -->
+                                <!-- <td style="border: 2px solid black;"><field name="child_relationship1" readonly="1"/></td> -->
+                                <td style="border: 2px solid black;"><field name="child_birthday1" readonly="1"/></td>
+                                <!-- <td style="border: 2px solid black;"><field name="child_address1" readonly="1"/></td> -->
+                                <td style="border: 2px solid black;">
+                                    <field name="child_dnifile1_filename" readonly='1' invisible="True"/>
+                                    <field name="child_dnifile1" widget="binary" filename="child_dnifile1_filename" attrs="{'invisible': [('child_dnifile1', '=', False)]}" />
+                                    <button name="action_preview_child_dnifile1"
+                                            string="Ver (Frontal)"
+                                            type="object"
+                                            class="btn-secondary"
+                                            icon="fa-eye"
+                                            attrs="{'invisible': [('child_dnifile1', '=', False)]}"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="child_dnifile1_back_filename" readonly='1' invisible="True"/>
+                                    <field name="child_dnifile1_back" widget="binary" filename="child_dnifile1_back_filename" attrs="{'invisible': [('child_dnifile1_back', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile1_back"
+                                            string="Ver (Posterior)"
+                                            type="object"
+                                            class="btn-secondary"
+                                            icon="fa-eye"
+                                            attrs="{'invisible': [('child_dnifile1_back', '=', False)]}"/>
+                                </td>
+                                <td style="border: none"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;"><field name="child_dni2" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_full_name2" readonly="1"/></td>
+                                <!-- <td style="border: 2px solid black;"><field name="child_gender2" readonly="1"/></td> -->
+                                <!-- <td style="border: 2px solid black;"><field name="child_relationship2" readonly="1"/></td> -->
+                                <td style="border: 2px solid black;"><field name="child_birthday2" readonly="1"/></td>
+                                <!-- <td style="border: 2px solid black;"><field name="child_address2" readonly="1"/></td> -->
+                                <td style="border: 2px solid black;">
+                                    <field name="child_dnifile2_filename" readonly='1' invisible="True"/>
+                                    <field name="child_dnifile2" widget="binary" filename="child_dnifile2_filename" attrs="{'invisible': [('child_dnifile2', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile2"
+                                            string="Ver (Frontal)"
+                                            type="object"
+                                            class="btn-secondary"
+                                            icon="fa-eye"
+                                            attrs="{'invisible': [('child_dnifile2', '=', False)]}"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="child_dnifile2_back_filename" readonly='1' invisible="True"/>
+                                    <field name="child_dnifile2_back" widget="binary" filename="child_dnifile2_back_filename" attrs="{'invisible': [('child_dnifile2_back', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile2_back"
+                                            string="Ver (Posterior)"
+                                            type="object"
+                                            class="btn-secondary"
+                                            icon="fa-eye"
+                                            attrs="{'invisible': [('child_dnifile2_back', '=', False)]}"/>
+                                </td>
+                                <td style="border: none"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;"><field name="child_dni3" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_full_name3" readonly="1"/></td>
+                                <!-- <td style="border: 2px solid black;"><field name="child_gender3" readonly="1"/></td> -->
+                                <!-- <td style="border: 2px solid black;"><field name="child_relationship3" readonly="1"/></td> -->
+                                <td style="border: 2px solid black;"><field name="child_birthday3" readonly="1"/></td>
+                                <!-- <td style="border: 2px solid black;"><field name="child_address3" readonly="1"/></td> -->
+                                <td style="border: 2px solid black;">
+                                    <field name="child_dnifile3_filename" readonly='1' invisible="True"/>
+                                    <field name="child_dnifile3" widget="binary" filename="child_dnifile3_filename" attrs="{'invisible': [('child_dnifile3', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile3"
+                                            string="Ver (Frontal)"
+                                            type="object"
+                                            class="btn-secondary"
+                                            icon="fa-eye"
+                                            attrs="{'invisible': [('child_dnifile3', '=', False)]}"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="child_dnifile3_back_filename" readonly='1' invisible="True"/>
+                                    <field name="child_dnifile3_back" widget="binary" filename="child_dnifile3_back_filename" attrs="{'invisible': [('child_dnifile3_back', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile3_back"
+                                            string="Ver (Posterior)"
+                                            type="object"
+                                            class="btn-secondary"
+                                            icon="fa-eye"
+                                            attrs="{'invisible': [('child_dnifile3_back', '=', False)]}"/>
+                                </td>
+                                <td style="border: none"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;"><field name="child_dni4" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_full_name4" readonly="1"/></td>
+                                <!-- <td style="border: 2px solid black;"><field name="child_gender4" readonly="1"/></td> -->
+                                <!-- <td style="border: 2px solid black;"><field name="child_relationship4" readonly="1"/></td> -->
+                                <td style="border: 2px solid black;"><field name="child_birthday4" readonly="1"/></td>
+                                <!-- <td style="border: 2px solid black;"><field name="child_address4" readonly="1"/></td> -->
+                                <td style="border: 2px solid black;">
+                                    <field name="child_dnifile4_filename" readonly='1' invisible="True"/>
+                                    <field name="child_dnifile4" widget="binary" filename="child_dnifile4_filename" attrs="{'invisible': [('child_dnifile4', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile4"
+                                            string="Ver (Frontal)"
+                                            type="object"
+                                            class="btn-secondary"
+                                            icon="fa-eye"
+                                            attrs="{'invisible': [('child_dnifile4', '=', False)]}"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="child_dnifile4_back_filename" readonly='1' invisible="True"/>
+                                    <field name="child_dnifile4_back" widget="binary" filename="child_dnifile4_back_filename" attrs="{'invisible': [('child_dnifile4_back', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile4_back"
+                                            string="Ver (Posterior)"
+                                            type="object"
+                                            class="btn-secondary"
+                                            icon="fa-eye"
+                                            attrs="{'invisible': [('child_dnifile4_back', '=', False)]}"/>
+                                </td>
+                                <td style="border: none"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;"><field name="child_dni5" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_full_name5" readonly="1"/></td>
+                                <!-- <td style="border: 2px solid black;"><field name="child_gender5" readonly="1"/></td> -->
+                                <!-- <td style="border: 2px solid black;"><field name="child_relationship5" readonly="1"/></td> -->
+                                <td style="border: 2px solid black;"><field name="child_birthday5" readonly="1"/></td>
+                                <!-- <td style="border: 2px solid black;"><field name="child_address5" readonly="1"/></td> -->
+                                <td style="border: 2px solid black;">
+                                    <field name="child_dnifile5_filename" readonly='1' invisible="True"/>
+                                    <field name="child_dnifile5" widget="binary" filename="child_dnifile5_filename" attrs="{'invisible': [('child_dnifile5', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile5"
+                                            string="Ver (Frontal)"
+                                            type="object"
+                                            class="btn-secondary"
+                                            icon="fa-eye"
+                                            attrs="{'invisible': [('child_dnifile5', '=', False)]}"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="child_dnifile5_back_filename" readonly='1' invisible="True"/>
+                                    <field name="child_dnifile5_back" widget="binary" filename="child_dnifile5_back_filename" attrs="{'invisible': [('child_dnifile5_back', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile5_back"
+                                            string="Ver (Posterior)"
+                                            type="object"
+                                            class="btn-secondary"
+                                            icon="fa-eye"
+                                            attrs="{'invisible': [('child_dnifile5_back', '=', False)]}"/>
+                                </td>
+                                <td style="border: none"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 2px solid black;"><field name="child_dni6" readonly="1"/></td>
+                                <td style="border: 2px solid black;"><field name="child_full_name6" readonly="1"/></td>
+                                <!-- <td style="border: 2px solid black;"><field name="child_gender6" readonly="1"/></td> -->
+                                <!-- <td style="border: 2px solid black;"><field name="child_relationship6" readonly="1"/></td> -->
+                                <td style="border: 2px solid black;"><field name="child_birthday6" readonly="1"/></td>
+                                <!-- <td style="border: 2px solid black;"><field name="child_address6" readonly="1"/></td> -->
+                                <td style="border: 2px solid black;">
+                                    <field name="child_dnifile6_filename" readonly='1' invisible="True"/>
+                                    <field name="child_dnifile6" widget="binary" filename="child_dnifile6_filename" attrs="{'invisible': [('child_dnifile6', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile6"
+                                            string="Ver (Frontal)"
+                                            type="object"
+                                            class="btn-secondary"
+                                            icon="fa-eye"
+                                            attrs="{'invisible': [('child_dnifile6', '=', False)]}"/>
+                                </td>
+                                <td style="border: 2px solid black;">
+                                    <field name="child_dnifile6_back_filename" readonly='1' invisible="True"/>
+                                    <field name="child_dnifile6_back" widget="binary" filename="child_dnifile6_back_filename" attrs="{'invisible': [('child_dnifile6_back', '=', False)]}"/>
+                                    <button name="action_preview_child_dnifile6_back"
+                                            string="Ver (Posterior)"
+                                            type="object"
+                                            class="btn-secondary"
+                                            icon="fa-eye"
+                                            attrs="{'invisible': [('child_dnifile6_back', '=', False)]}"/>
+                                </td>
+                                <td style="border: none"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </group>
+                <footer>
+                    <button string="Cerrar" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>

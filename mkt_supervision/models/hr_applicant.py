@@ -53,13 +53,17 @@ class HrApplicant(models.Model):
             missing_fields = []
 
             if not record.cost_center_id:
-                missing_fields.append("Cost Center")
-            if not record.salary_proposed:
-                missing_fields.append("Salary Proposed")
+                missing_fields.append("Centro de Costo")
             if not record.first_contract_start:
-                missing_fields.append("First Contract Start")
+                missing_fields.append("Fecha Inicio de Contrato")
             if not record.first_contract_end:
-                missing_fields.append("First Contract End")
+                missing_fields.append("Fecha Fin de Contrato")
+            if not record.salary_proposed:
+                missing_fields.append("Salario")
+            if not record.work_type:
+                missing_fields.append("Tipo de Trabajo")
+            if not record.parent_id:
+                missing_fields.append("Jefe")
 
             if missing_fields:
                 raise UserError(_(

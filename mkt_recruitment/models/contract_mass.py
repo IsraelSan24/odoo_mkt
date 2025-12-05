@@ -36,7 +36,7 @@ class ContractMass(models.Model):
     name = fields.Char(copy=False, required=True, default=lambda self: _('New'), string='Name')
     employee_ids = fields.Many2many(comodel_name="hr.employee", relation="contract_mass_employee_rel", string="Employee", domain="['&', ('contract_id', '=', False), ('active', '=', True)]")
     contracts_ids = fields.One2many(comodel_name='hr.contract', inverse_name='massive_new_contracts_id', string='Created new contracts')
-    renew_employee_ids = fields.Many2many(comodel_name="hr.employee", relation="contract_mass_renew_employee_rel", string="Employee", domain="[('contract_id', '!=', False),('contract_id.state','=','open')]")
+    renew_employee_ids = fields.Many2many(comodel_name="hr.employee", relation="contract_mass_renew_employee_rel", string="Employee")
     renew_contracts_ids = fields.One2many(comodel_name='hr.contract', inverse_name='massive_renew_contracts_id', string='Created renewed contracts')
     contract_type_id = fields.Many2one(comodel_name="hr.contract.type", string="Contract Type")
     mode = fields.Selection(selection=contract_modes, required=True, default='new_employee', string='New or Renewed')
@@ -114,13 +114,11 @@ class ContractMass(models.Model):
             for employee in record.renew_employee_ids:
                 last_contract = self.env['hr.contract'].search([
                     ('employee_id', '=', employee.id),
-                    ('state', '=', 'open')
                 ], order='date_start desc', limit=1)
                 if last_contract:
-                    last_contracts.append((4, last_contract.id))
+                    last_contracts.append(last_contract.id)
 
-            if last_contracts:
-                record.write({'last_contract_ids': last_contracts})
+            record.last_contract_ids = [(6, 0, last_contracts)]
 
     def create_contract_to_new_employee(self):
         if self.mode == 'new_employee':
@@ -146,9 +144,14 @@ class ContractMass(models.Model):
             self.state = 'generated'
 
     def create_renewed_contract(self):
+        self.ensure_one()
         if self.mode == 'renovation':
             for employee in self.renew_employee_ids:
-                contract_employee = self.env['hr.contract'].search([('employee_id','=',employee.id),('state','=','open')], order='date_start desc', limit=1)
+                contract_employee = self.env['hr.contract'].search([('employee_id','=',employee.id)], order='date_start desc', limit=1)
+
+                if not contract_employee:
+                    raise UserError(_("No contract found for employee %s") % employee.name)
+
                 employee_wage = contract_employee.wage
                 employee_contract_type = contract_employee.contract_type_id
                 employee_last_date_end = contract_employee.date_end
@@ -169,6 +172,15 @@ class ContractMass(models.Model):
                 new_contract.write_data() 
                 new_contract._compute_contract_duration()
             self.state = 'generated'
+
+    def action_print_renewed_contracts(self):
+        if not self.renew_contracts_ids:
+            raise UserError(_("No renewed contracts found to print"))
+        
+        if len(self.renew_contracts_ids) > 1:
+            return self.env['contract.zip.wizard'].with_context(active_ids=self.renew_contracts_ids.ids).create({}).action_generate_zip_contracts()
+        else:
+            return self.env.ref('mkt_recruitment.report_contract_action').report_action(self.renew_contracts_ids)
 
     @api.model
     def create(self, vals):
@@ -362,6 +374,48 @@ class ContractMass(models.Model):
                 'active_id': self.id
             },
         }
+
+    def action_open_identifiers_renovation_wizard(self):
+        self.ensure_one()
+        return {
+            'name': _('Introduce IDs (Renovation)'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'contract.mass.identifiers.wizard',
+            'view_mode': 'form',
+            'view_id': self.env.ref('mkt_recruitment.identifiers_wizard_form_view').id,
+            'target': 'new',
+            'context': {
+                'default_identifiers_input': '',
+                'active_model': self._name,
+                'active_id': self.id,
+                'mode': 'renovation'
+            },
+        }
+
+    def process_identifiers_renovation(self, text):
+        self.ensure_one()
+        id_list = self._parse_identifiers(text)
+        if not id_list:
+            return []
+
+        # Search employees by VAT (address_home_id.vat)
+        employees = self.env['hr.employee'].search([
+            ('address_home_id.vat', 'in', id_list),
+            ('active', '=', True)
+        ])
+        
+        # Update renew_employee_ids
+        self.renew_employee_ids = [(6, 0, employees.ids)]
+        
+        # Calculate missing
+        found_vats = set(employees.mapped('address_home_id.vat'))
+        
+        missing = []
+        for identifier in id_list:
+            if identifier not in found_vats:
+                missing.append(identifier)
+        
+        return missing
 
     @api.onchange('mode')
     def _onchange_mode(self):

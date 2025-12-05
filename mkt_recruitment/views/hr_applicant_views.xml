@@ -7,6 +7,8 @@
         <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
         <field name="arch" type="xml">
             <field name="email_from" position="before">
+                <field name="identification_type_id" attrs="{'readonly': [('stage_id', 'in', [5])]}" options="{'no_open': True}"/>
+                <field name="province_or_lima" attrs="{'readonly': [('stage_id', 'in', [5])]}"/>
                 <field name="vat"/>
                 <field name="is_autoemployee" invisible="True"/>
                 <field name="has_documents" invisible="True"/>
@@ -20,6 +22,12 @@
             <xpath expr="//field[@name='availability']" position="before">
                 <field name="first_contract_start" required='0'/>
                 <field name="first_contract_end" required='0'/>
+            </xpath>
+            <xpath expr="//field[@name='availability']" position="after">
+                <field name="work_type" required='0'/>
+                <field name="company_id" invisible='1'/>
+                <field name="parent_id" required='0'/>
+                
             </xpath>
             <xpath expr="//header/button[@name='create_employee_from_applicant']" position="attributes">
                 <attribute name="invisible">True</attribute>
@@ -107,6 +115,10 @@
         <field name="model">hr.applicant</field>
         <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
         <field name="arch" type="xml">
+
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">create_date desc</attribute>
+            </xpath>
             <xpath expr="//field[@name='partner_name']" position="after">
                 <field name="vat" string="ID"/>
             </xpath>
@@ -136,19 +148,27 @@
         <field name="model">hr.applicant</field>
         <field name="arch" type="xml">
             <tree string="Applicant Contract Request" 
+                  editable="bottom"
                   decoration-danger="supervision_data_approved == 'rejected'" 
-                  decoration-success="supervision_data_approved == 'approved'">
-                <field name="supervision_data_approved" invisible='1'/>
-                <field name="partner_name"/>
-                <field name="vat"/>
-                <field name="job_id"/>
-                <field name="department_id"/>
-                <field name="cost_center_id" decoration-bf="1"/>
-                <field name="salary_proposed" decoration-bf="1"/>
-                <field name="first_contract_start" decoration-bf="1"/>
-                <field name="first_contract_end" decoration-bf="1"/>
-                <field name="supervision_data_approved" widget="badge" decoration-info="supervision_data_approved == 'pending'" decoration-warning="supervision_data_approved == 'rejected'" decoration-success="supervision_data_approved == 'approved'"/>
+                  decoration-success="supervision_data_approved == 'approved'"
+                  default_order="create_date desc">
+                <field name="supervision_data_approved" readonly="1" invisible='1'/>
+                <field name="partner_name" readonly="1"/>
+                <field name="vat" readonly="1"/>
+                <field name="job_id" readonly="1" options="{'no_open': True}" optional="hide"/>
+                <field name="department_id" readonly="1" options="{'no_open': True}" optional="hide"/>
+                <field name="cost_center_id" readonly="1" decoration-bf="1" options="{'no_open': True}"/>
+                <field name="salary_proposed" readonly="1" decoration-bf="1"/>
+                <field name="first_contract_start" readonly="1" decoration-bf="1"/>
+                <field name="first_contract_end" readonly="1" decoration-bf="1"/>
+                <field name="work_type" readonly="1" decoration-bf="1"/>
+                <field name="company_id" readonly="1" invisible='1'/>
+                <field name="parent_id" readonly="1" decoration-bf="1" options="{'no_open': True}"/>
+                <field name="first_contract_type_id" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('first_contract_signed', '=', True)]}"/>
+                <field name="supervision_data_approved" readonly="1" widget="badge" decoration-info="supervision_data_approved == 'pending'" decoration-warning="supervision_data_approved == 'rejected'" decoration-success="supervision_data_approved == 'approved'"/>
                 <field name="write_date" readonly="1" optional="hide"/>
+                <field name="first_contract_id" optional="hide"  options="{'no_create': True, 'no_open': True}" groups="base.group_system"/>
+                <field name="first_contract_signed" readonly="1" groups="base.group_system" optional="hide"/>
             </tree>
         </field>
     </record>
@@ -158,15 +178,6 @@
         <field name="model">hr.applicant</field>
         <field name="inherit_id" ref="mkt_recruitment.view_hr_applicant_tree_payroll"/>
         <field name="arch" type="xml">
-            <xpath expr="//tree" position="inside">
-                <field name="stage_id" invisible='1'/>
-                <button name="action_approve_supervision_data"
-                        type="object"
-                        string="Approve"
-                        class="btn-primary"
-                        icon="fa-check-circle"
-                        attrs="{'invisible': ['|', ('stage_id', '!=', 4), ('supervision_data_approved', 'in', ['approved', 'rejected'])]}"/>
-            </xpath>
             <xpath expr="//tree" position="inside">
                 <header>
                     <button name="action_approve_supervision_data"
@@ -181,7 +192,39 @@
                             type="object"
                             string="Restore"
                             class="btn-secondary"/>
+                    <button name="action_send_unsend_first_contract"
+                            type="object"
+                            string="Enviar/No Enviar Contrato"
+                            class="btn-secondary"/>
+                    <button name="action_print_first_contract"
+                            type="object"
+                            string="Imprimir Contrato"
+                            class="btn-secondary"/>
                 </header>
+            </xpath>
+            <xpath expr="//tree" position="inside">
+                <field name="stage_id" invisible='1'/>
+                <field name="first_contract_id" invisible='1'/>
+                <field name="first_contract_type_id" invisible='1'/>
+                <field name="stage_id" optional="hide" readonly='1'/>
+                <field name="send_first_contract" widget="boolean_toggle" optional="hide"
+                       attrs="{'invisible': ['|', ('supervision_data_approved', '!=', 'approved'), '|', ('first_contract_id', '=', False), ('first_contract_type_id', '=', False)]}"></field>
+                <button name="action_applicant_data_wizard"
+                        type="object"
+                        string="Ver Info"
+                        class="btn-secondary"
+                        icon="fa-eye"/>
+                <button name="action_approve_supervision_data"
+                        type="object"
+                        string="Approve"
+                        class="btn-primary"
+                        icon="fa-check-circle"
+                        attrs="{'invisible': ['|', ('stage_id', '!=', 4), ('supervision_data_approved', 'in', ['approved', 'rejected'])]}"/>
+                <button name="action_open_first_contract" 
+                        type="object" 
+                        string="Ver Contrato" 
+                        class="btn-primary"
+                        attrs="{'invisible': ['|', ('supervision_data_approved', '!=', 'approved'), '|', ('first_contract_id', '=', False), ('first_contract_type_id', '=', False)]}"/>
             </xpath>
         </field>
     </record>
@@ -192,11 +235,15 @@
         <field name="model">hr.applicant</field>
         <field name="arch" type="xml">
         <search string="Search Applicants">
-            <field name="partner_name" />
+            <field name="partner_name" string="Nombre o DNI" filter_domain="['|',('vat','ilike',self),('partner_name','ilike',self)]"/>
             <field name="job_id"/>
+            <field name="cost_center_id" string="Centro de Costo"/>
 
+            <filter string="Pending/Approved (Contract not signed)" name="supervision_data_pending_and_approved_no_signed_contract" domain="['|', ('supervision_data_approved', '=', 'pending'), '&amp;', ('stage_id', '=', 4), ('supervision_data_approved', '=', 'approved')]"/>
             <filter string="Pending" name="supervision_data_pending_to_approved" domain="[('supervision_data_approved', '=', 'pending')]"/>
             <filter string="Approved" name="supervision_data_approved" domain="[('supervision_data_approved', '=', 'approved')]"/>
+            <filter string="Approved (Contract not signed)" name="supervision_data_approved_no_signed_contract" domain="[('supervision_data_approved', '=', 'approved'), ('stage_id', '=', 4)]"/>
+            <filter string="Approved (Contract signed)" name="supervision_data_approved_signed_contract" domain="[('supervision_data_approved', '=', 'approved'), ('stage_id', '=', 5)]"/>
             <filter string="Refused" name="supervision_data_refused" domain="[('supervision_data_approved', '=', 'rejected')]"/>
             <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
             <separator/>
@@ -247,8 +294,8 @@
         <field name="name">Applicants Contract Request</field>
         <field name="res_model">hr.applicant</field>
         <field name="view_mode">tree</field>
-        <field name="domain">[('stage_id.id', '=', 4), ('selected_applicant_approved', '=', 'true')]</field>
-        <field name="context">{'search_default_supervision_data_pending_to_approved': 1}</field>
+        <field name="domain">[('stage_id.id', 'in', [4, 5]), ('selected_applicant_approved', '=', 'true')]</field>
+        <field name="context">{'search_default_supervision_data_pending_and_approved_no_signed_contract': 1}</field>
         <field name="view_id" ref="view_hr_applicant_tree_payroll"/>
         <field name="search_view_id" ref="mkt_recruitment.view_hr_applicant_search_custom_payroll" />
     </record>

@@ -13,6 +13,8 @@
                 'partner_phone',
                 'job_id',
                 'department_id',
+                'identification_type_id',
+                'province_or_lima',
             ]"/>
         </function>
     </data>

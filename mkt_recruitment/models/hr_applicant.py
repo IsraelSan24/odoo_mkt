@@ -5,10 +5,14 @@ from odoo.addons.mkt_recruitment.models.apiperu import apiperu_dni
 import logging
 _logger = logging.getLogger(__name__)
 
+identification_type_valid_code = ('1', '4', '7', 'F')
 
 class Applicant(models.Model):
     _inherit = 'hr.applicant'
 
+    identification_type_id = fields.Many2one(comodel_name='l10n_latam.identification.type', string='Identification Types', 
+            domain=[('l10n_pe_vat_code', 'in', identification_type_valid_code)]
+            )
     vat = fields.Char(string='Vat')
     photo = fields.Image(string='Photo')
     is_autoemployee = fields.Boolean(default=False, compute='_compute_auto_employee_and_documents', string='Employee created from stage', store=True)
@@ -17,8 +21,20 @@ class Applicant(models.Model):
     applicant_partner_id = fields.Many2one(comodel_name='applicant.partner', string='Applicant partner')
     is_reinstatement = fields.Boolean(default=False, string='Is reinstatement', store=True)
 
+    first_contract_id = fields.Many2one('hr.contract', string=_("First Contract"), ondelete='set null', tracking=True)
+    _sql_constraints = [
+        ('unique_first_contract_id', 'UNIQUE(first_contract_id)', 'Este contrato ya está asignado a otro postulante.')
+    ]
+
+    first_contract_type_id = fields.Many2one('hr.contract.type', string=_("First Contract Type"))
+    first_contract_signed = fields.Boolean(
+        string=_("Is First Contract Signed?"),
+        compute="_compute_first_contract_signed",
+        store=True
+    )
     first_contract_start = fields.Date(string=_("First Contract Start Date"), tracking=True) 
     first_contract_end = fields.Date(string=_("First Contract End Date"), tracking=True)
+    send_first_contract = fields.Boolean(string=_("Send Contract"))
 
     cost_center_id = fields.Many2one('cost.center', string="Cost Center", tracking=True)
     selected_applicant_approved = fields.Boolean(string=_("Is selected applicant approved?"), tracking=True)
@@ -28,6 +44,53 @@ class Applicant(models.Model):
                                     ('rejected', 'Rejected'),
                                 ], string='Supervision Status', tracking=True)
     supervision_data_sent = fields.Boolean(_("Is supervision data sent?"), tracking=True, default=False) 
+
+    company_id = fields.Many2one('res.company', string='Compañía', default=lambda self: self.env.company)
+    work_type = fields.Selection([
+        ('week_end', 'Fin de Semana'),
+        ('fix_without_mobility', 'Fijo sin Movilidad'),
+        ('fix_with_mobility', 'Fijo con Movilidad'),
+        ],
+        string=_('Condición'))
+
+    parent_id = fields.Many2one('hr.employee', 'Jefe Directo', domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
+    province_or_lima = fields.Selection([
+        ('lima', 'Lima'),
+        ('province', 'Provincia'),
+    ], string=_("Province or Lima"))
+
+    @api.model
+    def _init_data(self):
+        ICP = self.env['ir.config_parameter'].sudo()
+        
+        # Verificar si ya se ejecutó
+        if ICP.get_param('mkt_recruitment.init_data_executed'):
+            return
+        
+        for rec in self.search([]):
+            if rec.selected_applicant_approved and rec.supervision_data_approved == 'approved':
+                employee_first_contract = rec.env['hr.contract'].search([('employee_id', '=', rec.emp_id.id)], order='create_date asc', limit=1)
+                _logger.info(f"\n\n\nINITDATA: {employee_first_contract}\n\n")
+
+                if employee_first_contract and not rec.first_contract_id and (rec.salary_proposed == employee_first_contract.wage) and (rec.first_contract_start == employee_first_contract.date_start) and (rec.first_contract_end == employee_first_contract.date_end):
+                    _logger.info(f"\n\n\nINITDATA: {employee_first_contract.is_sended}-{employee_first_contract.id}-{employee_first_contract.contract_type_id.id}\n\n")
+                    rec.with_context(skip_contract_sync=True).write({
+                        "send_first_contract": employee_first_contract.is_sended or False,
+                        "first_contract_id": employee_first_contract.id or False,
+                        "first_contract_type_id": employee_first_contract.contract_type_id.id or False,
+                    })
+
+        ICP.set_param('mkt_recruitment.init_data_executed', 'True')
+
+    @api.model
+    def _set_province_or_lima_from_partner(self):
+        partners = self.env['res.partner'].search([('belong_applicant_id', '!=', False), ('state_id', '!=', False)])
+
+        for partner in partners:
+            applicant = self.browse(partner.belong_applicant_id.id)
+            applicant.write({
+                'province_or_lima': 'lima' if partner.state_id.name.lower() == 'lima' else 'province'
+            })
 
     def write(self, vals):
         if 'stage_id' in vals:
@@ -56,9 +119,17 @@ class Applicant(models.Model):
                     partner.write({
                         'belong_applicant_id': rec.id
                     })
+
+                    if rec.stage_id.sequence == 2:
+                        if rec.identification_type_id:
+                            partner.write({
+                                'l10n_latam_identification_type_id': rec.identification_type_id.id
+                            })
+
+        if not self.env.context.get('skip_contract_sync'):
+            self._sync_to_contracts()
         
         return res
-
 
     def _message_post_after_hook(self, message, msg_vals):
         if self.email_from and not self.partner_id:
@@ -84,7 +155,6 @@ class Applicant(models.Model):
                     ('stage_id.fold', '=', False)]).write({'partner_id': new_partner.id})
         return super(Applicant, self)._message_post_after_hook(message, msg_vals)
 
-
     @api.depends('stage_id')
     def _compute_auto_employee_and_documents(self):
         for rec in self:
@@ -105,13 +175,18 @@ class Applicant(models.Model):
             rec.create_employee_by_stage()
             rec.access_portal_partner()
 
+    @api.depends("first_contract_id.signed_by")
+    def _compute_first_contract_signed(self):
+        for rec in self:
+            if rec.first_contract_id:
+                contract = rec.first_contract_id
+                rec.first_contract_signed = bool(contract.signed_by) if contract else False
 
     def update_data_partner(self):
         if self.stage_id.update_data:
             applicant_partner = self.env['applicant.partner'].search([('dni','=',self.vat)], order='create_date desc')
             if applicant_partner and applicant_partner.state != 'uploaded':
                 applicant_partner.update_partner()
-
 
     def contact_merge_stage(self):
         if self.stage_id.contact_merge:
@@ -134,7 +209,6 @@ class Applicant(models.Model):
                 })
                 contact_merge.action_merge()
 
-
     def access_portal_partner(self):
         if self.stage_id.access_portal:
             contact = self.env['res.partner'].search([('vat','=',self.vat)], order='create_date desc')
@@ -149,7 +223,7 @@ class Applicant(models.Model):
 
             # Verify if user associated to that contact exist
             user = self.env['res.users'].sudo().with_context(active_test=False).search([('partner_id', '=', contact.id)], limit=1)
-
+            employee = self.env['hr.employee'].sudo().search([('address_home_id', '=', contact.id)], limit=1)
 
             password = str(contact.vat)
             if not user:
@@ -161,20 +235,33 @@ class Applicant(models.Model):
                 })
 
                 user.password = password
+
+                if employee:
+                    employee.write({
+                        'user_id': user.id
+                    })
                 self._send_email_with_credentials(user, contact)
             else:
                 if user.active:
-                    # user.password = password
-                    # self._send_email_with_credentials(user, contact)
-                    # _logger.info(f"User {user.login} already exists and is active.")
-                    pass
+                    user.sudo().write({
+                        'password': password,
+                        'login': self.email_from,
+                    })
+                    self._send_email_with_credentials(user, contact)
+                    _logger.info(f"User {user.login} already exists and is active.")
 
                 else:
-                    user.password = password
-                    user.login = self.email_from
+                    user.sudo().write({
+                        'password': password,
+                        'login': self.email_from,
+                    })
+                    
                     user.sudo().toggle_active()
+                    if employee:
+                        employee.write({
+                            'user_id': user.id
+                        })
                     self._send_email_with_credentials(user, contact)
-
 
     def _send_email_with_credentials(self, user, contact):
 
@@ -208,8 +295,6 @@ class Applicant(models.Model):
             return {'success': True, 'message': _('Email sent successfully.')}
         elif mail.state == 'exception':
             return {'success': False, 'message': _('Error sending email: %s' % mail.failure_reason)}
-
-
 
     def create_employee_by_stage(self):
         employee = False
@@ -260,10 +345,15 @@ class Applicant(models.Model):
 
                 if self.partner_id.is_validate:
                     self.partner_id.write({'is_validate': False})
+                
+                if self.partner_id.document_okay:
+                    self.partner_id.write({'document_okay': False})
+                
+                if self.partner_id.children_okay:
+                    self.partner_id.write({'children_okay': False})
 
 
                 self.is_autoemployee = True
-
 
     def create_first_contract(self):
         employee_contract_history = self.env['hr.contract.history'].search([('employee_id', '=', self.emp_id.id)])
@@ -279,11 +369,10 @@ class Applicant(models.Model):
                 'is_renovation': False,
                 'department_id': self.emp_id.department_id.id,
                 'job_id': self.emp_id.job_id.id,
+                'contract_type_id': self.first_contract_type_id.id or False,
                 }
                 first_contract = self.env['hr.contract'].sudo().create(values)
-                first_contract.write_data() 
                 first_contract._compute_contract_duration()
-
 
     @api.model
     def create(self, vals):
@@ -322,17 +411,21 @@ class Applicant(models.Model):
             
             if record.supervision_data_approved != 'pending':
                 raise UserError(_("You can approve only when the request is pending."))
+            
+            if not record.first_contract_type_id:
+                raise UserError("Debes asignar un tipo de contrato para poder aprobar la solicitud de contrato.") 
 
             record.supervision_data_approved = 'approved'
 
-            if not record.partner_id.requires_compliance_process:
-                current_employee = self.env['hr.employee'].search([('address_home_id.id', '=', record.partner_id.id)], order='create_date desc', limit=1)
-                
-                if current_employee:
-                    current_employee.sudo().write({'cost_center_id': record.cost_center_id.id})
+            current_employee = self.env['hr.employee'].search([('address_home_id.id', '=', record.partner_id.id)], order='create_date desc', limit=1)
+            
+            if current_employee:
+                current_employee.sudo().write({'cost_center_id': record.cost_center_id.id,
+                                                'parent_id': record.parent_id.id})
+                if not record.partner_id.requires_compliance_process:
                     record.create_first_contract()
-                else:
-                    _logger.info(f"\n\n\nNO EMPLOYEE WAS FOUND\n\n\n")
+            else:
+                _logger.info(f"\n\n\nNO EMPLOYEE WAS FOUND\n\n\n")
 
     def action_correct_supervision_data(self):
         for record in self:
@@ -349,7 +442,7 @@ class Applicant(models.Model):
         for record in self:
             
             if int(record.stage_id) != 4:
-                raise UserError(_("You can approve only applicants in Contract Proposal."))
+                raise UserError(_("You can reject only applicants in Contract Proposal."))
 
             if record.supervision_data_approved != 'pending':
                 raise UserError(_("You can reject only when the request is pending."))
@@ -365,12 +458,11 @@ class Applicant(models.Model):
             if record.supervision_data_approved != 'approved':
                 raise UserError(_("You can restore only when the request is approved."))
 
-            record.supervision_data_approved = 'pending'
-
             current_employee = self.env['hr.employee'].search([('address_home_id.id', '=', record.partner_id.id)], order='create_date desc', limit=1)
             
             if current_employee:
-                current_employee.sudo().write({'cost_center_id': False})
+                current_employee.sudo().write({'cost_center_id': False,
+                                               'parent_id': False})
 
                 employee_contract_history = self.env['hr.contract.history'].search([('employee_id', '=', record.emp_id.id)])
 
@@ -383,3 +475,70 @@ class Applicant(models.Model):
                             raise UserError(_("It is not possible to restore the request because the first contract has been signed."))
             else:
                 _logger.info(f"\n\n\nNO EMPLOYEE WAS FOUND\n\n\n")
+
+            # Reset first contract data
+            record.with_context(skip_contract_sync=True).write({
+                "send_first_contract": False,
+                "first_contract_id": False,
+                # "first_contract_type_id": False,
+                "supervision_data_approved": 'pending'
+            })
+
+    def action_applicant_data_wizard(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Datos del Postulante',
+            'res_model': 'applicant.data.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'active_ids': self.ids}
+        }
+    
+    def action_open_first_contract(self):
+        self.ensure_one()
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Contrato',
+            'res_model': 'hr.contract',
+            'res_id': self.first_contract_id.id,
+            'view_mode': 'form',
+            'view_type': 'form',
+            'target': 'current',
+        }
+    
+    def action_send_unsend_first_contract(self):
+        for rec in self:
+            if rec.first_contract_id and rec.supervision_data_approved == 'approved':
+                rec.send_first_contract = not rec.send_first_contract
+            else:
+                raise UserError(_("You can only send/unsend the contract when the supervision data is approved and the first contract is created."))
+            
+    def action_print_first_contract(self):
+        valid_contracts = []
+        for rec in self:
+            if not rec.first_contract_id:
+                raise UserError(_("Contract not found. Please create it first."))
+            valid_contracts.append(rec.first_contract_id.id)
+
+        return self.env['hr.contract'].browse(valid_contracts).action_print_contract_report()
+
+    def unlink(self):
+        for rec in self:
+            if rec.stage_id.sequence > 1:
+                raise UserError(_("You can only delete applicants in the initial stage. Try archive them instead."))
+
+        return super().unlink()
+
+    def _sync_to_contracts(self):
+        for rec in self:
+            contract = rec.first_contract_id
+            if contract:
+                contract.with_context(skip_applicant_sync=True).write({
+                    "contract_type_id": rec.first_contract_type_id.id or False,
+                    "is_sended": rec.send_first_contract or False,
+                })
+            else:
+                rec.with_context(skip_contract_sync=True).write({
+                    'send_first_contract': False
+                })

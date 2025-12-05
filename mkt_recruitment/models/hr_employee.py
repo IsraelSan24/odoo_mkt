@@ -24,13 +24,13 @@ class HrEmployeePrivate(models.Model):
         ondelete='set null'
     )
 
-    @api.onchange('address_home_id','cost_center_id')
+    @api.onchange('address_home_id')
     def identification_id_onchange(self):
         for rec in self:
             if rec.address_home_id:
                 if rec.address_home_id.vat:
                     rec.identification_id = rec.address_home_id.vat
-                    rec.user_id = rec.env['res.users'].sudo().search([('partner_id', '=', rec.address_home_id.id)], limit=1)
+                    rec.user_id = rec.env['res.users'].sudo().search([('partner_id', '=', rec.address_home_id.id)], limit=1, order='create_date desc')
                 if rec.address_home_id.city_id:
                     if rec.address_home_id.city_id.name == 'Lima':
                         rec.is_province = False
@@ -41,6 +41,16 @@ class HrEmployeePrivate(models.Model):
                 rec.address_home_id = rec.env['res.partner'].sudo().search([('id', '=', rec.user_id.partner_id.id)], limit=1)
                 rec.identification_id = rec.address_home_id.vat
 
+    @api.model
+    def _get_identification_id(self):
+        for rec in self:
+            if rec.active and not rec.identification_id:
+                print("NOT IDENTIFICATION ID")
+                if rec.address_home_id and rec.address_home_id.vat:
+                    rec.identification_id = rec.address_home_id.vat
+                elif rec.user_id:
+                    rec.address_home_id = rec.env['res.partner'].sudo().search([('id', '=', rec.user_id.partner_id.id)], limit=1)
+                    rec.identification_id = rec.address_home_id.vat
 
     def name_get(self):
         result = []

@@ -1,6 +1,6 @@
 from odoo import _, api, fields, models
 from datetime import datetime
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from odoo.tools.float_utils import float_compare, float_is_zero
 from odoo.addons.mkt_documental_managment.models.api_dni import apiperu_dni
 from odoo.addons.mkt_documental_managment.models.api_ruc import apiperu_ruc
@@ -37,6 +37,8 @@ document_currencies = [
         ('dolares', 'Dolares'),
         ('euros', 'Euros')
     ]
+
+PATT_SERIE_NUM = re.compile(r'^([FE][A-Z0-9]{3})-(\d{1,8})$')
 
 def get_default_tax(self):
     return self.env['tax.taxes'].search([('name','=','IGV(18%)')]).id
@@ -122,7 +124,7 @@ class Settlement(models.Model):
     settle_amount_sum = fields.Float(compute='_compute_settle_amount_sum', store=True)
     vendor_sum = fields.Float(compute='_compute_vendor_sum', store=True)
     cost_center_id = fields.Many2one('cost.center', string='CC Number', related='requirement_id.cost_center_id', store=True, readonly=True, copy=False)
-
+    ignore_amount_from = fields.Boolean(default=False, string='Ignore "amount from" for retention and detraction calculation')
 
     @api.onchange('mobility_id')
     def _onchange_mobility_id(self):
@@ -431,32 +433,51 @@ class Settlement(models.Model):
     #             line.validation_voucher()
 
 
+    @api.constrains('document', 'document_type_id')
+    def _check_ft_document_format(self):
+        for rec in self:
+            if getattr(rec.document_type_id, 'short_name', '') == 'FT':
+                doc = (rec.document or '').strip().upper()
+                if not PATT_SERIE_NUM.match(doc):
+                    raise ValidationError(
+                        _("Para Factura (CPE 01) usa F/E + 3 alfanuméricos y número: "
+                          "FXXX-######## (p.ej. F0A1-12345678).")
+                    )
+                
+
     def validation_voucher(self):
         for rec in self:
-            if rec.document_type_id.short_name == 'FT':
-                cpe_data = apiperu_cpe(
-                    rec.dni_ruc, 
-                    '01', 
-                    (rec.document.split('-')[0]).upper(), 
-                    rec.document.split('-')[1].lstrip('0'), 
-                    rec.date.strftime("%Y-%m-%d"), 
-                    rec.settle_amount
-                )
-                if cpe_data and cpe_data.get('data'):
-                    cpe_data_detail = cpe_data['data']
-                    if cpe_data_detail and 'comprobante_estado_codigo' in cpe_data_detail:
-                        if cpe_data_detail['comprobante_estado_codigo'] == '1':
-                            rec.cpe_state = 'accepted'
-                        else:
-                            rec.cpe_state = 'non_existent'
+            if getattr(rec.document_type_id, 'short_name', '') == 'FT':
+                doc = (rec.document or '').strip().upper()
+                m = PATT_SERIE_NUM.match(doc)
+                if not m:
+                    raise UserError(
+                        _("Formato inválido para Factura. Usa F/E + 3 alfanuméricos y número: "
+                          "FXXX-######## (p.ej. F0A1-12345678).")
+                    )
 
-                        # Asignar el estado de la empresa como texto
-                        if 'empresa_estado_descripcion' in cpe_data_detail:
-                            rec.cpe_company_state = cpe_data_detail['empresa_estado_descripcion']
-                            _logger.info("Empresa estado: %s", cpe_data_detail.get('empresa_estado_descripcion'))  # <- aquí sí es seguro
-                    else:
-                        rec.cpe_state = 'failed'
-                        rec.cpe_company_state = 'Desconocido'
+                serie, numero = m.group(1), m.group(2)
+                numero_sin_ceros = numero.lstrip('0') or '0'
+                fecha = rec.date.strftime("%Y-%m-%d") if rec.date else ""
+                if not fecha:
+                    raise UserError(_("La factura no tiene fecha definida."))
+
+                try:
+                    cpe_data = apiperu_cpe(
+                        rec.dni_ruc, '01', serie, numero_sin_ceros, fecha, rec.settle_amount,
+                    )
+                except Exception as e:
+                    _logger.exception("Error invocando apiperu_cpe: %s", e)
+                    rec.cpe_state = 'failed'
+                    rec.cpe_company_state = 'Desconocido'
+                    raise UserError(_("No se pudo validar el CPE por un error de conexión. Inténtalo nuevamente."))
+
+                if cpe_data and cpe_data.get('data'):
+                    detail = cpe_data['data']
+                    code = detail.get('comprobante_estado_codigo')
+                    rec.cpe_state = 'accepted' if code == '1' else 'non_existent'
+                    rec.cpe_company_state = detail.get('empresa_estado_descripcion', 'Desconocido')
+                    _logger.info("Empresa estado: %s", detail.get('empresa_estado_descripcion'))
                 else:
                     rec.cpe_state = 'failed'
                     rec.cpe_company_state = 'Desconocido'
@@ -757,7 +778,7 @@ class Settlement(models.Model):
     #             rec.vendor = 0
 
 
-    @api.depends('currency_id', 'service_type_id', 'settle_amount', 'alternative_amount', 'differentiated_payment', 'date')  # Quitar settle_amount_sum
+    @api.depends('currency_id', 'service_type_id', 'settle_amount', 'alternative_amount', 'differentiated_payment', 'date', 'ignore_amount_from')  # Quitar settle_amount_sum
     def _compute_amounts(self):
         # Optimización: Una sola query para todas las fechas
         dates = list(set(rec.date for rec in self if rec.date))
@@ -781,7 +802,7 @@ class Settlement(models.Model):
             
             effective_amount = rec.alternative_amount if (rec.alternative_amount and rec.differentiated_payment) else base_amount
             
-            if base_amount * change_type > rec.service_type_id.amount_from:
+            if (base_amount * change_type > rec.service_type_id.amount_from) or rec.ignore_amount_from:
                 if rec.service_type_id.detraction:
                     rec.vendor = effective_amount - round((effective_amount * rec.service_type_id.percentage) / 100, 0)
                     rec.detraction = round((effective_amount * rec.service_type_id.percentage) / 100, 0)

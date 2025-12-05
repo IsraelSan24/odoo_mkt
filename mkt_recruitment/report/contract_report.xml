@@ -7931,11 +7931,11 @@
                 </t>
             </div>
             
-            <t t-if="o.state == 'signed'">
+            <t t-if="o.state in ('signed', 'open', 'close')">
                 <div class="footer" >
                     <div class="d-flex flex-row">
                         <div class="text-start">
-                            <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'documentsearch' + '&amp;width=70'" style="width:70px; height:70px; object-fit:contain;"/>
+                            <img t-att-src="'/report/barcode/?type=QR&amp;value=' + request.httprequest.host_url + 'contracteconsult/search' + '&amp;width=70'" style="width:70px; height:70px; object-fit:contain;"/>
                         </div>
                         <div style="margin-left:10px;font-size:0.400rem;">
                             <div>Contract: <span t-esc="o.name"/></div>
@@ -7965,5 +7965,15 @@
             </t>
         </t>
     </template>
+
+    <!-- <record id="action_print_contract_custom_server" model="ir.actions.server">
+        <field name="name">Imprimir Contrato PDF</field>
+        <field name="model_id" ref="model_hr_contract"/>
+        <field name="binding_model_id" ref="model_hr_contract"/>
+        <field name="state">code</field>
+        <field name="code">
+action = records.action_print_contract_report()
+        </field>
+    </record> -->
 
 </odoo>

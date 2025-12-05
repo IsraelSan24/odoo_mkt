@@ -463,11 +463,10 @@ class PortalCompliance(portal.CustomerPortal):
                     current_employee = request.env['hr.employee'].sudo().search([('address_home_id.id', '=', partner.id)], order='create_date desc', limit=1)
                     
                     if current_employee:
-                        current_employee.sudo().write({'cost_center_id': applicant.cost_center_id.id})
+                        # current_employee.sudo().write({'cost_center_id': applicant.cost_center_id.id,
+                        #                                'parent_id': applicant.parent_id.id})
 
-                    _logger.info(f"\n\n\nEND COMPLIANCE: APPLICANT FOUND TO CREATE FIRST_CONTRACT\n\n\n")
-                    applicant.sudo().create_first_contract()
-                    _logger.info(f"\n\n\nEND COMPLIANCE: FIRST CONTRACT CREATED\n\n\n")
+                        applicant.sudo().create_first_contract()
                 return request.redirect('/my/home')
             
         values = {'step': step, 'error': {}, 'error_message': [], 'compliance_process': partner.requires_compliance_process, "action_url": f"/portal/compliance/step/{step}"}
@@ -490,7 +489,7 @@ class PortalCompliance(portal.CustomerPortal):
             districts = request.env['l10n_pe.res.city.district'].sudo().search([])
             nationalities = request.env['res.country'].sudo().search([('demonym','!=',False)])
             identifications = request.env['l10n_latam.identification.type'].sudo().search([
-                ('name', 'in', ('DNI', 'PTP', 'Pasaporte', 'Cédula Extranjera', 'Carnet de Extranjeria'))
+                ('l10n_pe_vat_code', 'in', ('1', '4', '7', 'F'))
             ])
 
             values.update({
@@ -733,6 +732,10 @@ class PortalCompliance(portal.CustomerPortal):
         # pdf_contract = request.env.ref('mkt_recruitment.report_contract_action').with_user(SUPERUSER_ID)._render_qweb_pdf([first_contract.id])[0]
 
         query_string = '&message=sign_ok'
+
+        partner.write({'document_okay': True,
+                       'is_validate': True,
+                       'children_okay': True})
 
         return {
             'force_refresh': True,

@@ -1,11 +1,14 @@
 import base64
 import binascii
 from odoo import _, fields, http, SUPERUSER_ID
-from odoo.exceptions import AccessError, MissingError
+from odoo.exceptions import AccessError, MissingError, ValidationError
 from odoo.http import request
 from odoo.addons.portal.controllers import portal
 from odoo.addons.portal.controllers.portal import pager as portal_pager
 from .portal_compliance import require_portal_checks
+
+import logging
+_logger = logging.getLogger(__name__)
 
 # class ApplicantPartner(http.Controller):
     
@@ -53,24 +56,21 @@ from .portal_compliance import require_portal_checks
 class RecruitmentPortal(portal.CustomerPortal):
 
     portal.CustomerPortal.MANDATORY_BILLING_FIELDS.remove("city")
+    portal.CustomerPortal.MANDATORY_BILLING_FIELDS.remove("email")
+    portal.CustomerPortal.MANDATORY_BILLING_FIELDS.remove("country_id")
     MANDATORY_BILLING_FIELDS = portal.CustomerPortal.MANDATORY_BILLING_FIELDS + [
         "personal_email",
-        "emergency_phone",
-        "reference_location",
-        "emergency_contact",
-        "emergency_contact_relationship",
-        "l10n_pe_district",
-        "vat",
-        "gender",
-        "education_level",
-        "education_start_date",
-        "education_end_date",
-        "institution",
-        "profession",
         "birthday",
+        "gender",
+        "vat",
         "marital",
-        "children",
+        
+        "state_id",
         "city_id",
+        "l10n_pe_district",
+        "reference_location",
+
+        "education_level",
         ]
 
     OPTIONAL_BILLING_FIELDS = portal.CustomerPortal.OPTIONAL_BILLING_FIELDS + [
@@ -120,6 +120,12 @@ class RecruitmentPortal(portal.CustomerPortal):
         if 'document_count' in counters:
             values['document_count'] = RecruitmentDocument.search_count(self._prepare_documents_domain(partner)) \
                 if RecruitmentDocument.check_access_rights('read', raise_exception=False) else 0
+        if 'trecord_count' in counters:
+            partner = request.env.user.partner_id
+            values['trecord_count'] = request.env['t.record'].sudo().search_count([
+                ('partner_id', '=', partner.id),
+                ('state', '!=', 'draft'),
+            ])
         return values
 
 
@@ -169,21 +175,24 @@ class RecruitmentPortal(portal.CustomerPortal):
         })
 
         if post and request.httprequest.method == 'POST':
-            # 🟢 Evitar errores con checkboxes (que no se mandan si no están marcados)
-            for field in [
-                'private_pension_system', 'national_pension_system',
-                'coming_from_onp', 'coming_from_afp', 'afp_first_job'
-            ]:
-                post[field] = post.get(field, False)
+            # Evitar errores con checkboxes (que no se mandan si no están marcados)
+            if not 'ommit_validation_pension_system_checkboxes' in post:
+                _logger.info("OMMIT VALIDATION PENSION SYSTEM CHECKBOXES")
+                for field in [
+                    'private_pension_system', 'national_pension_system',
+                    'coming_from_onp', 'coming_from_afp', 'afp_first_job'
+                ]:
+                    post[field] = post.get(field, False)
 
-            # 🔍 Obtener campos válidos desde el modelo res.partner
+            # Obtener campos válidos desde el modelo res.partner
             partner_fields = request.env['res.partner'].sudo().fields_get()
             valid_keys = list(partner_fields.keys())
 
-            # 🟡 Filtramos post para evitar errores por campos inexistentes
+            _logger.info(post)
+            # Filtramos post para evitar errores por campos inexistentes
             safe_post = {k: v for k, v in post.items() if k in valid_keys}
 
-            # 🟢 Convertir a int los IDs si existen
+            # Convertir a int los IDs si existen
             for field in ['country_id', 'state_id']:
                 if field in safe_post:
                     try:
@@ -191,33 +200,67 @@ class RecruitmentPortal(portal.CustomerPortal):
                     except Exception:
                         safe_post[field] = False
 
-            # 🟢 Ajuste si usas "zipcode"
-            if 'zipcode' in safe_post:
-                safe_post['zip'] = safe_post.pop('zipcode')
+            # Validación opcional solo para campos reales
+            # error, error_message = {}, []
+            # for field_name in self.MANDATORY_BILLING_FIELDS:
+            #     if field_name in valid_keys and not post.get(field_name):
+            #         error[field_name] = 'missing'
 
-            # 🟢 Validación opcional solo para campos reales
-            error, error_message = {}, []
-            for field_name in self.MANDATORY_BILLING_FIELDS:
-                if field_name in valid_keys and not post.get(field_name):
-                    error[field_name] = 'missing'
+            # LISTA DE TUS CAMPOS DE TIPO FILE
+            file_fields = [
+                'child_dnifile1', 'child_dnifile1_back', 
+                'child_dnifile2', 'child_dnifile2_back',
+                'child_dnifile3', 'child_dnifile3_back',
+                'child_dnifile4', 'child_dnifile4_back',
+                'child_dnifile5', 'child_dnifile5_back',
+                'child_dnifile6', 'child_dnifile6_back'
+            ]
 
-            values.update({'error': error, 'error_message': error_message})
-            values.update(post)
+            for field_name in file_fields:
+                # Verificar si el campo vino en el POST
+                if field_name in safe_post:
+                    file_stream = safe_post[field_name]
+                    
+                    # Verificar si es un objeto FileStorage (archivo subido) y si tiene contenido
+                    if hasattr(file_stream, 'read'):
+                        # Leer el archivo y convertirlo a base64
+                        file_content = file_stream.read()
+                        
+                        if file_content:
+                            # Si hay contenido, codificamos a base64
+                            encoded_file = base64.b64encode(file_content)
+                            safe_post[field_name] = encoded_file
+                            
+                            # Opcional: Si tienes campos para guardar el nombre del archivo
+                            # safe_post[field_name + '_name'] = file_stream.filename
+                        else:
+                            # Si el archivo está vacío (ej. el usuario no subió nada nuevo),
+                            # eliminamos la clave para no sobrescribir lo existente con vacío
+                            # OJO: Si quieres permitir borrar, la lógica es distinta.
+                            safe_post.pop(field_name)
+                    else:
+                        # Si no es un archivo (ej. es un string vacío), lo quitamos para no dar error
+                        if not safe_post[field_name]:
+                            safe_post.pop(field_name)
 
-            if not error:
-                safe_post['is_validate'] = True
-                partner.sudo().write(safe_post)
-                partner.sudo()._onchange_age()
 
-                return request.redirect(redirect or '/my/documents')
+            # values.update({'error': error, 'error_message': error_message})
+            values.update(safe_post)
+            # if not error:
+            safe_post['is_validate'] = True
+            partner.sudo().write(safe_post)
+            partner.sudo()._onchange_age()
+
+            return request.redirect(redirect or '/my/home')
 
         # 🔁 Datos auxiliares para renderizar la página
+        _logger.info(request.env['res.country.state'].sudo().search([('country_id.code','=','PE')]))
         values.update({
             'partner': partner,
-            'countries': request.env['res.country'].sudo().search([]),
+            'countries': request.env['res.country'].sudo().search([('code','=','PE')]),
             'districts': request.env['l10n_pe.res.city.district'].sudo().search([]),
-            'states': request.env['res.country.state'].sudo().search([]),
-            'cities': request.env['res.city'].sudo().search([]),
+            'states': request.env['res.country.state'].sudo().search([('country_id.code','=','PE')]),
+            'cities': request.env['res.city'].sudo().search([('country_id.code','=','PE')]),
             'genders': partner.gender,
             'education_levels': partner.education_level,
             'emergency_contact_relationships': partner.emergency_contact_relationship,
@@ -542,10 +585,7 @@ class RecruitmentPortal(portal.CustomerPortal):
             request.env.cr.commit()
         except (TypeError, binascii.Error) as e:
             return {'error': _('Invalid data.')}
-
-        pdf = request.env.ref('mkt_recruitment.report_contract_action').with_user(SUPERUSER_ID)._render_qweb_pdf([contract_sudo.id])[0]
-
-        query_string = '&message=sign_ok'
+        
         return {
             'force_refresh': True,
             'redirect_url': '/my/contracts',
@@ -651,3 +691,179 @@ class RecruitmentPortal(portal.CustomerPortal):
             'force_refresh': True,
             'redirect_url': '/my/documents',
         }
+
+    @http.route(['/my/trecord', '/my/trecord/page/<int:page>'], type='http', auth='user', website=True)
+    def portal_my_trecords(self, page=1, sortby=None, **kw):
+        values = self._prepare_portal_layout_values()
+        partner = request.env.user.partner_id
+
+        domain = [('partner_id', '=', partner.id), ('state', '!=', 'draft')]
+        TRecord = request.env['t.record'].sudo()
+        total = TRecord.search_count(domain)
+
+        pager = portal_pager(
+            url="/my/trecord",
+            total=total,
+            page=page,
+            step=20
+        )
+        trecords = TRecord.search(domain, limit=20, offset=pager['offset'], order='id desc')
+
+        values.update({
+            'trecords': trecords,
+            'page_name': 'trecord',   # <- Para breadcrumbs del XML
+            'pager': pager,
+        })
+        return request.render('mkt_recruitment.portal_my_trecords', values)
+
+    @http.route(['/my/trecord/<int:record_id>'], type='http', auth='public', website=True)
+    def portal_trecord_page(self, record_id=None, access_token=None, report_type=None, download=False, **kw):
+        rec = request.env['t.record'].sudo().browse(record_id)
+        if not rec.exists():
+            return request.not_found()
+        if not rec.access_token:
+            rec._compute_access_url()
+
+        # Permisos: dueño o con access_token
+        allowed = False
+        user = request.env.user
+        if user and not user._is_public():
+            allowed = (rec.partner_id == user.partner_id)
+        if access_token and access_token == rec.access_token:
+            allowed = True
+        if not allowed:
+            return request.redirect('/my')
+
+        # Nombre corto para la firma (se usa en el template)
+        partner = request.env.user.partner_id
+        try:
+            sig_name = partner._get_signature_name() if callable(getattr(partner, '_get_signature_name', None)) else partner.name
+        except Exception:
+            sig_name = partner.name
+
+        # Si piden el PDF directo
+        if report_type == 'pdf':
+            if not rec.t_record:
+                return request.not_found()
+            pdf_bytes = base64.b64decode(rec.t_record)
+            headers = [('Content-Type', 'application/pdf'), ('Content-Length', str(len(pdf_bytes)))]
+            if download:
+                filename = (rec.t_record_filename or 'T-record.pdf').replace(' ', '_')
+                headers.append(('Content-Disposition', f'attachment; filename="{filename}"'))
+            return request.make_response(pdf_bytes, headers)
+
+        # Render de la página (usa el template que hereda portal.portal_sidebar)
+        values = {
+            'trecord_document': rec,
+            'report_type': report_type or 'html',
+            'message': kw.get('message'),
+            'page_name': 'trecord',            # <- IMPORTANTE: coincide con el XML
+            'signature_short_name': sig_name,  # <- lo usa el signature_form por defecto
+        }
+        return request.render('mkt_recruitment.trecord_document_portal_template', values)
+
+    @http.route('/my/trecord/<int:record_id>/request_code', type='json', auth='user', website=True)
+    def trecord_request_code(self, record_id, method='email', **kw):
+        rec = request.env['t.record'].sudo().browse(record_id)
+        _logger.info("trecord_request_code record_id:%s method:%s user:%s", record_id, method, request.env.user.id)
+        if not rec or rec.partner_id != request.env.user.partner_id:
+            _logger.warning("request_code denied: rec:%s partner_mismatch", rec and rec.id)
+            return {'error': _('Not allowed.')}
+        try:
+            if method == 'sms':
+                res = rec.send_sms_to_validate_trecord()
+            else:
+                res = rec.send_email_to_validate_trecord()
+            request.env.cr.commit()
+            _logger.info("request_code result record_id:%s -> %s", record_id, res)
+            return res or {'success': True}
+        except ValidationError as e:
+            _logger.warning("request_code ValidationError record_id:%s -> %s", record_id, e)
+            return {'error': e.name or str(e)}
+        except Exception as e:
+            _logger.exception("request_code Exception record_id:%s", record_id)
+            request.env['ir.logging'].sudo().create({
+                'name': 'trecord_request_code',
+                'type': 'server',
+                'level': 'ERROR',
+                'dbname': request.db,
+                'message': f'Error request_code: {e}',
+                'path': 'mkt_recruitment.controllers',
+                'line': '0',
+                'func': 'trecord_request_code',
+            })
+            return {'error': _('Error sending code.')}
+
+    @http.route('/my/trecord/<int:record_id>/sign', type='json', auth='user', website=True)
+    def trecord_portal_sign(self, record_id, access_token=None, name=None, signature=None, digits=None):
+        access_token = access_token or request.httprequest.args.get('access_token')
+        rec = request.env['t.record'].sudo().browse(record_id)
+        _logger.info("trecord_portal_sign record_id:%s user:%s name:%s sig_len:%s digits:%s",
+                     record_id, request.env.user.id, name, len(signature or '') if signature else 0, digits)
+
+        if not rec.exists():
+            _logger.warning("trecord_portal_sign invalid document id:%s", record_id)
+            return {'error': _('Invalid document.')}
+
+        allowed = (not request.env.user._is_public() and rec.partner_id == request.env.user.partner_id)
+        if access_token and access_token == rec.access_token:
+            allowed = True
+        if not allowed:
+            _logger.warning("trecord_portal_sign access denied id:%s", record_id)
+            return {'error': _('Access denied.')}
+
+        if not signature or not digits:
+            _logger.warning("trecord_portal_sign missing signature/digits id:%s", record_id)
+            return {'error': _('Signature and code are required.')}
+
+        # Normaliza firma si viene como dataURL
+        try:
+            if isinstance(signature, str) and signature.startswith('data:image'):
+                header, b64data = signature.split(',', 1)
+                _logger.info("trecord_portal_sign signature header:%s ... stripped", header[:32])
+                signature = b64data
+        except Exception:
+            _logger.exception("trecord_portal_sign error stripping signature header")
+            return {'error': _('Invalid signature data.')}
+
+        try:
+            rec.action_portal_sign_and_stamp(name, signature, ''.join(str(d) for d in str(digits))[:4])
+            request.env.cr.commit()
+            _logger.info("trecord_portal_sign success id:%s", record_id)
+        except ValidationError as e:
+            _logger.warning("trecord_portal_sign ValidationError id:%s -> %s", record_id, e)
+            return {'error': e.name or str(e)}
+        except Exception:
+            _logger.exception("trecord_portal_sign Exception id:%s", record_id)
+            return {'error': _('Error processing signature.')}
+
+        # return {'force_refresh': True, 'redirect_url': '/my/trecord'}
+        return {'force_refresh': True}
+
+    @http.route('/trecord/verify/<string:token>', type='http', auth='public', website=True, sitemap=False)
+    def trecord_public_pdf(self, token=None, download=False, **kw):
+        """Entrega el PDF de T-Record por access_token, sin login."""
+        if not token:
+            return request.not_found()
+
+        rec = request.env['t.record'].sudo().search([('access_token', '=', token)], limit=1)
+        if not rec or not rec.t_record:
+            _logger.warning("trecord_public_pdf token not found or empty pdf: %s", token)
+            return request.not_found()
+
+        # Opcional: bloquear si está en draft
+        if rec.state == 'draft':
+            _logger.warning("trecord_public_pdf draft state blocked: %s", rec.id)
+            return request.not_found()
+
+        pdf_bytes = base64.b64decode(rec.t_record)
+        headers = [
+            ('Content-Type', 'application/pdf'),
+            ('Content-Length', str(len(pdf_bytes))),
+        ]
+        if download:
+            filename = (rec.t_record_filename or 'T-record.pdf').replace(' ', '_')
+            headers.append(('Content-Disposition', f'attachment; filename="{filename}"'))
+
+        _logger.info("trecord_public_pdf ok id:%s token:%s", rec.id, token[:8] + '...')
+        return request.make_response(pdf_bytes, headers)

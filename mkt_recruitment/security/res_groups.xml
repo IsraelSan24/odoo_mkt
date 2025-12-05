@@ -17,4 +17,17 @@
         <field name="category_id" ref="base.module_category_human_resources_employees"/>
     </record>
 
+    <record id="group_province_recruiter" model="res.groups">
+        <field name="name">Province Recruiter</field>
+        <field name="category_id" ref="mkt_recruitment.category_personnel_selection"/>
+        <field name="implied_ids" eval="[(4, ref('hr.group_hr_user'))]"/>
+    </record>
+
+    <record id="group_lima_recruiter" model="res.groups">
+        <field name="name">Lima Recruiter</field>
+        <field name="category_id" ref="mkt_recruitment.category_personnel_selection"/>
+        <field name="implied_ids" eval="[(4, ref('hr.group_hr_user'))]"/>
+    </record>
+
+
 </odoo>

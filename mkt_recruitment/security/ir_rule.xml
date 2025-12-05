@@ -27,26 +27,70 @@
         <field name="model_id" ref="hr.model_hr_job"/>
         <field name="domain_force">
             [
-                '|',
                 ('department_id', 'in', user.get_recruiter_departments()),
-                ('department_id', '=', False)
             ]
         </field>
-        <field name="groups" eval="[4, ref('group_user_hr')]"/>
+        <field name="groups" eval="[4, ref('hr.group_hr_user')]"/>
     </record>
 
+    <record id="rule_jobs_employees_admin" model="ir.rule">
+        <field name="name">Jobs for Employees Admin</field>
+        <field name="model_id" ref="hr.model_hr_job"/>
+        <field name="domain_force">
+            [(1, '=', 1)]
+        </field>
+        <field name="groups" eval="[4, ref('hr.group_hr_manager')]"/>
+    </record>
+
+    <!-- HR APPLICANT -->
+<!-- 
     <record id="rule_recruiter_team_applicant" model="ir.rule">
         <field name="name">Recruiter Team</field>
         <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
         <field name="domain_force">
-            [
-                '|',
+            [   
                 ('department_id', 'in', user.get_recruiter_departments()),
-                ('department_id', '=', False)
             ]
         </field>
-        <field name="groups" eval="[4, ref('group_user_hr')]"/>
+        <field name="groups" eval="[4, ref('hr.group_hr_user')]"/>
+    </record> -->
+
+    <record id="rule_applicant_employees_admin" model="ir.rule">
+        <field name="name">Recruitment for Employees Admin</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="domain_force">
+            [(1, '=', 1)]
+        </field>
+        <field name="groups" eval="[4, ref('hr.group_hr_manager')]"/>
     </record>
+
+    <record id="rule_recruiter_province" model="ir.rule">
+        <field name="name">Province Recruiter</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="domain_force">
+            [
+                '&amp;',
+                ('department_id', 'in', user.get_recruiter_departments()),
+                ('province_or_lima', 'in', ('province', False)),
+            ]
+        </field>
+        <field name="groups" eval="[4, ref('mkt_recruitment.group_province_recruiter')]"/>
+    </record>
+
+    <record id="rule_recruiter_lima" model="ir.rule">
+        <field name="name">Lima Recruiter</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="domain_force">
+            [
+                '&amp;',
+                ('department_id', 'in', user.get_recruiter_departments()),
+                ('province_or_lima', 'in', ('lima', False)),
+            ]
+        </field>
+        <field name="groups" eval="[4, ref('mkt_recruitment.group_lima_recruiter')]"/>
+    </record>
+
+
 
 
 </odoo>
