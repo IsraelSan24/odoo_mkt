@@ -128,6 +128,8 @@
                             <field name="income_tax_id" attrs="{'invisible':[('income_tax','=',False)]}"
                                 groups="mkt_documental_managment.documental_requirement_intern_control,mkt_documental_managment.documental_requirement_accounting"
                                 options="{'no_create': '1', 'no_edit': '1', 'no_open': '1'}"/>
+                            <field name="ignore_amount_from" widget="boolean_toggle"
+                                groups="mkt_documental_managment.documental_requirement_intern_control"/>
                         </group>
                     </group>
                 </sheet>
