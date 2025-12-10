@@ -51,6 +51,7 @@
           </xpath>
           <xpath expr="//field[@name='department_id']" position="after">
               <field name="cost_center_id" 
+                     options="{'no_create_edit': True}"
                      groups="mkt_supervision.group_supervision_hiring_approver" 
                      attrs="{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
           </xpath>
