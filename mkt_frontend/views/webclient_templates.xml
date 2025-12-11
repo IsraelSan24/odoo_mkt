@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="mkt_custom_login" name="MKT Login Custom" inherit_id="web.login">
+        
+        <!-- Agregar header personalizado antes del formulario -->
+        <xpath expr="//form[hasclass('oe_login_form')]" position="before">
+            <div class="mkt-login-header">
+                <div class="mkt-logo-circle">
+                    <i class="fa fa-user-circle-o fa-3x"></i>
+                </div>
+                <h1 class="mkt-brand-title">Bienvenido</h1>
+                <p class="mkt-brand-subtitle">Marketing Alterno Peru</p>
+            </div>
+        </xpath>
+        
+        <!-- Agregar clase al formulario -->
+        <xpath expr="//form[hasclass('oe_login_form')]" position="attributes">
+            <attribute name="class" add="mkt-login-form" separator=" "/>
+        </xpath>
+        
+        <!-- Modificar input de login/email -->
+        <xpath expr="//input[@id='login']" position="attributes">
+            <attribute name="class" add="mkt-input" separator=" "/>
+            <attribute name="placeholder">tu@email.com</attribute>
+        </xpath>
+        
+        <!-- Modificar input de password -->
+        <xpath expr="//input[@id='password']" position="attributes">
+            <attribute name="class" add="mkt-input" separator=" "/>
+            <attribute name="placeholder">Contraseña</attribute>
+        </xpath>
+        
+        <!-- Modificar botón de login -->
+        <xpath expr="//button[@type='submit']" position="attributes">
+            <attribute name="class">btn btn-primary btn-block mkt-btn-login</attribute>
+        </xpath>
+        
+    </template>
+
+    <!-- Template para Reset Password - Heredando de auth_signup -->
+    <template id="mkt_reset_password" name="MKT Reset Password" inherit_id="auth_signup.reset_password">
+        
+        <!-- Agregar header personalizado antes del formulario -->
+        <xpath expr="//form[hasclass('oe_reset_password_form')]" position="before">
+            <div class="mkt-login-header">
+                <div class="mkt-logo-circle mkt-logo-reset">
+                    <i class="fa fa-key fa-3x"></i>
+                </div>
+                <h1 class="mkt-brand-title">Recuperar Contraseña</h1>
+                <p class="mkt-brand-subtitle">Marketing Alterno Peru</p>
+            </div>
+        </xpath>
+        
+        <!-- Agregar clases al formulario -->
+        <xpath expr="//form[hasclass('oe_reset_password_form')]" position="attributes">
+            <attribute name="class" add="mkt-login-form mkt-reset-form" separator=" "/>
+        </xpath>
+        
+        <!-- Modificar el div contenedor del input de login -->
+        <xpath expr="//div[hasclass('field-login')]" position="attributes">
+            <attribute name="class" add="mkt-field-login" separator=" "/>
+        </xpath>
+        
+        <!-- Modificar label del input de login -->
+        <xpath expr="//label[@for='login']" position="replace">
+            <label for="login" class="mkt-label">
+                <i class="fa fa-envelope"></i> Tu correo electrónico
+            </label>
+        </xpath>
+        
+        <!-- Modificar input de login/email -->
+        <xpath expr="//input[@name='login']" position="attributes">
+            <attribute name="class" add="mkt-input" separator=" "/>
+            <attribute name="placeholder">tu@email.com</attribute>
+        </xpath>
+        
+        <!-- Modificar botón de confirmar -->
+        <xpath expr="//button[@type='submit']" position="attributes">
+            <attribute name="class">btn btn-primary btn-block mkt-btn-login mkt-btn-reset</attribute>
+        </xpath>
+        
+        <!-- Estilizar el enlace "Volver a inicio de sesión" -->
+        <xpath expr="//a[contains(@href, '/web/login')]" position="attributes">
+            <attribute name="class" add="mkt-link-back" separator=" "/>
+        </xpath>
+        
+    </template>
+    
+</odoo>
