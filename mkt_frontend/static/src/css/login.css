@@ -1,0 +1,336 @@
+:root {
+    --mkt-primary: #E0383B;
+    --mkt-primary-dark: #c02f32;
+    --mkt-primary-light: #e85558;
+    --mkt-black: #000000;
+    --mkt-white: #FFFFFF;
+    --mkt-light-blue: #D7E9EF;
+    --mkt-gray-dark: #2d2d2d;
+    --mkt-gray: #666666;
+    --mkt-gray-light: #f5f5f5;
+}
+
+/* ========== FONDO DE LA PÁGINA ========== */
+.o_login_page {
+    background: linear-gradient(135deg, var(--mkt-gray-dark) 0%, var(--mkt-black) 100%) !important;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto de patrón en el fondo */
+.o_login_page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(224, 56, 59, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(215, 233, 239, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* ========== HEADER PERSONALIZADO ========== */
+.mkt-login-header {
+    text-align: center;
+    margin-bottom: 30px;
+    background: var(--mkt-white);
+    padding: 40px 30px 30px;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeInDown 0.6s ease-out;
+}
+
+.mkt-logo-circle {
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, var(--mkt-primary), var(--mkt-primary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 8px 25px rgba(224, 56, 59, 0.4);
+    color: var(--mkt-white);
+}
+
+.mkt-brand-title {
+    color: var(--mkt-black);
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+}
+
+.mkt-brand-subtitle {
+    color: var(--mkt-gray);
+    font-size: 15px;
+    margin: 0;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* ========== TARJETA DE LOGIN ========== */
+.mkt-login-card {
+    background: var(--mkt-white) !important;
+    border-radius: 0 0 20px 20px !important;
+    box-shadow: 0 10px 40px rgba(224, 56, 59, 0.15) !important;
+    border: none !important;
+    margin-top: 0 !important;
+    animation: fadeInUp 0.6s ease-out;
+    transition: all 0.3s ease;
+}
+
+.mkt-login-card:hover {
+    box-shadow: 0 15px 50px rgba(224, 56, 59, 0.25) !important;
+}
+
+/* ========== FORMULARIO ========== */
+.mkt-login-form {
+    /* padding: 0 !important; */
+    padding: 40px 30px 30px;
+    margin-top: 30px !important;
+    border-radius: 0 0 20px 20px;
+    background: var(--mkt-white);
+}
+
+.mkt-login-form .form-group {
+    margin-bottom: 24px;
+}
+
+/* Labels */
+.mkt-login-form label {
+    color: var(--mkt-black);
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 10px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ========== INPUTS ========== */
+.mkt-input {
+    width: 100%;
+    padding: 14px 18px !important;
+    border: 2px solid #e0e0e0 !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+    color: var(--mkt-black) !important;
+    background: var(--mkt-white) !important;
+    transition: all 0.3s ease !important;
+    height: 48px !important;
+}
+
+.mkt-input:focus {
+    outline: none !important;
+    border-color: var(--mkt-primary) !important;
+    background: var(--mkt-white) !important;
+    box-shadow: 0 0 0 3px rgba(224, 56, 59, 0.1) !important;
+}
+
+.mkt-input::placeholder {
+    color: #bdbdbd;
+    font-style: italic;
+}
+
+/* ========== BOTÓN DE LOGIN ========== */
+.mkt-btn-login {
+    width: 100%;
+    padding: 16px 24px !important;
+    background: linear-gradient(135deg, var(--mkt-primary), var(--mkt-primary-light)) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    color: var(--mkt-white) !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px;
+    transition: all 0.3s ease !important;
+    margin-top: 10px !important;
+    box-shadow: 0 6px 20px rgba(224, 56, 59, 0.4) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.mkt-btn-login::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.mkt-btn-login:hover {
+    background: linear-gradient(135deg, var(--mkt-primary-dark), var(--mkt-primary)) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(224, 56, 59, 0.5) !important;
+}
+
+.mkt-btn-login:hover::before {
+    left: 100%;
+}
+
+.mkt-btn-login:active {
+    transform: translateY(0);
+}
+
+.mkt-btn-login i {
+    margin-right: 8px;
+}
+
+/* ========== ENLACES ========== */
+.mkt-login-form a {
+    color: var(--mkt-primary) !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+}
+
+.mkt-login-form a:hover {
+    color: var(--mkt-primary-dark) !important;
+    text-decoration: none !important;
+}
+
+/* ========== ALERTAS ========== */
+.mkt-login-form .alert {
+    border-radius: 10px !important;
+    border: none !important;
+    padding: 12px 16px !important;
+    margin-bottom: 20px !important;
+    font-size: 14px !important;
+    border-left: 4px solid !important;
+}
+
+.mkt-login-form .alert-danger {
+    background-color: #ffebee !important;
+    color: #c62828 !important;
+    border-left-color: var(--mkt-primary) !important;
+}
+
+.mkt-login-form .alert-info {
+    background-color: var(--mkt-light-blue) !important;
+    color: #01579b !important;
+    border-left-color: #3498db !important;
+}
+
+/* ========== SELECT DE BASE DE DATOS ========== */
+.mkt-login-form select {
+    padding: 14px 18px !important;
+    border: 2px solid #e0e0e0 !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+    color: var(--mkt-black) !important;
+    background: var(--mkt-white) !important;
+    transition: all 0.3s ease !important;
+    height: 48px !important;
+    cursor: pointer;
+}
+
+.mkt-login-form select:focus {
+    outline: none !important;
+    border-color: var(--mkt-primary) !important;
+    box-shadow: 0 0 0 3px rgba(224, 56, 59, 0.1) !important;
+}
+
+/* ========== LISTA DE BASES DE DATOS ========== */
+.mkt-login-form .list-group-item {
+    border: 2px solid #e0e0e0 !important;
+    border-radius: 10px !important;
+    margin-bottom: 10px !important;
+    padding: 15px 20px !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer;
+}
+
+.mkt-login-form .list-group-item:hover {
+    border-color: var(--mkt-primary) !important;
+    background-color: var(--mkt-light-blue) !important;
+    transform: translateX(5px);
+}
+
+/* ========== RESPONSIVO ========== */
+@media (max-width: 576px) {
+    .mkt-login-header {
+        padding: 30px 20px 25px;
+    }
+    
+    .mkt-logo-circle {
+        width: 75px;
+        height: 75px;
+    }
+    
+    .mkt-brand-title {
+        font-size: 26px;
+    }
+    
+    .mkt-brand-subtitle {
+        font-size: 13px;
+    }
+    
+    .mkt-input {
+        padding: 12px 16px !important;
+        font-size: 14px !important;
+        height: 44px !important;
+    }
+    
+    .mkt-btn-login {
+        padding: 14px 20px !important;
+        font-size: 15px !important;
+    }
+}
+
+/* ========== ANIMACIONES ========== */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== ACCESIBILIDAD ========== */
+.mkt-input:focus-visible,
+.mkt-btn-login:focus-visible {
+    outline: 3px solid var(--mkt-primary) !important;
+    outline-offset: 2px !important;
+}
+
+/* ========== OCULTAR LOGO DE ODOO ========== */
+.oe_logo {
+    display: none !important;
+}
+
+/* ========== AJUSTES GENERALES ========== */
+.o_login_page .card-body {
+    padding: 40px !important;
+}
+
+/* Footer */
+.mkt-login-form .text-center.small {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    color: var(--mkt-gray);
+    font-size: 12px;
+}
