@@ -1053,7 +1053,7 @@
                                     MARKETING 
                                 </strong>
                                 por necesidades del servicio, en ejercicio de su facultad de dirección, de conformidad con el artículo 9 de la LPCL. Asimismo,
-                                se compromete a cumplir with las disposiciones establecidas en las normativas de la empresa sobre Exclusividad, Reserva, Confidencialidad, No
+                                se compromete a cumplir con las disposiciones establecidas en las normativas de la empresa sobre Exclusividad, Reserva, Confidencialidad, No
                                 Competencia y Propiedad Intelectual . Accesoriamente deberá asistir a las capacitaciones que la empresa disponga en su oportunidad y todo lo relacionado
                                 programado que se encuentre vinculado al cargo que desempeña.
                             </p>
@@ -3412,7 +3412,7 @@
                                     DE LA SUPLETORIEDAD DE LA LEY PERUANA
                                 </strong>
                             </p>
-                            <p class="contract-paragraph">
+                            <p class="contract-paragraph-large">
                                 EN TODO LO NO PREVISTO EXPRESAMENTE EN EL PRESENTE CONTRATO&#44; REGIRÁN LAS LEYES VIGENTES EN EL PERÚ AL MOMENTO EN QUE TALES HECHOS OCURRAN&#46;
                             </p>
                             <p class="contract-clause-title">
@@ -3423,7 +3423,7 @@
                                     DE LA JURISDICCIÓN
                                 </strong>
                             </p>
-                            <p class="contract-paragraph">
+                            <p class="contract-paragraph-large">
                                 LAS PARTES RENUNCIAN AL FUERO JUDICIAL O ADMINISTRATIVO DE SUS DOMICILIOS O CENTROS DE TRABAJO Y SE SOMETEN A LA
                                 JURISDICCIÓN DE LOS JUECES Y AUTORIDADES ADMINISTRATIVAS DE LIMA&#46;
                             </p>
@@ -3435,10 +3435,10 @@
                                     DE LA APROBACIÓN DEL CONTRATO
                                 </strong>
                             </p>
-                            <p class="contract-paragraph">
+                            <p class="contract-paragraph-large">
                                 EL PRESENTE CONTRATO SERÁ SOMETIDO AL MINISTERIO DE TRABAJO Y PROMOCIÓN DEL EMPLEO PARA SU APROBACIÓN&#44; EN OBSERVANCIA DE LO DISPUESTO POR EL ARTÍCULO 2&#176; DEL DECRETO LEGISLATIVO 689 CONCORDADO CON EL ARTÍCULO 1&#176; DE SU REGLAMENTO&#44; APROBADO MEDIANTE DECRETO SUPREMO N&#176; 014&#45;92&#45;TR&#46;
                             </p>
-                            <p class="contract-paragraph">
+                            <p class="contract-paragraph-large">
                                 FIRMADO POR 
                                 <strong>
                                     EL TRABAJADOR 
@@ -3478,10 +3478,10 @@
                                     PRIMERA DISPOSICIÓN COMPLEMENTARIA
                                 </strong>
                             </p>
-                            <p class="contract-paragraph">
+                            <p class="contract-paragraph-large">
                                 EL TRABAJADOR DECLARA LIBREMENTE SU AUTORIZACION ANTE EMPLEADOR, QUE ESTE ÚLTIMO PUEDA DISPONER Y UTILIZAR DE MANERA TOTAL O PARCIALMENTE SU IMAGEN, VOZ Y/O REACCIONES, SECUELAS DE VIDEO, DE MODO GRATUITO Y LIBRE DE TODA COMPENSACIÓN ECONÓMICA, A FIN DE QUE LA MISMA SEA DIVULGADA Y/O INCORPORADA CON FINES PUBLICITARIOS EN TODO MEDIO DE COMUNICACIÓN QUE PUEDAN PUBLICITARSE O PROMOCIONARSE, A TRAVÉS DE MEDIOS DIGITALES, INTERNET, Y/O REDES SOCIALES, SIN RESTRICCIONES NI LÍMITES TEMPORALES ASÍ COMO DE MEDIOS PARA SU REPRODUCCIÓN Y/O DIFUSIÓN, SIENDO LA PRESENTE DE DURACIÓN INDETERMINADA. Y POR LA PRESENTE EL TRABAJADOR Y SUS SUCESORES EXIMEN A LA EMPRESA Y A TODO REPRESENTANTE DE ESTAS Y/O CUENTA COMERCIAL DE TODA RESPONSABILIDAD ANTE CUALQUIER RECLAMO POR DAÑOS O DE INDEMNIZACIÓN QUE SURJA DE LAS ACTIVIDADES AUTORIZADAS POR ESTE ACUERDO, LIBRE DE TODA REGALÍA.
                             </p>
-                            <p class="contract-paragraph">
+                            <p class="contract-paragraph-large">
                                 LA PRESENTE AUTORIZACIÓN NO TIENE ÁMBITO GEOGRÁFICO DETERMINADO, ASIMISMO MEDIANTE EL PRESENTE ESCRITO, EL QUE SUSCRIBE MANIFIESTA QUE LO ANTERIORMENTE AUTORIZADO NO PERJUDICA PRESTIGIO Y NO ATENTA CONTRA SU DIGNIDAD Y HONOR, CONFORME A LO SEÑALADO EN EL ARTÍCULO 15° DE CÓDIGO CIVIL PERUANO Y A LO REGULADO MEDIANTE LEY N° 29733 LEY DE PROTECCIÓN DE DATOS PERSONALES Y SU REGLAMENTO APROBADO MEDIANTE DECRETO SUPREMO N° 003-2013-JUS. POR LO TANTO, NO EXISTE INTROMISIÓN ILEGÍTIMA EN EL ÁMBITO DE SU DERECHO DE LA INTIMIDAD Y/O RENUNCIA EXPRESAMENTE A CUALQUIER TIPO DE RESARCIMIENTO, INDEMNIZACIÓN U OTRO TIPO DE MECANISMO REPARADOR DE DERECHOS ANTE LA EMPRESA MARKETING ALTERNO PERU SAC, A LA CUAL BRINDO MI ABSOLUTA AUTORIZACIÓN.
                             </p>
                             <table class="table">
@@ -5988,7 +5988,7 @@
                 <t t-if="o.contract_type_id.contract_short_name == 'CTTIF'">
                     <article>
                         <div class="contract-page-break">
-                            <p class="contract-text-center contract-title">
+                            <p class="contract-text-center">
                                 <t t-if="o.is_renovation">
                                     <strong>RENOVACIÓN DE CONTRATO DE TRABAJO TEMPORAL INNOMINADO</strong>
                                 </t>
@@ -6468,12 +6468,12 @@
                         <div class="contract-page-break">
                             <p class="contract-text-center">
                                 <t t-if="o.is_renovation">
-                                    <strong class="contract-title">
+                                    <strong>
                                         RENOVACIÓN DE CONTRATO DE TRABAJO TEMPORAL INNOMINADO
                                     </strong>
                                 </t>
                                 <t t-else="">
-                                    <strong class="contract-title">
+                                    <strong>
                                         CONTRATO DE TRABAJO TEMPORAL INNOMINADO
                                     </strong>
                                 </t>
