@@ -7,301 +7,343 @@
     --mkt-light-blue: #D7E9EF;
     --mkt-gray-dark: #2d2d2d;
     --mkt-gray: #666666;
-    --mkt-gray-light: #f5f5f5;
+    --mkt-text: #333333;
 }
 
 /* ========== FONDO DE LA PÁGINA ========== */
+body.o_login_page,
 .o_login_page {
-    background: linear-gradient(135deg, var(--mkt-gray-dark) 0%, var(--mkt-black) 100%) !important;
+    background: linear-gradient(135deg, #f0f2f5 0%, #e4e7eb 100%) !important;
     min-height: 100vh;
-    position: relative;
+}
+
+/* ========== OCULTAR LOGO DE ODOO ========== */
+.o_login_page .oe_logo {
+    display: none !important;
+}
+
+/* ========== CONTENEDOR PRINCIPAL ========== */
+.o_login_page > .container {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+}
+
+/* ========== FORMULARIO DE LOGIN UNIFICADO ========== */
+.oe_login_form {
+    background: white !important;
+    padding: 0 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
+    border: none !important;
     overflow: hidden;
+    animation: fadeInUp 0.5s ease;
+    border-bottom: 2px solid #E0383B !important;
 }
 
-/* Efecto de patrón en el fondo */
-.o_login_page::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        radial-gradient(circle at 20% 50%, rgba(224, 56, 59, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(215, 233, 239, 0.1) 0%, transparent 50%);
-    pointer-events: none;
+.oe_login_form {
+    width: 350px !important;
+    max-width: 350px !important;
 }
-
-/* ========== HEADER PERSONALIZADO ========== */
-.mkt-login-header {
+/* ========== HEADER DENTRO DEL FORMULARIO ========== */
+.oe_login_form .mkt-login-header {
     text-align: center;
-    margin-bottom: 30px;
-    background: var(--mkt-white);
-    padding: 40px 30px 30px;
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
-    animation: fadeInDown 0.6s ease-out;
+    padding: 48px 40px 32px 40px;
+    background: white;
+    /* border-bottom: 1px solid #f0f0f0; */
+    margin: 0;
 }
 
 .mkt-logo-circle {
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     background: linear-gradient(135deg, var(--mkt-primary), var(--mkt-primary-light));
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 20px;
-    box-shadow: 0 8px 25px rgba(224, 56, 59, 0.4);
-    color: var(--mkt-white);
+    box-shadow: 0 8px 24px rgba(224, 56, 59, 0.25);
+    transition: transform 0.3s ease;
+}
+
+.mkt-logo-circle:hover {
+    transform: scale(1.05);
+}
+
+.mkt-logo-circle i {
+    color: white;
+    font-size: 36px;
 }
 
 .mkt-brand-title {
-    color: var(--mkt-black);
-    font-size: 32px;
-    font-weight: 700;
-    margin: 0 0 8px 0;
-    letter-spacing: -0.5px;
+    color: var(--mkt-text);
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0 0 6px 0;
 }
 
 .mkt-brand-subtitle {
     color: var(--mkt-gray);
-    font-size: 15px;
-    margin: 0;
-    font-weight: 500;
+    font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
+    font-weight: 500;
+    margin: 0;
 }
 
-/* ========== TARJETA DE LOGIN ========== */
-.mkt-login-card {
-    background: var(--mkt-white) !important;
-    border-radius: 0 0 20px 20px !important;
-    box-shadow: 0 10px 40px rgba(224, 56, 59, 0.15) !important;
-    border: none !important;
-    margin-top: 0 !important;
-    animation: fadeInUp 0.6s ease-out;
-    transition: all 0.3s ease;
+/* ========== ICONOS DENTRO DE LOS INPUTS ========== */
+
+.oe_login_form .form-group::before {
+    font-family: 'FontAwesome';
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mkt-gray);
+    font-size: 16px;
+    pointer-events: none;
+    z-index: 10;
+    transition: color 0.3s ease;
+    margin-top: 25px;
 }
 
-.mkt-login-card:hover {
-    box-shadow: 0 15px 50px rgba(224, 56, 59, 0.25) !important;
+/* Iconos específicos por tipo de campo */
+.oe_login_form .field-login::before,
+.oe_login_form .form-group:has(input#login)::before,
+.oe_login_form div:has(> input[type="text"][name="login"])::before {
+    content: '\f0e0'; /* fa-envelope */
 }
 
-/* ========== FORMULARIO ========== */
-.mkt-login-form {
-    /* padding: 0 !important; */
-    padding: 40px 30px 30px;
-    margin-top: 30px !important;
-    border-radius: 0 0 20px 20px;
-    background: var(--mkt-white);
+.oe_login_form .form-group:has(input[type="password"])::before,
+.oe_login_form div:has(> input#password)::before {
+    content: '\f023'; /* fa-lock */
 }
 
-.mkt-login-form .form-group {
+.oe_login_form .form-group:has(select[name="db"])::before,
+.oe_login_form div:has(> select)::before {
+    content: '\f1c0'; /* fa-database */
+}
+
+/* Cambiar color del icono cuando el input tiene foco */
+.oe_login_form .form-group:has(input:focus)::before,
+.oe_login_form .form-group:has(select:focus)::before {
+    color: var(--mkt-primary);
+}
+
+/* ========== CONTENIDO DEL FORMULARIO ========== */
+.oe_login_form > *:not(.mkt-login-header) {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.oe_login_form > .form-group:first-of-type {
+    padding-top: 32px;
+}
+
+.oe_login_form > .form-group:last-of-type,
+.oe_login_form > button[type="submit"],
+.oe_login_form > .text-center {
+    padding-bottom: 40px;
+}
+
+/* ========== GRUPOS DE CAMPOS ========== */
+.oe_login_form .form-group {
     margin-bottom: 24px;
 }
 
-/* Labels */
-.mkt-login-form label {
-    color: var(--mkt-black);
-    font-weight: 600;
-    font-size: 13px;
-    margin-bottom: 10px;
+/* ========== LABELS ========== */
+.oe_login_form label {
     display: block;
+    color: var(--mkt-text);
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
 }
 
 /* ========== INPUTS ========== */
-.mkt-input {
+.oe_login_form input[type="text"],
+.oe_login_form input[type="email"],
+.oe_login_form input[type="password"],
+.oe_login_form input.form-control {
+    width: 100%;
+    padding: 14px 18px 14px 48px !important;
+    border: 2px solid #e0e0e0 !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+    color: var(--mkt-text) !important;
+    background: white !important;
+    transition: all 0.3s ease !important;
+    height: 48px !important;
+    line-height: 1.5 !important;
+    box-sizing: border-box;
+}
+
+.oe_login_form input[type="text"]:focus,
+.oe_login_form input[type="email"]:focus,
+.oe_login_form input[type="password"]:focus,
+.oe_login_form input.form-control:focus {
+    border-color: var(--mkt-primary) !important;
+    box-shadow: 0 0 0 4px rgba(224, 56, 59, 0.08) !important;
+    outline: none !important;
+}
+
+.oe_login_form input::placeholder {
+    color: #bdbdbd !important;
+}
+
+/* ========== SELECT (BASE DE DATOS) ========== */
+.oe_login_form select.form-control {
     width: 100%;
     padding: 14px 18px !important;
     border: 2px solid #e0e0e0 !important;
     border-radius: 10px !important;
     font-size: 15px !important;
-    color: var(--mkt-black) !important;
-    background: var(--mkt-white) !important;
+    color: var(--mkt-text) !important;
+    background: white !important;
+    cursor: pointer;
     transition: all 0.3s ease !important;
-    height: 48px !important;
 }
 
-.mkt-input:focus {
-    outline: none !important;
+.oe_login_form select.form-control:focus {
     border-color: var(--mkt-primary) !important;
-    background: var(--mkt-white) !important;
-    box-shadow: 0 0 0 3px rgba(224, 56, 59, 0.1) !important;
-}
-
-.mkt-input::placeholder {
-    color: #bdbdbd;
-    font-style: italic;
+    box-shadow: 0 0 0 4px rgba(224, 56, 59, 0.08) !important;
+    outline: none !important;
 }
 
 /* ========== BOTÓN DE LOGIN ========== */
-.mkt-btn-login {
+.oe_login_form button[type="submit"],
+.oe_login_form .btn-primary {
     width: 100%;
     padding: 16px 24px !important;
     background: linear-gradient(135deg, var(--mkt-primary), var(--mkt-primary-light)) !important;
     border: none !important;
-    border-radius: 12px !important;
-    color: var(--mkt-white) !important;
-    font-size: 16px !important;
+    border-radius: 10px !important;
+    color: white !important;
+    font-size: 15px !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
     letter-spacing: 1px;
+    cursor: pointer;
     transition: all 0.3s ease !important;
-    margin-top: 10px !important;
-    box-shadow: 0 6px 20px rgba(224, 56, 59, 0.4) !important;
-    position: relative;
-    overflow: hidden;
+    margin-top: 12px !important;
+    box-shadow: 0 6px 20px rgba(224, 56, 59, 0.3) !important;
 }
 
-.mkt-btn-login::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s ease;
-}
-
-.mkt-btn-login:hover {
+.oe_login_form button[type="submit"]:hover,
+.oe_login_form .btn-primary:hover {
     background: linear-gradient(135deg, var(--mkt-primary-dark), var(--mkt-primary)) !important;
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(224, 56, 59, 0.5) !important;
+    box-shadow: 0 8px 24px rgba(224, 56, 59, 0.4) !important;
 }
 
-.mkt-btn-login:hover::before {
-    left: 100%;
-}
-
-.mkt-btn-login:active {
+.oe_login_form button[type="submit"]:active {
     transform: translateY(0);
 }
 
-.mkt-btn-login i {
-    margin-right: 8px;
-}
-
 /* ========== ENLACES ========== */
-.mkt-login-form a {
+.oe_login_form a {
     color: var(--mkt-primary) !important;
     text-decoration: none !important;
-    font-weight: 600 !important;
-    transition: all 0.3s ease !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease;
 }
 
-.mkt-login-form a:hover {
+.oe_login_form a:hover {
     color: var(--mkt-primary-dark) !important;
-    text-decoration: none !important;
+    text-decoration: underline !important;
+}
+
+/* Centrar enlace de "Restablecer contraseña" */
+.oe_login_form .text-center {
+    text-align: center;
+    margin-top: 20px;
 }
 
 /* ========== ALERTAS ========== */
-.mkt-login-form .alert {
+.oe_login_form .alert {
     border-radius: 10px !important;
     border: none !important;
-    padding: 12px 16px !important;
+    padding: 14px 18px !important;
     margin-bottom: 20px !important;
     font-size: 14px !important;
     border-left: 4px solid !important;
 }
 
-.mkt-login-form .alert-danger {
+.oe_login_form .alert-danger {
     background-color: #ffebee !important;
     color: #c62828 !important;
     border-left-color: var(--mkt-primary) !important;
 }
 
-.mkt-login-form .alert-info {
+.oe_login_form .alert-info {
     background-color: var(--mkt-light-blue) !important;
     color: #01579b !important;
     border-left-color: #3498db !important;
 }
 
-/* ========== SELECT DE BASE DE DATOS ========== */
-.mkt-login-form select {
-    padding: 14px 18px !important;
-    border: 2px solid #e0e0e0 !important;
-    border-radius: 10px !important;
-    font-size: 15px !important;
-    color: var(--mkt-black) !important;
-    background: var(--mkt-white) !important;
-    transition: all 0.3s ease !important;
-    height: 48px !important;
-    cursor: pointer;
-}
-
-.mkt-login-form select:focus {
-    outline: none !important;
-    border-color: var(--mkt-primary) !important;
-    box-shadow: 0 0 0 3px rgba(224, 56, 59, 0.1) !important;
-}
-
-/* ========== LISTA DE BASES DE DATOS ========== */
-.mkt-login-form .list-group-item {
-    border: 2px solid #e0e0e0 !important;
-    border-radius: 10px !important;
-    margin-bottom: 10px !important;
-    padding: 15px 20px !important;
-    transition: all 0.3s ease !important;
-    cursor: pointer;
-}
-
-.mkt-login-form .list-group-item:hover {
-    border-color: var(--mkt-primary) !important;
-    background-color: var(--mkt-light-blue) !important;
-    transform: translateX(5px);
-}
-
-/* ========== RESPONSIVO ========== */
+/* ========== RESPONSIVE ========== */
 @media (max-width: 576px) {
-    .mkt-login-header {
-        padding: 30px 20px 25px;
+    .oe_login_form {
+        width: 300px !important;
+        max-width: 300px !important;
+    }
+    .oe_login_form .mkt-login-header {
+        padding: 40px 24px 24px 24px;
+    }
+    
+    .oe_login_form > *:not(.mkt-login-header) {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+    
+    .oe_login_form button[type="submit"] {
+        width: calc(100% - 48px);
+        margin-left: 24px;
+        margin-right: 24px;
     }
     
     .mkt-logo-circle {
-        width: 75px;
-        height: 75px;
+        width: 70px;
+        height: 70px;
+    }
+    
+    .mkt-logo-circle i {
+        font-size: 32px;
     }
     
     .mkt-brand-title {
-        font-size: 26px;
+        font-size: 22px;
     }
     
     .mkt-brand-subtitle {
-        font-size: 13px;
+        font-size: 12px;
     }
     
-    .mkt-input {
-        padding: 12px 16px !important;
+    .oe_login_form input[type="text"],
+    .oe_login_form input[type="email"],
+    .oe_login_form input[type="password"],
+    .oe_login_form select.form-control {
+        padding: 12px 16px 12px 44px !important;
         font-size: 14px !important;
         height: 44px !important;
     }
     
-    .mkt-btn-login {
+    .oe_login_form button[type="submit"] {
         padding: 14px 20px !important;
-        font-size: 15px !important;
+        font-size: 14px !important;
     }
 }
 
 /* ========== ANIMACIONES ========== */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
@@ -309,28 +351,7 @@
     }
 }
 
-/* ========== ACCESIBILIDAD ========== */
-.mkt-input:focus-visible,
-.mkt-btn-login:focus-visible {
-    outline: 3px solid var(--mkt-primary) !important;
-    outline-offset: 2px !important;
-}
-
-/* ========== OCULTAR LOGO DE ODOO ========== */
-.oe_logo {
-    display: none !important;
-}
-
-/* ========== AJUSTES GENERALES ========== */
-.o_login_page .card-body {
-    padding: 40px !important;
-}
-
-/* Footer */
-.mkt-login-form .text-center.small {
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px solid #e0e0e0;
-    color: var(--mkt-gray);
-    font-size: 12px;
+/* ========== AJUSTES FINALES ========== */
+.oe_login_form .clearfix {
+    clear: both;
 }
