@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Template de Login -->
     <template id="mkt_custom_login" name="MKT Login Custom" inherit_id="web.login">
         
-        <!-- Agregar header personalizado antes del formulario -->
-        <xpath expr="//form[hasclass('oe_login_form')]" position="before">
+        <!-- Agregar clase al formulario -->
+        <xpath expr="//form[hasclass('oe_login_form')]" position="attributes">
+            <attribute name="class" add="mkt-login-form" separator=" "/>
+        </xpath>
+        
+        <!-- Agregar header personalizado DENTRO del formulario (al inicio) -->
+        <xpath expr="//form[hasclass('oe_login_form')]/*[1]" position="before">
             <div class="mkt-login-header">
                 <div class="mkt-logo-circle">
                     <i class="fa fa-user-circle-o fa-3x"></i>
@@ -13,17 +19,12 @@
             </div>
         </xpath>
         
-        <!-- Agregar clase al formulario -->
-        <xpath expr="//form[hasclass('oe_login_form')]" position="attributes">
-            <attribute name="class" add="mkt-login-form" separator=" "/>
-        </xpath>
-        
         <!-- Modificar input de login/email -->
         <xpath expr="//input[@id='login']" position="attributes">
             <attribute name="class" add="mkt-input" separator=" "/>
             <attribute name="placeholder">tu@email.com</attribute>
         </xpath>
-        
+
         <!-- Modificar input de password -->
         <xpath expr="//input[@id='password']" position="attributes">
             <attribute name="class" add="mkt-input" separator=" "/>
@@ -37,11 +38,16 @@
         
     </template>
 
-    <!-- Template para Reset Password - Heredando de auth_signup -->
+    <!-- Template para Reset Password -->
     <template id="mkt_reset_password" name="MKT Reset Password" inherit_id="auth_signup.reset_password">
         
-        <!-- Agregar header personalizado antes del formulario -->
-        <xpath expr="//form[hasclass('oe_reset_password_form')]" position="before">
+        <!-- Agregar clases al formulario -->
+        <xpath expr="//form[hasclass('oe_reset_password_form')]" position="attributes">
+            <attribute name="class" add="mkt-login-form mkt-reset-form" separator=" "/>
+        </xpath>
+        
+        <!-- Agregar header personalizado DENTRO del formulario (al inicio) -->
+        <xpath expr="//form[hasclass('oe_reset_password_form')]/*[1]" position="before">
             <div class="mkt-login-header">
                 <div class="mkt-logo-circle mkt-logo-reset">
                     <i class="fa fa-key fa-3x"></i>
@@ -51,21 +57,12 @@
             </div>
         </xpath>
         
-        <!-- Agregar clases al formulario -->
-        <xpath expr="//form[hasclass('oe_reset_password_form')]" position="attributes">
-            <attribute name="class" add="mkt-login-form mkt-reset-form" separator=" "/>
-        </xpath>
-        
-        <!-- Modificar el div contenedor del input de login -->
-        <xpath expr="//div[hasclass('field-login')]" position="attributes">
-            <attribute name="class" add="mkt-field-login" separator=" "/>
-        </xpath>
-        
         <!-- Modificar label del input de login -->
         <xpath expr="//label[@for='login']" position="replace">
-            <label for="login" class="mkt-label">
+            <label for="login" class="mkt-label">Tu correo electrónico</label>
+            <!-- <label for="login" class="mkt-label">
                 <i class="fa fa-envelope"></i> Tu correo electrónico
-            </label>
+            </label> -->
         </xpath>
         
         <!-- Modificar input de login/email -->
