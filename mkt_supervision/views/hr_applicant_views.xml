@@ -54,6 +54,9 @@
                      options="{'no_create_edit': True}"
                      groups="mkt_supervision.group_supervision_hiring_approver" 
                      attrs="{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
+              <field name="cost_center_name" 
+                     groups="mkt_supervision.group_supervision_hiring_approver" 
+                     attrs="{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
           </xpath>
       </field>
   </record>
@@ -159,6 +162,7 @@
               <field name="job_id" readonly="1" options="{'no_open': True}"/>
               <field name="department_id" readonly="1" options="{'no_open': True}"/>
               <field name="cost_center_id" decoration-bf="1" options="{'no_open': True}" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
+              <field name="cost_center_name" decoration-bf="1" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
               <field name="salary_proposed" decoration-bf="1" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
               <field name="first_contract_start" decoration-bf="1" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
               <field name="first_contract_end" decoration-bf="1" attrs="{'readonly': [('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
