@@ -37,6 +37,7 @@ class Applicant(models.Model):
     send_first_contract = fields.Boolean(string=_("Send Contract"))
 
     cost_center_id = fields.Many2one('cost.center', string="Cost Center", tracking=True)
+    cost_center_name = fields.Char(string="Cost Center Name", related="cost_center_id.name", store=False, readonly=True)
     selected_applicant_approved = fields.Boolean(string=_("Is selected applicant approved?"), tracking=True)
     supervision_data_approved = fields.Selection([
                                     ('pending', 'Pending'),

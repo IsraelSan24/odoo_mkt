@@ -10,7 +10,7 @@
           <field name="first_contract_end" string= "Fecha Fin de Contrato"/>
           <field name="salary_proposed" string= "Salario"/>
           <field name="work_type" string= "Condición"/>
-          <field name="parent_id" string= "Jefe Directo" options="{'no_create': True}"/>
+          <field name="parent_id" string= "Jefe Directo" options="{'no_create': True, 'no_edit': True}"/>
           <field name="company_id" invisible='1'/>
         </group>
         <footer>

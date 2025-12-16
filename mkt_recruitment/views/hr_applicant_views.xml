@@ -158,6 +158,7 @@
                 <field name="job_id" readonly="1" options="{'no_open': True}" optional="hide"/>
                 <field name="department_id" readonly="1" options="{'no_open': True}" optional="hide"/>
                 <field name="cost_center_id" readonly="1" decoration-bf="1" options="{'no_open': True}"/>
+                <field name="cost_center_name" readonly="1" decoration-bf="1" optional="hide"/>
                 <field name="salary_proposed" readonly="1" decoration-bf="1"/>
                 <field name="first_contract_start" readonly="1" decoration-bf="1"/>
                 <field name="first_contract_end" readonly="1" decoration-bf="1"/>
