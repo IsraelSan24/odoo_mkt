@@ -1,0 +1,128 @@
+/* contract_styles.css */
+
+/* Títulos y encabezados */
+.contract-title {
+    text-align: center;
+    font-size: 0.905rem;
+}
+
+.contract-subtitle {
+    text-align: center;
+    font-size: 0.905rem;
+}
+
+.contract-subtitle-underline {
+    text-align: center;
+    font-size: 0.905rem;
+    text-decoration: underline;
+}
+
+/* Párrafos */
+.contract-paragraph {
+    font-size: 0.625rem;
+    text-align: justify;
+}
+
+.contract-paragraph-large {
+    font-size: 0.800rem;
+    text-align: justify;
+}
+
+
+.contract-paragraph.mb-10 {
+    margin: auto auto 10px auto;
+}
+
+.contract-paragraph-center {
+    font-size: 0.625rem;
+    text-align: center;
+}
+
+/* Cláusulas */
+.contract-clause-title {
+    font-size: 0.905rem;
+}
+
+.contract-clause-title-large {
+    font-size: 0.910rem;
+}
+
+/* Listas */
+.contract-list {
+    font-size: 0.625rem;
+    text-align: justify;
+}
+
+.contract-list-alpha {
+    list-style-type: lower-alpha;
+    font-size: 0.625rem;
+}
+
+/* Divisores de página */
+.contract-page-break {
+    page-break-after: always;
+    margin-top: -20px;
+}
+
+.contract-page-break.tight {
+    line-height: 1.4;
+}
+
+.contract-page-break-padded {
+    page-break-after: always;
+    padding-top: 20px;
+}
+
+/* Tablas de firma */
+/* .contract-signature-table {
+    margin: 0 auto;
+}
+
+.contract-signature-cell {
+    border: none;
+}
+
+.contract-signature-line {
+    text-align: center;
+    border-top: 2px solid;
+    border-bottom: none;
+}
+
+.contract-signature-image {
+    max-height: 6rem;
+    max-width: 100%;
+}
+
+.contract-signature-spacer {
+    min-height: 100px;
+} */
+
+/* Espaciados */
+.contract-mt-20 {
+    margin-top: 20px;
+}
+
+.contract-mt-40 {
+    margin-top: 40px;
+}
+
+/* Estilos de texto */
+.contract-text-justify {
+    text-align: justify;
+}
+
+.contract-text-center {
+    text-align: center;
+}
+
+.contract-text-center.large {
+    font-size: 0.910rem;
+}
+
+.contract-bold {
+    font-weight: bold;
+}
+
+.contract-underline {
+    text-decoration: underline;
+}
