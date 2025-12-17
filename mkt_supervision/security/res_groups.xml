@@ -9,7 +9,7 @@
     <record id="group_supervision_hiring_approver" model="res.groups">
         <field name="name">Hiring Approver</field>
         <field name="category_id" ref="mkt_supervision.module_mkt_supervision"/>
-        <field name="implied_ids" eval="[(4, ref('hr_recruitment.group_hr_recruitment_user'))]"></field>
+        <field name="implied_ids" eval="[(4, ref('hr_recruitment.group_hr_recruitment_user')), (4, ref('mkt_supervision.group_supervision_supervisor'))]"></field>
     </record>
 
     <record id="group_supervision_admin" model="res.groups">

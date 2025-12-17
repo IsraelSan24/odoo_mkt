@@ -19,7 +19,7 @@
       <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
       <field name="arch" type="xml">
           <xpath expr="//field[@name='salary_expected']/ancestor::group[1]" position="attributes">
-              <attribute name="groups">mkt_supervision.group_supervision_hiring_approver</attribute>
+              <attribute name="groups">mkt_supervision.group_supervision_hiring_approver,mkt_supervision.group_supervision_admin</attribute>
           </xpath>
  
           <xpath expr="//field[@name='salary_proposed']" position="attributes">
@@ -52,10 +52,10 @@
           <xpath expr="//field[@name='department_id']" position="after">
               <field name="cost_center_id" 
                      options="{'no_create_edit': True}"
-                     groups="mkt_supervision.group_supervision_hiring_approver" 
+                     groups="mkt_supervision.group_supervision_hiring_approver,mkt_supervision.group_supervision_admin" 
                      attrs="{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
               <field name="cost_center_name" 
-                     groups="mkt_supervision.group_supervision_hiring_approver" 
+                     groups="mkt_supervision.group_supervision_hiring_approver,mkt_supervision.group_supervision_admin" 
                      attrs="{'readonly': ['&amp;', ('stage_id', '=', 5), ('supervision_data_approved', 'in', ['pending', 'approved'])]}"/>
           </xpath>
       </field>
@@ -73,7 +73,7 @@
                     class="btn-primary"
                     icon="fa-check-circle"
                     attrs="{'invisible': [('stage_id', '!=', 2)]}"
-                    groups="mkt_supervision.group_supervision_hiring_approver"/>
+                    groups="mkt_supervision.group_supervision_hiring_approver,mkt_supervision.group_supervision_admin"/>
           </xpath>
       </field>
   </record>
@@ -90,7 +90,7 @@
                     class="btn-primary"
                     icon="fa-check-circle"
                     attrs="{'invisible': [('stage_id', '!=', 2)]}"
-                    groups="mkt_supervision.group_supervision_hiring_approver"/>
+                    groups="mkt_supervision.group_supervision_hiring_approver,mkt_supervision.group_supervision_admin"/>
           </xpath>
           <xpath expr="//tree" position="inside">
             <header>
@@ -99,7 +99,7 @@
                       string="Approve"
                       class="btn-primary"
                       icon="fa-check-circle"
-                      groups="mkt_supervision.group_supervision_hiring_approver"/>
+                      groups="mkt_supervision.group_supervision_hiring_approver,mkt_supervision.group_supervision_admin"/>
             </header>
           </xpath>
           <xpath expr="//tree" position="inside">
@@ -108,7 +108,7 @@
                       type="object"
                       string="Reject"
                       class="btn-secondary"
-                      groups="mkt_supervision.group_supervision_hiring_approver"/>
+                      groups="mkt_supervision.group_supervision_hiring_approver,mkt_supervision.group_supervision_admin"/>
             </header>
           </xpath>
       </field>
