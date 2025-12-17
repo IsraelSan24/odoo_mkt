@@ -43,17 +43,15 @@
     </record>
 
     <!-- HR APPLICANT -->
-<!-- 
-    <record id="rule_recruiter_team_applicant" model="ir.rule">
-        <field name="name">Recruiter Team</field>
+
+    <record id="rule_recruiter_any" model="ir.rule">
+        <field name="name">Recruiter Any</field>
         <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
         <field name="domain_force">
-            [   
-                ('department_id', 'in', user.get_recruiter_departments()),
-            ]
+            [('id', '=', False)]
         </field>
-        <field name="groups" eval="[4, ref('hr.group_hr_user')]"/>
-    </record> -->
+        <field name="groups" eval="[4, ref('hr_recruitment.group_hr_recruitment_user')]"/>
+    </record>
 
     <record id="rule_applicant_employees_admin" model="ir.rule">
         <field name="name">Recruitment for Employees Admin</field>

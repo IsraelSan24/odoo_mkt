@@ -100,7 +100,7 @@ class Applicant(models.Model):
                 raise UserError(_("El nuevo estado no es válido."))
             
             # restrict if not in group
-            if new_stage.id == 4 and not self.env.user.has_group('mkt_supervision.group_supervision_hiring_approver'):
+            if new_stage.id == 4 and not (self.env.user.has_group('mkt_supervision.group_supervision_hiring_approver') or self.env.user.has_group('mkt_supervision.group_supervision_admin')):
                 _logger.info(f"\n\n\nHRAPPLICANT RESTRICT GROUP\n\n\n")
                 raise AccessError(_("You don't have permissions to move candidates to this stage."))
 
