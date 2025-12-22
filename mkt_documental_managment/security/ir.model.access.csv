@@ -75,3 +75,4 @@ access_internal_announcement_accounting,Internal Announcement - Accounting,model
 access_requirement_province_acl_user,access_requirement_province_acl_user,model_requirement_province_acl,base.group_user,1,1,1,1
 access_province_report,access_province_report,model_province_report,,1,1,1,1
 access_province_reimbursements_report,access_province_reimbursements_report,model_province_reimbursements_report,,1,1,1,1
+access_cost_center_budget_administrator,access.cost.center.budget.administrator,mkt_cost_center.model_cost_center,mkt_documental_managment.budget_control_administrator,1,1,1,0
