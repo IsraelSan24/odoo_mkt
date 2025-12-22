@@ -2206,6 +2206,12 @@ class DocumentalRequirements(models.Model):
 
 
     def write(self, vals):
+
+        if 'active' in vals and vals['active'] is False:
+            for record in self:
+                if record.requirement_payment_ids:
+                    raise UserError(_("You cannot delete a documental requirement that has payment records."))
+
         res = super(DocumentalRequirements, self).write(vals)
         self.set_line_number()
         return res
