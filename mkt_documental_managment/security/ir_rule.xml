@@ -231,4 +231,20 @@
         <field name="perm_unlink" eval="True"/>
     </record>
 
+    <record id="own_job_rule" model="ir.rule">
+        <field name="name">Own Job</field>
+        <field name="model_id" ref="hr.model_hr_job"/>
+        <field name="domain_force">
+            [
+                ('id', 'in', user.employee_ids.mapped('job_id').ids),
+            ]
+        </field>
+        <field name="groups" eval="[(4,ref('mkt_documental_managment.documental_requirement_user')), (4,ref('mkt_documental_managment.documental_settlement_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+
 </odoo>
