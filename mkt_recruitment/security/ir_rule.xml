@@ -21,6 +21,25 @@
         <field name="groups" eval="[4, ref('mkt_recruitment.group_hr_contract_back_office')]"/>
     </record>
 
+    <record id="contract_manager_rule" model="ir.rule">
+        <field name="name">Contract Manager</field>
+        <field name="model_id" ref="hr_contract.model_hr_contract"/>
+        <field name="groups" eval="[(4, ref('hr_contract.group_hr_contract_manager'))]"/>
+        <field name="domain_force">
+            [
+                ('employee_id.is_back_office', '=', False)
+            ]
+        </field>
+    </record>
+
+    <record id="contract_back_office_rule" model="ir.rule">
+        <field name="name">Contract Back Office</field>
+        <field name="model_id" ref="hr_contract.model_hr_contract"/>
+        <field name="groups" eval="[(4, ref('mkt_recruitment.group_hr_contract_back_office'))]"/>
+        <field name="domain_force">
+            [(1, '=', 1)]
+        </field>
+    </record>
 
     <record id="recruiter_team_rule" model="ir.rule">
         <field name="name">Recruiter Team</field>
